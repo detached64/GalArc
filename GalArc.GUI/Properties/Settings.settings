@@ -3,13 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="un_chkbxMatch_checked" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="un_selEngine_selectedIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="pa_chkbxMatch_checked" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="pa_selEngine_selectedIndex" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
