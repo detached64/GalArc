@@ -1,6 +1,6 @@
 # GalArc
 
-Galgame Archive Tool
+Galgame Archive Tool.
 
 Mainly focus on the unpacking and repacking of galgame archives.
 
