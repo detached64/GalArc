@@ -43,9 +43,6 @@
             // 
             this.op_cbLang.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.op_cbLang.FormattingEnabled = true;
-            this.op_cbLang.Items.AddRange(new object[] {
-            resources.GetString("op_cbLang.Items"),
-            resources.GetString("op_cbLang.Items1")});
             resources.ApplyResources(this.op_cbLang, "op_cbLang");
             this.op_cbLang.Name = "op_cbLang";
             this.op_cbLang.SelectedIndexChanged += new System.EventHandler(this.op_cbLang_SelectedIndexChanged);
@@ -72,8 +69,8 @@
         }
 
         #endregion
-        private System.Windows.Forms.ComboBox op_cbLang;
         internal System.Windows.Forms.Label op_lbLang;
         internal System.Windows.Forms.CheckBox op_chkbxOnTop;
+        internal System.Windows.Forms.ComboBox op_cbLang;
     }
 }

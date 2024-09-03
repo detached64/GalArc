@@ -1,5 +1,6 @@
 ﻿using Log;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -8,6 +9,9 @@ namespace GalArc.GUI
     public partial class OptionWindow : UserControl
     {
         public static OptionWindow Instance;
+
+        internal static Dictionary<string, string> languages = new Dictionary<string, string>();
+
         public OptionWindow()
         {
             Instance = this;
@@ -15,30 +19,17 @@ namespace GalArc.GUI
             Controller.Localization.SetLocalCulture(main.LocalCulture);
             Controller.Localization.GetStrings_option();
             LoadState();
+            Controller.UpdateContent.InitCombobox_Lang();
         }
 
         private void OptionWindow_Load(object sender, EventArgs e)
         {
-            if (main.LocalCulture == "zh-CN")
-            {
-                this.op_cbLang.Text = "简体中文";
-            }
-            else if (main.LocalCulture == "en-US")
-            {
-                this.op_cbLang.Text = "English";
-            }
+            this.op_cbLang.Text = languages.FirstOrDefault(x => x.Value == main.LocalCulture).Key;
         }
 
         private void op_cbLang_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.op_cbLang.Text == "简体中文")
-            {
-                main.LocalCulture = "zh-CN";
-            }
-            else if (this.op_cbLang.Text == "English")
-            {
-                main.LocalCulture = "en-US";
-            }
+            main.LocalCulture = languages[this.op_cbLang.Text];
             Controller.Localization.SetLocalCulture(main.LocalCulture);
             Controller.Localization.RefreshStrings();
             if (Resource.Global.AutoSaveLanguage)

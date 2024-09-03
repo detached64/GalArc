@@ -31,6 +31,12 @@ namespace GalArc.Controller
             }
         }
 
+        internal static void InitLang()
+        {
+            OptionWindow.languages.Add("English", "en-US");
+            OptionWindow.languages.Add("简体中文", "zh-CN");
+        }
+
         /// <summary>
         /// Update the content of listbox accordingly when specified combobox is updated.
         /// </summary>
@@ -141,6 +147,12 @@ namespace GalArc.Controller
                 default:
                     break;
             }
+        }
+
+
+        internal static void InitCombobox_Lang()
+        {
+            OptionWindow.Instance.op_cbLang.Items.AddRange(OptionWindow.languages.Keys.ToArray());
         }
     }
 }

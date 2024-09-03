@@ -23,6 +23,7 @@ namespace GalArc
             Main = this;
             InitializeComponent();
             LogUtility.NewInstance();
+            Controller.UpdateContent.InitLang();
             LocalCulture = Controller.Localization.GetLocalCulture();
 
             logWindow = new LogWindow();
@@ -103,5 +104,6 @@ namespace GalArc
             this.main_statusLabel.Text = string.Empty;
             timer.Stop();
         }
+
     }
 }
