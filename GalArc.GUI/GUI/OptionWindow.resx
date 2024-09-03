@@ -150,7 +150,7 @@
     <value>78, 96</value>
   </data>
   <data name="op_cbLang.Size" type="System.Drawing.Size, System.Drawing">
-    <value>158, 32</value>
+    <value>129, 32</value>
   </data>
   <data name="op_cbLang.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
