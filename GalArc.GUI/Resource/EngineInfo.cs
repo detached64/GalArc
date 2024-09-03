@@ -71,7 +71,7 @@ namespace GalArc.Resource
             new EngineInfo("NitroPlus","PAK","PAK"),
             new EngineInfo("NScripter","NS2","NS2"),
             new EngineInfo("Palette","PAK","PAK"),
-            new EngineInfo("RPGMaker","RGSSAD/RGSS2A/RGSS3A",""),
+            new EngineInfo("RPGMaker","RGSSAD/RGSS2A/RGSS3A","RGSSAD/RGSS2A/RGSS3A","1"),
             new EngineInfo("Softpal","PAC","PAC"),
             new EngineInfo("SystemNNN","GPK/VPK","GPK/VPK","1/2"),
             new EngineInfo("Triangle","CG/SUD","CG/SUD")
