@@ -6,15 +6,15 @@
 
 2. Go to Log -> Properties -> Resources.resx , add a new language and translate the strings. 
 
-3. Go to GalArc.GUI -> Controller -> UpdateContent.cs -> line 34 , add your language name and culture like this:
+3. Go to GalArc.GUI -> Resource -> Languages.cs -> line 9 , add your language name and culture like this:
 
    ```C#
-   internal static void InitLang()
+   internal static Dictionary<string, string> languages = new Dictionary<string, string>
    {
-       OptionWindow.languages.Add("English", "en-US");
-       OptionWindow.languages.Add("简体中文", "zh-CN");
-       OptionWindow.languages.Add("日本語","ja-JP");		// add here
-   }
+       { "简体中文" , "zh-CN" },
+       { "English" , "en-US" },
+       { "日本語" , "ja-JP" }			// add here
+   };
    ```
 
 ## Add new format support
