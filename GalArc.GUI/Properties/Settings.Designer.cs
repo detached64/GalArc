@@ -25,7 +25,7 @@ namespace GalArc.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool un_chkbxMatch_checked {
             get {
                 return ((bool)(this["un_chkbxMatch_checked"]));
@@ -49,7 +49,7 @@ namespace GalArc.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool pa_chkbxMatch_checked {
             get {
                 return ((bool)(this["pa_chkbxMatch_checked"]));
