@@ -10,8 +10,6 @@ namespace GalArc.GUI
     {
         public static OptionWindow Instance;
 
-        internal static Dictionary<string, string> languages = new Dictionary<string, string>();
-
         public OptionWindow()
         {
             Instance = this;
@@ -24,12 +22,12 @@ namespace GalArc.GUI
 
         private void OptionWindow_Load(object sender, EventArgs e)
         {
-            this.op_cbLang.Text = languages.FirstOrDefault(x => x.Value == main.LocalCulture).Key;
+            this.op_cbLang.Text = Resource.Languages.languages.FirstOrDefault(x => x.Value == main.LocalCulture).Key;
         }
 
         private void op_cbLang_SelectedIndexChanged(object sender, EventArgs e)
         {
-            main.LocalCulture = languages[this.op_cbLang.Text];
+            main.LocalCulture = Resource.Languages.languages[this.op_cbLang.Text];
             Controller.Localization.SetLocalCulture(main.LocalCulture);
             Controller.Localization.RefreshStrings();
             if (Resource.Global.AutoSaveLanguage)

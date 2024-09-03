@@ -23,7 +23,6 @@ namespace GalArc
             Main = this;
             InitializeComponent();
             LogUtility.NewInstance();
-            Controller.UpdateContent.InitLang();
             LocalCulture = Controller.Localization.GetLocalCulture();
 
             logWindow = new LogWindow();
