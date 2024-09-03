@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Utility;
 
 namespace ArcFormats.RPGMaker
 {
@@ -36,6 +37,19 @@ namespace ArcFormats.RPGMaker
             }
         }
 
+        public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
+        {
+            switch (version)
+            {
+                case "1":
+                    rgssV1_pack(folderPath, filePath);
+                    break;
+                //case "3":
+                //    rgssV3_pack(folderPath, filePath);
+                //    break;
+            }
+        }
+
         private static void rgssV1_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
@@ -48,7 +62,7 @@ namespace ArcFormats.RPGMaker
             {
                 uint nameLen = br.ReadUInt32() ^ keygen.Compute();
                 byte[] nameBytes = br.ReadBytes((int)nameLen);
-                string name = DecryptName(nameBytes, keygen);
+                string name = Encoding.UTF8.GetString(DecryptName(nameBytes, keygen));
                 string fullPath = Path.Combine(folderPath, name);
                 Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
                 uint size = br.ReadUInt32() ^ keygen.Compute();
@@ -59,7 +73,6 @@ namespace ArcFormats.RPGMaker
             fs.Dispose();
             br.Dispose();
         }
-
         private static void rgssV3_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
@@ -81,39 +94,95 @@ namespace ArcFormats.RPGMaker
                 uint fileSize = br.ReadUInt32() ^ key;
                 uint thisKey = br.ReadUInt32() ^ key;
                 uint nameLen = br.ReadUInt32() ^ key;
-                string fullPath = Path.Combine(folderPath, DecryptName(br.ReadBytes((int)nameLen), key));
+                string fullPath = Path.Combine(folderPath, Encoding.UTF8.GetString(DecryptName(br.ReadBytes((int)nameLen), key)));
                 Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
                 long pos = fs.Position;
                 fs.Position = dataOffset;
                 File.WriteAllBytes(fullPath, DecryptData(br.ReadBytes((int)fileSize), new KeyGen(thisKey)));
                 fs.Position = pos;
-                //LogUtility.Debug(pos.ToString());
                 fileCount++;
+                //LogUtility.Debug(thisKey.ToString());
             }
             LogUtility.Debug(fileCount + " files inside.");
             fs.Dispose();
             br.Dispose();
         }
 
+        private static void rgssV1_pack(string folderPath, string filePath)
+        {
+            FileStream fw = File.Create(filePath);
+            BinaryWriter bw = new BinaryWriter(fw);
+            bw.Write(Encoding.ASCII.GetBytes("RGSSAD\0"));
+            bw.Write((byte)1);
+            string[] files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
+            LogUtility.InitBar(files.Length);
+            KeyGen keygen = new KeyGen(0xDEADCAFE);
+            foreach (string file in files)
+            {
+                byte[] relativePath = Encoding.UTF8.GetBytes(file.Substring(folderPath.Length + 1));
+                bw.Write((uint)relativePath.Length ^ keygen.Compute());
+                bw.Write(DecryptName(relativePath, keygen));
+                byte[] data = File.ReadAllBytes(file);
+                bw.Write((uint)data.Length ^ keygen.Compute());
+                bw.Write(DecryptData(data, new KeyGen(keygen.GetCurrent())));
+            }
+            bw.Dispose();
+            fw.Dispose();
+        }
 
-        private static string DecryptName(byte[] data, KeyGen keygen)
+        //private static void rgssV3_pack(string folderPath, string filePath)
+        //{
+        //    FileStream fw = File.Create(filePath);
+        //    BinaryWriter bw = new BinaryWriter(fw);
+        //    bw.Write(Encoding.ASCII.GetBytes("RGSSAD\0"));
+        //    bw.Write((byte)3);
+        //    bw.Write(0x4ea6);
+        //    uint key = 9 * 0x4ea6 + 3;
+        //    string[] files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
+        //    uint fileCount = (uint)files.Length;
+        //    uint baseOffset = (uint)Utilities.GetNameLenSum(files, Encoding.UTF8) + 16 * fileCount + 12 + 16;
+        //    LogUtility.InitBar(files.Length);
+        //    foreach (string file in files)
+        //    {
+        //        byte[] relativePath = Encoding.UTF8.GetBytes(file.Substring(folderPath.Length + 1));
+        //        byte[] data = File.ReadAllBytes(file);
+        //        uint thisKey = 0;
+        //        bw.Write(baseOffset ^ key);
+        //        bw.Write((uint)data.Length ^ key);
+        //        bw.Write(thisKey ^ key);
+        //        bw.Write((int)(relativePath.Length ^ key));
+        //        bw.Write(DecryptName(relativePath, key));
+        //        long pos = fw.Position;
+        //        fw.Position = baseOffset;
+        //        bw.Write(DecryptData(data, new KeyGen(thisKey)));
+        //        baseOffset += (uint)data.Length;
+        //        fw.Position = pos;
+        //        LogUtility.UpdateBar();
+        //    }
+        //    bw.Write(key);
+        //    bw.Write(0);
+        //    bw.Write((long)0);
+        //    bw.Dispose();
+        //    fw.Dispose();
+
+        //}
+
+        private static byte[] DecryptName(byte[] data, KeyGen keygen)
         {
             for (int i = 0; i < data.Length; i++)
             {
                 data[i] ^= (byte)keygen.Compute();
             }
-            return Encoding.UTF8.GetString(data);
+            return data;
         }
-
-        private static string DecryptName(byte[] data, uint key)
+        private static byte[] DecryptName(byte[] data, uint key)
         {
             for (int i = 0; i < data.Length; i++)
             {
                 data[i] ^= (byte)(key >> (i << 3));
             }
-            return Encoding.UTF8.GetString(data);
+            return data;
         }
-
         private static byte[] DecryptData(byte[] data, KeyGen keygen)
         {
             uint key = keygen.Compute();
