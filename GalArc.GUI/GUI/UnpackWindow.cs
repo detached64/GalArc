@@ -181,7 +181,6 @@ namespace GalArc.GUI
             PackWindow.Instance.pa_chkbxShowLog.Checked = this.un_chkbxShowLog.Checked;
             main.logWindow.ChangePosition(main.Main.Location.X, main.Main.Location.Y);
             main.logWindow.Visible = this.un_chkbxShowLog.Checked;
-            //main.Main.Activate();
             if (Resource.Global.AutoSaveShowLog)
             {
                 Properties.Settings.Default.chkbxShowLog_checked = this.un_chkbxShowLog.Checked;

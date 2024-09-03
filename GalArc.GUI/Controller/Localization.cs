@@ -26,14 +26,9 @@ namespace GalArc.Controller
             {
                 LocalCulture = Properties.Settings.Default.lastLang;
             }
-            switch (LocalCulture)
+            if (!OptionWindow.languages.Values.ToArray().Contains(LocalCulture))
             {
-                case "zh-CN":
-                    break;
-                case "en-US":
-                default:
-                    LocalCulture = "en-US";
-                    break;
+                LocalCulture = "en-US";
             }
             return LocalCulture;
         }
