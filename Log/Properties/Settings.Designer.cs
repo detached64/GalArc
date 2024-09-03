@@ -25,7 +25,7 @@ namespace Log.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool log_chkbxVerbose {
             get {
                 return ((bool)(this["log_chkbxVerbose"]));
@@ -37,7 +37,7 @@ namespace Log.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool log_chkbxSave {
             get {
                 return ((bool)(this["log_chkbxSave"]));
