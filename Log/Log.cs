@@ -92,7 +92,7 @@ namespace Log
         {
             if (Resource.Global.AutoSaveLogVerbose)
             {
-                Properties.Settings.Default.log_chkbxVerbose = this.log_chkbxDebug.Checked;
+                Properties.Settings.Default.log_chkbxDebug = this.log_chkbxDebug.Checked;
                 Properties.Settings.Default.Save();
             }
         }
@@ -110,7 +110,7 @@ namespace Log
         {
             if (Resource.Global.AutoSaveLogVerbose)
             {
-                this.log_chkbxDebug.Checked = Properties.Settings.Default.log_chkbxVerbose;
+                this.log_chkbxDebug.Checked = Properties.Settings.Default.log_chkbxDebug;
             }
 
             if (Resource.Global.AutoSaveLogSave)

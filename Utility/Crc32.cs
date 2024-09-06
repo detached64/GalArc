@@ -1,8 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// File: Utility/Crc32.cs
+// Date: 2024/09/04
+// Description: crc32校验和计算
+//
+// Copyright (C) 2024 detached64
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//
+
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Utility
 {
@@ -18,9 +35,13 @@ namespace Utility
                 for (int j = 0; j < 8; j++)
                 {
                     if (0 != (entry & 1))
+                    {
                         entry = (entry >> 1) ^ Polynomial;
+                    }
                     else
+                    {
                         entry >>= 1;
+                    }
                 }
                 table[i] = entry;
             }
@@ -32,7 +53,10 @@ namespace Utility
             uint[] table = InitializeTable();
             uint crc = 0xffffffff;
             for (int i = 0; i < data.Length; i++)
+            {
                 crc = (crc >> 8) ^ table[(crc & 0xff) ^ data[i]];
+            }
+
             return ~crc;
         }
 
