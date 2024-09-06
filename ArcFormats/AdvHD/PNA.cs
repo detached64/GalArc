@@ -10,7 +10,7 @@ namespace ArcFormats.AdvHD
 {
     public static class PNA
     {
-        struct AdvHD_pna_header
+        private struct AdvHD_pna_header
         {
             internal string magic { get; set; }
             internal uint unknown1 { get; set; }
@@ -18,7 +18,7 @@ namespace ArcFormats.AdvHD
             internal uint height { get; set; }
             internal uint fileCount { get; set; }
         }
-        struct AdvHD_pna_entry
+        private struct AdvHD_pna_entry
         {
             internal uint fileType { get; set; }
             internal uint fileNumber { get; set; }
@@ -31,6 +31,7 @@ namespace ArcFormats.AdvHD
             internal uint remark3 { get; set; }
             internal uint fileSize { get; set; }
         }
+
         public static void Unpack(string filePath, string folderPath, Encoding encoding)
         {
             AdvHD_pna_header header = new AdvHD_pna_header();
@@ -82,7 +83,6 @@ namespace ArcFormats.AdvHD
             fs.Dispose();
             br.Dispose();
         }
-
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             string spath = folderPath + ".pna";

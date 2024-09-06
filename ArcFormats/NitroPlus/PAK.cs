@@ -10,7 +10,7 @@ namespace ArcFormats.NitroPlus
 {
     public class PAK
     {
-        struct NitroPlus_pak_entry
+        private struct NitroPlus_pak_entry
         {
             public uint pathLen { get; set; }
             public string path { get; set; }
@@ -19,6 +19,7 @@ namespace ArcFormats.NitroPlus
             public uint reserve { get; set; }
             public string fullPath { get; set; }
         }
+
         public static void Unpack(string filePath, string folderPath, Encoding encoding)
         {
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
@@ -53,7 +54,6 @@ namespace ArcFormats.NitroPlus
             fs.Dispose();
             ms.Dispose();
         }
-
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -113,5 +113,6 @@ namespace ArcFormats.NitroPlus
             }
             fw.Dispose();
         }
+ 
     }
 }
