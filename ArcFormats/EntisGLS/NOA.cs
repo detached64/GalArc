@@ -9,7 +9,7 @@ namespace ArcFormats.EntisGLS
 {
     public class NOA
     {
-        struct EntisGLS_noa_header
+        private struct EntisGLS_noa_header
         {
             public byte[] magic1 { get; set; }
             public byte[] magic2 { get; set; }
@@ -20,13 +20,13 @@ namespace ArcFormats.EntisGLS
 
             public static byte[] magic2_valid = { 0x45, 0x52, 0x49, 0x53, 0x41, 0x2d, 0x41, 0x72, 0x63, 0x68, 0x69, 0x76, 0x65, 0x20, 0x66, 0x69, 0x6c, 0x65 };
         }
-        struct EntisGLS_noa_entry_header
+        private struct EntisGLS_noa_entry_header
         {
             public string magic { get; set; }
             public ulong indexSize { get; set; }
             public uint fileCount { get; set; }
         }
-        internal class EntisGLS_noa_entry
+        private class EntisGLS_noa_entry
         {
             public ulong fileSize { get; set; }
             public uint attribute { get; set; }
@@ -50,7 +50,7 @@ namespace ArcFormats.EntisGLS
                 fileName = string.Empty;
             }
         }
-        internal class EntisGLS_noa_timeStamp
+        private class EntisGLS_noa_timeStamp
         {
             public byte second { get; set; }
             public byte minute { get; set; }
@@ -132,7 +132,6 @@ namespace ArcFormats.EntisGLS
             //File.WriteAllText(folderPath + "\\" + "TimestampInfo.json", jsonStr);
             fs.Dispose();
         }
-
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             //string jsonPath = folderPath + "\\" + "TimestampInfo.json";

@@ -10,14 +10,14 @@ namespace ArcFormats.InnocentGrey
 {
     public class IGA
     {
-        struct InnocentGrey_iga_header
+        private struct InnocentGrey_iga_header
         {
             public byte[] magic { get; set; }//IGA0
             public uint unknown1 { get; set; }//checksum?
             public uint unknown2 { get; set; }//2
             public uint unknown3 { get; set; }//2
         }
-        struct InnocentGrey_iga_entry
+        private struct InnocentGrey_iga_entry
         {
             public uint nameOffset { get; set; }
             public uint dataOffset { get; set; }
@@ -153,7 +153,7 @@ namespace ArcFormats.InnocentGrey
 
             fw.Dispose();
         }
-    }
 
+    }
 }
 

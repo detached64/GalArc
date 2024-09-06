@@ -1,23 +1,21 @@
 ﻿using Log;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Utility;
 
 namespace ArcFormats.KID
 {
     public class DAT
     {
-        struct KID_dat_header
+        private struct KID_dat_header
         {
             public string magic { get; set; }
             public uint fileCount { get; set; }
             public long reserve { get; set; }
         }
-        struct KID_dat_entry
+        private struct KID_dat_entry
         {
             public uint offset { get; set; }
             public uint size { get; set; }
@@ -52,7 +50,6 @@ namespace ArcFormats.KID
             }
             fs.Dispose();
         }
-
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -79,5 +76,6 @@ namespace ArcFormats.KID
             }
             fw.Dispose();
         }
+
     }
 }

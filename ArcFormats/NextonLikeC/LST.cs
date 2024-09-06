@@ -10,7 +10,7 @@ namespace ArcFormats.NextonLikeC
 {
     public class LST
     {
-        struct NextonLikeC_lst_entry
+        private struct NextonLikeC_lst_entry
         {
             public uint fileOffset { get; set; }
             public uint fileSize { get; set; }
@@ -19,6 +19,7 @@ namespace ArcFormats.NextonLikeC
             //1:script 2,3:image 4,5:audio
             //1:SNX 3:PNG 4,5:OGG
         }
+
         public static void Unpack(string filePath, string folderPath, Encoding encoding)
         {
             string arcPath;
@@ -93,5 +94,6 @@ namespace ArcFormats.NextonLikeC
                 LogUtility.UpdateBar();
             }
         }
+
     }
 }

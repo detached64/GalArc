@@ -10,25 +10,26 @@ namespace ArcFormats.Softpal
 {
     public class PAC
     {
-        struct Softpal_pac_entry
+        private struct Entry
         {
             public string fileName { get; set; }
             public uint fileSize { get; set; }
             public uint offset { get; set; }
         }
+
         public static void Unpack(string filePath, string folderPath, Encoding encoding)
         {
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             BinaryReader br = new BinaryReader(fs);
             int fileCount = br.ReadInt32();
             fs.Position = 0x3fe;
-            List<Softpal_pac_entry> entries = new List<Softpal_pac_entry>();
+            List<Entry> entries = new List<Entry>();
             LogUtility.InitBar(fileCount);
             Directory.CreateDirectory(folderPath);
 
             for (int i = 0; i < fileCount; i++)
             {
-                Softpal_pac_entry entry = new Softpal_pac_entry();
+                Entry entry = new Entry();
                 entry.fileName = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(32)).TrimEnd('\0');
                 entry.fileSize = br.ReadUInt32();
                 entry.offset = br.ReadUInt32();
@@ -67,5 +68,6 @@ namespace ArcFormats.Softpal
             bw.Write(Encoding.ASCII.GetBytes("EOF "));
             fw.Dispose();
         }
+    
     }
 }

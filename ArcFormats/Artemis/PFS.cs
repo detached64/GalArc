@@ -12,7 +12,7 @@ namespace ArcFormats.Artemis
 {
     public class PFS
     {
-        struct Artemis_pfs_Header
+        private struct Artemis_pfs_Header
         {
             public string Magic { get; set; }
             public string Version { get; set; }
@@ -20,7 +20,7 @@ namespace ArcFormats.Artemis
             public uint FileCount { get; set; }
             public uint pathLenSum { get; set; }
         }
-        struct Artemis_pfs_Entry
+        private struct Artemis_pfs_Entry
         {
             public string filePath { get; set; } //绝对路径，拼接而成
             public uint Size { get; set; }

@@ -10,25 +10,25 @@ namespace ArcFormats.AdvHD
 {
     public class ARC
     {
-        struct AdvHD_arc_v1_header
+        private struct AdvHD_arc_v1_header
         {
             public uint typeCount { get; set; }
             public uint fileCountAll { get; set; }
         }
-        struct AdvHD_arc_v1_type_header
+        private struct AdvHD_arc_v1_type_header
         {
             public string ext { get; set; }
             public uint fileCount { get; set; }
             public uint indexOffset { get; set; }
         }
-        struct AdvHD_arc_v1_entry
+        private struct AdvHD_arc_v1_entry
         {
             public string fileName { get; set; }
             public uint fileSize { get; set; }
             public uint offset { get; set; }
             public string filePath { get; set; }
         }
-        private static void arc_v1_unpack(string filePath, string folderPath)
+        private static void arcV1_unpack(string filePath, string folderPath)
         {
             AdvHD_arc_v1_header header = new AdvHD_arc_v1_header();
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
@@ -72,7 +72,7 @@ namespace ArcFormats.AdvHD
             }
             fs.Dispose();
         }
-        private static void arc_v1_pack(string folderPath, string filePath)
+        private static void arcV1_pack(string folderPath, string filePath)
         {
             HashSet<string> uniqueExtension = new HashSet<string>();
 
@@ -132,19 +132,19 @@ namespace ArcFormats.AdvHD
             fw.Dispose();
         }
 
-        struct AdvHD_arc_v2_header
+        private struct AdvHD_arc_v2_header
         {
             public uint fileCount { get; set; }
             public uint entrySize { get; set; }
         }
-        struct AdvHD_arc_v2_entry
+        private struct AdvHD_arc_v2_entry
         {
             public uint fileSize { get; set; }
             public uint offset { get; set; }
             public string fileName { get; set; }
             public string filePath { get; set; }
         }
-        private static void arc_v2_unpack(string filePath, string folderPath)
+        private static void arcV2_unpack(string filePath, string folderPath)
         {
             //init
             AdvHD_arc_v2_header header = new AdvHD_arc_v2_header();
@@ -180,7 +180,7 @@ namespace ArcFormats.AdvHD
             fs.Dispose();
             br1.Dispose();
         }
-        private static void arc_v2_pack(string folderPath, string filePath)
+        private static void arcV2_pack(string folderPath, string filePath)
         {
             AdvHD_arc_v2_header header = new AdvHD_arc_v2_header();
             List<AdvHD_arc_v2_entry> l = new List<AdvHD_arc_v2_entry>();
@@ -247,12 +247,12 @@ namespace ArcFormats.AdvHD
             if (a >= 'A')//extension
             {
                 LogUtility.Info("Valid arc v1 archive detected.");
-                arc_v1_unpack(filePath, folderPath);
+                arcV1_unpack(filePath, folderPath);
             }
             else
             {
                 LogUtility.Info("Valid arc v2 archive detected.");
-                arc_v2_unpack(filePath, folderPath);
+                arcV2_unpack(filePath, folderPath);
             }
         }
 
@@ -260,11 +260,11 @@ namespace ArcFormats.AdvHD
         {
             if (version == "1")
             {
-                arc_v1_pack(folderPath, filePath);
+                arcV1_pack(folderPath, filePath);
             }
             else
             {
-                arc_v2_pack(folderPath, filePath);
+                arcV2_pack(folderPath, filePath);
             }
         }
     }
