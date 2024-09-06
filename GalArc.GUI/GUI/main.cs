@@ -17,7 +17,7 @@ namespace GalArc
 
         internal static string LocalCulture;
 
-        private static Timer timer = new Timer { Interval = 5000 };
+        //private static Timer timer = new Timer { Interval = 5000 };
         public main()
         {
             Main = this;
@@ -51,7 +51,7 @@ namespace GalArc
 
             LogUtility.Process += LogUtility_Process;
             LogUtility.ErrorOccured += LogUtility_ErrorOccured;
-            timer.Tick += Timer_Tick;
+            //timer.Tick += Timer_Tick;
         }
 
         private void main_Load(object sender, EventArgs e)
@@ -98,11 +98,11 @@ namespace GalArc
             this.main_statusLabel.Text = message;
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            this.main_statusLabel.Text = string.Empty;
-            timer.Stop();
-        }
+        //private void Timer_Tick(object sender, EventArgs e)
+        //{
+        //    this.main_statusLabel.Text = string.Empty;
+        //    timer.Stop();
+        //}
 
     }
 }
