@@ -1,6 +1,6 @@
 ﻿// File: Utility/Zstd.cs
 // Date: 2024/08/31
-// Description: 对Zstd的压缩和解压缩进行了封装
+// Description: 对Zstd的压缩和解压缩进行了封装，依赖Zstandard.Net
 //
 // Copyright (C) 2024 detached64
 //

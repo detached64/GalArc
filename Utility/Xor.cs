@@ -1,6 +1,6 @@
 ﻿// File: Utility/Xor.cs
 // Date: 2024/08/26
-// Description: 对Xor的加密进行封装
+// Description: xor封装
 //
 // Copyright (C) 2024 detached64
 //
