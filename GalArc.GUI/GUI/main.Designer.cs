@@ -39,10 +39,12 @@
             // 
             // pages
             // 
+            this.pages.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.pages.Controls.Add(this.unpackPage);
             this.pages.Controls.Add(this.packPage);
             this.pages.Controls.Add(this.optionPage);
             this.pages.Controls.Add(this.aboutPage);
+            this.pages.HotTrack = true;
             this.pages.Location = new System.Drawing.Point(12, 12);
             this.pages.Name = "pages";
             this.pages.SelectedIndex = 0;
@@ -53,10 +55,10 @@
             // unpackPage
             // 
             this.unpackPage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.unpackPage.Location = new System.Drawing.Point(4, 33);
+            this.unpackPage.Location = new System.Drawing.Point(4, 36);
             this.unpackPage.Name = "unpackPage";
             this.unpackPage.Padding = new System.Windows.Forms.Padding(3);
-            this.unpackPage.Size = new System.Drawing.Size(1097, 639);
+            this.unpackPage.Size = new System.Drawing.Size(1097, 636);
             this.unpackPage.TabIndex = 0;
             this.unpackPage.Text = "Unpack";
             this.unpackPage.UseVisualStyleBackColor = true;
@@ -64,10 +66,10 @@
             // packPage
             // 
             this.packPage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.packPage.Location = new System.Drawing.Point(4, 33);
+            this.packPage.Location = new System.Drawing.Point(4, 36);
             this.packPage.Name = "packPage";
             this.packPage.Padding = new System.Windows.Forms.Padding(3);
-            this.packPage.Size = new System.Drawing.Size(1097, 639);
+            this.packPage.Size = new System.Drawing.Size(1097, 636);
             this.packPage.TabIndex = 1;
             this.packPage.Text = "Pack";
             this.packPage.UseVisualStyleBackColor = true;
@@ -75,10 +77,10 @@
             // optionPage
             // 
             this.optionPage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.optionPage.Location = new System.Drawing.Point(4, 33);
+            this.optionPage.Location = new System.Drawing.Point(4, 36);
             this.optionPage.Name = "optionPage";
             this.optionPage.Padding = new System.Windows.Forms.Padding(3);
-            this.optionPage.Size = new System.Drawing.Size(1097, 639);
+            this.optionPage.Size = new System.Drawing.Size(1097, 636);
             this.optionPage.TabIndex = 2;
             this.optionPage.Text = "Option";
             this.optionPage.UseVisualStyleBackColor = true;
@@ -86,10 +88,10 @@
             // aboutPage
             // 
             this.aboutPage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.aboutPage.Location = new System.Drawing.Point(4, 33);
+            this.aboutPage.Location = new System.Drawing.Point(4, 36);
             this.aboutPage.Name = "aboutPage";
             this.aboutPage.Padding = new System.Windows.Forms.Padding(3);
-            this.aboutPage.Size = new System.Drawing.Size(1097, 639);
+            this.aboutPage.Size = new System.Drawing.Size(1097, 636);
             this.aboutPage.TabIndex = 3;
             this.aboutPage.Text = "About";
             this.aboutPage.UseVisualStyleBackColor = true;

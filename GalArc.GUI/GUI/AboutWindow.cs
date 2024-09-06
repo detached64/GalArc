@@ -132,7 +132,7 @@ namespace GalArc.GUI
             }
             catch (Exception)
             {
-                LogUtility.CheckError();
+                LogUtility.ShowCheckError();
             }
         }
         private string OpenVersion()
@@ -177,7 +177,7 @@ namespace GalArc.GUI
                     this.ab_btnDownload.Enabled = false;
                 }
             }
-            LogUtility.CheckSuccess(existNewer);
+            LogUtility.ShowCheckSuccess(existNewer);
         }
 
         private void searchText_TextChanged(object sender, EventArgs e)
@@ -210,13 +210,17 @@ namespace GalArc.GUI
             this.searchText.Location = new System.Drawing.Point(this.ab_lbSearch.Location.X + this.ab_lbSearch.Width +  delta, this.searchText.Location.Y);
         }
 
-        private void ab_btnCheckUpdate_Click(object sender, EventArgs e)
+        private async void ab_btnCheckUpdate_Click(object sender, EventArgs e)
         {
             this.ab_btnCheckUpdate.Enabled = false;
-            LogUtility.CheckUpdate();
-            DownloadVersion();
-            CompareVersion(OpenVersion());
-            this.ab_btnCheckUpdate.Enabled = true;
+            try
+            {
+                await UpdateProgram();
+            }
+            finally
+            {
+                this.ab_btnCheckUpdate.Enabled = true;
+            }
         }
         private void ab_btnDownload_Click(object sender, EventArgs e)
         {
@@ -235,5 +239,14 @@ namespace GalArc.GUI
             Process.Start(new ProcessStartInfo(issueUrl) { UseShellExecute = true });
         }
 
+        private async Task UpdateProgram()
+        {
+            await Task.Run(() => 
+            {
+                LogUtility.ShowCheckingUpdate();
+                DownloadVersion();
+                CompareVersion(OpenVersion());
+            });
+        }
     }
 }
