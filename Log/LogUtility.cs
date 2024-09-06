@@ -142,12 +142,12 @@ namespace Log
             LogWindow.Instance.bar.PerformStep();
         }
 
-        public static void CheckUpdate()
+        public static void ShowCheckingUpdate()
         {
             Info("Checking for update……");
             OnProcess("Checking for update……");
         }
-        public static async void CheckSuccess(bool existNewer)
+        public static async void ShowCheckSuccess(bool existNewer)
         {
             if (existNewer)
             {
@@ -160,7 +160,7 @@ namespace Log
                 await OnShowAndDisappear("You are using the latest version of GalArc.");
             }
         }
-        public static void CheckError()
+        public static void ShowCheckError()
         {
             Error("Error occurs while checking for update.");
         }
