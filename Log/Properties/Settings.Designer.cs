@@ -25,13 +25,13 @@ namespace Log.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool log_chkbxVerbose {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool log_chkbxDebug {
             get {
-                return ((bool)(this["log_chkbxVerbose"]));
+                return ((bool)(this["log_chkbxDebug"]));
             }
             set {
-                this["log_chkbxVerbose"] = value;
+                this["log_chkbxDebug"] = value;
             }
         }
         
