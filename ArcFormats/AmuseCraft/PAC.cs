@@ -9,12 +9,13 @@ namespace ArcFormats.AmuseCraft
 {
     public class PAC
     {
-        struct AmuseCraft_pac_entry
+        private struct AmuseCraft_pac_entry
         {
             public string fileName { get; set; }
             public uint fileSize { get; set; }
             public uint offset { get; set; }
         }
+
         public static void Unpack(string filePath, string folderPath, Encoding encoding)
         {
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
@@ -43,7 +44,6 @@ namespace ArcFormats.AmuseCraft
             }
             fs.Dispose();
         }
-
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             uint fileCount = (uint)Utilities.GetFileCount_All(folderPath);

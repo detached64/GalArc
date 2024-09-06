@@ -11,11 +11,11 @@ namespace ArcFormats.Ai6Win
 {
     public class ARC
     {
-        struct Silky_arc_header
+        private struct Silky_arc_header
         {
             public uint fileCount { get; set; }
         }
-        struct Silky_arc_entry
+        private struct Silky_arc_entry
         {
             public string name { get; set; }
             public uint sizePacked { get; set; }
@@ -80,6 +80,7 @@ namespace ArcFormats.Ai6Win
                 LogUtility.UpdateBar();
             }
         }
+
         //public static int arc_pack(string folderPath)
         //{
         //    string filePath = Path.GetDirectoryName(folderPath) + "\\" + Path.GetFileName(folderPath) + ".arc.new";

@@ -9,7 +9,7 @@ namespace ArcFormats.SystemNNN
 {
     public class GPK
     {
-        struct SystemNNN_gtb_entry
+        private struct SystemNNN_gtb_entry
         {
             public uint size { get; set; }
             public uint offset { get; set; }
@@ -182,5 +182,6 @@ namespace ArcFormats.SystemNNN
             fs1.Dispose();
             fs2.Dispose();
         }
+    
     }
 }

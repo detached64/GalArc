@@ -10,12 +10,13 @@ namespace ArcFormats.Triangle
 {
     public class CG
     {
-        struct Triangle_CG_entry
+        private struct Triangle_CG_entry
         {
             public string name { get; set; }
             public uint offset { get; set; }
             public uint size { get; set; }
         }
+
         public static void Unpack(string filePath, string folderPath, Encoding encoding)
         {
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
@@ -48,7 +49,6 @@ namespace ArcFormats.Triangle
             fs.Dispose();
             br.Dispose();
         }
-
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -75,5 +75,6 @@ namespace ArcFormats.Triangle
             fs.Dispose();
             bw.Dispose();
         }
+    
     }
 }

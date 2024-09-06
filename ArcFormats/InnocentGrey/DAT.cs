@@ -1,5 +1,4 @@
 ﻿using Log;
-using Log.Resource;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,14 +10,14 @@ namespace ArcFormats.InnocentGrey
 {
     public class DAT
     {
-        struct InnocentGrey_dat_header
+        private struct InnocentGrey_dat_header
         {
             public string magic { get; set; }//"PACKDAT."
             public uint fileCount { get; set; }
             public uint fileCount1 { get; set; }
 
         }
-        struct InnocentGrey_dat_entry
+        private struct InnocentGrey_dat_entry
         {
             public string fileName { get; set; }//32 bytes
             public uint offset { get; set; }
@@ -84,7 +83,6 @@ namespace ArcFormats.InnocentGrey
             br.Dispose();
             fs.Dispose();
         }
-
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -122,8 +120,6 @@ namespace ArcFormats.InnocentGrey
             bw.Dispose();
             fw.Dispose();
         }
-
-
 
     }
 }

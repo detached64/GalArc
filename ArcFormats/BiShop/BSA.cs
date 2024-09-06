@@ -10,16 +10,16 @@ namespace ArcFormats.BiShop
 {
     public class BSA
     {
-        private static byte[] magic = { 0x42, 0x53, 0x41, 0x72, 0x63, 0x00, 0x00, 0x00 };
+        static byte[] magic = { 0x42, 0x53, 0x41, 0x72, 0x63, 0x00, 0x00, 0x00 };
 
-        internal static List<string> m_path = new List<string> { };
+        static List<string> m_path = new List<string> { };
 
-        internal static int realCount = 0;
+        static int realCount = 0;
 
 
-        internal static string rootDir = string.Empty;
+        static string rootDir = string.Empty;
 
-        internal static int FileCount = 0;
+        static int FileCount = 0;
 
         private struct Entry
         {

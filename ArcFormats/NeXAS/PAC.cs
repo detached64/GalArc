@@ -101,5 +101,6 @@ namespace ArcFormats.NeXAS
             reader.Dispose();
             readerIndex.Dispose();
         }
+
     }
 }

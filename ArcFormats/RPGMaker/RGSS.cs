@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Utility;
 
 namespace ArcFormats.RPGMaker
 {
@@ -36,7 +35,6 @@ namespace ArcFormats.RPGMaker
                 LogUtility.Error("Error:version not recognized.");
             }
         }
-
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             switch (version)
@@ -44,9 +42,9 @@ namespace ArcFormats.RPGMaker
                 case "1":
                     rgssV1_pack(folderPath, filePath);
                     break;
-                //case "3":
-                //    rgssV3_pack(folderPath, filePath);
-                //    break;
+                    //case "3":
+                    //    rgssV3_pack(folderPath, filePath);
+                    //    break;
             }
         }
 
@@ -197,7 +195,6 @@ namespace ArcFormats.RPGMaker
             }
             return data;
         }
-
 
         internal class KeyGen
         {

@@ -10,6 +10,7 @@ namespace ArcFormats.Palette
     public class PAK
     {
         private static byte[] magic = { 0x05, 0x50, 0x41, 0x43, 0x4b, 0x32 };
+
         public static void Unpack(string filePath, string folderPath, Encoding encoding)
         {
             FileStream fs = File.OpenRead(filePath);
@@ -37,7 +38,6 @@ namespace ArcFormats.Palette
             fs.Dispose();
             br.Dispose();
         }
-
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             string[] files = Directory.GetFiles(folderPath, "*.*", SearchOption.TopDirectoryOnly);
@@ -69,5 +69,6 @@ namespace ArcFormats.Palette
             fs.Dispose();
             bw.Dispose();
         }
+    
     }
 }

@@ -7,9 +7,9 @@ using Utility;
 
 namespace ArcFormats.SystemNNN
 {
-    internal class VPK
+    public class VPK
     {
-        struct SystemNNN_vtb_entry
+        private struct SystemNNN_vtb_entry
         {
             public int size { get; set; }
             public string filePath { get; set; }
@@ -110,5 +110,6 @@ namespace ArcFormats.SystemNNN
             fs1.Dispose();
             fs2.Dispose();
         }
+    
     }
 }

@@ -10,13 +10,12 @@ namespace ArcFormats.Kirikiri
 {
     public class XP3
     {
-        struct Header
+        private struct Header
         {
             internal static byte[] magic = { 0x58, 0x50, 0x33, 0x0d, 0x0a, 0x20, 0x0a, 0x1a, 0x8b, 0x67, 0x01 };
             internal ulong indexOffset { get; set; }
         }
-
-        struct Entry
+        private struct Entry
         {
             internal ulong unpackedFileSize { get; set; }
             internal ulong packedFileSize { get; set; }
@@ -25,6 +24,7 @@ namespace ArcFormats.Kirikiri
             internal bool isCompressed { get; set; }
             internal string path { get; set; }
         }
+
         public static void Unpack(string filePath, string folderPath, Encoding encoding)
         {
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
@@ -143,7 +143,6 @@ NextEntry:      ms.Position = nextPos;
             fs.Dispose();
             br.Dispose();
         }
-
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             Stream xp3Stream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -215,5 +214,6 @@ NextEntry:      ms.Position = nextPos;
 
             xp3Stream.Dispose();
         }
+
     }
 }

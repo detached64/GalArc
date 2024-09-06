@@ -10,7 +10,7 @@ namespace ArcFormats.NScripter
 {
     public class NS2
     {
-        struct NScripter_ns2_entry
+        private struct NScripter_ns2_entry
         {
             public string filePath { get; set; }
             public uint fileSize { get; set; }
@@ -51,7 +51,6 @@ namespace ArcFormats.NScripter
             fs.Dispose();
             br.Dispose();
         }
-
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             int fileCount = Utilities.GetFileCount_All(folderPath);
@@ -102,5 +101,6 @@ namespace ArcFormats.NScripter
             fw.Dispose();
             bw.Dispose();
         }
+    
     }
 }
