@@ -54,6 +54,7 @@
     <Compile Include="Controller\InitPack.cs" />
     <Compile Include="Controller\InitUnpack.cs" />
     <Compile Include="Controller\UpdateContent.cs" />
+    <Compile Include="Controller\UpdateVersion.cs" />
     <Compile Include="Resource\Global.cs" />
     <Compile Include="Controller\Localization.cs" />
     <Compile Include="Controller\SyncPath.cs" />

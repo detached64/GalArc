@@ -188,7 +188,7 @@
             // 
             this.ab_lbLatestVer.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ab_lbLatestVer.AutoSize = true;
-            this.ab_lbLatestVer.Location = new System.Drawing.Point(196, 109);
+            this.ab_lbLatestVer.Location = new System.Drawing.Point(196, 104);
             this.ab_lbLatestVer.Name = "ab_lbLatestVer";
             this.ab_lbLatestVer.Size = new System.Drawing.Size(91, 24);
             this.ab_lbLatestVer.TabIndex = 3;
@@ -198,7 +198,7 @@
             // 
             this.ab_lbCurrentVer.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ab_lbCurrentVer.AutoSize = true;
-            this.ab_lbCurrentVer.Location = new System.Drawing.Point(196, 47);
+            this.ab_lbCurrentVer.Location = new System.Drawing.Point(196, 52);
             this.ab_lbCurrentVer.Name = "ab_lbCurrentVer";
             this.ab_lbCurrentVer.Size = new System.Drawing.Size(51, 24);
             this.ab_lbCurrentVer.TabIndex = 2;
@@ -208,7 +208,7 @@
             // 
             this.ab_lbLatestVersion.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.ab_lbLatestVersion.AutoSize = true;
-            this.ab_lbLatestVersion.Location = new System.Drawing.Point(42, 109);
+            this.ab_lbLatestVersion.Location = new System.Drawing.Point(42, 104);
             this.ab_lbLatestVersion.Name = "ab_lbLatestVersion";
             this.ab_lbLatestVersion.Size = new System.Drawing.Size(134, 24);
             this.ab_lbLatestVersion.TabIndex = 1;
@@ -219,7 +219,7 @@
             // 
             this.ab_lbCurrentVersion.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.ab_lbCurrentVersion.AutoSize = true;
-            this.ab_lbCurrentVersion.Location = new System.Drawing.Point(42, 47);
+            this.ab_lbCurrentVersion.Location = new System.Drawing.Point(42, 52);
             this.ab_lbCurrentVersion.Name = "ab_lbCurrentVersion";
             this.ab_lbCurrentVersion.Size = new System.Drawing.Size(148, 24);
             this.ab_lbCurrentVersion.TabIndex = 1;
@@ -229,7 +229,7 @@
             // ab_btnDownload
             // 
             this.ab_btnDownload.Enabled = false;
-            this.ab_btnDownload.Location = new System.Drawing.Point(341, 104);
+            this.ab_btnDownload.Location = new System.Drawing.Point(341, 99);
             this.ab_btnDownload.Name = "ab_btnDownload";
             this.ab_btnDownload.Size = new System.Drawing.Size(112, 35);
             this.ab_btnDownload.TabIndex = 0;
@@ -239,7 +239,7 @@
             // 
             // ab_btnCheckUpdate
             // 
-            this.ab_btnCheckUpdate.Location = new System.Drawing.Point(341, 41);
+            this.ab_btnCheckUpdate.Location = new System.Drawing.Point(341, 47);
             this.ab_btnCheckUpdate.Name = "ab_btnCheckUpdate";
             this.ab_btnCheckUpdate.Size = new System.Drawing.Size(112, 35);
             this.ab_btnCheckUpdate.TabIndex = 0;
