@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Threading.Tasks;
 
 namespace GalArc.GUI
 {
@@ -22,19 +21,11 @@ namespace GalArc.GUI
 
         private const int delta = 6;
 
-        private static string currentVersion;
-
-        private const string versionPath = "version.txt";
-
-        private const string versionUrl = "https://raw.githubusercontent.com/detached64/GalArc/master/docs/version.txt";
-
         private const string downloadUrl = "https://github.com/detached64/GalArc/releases/latest";
 
         private const string programUrl = "https://github.com/detached64/GalArc";
 
         private const string issueUrl = "https://github.com/detached64/GalArc/issues";
-
-        private static bool existNewer = false;
 
         public AboutWindow()
         {
@@ -47,14 +38,9 @@ namespace GalArc.GUI
         {
             InitializeDataGridView();
             UpdateDataGridView(engines);
-            InitVersion();
+            Controller.UpdateVersion.InitVersion();
         }
 
-        private void InitVersion()
-        {
-            this.ab_lbCurrentVer.Text = Resource.Global.CurrentVersion;
-            currentVersion = this.ab_lbCurrentVer.Text;
-        }
         internal void SaveEnginesToFile(string filePath, List<EngineInfo> engines)
         {
             using (StreamWriter writer = new StreamWriter(filePath))
@@ -116,69 +102,6 @@ namespace GalArc.GUI
             }
         }
 
-        private void DownloadVersion()
-        {
-            if (File.Exists(versionPath))
-            {
-                File.Delete(versionPath);
-            }
-
-            try
-            {
-                using (System.Net.WebClient webClient = new System.Net.WebClient())
-                {
-                    webClient.DownloadFile(versionUrl, versionPath);
-                }
-            }
-            catch (Exception)
-            {
-                LogUtility.ShowCheckError();
-            }
-        }
-        private string OpenVersion()
-        {
-            if (!File.Exists(versionPath))
-            {
-                return "Unknown";
-            }
-            else
-            {
-                return File.ReadAllText(versionPath);
-            }
-        }
-        private void CompareVersion(string latestVersion)
-        {
-            if (latestVersion == "Unknown" || !latestVersion.Contains("."))
-            {
-                this.ab_btnDownload.Enabled = false;
-                return;
-            }
-            if(File.Exists(versionPath))
-            {
-                File.Delete(versionPath);
-            }
-            this.ab_lbLatestVer.Text = latestVersion;
-            string[] parts1 = currentVersion.Split('.');
-            string[] parts2 = latestVersion.Split('.');
-
-            for (int i = 0; i < Math.Max(parts1.Length, parts2.Length); i++)
-            {
-                int num1 = (i < parts1.Length) ? int.Parse(parts1[i]) : 0;
-                int num2 = (i < parts2.Length) ? int.Parse(parts2[i]) : 0;
-
-                if (num1 < num2)
-                {
-                    this.ab_btnDownload.Enabled = true;
-                    existNewer = true;
-                    break;
-                }
-                else
-                {
-                    this.ab_btnDownload.Enabled = false;
-                }
-            }
-            LogUtility.ShowCheckSuccess(existNewer);
-        }
 
         private void searchText_TextChanged(object sender, EventArgs e)
         {
@@ -207,7 +130,7 @@ namespace GalArc.GUI
         }
         private void ab_lbSearch_SizeChanged(object sender, EventArgs e)
         {
-            this.searchText.Location = new System.Drawing.Point(this.ab_lbSearch.Location.X + this.ab_lbSearch.Width +  delta, this.searchText.Location.Y);
+            this.searchText.Location = new System.Drawing.Point(this.ab_lbSearch.Location.X + this.ab_lbSearch.Width + delta, this.searchText.Location.Y);
         }
 
         private async void ab_btnCheckUpdate_Click(object sender, EventArgs e)
@@ -215,10 +138,21 @@ namespace GalArc.GUI
             this.ab_btnCheckUpdate.Enabled = false;
             try
             {
-                await UpdateProgram();
+                LogUtility.ShowCheckingUpdate();
+                await Controller.UpdateVersion.UpdateProgram();
             }
             finally
             {
+                this.ab_lbLatestVer.Text = Controller.UpdateVersion.latestVersion;
+                LogUtility.ShowCheckSuccess(Controller.UpdateVersion.isNewVerExist);
+                if (Controller.UpdateVersion.isNewVerExist)
+                {
+                    this.ab_btnDownload.Enabled = true;
+                }
+                else
+                {
+                    this.ab_btnDownload.Enabled = false;
+                }
                 this.ab_btnCheckUpdate.Enabled = true;
             }
         }
@@ -239,14 +173,5 @@ namespace GalArc.GUI
             Process.Start(new ProcessStartInfo(issueUrl) { UseShellExecute = true });
         }
 
-        private async Task UpdateProgram()
-        {
-            await Task.Run(() => 
-            {
-                LogUtility.ShowCheckingUpdate();
-                DownloadVersion();
-                CompareVersion(OpenVersion());
-            });
-        }
     }
 }
