@@ -179,10 +179,13 @@ namespace GalArc.GUI
 
         private void pa_chkbxShowLog_CheckedChanged(object sender, EventArgs e)
         {
-            UnpackWindow.Instance.un_chkbxShowLog.Checked = this.pa_chkbxShowLog.Checked;
+            if (UnpackWindow.Instance.un_chkbxShowLog.Checked != this.pa_chkbxShowLog.Checked)
+            {
+                UnpackWindow.Instance.un_chkbxShowLog.Checked = this.pa_chkbxShowLog.Checked;
+            }
             main.logWindow.ChangePosition(main.Main.Location.X, main.Main.Location.Y);
             main.logWindow.Visible = this.pa_chkbxShowLog.Checked;
-            //main.Main.Activate();
+            main.Main.BringMainToFront();
             if (Resource.Global.AutoSaveShowLog)
             {
                 Properties.Settings.Default.chkbxShowLog_checked = this.pa_chkbxShowLog.Checked;
