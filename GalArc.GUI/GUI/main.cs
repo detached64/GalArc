@@ -95,5 +95,35 @@ namespace GalArc
             this.main_statusLabel.Text = message;
         }
 
+        private void main_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.L)
+            {
+                if (UnpackWindow.Instance.un_chkbxShowLog.Checked)
+                {
+                    UnpackWindow.Instance.un_chkbxShowLog.Checked = false;
+                }
+                else
+                {
+                    UnpackWindow.Instance.un_chkbxShowLog.Checked = true;
+                }
+            }
+            e.Handled = true;
+        }
+
+        internal void BringMainToFront()
+        {
+            if (this.TopMost)
+            {
+                this.TopMost = false;
+                this.TopMost = true;
+            }
+            else
+            {
+                this.TopMost = true;
+                this.TopMost = false;
+            }
+            this.BringToFront();
+        }
     }
 }

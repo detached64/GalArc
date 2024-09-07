@@ -107,13 +107,14 @@
             // 
             // main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1129, 732);
             this.Controls.Add(this.main_statusLabel);
             this.Controls.Add(this.pages);
             this.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "main";
@@ -122,18 +123,19 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.main_FormClosing);
             this.Load += new System.EventHandler(this.main_Load);
             this.LocationChanged += new System.EventHandler(this.main_LocationChanged);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.main_KeyDown);
             this.pages.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.Label main_statusLabel;
         public System.Windows.Forms.TabPage unpackPage;
         public System.Windows.Forms.TabPage packPage;
         public System.Windows.Forms.TabPage optionPage;
         public System.Windows.Forms.TabPage aboutPage;
         public System.Windows.Forms.TabControl pages;
+        internal System.Windows.Forms.Label main_statusLabel;
     }
 }
 
