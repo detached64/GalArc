@@ -1,4 +1,4 @@
-﻿// File: Utility/ZlibStream.cs
+﻿// File: Utility/Zlib.cs
 // Date: 2024/08/26
 // Description: 基于arcusmaximus的相关代码，对Zlib的压缩和解压缩进行了封装
 //
