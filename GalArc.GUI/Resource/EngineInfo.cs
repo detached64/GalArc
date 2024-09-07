@@ -13,33 +13,6 @@ namespace GalArc.Resource
         internal bool isUnpackEncodingEnabled { get; set; }
         internal bool isPackEncodingEnabled { get; set; }
 
-        internal EngineInfo(string engineName, string unpackFormat, string packFormat)
-        {
-            EngineName = engineName;
-            UnpackFormat = unpackFormat;
-            PackFormat = packFormat;
-            PackVersion = string.Empty;
-            isUnpackEncodingEnabled = false;
-            isPackEncodingEnabled = false;
-        }
-        internal EngineInfo(string engineName, string unpackFormat, string packFormat, string packVersion)
-        {
-            EngineName = engineName;
-            UnpackFormat = unpackFormat;
-            PackFormat = packFormat;
-            PackVersion = packVersion;
-            isUnpackEncodingEnabled = false;
-            isPackEncodingEnabled = false;
-        }
-        internal EngineInfo(string engineName, string unpackFormat, string packFormat, bool isUnpackEncodingEnabled, bool isPackEncodingEnabled)
-        {
-            EngineName = engineName;
-            UnpackFormat = unpackFormat;
-            PackFormat = packFormat;
-            PackVersion = string.Empty;
-            this.isUnpackEncodingEnabled = isUnpackEncodingEnabled;
-            this.isPackEncodingEnabled = isPackEncodingEnabled;
-        }
         internal EngineInfo(string engineName, string unpackFormat, string packFormat, string packVersion, bool isUnpackEncodingEnabled, bool isPackEncodingEnabled)
         {
             EngineName = engineName;
@@ -48,6 +21,18 @@ namespace GalArc.Resource
             PackVersion = packVersion;
             this.isUnpackEncodingEnabled = isUnpackEncodingEnabled;
             this.isPackEncodingEnabled = isPackEncodingEnabled;
+        }
+        internal EngineInfo(string engineName, string unpackFormat, string packFormat)
+        : this(engineName, unpackFormat, packFormat, string.Empty, false, false)
+        {
+        }
+        internal EngineInfo(string engineName, string unpackFormat, string packFormat, string packVersion)
+            : this(engineName, unpackFormat, packFormat, packVersion, false, false)
+        {
+        }
+        internal EngineInfo(string engineName, string unpackFormat, string packFormat, bool isUnpackEncodingEnabled, bool isPackEncodingEnabled)
+            : this(engineName, unpackFormat, packFormat, string.Empty, isUnpackEncodingEnabled, isPackEncodingEnabled)
+        {
         }
 
     }
