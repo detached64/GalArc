@@ -39,10 +39,10 @@ namespace Utility.Compression
 
         public static byte[] Compress(byte[] data)
         {
-            Stream input = new MemoryStream(data);
-            ZstandardStream stream = new ZstandardStream(input, CompressionMode.Compress);
-            MemoryStream memoryStream = new MemoryStream();
-            stream.CopyTo(memoryStream);
+            var memoryStream = new MemoryStream();
+            var compressionStream = new ZstandardStream(memoryStream, CompressionMode.Compress);
+            compressionStream.Write(data, 0, data.Length);
+            compressionStream.Close();
             return memoryStream.ToArray();
         }
     }
