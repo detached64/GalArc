@@ -1,8 +1,6 @@
 ﻿using Log;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Utility;
 
@@ -43,6 +41,7 @@ namespace ArcFormats.Softpal
             }
             fs.Dispose();
         }
+
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -68,6 +67,5 @@ namespace ArcFormats.Softpal
             bw.Write(Encoding.ASCII.GetBytes("EOF "));
             fw.Dispose();
         }
-    
     }
 }

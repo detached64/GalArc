@@ -1,8 +1,6 @@
 ﻿using Log;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Utility;
 
@@ -17,6 +15,7 @@ namespace ArcFormats.InnocentGrey
             public uint unknown2 { get; set; }//2
             public uint unknown3 { get; set; }//2
         }
+
         private struct InnocentGrey_iga_entry
         {
             public uint nameOffset { get; set; }
@@ -91,6 +90,7 @@ namespace ArcFormats.InnocentGrey
             fs.Dispose();
             br.Dispose();
         }
+
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -153,7 +153,5 @@ namespace ArcFormats.InnocentGrey
 
             fw.Dispose();
         }
-
     }
 }
-

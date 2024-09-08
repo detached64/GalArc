@@ -1,7 +1,5 @@
 ﻿using Log;
-using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace ArcFormats.RPGMaker
@@ -35,6 +33,7 @@ namespace ArcFormats.RPGMaker
                 LogUtility.Error("Error:version not recognized.");
             }
         }
+
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             switch (version)
@@ -71,6 +70,7 @@ namespace ArcFormats.RPGMaker
             fs.Dispose();
             br.Dispose();
         }
+
         private static void rgssV3_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
@@ -173,6 +173,7 @@ namespace ArcFormats.RPGMaker
             }
             return data;
         }
+
         private static byte[] DecryptName(byte[] data, uint key)
         {
             for (int i = 0; i < data.Length; i++)
@@ -181,6 +182,7 @@ namespace ArcFormats.RPGMaker
             }
             return data;
         }
+
         private static byte[] DecryptData(byte[] data, KeyGen keygen)
         {
             uint key = keygen.Compute();
@@ -198,17 +200,20 @@ namespace ArcFormats.RPGMaker
 
         internal class KeyGen
         {
-            uint m_seed;
+            private uint m_seed;
+
             public KeyGen(uint seed)
             {
                 m_seed = seed;
             }
+
             public uint Compute()
             {
                 uint result = m_seed;
                 m_seed = m_seed * 7 + 3;
                 return result;
             }
+
             public uint GetCurrent()
             {
                 return m_seed;

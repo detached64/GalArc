@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Utility;
 
@@ -74,19 +73,23 @@ namespace ArcFormats.NextonLikeC
                         byte[] bufferSCR = Xor.xor(brArc.ReadBytes((int)l[i].fileSize), keyArc);
                         File.WriteAllBytes(folderPath + "\\" + l[i].fileName + ".SNX", bufferSCR);
                         break;
+
                     case 2:
                     case 3://image
                         byte[] bufferIMG = brArc.ReadBytes((int)l[i].fileSize);
                         File.WriteAllBytes(folderPath + "\\" + l[i].fileName + ".PNG", bufferIMG);
                         break;
+
                     case 4://audio
                         byte[] bufferAUD_WAV = brArc.ReadBytes((int)l[i].fileSize);
                         File.WriteAllBytes(folderPath + "\\" + l[i].fileName + ".WAV", bufferAUD_WAV);
                         break;
+
                     case 5:
                         byte[] bufferAUD_OGG = brArc.ReadBytes((int)l[i].fileSize);
                         File.WriteAllBytes(folderPath + "\\" + l[i].fileName + ".SNX", bufferAUD_OGG);
                         break;
+
                     default:
                         LogUtility.Info("Unrecognized file detected:" + l[i].fileName + "Skip." + Environment.NewLine);
                         break;
@@ -94,6 +97,5 @@ namespace ArcFormats.NextonLikeC
                 LogUtility.UpdateBar();
             }
         }
-
     }
 }

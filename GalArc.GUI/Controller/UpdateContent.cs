@@ -16,7 +16,7 @@ namespace GalArc.Controller
         /// <summary>
         /// Initialize the content of combobox.
         /// </summary>
-        internal static void InitCombobox()
+        internal static void InitCombobox_Engines()
         {
             foreach (var engine in EngineInfos.engineInfos)
             {
@@ -117,6 +117,7 @@ namespace GalArc.Controller
                 PackWindow.Instance.pa_combVersion.Enabled = false;
             }
         }
+
         /// <summary>
         /// To remove the content of version combobox when selected format doesn't need specific version.
         /// </summary>
@@ -143,8 +144,7 @@ namespace GalArc.Controller
             }
         }
 
-
-        internal static void InitCombobox_Lang()
+        internal static void InitCombobox_Languages()
         {
             OptionWindow.Instance.op_cbLang.Items.AddRange(Resource.Languages.languages.Keys.ToArray());
         }

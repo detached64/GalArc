@@ -1,7 +1,5 @@
 ﻿using Log;
-using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Utility;
 
@@ -15,6 +13,7 @@ namespace ArcFormats.KID
             public uint fileCount { get; set; }
             public long reserve { get; set; }
         }
+
         private struct KID_dat_entry
         {
             public uint offset { get; set; }
@@ -50,6 +49,7 @@ namespace ArcFormats.KID
             }
             fs.Dispose();
         }
+
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -76,6 +76,5 @@ namespace ArcFormats.KID
             }
             fw.Dispose();
         }
-
     }
 }

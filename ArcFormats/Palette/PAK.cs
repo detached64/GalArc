@@ -1,5 +1,4 @@
 ﻿using Log;
-using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -38,6 +37,7 @@ namespace ArcFormats.Palette
             fs.Dispose();
             br.Dispose();
         }
+
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             string[] files = Directory.GetFiles(folderPath, "*.*", SearchOption.TopDirectoryOnly);
@@ -69,6 +69,5 @@ namespace ArcFormats.Palette
             fs.Dispose();
             bw.Dispose();
         }
-    
     }
 }

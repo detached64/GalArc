@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Utility;
 using Utility.Compression;
@@ -15,6 +14,7 @@ namespace ArcFormats.Ai6Win
         {
             public uint fileCount { get; set; }
         }
+
         private struct Silky_arc_entry
         {
             public string name { get; set; }
@@ -124,4 +124,3 @@ namespace ArcFormats.Ai6Win
         //}
     }
 }
-

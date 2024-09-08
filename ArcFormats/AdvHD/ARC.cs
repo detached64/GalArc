@@ -1,8 +1,6 @@
 ﻿using Log;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Utility;
 
@@ -15,12 +13,14 @@ namespace ArcFormats.AdvHD
             public uint typeCount { get; set; }
             public uint fileCountAll { get; set; }
         }
+
         private struct AdvHD_arc_v1_type_header
         {
             public string ext { get; set; }
             public uint fileCount { get; set; }
             public uint indexOffset { get; set; }
         }
+
         private struct AdvHD_arc_v1_entry
         {
             public string fileName { get; set; }
@@ -28,6 +28,7 @@ namespace ArcFormats.AdvHD
             public uint offset { get; set; }
             public string filePath { get; set; }
         }
+
         private static void arcV1_unpack(string filePath, string folderPath)
         {
             AdvHD_arc_v1_header header = new AdvHD_arc_v1_header();
@@ -72,6 +73,7 @@ namespace ArcFormats.AdvHD
             }
             fs.Dispose();
         }
+
         private static void arcV1_pack(string folderPath, string filePath)
         {
             HashSet<string> uniqueExtension = new HashSet<string>();
@@ -137,6 +139,7 @@ namespace ArcFormats.AdvHD
             public uint fileCount { get; set; }
             public uint entrySize { get; set; }
         }
+
         private struct AdvHD_arc_v2_entry
         {
             public uint fileSize { get; set; }
@@ -144,6 +147,7 @@ namespace ArcFormats.AdvHD
             public string fileName { get; set; }
             public string filePath { get; set; }
         }
+
         private static void arcV2_unpack(string filePath, string folderPath)
         {
             //init
@@ -180,6 +184,7 @@ namespace ArcFormats.AdvHD
             fs.Dispose();
             br1.Dispose();
         }
+
         private static void arcV2_pack(string folderPath, string filePath)
         {
             AdvHD_arc_v2_header header = new AdvHD_arc_v2_header();

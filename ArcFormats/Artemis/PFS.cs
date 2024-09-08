@@ -20,6 +20,7 @@ namespace ArcFormats.Artemis
             public uint FileCount { get; set; }
             public uint pathLenSum { get; set; }
         }
+
         private struct Artemis_pfs_Entry
         {
             public string filePath { get; set; } //绝对路径，拼接而成
@@ -37,7 +38,6 @@ namespace ArcFormats.Artemis
                 Magic = "pf",
                 FileCount = 0
             };
-
 
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             BinaryReader br = new BinaryReader(fs);
@@ -97,6 +97,7 @@ namespace ArcFormats.Artemis
                     fs.Dispose();
                     br.Dispose();
                     return;
+
                 case "2":
                     header.IndexSize = br.ReadUInt32();
                     LogUtility.Info("Valid pfs v2 archive detected.");
@@ -129,6 +130,7 @@ namespace ArcFormats.Artemis
                     fs.Dispose();
                     br.Dispose();
                     return;
+
                 case "6":
                     header.IndexSize = br.ReadUInt32();
                     LogUtility.Info("Valid pfs v6 archive detected.");
@@ -164,6 +166,7 @@ namespace ArcFormats.Artemis
                     throw new NotImplementedException("pfs v" + header.Version + " archive temporarily not supported.");
             }
         }
+
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             //init
@@ -372,7 +375,5 @@ namespace ArcFormats.Artemis
                     return;
             }
         }
-
     }
 }
-
