@@ -163,7 +163,7 @@ namespace ArcFormats.AdvHD
                 AdvHD_arc_v2_entry entry = new AdvHD_arc_v2_entry();
                 entry.fileSize = br1.ReadUInt32();
                 entry.offset = br1.ReadUInt32() + 8 + header.entrySize;
-                entry.fileName = Utilities.ReadUntil_Unicode(br1);
+                entry.fileName = Utilities.ReadCString(br1, Encoding.Unicode);
                 entry.filePath = folderPath + "\\" + entry.fileName;
 
                 l.Add(entry);
@@ -242,7 +242,7 @@ namespace ArcFormats.AdvHD
         {
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             BinaryReader br = new BinaryReader(fs);
-            br.ReadBytes(6);
+            fs.Position = 6;
             char a = br.ReadChar();
             if (a >= 'A')//extension
             {
