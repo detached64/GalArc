@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Utility;
 
@@ -51,6 +50,7 @@ namespace ArcFormats.NScripter
             fs.Dispose();
             br.Dispose();
         }
+
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             int fileCount = Utilities.GetFileCount_All(folderPath);
@@ -101,6 +101,5 @@ namespace ArcFormats.NScripter
             fw.Dispose();
             bw.Dispose();
         }
-
     }
 }

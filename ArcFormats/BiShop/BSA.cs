@@ -1,5 +1,4 @@
 ﻿using Log;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,16 +9,15 @@ namespace ArcFormats.BiShop
 {
     public class BSA
     {
-        static byte[] magic = { 0x42, 0x53, 0x41, 0x72, 0x63, 0x00, 0x00, 0x00 };
+        private static byte[] magic = { 0x42, 0x53, 0x41, 0x72, 0x63, 0x00, 0x00, 0x00 };
 
-        static List<string> m_path = new List<string> { };
+        private static List<string> m_path = new List<string> { };
 
-        static int realCount = 0;
+        private static int realCount = 0;
 
+        private static string rootDir = string.Empty;
 
-        static string rootDir = string.Empty;
-
-        static int FileCount = 0;
+        private static int FileCount = 0;
 
         private struct Entry
         {
@@ -56,6 +54,7 @@ namespace ArcFormats.BiShop
                 LogUtility.Error_NotValidArchive();
             }
         }
+
         private static void bsaV1_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
@@ -81,6 +80,7 @@ namespace ArcFormats.BiShop
             fs.Dispose();
             br.Dispose();
         }
+
         private static void bsaV2_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
@@ -130,7 +130,6 @@ namespace ArcFormats.BiShop
             LogUtility.Debug(realCount.ToString() + " among them are actually files.");
             fs.Dispose();
             br.Dispose();
-
         }
 
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)

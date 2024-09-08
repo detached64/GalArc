@@ -62,7 +62,6 @@ namespace ArcFormats.NeXAS
                 fs.Seek(offset, SeekOrigin.Begin);
                 byte[] fileData = reader.ReadBytes(packedSize);
 
-
                 if (unpackedSize != packedSize && method != Method.None) // compressed
                 {
                     LogUtility.Debug("Packed file detected:" + fileName + ".Try " + method.ToString() + "……");
@@ -73,12 +72,15 @@ namespace ArcFormats.NeXAS
                             case Method.Huffman:
                                 File.WriteAllBytes(path, Huffman.Decompress(fileData, unpackedSize));
                                 break;
+
                             case Method.Lzss:
                                 File.WriteAllBytes(path, Lzss.Decompress(fileData));
                                 break;
+
                             case Method.Zlib:
                                 File.WriteAllBytes(path, Zlib.DecompressBytes(fileData));
                                 break;
+
                             case Method.Zstd:
                                 File.WriteAllBytes(path, Zstd.Decompress(fileData));
                                 break;
@@ -101,6 +103,5 @@ namespace ArcFormats.NeXAS
             reader.Dispose();
             readerIndex.Dispose();
         }
-
     }
 }

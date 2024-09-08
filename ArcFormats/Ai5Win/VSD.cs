@@ -1,7 +1,5 @@
 ﻿using Log;
-using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace ArcFormats.Ai5Win
@@ -28,4 +26,3 @@ namespace ArcFormats.Ai5Win
         }
     }
 }
-

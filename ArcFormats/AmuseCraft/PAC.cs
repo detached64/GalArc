@@ -1,7 +1,5 @@
 ﻿using Log;
-using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Utility;
 
@@ -44,6 +42,7 @@ namespace ArcFormats.AmuseCraft
             }
             fs.Dispose();
         }
+
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             uint fileCount = (uint)Utilities.GetFileCount_All(folderPath);
@@ -80,6 +79,4 @@ namespace ArcFormats.AmuseCraft
             fw.Dispose();
         }
     }
-
 }
-

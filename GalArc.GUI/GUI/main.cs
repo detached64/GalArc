@@ -45,7 +45,7 @@ namespace GalArc
             Log.Controller.Localization.SetLocalCulture(LocalCulture);
             Log.Controller.Localization.GetStrings_Log();
 
-            Controller.UpdateContent.InitCombobox();
+            Controller.UpdateContent.InitCombobox_Engines();
 
             LogUtility.Process += LogUtility_Process;
             LogUtility.ErrorOccured += LogUtility_ErrorOccured;

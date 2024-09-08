@@ -1,5 +1,4 @@
 ﻿using Log;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -49,6 +48,7 @@ namespace ArcFormats.Triangle
             fs.Dispose();
             br.Dispose();
         }
+
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -75,6 +75,5 @@ namespace ArcFormats.Triangle
             fs.Dispose();
             bw.Dispose();
         }
-    
     }
 }

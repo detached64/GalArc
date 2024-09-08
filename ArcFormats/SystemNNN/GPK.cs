@@ -1,7 +1,6 @@
 ﻿using Log;
 using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Utility;
 
@@ -105,15 +104,14 @@ namespace ArcFormats.SystemNNN
             br1.Dispose();
             br2.Dispose();
         }
+
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
-
             DirectoryInfo d = new DirectoryInfo(folderPath);
             uint filecount = (uint)Utilities.GetFileCount_All(folderPath);
             LogUtility.InitBar(3 * filecount);
             string gpkPath = filePath;
             string gtbPath = filePath.Contains(".gpk") ? gpkPath.Replace(".gpk", ".gtb") : gpkPath + ".gtb";
-
 
             FileStream fs1 = new FileStream(gtbPath, FileMode.Create, FileAccess.Write);
             FileStream fs2 = new FileStream(gpkPath, FileMode.Create, FileAccess.Write);
@@ -182,6 +180,5 @@ namespace ArcFormats.SystemNNN
             fs1.Dispose();
             fs2.Dispose();
         }
-
     }
 }

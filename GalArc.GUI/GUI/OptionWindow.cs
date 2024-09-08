@@ -17,7 +17,7 @@ namespace GalArc.GUI
             Controller.Localization.SetLocalCulture(main.LocalCulture);
             Controller.Localization.GetStrings_option();
             LoadState();
-            Controller.UpdateContent.InitCombobox_Lang();
+            Controller.UpdateContent.InitCombobox_Languages();
         }
 
         private void OptionWindow_Load(object sender, EventArgs e)

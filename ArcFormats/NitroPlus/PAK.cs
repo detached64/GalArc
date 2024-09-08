@@ -1,7 +1,5 @@
 ﻿using Log;
-using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Utility;
 using Utility.Compression;
@@ -54,6 +52,7 @@ namespace ArcFormats.NitroPlus
             fs.Dispose();
             ms.Dispose();
         }
+
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -113,6 +112,5 @@ namespace ArcFormats.NitroPlus
             }
             fw.Dispose();
         }
- 
     }
 }

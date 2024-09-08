@@ -1,7 +1,6 @@
 ﻿using Log;
 using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Utility;
 
@@ -69,6 +68,7 @@ namespace ArcFormats.SystemNNN
             br1.Dispose();
             br2.Dispose();
         }
+
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             //init
@@ -110,6 +110,5 @@ namespace ArcFormats.SystemNNN
             fs1.Dispose();
             fs2.Dispose();
         }
-    
     }
 }

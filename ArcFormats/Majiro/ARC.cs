@@ -40,8 +40,8 @@ namespace ArcFormats.Majiro
             {
                 LogUtility.Error_NotValidArchive();
             }
-
         }
+
         private static void arcV1_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
@@ -83,6 +83,7 @@ namespace ArcFormats.Majiro
             brIndex.Dispose();
             ms.Dispose();
         }
+
         private static void arcV2_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
@@ -117,6 +118,7 @@ namespace ArcFormats.Majiro
             brIndex.Dispose();
             ms.Dispose();
         }
+
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             if (version == "1")
@@ -128,6 +130,7 @@ namespace ArcFormats.Majiro
                 arcV2_pack(folderPath, filePath);
             }
         }
+
         private static void arcV1_pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
@@ -171,6 +174,7 @@ namespace ArcFormats.Majiro
             bw.Dispose();
             fw.Dispose();
         }
+
         private static void arcV2_pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
@@ -213,6 +217,5 @@ namespace ArcFormats.Majiro
             bw.Dispose();
             fw.Dispose();
         }
-
     }
 }

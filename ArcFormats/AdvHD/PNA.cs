@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Utility;
 
@@ -18,6 +17,7 @@ namespace ArcFormats.AdvHD
             internal uint height { get; set; }
             internal uint fileCount { get; set; }
         }
+
         private struct AdvHD_pna_entry
         {
             internal uint fileType { get; set; }
@@ -83,6 +83,7 @@ namespace ArcFormats.AdvHD
             fs.Dispose();
             br.Dispose();
         }
+
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             string spath = folderPath + ".pna";
@@ -109,7 +110,6 @@ namespace ArcFormats.AdvHD
             DirectoryInfo dir = new DirectoryInfo(folderPath);
             foreach (FileInfo fi in dir.GetFiles())
             {
-
                 while (br.ReadUInt32() != 0)
                 {
                     fs.Seek(-4 + 40, SeekOrigin.Current);
@@ -132,4 +132,3 @@ namespace ArcFormats.AdvHD
         }
     }
 }
-

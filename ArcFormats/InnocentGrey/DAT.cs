@@ -15,8 +15,8 @@ namespace ArcFormats.InnocentGrey
             public string magic { get; set; }//"PACKDAT."
             public uint fileCount { get; set; }
             public uint fileCount1 { get; set; }
-
         }
+
         private struct InnocentGrey_dat_entry
         {
             public string fileName { get; set; }//32 bytes
@@ -83,6 +83,7 @@ namespace ArcFormats.InnocentGrey
             br.Dispose();
             fs.Dispose();
         }
+
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -120,6 +121,5 @@ namespace ArcFormats.InnocentGrey
             bw.Dispose();
             fw.Dispose();
         }
-
     }
 }

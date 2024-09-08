@@ -1,5 +1,4 @@
 ﻿using Log;
-using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,6 +14,7 @@ namespace ArcFormats.Kirikiri
             internal static byte[] magic = { 0x58, 0x50, 0x33, 0x0d, 0x0a, 0x20, 0x0a, 0x1a, 0x8b, 0x67, 0x01 };
             internal ulong indexOffset { get; set; }
         }
+
         private struct Entry
         {
             internal ulong unpackedFileSize { get; set; }
@@ -57,6 +57,7 @@ namespace ArcFormats.Kirikiri
                         LogUtility.Error("Error:additional bytes beyond index.");
                     }
                     break;
+
                 case 1:                         //index compressed
                     long packedIndexSize = br.ReadInt64();
                     long unpackedIndexSize = br.ReadInt64();
@@ -71,6 +72,7 @@ namespace ArcFormats.Kirikiri
                         LogUtility.Info("Index size fails to match.Try reading……");
                     }
                     break;
+
                 default:
                     LogUtility.Error_NotValidArchive();
                     return;
@@ -108,13 +110,15 @@ namespace ArcFormats.Kirikiri
                             entry.packedFileSize = brIndex.ReadUInt64();
                             ushort fileNameLen = brIndex.ReadUInt16();
                             entry.relativePath = Encoding.Unicode.GetString(brIndex.ReadBytes(fileNameLen * 2));
-                            entry.path = folderPath + "\\" + entry.relativePath.Replace("/","\\");
+                            entry.path = folderPath + "\\" + entry.relativePath.Replace("/", "\\");
                             break;
+
                         case "segm":
                             entry.isCompressed = brIndex.ReadInt32() == 1;
                             entry.dataOffset = brIndex.ReadInt64();
                             brIndex.ReadBytes((int)sectionLen - 12);
                             break;
+
                         case "adlr":
                             brIndex.ReadBytes(4);
                             break;
@@ -143,6 +147,7 @@ NextEntry:      ms.Position = nextPos;
             fs.Dispose();
             br.Dispose();
         }
+
         public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
         {
             Stream xp3Stream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -168,7 +173,7 @@ NextEntry:      ms.Position = nextPos;
                 Zlib.AppendCompressedFile(xp3Stream, f.FullName, out long originalSize, out long compressedSize);
                 //File
                 bwEntry.Write(Encoding.ASCII.GetBytes("File"));
-                string thisFilePath = f.FullName.Substring(folderPath.Length + 1).Replace("\\","/");
+                string thisFilePath = f.FullName.Substring(folderPath.Length + 1).Replace("\\", "/");
                 bwEntry.Write((long)(90 + 2 * thisFilePath.Length));
                 //info
                 bwEntry.Write(Encoding.ASCII.GetBytes("info"));
@@ -214,6 +219,5 @@ NextEntry:      ms.Position = nextPos;
 
             xp3Stream.Dispose();
         }
-
     }
 }
