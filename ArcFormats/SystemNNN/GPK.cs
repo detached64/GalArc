@@ -61,7 +61,7 @@ namespace ArcFormats.SystemNNN
 
                 fs1.Seek(4 + 8 * filecount + entry.offset, SeekOrigin.Begin);
 
-                entry.filePath = folderPath + "\\" + Encoding.UTF8.GetString(Utilities.ReadUntil_Ansi(br1, 0x00)) + ".dwq";
+                entry.filePath = folderPath + "\\" + Utilities.ReadCString(br1, Encoding.UTF8) + ".dwq";
                 thisPos = (uint)fs1.Position;
                 maxPos = Math.Max(thisPos, maxPos);
 
@@ -83,7 +83,7 @@ namespace ArcFormats.SystemNNN
             fs1.Seek(offset + 4 + 8 * filecount, SeekOrigin.Begin);
             SystemNNN_gtb_entry last = new SystemNNN_gtb_entry();
             last.offset = gtbSize - (offset + 4 + 8 * filecount) - 1;
-            last.filePath = folderPath + "\\" + Encoding.UTF8.GetString(Utilities.ReadUntil_Ansi(br1, 0x00)) + ".dwq";
+            last.filePath = folderPath + "\\" + Utilities.ReadCString(br1, Encoding.UTF8) + ".dwq";
             last.size = gpkSize - sizeWithoutLast;
 
             thisPos = (uint)fs1.Position;
@@ -134,7 +134,7 @@ namespace ArcFormats.SystemNNN
                     FileInfo deleteVtb = new FileInfo(gtbPath);
                     deleteVpk.Delete();
                     deleteVtb.Delete();
-                    throw new Exception("Error:File extension " + fi.Extension +" not supported.");
+                    throw new Exception("Error:File extension " + fi.Extension + " not supported.");
                 }
                 writer1.Write(offsetToNow);
                 offsetToNow = offsetToNow + (uint)Path.GetFileNameWithoutExtension(fi.FullName).Length + 1;
@@ -182,6 +182,6 @@ namespace ArcFormats.SystemNNN
             fs1.Dispose();
             fs2.Dispose();
         }
-    
+
     }
 }

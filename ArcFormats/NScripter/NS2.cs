@@ -33,7 +33,7 @@ namespace ArcFormats.NScripter
             {
                 NScripter_ns2_entry entry = new NScripter_ns2_entry();
                 br.ReadByte();//skip "
-                entry.filePath = folderPath + "\\" + ArcEncoding.Shift_JIS.GetString(Utilities.ReadUntil_Ansi(br, 0x22));
+                entry.filePath = folderPath + "\\" + Utilities.ReadCString(br, ArcEncoding.Shift_JIS, 0x22);
                 entry.fileSize = br.ReadUInt32();
                 entries.Add(entry);
             }
@@ -101,6 +101,6 @@ namespace ArcFormats.NScripter
             fw.Dispose();
             bw.Dispose();
         }
-    
+
     }
 }

@@ -52,44 +52,46 @@ namespace Utility
         }
 
         /// <summary>
-        /// Only used for continuous file names with a separator in between like '0x00'.
-        /// If file name length is fixed,use GetString.TrimEnd() instead.
+        /// Only used for continuous file names with a separator in between.
         /// </summary>
         /// <param name="br"></param>
+        /// <param name="encoding"></param>
         /// <param name="toThis"></param>
         /// <returns></returns>
-        public static byte[] ReadUntil_Ansi(BinaryReader br, byte toThis)
+        public static string ReadCString(BinaryReader br, Encoding encoding, byte toThis = 0x00)
         {
-            List<byte> name = new List<byte>();
-            byte aName;
-            while ((aName = br.ReadByte()) != toThis)
-            {
-                name.Add(aName);
-            }
-            return name.ToArray();
-        }
+            List<byte> byteList = new List<byte>();
+            bool isUnicode = encoding == Encoding.Unicode;
 
-        /// <summary>
-        /// Used for continuous file name with separators 0x0000 in between.
-        /// </summary>
-        /// <param name="br"></param>
-        /// <returns></returns>
-        public static string ReadUntil_Unicode(BinaryReader br)
-        {
-            List<byte> name = new List<byte>();
-            byte[] aname = new byte[2];
-            byte[] fix = new byte[2];
-            while ((aname = br.ReadBytes(2))[0] != 0x00 || aname[1] != 0x00)
+            if (isUnicode)
             {
-                name.Add(aname[0]);
-                name.Add(aname[1]);
-            }
-            return Encoding.Unicode.GetString(name.ToArray());
-        }
+                while (true)
+                {
+                    byte b1 = br.ReadByte();
+                    byte b2 = br.ReadByte();
+                    if (b1 == 0 && b2 == 0)
+                    {
+                        break;
+                    }
+                    byteList.Add(b1);
+                    byteList.Add(b2);
 
-        public static string ReadCString(BinaryReader br, Encoding encoding)
-        {
-            return encoding.GetString(ReadUntil_Ansi(br, 0x00));
+                }
+            }
+            else
+            {
+                while (true)
+                {
+                    byte b = br.ReadByte();
+                    if (b == toThis)
+                    {
+                        break;
+                    }
+                    byteList.Add(b);
+                }
+            }
+
+            return encoding.GetString(byteList.ToArray());
         }
 
         /// <summary>
