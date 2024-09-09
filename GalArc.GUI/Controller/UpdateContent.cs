@@ -4,6 +4,7 @@ using Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace GalArc.Controller
 {
@@ -148,5 +149,20 @@ namespace GalArc.Controller
         {
             OptionWindow.Instance.op_cbLang.Items.AddRange(Resource.Languages.languages.Keys.ToArray());
         }
+
+        internal static void InitDataGridView()
+        {
+            AboutWindow.Instance.dataGridViewEngines.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        internal static void UpdateDataGridView(List<EngineInfo> engines)
+        {
+            AboutWindow.Instance.dataGridViewEngines.Rows.Clear();
+            foreach (var engine in engines)
+            {
+                AboutWindow.Instance.dataGridViewEngines.Rows.Add(engine.EngineName, engine.UnpackFormat, engine.PackFormat);
+            }
+        }
+
     }
 }

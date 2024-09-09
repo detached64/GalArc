@@ -36,83 +36,21 @@ namespace GalArc.GUI
         }
         private void AboutWindow_Load(object sender, EventArgs e)
         {
-            InitializeDataGridView();
-            UpdateDataGridView(engines);
+            Controller.UpdateContent.InitDataGridView();
+            Controller.UpdateContent.UpdateDataGridView(engines);
             Controller.UpdateVersion.InitVersion();
         }
-
-        internal void SaveEnginesToFile(string filePath, List<EngineInfo> engines)
-        {
-            using (StreamWriter writer = new StreamWriter(filePath))
-            {
-                writer.WriteLine("EngineName,UnpackFormat,PackFormat");
-
-                foreach (var engine in engines)
-                {
-                    writer.WriteLine($"{engine.EngineName},{engine.UnpackFormat},{engine.PackFormat}");
-                }
-            }
-        }
-        internal List<EngineInfo> LoadEnginesFromFile(string filePath)
-        {
-            var engines = new List<EngineInfo>();
-
-            using (StreamReader reader = new StreamReader(filePath))
-            {
-                // 读取表头
-                reader.ReadLine();
-
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    var values = line.Split(',');
-                    var engine = new EngineInfo(values[0], values[1], values[2]);
-                    engines.Add(engine);
-                }
-            }
-            return engines;
-        }
-        internal void LoadEnginesFromGrid(DataGridView dataGridView, List<EngineInfo> engines)
-        {
-            engines.Clear();
-
-            foreach (DataGridViewRow row in dataGridView.Rows)
-            {
-                string name = row.Cells["Name"].Value?.ToString();
-                string unpackFormat = row.Cells["UnpackFormat"].Value?.ToString();
-                string packFormat = row.Cells["PackFormat"].Value?.ToString();
-
-                if (!string.IsNullOrEmpty(name))
-                {
-                    EngineInfo engine = new EngineInfo(name, unpackFormat, packFormat);
-                    engines.Add(engine);
-                }
-            }
-        }
-        private void InitializeDataGridView()
-        {
-            dataGridViewEngines.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-        }
-        private void UpdateDataGridView(List<EngineInfo> engines)
-        {
-            dataGridViewEngines.Rows.Clear();
-            foreach (var engine in engines)
-            {
-                dataGridViewEngines.Rows.Add(engine.EngineName, engine.UnpackFormat, engine.PackFormat);
-            }
-        }
-
 
         private void searchText_TextChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(this.searchText.Text))
             {
                 searchedEngines = engines.Where(engine => engine.EngineName.IndexOf(this.searchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.UnpackFormat.IndexOf(this.searchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.PackFormat.IndexOf(this.searchText.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-                UpdateDataGridView(searchedEngines);
+                Controller.UpdateContent.UpdateDataGridView(searchedEngines);
             }
             else
             {
-                UpdateDataGridView(engines);
+                Controller.UpdateContent.UpdateDataGridView(engines);
             }
         }
 
