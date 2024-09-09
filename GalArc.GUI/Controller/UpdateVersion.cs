@@ -17,7 +17,7 @@ namespace GalArc.Controller
 
         private const string versionPath = "version.txt";
 
-        private const string versionUrl = "https://raw.githubusercontent.com/detached64/GalArc/master/docs/version.txt";
+        private const string versionUrl = "https://pastebin.com/raw/4pvccgbk";
 
         internal static bool isNewVerExist = false;
 
