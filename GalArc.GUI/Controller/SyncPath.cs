@@ -9,19 +9,28 @@ namespace GalArc.Controller
     {
         public static void un_folderPathSync()
         {
-            if (UnpackWindow.Instance.un_selEngine.Text == "NextonLikeC")
+            string folderPath = Path.Combine(Path.GetDirectoryName(UnpackWindow.Instance.un_FilePath.Text), Path.GetFileNameWithoutExtension(UnpackWindow.Instance.un_FilePath.Text));
+            if (File.Exists(folderPath))
             {
-                UnpackWindow.Instance.un_FolderPath.Text = Path.GetDirectoryName(UnpackWindow.Instance.un_FilePath.Text) + "\\" + Path.GetFileNameWithoutExtension(UnpackWindow.Instance.un_FilePath.Text) + "_unpacked";
+                UnpackWindow.Instance.un_FolderPath.Text = folderPath + "_unpacked";
             }
             else
             {
-                UnpackWindow.Instance.un_FolderPath.Text = Path.GetDirectoryName(UnpackWindow.Instance.un_FilePath.Text) + "\\" + Path.GetFileNameWithoutExtension(UnpackWindow.Instance.un_FilePath.Text);
+                UnpackWindow.Instance.un_FolderPath.Text = folderPath;
             }
         }
 
         public static void pa_filePathSync()
         {
-            PackWindow.Instance.pa_FilePath.Text = PackWindow.Instance.pa_FolderPath.Text + "." + PackWindow.Instance.pa_combPackFormat.Text.ToLower() + ".new";
+            string filePath = PackWindow.Instance.pa_FolderPath.Text + "." + PackWindow.Instance.pa_combPackFormat.Text.ToLower();
+            if (File.Exists(filePath))
+            {
+                PackWindow.Instance.pa_FilePath.Text = filePath + ".new";
+            }
+            else
+            {
+                PackWindow.Instance.pa_FilePath.Text = filePath;
+            }
         }
     }
 }
