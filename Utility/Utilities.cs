@@ -145,7 +145,7 @@ namespace Utility
             int sum = 0;
             foreach (string s in fileSet)
             {
-                sum += encoding.GetBytes(Path.GetFileName(s)).Length;
+                sum += encoding.GetByteCount(Path.GetFileName(s));
             }
             return sum;
         }

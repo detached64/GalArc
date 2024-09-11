@@ -46,7 +46,7 @@ namespace GalArc.Resource
             new EngineInfo("AmuseCraft","PAC","PAC"),
             new EngineInfo("Artemis","PFS","PFS","8/6/2",true,true),
             new EngineInfo("BiShop","BSA", "BSA","1/2"),
-            new EngineInfo("Cmvs","CPZ",string.Empty),
+            new EngineInfo("Cmvs","CPZ","CPZ","1"),
             new EngineInfo("EntisGLS","NOA","NOA",true,true),
             new EngineInfo("InnocentGrey","IGA/DAT","IGA/DAT"),
             new EngineInfo("KID","DAT","DAT"),
