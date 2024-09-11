@@ -58,7 +58,7 @@ namespace ArcFormats.Kirikiri
                     }
                     break;
 
-                case 1:                         //index compressed
+                case 1:                    //index compressed
                     long packedIndexSize = br.ReadInt64();
                     long unpackedIndexSize = br.ReadInt64();
                     byte[] packedIndex = br.ReadBytes((int)packedIndexSize);
@@ -161,7 +161,7 @@ NextEntry:      ms.Position = nextPos;
                 bw.Write((long)0);
             }
             bw.Write((long)0);//index offset to 0x00
-            LogUtility.InitBar(Utilities.GetFileCount_All(folderPath) + 1);
+            LogUtility.InitBar(Utilities.GetFileCount_All(folderPath));
 
             DirectoryInfo d = new DirectoryInfo(folderPath);
             MemoryStream ms = new MemoryStream();
@@ -215,7 +215,6 @@ NextEntry:      ms.Position = nextPos;
                 xp3Stream.Position = 32;
             }
             bw.Write(indexOffset);
-            LogUtility.UpdateBar();
 
             xp3Stream.Dispose();
         }

@@ -202,5 +202,13 @@ namespace GalArc.GUI
             UpdateContent.UpdatePackVersion();
             UpdateContent.ConfigurePackVersion();
         }
+
+        private void pa_ShowFormat_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (this.pa_combPackFormat.Items.Cast<string>().ToArray().Contains(this.pa_ShowFormat.SelectedItem))
+            {
+                this.pa_combPackFormat.Text = this.pa_ShowFormat.SelectedItem.ToString();
+            }
+        }
     }
 }

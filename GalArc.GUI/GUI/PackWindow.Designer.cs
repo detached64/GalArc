@@ -120,6 +120,7 @@
             this.pa_ShowFormat.Name = "pa_ShowFormat";
             this.pa_ShowFormat.Size = new System.Drawing.Size(121, 98);
             this.pa_ShowFormat.TabIndex = 13;
+            this.pa_ShowFormat.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pa_ShowFormat_MouseDoubleClick);
             // 
             // pa_lbFormat
             // 
