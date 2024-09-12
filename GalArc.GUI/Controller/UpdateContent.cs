@@ -14,6 +14,13 @@ namespace GalArc.Controller
         internal static EngineInfo selectedEngineInfo_Pack;
 
         internal static string[] EncodingList = { "Shift_JIS", "GBK", "UTF-8" };
+
+        internal static Dictionary<string, string> versionPairs = new Dictionary<string, string>
+        {
+            { "AdvHD", "ARC" },
+            { "SystemNNN", "GPK" },
+            { "Triangle", "CGF" },
+        };
         /// <summary>
         /// Initialize the content of combobox.
         /// </summary>
@@ -107,7 +114,7 @@ namespace GalArc.Controller
         internal static void UpdatePackVersion()
         {
             PackWindow.Instance.pa_combVersion.Items.Clear();
-            if (!string.IsNullOrEmpty(selectedEngineInfo_Pack.PackVersion))
+            if (!string.IsNullOrEmpty(selectedEngineInfo_Pack.PackVersion) && ConfigurePackVersion())
             {
                 PackWindow.Instance.pa_combVersion.Enabled = true;
                 PackWindow.Instance.pa_combVersion.Items.AddRange(selectedEngineInfo_Pack.PackVersion.Split('/'));
@@ -122,27 +129,14 @@ namespace GalArc.Controller
         /// <summary>
         /// To remove the content of version combobox when selected format doesn't need specific version.
         /// </summary>
-        internal static void ConfigurePackVersion()
+        internal static bool ConfigurePackVersion()
         {
-            switch (PackWindow.Instance.pa_selEngine.Text)
+            bool isVersionEnabled = false;
+            if (versionPairs.ContainsKey(PackWindow.Instance.pa_selEngine.Text) && PackWindow.Instance.pa_combPackFormat.Text == versionPairs[PackWindow.Instance.pa_selEngine.Text])
             {
-                case "AdvHD":
-                    if (PackWindow.Instance.pa_combPackFormat.Text != "ARC")
-                    {
-                        PackWindow.Instance.pa_combVersion.Items.Clear();
-                        PackWindow.Instance.pa_combVersion.Enabled = false;
-                    }
-                    break;
-                case "SystemNNN":
-                    if (PackWindow.Instance.pa_combPackFormat.Text != "GPK")
-                    {
-                        PackWindow.Instance.pa_combVersion.Items.Clear();
-                        PackWindow.Instance.pa_combVersion.Enabled = false;
-                    }
-                    break;
-                default:
-                    break;
+                isVersionEnabled = true;
             }
+            return isVersionEnabled;
         }
 
         internal static void InitCombobox_Languages()

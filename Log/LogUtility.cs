@@ -56,10 +56,17 @@ namespace Log
         {
             System.IO.File.AppendAllText("log.txt", Environment.NewLine + "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "][New Instance]" + Environment.NewLine);
         }
-        public static void Error(string log)
+        public static void Error(string log, bool toThrow = true)
         {
-            WriteAndSaveLog(log, 0);
-            OnErrorOccur("Error occurs.");
+            if (!toThrow)
+            {
+                WriteAndSaveLog(log, 0);
+                OnErrorOccur("Error occurs.");
+            }
+            else
+            {
+                throw new Exception(log);
+            }
         }
         public static void Info(string log)
         {
@@ -162,7 +169,7 @@ namespace Log
         }
         public static void ShowCheckError()
         {
-            Error("Error occurs while checking for update.");
+            Error("Error occurs while checking for update.",false);
         }
     }
 }

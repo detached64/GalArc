@@ -67,7 +67,7 @@ namespace GalArc.Controller
         /// </summary>
         /// <param name="extension"></param>
         /// <returns></returns>
-        private static string CleanExtension(string extension)
+        internal static string CleanExtension(string extension)
         {
             if (extension == "RGSSAD" || extension == "RGSS2A" || extension == "RGSS3A")
             {

@@ -94,6 +94,15 @@ namespace Utility
             return encoding.GetString(byteList.ToArray());
         }
 
+        public static string GetCString(string str, Encoding encoding)
+        {
+            byte[] bytes = encoding.GetBytes(str);
+            byte[] cStringBytes = new byte[bytes.Length + 1];
+            Array.Copy(bytes, cStringBytes, bytes.Length);
+            cStringBytes[bytes.Length] = 0x00;
+            return encoding.GetString(cStringBytes);
+        }
+
         /// <summary>
         /// Get file count in specified folder and all subfolders.
         /// </summary>

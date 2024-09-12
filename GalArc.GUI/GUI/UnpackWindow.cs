@@ -132,17 +132,17 @@ namespace GalArc.GUI
         {
             if (string.IsNullOrEmpty(this.un_FilePath.Text))
             {
-                LogUtility.Error("Please specify input file path.");
+                LogUtility.Error("Please specify input file path.", false);
                 return;
             }
             if (string.IsNullOrEmpty(this.un_FolderPath.Text))
             {
-                LogUtility.Error("Please specify output folder path.");
+                LogUtility.Error("Please specify output folder path.",false);
                 return;
             }
             if (!File.Exists(this.un_FilePath.Text))
             {
-                LogUtility.Error("File specified does not exist.");
+                LogUtility.Error("File specified does not exist.", false);
                 return;
             }
             try
@@ -153,12 +153,12 @@ namespace GalArc.GUI
             {
                 if (ex.InnerException == null)
                 {
-                    LogUtility.Error(ex.Message);
+                    LogUtility.Error(ex.Message, false);
                     LogUtility.Debug(ex.ToString());
                 }
                 else
                 {
-                    LogUtility.Error(ex.InnerException.Message);
+                    LogUtility.Error(ex.InnerException.Message, false);
                     LogUtility.Debug(ex.InnerException.ToString());
                 }
                 LogWindow.Instance.bar.Value = 0;

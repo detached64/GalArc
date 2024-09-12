@@ -53,6 +53,7 @@
     <Compile Include="AmuseCraft\PAC.cs" />
     <Compile Include="Artemis\PFS.cs" />
     <Compile Include="BiShop\BSA.cs" />
+    <Compile Include="Cmvs\CPZ.cs" />
     <Compile Include="EntisGLS\NOA.cs" />
     <Compile Include="InnocentGrey\DAT.cs" />
     <Compile Include="InnocentGrey\IGA.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="SystemNNN\GPK.cs" />
     <Compile Include="SystemNNN\VPK.cs" />
     <Compile Include="Triangle\CG.cs" />
+    <Compile Include="Triangle\CGF.cs" />
     <Compile Include="Triangle\SUD.cs" />
   </ItemGroup>
   <ItemGroup>

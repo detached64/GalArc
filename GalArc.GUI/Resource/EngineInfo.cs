@@ -60,7 +60,7 @@ namespace GalArc.Resource
             new EngineInfo("RPGMaker","RGSSAD/RGSS2A/RGSS3A","RGSSAD/RGSS2A/RGSS3A","1"),
             new EngineInfo("Softpal","PAC","PAC"),
             new EngineInfo("SystemNNN","GPK/VPK","GPK/VPK","1/2"),
-            new EngineInfo("Triangle","CG/SUD","CG/SUD")
+            new EngineInfo("Triangle","CG/CGF/SUD","CG/CGF/SUD","1")
         };
     }
 }
