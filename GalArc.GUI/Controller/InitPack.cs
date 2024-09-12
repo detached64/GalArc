@@ -22,7 +22,7 @@ namespace GalArc.Controller
             {
                 throw new Exception("Error:Not a supported format.");
             }
-            extension = CleanExtension(extension);
+            extension = Controller.InitUnpack.CleanExtension(extension);
             string fullTypeName = $"ArcFormats.{engineName}.{extension}";
 
             Assembly assembly = Assembly.Load("ArcFormats");
@@ -62,19 +62,5 @@ namespace GalArc.Controller
                 throw new Exception("Error:Specified format not found.");
             }
         }
-        /// <summary>
-        /// Used for multiple extensions that share the same format.
-        /// </summary>
-        /// <param name="extension"></param>
-        /// <returns></returns>
-        private static string CleanExtension(string extension)
-        {
-            if (extension == "RGSSAD" || extension == "RGSS2A" || extension == "RGSS3A")
-            {
-                return "RGSS";
-            }
-            return extension;
-        }
-
     }
 }

@@ -98,6 +98,7 @@ namespace ArcFormats.Cmvs
             bw.Write(Encoding.ASCII.GetBytes("CPZ1"));
             int fileCount = files.Length;
             bw.Write(fileCount);
+            LogUtility.InitBar(fileCount);
             long indexSize = 26 * fileCount + Utilities.GetNameLenSum(files, ArcEncoding.Shift_JIS);
             bw.Write(indexSize * 2);
 
@@ -132,6 +133,7 @@ namespace ArcFormats.Cmvs
                     data[i] = (byte)((data[i] + 0x6C) ^ Key_cpzV1[i & 0x3F]);
                 }
                 bw.Write(data);
+                LogUtility.UpdateBar();
             }
             fw.Dispose();
             bw.Dispose();

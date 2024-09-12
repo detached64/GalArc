@@ -132,17 +132,17 @@ namespace GalArc.GUI
         {
             if (string.IsNullOrEmpty(this.pa_FolderPath.Text))
             {
-                LogUtility.Error("Please specify input folder path.");
+                LogUtility.Error("Please specify input folder path.", false);
                 return;
             }
             if (string.IsNullOrEmpty(this.pa_FilePath.Text))
             {
-                LogUtility.Error("Please specify output file path.");
+                LogUtility.Error("Please specify output file path.", false);
                 return;
             }
             if (!Directory.Exists(this.pa_FolderPath.Text))
             {
-                LogUtility.Error("Folder specified does not exist.");
+                LogUtility.Error("Folder specified does not exist.", false);
                 return;
             }
             try
@@ -153,11 +153,13 @@ namespace GalArc.GUI
             {
                 if (ex.InnerException == null)
                 {
-                    LogUtility.Error(ex.Message);
+                    LogUtility.Error(ex.Message, false);
+                    LogUtility.Debug(ex.ToString());
                 }
                 else
                 {
-                    LogUtility.Error(ex.InnerException.Message);
+                    LogUtility.Error(ex.InnerException.Message, false);
+                    LogUtility.Debug(ex.InnerException.ToString());
                 }
                 LogWindow.Instance.bar.Value = 0;
             }
@@ -173,7 +175,6 @@ namespace GalArc.GUI
             UpdateContent.UpdatePackListbox();
             UpdateContent.UpdatePackFormat();
             UpdateContent.UpdatePackVersion();
-            UpdateContent.ConfigurePackVersion();
             UpdateContent.UpdatePackEncoding();
         }
 
@@ -200,7 +201,6 @@ namespace GalArc.GUI
                 SyncPath.pa_filePathSync();
             }
             UpdateContent.UpdatePackVersion();
-            UpdateContent.ConfigurePackVersion();
         }
 
         private void pa_ShowFormat_MouseDoubleClick(object sender, MouseEventArgs e)
