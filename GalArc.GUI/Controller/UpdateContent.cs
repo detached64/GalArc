@@ -114,7 +114,7 @@ namespace GalArc.Controller
         internal static void UpdatePackVersion()
         {
             PackWindow.Instance.pa_combVersion.Items.Clear();
-            if (!string.IsNullOrEmpty(selectedEngineInfo_Pack.PackVersion) && ConfigurePackVersion())
+            if (!string.IsNullOrEmpty(selectedEngineInfo_Pack.PackVersion) && !selectedEngineInfo_Pack.PackFormat.Contains("/") || ConfigurePackVersion())
             {
                 PackWindow.Instance.pa_combVersion.Enabled = true;
                 PackWindow.Instance.pa_combVersion.Items.AddRange(selectedEngineInfo_Pack.PackVersion.Split('/'));
@@ -142,11 +142,6 @@ namespace GalArc.Controller
         internal static void InitCombobox_Languages()
         {
             OptionWindow.Instance.op_cbLang.Items.AddRange(Resource.Languages.languages.Keys.ToArray());
-        }
-
-        internal static void InitDataGridView()
-        {
-            AboutWindow.Instance.dataGridViewEngines.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         internal static void UpdateDataGridView(List<EngineInfo> engines)

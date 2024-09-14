@@ -41,12 +41,12 @@ namespace ArcFormats.BiShop
             br.Dispose();
             if (version > 1)
             {
-                LogUtility.Info("Valid bsa v2 archive detected.");
+                LogUtility.ShowVersion("bsa", 2);
                 bsaV2_unpack(filePath, folderPath);
             }
             else if (version == 1)
             {
-                LogUtility.Info("Valid bsa v1 archive detected.");
+                LogUtility.ShowVersion("bsa", 1);
                 bsaV1_unpack(filePath, folderPath);
             }
             else

@@ -51,7 +51,7 @@ namespace ArcFormats.Artemis
             {
                 case "8":
                     header.IndexSize = br.ReadUInt32();
-                    LogUtility.Info("Valid pfs v8 archive detected.");
+                    LogUtility.ShowVersion("pfs", 8);
 
                     byte[] xorKey;
                     byte[] headerBytes = br.ReadBytes((int)header.IndexSize);
@@ -100,7 +100,7 @@ namespace ArcFormats.Artemis
 
                 case "2":
                     header.IndexSize = br.ReadUInt32();
-                    LogUtility.Info("Valid pfs v2 archive detected.");
+                    LogUtility.ShowVersion("pfs", 2);
                     br.ReadUInt32();//reserve 0x00000000
                     header.FileCount = br.ReadUInt32();
                     long presPos2 = 0;
@@ -133,7 +133,7 @@ namespace ArcFormats.Artemis
 
                 case "6":
                     header.IndexSize = br.ReadUInt32();
-                    LogUtility.Info("Valid pfs v6 archive detected.");
+                    LogUtility.ShowVersion("pfs", 6);
                     header.FileCount = br.ReadUInt32();
                     long presPos6 = 0;//position at present
                     LogUtility.InitBar((int)header.FileCount);

@@ -36,7 +36,6 @@ namespace GalArc.GUI
         }
         private void AboutWindow_Load(object sender, EventArgs e)
         {
-            Controller.UpdateContent.InitDataGridView();
             Controller.UpdateContent.UpdateDataGridView(engines);
             Controller.UpdateVersion.InitVersion();
         }

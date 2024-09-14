@@ -28,12 +28,12 @@ namespace ArcFormats.Majiro
             br.Dispose();
             if (magic == magicV1)
             {
-                LogUtility.Info("Valid arc v1 archive detected.");
+                LogUtility.ShowVersion("arc", 1);
                 arcV1_unpack(filePath, folderPath);
             }
             else if (magic == magicV2)
             {
-                LogUtility.Info("Valid arc v2 archive detected.");
+                LogUtility.ShowVersion("arc", 2);
                 arcV2_unpack(filePath, folderPath);
             }
             else
