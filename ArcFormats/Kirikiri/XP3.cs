@@ -36,12 +36,12 @@ namespace ArcFormats.Kirikiri
             }
             if (br.ReadByte() == 0x17)
             {
-                LogUtility.Info("Valid xp3 v2 archive detected.");
+                LogUtility.ShowVersion("xp3", 2);
                 br.ReadBytes(20);
             }
             else
             {
-                LogUtility.Info("Valid xp3 v1 archive detected.");
+                LogUtility.ShowVersion("xp3", 1);
                 fs.Position--;
             }
             uint indexOffset = br.ReadUInt32();

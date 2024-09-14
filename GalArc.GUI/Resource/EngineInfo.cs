@@ -43,7 +43,6 @@ namespace GalArc.Resource
             new EngineInfo("AdvHD","ARC/PNA","ARC/PNA","1/2"),
             new EngineInfo("Ai5Win","VSD",string.Empty),
             new EngineInfo("Ai6Win","ARC",string.Empty),
-            new EngineInfo("AmuseCraft","PAC","PAC"),
             new EngineInfo("Artemis","PFS","PFS","8/6/2",true,true),
             new EngineInfo("BiShop","BSA", "BSA","1/2"),
             new EngineInfo("Cmvs","CPZ","CPZ","1"),
@@ -58,7 +57,7 @@ namespace GalArc.Resource
             new EngineInfo("NScripter","NS2","NS2"),
             new EngineInfo("Palette","PAK","PAK"),
             new EngineInfo("RPGMaker","RGSSAD/RGSS2A/RGSS3A","RGSSAD/RGSS2A/RGSS3A","1"),
-            new EngineInfo("Softpal","PAC","PAC"),
+            new EngineInfo("Softpal","PAC","PAC","1/2"),
             new EngineInfo("SystemNNN","GPK/VPK","GPK/VPK","1/2"),
             new EngineInfo("Triangle","CG/CGF/SUD","CG/CGF/SUD","1")
         };

@@ -92,11 +92,11 @@ namespace ArcFormats.SystemNNN
             LogUtility.UpdateBar();
             if (maxPos == gtbSize)
             {
-                LogUtility.Info("Valid gpk v1 archive detected.");
+                LogUtility.ShowVersion("gpk", 1);
             }
             else
             {
-                LogUtility.Info("Valid gpk v2 archive detected.");
+                LogUtility.ShowVersion("gpk", 2);
             }
 
             fs1.Dispose();

@@ -98,7 +98,7 @@ namespace ArcFormats.InnocentGrey
             InnocentGrey_iga_header header = new InnocentGrey_iga_header();
             header.magic = Encoding.ASCII.GetBytes("IGA0");
             bw.Write(header.magic);
-            bw.Write(0);//don't know accurate value,but 0 seems valid,so just set it to 0
+            bw.Write(0);//don't know accurate value,but 0 seems valid
             bw.Write(2);
             bw.Write(2);
             List<InnocentGrey_iga_entry> l = new List<InnocentGrey_iga_entry>();

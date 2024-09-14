@@ -1,6 +1,6 @@
 # How to contribute
 
-## Translation
+## Translate
 
 1. Go to GalArc.GUI -> Properties -> Resources.resx , add a new language and translate the strings. 
 

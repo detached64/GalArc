@@ -18,14 +18,15 @@ namespace ArcFormats.RPGMaker
             int version = br.ReadByte();
             fs.Dispose();
             br.Dispose();
+
             if (version == 1)
             {
-                LogUtility.Info("Valid " + Path.GetExtension(filePath).Replace(".", string.Empty) + " v1 archive detected.");
+                LogUtility.ShowVersion(Path.GetExtension(filePath).Replace(".", string.Empty), version);
                 rgssV1_unpack(filePath, folderPath);
             }
             else if (version == 3)
             {
-                LogUtility.Info("Valid " + Path.GetExtension(filePath).Replace(".", string.Empty) + " v3 archive detected.");
+                LogUtility.ShowVersion(Path.GetExtension(filePath).Replace(".", string.Empty), version);
                 rgssV3_unpack(filePath, folderPath);
             }
             else
