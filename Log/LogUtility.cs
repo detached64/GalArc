@@ -19,6 +19,7 @@
 //
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Log
@@ -34,7 +35,7 @@ namespace Log
     {
         public static event EventHandler<string> Process;
         public static event EventHandler<string> ErrorOccured;
-
+        private static CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         private static void SaveLog(string log)
         {
@@ -56,6 +57,12 @@ namespace Log
         {
             System.IO.File.AppendAllText("log.txt", Environment.NewLine + "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "][New Instance]" + Environment.NewLine);
         }
+        /// <summary>
+        /// Show error log and throw exception if <paramref name="toThrow"/> is true.
+        /// </summary>
+        /// <param name="log"></param>
+        /// <param name="toThrow"></param>
+        /// <exception cref="Exception"></exception>
         public static void Error(string log, bool toThrow = true)
         {
             if (!toThrow)
@@ -129,9 +136,24 @@ namespace Log
         }
         internal static async Task OnShowAndDisappear(string message, int second = 5)
         {
-            OnProcess(message);
-            await Task.Delay(second * 1000);
-            OnProcess(string.Empty);
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
+            _cancellationTokenSource = new CancellationTokenSource();
+            var token = _cancellationTokenSource.Token;
+
+            try
+            {
+                OnProcess(message);
+                await Task.Delay(second * 1000, token);
+                if (!token.IsCancellationRequested)
+                {
+                    OnProcess(string.Empty);
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                //ignore
+            }
         }
 
         public static void InitBar(int max)
