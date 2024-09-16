@@ -47,8 +47,8 @@ namespace GalArc
 
             Controller.UpdateContent.InitCombobox_Engines();
 
-            LogUtility.Process += LogUtility_Process;
-            LogUtility.ErrorOccured += LogUtility_ErrorOccured;
+            LogUtility.Process += ChangeLabel;
+            LogUtility.ErrorOccured += ChangeLabel;
         }
 
         private void main_Load(object sender, EventArgs e)
@@ -86,11 +86,7 @@ namespace GalArc
             }
         }
 
-        private void LogUtility_Process(object sender, string message)
-        {
-            this.main_statusLabel.Text = message;
-        }
-        private void LogUtility_ErrorOccured(object sender, string message)
+        private void ChangeLabel(object sender, string message)
         {
             this.main_statusLabel.Text = message;
         }

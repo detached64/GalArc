@@ -89,7 +89,6 @@ namespace ArcFormats.Cmvs
             fs.Dispose();
             br.Dispose();
         }
-
         private static void cpzV1_pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
@@ -138,6 +137,11 @@ namespace ArcFormats.Cmvs
             fw.Dispose();
             bw.Dispose();
             indexWriter.Dispose();
+        }
+
+        private static void cpzV6_unpack(string filePath, string folderPath)
+        {
+
         }
     }
 }
