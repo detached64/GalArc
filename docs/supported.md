@@ -9,17 +9,18 @@ Attention:this file may not be updated regularly.
 | Ai6Win           | `arc`                      | ✔️      | ❌    | All                     |
 | AmuseCraft       | `pac`                      | ✔️      | ✔️    | All                     |
 | Artemis          | `pfs`                      | ✔️      | ✔️    | All                     |
-| EntisGLS         | `noa`                      | ✔️      | ✔️    | Only unencrypted        |
+| Cmvs             | `cpz`                      | ✔️      | ✔️    | v1                      |
+| EntisGLS         | `noa`                      | ✔️      | ✔️    | unencrypted             |
 | InnocentGray     | `iga` `dat`                | ✔️      | ✔️    | `iga`:All `dat`:Limited |
 | KID              | `dat`                      | ✔️      | ✔️    | All                     |
-| Kirikiri         | `xp3`                      | ✔️      | ✔️    | Only unencrypted        |
+| Kirikiri         | `xp3`                      | ✔️      | ✔️    | unencrypted             |
 | Majiro           | `arc`                      | ✔️      | ✔️    | All                     |
 | NeXAS            | `pac`                      | ✔️      | ❌    | All                     |
 | NextonLikeC      | `lst`                      | ✔️      | ❌    | All                     |
 | Nitro+           | `pak`                      | ✔️      | ✔️    | All                     |
-| NScripter        | `ns2`                      | ✔️      | ✔️    | Only unencrypted        |
-| RPGMaker         | `rgssad` `rgss2a` `rgss3a` | ✔️      | ❌    | All                     |
+| NScripter        | `ns2`                      | ✔️      | ✔️    | unencrypted             |
+| RPGMaker         | `rgssad` `rgss2a` `rgss3a` | ✔️      | ✔️    | Pack:v1                 |
 | Softpal          | `pac`                      | ✔️      | ✔️    | All                     |
 | SystemNNN        | `gpk` `gtb` `vpk` `vtb`    | ✔️      | ✔️    | All                     |
-| Triangle         | `CG` `SUD`                 | ✔️      | ✔️    | All                     |
+| Triangle         | `CG` `SUD` `CGF`           | ✔️      | ✔️    | All                     |
 
