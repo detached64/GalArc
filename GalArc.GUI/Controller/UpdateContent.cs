@@ -13,7 +13,7 @@ namespace GalArc.Controller
         internal static EngineInfo selectedEngineInfo_Unpack;
         internal static EngineInfo selectedEngineInfo_Pack;
 
-        internal static string[] EncodingList = { "Shift_JIS", "GBK", "UTF-8" };
+        internal static string[] EncodingList = Resource.Encoding.CodePages.Keys.ToArray();
 
         internal static Dictionary<string, string> versionPairs = new Dictionary<string, string>
         {
@@ -72,6 +72,12 @@ namespace GalArc.Controller
                 PackWindow.Instance.pa_ShowFormat.Items.AddRange(engine.PackFormat.Split('/'));
                 selectedEngineInfo_Pack = engine;
             }
+        }
+
+        internal static void InitEncoding()
+        {
+            UnpackWindow.Instance.un_combEncoding.Items.AddRange(EncodingList);
+            PackWindow.Instance.pa_combEncoding.Items.AddRange(EncodingList);
         }
 
         internal static void UpdateUnpackEncoding()

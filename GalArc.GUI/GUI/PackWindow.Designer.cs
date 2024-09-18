@@ -254,10 +254,6 @@
             this.pa_combEncoding.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.pa_combEncoding.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.pa_combEncoding.FormattingEnabled = true;
-            this.pa_combEncoding.Items.AddRange(new object[] {
-            "UTF-8",
-            "Shift-JIS",
-            "GBK"});
             this.pa_combEncoding.Location = new System.Drawing.Point(53, 98);
             this.pa_combEncoding.Name = "pa_combEncoding";
             this.pa_combEncoding.Size = new System.Drawing.Size(127, 32);
