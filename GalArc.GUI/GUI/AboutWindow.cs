@@ -3,8 +3,8 @@ using Log;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace GalArc.GUI
@@ -31,6 +31,13 @@ namespace GalArc.GUI
         {
             Instance = this;
             InitializeComponent();
+
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint, true);
+            this.UpdateStyles();
+            Type type = this.dataGridViewEngines.GetType();
+            PropertyInfo pi = type.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+            pi.SetValue(this.dataGridViewEngines, true, null);
+
             Controller.Localization.SetLocalCulture(main.LocalCulture);
             Controller.Localization.GetStrings_about();
         }

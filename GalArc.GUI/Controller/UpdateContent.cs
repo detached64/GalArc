@@ -153,6 +153,16 @@ namespace GalArc.Controller
         internal static void UpdateDataGridView(List<EngineInfo> engines)
         {
             AboutWindow.Instance.dataGridViewEngines.Rows.Clear();
+            //int count = engines.Count;
+            //DataGridViewRow[] rows = new DataGridViewRow[count];
+            //for (int i = 0; i < count; i++)
+            //{
+            //    rows[i] = new DataGridViewRow();
+            //    rows[i].CreateCells(AboutWindow.Instance.dataGridViewEngines);
+            //    rows[i].Cells[0].Value = engines[i].EngineName;
+            //    rows[i].Cells[1].Value = engines[i].UnpackFormat;
+            //    rows[i].Cells[2].Value = engines[i].PackFormat;
+            //}
             foreach (var engine in engines)
             {
                 AboutWindow.Instance.dataGridViewEngines.Rows.Add(engine.EngineName, engine.UnpackFormat, engine.PackFormat);
