@@ -46,6 +46,7 @@ namespace GalArc
             Log.Controller.Localization.GetStrings_Log();
 
             Controller.UpdateContent.InitCombobox_Engines();
+            Controller.UpdateContent.InitEncoding();
 
             LogUtility.Process += ChangeLabel;
             LogUtility.ErrorOccured += ChangeLabel;

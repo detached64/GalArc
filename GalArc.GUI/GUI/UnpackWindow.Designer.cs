@@ -161,10 +161,6 @@
             this.un_combEncoding.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.un_combEncoding.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.un_combEncoding.FormattingEnabled = true;
-            this.un_combEncoding.Items.AddRange(new object[] {
-            "UTF-8",
-            "Shift-JIS",
-            "GBK"});
             this.un_combEncoding.Location = new System.Drawing.Point(53, 98);
             this.un_combEncoding.Name = "un_combEncoding";
             this.un_combEncoding.Size = new System.Drawing.Size(127, 32);
