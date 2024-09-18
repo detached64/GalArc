@@ -20,7 +20,7 @@ namespace ArcFormats.NeXAS
             Zstd = 7
         }
 
-        private struct FileEntry
+        private struct Entry
         {
             public string FileName;
             public string FilePath;
@@ -30,7 +30,9 @@ namespace ArcFormats.NeXAS
         }
         private static string FolderPath = string.Empty;
 
-        private static List<FileEntry> entries = new List<FileEntry>();
+        private static Encoding encodings = Encoding.UTF8;
+
+        private static List<Entry> entries = new List<Entry>();
 
         private static byte[] signature = { 0x50, 0x41, 0x43 };       //"PAC"
 
@@ -39,6 +41,7 @@ namespace ArcFormats.NeXAS
             FileStream fs = File.OpenRead(filePath);
             BinaryReader reader = new BinaryReader(fs);
             FolderPath = folderPath;
+            encodings = encoding;
             if (!reader.ReadBytes(3).SequenceEqual(signature))
             {
                 LogUtility.Error_NotValidArchive();
@@ -75,7 +78,7 @@ namespace ArcFormats.NeXAS
                 fs.Seek(entries[i].Offset, SeekOrigin.Begin);
                 byte[] fileData = reader.ReadBytes(entries[i].PackedSize);
 
-                if (entries[i].UnpackedSize != entries[i].PackedSize && method != Method.None) // compressed
+                if (entries[i].UnpackedSize != entries[i].PackedSize && method != Method.None && Enum.IsDefined(typeof(Method), method)) // compressed
                 {
                     LogUtility.Debug("Packed file detected:" + entries[i].FileName + ".Try " + method.ToString() + "……");
                     try
@@ -105,7 +108,7 @@ namespace ArcFormats.NeXAS
                         LogUtility.Debug(ex.Message);
                     }
                 }
-                else                                                    // No compression
+                else                                                    // No compression or unknown method
                 {
                     File.WriteAllBytes(entries[i].FilePath, fileData);
                 }
@@ -123,8 +126,8 @@ namespace ArcFormats.NeXAS
             {
                 for (int i = 0; i < fileCount; i++)
                 {
-                    FileEntry entry = new FileEntry();
-                    entry.FileName = ArcEncoding.Shift_JIS.GetString(reader.ReadBytes(64)).TrimEnd('\0');
+                    Entry entry = new Entry();
+                    entry.FileName = encodings.GetString(reader.ReadBytes(64)).TrimEnd('\0');
                     entry.FilePath = Path.Combine(FolderPath, entry.FileName);
                     entry.Offset = reader.ReadInt32();
                     entry.UnpackedSize = reader.ReadInt32();
@@ -154,8 +157,8 @@ namespace ArcFormats.NeXAS
             {
                 for (int i = 0; i < fileCount; i++)
                 {
-                    FileEntry entry = new FileEntry();
-                    entry.FileName = ArcEncoding.Shift_JIS.GetString(readerIndex.ReadBytes(64)).TrimEnd('\0');
+                    Entry entry = new Entry();
+                    entry.FileName = encodings.GetString(readerIndex.ReadBytes(64)).TrimEnd('\0');
                     entry.FilePath = Path.Combine(FolderPath, entry.FileName);
                     entry.Offset = readerIndex.ReadInt32();
                     entry.UnpackedSize = readerIndex.ReadInt32();
