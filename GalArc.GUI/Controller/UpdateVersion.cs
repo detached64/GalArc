@@ -1,10 +1,10 @@
 ﻿using GalArc.GUI;
+using GalArc.Properties;
 using Log;
 using System;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using GalArc.Properties;
 
 namespace GalArc.Controller
 {
@@ -76,7 +76,10 @@ namespace GalArc.Controller
             {
                 int num1 = (i < parts1.Length) ? int.Parse(parts1[i]) : 0;
                 int num2 = (i < parts2.Length) ? int.Parse(parts2[i]) : 0;
-
+                if (num1 > num2)
+                {
+                    break;
+                }
                 if (num1 < num2)
                 {
                     isNewVerExist = true;
