@@ -3,6 +3,7 @@ using Log;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -37,6 +38,8 @@ namespace GalArc.GUI
             Type type = this.dataGridViewEngines.GetType();
             PropertyInfo pi = type.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
             pi.SetValue(this.dataGridViewEngines, true, null);
+
+            this.dataGridViewEngines.RowPrePaint += new DataGridViewRowPrePaintEventHandler(dataGridViewEngines_RowPrePaint);
 
             Controller.Localization.SetLocalCulture(main.LocalCulture);
             Controller.Localization.GetStrings_about();
@@ -117,5 +120,16 @@ namespace GalArc.GUI
             Process.Start(new ProcessStartInfo(issueUrl) { UseShellExecute = true });
         }
 
+        private void dataGridViewEngines_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            if (e.RowIndex % 2 == 0)
+            {
+                this.dataGridViewEngines.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(242, 245, 249);
+            }
+            else
+            {
+                this.dataGridViewEngines.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+            }
+        }
     }
 }
