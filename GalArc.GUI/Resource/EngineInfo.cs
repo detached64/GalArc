@@ -51,7 +51,7 @@ namespace GalArc.Resource
             new EngineInfo("KID","DAT","DAT"),
             new EngineInfo("Kirikiri","XP3","XP3","1/2"),
             new EngineInfo("Majiro","ARC","ARC","1/2"),
-            new EngineInfo("NeXAS","PAC", string.Empty),
+            new EngineInfo("NeXAS","PAC", string.Empty,true,false),
             new EngineInfo("NextonLikeC","LST",string.Empty),
             new EngineInfo("NitroPlus","PAK","PAK"),
             new EngineInfo("NScripter","NS2","NS2"),

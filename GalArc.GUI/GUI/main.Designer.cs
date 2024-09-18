@@ -44,7 +44,6 @@
             this.pages.Controls.Add(this.packPage);
             this.pages.Controls.Add(this.optionPage);
             this.pages.Controls.Add(this.aboutPage);
-            this.pages.HotTrack = true;
             this.pages.Location = new System.Drawing.Point(12, 12);
             this.pages.Name = "pages";
             this.pages.SelectedIndex = 0;
