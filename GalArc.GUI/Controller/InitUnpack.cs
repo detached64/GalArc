@@ -28,7 +28,11 @@ namespace GalArc.Controller
             MethodInfo unpackMethod = ArcUnpack?.GetMethod("Unpack", BindingFlags.Static | BindingFlags.Public);
             if (ArcUnpack != null && unpackMethod != null)
             {
-                Encoding encoding = Encoding.GetEncoding(Resource.Encoding.CodePages[encodingString]);
+                Encoding encoding = Encoding.UTF8;
+                if (!string.IsNullOrEmpty(encodingString))
+                {
+                    encoding = Encoding.GetEncoding(Resource.Encoding.CodePages[encodingString]);
+                }
                 List<object> list = new List<object>
                 {
                     inputFilePath,
