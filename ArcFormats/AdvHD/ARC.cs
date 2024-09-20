@@ -56,17 +56,19 @@ namespace ArcFormats.AdvHD
                 for (int j = 0; j < typeHeaders[i].fileCount; j++)
                 {
                     AdvHD_arc_v1_entry index = new AdvHD_arc_v1_entry();
-                    index.fileName = Encoding.ASCII.GetString(br.ReadBytes(13)).Replace("\0", string.Empty);
-
+                    index.fileName = Encoding.ASCII.GetString(br.ReadBytes(13)).Replace("\0", string.Empty) + "." + typeHeaders[i].ext;
                     index.fileSize = br.ReadUInt32();
                     index.offset = br.ReadUInt32();
                     long pos = fs.Position;
-                    index.filePath = folderPath + "\\" + index.fileName + "." + typeHeaders[i].ext;
-                    FileStream fw = new FileStream(index.filePath, FileMode.Create, FileAccess.Write);
+                    index.filePath = Path.Combine(folderPath, index.fileName);
                     fs.Seek(index.offset, SeekOrigin.Begin);
                     byte[] buffer = br.ReadBytes((int)index.fileSize);
-                    fw.Write(buffer, 0, buffer.Length);
-                    fw.Close();
+                    if (Global.ToDecryptScript && IsScriptFile(Path.GetExtension(index.filePath), "1"))
+                    {
+                        LogUtility.Debug("Try to decrypt script:" + index.fileName);
+                        DecryptScript(buffer);
+                    }
+                    File.WriteAllBytes(index.filePath, buffer);
                     fs.Seek(pos, SeekOrigin.Begin);
                     LogUtility.UpdateBar();
                 }
@@ -175,10 +177,13 @@ namespace ArcFormats.AdvHD
 
             for (int i = 0; i < header.fileCount; i++)
             {
-                FileStream fw = new FileStream(l[i].filePath, FileMode.Create, FileAccess.Write);
                 byte[] buffer = br1.ReadBytes((int)l[i].fileSize);
-                fw.Write(buffer, 0, buffer.Length);
-                fw.Dispose();
+                if (Global.ToDecryptScript && IsScriptFile(Path.GetExtension(l[i].filePath), "2"))
+                {
+                    LogUtility.Debug("Try to decrypt script:" + l[i].fileName);
+                    DecryptScript(buffer);
+                }
+                File.WriteAllBytes(l[i].filePath, buffer);
                 LogUtility.UpdateBar();
             }
             fs.Dispose();
@@ -249,7 +254,7 @@ namespace ArcFormats.AdvHD
             BinaryReader br = new BinaryReader(fs);
             fs.Position = 6;
             char a = br.ReadChar();
-            if (a >= 'A')//extension
+            if (a >= 'A')   //extension
             {
                 LogUtility.Info("Valid arc v1 archive detected.");
                 arcV1_unpack(filePath, folderPath);
@@ -270,6 +275,28 @@ namespace ArcFormats.AdvHD
             else
             {
                 arcV2_pack(folderPath, filePath);
+            }
+        }
+
+        private static bool IsScriptFile(string ext, string version)
+        {
+            ext = ext.ToLower().TrimStart('.');
+            if (version == "1")
+            {
+                return ext == "scr" || ext == "wsc";
+            }
+            else if (version == "2")
+            {
+                return ext == "json" || ext == "ws2";
+            }
+            return false;
+        }
+
+        private static void DecryptScript(byte[] data)
+        {
+            for (int i = 0; i < data.Length; ++i)
+            {
+                data[i] = Binary.RotByteR(data[i], 2);
             }
         }
     }
