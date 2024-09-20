@@ -118,5 +118,17 @@ namespace GalArc.Properties {
                 this["isTopMost"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool un_chkbxDecScr_checked {
+            get {
+                return ((bool)(this["un_chkbxDecScr_checked"]));
+            }
+            set {
+                this["un_chkbxDecScr_checked"] = value;
+            }
+        }
     }
 }

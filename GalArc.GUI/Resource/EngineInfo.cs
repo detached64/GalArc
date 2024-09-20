@@ -12,8 +12,9 @@ namespace GalArc.Resource
         internal string PackVersion { get; set; }
         internal bool isUnpackEncodingEnabled { get; set; }
         internal bool isPackEncodingEnabled { get; set; }
+        internal bool isDecryptScriptEnabled { get; set; }
 
-        internal EngineInfo(string engineName, string unpackFormat, string packFormat, string packVersion, bool isUnpackEncodingEnabled, bool isPackEncodingEnabled)
+        internal EngineInfo(string engineName, string unpackFormat, string packFormat, string packVersion, bool isUnpackEncodingEnabled, bool isPackEncodingEnabled, bool isDecryptScriptEnabled)
         {
             EngineName = engineName;
             UnpackFormat = unpackFormat;
@@ -21,17 +22,18 @@ namespace GalArc.Resource
             PackVersion = packVersion;
             this.isUnpackEncodingEnabled = isUnpackEncodingEnabled;
             this.isPackEncodingEnabled = isPackEncodingEnabled;
+            this.isDecryptScriptEnabled = isDecryptScriptEnabled;
         }
         internal EngineInfo(string engineName, string unpackFormat, string packFormat)
-        : this(engineName, unpackFormat, packFormat, string.Empty, false, false)
+        : this(engineName, unpackFormat, packFormat, string.Empty, false, false, false)
         {
         }
         internal EngineInfo(string engineName, string unpackFormat, string packFormat, string packVersion)
-            : this(engineName, unpackFormat, packFormat, packVersion, false, false)
+            : this(engineName, unpackFormat, packFormat, packVersion, false, false, false)
         {
         }
         internal EngineInfo(string engineName, string unpackFormat, string packFormat, bool isUnpackEncodingEnabled, bool isPackEncodingEnabled)
-            : this(engineName, unpackFormat, packFormat, string.Empty, isUnpackEncodingEnabled, isPackEncodingEnabled)
+            : this(engineName, unpackFormat, packFormat, string.Empty, isUnpackEncodingEnabled, isPackEncodingEnabled, false)
         {
         }
 
@@ -43,7 +45,7 @@ namespace GalArc.Resource
             new EngineInfo("AdvHD","ARC/PNA","ARC/PNA","1/2"),
             new EngineInfo("Ai5Win","VSD",string.Empty),
             new EngineInfo("Ai6Win","ARC",string.Empty),
-            new EngineInfo("Artemis","PFS","PFS","8/6/2",true,true),
+            new EngineInfo("Artemis","PFS","PFS","8/6/2",true,true,false),
             new EngineInfo("BiShop","BSA", "BSA","1/2"),
             new EngineInfo("Cmvs","CPZ","CPZ","1"),
             new EngineInfo("EntisGLS","NOA","NOA",true,true),
@@ -60,7 +62,7 @@ namespace GalArc.Resource
             new EngineInfo("Softpal","PAC","PAC","1/2"),
             new EngineInfo("SystemNNN","GPK/VPK","GPK/VPK","1/2"),
             new EngineInfo("Triangle","CG/CGF/SUD","CG/CGF/SUD","1"),
-            new EngineInfo("Yuris","YPF","YPF"),
+            new EngineInfo("Yuris","YPF", string.Empty, string.Empty,false,false,true),
         };
     }
 }

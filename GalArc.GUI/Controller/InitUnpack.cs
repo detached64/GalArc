@@ -9,7 +9,7 @@ namespace GalArc.Controller
 {
     internal class InitUnpack
     {
-        internal static void initUnpack(string inputFilePath, string outputFolderPath, string encodingString)
+        internal static void initUnpack(string inputFilePath, string outputFolderPath, string encodingString, bool toDecScr)
         {
             string engineName = UnpackWindow.Instance.un_selEngine.Text;
             string extension = Path.GetExtension(inputFilePath).Replace(".", string.Empty).ToUpper();
@@ -25,7 +25,7 @@ namespace GalArc.Controller
             extension = CleanExtension(extension);
             string fullTypeName = $"ArcFormats.{engineName}.{extension}";
 
-            ArcFormats.Global global = new ArcFormats.Global(inputFilePath, outputFolderPath, fullTypeName, encoding, encoding, true, null);
+            ArcFormats.Global global = new ArcFormats.Global(inputFilePath, outputFolderPath, fullTypeName, encoding, encoding, toDecScr, null);
             global.Unpack();
         }
 

@@ -367,6 +367,15 @@ namespace GalArc.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Decrypt Scripts 的本地化字符串。
+        /// </summary>
+        internal static string un_chkbx_DecScr {
+            get {
+                return ResourceManager.GetString("un_chkbx_DecScr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Log 的本地化字符串。
         /// </summary>
         internal static string un_chkbx_Log {

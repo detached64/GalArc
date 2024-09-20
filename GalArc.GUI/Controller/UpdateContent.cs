@@ -169,5 +169,16 @@ namespace GalArc.Controller
             }
         }
 
+        internal static void UpdateDecScr()
+        {
+            if (selectedEngineInfo_Unpack.isDecryptScriptEnabled)
+            {
+                UnpackWindow.Instance.un_chkbxDecScr.Enabled = true;
+            }
+            else
+            {
+                UnpackWindow.Instance.un_chkbxDecScr.Enabled = false;
+            }
+        }
     }
 }

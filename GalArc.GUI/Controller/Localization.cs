@@ -56,6 +56,7 @@ namespace GalArc.Controller
 
             UnpackWindow.Instance.un_chkbxMatch.Text = Resources.un_chkbx_Match;
             UnpackWindow.Instance.un_chkbxShowLog.Text = Resources.un_chkbx_Log;
+            UnpackWindow.Instance.un_chkbxDecScr.Text = Resources.un_chkbx_DecScr;
 
             UnpackWindow.Instance.un_btnClear.Text = Resources.un_btn_Clear;
             UnpackWindow.Instance.btnUnpack.Text = Resources.un_btn_Unpack;
