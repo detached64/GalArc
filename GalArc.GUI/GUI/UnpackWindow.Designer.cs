@@ -47,6 +47,7 @@
             this.un_btnClear = new System.Windows.Forms.Button();
             this.un_chkbxMatch = new System.Windows.Forms.CheckBox();
             this.un_chkbxShowLog = new System.Windows.Forms.CheckBox();
+            this.un_chkbxDecScr = new System.Windows.Forms.CheckBox();
             this.un_gbOption.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -147,6 +148,7 @@
             // 
             // un_gbOption
             // 
+            this.un_gbOption.Controls.Add(this.un_chkbxDecScr);
             this.un_gbOption.Controls.Add(this.un_combEncoding);
             this.un_gbOption.Controls.Add(this.un_lbEncoding);
             this.un_gbOption.Location = new System.Drawing.Point(240, 302);
@@ -220,6 +222,17 @@
             this.un_chkbxShowLog.UseVisualStyleBackColor = true;
             this.un_chkbxShowLog.CheckedChanged += new System.EventHandler(this.un_chkbxShowLog_CheckedChanged);
             // 
+            // un_chkbxDecScr
+            // 
+            this.un_chkbxDecScr.AutoSize = true;
+            this.un_chkbxDecScr.Location = new System.Drawing.Point(209, 100);
+            this.un_chkbxDecScr.Name = "un_chkbxDecScr";
+            this.un_chkbxDecScr.Size = new System.Drawing.Size(168, 28);
+            this.un_chkbxDecScr.TabIndex = 2;
+            this.un_chkbxDecScr.Text = "Decrypt Scripts";
+            this.un_chkbxDecScr.UseVisualStyleBackColor = true;
+            this.un_chkbxDecScr.CheckedChanged += new System.EventHandler(this.un_chkbxDecScr_CheckedChanged);
+            // 
             // UnpackWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
@@ -271,5 +284,6 @@
         internal System.Windows.Forms.ComboBox un_combEncoding;
         internal System.Windows.Forms.GroupBox un_gbOption;
         internal System.Windows.Forms.Label un_lbEncoding;
+        internal System.Windows.Forms.CheckBox un_chkbxDecScr;
     }
 }

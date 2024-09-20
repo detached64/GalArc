@@ -126,6 +126,10 @@ namespace GalArc.GUI
             {
                 this.un_selEngine.SelectedIndex = Properties.Settings.Default.un_selEngine_selectedIndex;
             }
+            if (Resource.Global.AutoSaveDecryptScripts)
+            {
+                this.un_chkbxDecScr.Checked = Properties.Settings.Default.un_chkbxDecScr_checked;
+            }
         }
 
         private void btnUnpack_Click(object sender, EventArgs e)
@@ -137,7 +141,7 @@ namespace GalArc.GUI
             }
             if (string.IsNullOrEmpty(this.un_FolderPath.Text))
             {
-                LogUtility.Error("Please specify output folder path.",false);
+                LogUtility.Error("Please specify output folder path.", false);
                 return;
             }
             if (!File.Exists(this.un_FilePath.Text))
@@ -147,7 +151,7 @@ namespace GalArc.GUI
             }
             try
             {
-                Controller.InitUnpack.initUnpack(this.un_FilePath.Text, this.un_FolderPath.Text, this.un_combEncoding.Text);
+                Controller.InitUnpack.initUnpack(this.un_FilePath.Text, this.un_FolderPath.Text, this.un_combEncoding.Text, this.un_chkbxDecScr.Checked);
             }
             catch (Exception ex)
             {
@@ -174,6 +178,7 @@ namespace GalArc.GUI
             }
             UpdateContent.UpdateUnpackListbox();
             UpdateContent.UpdateUnpackEncoding();
+            UpdateContent.UpdateDecScr();
         }
 
         private void un_chkbxShowLog_CheckedChanged(object sender, EventArgs e)
@@ -188,6 +193,15 @@ namespace GalArc.GUI
             if (Resource.Global.AutoSaveShowLog)
             {
                 Properties.Settings.Default.chkbxShowLog_checked = this.un_chkbxShowLog.Checked;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        private void un_chkbxDecScr_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Resource.Global.AutoSaveDecryptScripts)
+            {
+                Properties.Settings.Default.un_chkbxDecScr_checked = this.un_chkbxDecScr.Checked;
                 Properties.Settings.Default.Save();
             }
         }

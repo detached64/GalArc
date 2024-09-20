@@ -240,4 +240,7 @@
   <data name="op_chkbx_OnTop" xml:space="preserve">
     <value>Always on top</value>
   </data>
+  <data name="un_chkbx_DecScr" xml:space="preserve">
+    <value>Decrypt Scripts</value>
+  </data>
 </root>
