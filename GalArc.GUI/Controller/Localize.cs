@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace GalArc.Controller
 {
-    internal class Localization
+    internal class Localize
     {
         /// <summary>
         /// Set the culture according to the system language.

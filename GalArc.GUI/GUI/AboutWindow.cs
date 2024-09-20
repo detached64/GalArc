@@ -41,8 +41,8 @@ namespace GalArc.GUI
 
             this.dataGridViewEngines.RowPrePaint += new DataGridViewRowPrePaintEventHandler(dataGridViewEngines_RowPrePaint);
 
-            Controller.Localization.SetLocalCulture(main.LocalCulture);
-            Controller.Localization.GetStrings_about();
+            Controller.Localize.SetLocalCulture(main.LocalCulture);
+            Controller.Localize.GetStrings_about();
         }
         private void AboutWindow_Load(object sender, EventArgs e)
         {

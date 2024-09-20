@@ -19,8 +19,8 @@ namespace GalArc.GUI
             this.un_FilePath.DragDrop += new DragEventHandler(un_FilePath_DragDrop);
             this.un_FolderPath.DragEnter += new DragEventHandler(un_FolderPath_DragEnter);
             this.un_FolderPath.DragDrop += new DragEventHandler(un_FolderPath_DragDrop);
-            Controller.Localization.SetLocalCulture(main.LocalCulture);
-            Controller.Localization.GetStrings_unpack();
+            Controller.Localize.SetLocalCulture(main.LocalCulture);
+            Controller.Localize.GetStrings_unpack();
 
             LogWindow.Instance.LogFormHidden += new EventHandler(LogForm_LogFormHidden);
         }
@@ -151,7 +151,7 @@ namespace GalArc.GUI
             }
             try
             {
-                Controller.InitUnpack.initUnpack(this.un_FilePath.Text, this.un_FolderPath.Text, this.un_combEncoding.Text, this.un_chkbxDecScr.Checked);
+                Controller.Execute.InitUnpack(this.un_FilePath.Text, this.un_FolderPath.Text, this.un_combEncoding.Text, this.un_chkbxDecScr.Checked);
             }
             catch (Exception ex)
             {
