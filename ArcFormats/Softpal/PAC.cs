@@ -1,4 +1,5 @@
 ﻿using Log;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -57,6 +58,18 @@ namespace ArcFormats.Softpal
             for (int i = 0; i < fileCount; i++)
             {
                 byte[] data = br.ReadBytes((int)entries[i].fileSize);
+                if (data[0] == '$')
+                {
+                    try
+                    {
+                        LogUtility.Debug($"Decrypting {entries[i].fileName}");
+                        DecryptScript(data);
+                    }
+                    catch
+                    {
+                        LogUtility.Info($"Decrypting {entries[i].fileName} failed");
+                    }
+                }
                 File.WriteAllBytes(folderPath + "\\" + entries[i].fileName, data);
                 LogUtility.UpdateBar();
             }
@@ -85,12 +98,43 @@ namespace ArcFormats.Softpal
                 long pos = fs.Position;
                 fs.Position = entry.offset;
                 byte[] fileData = br.ReadBytes((int)entry.fileSize);
+                if (Global.ToDecryptScript && fileData.Length >= 16 && fileData[0] == 36)  //'$'
+                {
+                    try
+                    {
+                        LogUtility.Debug($"Try to decrypt script:{entry.fileName}");
+                        DecryptScript(fileData);
+                    }
+                    catch
+                    {
+                        LogUtility.Error($"Decrypting {entry.fileName} failed.", false);
+                    }
+                }
+
                 File.WriteAllBytes(folderPath + "\\" + entry.fileName, fileData);
                 fs.Position = pos;
                 LogUtility.UpdateBar();
             }
             fs.Dispose();
             br.Dispose();
+        }
+
+        private static void DecryptScript(byte[] data)
+        {
+            int count = (data.Length - 16) / 4;
+            int shift = 4;
+            for (int i = 0; i < count; i++)
+            {
+                int index = 16 + i * 4;
+                uint value = BitConverter.ToUInt32(data, index);
+
+                byte rotatedByte = Binary.RotByteL((byte)value, shift++);
+                value = (value & 0xFFFFFF00u) | rotatedByte;
+                value ^= 0x084DF873u ^ 0xFF987DEEu;
+
+                byte[] bytes = BitConverter.GetBytes(value);
+                Buffer.BlockCopy(bytes, 0, data, index, 4);
+            }
         }
 
         public static void Pack(string folderPath, string filePath)
