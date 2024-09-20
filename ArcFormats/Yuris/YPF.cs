@@ -89,10 +89,10 @@ namespace ArcFormats.Yuris
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(entry.filePath));
                 }
-                if (Global.ToDecryptScript && Path.GetExtension(entry.filePath) == ".ybn")
+                if (Global.ToDecryptScript && Path.GetExtension(entry.filePath) == ".ybn" && BitConverter.ToUInt32(entry.fileData, 0) == 0x42545359)
                 {
                     LogUtility.Debug("Try to decrypt script:" + entry.fileName);
-                    TryDecryptScript(entry.fileData);
+                    entry.fileData = TryDecryptScript(entry.fileData);
                 }
                 File.WriteAllBytes(entry.filePath, entry.fileData);
                 LogUtility.UpdateBar();
@@ -180,54 +180,100 @@ namespace ArcFormats.Yuris
             return Xor.xor(name, scheme.key);
         }
 
-        private static void TryDecryptScript(byte[] script)
+        private static byte[] TryDecryptScript(byte[] script)
         {
-            if (isFirstGuessYst)
+            byte[] result = new byte[] { };
+            try
             {
-                MemoryStream ms = new MemoryStream(script);
-                BinaryReader br = new BinaryReader(ms);
-                if (!br.ReadBytes(4).SequenceEqual(new byte[] { 0x59, 0x53, 0x54, 0x42 }))
+                FindXorKey(script, "new");
+                result = DecryptNewScript(script, BitConverter.ToUInt32(script, 12), BitConverter.ToUInt32(script, 16), BitConverter.ToUInt32(script, 20), BitConverter.ToUInt32(script, 24));
+            }
+            catch
+            {
+                try
+                {
+                    FindXorKey(script, "old");
+                    result = DecryptOldScript(script, BitConverter.ToUInt32(script, 8), BitConverter.ToUInt32(script, 12));
+                }
+                catch
+                {
+                    isFirstGuessYst = true;
+                    LogUtility.Error("Decryption failed.", false);
+                    return script;
+                }
+            }
+            isFirstGuessYst = false;
+            return result;
+        }
+        private static void FindXorKey(byte[] script, string flag)
+        {
+            if (flag == "old")
+            {
+                if (script.Length < 44 || !isFirstGuessYst)
                 {
                     return;
                 }
+                Array.Copy(script, 44, scheme.scriptKeyBytes, 0, 4);
+            }
+            else
+            {
+                if (!isFirstGuessYst)
+                {
+                    return;
+                }
+                MemoryStream ms = new MemoryStream(script);
+                BinaryReader br = new BinaryReader(ms);
                 ms.Position = 12;
                 uint a = br.ReadUInt32();
 
                 ms.Position = a + 40;
                 scheme.scriptKey = br.ReadUInt32();
                 scheme.scriptKeyBytes = BitConverter.GetBytes(scheme.scriptKey);
-                isFirstGuessYst = false;
             }
-            if (BitConverter.ToUInt32(script, 0) != 0x42545359)
-            {
-                LogUtility.Debug("Not a valid YSTB file.");
-                return;
-            }
-            DecryptScript(script, BitConverter.ToUInt32(script, 12), BitConverter.ToUInt32(script, 16), BitConverter.ToUInt32(script, 20), BitConverter.ToUInt32(script, 24));
         }
 
-        private static void DecryptScript(byte[] script, uint len1, uint len2, uint len3, uint len4)
+        private static byte[] DecryptNewScript(byte[] script, uint len1, uint len2, uint len3, uint len4)
         {
+            byte[] result = new byte[script.Length];
+            Array.Copy(script, result, script.Length);
             uint pos = 32;
             for (uint i = 0; i < len1; i++)
             {
-                script[i + pos] ^= scheme.scriptKeyBytes[i & 3];
+                result[i + pos] ^= scheme.scriptKeyBytes[i & 3];
             }
             pos += len1;
             for (uint i = 0; i < len2; i++)
             {
-                script[i + pos] ^= scheme.scriptKeyBytes[i & 3];
+                result[i + pos] ^= scheme.scriptKeyBytes[i & 3];
             }
             pos += len2;
             for (uint i = 0; i < len3; i++)
             {
-                script[i + pos] ^= scheme.scriptKeyBytes[i & 3];
+                result[i + pos] ^= scheme.scriptKeyBytes[i & 3];
             }
             pos += len3;
             for (uint i = 0; i < len4; i++)
             {
-                script[i + pos] ^= scheme.scriptKeyBytes[i & 3];
+                result[i + pos] ^= scheme.scriptKeyBytes[i & 3];
             }
+            return result;
+        }
+
+        private static byte[] DecryptOldScript(byte[] script, uint len1, uint len2)
+        {
+            byte[] result = new byte[script.Length];
+            Array.Copy(script, result, script.Length);
+            uint pos = 32;
+            for (uint i = 0; i < len1; i++)
+            {
+                result[i + pos] ^= scheme.scriptKeyBytes[i & 3];
+            }
+            pos += len1;
+            for (uint i = 0; i < len2; i++)
+            {
+                result[i + pos] ^= scheme.scriptKeyBytes[i & 3];
+            }
+            return result;
         }
     }
 }
