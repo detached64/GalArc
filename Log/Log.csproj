@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\Localization.cs" />
+    <Compile Include="Controller\Localize.cs" />
     <Compile Include="Resource\Global.cs" />
     <Compile Include="Log.cs">
       <SubType>Form</SubType>
