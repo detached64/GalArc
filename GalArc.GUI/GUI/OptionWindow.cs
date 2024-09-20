@@ -14,8 +14,8 @@ namespace GalArc.GUI
         {
             Instance = this;
             InitializeComponent();
-            Controller.Localization.SetLocalCulture(main.LocalCulture);
-            Controller.Localization.GetStrings_option();
+            Controller.Localize.SetLocalCulture(main.LocalCulture);
+            Controller.Localize.GetStrings_option();
             LoadState();
             Controller.UpdateContent.InitCombobox_Languages();
         }
@@ -28,8 +28,8 @@ namespace GalArc.GUI
         private void op_cbLang_SelectedIndexChanged(object sender, EventArgs e)
         {
             main.LocalCulture = Resource.Languages.languages[this.op_cbLang.Text];
-            Controller.Localization.SetLocalCulture(main.LocalCulture);
-            Controller.Localization.RefreshStrings();
+            Controller.Localize.SetLocalCulture(main.LocalCulture);
+            Controller.Localize.RefreshStrings();
             if (Resource.Global.AutoSaveLanguage)
             {
                 Properties.Settings.Default.lastLang = main.LocalCulture;

@@ -12,7 +12,7 @@ namespace GalArc.Controller
             string folderPath = Path.Combine(Path.GetDirectoryName(UnpackWindow.Instance.un_FilePath.Text), Path.GetFileNameWithoutExtension(UnpackWindow.Instance.un_FilePath.Text));
             if (File.Exists(folderPath))
             {
-                UnpackWindow.Instance.un_FolderPath.Text = folderPath + "_unpacked";
+                UnpackWindow.Instance.un_FolderPath.Text = UnpackWindow.Instance.un_FilePath.Text.Replace('.', '_') + "_unpacked";
             }
             else
             {

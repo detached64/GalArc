@@ -21,7 +21,7 @@ namespace GalArc
             Main = this;
             InitializeComponent();
             LogUtility.NewInstance();
-            LocalCulture = Controller.Localization.GetLocalCulture();
+            LocalCulture = Controller.Localize.GetLocalCulture();
 
             logWindow = new LogWindow();
             unpackWindow = new UnpackWindow();
@@ -39,8 +39,8 @@ namespace GalArc
             optionWindow.Dock = DockStyle.Fill;
             aboutWindow.Dock = DockStyle.Fill;
 
-            Controller.Localization.SetLocalCulture(LocalCulture);
-            Controller.Localization.GetStrings_main();
+            Controller.Localize.SetLocalCulture(LocalCulture);
+            Controller.Localize.GetStrings_main();
 
             Log.Controller.Localization.SetLocalCulture(LocalCulture);
             Log.Controller.Localization.GetStrings_Log();

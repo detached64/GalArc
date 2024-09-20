@@ -52,7 +52,7 @@ namespace Utility
         }
 
         /// <summary>
-        /// Only used for continuous file names with a separator in between.
+        /// Used for continuous file names with a separator <paramref name="toThis"/> in between.
         /// </summary>
         /// <param name="br"></param>
         /// <param name="encoding"></param>
@@ -159,5 +159,22 @@ namespace Utility
             return sum;
         }
 
+        /// <summary>
+        /// Whether <paramref name="a"/> is among the <paramref name="array"/>.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="array"></param>
+        /// <returns></returns>
+        public static bool IsAmongArray(object a, object[] array)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (a == array[i])
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
