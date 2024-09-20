@@ -42,8 +42,8 @@ namespace GalArc
             Controller.Localize.SetLocalCulture(LocalCulture);
             Controller.Localize.GetStrings_main();
 
-            Log.Controller.Localization.SetLocalCulture(LocalCulture);
-            Log.Controller.Localization.GetStrings_Log();
+            Log.Controller.Localize.SetLocalCulture(LocalCulture);
+            Log.Controller.Localize.GetStrings_Log();
 
             Controller.UpdateContent.InitCombobox_Engines();
             Controller.UpdateContent.InitEncoding();

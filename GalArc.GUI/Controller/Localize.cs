@@ -133,7 +133,7 @@ namespace GalArc.Controller
             GetStrings_pack();
             GetStrings_option();
             GetStrings_about();
-            Log.Controller.Localization.GetStrings_Log();
+            Log.Controller.Localize.GetStrings_Log();
         }
     }
 }
