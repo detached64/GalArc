@@ -39,19 +39,23 @@ namespace GalArc.GUI
 
         private void op_chkbxTopMost_CheckedChanged(object sender, EventArgs e)
         {
-            if (Resource.Global.AutoSaveTopMost)
+            if (this.op_chkbxOnTop.Checked)
             {
-                if (this.op_chkbxOnTop.Checked)
+                LogWindow.Instance.TopMost = true;
+                main.Main.TopMost = true;
+                if (Resource.Global.AutoSaveTopMost)
                 {
-                    LogWindow.Instance.TopMost = true;
-                    main.Main.TopMost = true;
+
                     Properties.Settings.Default.isTopMost = true;
                     Properties.Settings.Default.Save();
                 }
-                else
+            }
+            else
+            {
+                LogWindow.Instance.TopMost = false;
+                main.Main.TopMost = false;
+                if (Resource.Global.AutoSaveTopMost)
                 {
-                    LogWindow.Instance.TopMost = false;
-                    main.Main.TopMost = false;
                     Properties.Settings.Default.isTopMost = false;
                     Properties.Settings.Default.Save();
                 }

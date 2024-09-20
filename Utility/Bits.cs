@@ -19,11 +19,7 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Utility
 {
@@ -32,7 +28,9 @@ namespace Utility
         public static int ReadBits(byte[] byteArray, ref int bitPosition, int bitCount)
         {
             if (byteArray == null || bitPosition < 0 || bitCount <= 0)
+            {
                 throw new ArgumentException("Invalid input.");
+            }
 
             int result = 0;
 

@@ -196,7 +196,7 @@ namespace Log
 
         public static void ShowVersion(string extension, int version)
         {
-            LogUtility.Info($"Valid {extension} v{version} archive detected.");
+            Info($"Valid {extension} v{version} archive detected.");
         }
     }
 }
