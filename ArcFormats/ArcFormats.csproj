@@ -72,6 +72,7 @@
     <Compile Include="Triangle\CG.cs" />
     <Compile Include="Triangle\CGF.cs" />
     <Compile Include="Triangle\SUD.cs" />
+    <Compile Include="Yuris\YPF.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Log\Log.csproj">
