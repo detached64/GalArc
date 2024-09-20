@@ -10,7 +10,7 @@ namespace ArcFormats.Palette
     {
         private static byte[] magic = { 0x05, 0x50, 0x41, 0x43, 0x4b, 0x32 };
 
-        public static void Unpack(string filePath, string folderPath, Encoding encoding)
+        public static void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -38,7 +38,7 @@ namespace ArcFormats.Palette
             br.Dispose();
         }
 
-        public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
+        public static void Pack(string folderPath, string filePath)
         {
             string[] files = Directory.GetFiles(folderPath, "*.*", SearchOption.TopDirectoryOnly);
             int nameLenSum = Utilities.GetNameLenSum(files, ArcEncoding.Shift_JIS);

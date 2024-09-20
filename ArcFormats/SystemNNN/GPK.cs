@@ -15,7 +15,7 @@ namespace ArcFormats.SystemNNN
             public string filePath { get; set; }
         }
 
-        public static void Unpack(string filePath, string folderPath, Encoding encoding)
+        public static void Unpack(string filePath, string folderPath)
         {
             //init
             string gpkPath;
@@ -105,7 +105,7 @@ namespace ArcFormats.SystemNNN
             br2.Dispose();
         }
 
-        public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
+        public static void Pack(string folderPath, string filePath)
         {
             DirectoryInfo d = new DirectoryInfo(folderPath);
             uint filecount = (uint)Utilities.GetFileCount_All(folderPath);
@@ -156,7 +156,7 @@ namespace ArcFormats.SystemNNN
                 LogUtility.UpdateBar();
             }
 
-            if (version == "1")
+            if (Global.Version == "1")
             {
                 //skip this
             }

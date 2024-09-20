@@ -17,7 +17,7 @@ namespace ArcFormats.Cmvs
             0x9C, 0x58, 0x8C, 0xD3, 0x96, 0xC8, 0x8C, 0xCB, 0x8C, 0xCE, 0x8C, 0xF3, 0x8C, 0xD6, 0x8B, 0x52,
         };
 
-        public static void Unpack(string filePath, string folderPath, Encoding encoding)
+        public static void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -38,9 +38,9 @@ namespace ArcFormats.Cmvs
             }
         }
 
-        public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
+        public static void Pack(string folderPath, string filePath)
         {
-            switch (version)
+            switch (Global.Version)
             {
                 case "1":
                     cpzV1_pack(folderPath, filePath);

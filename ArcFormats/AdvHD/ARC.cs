@@ -243,7 +243,7 @@ namespace ArcFormats.AdvHD
             bw.Dispose();
         }
 
-        public static void Unpack(string filePath, string folderPath, Encoding encoding)
+        public static void Unpack(string filePath, string folderPath)
         {
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             BinaryReader br = new BinaryReader(fs);
@@ -261,9 +261,9 @@ namespace ArcFormats.AdvHD
             }
         }
 
-        public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
+        public static void Pack(string folderPath, string filePath)
         {
-            if (version == "1")
+            if (Global.Version == "1")
             {
                 arcV1_pack(folderPath, filePath);
             }

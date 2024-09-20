@@ -1,9 +1,7 @@
 ﻿using GalArc.GUI;
-using Log;
+using GalArc.Resource;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 
 namespace GalArc.Controller
@@ -18,32 +16,18 @@ namespace GalArc.Controller
             {
                 throw new Exception("Error:Not a supported format.");
             }
-            extension = Controller.InitUnpack.CleanExtension(extension);
+            Encoding encoding = Encoding.UTF8;
+            if (!string.IsNullOrEmpty(encodingString))
+            {
+                encoding = Encoding.GetEncoding(Encodings.CodePages[encodingString]);
+            }
+            extension = InitUnpack.CleanExtension(extension);
             string fullTypeName = $"ArcFormats.{engineName}.{extension}";
 
-            Assembly assembly = Assembly.Load("ArcFormats");
-            Type ArcPack = assembly.GetType(fullTypeName);
 
-            MethodInfo packMethod = ArcPack?.GetMethod("Pack", BindingFlags.Static | BindingFlags.Public);
-            if (ArcPack != null && packMethod != null)
-            {
-                Encoding encoding = Encoding.GetEncoding(Resource.Encoding.CodePages[encodingString]);
-                List<object> list = new List<object>
-                {
-                    inputFolderPath,
-                    outputFilePath,
-                    version,
-                    encoding
-                };
-                object[] parameters = list.ToArray();
-                LogUtility.InitPack(inputFolderPath, outputFilePath);
-                packMethod.Invoke(null, parameters);
-                LogUtility.FinishPack();
-            }
-            else
-            {
-                throw new Exception("Error:Specified format not found.");
-            }
+            ArcFormats.Global global = new ArcFormats.Global(outputFilePath, inputFolderPath, fullTypeName, encoding, encoding, true, version);
+            global.Pack();
+
         }
     }
 }

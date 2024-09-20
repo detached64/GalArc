@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GalArc.Resource
 {
-    internal class Encoding
+    internal class Encodings
     {
         public static Dictionary<string, int> CodePages = new Dictionary<string, int>
         {

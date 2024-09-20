@@ -14,7 +14,7 @@ namespace ArcFormats.SystemNNN
             public string filePath { get; set; }
         }
 
-        public static void Unpack(string filePath, string folderPath, Encoding encoding)
+        public static void Unpack(string filePath, string folderPath)
         {
             //init
             string vpkPath;
@@ -69,7 +69,7 @@ namespace ArcFormats.SystemNNN
             br2.Dispose();
         }
 
-        public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
+        public static void Pack(string folderPath, string filePath)
         {
             //init
             int sizeToNow = 0;
