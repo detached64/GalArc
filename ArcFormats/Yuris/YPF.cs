@@ -34,8 +34,8 @@ namespace ArcFormats.Yuris
 
         internal static List<Entry> entries = new List<Entry>();
         internal static Scheme scheme = new Scheme();
-        internal static int TablesIndex = 2;
-        internal static int ExtraLensIndex = 1;  // most freqently used combination(as far as I guess):table3,extraLen=8
+        internal static int TablesIndex;
+        internal static int ExtraLensIndex;  // most freqently used combination(as far as I guess):table3,extraLen=8
 
         internal static bool isFirstGuessYpf = true;
         internal static bool isFirstGuessYst = true;
@@ -60,8 +60,8 @@ namespace ArcFormats.Yuris
             FolderPath = folderPath;
             scheme.key = 0;
             scheme.scriptKeyBytes = new byte[] { };
-            TablesIndex = 2;
-            ExtraLensIndex = 1;
+            TablesIndex = tables.Count - 1;
+            ExtraLensIndex = extraLens.Count - 1;
             scheme.table = tables[TablesIndex];
             scheme.extraLen = extraLens[ExtraLensIndex];
             entries.Clear();
@@ -72,11 +72,11 @@ namespace ArcFormats.Yuris
             int fileCount = br.ReadInt32();
             uint indexSize = br.ReadUInt32();
             fs.Position += 16;
+            LogUtility.InitBar(entries.Count);
 
             TryReadIndex(br, fileCount);
 
             Directory.CreateDirectory(folderPath);
-            LogUtility.InitBar(entries.Count);
 
             foreach (Entry entry in entries)
             {
