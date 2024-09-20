@@ -58,16 +58,16 @@ namespace ArcFormats.Softpal
             for (int i = 0; i < fileCount; i++)
             {
                 byte[] data = br.ReadBytes((int)entries[i].fileSize);
-                if (data[0] == '$')
+                if (Global.ToDecryptScript && data.Length >= 16 && data[0] == 36)  //'$'
                 {
                     try
                     {
-                        LogUtility.Debug($"Decrypting {entries[i].fileName}");
+                        LogUtility.Debug($"Try to decrypt script:{entries[i].fileName}");
                         DecryptScript(data);
                     }
                     catch
                     {
-                        LogUtility.Info($"Decryption failed.");
+                        LogUtility.Error($"Decrypting {entries[i].fileName} failed.", false);
                     }
                 }
                 File.WriteAllBytes(folderPath + "\\" + entries[i].fileName, data);
