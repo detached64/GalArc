@@ -67,7 +67,7 @@ namespace ArcFormats.Softpal
                     }
                     catch
                     {
-                        LogUtility.Info($"Decrypting {entries[i].fileName} failed");
+                        LogUtility.Info($"Decryption failed.");
                     }
                 }
                 File.WriteAllBytes(folderPath + "\\" + entries[i].fileName, data);
