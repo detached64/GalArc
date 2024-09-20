@@ -29,7 +29,7 @@ namespace Utility
     public class Utilities
     {
         /// <summary>
-        /// Sort the file paths.Use string.CompareOrdinal() to avoid culture influence.
+        /// Sort the file paths. Use string.CompareOrdinal() to avoid culture influence.
         /// </summary>
         /// <param name="pathString"></param>
         public static void InsertSort(string[] pathString)
