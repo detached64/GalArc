@@ -26,16 +26,14 @@
 3. Add unpack or pack method there. Make sure the methods are like these:
 
    ```C#
-   public static void Unpack(string filePath, string folderPath, Encoding encoding)
+   public static void Unpack(string filePath, string folderPath)
    {
        
    }
-   public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
+   public static void Pack(string folderPath, string filePath)
    {
        
    }
    ```
-
-   Even if you don't need encoding or version specified , don't remove them. 
 
 4. Add a new EngineInfo in GalArc.GUI -> Resource -> EngineInfo.cs. You may refer to the constructors above to construct a new object. 
