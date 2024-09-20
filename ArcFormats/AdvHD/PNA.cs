@@ -32,7 +32,7 @@ namespace ArcFormats.AdvHD
             internal uint fileSize { get; set; }
         }
 
-        public static void Unpack(string filePath, string folderPath, Encoding encoding)
+        public static void Unpack(string filePath, string folderPath)
         {
             AdvHD_pna_header header = new AdvHD_pna_header();
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
@@ -84,7 +84,7 @@ namespace ArcFormats.AdvHD
             br.Dispose();
         }
 
-        public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
+        public static void Pack(string folderPath, string filePath)
         {
             string spath = folderPath + ".pna";
             string tpath = filePath;

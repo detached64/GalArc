@@ -26,7 +26,7 @@ namespace ArcFormats.BiShop
             internal uint dataSize { get; set; }
         }
 
-        public static void Unpack(string filePath, string folderPath, Encoding encoding)
+        public static void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -132,13 +132,13 @@ namespace ArcFormats.BiShop
             br.Dispose();
         }
 
-        public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
+        public static void Pack(string folderPath, string filePath)
         {
-            if (version == "1")
+            if (Global.Version == "1")
             {
                 bsaV1_pack(folderPath, filePath);
             }
-            else if (version == "2")
+            else if (Global.Version == "2")
             {
                 bsaV2_pack(folderPath, filePath);
             }

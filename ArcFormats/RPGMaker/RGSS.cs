@@ -6,7 +6,7 @@ namespace ArcFormats.RPGMaker
 {
     public class RGSS
     {
-        public static void Unpack(string filePath, string folderPath, Encoding encoding)
+        public static void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -35,16 +35,13 @@ namespace ArcFormats.RPGMaker
             }
         }
 
-        public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
+        public static void Pack(string folderPath, string filePath)
         {
-            switch (version)
+            switch (Global.Version)
             {
                 case "1":
                     rgssV1_pack(folderPath, filePath);
                     break;
-                    //case "3":
-                    //    rgssV3_pack(folderPath, filePath);
-                    //    break;
             }
         }
 

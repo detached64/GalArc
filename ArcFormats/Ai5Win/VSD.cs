@@ -6,7 +6,7 @@ namespace ArcFormats.Ai5Win
 {
     public class VSD
     {
-        public static void Unpack(string filePath, string folderPath, Encoding encoding)
+        public static void Unpack(string filePath, string folderPath)
         {
             Directory.CreateDirectory(Path.GetDirectoryName(filePath) + "\\" + Path.GetFileNameWithoutExtension(filePath));
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);

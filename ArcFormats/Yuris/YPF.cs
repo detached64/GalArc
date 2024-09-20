@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Utility;
 using Utility.Compression;
 
@@ -48,7 +47,7 @@ namespace ArcFormats.Yuris
         static readonly List<byte[]> tables = new List<byte[]> { Table1, Table2, Table3 };
         static readonly List<int> extraLens = new List<int> { 4, 8 };
 
-        public static void Unpack(string filePath, string folderPath, Encoding encoding)
+        public static void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -72,7 +71,7 @@ namespace ArcFormats.Yuris
             int fileCount = br.ReadInt32();
             uint indexSize = br.ReadUInt32();
             fs.Position += 16;
-            LogUtility.InitBar(entries.Count);
+            LogUtility.InitBar(fileCount);
 
             TryReadIndex(br, fileCount);
 
@@ -90,7 +89,7 @@ namespace ArcFormats.Yuris
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(entry.filePath));
                 }
-                if (Path.GetExtension(entry.filePath) == ".ybn")
+                if (Global.ToDecryptScript && Path.GetExtension(entry.filePath) == ".ybn")
                 {
                     LogUtility.Debug("Try to decrypt script:" + entry.fileName);
                     TryDecryptScript(entry.fileData);

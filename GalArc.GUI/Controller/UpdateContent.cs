@@ -13,7 +13,7 @@ namespace GalArc.Controller
         internal static EngineInfo selectedEngineInfo_Unpack;
         internal static EngineInfo selectedEngineInfo_Pack;
 
-        internal static string[] EncodingList = Resource.Encoding.CodePages.Keys.ToArray();
+        internal static string[] EncodingList = Resource.Encodings.CodePages.Keys.ToArray();
 
         internal static Dictionary<string, string> versionPairs = new Dictionary<string, string>
         {

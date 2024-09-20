@@ -26,7 +26,7 @@ namespace ArcFormats.Ai6Win
             public bool isPacked { get; set; }
         }
 
-        public static void Unpack(string filePath, string folderPath, Encoding encoding)
+        public static void Unpack(string filePath, string folderPath)
         {
             Silky_arc_header header = new Silky_arc_header();
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);

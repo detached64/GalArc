@@ -1,10 +1,8 @@
 ﻿using GalArc.GUI;
-using Log;
+using GalArc.Resource;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 
 namespace GalArc.Controller
@@ -19,36 +17,18 @@ namespace GalArc.Controller
             {
                 throw new Exception("Error:Not a supported format.");
             }
+            Encoding encoding = Encoding.UTF8;
+            if (!string.IsNullOrEmpty(encodingString))
+            {
+                encoding = Encoding.GetEncoding(Encodings.CodePages[encodingString]);
+            }
             extension = CleanExtension(extension);
             string fullTypeName = $"ArcFormats.{engineName}.{extension}";
 
-            Assembly assembly = Assembly.Load("ArcFormats");
-            Type ArcUnpack = assembly.GetType(fullTypeName);
-
-            MethodInfo unpackMethod = ArcUnpack?.GetMethod("Unpack", BindingFlags.Static | BindingFlags.Public);
-            if (ArcUnpack != null && unpackMethod != null)
-            {
-                Encoding encoding = Encoding.UTF8;
-                if (!string.IsNullOrEmpty(encodingString))
-                {
-                    encoding = Encoding.GetEncoding(Resource.Encoding.CodePages[encodingString]);
-                }
-                List<object> list = new List<object>
-                {
-                    inputFilePath,
-                    outputFolderPath,
-                    encoding
-                };
-                object[] parameters = list.ToArray();
-                LogUtility.InitUnpack(inputFilePath, outputFolderPath);
-                unpackMethod.Invoke(null, parameters);
-                LogUtility.FinishUnpack();
-            }
-            else
-            {
-                throw new Exception("Error:Specified format not found.");
-            }
+            ArcFormats.Global global = new ArcFormats.Global(inputFilePath, outputFolderPath, fullTypeName, encoding, encoding, true, null);
+            global.Unpack();
         }
+
         /// <summary>
         /// Used for multiple extensions that share the same format.
         /// </summary>

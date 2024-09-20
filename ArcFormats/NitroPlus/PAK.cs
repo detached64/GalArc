@@ -18,7 +18,7 @@ namespace ArcFormats.NitroPlus
             public string fullPath { get; set; }
         }
 
-        public static void Unpack(string filePath, string folderPath, Encoding encoding)
+        public static void Unpack(string filePath, string folderPath)
         {
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             BinaryReader br = new BinaryReader(fs);
@@ -53,7 +53,7 @@ namespace ArcFormats.NitroPlus
             ms.Dispose();
         }
 
-        public static void Pack(string folderPath, string filePath, string version, Encoding encoding)
+        public static void Pack(string folderPath, string filePath)
         {
             FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
             BinaryWriter bw = new BinaryWriter(fw);
