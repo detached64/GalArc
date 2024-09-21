@@ -9,7 +9,7 @@ namespace ArcFormats.NScripter
 {
     public class NS2
     {
-        private struct NScripter_ns2_entry
+        private struct Entry
         {
             public string filePath { get; set; }
             public uint fileSize { get; set; }
@@ -26,11 +26,11 @@ namespace ArcFormats.NScripter
                 throw new Exception("Error:Encrypted data detected.");
             }
             Directory.CreateDirectory(folderPath);
-            List<NScripter_ns2_entry> entries = new List<NScripter_ns2_entry>();
+            List<Entry> entries = new List<Entry>();
 
             while (fs.Position < dataOffset - 1)//dataOffset - 1 is the end of file path
             {
-                NScripter_ns2_entry entry = new NScripter_ns2_entry();
+                Entry entry = new Entry();
                 br.ReadByte();//skip "
                 entry.filePath = folderPath + "\\" + Utilities.ReadCString(br, ArcEncoding.Shift_JIS, 0x22);
                 entry.fileSize = br.ReadUInt32();
@@ -40,7 +40,7 @@ namespace ArcFormats.NScripter
 
             LogUtility.InitBar(entries.Count);
 
-            foreach (NScripter_ns2_entry entry in entries)
+            foreach (Entry entry in entries)
             {
                 byte[] data = br.ReadBytes((int)entry.fileSize);
                 Directory.CreateDirectory(Path.GetDirectoryName(entry.filePath));
@@ -67,11 +67,11 @@ namespace ArcFormats.NScripter
             }
             Utilities.InsertSort(pathString);//cannot use getfiles,like pf8
 
-            List<NScripter_ns2_entry> entries = new List<NScripter_ns2_entry>();
+            List<Entry> entries = new List<Entry>();
 
             for (int j = 0; j < fileCount; j++)
             {
-                NScripter_ns2_entry entry = new NScripter_ns2_entry();
+                Entry entry = new Entry();
                 entry.filePathDivided = pathString[j];              //contains '/'
                 entry.filePath = folderPath + "\\" + pathString[j];
                 entry.fileSize = (uint)new FileInfo(entry.filePath).Length;

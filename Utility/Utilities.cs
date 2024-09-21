@@ -158,23 +158,5 @@ namespace Utility
             }
             return sum;
         }
-
-        /// <summary>
-        /// Whether <paramref name="a"/> is among the <paramref name="array"/>.
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="array"></param>
-        /// <returns></returns>
-        public static bool IsAmongArray(object a, object[] array)
-        {
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (a == array[i])
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
     }
 }
