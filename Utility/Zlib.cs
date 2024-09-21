@@ -150,41 +150,41 @@ namespace Utility.Compression
         /// <returns></returns>
         public static byte[] DecompressBytes(byte[] inputData)
         {
-            MemoryStream inputStream = new MemoryStream(inputData);
-            BinaryReader br = new BinaryReader(inputStream);
-            byte magic1 = br.ReadByte();
-            byte magic2 = br.ReadByte();
-            using (MemoryStream outputStream = new MemoryStream())
+            using (MemoryStream inputStream = new MemoryStream(inputData))
+            using (BinaryReader br = new BinaryReader(inputStream))
             {
-                if (magic1 != 0x78 || (magic2 != 0x01 && magic2 != 0x9c && magic2 != 0xda))
+                byte magic1 = br.ReadByte();
+                byte magic2 = br.ReadByte();
+                using (MemoryStream outputStream = new MemoryStream())
                 {
-                    //raw deflate
-                    inputStream.Position -= 2;
-                    try
+                    if (magic1 != 0x78 || (magic2 != 0x01 && magic2 != 0x9c && magic2 != 0xda))
                     {
+                        //raw deflate
+                        inputStream.Position -= 2;
+                        try
+                        {
+                            using (DeflateStream decompressed = new DeflateStream(inputStream, CompressionMode.Decompress, true))
+                            {
+                                decompressed.CopyTo(outputStream);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            LogUtility.Error(e.Message);
+                        }
+                    }
+                    else
+                    {
+                        //zlib
+                        inputStream.SetLength(inputStream.Length - 4);          //remove checksum
                         using (DeflateStream decompressed = new DeflateStream(inputStream, CompressionMode.Decompress, true))
                         {
                             decompressed.CopyTo(outputStream);
                         }
                     }
-                    catch (Exception e)
-                    {
-                        LogUtility.Error(e.Message);
-                    }
+                    return outputStream.ToArray();
                 }
-                else
-                {
-                    //zlib
-                    inputStream.SetLength(inputStream.Length - 4);          //remove checksum
-                    using (DeflateStream decompressed = new DeflateStream(inputStream, CompressionMode.Decompress, true))
-                    {
-                        decompressed.CopyTo(outputStream);
-                    }
-                }
-                return outputStream.ToArray();
             }
-
         }
-
     }
 }
