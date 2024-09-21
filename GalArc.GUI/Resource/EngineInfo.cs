@@ -43,7 +43,7 @@ namespace GalArc.Resource
         public static List<EngineInfo> engineInfos = new List<EngineInfo>
         {
             new EngineInfo("AdvHD","ARC/PNA","ARC/PNA","1/2",false,false,true),
-            new EngineInfo("Ai5Win","VSD",string.Empty),
+            new EngineInfo("Ai5Win","ARC/VSD",string.Empty),
             new EngineInfo("Ai6Win","ARC",string.Empty),
             new EngineInfo("Artemis","PFS","PFS","8/6/2",true,true,false),
             new EngineInfo("BiShop","BSA", "BSA","1/2"),
