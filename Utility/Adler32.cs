@@ -1,6 +1,6 @@
 ﻿// File: Utility/Adler32.cs
 // Date: 2024/08/27
-// Description: 基于arcusmaximus的相关代码，对Adler32的校验进行封装；针对ZlibStream的校验和做出调整
+// Description: 基于arcusmaximus的代码，封装Adler32校验和
 //
 // Copyright (c) 2018 arcusmaximus
 //
@@ -27,28 +27,14 @@ namespace Utility
 {
     public class Adler32
     {
-        private const uint Adler32Modulus = 65521;
-        public static uint Calculate(byte[] data)
-        {
-            uint a = 1, b = 0;
+        private uint _a = 1;
+        private uint _b = 0;
 
-            foreach (byte octet in data)
-            {
-                a = (a + octet) % Adler32Modulus;
-                b = (b + a) % Adler32Modulus;
-            }
-
-            return (b << 16) | a;
-        }
-
-        private int _a = 1;
-        private int _b = 0;
-
-        public int Checksum
+        public uint Checksum
         {
             get
             {
-                return _b * 65536 + _a;
+                return (_b << 16) | _a;
             }
         }
 
