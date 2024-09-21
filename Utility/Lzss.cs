@@ -26,75 +26,6 @@ namespace Utility.Compression
 {
     public class Lzss
     {
-        public static MemoryStream Decompress(MemoryStream ms)
-        {
-            const int N = 4096;
-            const int F = 18;
-            const int THRESHOLD = 2;
-            int[] lzBuffer = new int[N + F - 1];
-            int r = N - F;
-            int flags = 0;
-
-            MemoryStream output = new MemoryStream();
-            int bufferIndex = 0;
-
-            while (true)
-            {
-                if (((flags >>= 1) & 256) == 0)
-                {
-                    if (bufferIndex >= ms.Length)
-                    {
-                        break;
-                    }
-
-                    flags = ms.ReadByte() | 0xff00;
-                    bufferIndex++;
-                }
-
-                if ((flags & 1) != 0)
-                {
-                    if (bufferIndex >= ms.Length)
-                    {
-                        break;
-                    }
-
-                    int c = ms.ReadByte();
-                    bufferIndex++;
-                    output.WriteByte((byte)c);
-                    lzBuffer[r++] = c;
-                    r &= (N - 1);
-                }
-                else
-                {
-                    if (bufferIndex >= ms.Length)
-                    {
-                        break;
-                    }
-
-                    int i = ms.ReadByte();
-                    bufferIndex++;
-                    if (bufferIndex >= ms.Length)
-                    {
-                        break;
-                    }
-
-                    int j = ms.ReadByte();
-                    bufferIndex++;
-                    i |= ((j & 0xf0) << 4);
-                    j = (j & 0x0f) + THRESHOLD;
-
-                    for (int k = 0; k <= j; k++)
-                    {
-                        int c = lzBuffer[(i + k) & (N - 1)];
-                        output.WriteByte((byte)c);
-                        lzBuffer[r++] = c;
-                        r &= (N - 1);
-                    }
-                }
-            }
-            return output;
-        }
-
         public static byte[] Decompress(byte[] data)
         {
             const int N = 4096;
@@ -104,66 +35,69 @@ namespace Utility.Compression
             int r = N - F;
             int flags = 0;
 
-            MemoryStream ms = new MemoryStream(data);
-            MemoryStream output = new MemoryStream();
-            int bufferIndex = 0;
-
-            while (true)
+            using (MemoryStream ms = new MemoryStream(data))
             {
-                if (((flags >>= 1) & 256) == 0)
+                using (MemoryStream output = new MemoryStream())
                 {
-                    if (bufferIndex >= ms.Length)
+                    int bufferIndex = 0;
+
+                    while (true)
                     {
-                        break;
+                        if (((flags >>= 1) & 256) == 0)
+                        {
+                            if (bufferIndex >= ms.Length)
+                            {
+                                break;
+                            }
+
+                            flags = ms.ReadByte() | 0xff00;
+                            bufferIndex++;
+                        }
+
+                        if ((flags & 1) != 0)
+                        {
+                            if (bufferIndex >= ms.Length)
+                            {
+                                break;
+                            }
+
+                            int c = ms.ReadByte();
+                            bufferIndex++;
+                            output.WriteByte((byte)c);
+                            lzBuffer[r++] = c;
+                            r &= (N - 1);
+                        }
+                        else
+                        {
+                            if (bufferIndex >= ms.Length)
+                            {
+                                break;
+                            }
+
+                            int i = ms.ReadByte();
+                            bufferIndex++;
+                            if (bufferIndex >= ms.Length)
+                            {
+                                break;
+                            }
+
+                            int j = ms.ReadByte();
+                            bufferIndex++;
+                            i |= ((j & 0xf0) << 4);
+                            j = (j & 0x0f) + THRESHOLD;
+
+                            for (int k = 0; k <= j; k++)
+                            {
+                                int c = lzBuffer[(i + k) & (N - 1)];
+                                output.WriteByte((byte)c);
+                                lzBuffer[r++] = c;
+                                r &= (N - 1);
+                            }
+                        }
                     }
-
-                    flags = ms.ReadByte() | 0xff00;
-                    bufferIndex++;
-                }
-
-                if ((flags & 1) != 0)
-                {
-                    if (bufferIndex >= ms.Length)
-                    {
-                        break;
-                    }
-
-                    int c = ms.ReadByte();
-                    bufferIndex++;
-                    output.WriteByte((byte)c);
-                    lzBuffer[r++] = c;
-                    r &= (N - 1);
-                }
-                else
-                {
-                    if (bufferIndex >= ms.Length)
-                    {
-                        break;
-                    }
-
-                    int i = ms.ReadByte();
-                    bufferIndex++;
-                    if (bufferIndex >= ms.Length)
-                    {
-                        break;
-                    }
-
-                    int j = ms.ReadByte();
-                    bufferIndex++;
-                    i |= ((j & 0xf0) << 4);
-                    j = (j & 0x0f) + THRESHOLD;
-
-                    for (int k = 0; k <= j; k++)
-                    {
-                        int c = lzBuffer[(i + k) & (N - 1)];
-                        output.WriteByte((byte)c);
-                        lzBuffer[r++] = c;
-                        r &= (N - 1);
-                    }
+                    return output.ToArray();
                 }
             }
-            return output.ToArray();
         }
-
     }
 }
