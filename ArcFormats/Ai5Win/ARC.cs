@@ -57,7 +57,7 @@ namespace ArcFormats.Ai5Win
         {
             int lengthIndex = 0;
             entries = new List<Entry>();
-            while (lengthIndex < 3)
+            while (lengthIndex < NameLengths.Length)
             {
                 try
                 {
