@@ -8,18 +8,19 @@ using Utility.Compression;
 
 namespace ArcFormats.Ai5Win
 {
-    internal class Entry
-    {
-        internal string name;
-        internal string filePath;
-        internal uint size;
-        internal uint offset;
-    }
     public class ARC
     {
-        private static int[] NameLengths = { 0x14, 0x18, 0x1E, 0x20, 0x100 };
+        private class Entry
+        {
+            internal string name;
+            internal string filePath;
+            internal uint size;
+            internal uint offset;
+        }
 
-        private static string[] ExtNeedLzss = { "mes", "lib", "a", "a6", "msk", "x" };
+        private readonly static int[] NameLengths = { 0x14, 0x18, 0x1E, 0x20, 0x100 };
+
+        private readonly static string[] ExtNeedLzss = { "mes", "lib", "a", "a6", "msk", "x" };
 
         private static string FolderPath;
 
@@ -56,20 +57,19 @@ namespace ArcFormats.Ai5Win
 
         private static void TryReadIndex(BinaryReader br, int fileCount, out List<Entry> entries)
         {
-            int lengthIndex = 0;
             entries = new List<Entry>();
-            while (lengthIndex < NameLengths.Length)
+            foreach (int nameLength in NameLengths)
             {
                 try
                 {
                     entries.Clear();
                     ArcScheme scheme = new ArcScheme();
-                    scheme.GuessScheme(br, fileCount, NameLengths[lengthIndex]);
+                    scheme.GuessScheme(br, fileCount, nameLength);
                     br.BaseStream.Position = 4;
                     for (int i = 0; i < fileCount; i++)
                     {
                         Entry entry = new Entry();
-                        entry.name = ArcEncoding.Shift_JIS.GetString(Xor.xor(br.ReadBytes(NameLengths[lengthIndex]), scheme.nameKey)).TrimEnd('\0');
+                        entry.name = ArcEncoding.Shift_JIS.GetString(Xor.xor(br.ReadBytes(nameLength), scheme.nameKey)).TrimEnd('\0');
                         entry.filePath = Path.Combine(FolderPath, entry.name);
                         entry.size = br.ReadUInt32() ^ scheme.sizeKey;
                         entry.offset = br.ReadUInt32() ^ scheme.offsetKey;
@@ -78,9 +78,7 @@ namespace ArcFormats.Ai5Win
                     return;
                 }
                 catch
-                {
-                    lengthIndex++;
-                }
+                { }
             }
             LogUtility.Error("Failed to read index.");
         }

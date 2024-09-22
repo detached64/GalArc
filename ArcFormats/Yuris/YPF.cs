@@ -31,21 +31,19 @@ namespace ArcFormats.Yuris
             public byte[] scriptKeyBytes;
         }
 
-        internal static List<Entry> entries = new List<Entry>();
-        internal static Scheme scheme = new Scheme();
-        internal static int TablesIndex;
-        internal static int ExtraLensIndex;  // most freqently used combination(as far as I guess):table3,extraLen=8
+        static List<Entry> entries = new List<Entry>();
+        static Scheme scheme = new Scheme();
 
-        internal static bool isFirstGuessYpf = true;
-        internal static bool isFirstGuessYst = true;
-        internal static string FolderPath { get; set; }
+        static bool isFirstGuessYpf = true;
+        static bool isFirstGuessYst = true;
+        static string FolderPath { get; set; }
 
-
+        // most freqently used combination (as far as I guess) : table3 , extraLen = 8
         static readonly byte[] Table1 = { 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
         static readonly byte[] Table2 = { 0x0C, 0x10, 0x11, 0x19, 0x1C, 0x1E, 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
         static readonly byte[] Table3 = { 0x03, 0x48, 0x06, 0x35, 0x0C, 0x10, 0x11, 0x19, 0x1C, 0x1E, 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
-        static readonly List<byte[]> tables = new List<byte[]> { Table1, Table2, Table3 };
-        static readonly List<int> extraLens = new List<int> { 4, 8 };
+        static readonly List<byte[]> tables = new List<byte[]> { Table3, Table2, Table1 };
+        static readonly List<int> extraLens = new List<int> { 8, 4 };
 
         public static void Unpack(string filePath, string folderPath)
         {
@@ -96,31 +94,22 @@ namespace ArcFormats.Yuris
 
         private static void TryReadIndex(BinaryReader br, int fileCount)
         {
-
-            while (TablesIndex >= 0 && ExtraLensIndex >= 0)
+            foreach (var table in tables)
             {
-                scheme.table = tables[TablesIndex];
-                scheme.extraLen = extraLens[ExtraLensIndex];
-                LogUtility.Debug($"Try Table {TablesIndex + 1} , Extra Length = {scheme.extraLen}……");
-
-                try
+                foreach (var length in extraLens)
                 {
-                    ReadIndex(br, fileCount);
-                    return; // Exit the loop if successful
-                }
-                catch (Exception)
-                {
-                    if (ExtraLensIndex > 0)
+                    scheme.table = table;
+                    scheme.extraLen = length;
+                    LogUtility.Debug($"Try Table {tables.Count - tables.IndexOf(table)} , Extra Length = {length}……");
+                    try
                     {
-                        ExtraLensIndex--;
+                        ReadIndex(br, fileCount);
+                        return;
                     }
-                    else
-                    {
-                        TablesIndex--;
-                        ExtraLensIndex = extraLens.Count - 1;
-                    }
+                    catch { }
                 }
             }
+            LogUtility.Error("Failed to read index.");
         }
 
         private static void ReadIndex(BinaryReader br, int fileCount)
@@ -272,10 +261,8 @@ namespace ArcFormats.Yuris
         {
             scheme.key = 0;
             scheme.scriptKeyBytes = new byte[] { };
-            TablesIndex = tables.Count - 1;
-            ExtraLensIndex = extraLens.Count - 1;
-            scheme.table = tables[TablesIndex];
-            scheme.extraLen = extraLens[ExtraLensIndex];
+            scheme.table = tables[0];
+            scheme.extraLen = extraLens[0];
             entries.Clear();
             isFirstGuessYpf = true;
             isFirstGuessYst = true;

@@ -27,18 +27,15 @@ namespace ArcFormats.Ai6Win
                 () => UnpackArcNew(filePath, folderPath),
 
             };
-            int methodIndex = 0;
-            while (methodIndex < actions.Count)
+            foreach(var action in actions)
             {
                 try
                 {
-                    actions[methodIndex]();
+                    action();
                     return;
                 }
                 catch
-                {
-                    methodIndex++;
-                }
+                { }
             }
             LogUtility.Error_NotValidArchive();
         }
