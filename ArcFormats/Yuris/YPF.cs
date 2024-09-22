@@ -57,15 +57,7 @@ namespace ArcFormats.Yuris
             }
 
             FolderPath = folderPath;
-            scheme.key = 0;
-            scheme.scriptKeyBytes = new byte[] { };
-            TablesIndex = tables.Count - 1;
-            ExtraLensIndex = extraLens.Count - 1;
-            scheme.table = tables[TablesIndex];
-            scheme.extraLen = extraLens[ExtraLensIndex];
-            entries.Clear();
-            isFirstGuessYpf = true;
-            isFirstGuessYst = true;
+            Reset();
 
             uint version = br.ReadUInt32();
             int fileCount = br.ReadInt32();
@@ -274,6 +266,19 @@ namespace ArcFormats.Yuris
                 result[i + pos] ^= scheme.scriptKeyBytes[i & 3];
             }
             return result;
+        }
+
+        private static void Reset()
+        {
+            scheme.key = 0;
+            scheme.scriptKeyBytes = new byte[] { };
+            TablesIndex = tables.Count - 1;
+            ExtraLensIndex = extraLens.Count - 1;
+            scheme.table = tables[TablesIndex];
+            scheme.extraLen = extraLens[ExtraLensIndex];
+            entries.Clear();
+            isFirstGuessYpf = true;
+            isFirstGuessYst = true;
         }
     }
 }

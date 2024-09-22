@@ -27,8 +27,9 @@ namespace ArcFormats.Ai5Win
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            ArcScheme scheme = new ArcScheme();
+
             FolderPath = folderPath;
+
             int fileCount = br.ReadInt32();
             LogUtility.InitBar(fileCount);
             Directory.CreateDirectory(folderPath);
