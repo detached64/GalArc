@@ -49,6 +49,7 @@
     <Compile Include="AdvHD\ARC.cs" />
     <Compile Include="AdvHD\PNA.cs" />
     <Compile Include="Ai5Win\ARC.cs" />
+    <Compile Include="Ai5Win\DAT.cs" />
     <Compile Include="Ai5Win\VSD.cs" />
     <Compile Include="Ai6Win\ARC.cs" />
     <Compile Include="Artemis\PFS.cs" />
