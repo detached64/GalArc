@@ -16,38 +16,6 @@ namespace ArcFormats.Cmvs
             0x8C, 0xFB, 0x8C, 0xD0, 0x8C, 0xC8, 0x8C, 0xF0, 0x8B, 0xFE, 0x8C, 0xAA, 0x8C, 0xF4, 0x8B, 0x4B,
             0x9C, 0x58, 0x8C, 0xD3, 0x96, 0xC8, 0x8C, 0xCB, 0x8C, 0xCE, 0x8C, 0xF3, 0x8C, 0xD6, 0x8B, 0x52,
         };
-
-        public static void Unpack(string filePath, string folderPath)
-        {
-            FileStream fs = File.OpenRead(filePath);
-            BinaryReader br = new BinaryReader(fs);
-            if (Encoding.ASCII.GetString(br.ReadBytes(3)) != "CPZ")
-            {
-                LogUtility.Error_NotValidArchive();
-            }
-
-            int version = br.ReadChar() - '0';
-            fs.Dispose();
-            br.Dispose();
-
-            switch (version)
-            {
-                case 1:
-                    cpzV1_unpack(filePath, folderPath);
-                    break;
-            }
-        }
-
-        public static void Pack(string folderPath, string filePath)
-        {
-            switch (Global.Version)
-            {
-                case "1":
-                    cpzV1_pack(folderPath, filePath);
-                    break;
-            }
-        }
-
         private static void cpzV1_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
@@ -139,9 +107,85 @@ namespace ArcFormats.Cmvs
             indexWriter.Dispose();
         }
 
+        class HeaderV6
+        {
+            public uint Magic;         //"CPZ6"
+            public uint DirCount;
+            public uint DirIndexLength;
+            public uint FileIndexLength;
+            public uint[] IndexVerify;
+            public uint[] Md5Data;
+            public uint IndexKey;
+            public uint IsEncrypt;     //1
+            public uint IndexSeed;
+            public uint HeaderCRC;
+        }
+        private static void ReadHeaderV6(BinaryReader br, HeaderV6 header)
+        {
+            header.Magic = br.ReadUInt32();
+            header.DirCount = br.ReadUInt32() ^ 0xfe3a53da;
+            header.DirIndexLength = br.ReadUInt32() ^ 0x37f298e;
+            header.FileIndexLength = br.ReadUInt32() ^ 0x7a6f3a2d;
+            header.IndexVerify = new uint[4];
+            header.IndexVerify[0] = br.ReadUInt32();
+            header.IndexVerify[1] = br.ReadUInt32();
+            header.IndexVerify[2] = br.ReadUInt32();
+            header.IndexVerify[3] = br.ReadUInt32();
+            header.Md5Data = new uint[4];
+            header.Md5Data[0] = br.ReadUInt32() ^ 0x43de7c1;
+            header.Md5Data[1] = br.ReadUInt32() ^ 0xcc65f416;
+            header.Md5Data[2] = br.ReadUInt32() ^ 0xd016a93d;
+            header.Md5Data[3] = br.ReadUInt32() ^ 0x97a3ba9b;
+            header.IndexKey = br.ReadUInt32() ^ 0xae7d39b7;
+            header.IsEncrypt = br.ReadUInt32() ^ 0xfb73a956;
+            header.IndexSeed = br.ReadUInt32() ^ 0x37acf832;
+            header.HeaderCRC = br.ReadUInt32();
+        }
         private static void cpzV6_unpack(string filePath, string folderPath)
         {
-
+            FileStream fs = File.OpenRead(filePath);
+            BinaryReader br = new BinaryReader(fs);
+            HeaderV6 header = new HeaderV6();
+            ReadHeaderV6(br, header);
         }
+
+        public static void Unpack(string filePath, string folderPath)
+        {
+            FileStream fs = File.OpenRead(filePath);
+            BinaryReader br = new BinaryReader(fs);
+            if (Encoding.ASCII.GetString(br.ReadBytes(3)) != "CPZ")
+            {
+                LogUtility.Error_NotValidArchive();
+            }
+
+            int version = br.ReadChar() - '0';
+            fs.Dispose();
+            br.Dispose();
+
+            switch (version)
+            {
+                case 1:
+                    cpzV1_unpack(filePath, folderPath);
+                    break;
+                case 6:
+                    cpzV6_unpack(filePath, folderPath);
+                    break;
+                default:
+                    LogUtility.Error($"cpz v{version} not implemented.");
+                    break;
+            }
+        }
+
+        public static void Pack(string folderPath, string filePath)
+        {
+            switch (Global.Version)
+            {
+                case "1":
+                    cpzV1_pack(folderPath, filePath);
+                    break;
+            }
+        }
+
+
     }
 }
