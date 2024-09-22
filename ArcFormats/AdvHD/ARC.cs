@@ -74,6 +74,7 @@ namespace ArcFormats.AdvHD
                 }
             }
             fs.Dispose();
+            br.Dispose();
         }
 
         private static void arcV1_pack(string folderPath, string filePath)
@@ -134,6 +135,10 @@ namespace ArcFormats.AdvHD
             msentry.Dispose();
             msdata.Dispose();
             fw.Dispose();
+            bwhead.Dispose();
+            bwtype.Dispose();
+            bwentry.Dispose();
+            bwdata.Dispose();
         }
 
         private struct AdvHD_arc_v2_header
