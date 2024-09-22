@@ -5,7 +5,7 @@ Attention:this file may not be updated regularly.
 | Engine(Producer) | Extension                  | Unpack | Pack | Supported               |
 | ---------------- | -------------------------- | ------ | ---- | ----------------------- |
 | AdvHD            | `arc` `pna`                | ✔️      | ✔️    | All                     |
-| Ai5Win           | `VSD`                      | ✔️      | ❌    | All                     |
+| Ai5Win           | `arc` `VSD`                | ✔️      | ❌    | All                     |
 | Ai6Win           | `arc`                      | ✔️      | ❌    | All                     |
 | AmuseCraft       | `pac`                      | ✔️      | ✔️    | All                     |
 | Artemis          | `pfs`                      | ✔️      | ✔️    | All                     |
@@ -23,4 +23,5 @@ Attention:this file may not be updated regularly.
 | Softpal          | `pac`                      | ✔️      | ✔️    | All                     |
 | SystemNNN        | `gpk` `gtb` `vpk` `vtb`    | ✔️      | ✔️    | All                     |
 | Triangle         | `CG` `SUD` `CGF`           | ✔️      | ✔️    | All                     |
+| Yuris            | `ypf`                      | ✔️      | ❌    | All                     |
 
