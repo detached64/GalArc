@@ -18,6 +18,6 @@ namespace GalArc.Resource
         internal static bool AutoSaveTopMost = true;
         internal static bool AutoSaveDecryptScripts = true;
 
-        internal static string CurrentVersion = "1.1.1";
+        internal static string CurrentVersion = "1.1.2";
     }
 }
