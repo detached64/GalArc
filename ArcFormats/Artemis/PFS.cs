@@ -12,7 +12,7 @@ namespace ArcFormats.Artemis
 {
     public class PFS
     {
-        private struct Artemis_pfs_Header
+        private struct Header
         {
             public string Magic { get; set; }
             public string Version { get; set; }
@@ -21,9 +21,9 @@ namespace ArcFormats.Artemis
             public uint pathLenSum { get; set; }
         }
 
-        private struct Artemis_pfs_Entry
+        private struct Entry
         {
-            public string filePath { get; set; } //绝对路径，拼接而成
+            public string filePath { get; set; }
             public uint Size { get; set; }
             public uint Offset { get; set; }
             public int pathLen { get; set; }
@@ -33,13 +33,13 @@ namespace ArcFormats.Artemis
         public static void Unpack(string filePath, string folderPath)
         {
             //init
-            Artemis_pfs_Header header = new Artemis_pfs_Header()
+            Header header = new Header()
             {
                 Magic = "pf",
                 FileCount = 0
             };
 
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
             if (Encoding.ASCII.GetString(br.ReadBytes(2)) != header.Magic)
             {
@@ -69,7 +69,7 @@ namespace ArcFormats.Artemis
 
                     for (int i = 0; i < header.FileCount; i++)
                     {
-                        Artemis_pfs_Entry entry = new Artemis_pfs_Entry();
+                        Entry entry = new Entry();
                         entry.pathLen = br.ReadInt32();
                         entry.filePath = folderPath + "\\" + Global.UnpackEncoding.GetString(br.ReadBytes(entry.pathLen));
                         br.ReadUInt32(); // skip 4 unused bytes:0x00000000
@@ -108,7 +108,7 @@ namespace ArcFormats.Artemis
 
                     for (int i = 0; i < header.FileCount; i++)
                     {
-                        Artemis_pfs_Entry entry = new Artemis_pfs_Entry();
+                        Entry entry = new Entry();
                         entry.pathLen = (int)br.ReadUInt32();
                         entry.filePath = folderPath + "/" + Global.UnpackEncoding.GetString(br.ReadBytes(entry.pathLen)).Replace("\\", "/");
                         br.ReadUInt32();//0x10000000
@@ -141,7 +141,7 @@ namespace ArcFormats.Artemis
                     //process
                     for (int i = 0; i < header.FileCount; i++)
                     {
-                        Artemis_pfs_Entry entry = new Artemis_pfs_Entry();
+                        Entry entry = new Entry();
                         entry.pathLen = br.ReadInt32();
                         entry.filePath = folderPath + "/" + Global.UnpackEncoding.GetString(br.ReadBytes(entry.pathLen)).Replace("\\", "/");
                         br.ReadUInt32(); // skip 4 unused bytes:0x00000000
@@ -163,20 +163,20 @@ namespace ArcFormats.Artemis
                     return;
 
                 default:
-                    throw new NotImplementedException("pfs v" + header.Version + " archive temporarily not supported.");
+                    throw new NotImplementedException($"pfs v{header.Version} archive temporarily not supported.");
             }
         }
 
         public static void Pack(string folderPath, string filePath)
         {
             //init
-            Artemis_pfs_Header header = new Artemis_pfs_Header()
+            Header header = new Header()
             {
                 Magic = "pf",
                 Version = Global.Version,
                 pathLenSum = 0
             };
-            List<Artemis_pfs_Entry> index = new List<Artemis_pfs_Entry>();
+            List<Entry> index = new List<Entry>();
 
             header.FileCount = (uint)Utilities.GetFileCount_All(folderPath);
             LogUtility.InitBar((int)header.FileCount);
@@ -197,7 +197,7 @@ namespace ArcFormats.Artemis
             //add entry
             for (int j = 0; j < header.FileCount; j++)
             {
-                Artemis_pfs_Entry artemisEntry = new Artemis_pfs_Entry()
+                Entry artemisEntry = new Entry()
                 {
                     Size = (uint)new FileInfo(folderPath + "\\" + pathString[j]).Length,
                     path = pathString[j],
@@ -217,7 +217,7 @@ namespace ArcFormats.Artemis
                     //indexsize=(filecount)4byte+(pathlen+0x00000000+offset to begin+file size)16byte*filecount+pathlensum+(file count+1)4byte+8*filecount+(0x00000000)4byte*2+(offsettablebegin-0x7)4byte
 
                     //write header
-                    MemoryStream ms8 = new MemoryStream((int)(header.IndexSize + Marshal.SizeOf<Artemis_pfs_Header>()));
+                    MemoryStream ms8 = new MemoryStream((int)(header.IndexSize + Marshal.SizeOf<Header>()));
                     BinaryWriter writer8 = new BinaryWriter(ms8);
                     writer8.Write(Encoding.ASCII.GetBytes(header.Magic));
                     writer8.Write(Encoding.ASCII.GetBytes(header.Version));
@@ -322,7 +322,7 @@ namespace ArcFormats.Artemis
                     //indexsize=(filecount)4byte+(pathlen+0x00000000+offset to begin+file size)16byte*filecount+pathlensum+(file count+1)4byte+8*filecount+(0x00000000)4byte*2+(offsettablebegin-0x7)4byte
 
                     //write header
-                    MemoryStream ms6 = new MemoryStream((int)(header.IndexSize + Marshal.SizeOf<Artemis_pfs_Header>()));
+                    MemoryStream ms6 = new MemoryStream((int)(header.IndexSize + Marshal.SizeOf<Header>()));
                     BinaryWriter writer6 = new BinaryWriter(ms6);
                     writer6.Write(Encoding.ASCII.GetBytes(header.Magic));
                     writer6.Write(Encoding.ASCII.GetBytes(header.Version));

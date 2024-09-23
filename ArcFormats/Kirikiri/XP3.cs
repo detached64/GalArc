@@ -206,14 +206,7 @@ NextEntry:      ms.Position = nextPos;
             bw.Write(compressedIndex);
             //index offset
             long indexOffset = xp3Stream.Length - 8 - 1 - 8 - comLen;
-            if (Global.Version == "1")
-            {
-                xp3Stream.Position = Header.magic.Length;
-            }
-            else
-            {
-                xp3Stream.Position = 32;
-            }
+            xp3Stream.Position = Global.Version == "1" ? Header.magic.Length : 32;
             bw.Write(indexOffset);
 
             xp3Stream.Dispose();
