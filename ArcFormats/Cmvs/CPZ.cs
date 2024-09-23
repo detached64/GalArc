@@ -9,7 +9,7 @@ namespace ArcFormats.Cmvs
 {
     public class CPZ
     {
-        static byte[] Key_cpzV1 =
+        static byte[] KeyV1 =
         {
             0x92, 0xCD, 0x97, 0x90, 0x8C, 0xD7, 0x8C, 0xD5, 0x8B, 0x4B, 0x93, 0xFA, 0x9A, 0xD7, 0x8C, 0xBF,
             0x8C, 0xC9, 0x8C, 0xEB, 0x8D, 0x69, 0x8D, 0x8B, 0x8C, 0xD2, 0x8C, 0xD6, 0x8B, 0x6D, 0x8C, 0xE3,
@@ -27,7 +27,7 @@ namespace ArcFormats.Cmvs
             byte[] index = br.ReadBytes((int)indexSize);
             for (int i = 0; i < index.Length; i++)
             {
-                index[i] = (byte)((index[i] ^ Key_cpzV1[i & 0x3F]) - 0x6C);
+                index[i] = (byte)((index[i] ^ KeyV1[i & 0x3F]) - 0x6C);
             }
 
             MemoryStream ms = new MemoryStream(index);
@@ -46,7 +46,7 @@ namespace ArcFormats.Cmvs
                 byte[] data = br.ReadBytes(size);
                 for (int j = 0; j < data.Length; j++)
                 {
-                    data[j] = (byte)((data[j] ^ Key_cpzV1[j & 0x3F]) - 0x6C);
+                    data[j] = (byte)((data[j] ^ KeyV1[j & 0x3F]) - 0x6C);
                 }
                 string path = Path.Combine(folderPath, fileName);
                 File.WriteAllBytes(path, data);
@@ -88,7 +88,7 @@ namespace ArcFormats.Cmvs
             byte[] index = raw_index.ToArray();
             for (int i = 0; i < index.Length; i++)
             {
-                index[i] = (byte)((index[i] + 0x6C) ^ Key_cpzV1[i & 0x3F]);
+                index[i] = (byte)((index[i] + 0x6C) ^ KeyV1[i & 0x3F]);
             }
             bw.Write(index);
 
@@ -97,7 +97,7 @@ namespace ArcFormats.Cmvs
                 byte[] data = File.ReadAllBytes(file);
                 for (int i = 0; i < data.Length; i++)
                 {
-                    data[i] = (byte)((data[i] + 0x6C) ^ Key_cpzV1[i & 0x3F]);
+                    data[i] = (byte)((data[i] + 0x6C) ^ KeyV1[i & 0x3F]);
                 }
                 bw.Write(data);
                 LogUtility.UpdateBar();
@@ -120,11 +120,12 @@ namespace ArcFormats.Cmvs
             public uint IndexSeed;
             public uint HeaderCRC;
         }
+
         private static void ReadHeaderV6(BinaryReader br, HeaderV6 header)
         {
             header.Magic = br.ReadUInt32();
             header.DirCount = br.ReadUInt32() ^ 0xfe3a53da;
-            header.DirIndexLength = br.ReadUInt32() ^ 0x37f298e;
+            header.DirIndexLength = br.ReadUInt32() ^ 0x37f298e8;
             header.FileIndexLength = br.ReadUInt32() ^ 0x7a6f3a2d;
             header.IndexVerify = new uint[4];
             header.IndexVerify[0] = br.ReadUInt32();
@@ -132,14 +133,31 @@ namespace ArcFormats.Cmvs
             header.IndexVerify[2] = br.ReadUInt32();
             header.IndexVerify[3] = br.ReadUInt32();
             header.Md5Data = new uint[4];
-            header.Md5Data[0] = br.ReadUInt32() ^ 0x43de7c1;
-            header.Md5Data[1] = br.ReadUInt32() ^ 0xcc65f416;
-            header.Md5Data[2] = br.ReadUInt32() ^ 0xd016a93d;
-            header.Md5Data[3] = br.ReadUInt32() ^ 0x97a3ba9b;
+            header.Md5Data[0] = br.ReadUInt32();
+            header.Md5Data[1] = br.ReadUInt32();
+            header.Md5Data[2] = br.ReadUInt32();
+            header.Md5Data[3] = br.ReadUInt32();
+            header.Md5Data[0] ^= 0x43de7c1a;
+            header.Md5Data[1] ^= 0xcc65f416;
+            header.Md5Data[2] ^= 0xd016a93d;
+            header.Md5Data[3] ^= 0x97a3ba9b;
             header.IndexKey = br.ReadUInt32() ^ 0xae7d39b7;
             header.IsEncrypt = br.ReadUInt32() ^ 0xfb73a956;
             header.IndexSeed = br.ReadUInt32() ^ 0x37acf832;
             header.HeaderCRC = br.ReadUInt32();
+
+            CmvsMD5.ComputeHash(header.Md5Data);
+            Utils.Swap(ref header.Md5Data[0], ref header.Md5Data[2]);
+            Utils.Swap(ref header.Md5Data[2], ref header.Md5Data[3]);
+
+            header.Md5Data[0] ^= 0x45a76c2f;
+            header.Md5Data[1] -= 0x5ba17fcb;
+            header.Md5Data[2] ^= 0x79abe8ad;
+            header.Md5Data[3] -= 0x1c08561b;
+
+            header.IndexSeed = Binary.RotR(header.IndexSeed, 5);
+            header.IndexSeed *= 0x7da8f173;
+            header.IndexSeed += 0x13712765;
         }
         private static void cpzV6_unpack(string filePath, string folderPath)
         {

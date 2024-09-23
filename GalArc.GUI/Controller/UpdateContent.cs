@@ -15,6 +15,9 @@ namespace GalArc.Controller
 
         internal static string[] EncodingList = Resource.Encodings.CodePages.Keys.ToArray();
 
+        /// <summary>
+        /// Add here only when multiple formats are supported and some of them need specific version.
+        /// </summary>
         internal static Dictionary<string, string> versionPairs = new Dictionary<string, string>
         {
             { "AdvHD", "ARC" },
@@ -120,7 +123,12 @@ namespace GalArc.Controller
         internal static void UpdatePackVersion()
         {
             PackWindow.Instance.pa_combVersion.Items.Clear();
-            if (!string.IsNullOrEmpty(selectedEngineInfo_Pack.PackVersion) && !selectedEngineInfo_Pack.PackFormat.Contains("/") || ConfigurePackVersion())
+            bool shouldEnable = !string.IsNullOrEmpty(selectedEngineInfo_Pack.PackVersion) &&
+                (
+                    !selectedEngineInfo_Pack.PackFormat.Contains("/") ||
+                    ConfigurePackVersion()
+                );
+            if (shouldEnable)
             {
                 PackWindow.Instance.pa_combVersion.Enabled = true;
                 PackWindow.Instance.pa_combVersion.Items.AddRange(selectedEngineInfo_Pack.PackVersion.Split('/'));
@@ -138,7 +146,7 @@ namespace GalArc.Controller
         internal static bool ConfigurePackVersion()
         {
             bool isVersionEnabled = false;
-            if (versionPairs.ContainsKey(PackWindow.Instance.pa_selEngine.Text) && PackWindow.Instance.pa_combPackFormat.Text == versionPairs[PackWindow.Instance.pa_selEngine.Text])
+            if (!versionPairs.ContainsKey(PackWindow.Instance.pa_selEngine.Text) || PackWindow.Instance.pa_combPackFormat.Text == versionPairs[PackWindow.Instance.pa_selEngine.Text])
             {
                 isVersionEnabled = true;
             }
