@@ -50,7 +50,7 @@ namespace GalArc.Controller
         }
 
         /// <summary>
-        /// Used for multiple extensions which are not all on the listbox , and they share the same method.
+        /// Used for multiple extensions which are not all on the listbox , but they share the same method.
         /// </summary>
         /// <param name="extension"></param>
         /// <param name="engineName"></param>
@@ -65,7 +65,7 @@ namespace GalArc.Controller
         }
 
         /// <summary>
-        /// Used for multiple extensions which are all on the listbox , but they share the same method.
+        /// Used for multiple extensions which are all on the listbox , and they share the same method.
         /// </summary>
         /// <param name="extension"></param>
         /// <returns></returns>
@@ -74,6 +74,10 @@ namespace GalArc.Controller
             if (extension == "RGSSAD" || extension == "RGSS2A" || extension == "RGSS3A")
             {
                 return "RGSS";
+            }
+            if (engineName == "PJADV" && extension == "PAK")
+            {
+                return "DAT";
             }
             return extension;
         }
