@@ -8,20 +8,20 @@ namespace ArcFormats.AdvHD
 {
     public class ARC
     {
-        private struct AdvHD_arc_v1_header
+        private struct HeaderV1
         {
             public uint typeCount { get; set; }
             public uint fileCountAll { get; set; }
         }
 
-        private struct AdvHD_arc_v1_type_header
+        private struct TypeHeaderV1
         {
             public string ext { get; set; }
             public uint fileCount { get; set; }
             public uint indexOffset { get; set; }
         }
 
-        private struct AdvHD_arc_v1_entry
+        private struct EntryV1
         {
             public string fileName { get; set; }
             public uint fileSize { get; set; }
@@ -31,17 +31,17 @@ namespace ArcFormats.AdvHD
 
         private static void arcV1_unpack(string filePath, string folderPath)
         {
-            AdvHD_arc_v1_header header = new AdvHD_arc_v1_header();
+            HeaderV1 header = new HeaderV1();
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             BinaryReader br = new BinaryReader(fs);
             header.fileCountAll = 0;
             header.typeCount = br.ReadUInt32();
-            List<AdvHD_arc_v1_type_header> typeHeaders = new List<AdvHD_arc_v1_type_header>();
+            List<TypeHeaderV1> typeHeaders = new List<TypeHeaderV1>();
             Directory.CreateDirectory(folderPath);
 
             for (int i = 0; i < header.typeCount; i++)
             {
-                AdvHD_arc_v1_type_header typeHeader = new AdvHD_arc_v1_type_header();
+                TypeHeaderV1 typeHeader = new TypeHeaderV1();
                 typeHeader.ext = Encoding.ASCII.GetString(br.ReadBytes(3));
                 br.ReadByte();
                 typeHeader.fileCount = br.ReadUInt32();
@@ -55,7 +55,7 @@ namespace ArcFormats.AdvHD
             {
                 for (int j = 0; j < typeHeaders[i].fileCount; j++)
                 {
-                    AdvHD_arc_v1_entry index = new AdvHD_arc_v1_entry();
+                    EntryV1 index = new EntryV1();
                     index.fileName = Encoding.ASCII.GetString(br.ReadBytes(13)).Replace("\0", string.Empty) + "." + typeHeaders[i].ext;
                     index.fileSize = br.ReadUInt32();
                     index.offset = br.ReadUInt32();
@@ -81,7 +81,7 @@ namespace ArcFormats.AdvHD
         {
             HashSet<string> uniqueExtension = new HashSet<string>();
 
-            AdvHD_arc_v1_header header = new AdvHD_arc_v1_header();
+            HeaderV1 header = new HeaderV1();
             header.fileCountAll = (uint)Utilities.GetFileCount_All(folderPath);
             LogUtility.InitBar((int)header.fileCountAll);
             string[] ext = Utilities.GetFileExtensions(folderPath);
@@ -91,7 +91,7 @@ namespace ArcFormats.AdvHD
             header.typeCount = (uint)extCount;
             int length = 13;
             DirectoryInfo d = new DirectoryInfo(folderPath);
-            List<AdvHD_arc_v1_type_header> typeHeaders = new List<AdvHD_arc_v1_type_header>();
+            List<TypeHeaderV1> typeHeaders = new List<TypeHeaderV1>();
             int[] type_fileCount = new int[extCount];
 
             FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -141,13 +141,13 @@ namespace ArcFormats.AdvHD
             bwdata.Dispose();
         }
 
-        private struct AdvHD_arc_v2_header
+        private struct HeaderV2
         {
             public uint fileCount { get; set; }
             public uint entrySize { get; set; }
         }
 
-        private struct AdvHD_arc_v2_entry
+        private struct EntryV2
         {
             public uint fileSize { get; set; }
             public uint offset { get; set; }
@@ -158,10 +158,10 @@ namespace ArcFormats.AdvHD
         private static void arcV2_unpack(string filePath, string folderPath)
         {
             //init
-            AdvHD_arc_v2_header header = new AdvHD_arc_v2_header();
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            HeaderV2 header = new HeaderV2();
+            FileStream fs = File.OpenRead(filePath);
             BinaryReader br1 = new BinaryReader(fs);
-            List<AdvHD_arc_v2_entry> l = new List<AdvHD_arc_v2_entry>();
+            List<EntryV2> l = new List<EntryV2>();
 
             Directory.CreateDirectory(folderPath);
 
@@ -171,11 +171,11 @@ namespace ArcFormats.AdvHD
 
             for (int i = 0; i < header.fileCount; i++)
             {
-                AdvHD_arc_v2_entry entry = new AdvHD_arc_v2_entry();
+                EntryV2 entry = new EntryV2();
                 entry.fileSize = br1.ReadUInt32();
                 entry.offset = br1.ReadUInt32() + 8 + header.entrySize;
                 entry.fileName = Utilities.ReadCString(br1, Encoding.Unicode);
-                entry.filePath = folderPath + "\\" + entry.fileName;
+                entry.filePath = Path.Combine(folderPath, entry.fileName);
 
                 l.Add(entry);
             }
@@ -197,8 +197,8 @@ namespace ArcFormats.AdvHD
 
         private static void arcV2_pack(string folderPath, string filePath)
         {
-            AdvHD_arc_v2_header header = new AdvHD_arc_v2_header();
-            List<AdvHD_arc_v2_entry> l = new List<AdvHD_arc_v2_entry>();
+            HeaderV2 header = new HeaderV2();
+            List<EntryV2> l = new List<EntryV2>();
             uint sizeToNow = 0;
 
             //make header
@@ -216,7 +216,7 @@ namespace ArcFormats.AdvHD
             //make entry
             foreach (FileInfo fi in d.GetFiles())
             {
-                AdvHD_arc_v2_entry entry = new AdvHD_arc_v2_entry();
+                EntryV2 entry = new EntryV2();
                 entry.fileName = fi.Name;
                 entry.fileSize = (uint)new FileInfo(fi.FullName).Length;
                 entry.offset = sizeToNow;
@@ -225,7 +225,7 @@ namespace ArcFormats.AdvHD
             }
 
             //write init
-            FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            FileStream fs = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fs);
 
             //write header
@@ -255,10 +255,16 @@ namespace ArcFormats.AdvHD
 
         public static void Unpack(string filePath, string folderPath)
         {
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            BinaryReader br = new BinaryReader(fs);
-            fs.Position = 6;
-            char a = br.ReadChar();
+            char a;
+            using (FileStream fs = File.OpenRead(filePath))
+            {
+                using (BinaryReader br = new BinaryReader(fs))
+                {
+                    fs.Position = 6;
+                    a = br.ReadChar();
+                }
+            }
+
             if (a >= 'A')   //extension
             {
                 LogUtility.Info("Valid arc v1 archive detected.");
