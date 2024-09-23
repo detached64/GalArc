@@ -9,7 +9,7 @@ namespace ArcFormats.EntisGLS
 {
     public class NOA
     {
-        private struct EntisGLS_noa_header
+        private struct Header
         {
             public byte[] magic1 { get; set; }
             public byte[] magic2 { get; set; }
@@ -21,28 +21,28 @@ namespace ArcFormats.EntisGLS
             public static byte[] magic2_valid = { 0x45, 0x52, 0x49, 0x53, 0x41, 0x2d, 0x41, 0x72, 0x63, 0x68, 0x69, 0x76, 0x65, 0x20, 0x66, 0x69, 0x6c, 0x65 };
         }
 
-        private struct EntisGLS_noa_entry_header
+        private struct EntryHeader
         {
             public string magic { get; set; }
             public ulong indexSize { get; set; }
             public uint fileCount { get; set; }
         }
 
-        private class EntisGLS_noa_entry
+        private class Entry
         {
             public ulong fileSize { get; set; }
             public uint attribute { get; set; }
             public uint encType { get; set; }
             public ulong offset { get; set; }
-            public EntisGLS_noa_timeStamp timestamp { get; set; }
+            public TimeStamp timestamp { get; set; }
             public uint extraInfoLen { get; set; }
             public string extraInfo { get; set; }
             public uint fileNameLen { get; set; }
             public string fileName { get; set; }
 
-            public EntisGLS_noa_entry()
+            public Entry()
             {
-                timestamp = new EntisGLS_noa_timeStamp();
+                timestamp = new TimeStamp();
                 fileSize = 0;
                 attribute = 0;
                 encType = 0;
@@ -54,7 +54,7 @@ namespace ArcFormats.EntisGLS
             }
         }
 
-        private class EntisGLS_noa_timeStamp
+        private class TimeStamp
         {
             public byte second { get; set; }
             public byte minute { get; set; }
@@ -67,14 +67,14 @@ namespace ArcFormats.EntisGLS
 
         public static void Unpack(string filePath, string folderPath)
         {
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            EntisGLS_noa_header header = new EntisGLS_noa_header();
+            Header header = new Header();
 
             header.magic1 = br.ReadBytes(16);
             header.magic2 = br.ReadBytes(18);
 
-            if (!header.magic1.SequenceEqual(EntisGLS_noa_header.magic1_valid) || !header.magic2.SequenceEqual(EntisGLS_noa_header.magic2_valid))
+            if (!header.magic1.SequenceEqual(Header.magic1_valid) || !header.magic2.SequenceEqual(Header.magic2_valid))
             {
                 LogUtility.Error_NotValidArchive();
             }
@@ -83,7 +83,7 @@ namespace ArcFormats.EntisGLS
             header.noaSizeWithout = br.ReadUInt32();
             header.reserve = br.ReadUInt32();
 
-            EntisGLS_noa_entry_header entry_header = new EntisGLS_noa_entry_header();
+            EntryHeader entry_header = new EntryHeader();
             entry_header.magic = Encoding.ASCII.GetString(br.ReadBytes(8));
             if (entry_header.magic != "DirEntry")
             {
@@ -99,7 +99,7 @@ namespace ArcFormats.EntisGLS
             long pos = 0;
             for (int i = 0; i < entry_header.fileCount; i++)
             {
-                EntisGLS_noa_entry entry = new EntisGLS_noa_entry();
+                Entry entry = new Entry();
                 entry.fileSize = br.ReadUInt64();
                 entry.attribute = br.ReadUInt32();
                 entry.encType = br.ReadUInt32();
@@ -128,19 +128,20 @@ namespace ArcFormats.EntisGLS
                 fs.Seek((long)entry.offset, SeekOrigin.Begin);
                 br.ReadBytes(16);
                 byte[] buffer = br.ReadBytes((int)entry.fileSize);
-                File.WriteAllBytes(folderPath + "\\" + entry.fileName, buffer);
+                File.WriteAllBytes(Path.Combine(folderPath, entry.fileName), buffer);
                 fs.Seek(pos, SeekOrigin.Begin);
                 LogUtility.UpdateBar();
             }
             //string jsonStr = JsonSerializer.Serialize(l);
             //File.WriteAllText(folderPath + "\\" + "TimestampInfo.json", jsonStr);
             fs.Dispose();
+            br.Dispose();
         }
 
         public static void Pack(string folderPath, string filePath)
         {
             //string jsonPath = folderPath + "\\" + "TimestampInfo.json";
-            FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
             string[] files = Directory.GetFiles(folderPath);
             //string[] excludedNames = new string[] { "TimestampInfo.json" };
@@ -180,8 +181,8 @@ namespace ArcFormats.EntisGLS
             //}
 
             //header
-            bw.Write(EntisGLS_noa_header.magic1_valid);
-            bw.Write(EntisGLS_noa_header.magic2_valid);
+            bw.Write(Header.magic1_valid);
+            bw.Write(Header.magic2_valid);
             bw.Write(new byte[30]);//skip file size,temporarily
                                    //entry header
             bw.Write(Encoding.ASCII.GetBytes("DirEntry"));
@@ -225,6 +226,7 @@ namespace ArcFormats.EntisGLS
             fw.Position = 56;//write size
             bw.Write(size - 64);
             fw.Dispose();
+            bw.Dispose();
         }
     }
 }

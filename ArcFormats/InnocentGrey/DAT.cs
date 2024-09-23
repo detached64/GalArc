@@ -10,16 +10,16 @@ namespace ArcFormats.InnocentGrey
 {
     public class DAT
     {
-        private struct InnocentGrey_dat_header
+        private struct Header
         {
-            public string magic { get; set; }//"PACKDAT."
+            public string magic { get; set; }       //"PACKDAT."
             public uint fileCount { get; set; }
             public uint fileCount1 { get; set; }
         }
 
-        private struct InnocentGrey_dat_entry
+        private struct Entry
         {
-            public string fileName { get; set; }//32 bytes
+            public string fileName { get; set; }
             public uint offset { get; set; }
             public uint fileType { get; set; }
             public uint fileSize_uncompressed { get; set; }
@@ -29,13 +29,13 @@ namespace ArcFormats.InnocentGrey
 
         public static void Unpack(string filePath, string folderPath)
         {
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
             if (Encoding.ASCII.GetString(br.ReadBytes(7)) != "PACKDAT" || br.ReadByte() != '\x2e')
             {
                 LogUtility.Error_NotValidArchive();
             }
-            InnocentGrey_dat_header header = new InnocentGrey_dat_header();
+            Header header = new Header();
             header.fileCount = br.ReadUInt32();
             header.fileCount1 = br.ReadUInt32();
             if (header.fileCount != header.fileCount1)
@@ -44,26 +44,19 @@ namespace ArcFormats.InnocentGrey
             }
 
             LogUtility.InitBar(header.fileCount);
-            List<InnocentGrey_dat_entry> entries = new List<InnocentGrey_dat_entry>();
+            List<Entry> entries = new List<Entry>();
             Directory.CreateDirectory(folderPath);
             for (int i = 0; i < header.fileCount; i++)
             {
-                InnocentGrey_dat_entry entry = new InnocentGrey_dat_entry();
+                Entry entry = new Entry();
                 entry.fileName = Encoding.ASCII.GetString(br.ReadBytes(32)).TrimEnd('\0');
                 entry.offset = br.ReadUInt32();
                 entry.fileType = br.ReadUInt32();
                 entry.fileSize_uncompressed = br.ReadUInt32();
                 entry.fileSize_compressed = br.ReadUInt32();
-                if (entry.fileSize_compressed == entry.fileSize_uncompressed)
-                {
-                    entry.isCompressed = false;
-                }
-                else
-                {
-                    entry.isCompressed = true;
-                }
+                entry.isCompressed = entry.fileSize_compressed != entry.fileSize_uncompressed;
 
-                if (entry.isCompressed)//skip compressed data for now
+                if (entry.isCompressed)     //skip compressed data for now
                 {
                     throw new NotImplementedException("Compressed data detected.Temporarily not supported.");
                 }
@@ -72,12 +65,11 @@ namespace ArcFormats.InnocentGrey
 
             for (int i = 0; i < header.fileCount; i++)
             {
-                fs.Seek(entries[i].offset, SeekOrigin.Begin);//have to seek manually,or it will read the wrong data
+                fs.Position = entries[i].offset;//have to seek manually,or it will read the wrong data
                 byte[] data = br.ReadBytes((int)entries[i].fileSize_uncompressed);
                 byte key = (byte)(Path.GetExtension(entries[i].fileName) == ".s" ? 0xFF : 0);
                 data = Xor.xor(data, key);
-                string fileName = folderPath + "\\" + entries[i].fileName;
-                File.WriteAllBytes(fileName, data);
+                File.WriteAllBytes(Path.Combine(folderPath, entries[i].fileName), data);
                 LogUtility.UpdateBar();
             }
             br.Dispose();
@@ -86,10 +78,10 @@ namespace ArcFormats.InnocentGrey
 
         public static void Pack(string folderPath, string filePath)
         {
-            FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
             DirectoryInfo d = new DirectoryInfo(folderPath);
-            InnocentGrey_dat_header header = new InnocentGrey_dat_header();
+            Header header = new Header();
             header.magic = "PACKDAT";
             header.fileCount = (uint)d.GetFiles("*.*", SearchOption.TopDirectoryOnly).Count();
             header.fileCount1 = header.fileCount;
