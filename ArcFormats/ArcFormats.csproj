@@ -54,7 +54,9 @@
     <Compile Include="Ai6Win\ARC.cs" />
     <Compile Include="Artemis\PFS.cs" />
     <Compile Include="BiShop\BSA.cs" />
+    <Compile Include="Cmvs\CmvsMD5.cs" />
     <Compile Include="Cmvs\CPZ.cs" />
+    <Compile Include="Cmvs\Utils.cs" />
     <Compile Include="EntisGLS\NOA.cs" />
     <Compile Include="Global\Global.cs" />
     <Compile Include="InnocentGrey\DAT.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="NitroPlus\PAK.cs" />
     <Compile Include="NScripter\NS2.cs" />
     <Compile Include="Palette\PAK.cs" />
+    <Compile Include="PJADV\DAT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RPGMaker\RGSS.cs" />
     <Compile Include="Softpal\PAC.cs" />
