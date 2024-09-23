@@ -8,15 +8,15 @@ namespace ArcFormats.InnocentGrey
 {
     public class IGA
     {
-        private struct InnocentGrey_iga_header
+        private struct Header
         {
-            public byte[] magic { get; set; }//IGA0
-            public uint unknown1 { get; set; }//checksum?
-            public uint unknown2 { get; set; }//2
-            public uint unknown3 { get; set; }//2
+            public byte[] magic { get; set; }   //IGA0
+            public uint unknown1 { get; set; }  //checksum?
+            public uint unknown2 { get; set; }  //2
+            public uint unknown3 { get; set; }  //2
         }
 
-        private struct InnocentGrey_iga_entry
+        private struct Entry
         {
             public uint nameOffset { get; set; }
             public uint dataOffset { get; set; }
@@ -27,10 +27,10 @@ namespace ArcFormats.InnocentGrey
 
         public static void Unpack(string filePath, string folderPath)
         {
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            List<InnocentGrey_iga_entry> entries = new List<InnocentGrey_iga_entry>();
-            List<InnocentGrey_iga_entry> entriesUpdate = new List<InnocentGrey_iga_entry>();
+            List<Entry> entries = new List<Entry>();
+            List<Entry> entriesUpdate = new List<Entry>();
             if (Encoding.ASCII.GetString(br.ReadBytes(4)) != "IGA0")
             {
                 LogUtility.Error_NotValidArchive();
@@ -42,7 +42,7 @@ namespace ArcFormats.InnocentGrey
             long endPos = fs.Position + indexSize;
             while (fs.Position < endPos)
             {
-                var entry = new InnocentGrey_iga_entry();
+                var entry = new Entry();
                 entry.nameOffset = Varint.UnpackUint(br);
                 entry.dataOffset = Varint.UnpackUint(br);
                 entry.fileSize = Varint.UnpackUint(br);
@@ -73,18 +73,17 @@ namespace ArcFormats.InnocentGrey
                 entriesUpdate.Add(entry);
             }
 
-            for (int i = 0; i < entries.Count; i++)
+            foreach (var entry in entriesUpdate)
             {
-                var entry = entriesUpdate[i];
                 fs.Position = entry.dataOffset;
                 byte[] buffer = new byte[entry.fileSize];
                 br.Read(buffer, 0, (int)entry.fileSize);
-                int key = Path.GetExtension(entry.fileName) == ".s" ? 0xFF : 0;//decrypt script file,详见garbro
+                int key = Path.GetExtension(entry.fileName) == ".s" ? 0xFF : 0; //decrypt script file
                 for (uint j = 0; j < entry.fileSize; j++)
                 {
                     buffer[j] ^= (byte)((j + 2) ^ key);
                 }
-                File.WriteAllBytes(folderPath + "\\" + entry.fileName, buffer);
+                File.WriteAllBytes(Path.Combine(folderPath, entry.fileName), buffer);
                 LogUtility.UpdateBar();
             }
             fs.Dispose();
@@ -93,22 +92,22 @@ namespace ArcFormats.InnocentGrey
 
         public static void Pack(string folderPath, string filePath)
         {
-            FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
-            InnocentGrey_iga_header header = new InnocentGrey_iga_header();
+            Header header = new Header();
             header.magic = Encoding.ASCII.GetBytes("IGA0");
             bw.Write(header.magic);
-            bw.Write(0);//don't know accurate value,but 0 seems valid
+            bw.Write(0);    //don't know accurate value,but 0 seems valid
             bw.Write(2);
             bw.Write(2);
-            List<InnocentGrey_iga_entry> l = new List<InnocentGrey_iga_entry>();
+            List<Entry> l = new List<Entry>();
 
             DirectoryInfo dir = new DirectoryInfo(folderPath);
             uint nameOffset = 0;
             uint dataOffset = 0;
             foreach (FileInfo file in dir.GetFiles("*.*", searchOption: SearchOption.TopDirectoryOnly))
             {
-                InnocentGrey_iga_entry entry = new InnocentGrey_iga_entry();
+                Entry entry = new Entry();
                 entry.fileName = file.Name;
                 entry.nameLen = (uint)entry.fileName.Length;
                 entry.nameOffset = nameOffset;
@@ -118,40 +117,47 @@ namespace ArcFormats.InnocentGrey
                 nameOffset += entry.nameLen;
                 dataOffset += entry.fileSize;
             }
-
-            MemoryStream msEntry = new MemoryStream();
-            BinaryWriter bwEntry = new BinaryWriter(msEntry);
-            MemoryStream msFileName = new MemoryStream();
-            BinaryWriter bwFileName = new BinaryWriter(msFileName);
             int fileCount = Utilities.GetFileCount_All(folderPath);
             LogUtility.InitBar(fileCount);
 
-            for (int i = 0; i < fileCount; i++)
+            using (MemoryStream msEntry = new MemoryStream())
             {
-                bwEntry.Write(Varint.PackUint(l[i].nameOffset));
-                bwEntry.Write(Varint.PackUint(l[i].dataOffset));
-                bwEntry.Write(Varint.PackUint(l[i].fileSize));
-                bwFileName.Write(Varint.PackString(l[i].fileName));
+                using (BinaryWriter bwEntry = new BinaryWriter(msEntry))
+                {
+                    using (MemoryStream msFileName = new MemoryStream())
+                    {
+                        using (BinaryWriter bwFileName = new BinaryWriter(msFileName))
+                        {
+                            for (int i = 0; i < fileCount; i++)
+                            {
+                                bwEntry.Write(Varint.PackUint(l[i].nameOffset));
+                                bwEntry.Write(Varint.PackUint(l[i].dataOffset));
+                                bwEntry.Write(Varint.PackUint(l[i].fileSize));
+                                bwFileName.Write(Varint.PackString(l[i].fileName));
+                            }
+                            bw.Write(Varint.PackUint((uint)msEntry.Length));
+                            msEntry.WriteTo(fw);
+
+                            bw.Write(Varint.PackUint((uint)msFileName.Length));
+                            msFileName.WriteTo(fw);
+                        }
+                    }
+                }
             }
-            bw.Write(Varint.PackUint((uint)msEntry.Length));
-            msEntry.WriteTo(fw);
 
-            bw.Write(Varint.PackUint((uint)msFileName.Length));
-            msFileName.WriteTo(fw);
-
-            for (int i = 0; i < l.Count; i++)
+            foreach (var entry in l)
             {
-                byte[] buffer = File.ReadAllBytes(folderPath + "\\" + l[i].fileName);
-                int key = Path.GetExtension(l[i].fileName) == ".s" ? 0xFF : 0;
-                for (uint j = 0; j < l[i].fileSize; j++)
+                byte[] buffer = File.ReadAllBytes(folderPath + "\\" + entry.fileName);
+                int key = Path.GetExtension(entry.fileName) == ".s" ? 0xFF : 0;
+                for (uint j = 0; j < entry.fileSize; j++)
                 {
                     buffer[j] ^= (byte)((j + 2) ^ key);
                 }
                 bw.Write(buffer);
                 LogUtility.UpdateBar();
             }
-
             fw.Dispose();
+            bw.Dispose();
         }
     }
 }
