@@ -1,10 +1,12 @@
 ﻿using GalArc.GUI;
+using GalArc.Properties;
 using GalArc.Resource;
 using Log;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Windows.Forms;
+using System.Reflection;
 
 namespace GalArc.Controller
 {
@@ -13,7 +15,7 @@ namespace GalArc.Controller
         internal static EngineInfo selectedEngineInfo_Unpack;
         internal static EngineInfo selectedEngineInfo_Pack;
 
-        internal static string[] EncodingList = Resource.Encodings.CodePages.Keys.ToArray();
+        internal static string[] EncodingList = Encodings.CodePages.Keys.ToArray();
 
         /// <summary>
         /// Add here only when multiple formats are supported and some of them need specific version.
@@ -24,6 +26,7 @@ namespace GalArc.Controller
             { "SystemNNN", "GPK" },
             { "Triangle", "CGF" },
         };
+
         /// <summary>
         /// Initialize the content of combobox.
         /// </summary>
@@ -155,12 +158,20 @@ namespace GalArc.Controller
 
         internal static void InitCombobox_Languages()
         {
-            OptionWindow.Instance.op_cbLang.Items.AddRange(Resource.Languages.languages.Keys.ToArray());
+            MainWindow.Instance.combLang.Items.AddRange(Languages.languages.Keys.ToArray());
+        }
+
+        internal static void InitDataGridView()
+        {
+            AboutBox.Instance.dataGridViewEngines.Columns.Clear();
+            AboutBox.Instance.dataGridViewEngines.Columns.Add("EngineName", Resources.ab_col_EngineName);
+            AboutBox.Instance.dataGridViewEngines.Columns.Add("UnpackFormat", Resources.ab_col_UnpackFormat);
+            AboutBox.Instance.dataGridViewEngines.Columns.Add("PackFormat", Resources.ab_col_PackFormat);
         }
 
         internal static void UpdateDataGridView(List<EngineInfo> engines)
         {
-            AboutWindow.Instance.dataGridViewEngines.Rows.Clear();
+            AboutBox.Instance.dataGridViewEngines.Rows.Clear();
             //int count = engines.Count;
             //DataGridViewRow[] rows = new DataGridViewRow[count];
             //for (int i = 0; i < count; i++)
@@ -173,7 +184,7 @@ namespace GalArc.Controller
             //}
             foreach (var engine in engines)
             {
-                AboutWindow.Instance.dataGridViewEngines.Rows.Add(engine.EngineName, engine.UnpackFormat, engine.PackFormat);
+                AboutBox.Instance.dataGridViewEngines.Rows.Add(engine.EngineName, engine.UnpackFormat, engine.PackFormat);
             }
         }
 
@@ -186,6 +197,19 @@ namespace GalArc.Controller
             else
             {
                 UnpackWindow.Instance.un_chkbxDecScr.Enabled = false;
+            }
+        }
+
+        internal static void UpdateLicense()
+        {
+            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("GalArc.License.txt"))
+            {
+                if (stream == null) throw new FileNotFoundException("Resource not found");
+
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    AboutBox.Instance.txtLicense.Text = reader.ReadToEnd();
+                }
             }
         }
     }

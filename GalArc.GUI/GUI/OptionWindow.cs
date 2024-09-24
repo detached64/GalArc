@@ -6,33 +6,32 @@ using System.Windows.Forms;
 
 namespace GalArc.GUI
 {
-    public partial class OptionWindow : UserControl
+    public partial class OptionDialog : Form
     {
-        public static OptionWindow Instance;
+        public static OptionDialog Instance;
 
-        public OptionWindow()
+        public OptionDialog()
         {
             Instance = this;
             InitializeComponent();
-            Controller.Localize.SetLocalCulture(main.LocalCulture);
+            Controller.Localize.SetLocalCulture(MainWindow.LocalCulture);
             Controller.Localize.GetStrings_option();
             LoadState();
-            Controller.UpdateContent.InitCombobox_Languages();
         }
 
         private void OptionWindow_Load(object sender, EventArgs e)
         {
-            this.op_cbLang.Text = Resource.Languages.languages.FirstOrDefault(x => x.Value == main.LocalCulture).Key;
+            this.op_cbLang.Text = Resource.Languages.languages.FirstOrDefault(x => x.Value == MainWindow.LocalCulture).Key;
         }
 
         private void op_cbLang_SelectedIndexChanged(object sender, EventArgs e)
         {
-            main.LocalCulture = Resource.Languages.languages[this.op_cbLang.Text];
-            Controller.Localize.SetLocalCulture(main.LocalCulture);
+            MainWindow.LocalCulture = Resource.Languages.languages[this.op_cbLang.Text];
+            Controller.Localize.SetLocalCulture(MainWindow.LocalCulture);
             Controller.Localize.RefreshStrings();
             if (Resource.Global.AutoSaveLanguage)
             {
-                Properties.Settings.Default.lastLang = main.LocalCulture;
+                Properties.Settings.Default.lastLang = MainWindow.LocalCulture;
                 Properties.Settings.Default.Save();
             }
         }
@@ -42,7 +41,7 @@ namespace GalArc.GUI
             if (this.op_chkbxOnTop.Checked)
             {
                 LogWindow.Instance.TopMost = true;
-                main.Main.TopMost = true;
+                MainWindow.Instance.TopMost = true;
                 if (Resource.Global.AutoSaveTopMost)
                 {
 
@@ -53,7 +52,7 @@ namespace GalArc.GUI
             else
             {
                 LogWindow.Instance.TopMost = false;
-                main.Main.TopMost = false;
+                MainWindow.Instance.TopMost = false;
                 if (Resource.Global.AutoSaveTopMost)
                 {
                     Properties.Settings.Default.isTopMost = false;

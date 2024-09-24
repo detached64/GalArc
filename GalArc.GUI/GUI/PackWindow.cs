@@ -19,7 +19,7 @@ namespace GalArc.GUI
             this.pa_FolderPath.DragDrop += new DragEventHandler(pa_FilePath_DragDrop);
             this.pa_FilePath.DragEnter += new DragEventHandler(pa_FolderPath_DragEnter);
             this.pa_FilePath.DragDrop += new DragEventHandler(pa_FolderPath_DragDrop);
-            Controller.Localize.SetLocalCulture(main.LocalCulture);
+            Controller.Localize.SetLocalCulture(MainWindow.LocalCulture);
             Controller.Localize.GetStrings_pack();
 
             LogWindow.Instance.LogFormHidden += new EventHandler(LogForm_LogFormHidden);
@@ -184,9 +184,9 @@ namespace GalArc.GUI
             {
                 UnpackWindow.Instance.un_chkbxShowLog.Checked = this.pa_chkbxShowLog.Checked;
             }
-            main.logWindow.ChangePosition(main.Main.Location.X, main.Main.Location.Y);
-            main.logWindow.Visible = this.pa_chkbxShowLog.Checked;
-            main.Main.BringMainToFront();
+            LogWindow.Instance.ChangePosition(MainWindow.Instance.Location.X, MainWindow.Instance.Location.Y);
+            LogWindow.Instance.Visible = this.pa_chkbxShowLog.Checked;
+            MainWindow.Instance.BringMainToFront();
             if (Resource.Global.AutoSaveShowLog)
             {
                 Properties.Settings.Default.chkbxShowLog_checked = this.pa_chkbxShowLog.Checked;
