@@ -54,24 +54,30 @@
     <Compile Include="Controller\Execute.cs" />
     <Compile Include="Controller\UpdateContent.cs" />
     <Compile Include="Controller\UpdateVersion.cs" />
+    <Compile Include="GUI\UpdateBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\UpdateBox.Designer.cs">
+      <DependentUpon>UpdateBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resource\Encodings.cs" />
     <Compile Include="Resource\Global.cs" />
     <Compile Include="Controller\Localize.cs" />
     <Compile Include="Controller\SyncPath.cs" />
-    <Compile Include="GUI\AboutWindow.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\AboutWindow.Designer.cs">
-      <DependentUpon>AboutWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\main.cs">
+    <Compile Include="GUI\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\main.Designer.cs">
-      <DependentUpon>main.cs</DependentUpon>
+    <Compile Include="GUI\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\OptionWindow.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\OptionWindow.Designer.cs">
       <DependentUpon>OptionWindow.cs</DependentUpon>
@@ -93,11 +99,11 @@
     <Compile Include="Resource\EngineInfo.cs" />
     <Compile Include="Resource\Languages.cs" />
     <Compile Include="Settings.cs" />
-    <EmbeddedResource Include="GUI\AboutWindow.resx">
-      <DependentUpon>AboutWindow.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\main.resx">
-      <DependentUpon>main.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\OptionWindow.resx">
       <DependentUpon>OptionWindow.cs</DependentUpon>
@@ -110,6 +116,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\UnpackWindow.resx">
       <DependentUpon>UnpackWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UpdateBox.resx">
+      <DependentUpon>UpdateBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\UpdateBox.zh-Hans.resx">
+      <DependentUpon>UpdateBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -145,6 +157,9 @@
       <Project>{76e72c4e-7f17-4d75-a596-c0280530a4eb}</Project>
       <Name>Log</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="License.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

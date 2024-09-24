@@ -21,11 +21,6 @@ namespace GalArc.Controller
 
         internal static bool isNewVerExist = false;
 
-        internal static void InitVersion()
-        {
-            AboutWindow.Instance.ab_lbCurrentVer.Text = currentVersion;
-        }
-
         internal static void DownloadVersion()
         {
             if (File.Exists(versionPath))
@@ -96,6 +91,5 @@ namespace GalArc.Controller
                 CompareVersion(OpenVersion());
             });
         }
-
     }
 }

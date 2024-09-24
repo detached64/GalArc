@@ -1,6 +1,6 @@
 ﻿namespace GalArc.GUI
 {
-    partial class OptionWindow
+    partial class OptionDialog
     {
         /// <summary>
         /// Required designer variable.

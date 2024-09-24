@@ -40,10 +40,8 @@ namespace GalArc.Controller
 
         internal static void GetStrings_main()
         {
-            main.Main.pages.TabPages[0].Text = Resources.main_unpackPage_Text;
-            main.Main.pages.TabPages[1].Text = Resources.main_packPage_Text;
-            main.Main.pages.TabPages[2].Text = Resources.main_optionPage_Text;
-            main.Main.pages.TabPages[3].Text = Resources.main_aboutPage_Text;
+            MainWindow.Instance.pages.TabPages[0].Text = Resources.main_unpackPage_Text;
+            MainWindow.Instance.pages.TabPages[1].Text = Resources.main_packPage_Text;
         }
 
         internal static void GetStrings_unpack()
@@ -85,45 +83,33 @@ namespace GalArc.Controller
 
         internal static void GetStrings_option()
         {
-            OptionWindow.Instance.op_lbLang.Text = Resources.op_lb_Lang;
-            OptionWindow.Instance.op_chkbxOnTop.Text = Resources.op_chkbx_OnTop;
+            OptionDialog.Instance.op_lbLang.Text = Resources.op_lb_Lang;
+            OptionDialog.Instance.op_chkbxOnTop.Text = Resources.op_chkbx_OnTop;
         }
 
         internal static void GetStrings_about()
         {
-            if (AboutWindow.Instance.dataGridViewEngines.Columns.Count == 3)
+            if (AboutBox.Instance.dataGridViewEngines.Columns.Count == 3)
             {
-                AboutWindow.Instance.dataGridViewEngines.Columns[0].HeaderText = Resources.ab_col_EngineName;
-                AboutWindow.Instance.dataGridViewEngines.Columns[1].HeaderText = Resources.ab_col_UnpackFormat;
-                AboutWindow.Instance.dataGridViewEngines.Columns[2].HeaderText = Resources.ab_col_PackFormat;
+                AboutBox.Instance.dataGridViewEngines.Columns[0].HeaderText = Resources.ab_col_EngineName;
+                AboutBox.Instance.dataGridViewEngines.Columns[1].HeaderText = Resources.ab_col_UnpackFormat;
+                AboutBox.Instance.dataGridViewEngines.Columns[2].HeaderText = Resources.ab_col_PackFormat;
             }
-            else if (AboutWindow.Instance.dataGridViewEngines.Columns.Count == 0)
+            else if (AboutBox.Instance.dataGridViewEngines.Columns.Count == 0)
             {
-                AboutWindow.Instance.dataGridViewEngines.Columns.Clear();
-                AboutWindow.Instance.dataGridViewEngines.Columns.Add("EngineName", Resources.ab_col_EngineName);
-                AboutWindow.Instance.dataGridViewEngines.Columns.Add("UnpackFormat", Resources.ab_col_UnpackFormat);
-                AboutWindow.Instance.dataGridViewEngines.Columns.Add("PackFormat", Resources.ab_col_PackFormat);
+                AboutBox.Instance.dataGridViewEngines.Columns.Clear();
+                AboutBox.Instance.dataGridViewEngines.Columns.Add("EngineName", Resources.ab_col_EngineName);
+                AboutBox.Instance.dataGridViewEngines.Columns.Add("UnpackFormat", Resources.ab_col_UnpackFormat);
+                AboutBox.Instance.dataGridViewEngines.Columns.Add("PackFormat", Resources.ab_col_PackFormat);
             }
             else
             {
                 Log.LogUtility.Error("Error occurs in AboutWindow dataGridViewEngines.");
             }
-            AboutWindow.Instance.ab_lbSearch.Text = Resources.ab_lb_Search;
-            AboutWindow.Instance.ab_linkSite.Text = Resources.ab_link_Site;
-            AboutWindow.Instance.ab_linkIssue.Text = Resources.ab_link_Issue;
-            AboutWindow.Instance.ab_lbCurrentVersion.Text = Resources.ab_lb_CurrentVersion;
-            AboutWindow.Instance.ab_lbLatestVersion.Text = Resources.ab_lb_LatestVersion;
-            if (!AboutWindow.Instance.ab_lbLatestVer.Text.Contains("."))         //the latest ver hasn't got.
-            {
-                AboutWindow.Instance.ab_lbLatestVer.Text = Resources.ab_lb_LatestVer;
-            }
-
-            AboutWindow.Instance.ab_gbAbout.Text = Resources.ab_gb_About;
-            AboutWindow.Instance.ab_gbFormat.Text = Resources.ab_gb_Format;
-            AboutWindow.Instance.ab_gbUpdate.Text = Resources.ab_gb_Update;
-
-            AboutWindow.Instance.ab_btnCheckUpdate.Text = Resources.ab_btn_Check;
-            AboutWindow.Instance.ab_btnDownload.Text = Resources.ab_btn_Download;
+            AboutBox.Instance.ab_lbSearch.Text = Resources.ab_lb_Search;
+            AboutBox.Instance.ab_linkSite.Text = Resources.ab_link_Site;
+            AboutBox.Instance.ab_linkIssue.Text = Resources.ab_link_Issue;
+            AboutBox.Instance.lbCurrentVer.Text = $"Version {Resource.Global.CurrentVersion}";
         }
 
         internal static void RefreshStrings()
@@ -131,8 +117,6 @@ namespace GalArc.Controller
             GetStrings_main();
             GetStrings_unpack();
             GetStrings_pack();
-            GetStrings_option();
-            GetStrings_about();
             Log.Controller.Localize.GetStrings_Log();
         }
     }
