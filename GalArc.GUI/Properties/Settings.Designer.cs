@@ -26,60 +26,12 @@ namespace GalArc.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool un_chkbxMatch_checked {
+        public bool chkbxMatch_checked {
             get {
-                return ((bool)(this["un_chkbxMatch_checked"]));
+                return ((bool)(this["chkbxMatch_checked"]));
             }
             set {
-                this["un_chkbxMatch_checked"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int un_selEngine_selectedIndex {
-            get {
-                return ((int)(this["un_selEngine_selectedIndex"]));
-            }
-            set {
-                this["un_selEngine_selectedIndex"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool pa_chkbxMatch_checked {
-            get {
-                return ((bool)(this["pa_chkbxMatch_checked"]));
-            }
-            set {
-                this["pa_chkbxMatch_checked"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int pa_selEngine_selectedIndex {
-            get {
-                return ((int)(this["pa_selEngine_selectedIndex"]));
-            }
-            set {
-                this["pa_selEngine_selectedIndex"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int selectedTab {
-            get {
-                return ((int)(this["selectedTab"]));
-            }
-            set {
-                this["selectedTab"] = value;
+                this["chkbxMatch_checked"] = value;
             }
         }
         
@@ -110,24 +62,72 @@ namespace GalArc.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool isTopMost {
+        public bool TopMost {
             get {
-                return ((bool)(this["isTopMost"]));
+                return ((bool)(this["TopMost"]));
             }
             set {
-                this["isTopMost"] = value;
+                this["TopMost"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool un_chkbxDecScr_checked {
+        public bool chkbxDecScr_checked {
             get {
-                return ((bool)(this["un_chkbxDecScr_checked"]));
+                return ((bool)(this["chkbxDecScr_checked"]));
             }
             set {
-                this["un_chkbxDecScr_checked"] = value;
+                this["chkbxDecScr_checked"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool chkbxUnpack_checked {
+            get {
+                return ((bool)(this["chkbxUnpack_checked"]));
+            }
+            set {
+                this["chkbxUnpack_checked"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool chkbxPack_checked {
+            get {
+                return ((bool)(this["chkbxPack_checked"]));
+            }
+            set {
+                this["chkbxPack_checked"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoSaveState {
+            get {
+                return ((bool)(this["AutoSaveState"]));
+            }
+            set {
+                this["AutoSaveState"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultEncoding {
+            get {
+                return ((string)(this["DefaultEncoding"]));
+            }
+            set {
+                this["DefaultEncoding"] = value;
             }
         }
     }

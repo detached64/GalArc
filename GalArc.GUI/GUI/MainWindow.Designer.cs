@@ -28,66 +28,73 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.main_statusLabel = new System.Windows.Forms.Label();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
+            this.lbStatus = new System.Windows.Forms.Label();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.optionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.preferenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.languagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.combLang = new System.Windows.Forms.ToolStripComboBox();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.packPage = new System.Windows.Forms.TabPage();
-            this.unpackPage = new System.Windows.Forms.TabPage();
-            this.pages = new System.Windows.Forms.TabControl();
-            this.menuStrip1.SuspendLayout();
-            this.pages.SuspendLayout();
+            this.treeViewEngines = new System.Windows.Forms.TreeView();
+            this.chkbxUnpack = new System.Windows.Forms.RadioButton();
+            this.chkbxPack = new System.Windows.Forms.RadioButton();
+            this.lbInput = new System.Windows.Forms.Label();
+            this.txtOutputPath = new System.Windows.Forms.TextBox();
+            this.txtInputPath = new System.Windows.Forms.TextBox();
+            this.lbOutput = new System.Windows.Forms.Label();
+            this.btSelInput = new System.Windows.Forms.Button();
+            this.btSelOutput = new System.Windows.Forms.Button();
+            this.btClear = new System.Windows.Forms.Button();
+            this.chkbxMatch = new System.Windows.Forms.CheckBox();
+            this.btExecute = new System.Windows.Forms.Button();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // main_statusLabel
+            // lbStatus
             // 
-            this.main_statusLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.main_statusLabel.Location = new System.Drawing.Point(16, 691);
-            this.main_statusLabel.Name = "main_statusLabel";
-            this.main_statusLabel.Size = new System.Drawing.Size(1097, 27);
-            this.main_statusLabel.TabIndex = 2;
-            this.main_statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lbStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.lbStatus, "lbStatus");
+            this.lbStatus.Name = "lbStatus";
             // 
-            // menuStrip1
+            // menuStrip
             // 
-            this.menuStrip1.AutoSize = false;
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            resources.ApplyResources(this.menuStrip, "menuStrip");
+            this.menuStrip.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
+            this.menuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionToolStripMenuItem,
             this.helpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1129, 32);
-            this.menuStrip1.TabIndex = 3;
-            this.menuStrip1.Text = "menuStrip";
+            this.menuStrip.Name = "menuStrip";
             // 
             // optionToolStripMenuItem
             // 
             this.optionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.preferenceToolStripMenuItem,
             this.languagesToolStripMenuItem});
             this.optionToolStripMenuItem.Name = "optionToolStripMenuItem";
-            this.optionToolStripMenuItem.Size = new System.Drawing.Size(87, 28);
-            this.optionToolStripMenuItem.Text = "Option";
+            resources.ApplyResources(this.optionToolStripMenuItem, "optionToolStripMenuItem");
+            // 
+            // preferenceToolStripMenuItem
+            // 
+            this.preferenceToolStripMenuItem.Name = "preferenceToolStripMenuItem";
+            resources.ApplyResources(this.preferenceToolStripMenuItem, "preferenceToolStripMenuItem");
+            this.preferenceToolStripMenuItem.Click += new System.EventHandler(this.preferenceToolStripMenuItem_Click);
             // 
             // languagesToolStripMenuItem
             // 
             this.languagesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.combLang});
             this.languagesToolStripMenuItem.Name = "languagesToolStripMenuItem";
-            this.languagesToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.languagesToolStripMenuItem.Text = "Languages";
+            resources.ApplyResources(this.languagesToolStripMenuItem, "languagesToolStripMenuItem");
             // 
             // combLang
             // 
             this.combLang.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.combLang.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            resources.ApplyResources(this.combLang, "combLang");
             this.combLang.Name = "combLang";
-            this.combLang.Size = new System.Drawing.Size(121, 32);
             this.combLang.SelectedIndexChanged += new System.EventHandler(this.combLang_SelectedIndexChanged);
             // 
             // helpToolStripMenuItem
@@ -96,97 +103,158 @@
             this.checkUpdateToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(67, 28);
-            this.helpToolStripMenuItem.Text = "Help";
+            resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
             // 
             // checkUpdateToolStripMenuItem
             // 
             this.checkUpdateToolStripMenuItem.Name = "checkUpdateToolStripMenuItem";
-            this.checkUpdateToolStripMenuItem.Size = new System.Drawing.Size(266, 34);
-            this.checkUpdateToolStripMenuItem.Text = "Check for updates";
+            resources.ApplyResources(this.checkUpdateToolStripMenuItem, "checkUpdateToolStripMenuItem");
             this.checkUpdateToolStripMenuItem.Click += new System.EventHandler(this.checkUpdateToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(266, 34);
-            this.aboutToolStripMenuItem.Text = "About";
+            resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // packPage
+            // treeViewEngines
             // 
-            this.packPage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.packPage.Location = new System.Drawing.Point(4, 36);
-            this.packPage.Name = "packPage";
-            this.packPage.Padding = new System.Windows.Forms.Padding(3);
-            this.packPage.Size = new System.Drawing.Size(1097, 593);
-            this.packPage.TabIndex = 1;
-            this.packPage.Text = "Pack";
-            this.packPage.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.treeViewEngines, "treeViewEngines");
+            this.treeViewEngines.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treeViewEngines.Name = "treeViewEngines";
+            this.treeViewEngines.PathSeparator = "/";
+            this.treeViewEngines.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewEngines_NodeMouseClick);
             // 
-            // unpackPage
+            // chkbxUnpack
             // 
-            this.unpackPage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.unpackPage.Location = new System.Drawing.Point(4, 36);
-            this.unpackPage.Name = "unpackPage";
-            this.unpackPage.Padding = new System.Windows.Forms.Padding(3);
-            this.unpackPage.Size = new System.Drawing.Size(1097, 593);
-            this.unpackPage.TabIndex = 0;
-            this.unpackPage.Text = "Unpack";
-            this.unpackPage.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.chkbxUnpack, "chkbxUnpack");
+            this.chkbxUnpack.Name = "chkbxUnpack";
+            this.chkbxUnpack.UseVisualStyleBackColor = true;
+            this.chkbxUnpack.CheckedChanged += new System.EventHandler(this.chkbxUnpack_CheckedChanged);
             // 
-            // pages
+            // chkbxPack
             // 
-            this.pages.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
-            this.pages.Controls.Add(this.unpackPage);
-            this.pages.Controls.Add(this.packPage);
-            this.pages.Location = new System.Drawing.Point(12, 55);
-            this.pages.Name = "pages";
-            this.pages.SelectedIndex = 0;
-            this.pages.Size = new System.Drawing.Size(1105, 633);
-            this.pages.TabIndex = 0;
-            this.pages.SelectedIndexChanged += new System.EventHandler(this.pages_SelectedIndexChanged);
+            resources.ApplyResources(this.chkbxPack, "chkbxPack");
+            this.chkbxPack.Name = "chkbxPack";
+            this.chkbxPack.UseVisualStyleBackColor = true;
+            this.chkbxPack.CheckedChanged += new System.EventHandler(this.chkbxPack_CheckedChanged);
+            // 
+            // lbInput
+            // 
+            resources.ApplyResources(this.lbInput, "lbInput");
+            this.lbInput.Name = "lbInput";
+            // 
+            // txtOutputPath
+            // 
+            this.txtOutputPath.AllowDrop = true;
+            resources.ApplyResources(this.txtOutputPath, "txtOutputPath");
+            this.txtOutputPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtOutputPath.Name = "txtOutputPath";
+            // 
+            // txtInputPath
+            // 
+            this.txtInputPath.AllowDrop = true;
+            resources.ApplyResources(this.txtInputPath, "txtInputPath");
+            this.txtInputPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtInputPath.Name = "txtInputPath";
+            this.txtInputPath.TextChanged += new System.EventHandler(this.txtInputPath_TextChanged);
+            // 
+            // lbOutput
+            // 
+            resources.ApplyResources(this.lbOutput, "lbOutput");
+            this.lbOutput.Name = "lbOutput";
+            // 
+            // btSelInput
+            // 
+            resources.ApplyResources(this.btSelInput, "btSelInput");
+            this.btSelInput.Name = "btSelInput";
+            this.btSelInput.UseVisualStyleBackColor = true;
+            this.btSelInput.Click += new System.EventHandler(this.btSelInput_Click);
+            // 
+            // btSelOutput
+            // 
+            resources.ApplyResources(this.btSelOutput, "btSelOutput");
+            this.btSelOutput.Name = "btSelOutput";
+            this.btSelOutput.UseVisualStyleBackColor = true;
+            this.btSelOutput.Click += new System.EventHandler(this.btSelOutput_Click);
+            // 
+            // btClear
+            // 
+            resources.ApplyResources(this.btClear, "btClear");
+            this.btClear.Name = "btClear";
+            this.btClear.UseVisualStyleBackColor = true;
+            this.btClear.Click += new System.EventHandler(this.btClear_Click);
+            // 
+            // chkbxMatch
+            // 
+            resources.ApplyResources(this.chkbxMatch, "chkbxMatch");
+            this.chkbxMatch.Checked = true;
+            this.chkbxMatch.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkbxMatch.Name = "chkbxMatch";
+            this.chkbxMatch.UseVisualStyleBackColor = true;
+            this.chkbxMatch.CheckedChanged += new System.EventHandler(this.chkbxMatch_CheckedChanged);
+            // 
+            // btExecute
+            // 
+            resources.ApplyResources(this.btExecute, "btExecute");
+            this.btExecute.Name = "btExecute";
+            this.btExecute.UseVisualStyleBackColor = true;
             // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1129, 732);
-            this.Controls.Add(this.main_statusLabel);
-            this.Controls.Add(this.pages);
-            this.Controls.Add(this.menuStrip1);
-            this.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.Controls.Add(this.btClear);
+            this.Controls.Add(this.chkbxMatch);
+            this.Controls.Add(this.btExecute);
+            this.Controls.Add(this.btSelInput);
+            this.Controls.Add(this.btSelOutput);
+            this.Controls.Add(this.lbOutput);
+            this.Controls.Add(this.txtOutputPath);
+            this.Controls.Add(this.txtInputPath);
+            this.Controls.Add(this.lbInput);
+            this.Controls.Add(this.chkbxPack);
+            this.Controls.Add(this.chkbxUnpack);
+            this.Controls.Add(this.treeViewEngines);
+            this.Controls.Add(this.lbStatus);
+            this.Controls.Add(this.menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
-            this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4);
-            this.MaximizeBox = false;
+            this.MainMenuStrip = this.menuStrip;
             this.Name = "MainWindow";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "GalArc";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.main_FormClosing);
             this.Load += new System.EventHandler(this.main_Load);
             this.LocationChanged += new System.EventHandler(this.main_LocationChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.main_KeyDown);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.pages.ResumeLayout(false);
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-        internal System.Windows.Forms.Label main_statusLabel;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        internal System.Windows.Forms.Label lbStatus;
+        private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem optionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        public System.Windows.Forms.TabPage packPage;
-        public System.Windows.Forms.TabPage unpackPage;
-        public System.Windows.Forms.TabControl pages;
         private System.Windows.Forms.ToolStripMenuItem checkUpdateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem languagesToolStripMenuItem;
         internal System.Windows.Forms.ToolStripComboBox combLang;
+        internal System.Windows.Forms.TreeView treeViewEngines;
+        private System.Windows.Forms.RadioButton chkbxUnpack;
+        private System.Windows.Forms.RadioButton chkbxPack;
+        private System.Windows.Forms.ToolStripMenuItem preferenceToolStripMenuItem;
+        private System.Windows.Forms.Label lbInput;
+        public System.Windows.Forms.TextBox txtOutputPath;
+        public System.Windows.Forms.TextBox txtInputPath;
+        private System.Windows.Forms.Label lbOutput;
+        private System.Windows.Forms.Button btSelInput;
+        private System.Windows.Forms.Button btSelOutput;
+        internal System.Windows.Forms.Button btClear;
+        internal System.Windows.Forms.CheckBox chkbxMatch;
+        internal System.Windows.Forms.Button btExecute;
     }
 }
 

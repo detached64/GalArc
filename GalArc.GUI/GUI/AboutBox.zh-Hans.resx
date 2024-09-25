@@ -117,4 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="lbDescription.Text" xml:space="preserve">
+    <value>Galgame Archive Tool</value>
+  </data>
+  <data name="pageEngines.Text" xml:space="preserve">
+    <value>支持的格式</value>
+  </data>
+  <data name="pageLicense.Text" xml:space="preserve">
+    <value>开源协议</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="lbSearch.Text" xml:space="preserve">
+    <value>搜索：</value>
+  </data>
+  <data name="lbLicense.Text" xml:space="preserve">
+    <value>GNU General Public License v3.0</value>
+  </data>
+  <data name="linkIssue.Text" xml:space="preserve">
+    <value>报告bug</value>
+  </data>
+  <data name="linkSite.Text" xml:space="preserve">
+    <value>开源地址</value>
+  </data>
+  <data name="lbCopyright.Text" xml:space="preserve">
+    <value>Copyright (c) 2024 detached64</value>
+  </data>
 </root>

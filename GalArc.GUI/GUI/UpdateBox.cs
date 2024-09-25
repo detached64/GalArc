@@ -21,6 +21,13 @@ namespace GalArc.GUI
             this.lbCurrentVer.Text = UpdateVersion.currentVersion;
             this.lbLatestVer.Text = UpdateVersion.latestVersion;
         }
+        private void UpdateBox_Load(object sender, EventArgs e)
+        {
+            if (MainWindow.Instance.TopMost)
+            {
+                this.TopMost = true;
+            }
+        }
 
         private void btDown_Click(object sender, EventArgs e)
         {
@@ -40,5 +47,6 @@ namespace GalArc.GUI
             this.lbCurrentVer.Location = new Point(maxLocation + delta, this.lbCurrentVer.Location.Y);
             this.lbLatestVer.Location = new Point(maxLocation + delta, this.lbLatestVer.Location.Y);
         }
+
     }
 }

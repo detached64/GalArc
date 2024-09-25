@@ -54,6 +54,24 @@
     <Compile Include="Controller\Execute.cs" />
     <Compile Include="Controller\UpdateContent.cs" />
     <Compile Include="Controller\UpdateVersion.cs" />
+    <Compile Include="GUI\GeneralSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\GeneralSettings.Designer.cs">
+      <DependentUpon>GeneralSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\PreferenceSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\PreferenceSettings.Designer.cs">
+      <DependentUpon>PreferenceSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\SettingsWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\SettingsWindow.Designer.cs">
+      <DependentUpon>SettingsWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\UpdateBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,7 +79,7 @@
       <DependentUpon>UpdateBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Resource\Encodings.cs" />
-    <Compile Include="Resource\Global.cs" />
+    <Compile Include="Resource\Settings.cs" />
     <Compile Include="Controller\Localize.cs" />
     <Compile Include="Controller\SyncPath.cs" />
     <Compile Include="GUI\AboutBox.cs">
@@ -75,12 +93,6 @@
     </Compile>
     <Compile Include="GUI\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\OptionWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\OptionWindow.Designer.cs">
-      <DependentUpon>OptionWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\PackWindow.cs">
       <SubType>UserControl</SubType>
@@ -102,17 +114,35 @@
     <EmbeddedResource Include="GUI\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\AboutBox.zh-Hans.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\GeneralSettings.resx">
+      <DependentUpon>GeneralSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\GeneralSettings.zh-Hans.resx">
+      <DependentUpon>GeneralSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\OptionWindow.resx">
-      <DependentUpon>OptionWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\OptionWindow.zh-Hans.resx">
-      <DependentUpon>OptionWindow.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\MainWindow.zh-Hans.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\PackWindow.resx">
       <DependentUpon>PackWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\PreferenceSettings.resx">
+      <DependentUpon>PreferenceSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\PreferenceSettings.zh-Hans.resx">
+      <DependentUpon>PreferenceSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\SettingsWindow.resx">
+      <DependentUpon>SettingsWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\SettingsWindow.zh-Hans.resx">
+      <DependentUpon>SettingsWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\UnpackWindow.resx">
       <DependentUpon>UnpackWindow.cs</DependentUpon>

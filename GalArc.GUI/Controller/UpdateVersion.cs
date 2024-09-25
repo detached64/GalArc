@@ -11,7 +11,7 @@ namespace GalArc.Controller
     internal class UpdateVersion
     {
 
-        internal static string currentVersion = Resource.Global.CurrentVersion;
+        internal static string currentVersion = Resource.Settings.CurrentVer;
 
         internal static string latestVersion = Resources.ab_lb_LatestVer;
 

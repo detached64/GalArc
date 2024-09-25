@@ -117,61 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="main_unpackPage_Text" xml:space="preserve">
-    <value>解包</value>
+  <data name="lbDefaultEncoding.Text" xml:space="preserve">
+    <value>默认编码</value>
   </data>
-  <data name="main_packPage_Text" xml:space="preserve">
-    <value>封包</value>
-  </data>
-  <data name="main_optionPage_Text" xml:space="preserve">
-    <value>选项</value>
-  </data>
-  <data name="main_aboutPage_Text" xml:space="preserve">
-    <value>关于</value>
-  </data>
-  <data name="ab_lb_Search" xml:space="preserve">
-    <value>搜索：</value>
-  </data>
-  <data name="ab_gb_About" xml:space="preserve">
-    <value>关于</value>
-  </data>
-  <data name="ab_gb_Update" xml:space="preserve">
-    <value>更新</value>
-  </data>
-  <data name="ab_gb_Format" xml:space="preserve">
-    <value>支持的格式</value>
-  </data>
-  <data name="ab_link_Site" xml:space="preserve">
-    <value>开源地址</value>
-  </data>
-  <data name="ab_link_Issue" xml:space="preserve">
-    <value>报告bug</value>
-  </data>
-  <data name="ab_lb_CurrentVersion" xml:space="preserve">
-    <value>当前版本：</value>
-  </data>
-  <data name="ab_lb_LatestVersion" xml:space="preserve">
-    <value>最新版本：</value>
-  </data>
-  <data name="ab_lb_LatestVer" xml:space="preserve">
-    <value>未知</value>
-  </data>
-  <data name="lbVersion" xml:space="preserve">
-    <value>版本 {0}</value>
-  </data>
-  <data name="nodeGeneral" xml:space="preserve">
-    <value>常规</value>
-  </data>
-  <data name="nodePreference" xml:space="preserve">
-    <value>偏好设置</value>
-  </data>
-  <data name="columnEngineName" xml:space="preserve">
-    <value>引擎名称</value>
-  </data>
-  <data name="columnPackFormat" xml:space="preserve">
-    <value>封包格式</value>
-  </data>
-  <data name="columnUnpackFormat" xml:space="preserve">
-    <value>解包格式</value>
+  <data name="chkbxTryDecScr.Text" xml:space="preserve">
+    <value>尝试解密脚本文件</value>
   </data>
 </root>
