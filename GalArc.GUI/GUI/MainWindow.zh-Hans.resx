@@ -165,4 +165,10 @@
   <data name="$this.Text" xml:space="preserve">
     <value>GalArc</value>
   </data>
+  <data name="chkbxShowLog.Text" xml:space="preserve">
+    <value>显示日志</value>
+  </data>
+  <data name="btExecute.Text" xml:space="preserve">
+    <value>--</value>
+  </data>
 </root>

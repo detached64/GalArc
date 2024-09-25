@@ -37,10 +37,5 @@ namespace GalArc.Controller
             Thread.CurrentThread.CurrentCulture = new CultureInfo(LocalCulture);
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(LocalCulture);
         }
-
-        internal static void RefreshStrings()
-        {
-            Log.Controller.Localize.GetStrings_Log();
-        }
     }
 }

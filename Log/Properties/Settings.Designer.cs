@@ -26,24 +26,36 @@ namespace Log.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool log_chkbxDebug {
+        public bool chkbxDebug {
             get {
-                return ((bool)(this["log_chkbxDebug"]));
+                return ((bool)(this["chkbxDebug"]));
             }
             set {
-                this["log_chkbxDebug"] = value;
+                this["chkbxDebug"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool log_chkbxSave {
+        public bool chkbxSave {
             get {
-                return ((bool)(this["log_chkbxSave"]));
+                return ((bool)(this["chkbxSave"]));
             }
             set {
-                this["log_chkbxSave"] = value;
+                this["chkbxSave"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoSaveState {
+            get {
+                return ((bool)(this["AutoSaveState"]));
+            }
+            set {
+                this["AutoSaveState"] = value;
             }
         }
     }

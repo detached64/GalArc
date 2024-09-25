@@ -1,13 +1,8 @@
 ﻿using GalArc.GUI;
-using GalArc.Properties;
 using GalArc.Resource;
-using Log;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Windows.Forms;
 
 namespace GalArc.Controller
 {

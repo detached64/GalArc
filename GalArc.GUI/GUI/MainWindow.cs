@@ -1,10 +1,12 @@
 ﻿using GalArc.Controller;
 using GalArc.GUI;
+using GalArc.Properties;
 using GalArc.Resource;
 using Log;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -29,26 +31,26 @@ namespace GalArc
 
         internal static bool isFirstChangeLang = true;
 
+        private static int deltaStatus = 15;
+
+        private static int delta = 6;
+
         public MainWindow()
         {
             Instance = this;
-
-            LocalCulture = Localize.GetLocalCulture();
-
             LogUtility.NewInstance();
 
-            LogWindow logWindow = new LogWindow();
-
+            LocalCulture = Localize.GetLocalCulture();
             Localize.SetLocalCulture(LocalCulture);
 
-            Log.Controller.Localize.GetStrings_Log();
+            LogWindow logWindow = new LogWindow();
+            LogWindow.ChangeLocalSettings(Settings.Default.AutoSaveState);
 
             InitializeComponent();
 
             LogUtility.Process += ChangeLabel;
             LogUtility.ErrorOccured += ChangeLabel;
 
-            this.AllowDrop = true;
             this.txtInputPath.DragEnter += new DragEventHandler(txtInputPath_DragEnter);
             this.txtInputPath.DragDrop += new DragEventHandler(txtInputPath_DragDrop);
             this.txtOutputPath.DragEnter += new DragEventHandler(txtOutputPath_DragEnter);
@@ -58,10 +60,15 @@ namespace GalArc
         private void main_Load(object sender, EventArgs e)
         {
             this.combLang.Items.AddRange(Languages.languages.Keys.ToArray());
-            this.TopMost = Properties.Settings.Default.TopMost;
+            this.TopMost = Settings.Default.TopMost;
             this.combLang.Text = Languages.languages.FirstOrDefault(x => x.Value == LocalCulture).Key;
-            this.chkbxUnpack.Checked = Properties.Settings.Default.chkbxUnpack_checked;
-            this.chkbxPack.Checked = Properties.Settings.Default.chkbxPack_checked;
+            if (Settings.Default.AutoSaveState)
+            {
+                this.chkbxUnpack.Checked = Settings.Default.chkbxUnpack_checked;
+                this.chkbxPack.Checked = Settings.Default.chkbxPack_checked;
+                this.chkbxMatch.Checked = Settings.Default.chkbxMatch_checked;
+                this.chkbxShowLog.Checked = Settings.Default.chkbxShowLog_checked;
+            }
         }
 
         private void txtInputPath_DragEnter(object sender, DragEventArgs e)
@@ -124,14 +131,7 @@ namespace GalArc
         {
             if (e.Control && e.KeyCode == Keys.L)
             {
-                if (UnpackWindow.Instance.un_chkbxShowLog.Checked)
-                {
-                    UnpackWindow.Instance.un_chkbxShowLog.Checked = false;
-                }
-                else
-                {
-                    UnpackWindow.Instance.un_chkbxShowLog.Checked = true;
-                }
+                this.chkbxShowLog.Checked = !this.chkbxShowLog.Checked;
             }
             e.Handled = true;
         }
@@ -181,8 +181,8 @@ namespace GalArc
         {
             string previousCulture = LocalCulture;
             LocalCulture = Languages.languages[this.combLang.Text];
-            Properties.Settings.Default.lastLang = LocalCulture;
-            Properties.Settings.Default.Save();
+            Settings.Default.lastLang = LocalCulture;
+            Settings.Default.Save();
             if (isFirstChangeLang)
             {
                 isFirstChangeLang = false;
@@ -191,7 +191,7 @@ namespace GalArc
             {
                 if (previousCulture != LocalCulture)
                 {
-                    Application.Exit();
+                    Application.ExitThread();
                     Process.Start(Assembly.GetExecutingAssembly().Location);
                 }
             }
@@ -204,8 +204,11 @@ namespace GalArc
                 UpdateTreeUnpack();
                 this.btExecute.Text = this.chkbxUnpack.Text;
             }
-            Properties.Settings.Default.chkbxUnpack_checked = this.chkbxUnpack.Checked;
-            Properties.Settings.Default.Save();
+            if (Settings.Default.AutoSaveState)
+            {
+                Settings.Default.chkbxUnpack_checked = this.chkbxUnpack.Checked;
+                Settings.Default.Save();
+            }
         }
 
         private void chkbxPack_CheckedChanged(object sender, EventArgs e)
@@ -215,8 +218,11 @@ namespace GalArc
                 UpdateTreePack();
                 this.btExecute.Text = this.chkbxPack.Text;
             }
-            Properties.Settings.Default.chkbxPack_checked = this.chkbxPack.Checked;
-            Properties.Settings.Default.Save();
+            if (Settings.Default.AutoSaveState)
+            {
+                Settings.Default.chkbxPack_checked = this.chkbxPack.Checked;
+                Settings.Default.Save();
+            }
         }
 
         private void treeViewEngines_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -320,6 +326,11 @@ namespace GalArc
                     }
                 }
             }
+            if (Settings.Default.AutoSaveState)
+            {
+                Settings.Default.chkbxMatch_checked = this.chkbxMatch.Checked;
+                Settings.Default.Save();
+            }
         }
 
         private void txtInputPath_TextChanged(object sender, EventArgs e)
@@ -398,5 +409,66 @@ namespace GalArc
             }
         }
 
+        private void chkbxShowLog_SizeChanged(object sender, EventArgs e)
+        {
+            this.lbStatus.Size = new Size(this.chkbxShowLog.Location.X - this.lbStatus.Location.X - deltaStatus, this.lbStatus.Size.Height);
+        }
+
+        private void chkbxUnpack_SizeChanged(object sender, EventArgs e)
+        {
+            this.chkbxPack.Location = new Point(this.chkbxUnpack.Location.X + this.chkbxUnpack.Size.Width + delta, this.chkbxPack.Location.Y);
+        }
+
+        private void btExecute_Click(object sender, EventArgs e)
+        {
+            if (this.chkbxUnpack.Checked)
+            {
+                if (string.IsNullOrEmpty(this.txtInputPath.Text))
+                {
+                    LogUtility.Error("Please specify input file path.", false);
+                    return;
+                }
+                if (string.IsNullOrEmpty(this.txtOutputPath.Text))
+                {
+                    LogUtility.Error("Please specify output folder path.", false);
+                    return;
+                }
+                if (!File.Exists(this.txtInputPath.Text))
+                {
+                    LogUtility.Error("File specified does not exist.", false);
+                    return;
+                }
+                try
+                {
+                    Execute.InitUnpack(this.txtInputPath.Text, this.txtOutputPath.Text);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException == null)
+                    {
+                        LogUtility.Error(ex.Message, false);
+                        LogUtility.Debug(ex.ToString());
+                    }
+                    else
+                    {
+                        LogUtility.Error(ex.InnerException.Message, false);
+                        LogUtility.Debug(ex.InnerException.ToString());
+                    }
+                    LogWindow.Instance.bar.Value = 0;
+                }
+            }
+        }
+
+        private void chkbxShowLog_CheckedChanged(object sender, EventArgs e)
+        {
+            LogWindow.Instance.ChangePosition(this.Location.X, this.Location.Y);
+            LogWindow.Instance.Visible = this.chkbxShowLog.Checked;
+            this.BringMainToFront();
+            if (Settings.Default.AutoSaveState)
+            {
+                Settings.Default.chkbxShowLog_checked = this.chkbxShowLog.Checked;
+                Settings.Default.Save();
+            }
+        }
     }
 }

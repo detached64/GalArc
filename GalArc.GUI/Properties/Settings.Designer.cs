@@ -85,7 +85,7 @@ namespace GalArc.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool chkbxUnpack_checked {
             get {
                 return ((bool)(this["chkbxUnpack_checked"]));

@@ -10,28 +10,21 @@ namespace GalArc.Controller
 {
     internal class Execute
     {
-        internal static void InitUnpack(string inputFilePath, string outputFolderPath, string encodingString, bool toDecScr)
+        internal static void InitUnpack(string inputFilePath, string outputFolderPath)
         {
-            string[] selectedInfos = MainWindow.selectedNodeUnpack.Text.Split('/');
+            string[] selectedInfos = MainWindow.selectedNodeUnpack.FullPath.Split('/');
             string engineName = selectedInfos[0];
-            string extension = Path.GetExtension(inputFilePath).Replace(".", string.Empty).ToUpper();
+            string extension = selectedInfos[1];
             extension = CleanExtension1(extension, engineName);
-            if (!Array.Exists(MainWindow.selectedEngineInfo_Unpack.UnpackFormat.Split('/'), element => element == extension))
-            {
-                throw new Exception("Error:Not a supported format.");
-            }
-
-            Encoding encoding = Encoding.UTF8;
-            if (!string.IsNullOrEmpty(encodingString))
-            {
-                encoding = Encoding.GetEncoding(Encodings.CodePages[encodingString]);
-            }
-
+            //if (!Array.Exists(MainWindow.selectedEngineInfo_Unpack.UnpackFormat.Split('/'), element => element == extension))
+            //{
+            //    throw new Exception("Error:Not a supported format.");
+            //}
             extension = CleanExtension2(extension, engineName);
             string fullTypeName = $"ArcFormats.{engineName}.{extension}";
 
-            ArcFormats.Global global = new ArcFormats.Global(inputFilePath, outputFolderPath, fullTypeName, encoding, encoding, toDecScr, null);
-            global.Unpack();
+            //ArcFormats.Global global = new ArcFormats.Global(inputFilePath, outputFolderPath, fullTypeName);
+            //global.Unpack();
         }
 
         internal static void InitPack(string inputFolderPath, string outputFilePath, string version, string encodingString)
