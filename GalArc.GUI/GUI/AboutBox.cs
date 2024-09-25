@@ -1,10 +1,11 @@
 ﻿using GalArc.Controller;
+using GalArc.Properties;
 using GalArc.Resource;
-using Log;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -38,14 +39,18 @@ namespace GalArc.GUI
 
             this.dataGridViewEngines.RowPrePaint += new DataGridViewRowPrePaintEventHandler(dataGridViewEngines_RowPrePaint);
 
-            Controller.Localize.SetLocalCulture(MainWindow.LocalCulture);
-            Controller.Localize.GetStrings_about();
+            Localize.SetLocalCulture(MainWindow.LocalCulture);
         }
 
         private void AboutBox_Load(object sender, EventArgs e)
         {
-            Controller.UpdateContent.UpdateDataGridView(engines);
-            Controller.UpdateContent.UpdateLicense();
+            if (MainWindow.Instance.TopMost)
+            {
+                this.TopMost = true;
+            }
+            this.lbCurrentVer.Text = string.Format(Resources.lbVersion, Resource.Settings.CurrentVer);
+            UpdateDataGridView(engines);
+            UpdateLicense();
         }
 
         private void searchText_TextChanged(object sender, EventArgs e)
@@ -53,28 +58,28 @@ namespace GalArc.GUI
             if (!string.IsNullOrEmpty(this.searchText.Text))
             {
                 searchedEngines = engines.Where(engine => engine.EngineName.IndexOf(this.searchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.UnpackFormat.IndexOf(this.searchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.PackFormat.IndexOf(this.searchText.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-                Controller.UpdateContent.UpdateDataGridView(searchedEngines);
+                UpdateDataGridView(searchedEngines);
             }
             else
             {
-                Controller.UpdateContent.UpdateDataGridView(engines);
+                UpdateDataGridView(engines);
             }
         }
 
         private void ab_lbSearch_SizeChanged(object sender, EventArgs e)
         {
-            this.searchText.Location = new System.Drawing.Point(this.ab_lbSearch.Location.X + this.ab_lbSearch.Width + delta, this.searchText.Location.Y);
+            this.searchText.Location = new Point(this.lbSearch.Location.X + this.lbSearch.Width + delta, this.searchText.Location.Y);
         }
 
         private void ab_linkSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            this.ab_linkSite.LinkVisited = true;
+            this.linkSite.LinkVisited = true;
             Process.Start(new ProcessStartInfo(programUrl) { UseShellExecute = true });
         }
 
         private void ab_linkIssue_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            this.ab_linkIssue.LinkVisited = true;
+            this.linkIssue.LinkVisited = true;
             Process.Start(new ProcessStartInfo(issueUrl) { UseShellExecute = true });
         }
 
@@ -89,5 +94,57 @@ namespace GalArc.GUI
                 this.dataGridViewEngines.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
             }
         }
+
+        private void UpdateDataGridView(List<EngineInfo> engines)
+        {
+            // update the column names
+            if (this.dataGridViewEngines.Columns.Count == 3)
+            {
+                this.dataGridViewEngines.Columns[0].HeaderText = Resources.columnEngineName;
+                this.dataGridViewEngines.Columns[1].HeaderText = Resources.columnUnpackFormat;
+                this.dataGridViewEngines.Columns[2].HeaderText = Resources.columnPackFormat;
+            }
+            else
+            {
+                this.dataGridViewEngines.Columns.Clear();
+                this.dataGridViewEngines.Columns.Add("EngineName", Resources.columnEngineName);
+                this.dataGridViewEngines.Columns.Add("UnpackFormat", Resources.columnUnpackFormat);
+                this.dataGridViewEngines.Columns.Add("PackFormat", Resources.columnPackFormat);
+            }
+
+            // update the rows
+            this.dataGridViewEngines.Rows.Clear();
+            //int count = engines.Count;
+            //DataGridViewRow[] rows = new DataGridViewRow[count];
+            //for (int i = 0; i < count; i++)
+            //{
+            //    rows[i] = new DataGridViewRow();
+            //    rows[i].CreateCells(AboutWindow.Instance.dataGridViewEngines);
+            //    rows[i].Cells[0].Value = engines[i].EngineName;
+            //    rows[i].Cells[1].Value = engines[i].UnpackFormat;
+            //    rows[i].Cells[2].Value = engines[i].PackFormat;
+            //}
+            foreach (var engine in engines)
+            {
+                this.dataGridViewEngines.Rows.Add(engine.EngineName, engine.UnpackFormat, engine.PackFormat);
+            }
+        }
+
+        private void UpdateLicense()
+        {
+            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("GalArc.License.txt"))
+            {
+                if (stream == null)
+                {
+                    throw new FileNotFoundException("Resource not found.");
+                }
+
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    this.txtLicense.Text = reader.ReadToEnd();
+                }
+            }
+        }
+
     }
 }

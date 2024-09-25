@@ -12,10 +12,11 @@ namespace GalArc.Controller
     {
         internal static void InitUnpack(string inputFilePath, string outputFolderPath, string encodingString, bool toDecScr)
         {
-            string engineName = UnpackWindow.Instance.un_selEngine.Text;
+            string[] selectedInfos = MainWindow.selectedNodeUnpack.Text.Split('/');
+            string engineName = selectedInfos[0];
             string extension = Path.GetExtension(inputFilePath).Replace(".", string.Empty).ToUpper();
             extension = CleanExtension1(extension, engineName);
-            if (!Array.Exists(Controller.UpdateContent.selectedEngineInfo_Unpack.UnpackFormat.Split('/'), element => element == extension))
+            if (!Array.Exists(MainWindow.selectedEngineInfo_Unpack.UnpackFormat.Split('/'), element => element == extension))
             {
                 throw new Exception("Error:Not a supported format.");
             }
@@ -35,8 +36,9 @@ namespace GalArc.Controller
 
         internal static void InitPack(string inputFolderPath, string outputFilePath, string version, string encodingString)
         {
-            string engineName = PackWindow.Instance.pa_selEngine.Text;
-            string extension = PackWindow.Instance.pa_combPackFormat.Text;
+            string[] selectedInfos = MainWindow.selectedNodePack.Text.Split('/');
+            string engineName = selectedInfos[0];
+            string extension = selectedInfos[1];
 
             Encoding encoding = Encoding.UTF8;
             if (!string.IsNullOrEmpty(encodingString))

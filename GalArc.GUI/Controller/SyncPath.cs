@@ -1,35 +1,33 @@
-﻿using GalArc.GUI;
-using System;
+﻿using System;
 using System.IO;
-using System.Linq;
 
 namespace GalArc.Controller
 {
     internal class SyncPath
     {
-        public static void un_folderPathSync()
+        public static string UnpackPathSync(string input)
         {
-            string folderPath = Path.Combine(Path.GetDirectoryName(UnpackWindow.Instance.un_FilePath.Text), Path.GetFileNameWithoutExtension(UnpackWindow.Instance.un_FilePath.Text));
+            string folderPath = Path.Combine(Path.GetDirectoryName(input), Path.GetFileNameWithoutExtension(input));
             if (File.Exists(folderPath))
             {
-                UnpackWindow.Instance.un_FolderPath.Text = UnpackWindow.Instance.un_FilePath.Text.Replace('.', '_') + "_unpacked";
+                return input.Replace('.', '_') + "_unpacked";
             }
             else
             {
-                UnpackWindow.Instance.un_FolderPath.Text = folderPath;
+                return folderPath;
             }
         }
 
-        public static void pa_filePathSync()
+        public static string PackPathSync(string input, string ext)
         {
-            string filePath = PackWindow.Instance.pa_FolderPath.Text + "." + PackWindow.Instance.pa_combPackFormat.Text.ToLower();
+            string filePath = input + "." + ext.ToLower();
             if (File.Exists(filePath))
             {
-                PackWindow.Instance.pa_FilePath.Text = filePath + ".new";
+                return filePath + ".new";
             }
             else
             {
-                PackWindow.Instance.pa_FilePath.Text = filePath;
+                return filePath;
             }
         }
     }

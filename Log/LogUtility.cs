@@ -83,6 +83,16 @@ namespace Log
         {
             WriteAndSaveLog(log, 2);
         }
+        public static void InfoRevoke(string log)
+        {
+            WriteAndSaveLog(log, 1);
+            OnProcess(log);
+        }
+        public static void DebugRevoke(string log)
+        {
+            WriteAndSaveLog(log, 2);
+            OnProcess(log);
+        }
         public static void Error_NotValidArchive()
         {
             throw new Exception("Error:Not a valid archive.");

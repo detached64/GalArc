@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,61 +117,82 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="main_unpackPage_Text" xml:space="preserve">
-    <value>解包</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="chkbxAutoSave.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="main_packPage_Text" xml:space="preserve">
-    <value>封包</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="chkbxAutoSave.Location" type="System.Drawing.Point, System.Drawing">
+    <value>59, 76</value>
   </data>
-  <data name="main_optionPage_Text" xml:space="preserve">
-    <value>选项</value>
+  <data name="chkbxAutoSave.Size" type="System.Drawing.Size, System.Drawing">
+    <value>311, 28</value>
   </data>
-  <data name="main_aboutPage_Text" xml:space="preserve">
-    <value>关于</value>
+  <data name="chkbxAutoSave.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="ab_lb_Search" xml:space="preserve">
-    <value>搜索：</value>
+  <data name="chkbxAutoSave.Text" xml:space="preserve">
+    <value>Automatically save control state</value>
   </data>
-  <data name="ab_gb_About" xml:space="preserve">
-    <value>关于</value>
+  <data name="&gt;&gt;chkbxAutoSave.Name" xml:space="preserve">
+    <value>chkbxAutoSave</value>
   </data>
-  <data name="ab_gb_Update" xml:space="preserve">
-    <value>更新</value>
+  <data name="&gt;&gt;chkbxAutoSave.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ab_gb_Format" xml:space="preserve">
-    <value>支持的格式</value>
+  <data name="&gt;&gt;chkbxAutoSave.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="ab_link_Site" xml:space="preserve">
-    <value>开源地址</value>
+  <data name="&gt;&gt;chkbxAutoSave.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="ab_link_Issue" xml:space="preserve">
-    <value>报告bug</value>
+  <data name="chkbxTopMost.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="ab_lb_CurrentVersion" xml:space="preserve">
-    <value>当前版本：</value>
+  <data name="chkbxTopMost.Location" type="System.Drawing.Point, System.Drawing">
+    <value>59, 131</value>
   </data>
-  <data name="ab_lb_LatestVersion" xml:space="preserve">
-    <value>最新版本：</value>
+  <data name="chkbxTopMost.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 28</value>
   </data>
-  <data name="ab_lb_LatestVer" xml:space="preserve">
-    <value>未知</value>
+  <data name="chkbxTopMost.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
-  <data name="lbVersion" xml:space="preserve">
-    <value>版本 {0}</value>
+  <data name="chkbxTopMost.Text" xml:space="preserve">
+    <value>Always on top</value>
   </data>
-  <data name="nodeGeneral" xml:space="preserve">
-    <value>常规</value>
+  <data name="&gt;&gt;chkbxTopMost.Name" xml:space="preserve">
+    <value>chkbxTopMost</value>
   </data>
-  <data name="nodePreference" xml:space="preserve">
-    <value>偏好设置</value>
+  <data name="&gt;&gt;chkbxTopMost.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="columnEngineName" xml:space="preserve">
-    <value>引擎名称</value>
+  <data name="&gt;&gt;chkbxTopMost.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="columnPackFormat" xml:space="preserve">
-    <value>封包格式</value>
+  <data name="&gt;&gt;chkbxTopMost.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="columnUnpackFormat" xml:space="preserve">
-    <value>解包格式</value>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>11, 24</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>微软雅黑, 9pt</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>752, 576</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>GeneralSettings</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

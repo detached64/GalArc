@@ -61,51 +61,6 @@ namespace GalArc.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Check 的本地化字符串。
-        /// </summary>
-        internal static string ab_btn_Check {
-            get {
-                return ResourceManager.GetString("ab_btn_Check", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Download 的本地化字符串。
-        /// </summary>
-        internal static string ab_btn_Download {
-            get {
-                return ResourceManager.GetString("ab_btn_Download", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Engine Name 的本地化字符串。
-        /// </summary>
-        internal static string ab_col_EngineName {
-            get {
-                return ResourceManager.GetString("ab_col_EngineName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Pack Format 的本地化字符串。
-        /// </summary>
-        internal static string ab_col_PackFormat {
-            get {
-                return ResourceManager.GetString("ab_col_PackFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Unpack Format 的本地化字符串。
-        /// </summary>
-        internal static string ab_col_UnpackFormat {
-            get {
-                return ResourceManager.GetString("ab_col_UnpackFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 About 的本地化字符串。
         /// </summary>
         internal static string ab_gb_About {
@@ -187,6 +142,42 @@ namespace GalArc.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Engine Name 的本地化字符串。
+        /// </summary>
+        internal static string columnEngineName {
+            get {
+                return ResourceManager.GetString("columnEngineName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Pack Format 的本地化字符串。
+        /// </summary>
+        internal static string columnPackFormat {
+            get {
+                return ResourceManager.GetString("columnPackFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unpack Format 的本地化字符串。
+        /// </summary>
+        internal static string columnUnpackFormat {
+            get {
+                return ResourceManager.GetString("columnUnpackFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Version {0} 的本地化字符串。
+        /// </summary>
+        internal static string lbVersion {
+            get {
+                return ResourceManager.GetString("lbVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 About 的本地化字符串。
         /// </summary>
         internal static string main_aboutPage_Text {
@@ -223,227 +214,20 @@ namespace GalArc.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Always on top 的本地化字符串。
+        ///   查找类似 General 的本地化字符串。
         /// </summary>
-        internal static string op_chkbx_OnTop {
+        internal static string nodeGeneral {
             get {
-                return ResourceManager.GetString("op_chkbx_OnTop", resourceCulture);
+                return ResourceManager.GetString("nodeGeneral", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Language 的本地化字符串。
+        ///   查找类似 Preference 的本地化字符串。
         /// </summary>
-        internal static string op_lb_Lang {
+        internal static string nodePreference {
             get {
-                return ResourceManager.GetString("op_lb_Lang", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Clear 的本地化字符串。
-        /// </summary>
-        internal static string pa_btn_Clear {
-            get {
-                return ResourceManager.GetString("pa_btn_Clear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Pack 的本地化字符串。
-        /// </summary>
-        internal static string pa_btn_Pack {
-            get {
-                return ResourceManager.GetString("pa_btn_Pack", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Log 的本地化字符串。
-        /// </summary>
-        internal static string pa_chkbx_Log {
-            get {
-                return ResourceManager.GetString("pa_chkbx_Log", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Match 的本地化字符串。
-        /// </summary>
-        internal static string pa_chkbx_Match {
-            get {
-                return ResourceManager.GetString("pa_chkbx_Match", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Pack Option 的本地化字符串。
-        /// </summary>
-        internal static string pa_gb_Option {
-            get {
-                return ResourceManager.GetString("pa_gb_Option", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Name Encoding 的本地化字符串。
-        /// </summary>
-        internal static string pa_lb_Encoding {
-            get {
-                return ResourceManager.GetString("pa_lb_Encoding", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Engine 的本地化字符串。
-        /// </summary>
-        internal static string pa_lb_Engine {
-            get {
-                return ResourceManager.GetString("pa_lb_Engine", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Format 的本地化字符串。
-        /// </summary>
-        internal static string pa_lb_Format {
-            get {
-                return ResourceManager.GetString("pa_lb_Format", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Input Folder 的本地化字符串。
-        /// </summary>
-        internal static string pa_lb_InputFolder {
-            get {
-                return ResourceManager.GetString("pa_lb_InputFolder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Output File 的本地化字符串。
-        /// </summary>
-        internal static string pa_lb_OutputFile {
-            get {
-                return ResourceManager.GetString("pa_lb_OutputFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Pack Format 的本地化字符串。
-        /// </summary>
-        internal static string pa_lb_PackFormat {
-            get {
-                return ResourceManager.GetString("pa_lb_PackFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Version 的本地化字符串。
-        /// </summary>
-        internal static string pa_lb_Version {
-            get {
-                return ResourceManager.GetString("pa_lb_Version", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Clear 的本地化字符串。
-        /// </summary>
-        internal static string un_btn_Clear {
-            get {
-                return ResourceManager.GetString("un_btn_Clear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Unpack 的本地化字符串。
-        /// </summary>
-        internal static string un_btn_Unpack {
-            get {
-                return ResourceManager.GetString("un_btn_Unpack", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Decrypt Scripts 的本地化字符串。
-        /// </summary>
-        internal static string un_chkbx_DecScr {
-            get {
-                return ResourceManager.GetString("un_chkbx_DecScr", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Log 的本地化字符串。
-        /// </summary>
-        internal static string un_chkbx_Log {
-            get {
-                return ResourceManager.GetString("un_chkbx_Log", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Match 的本地化字符串。
-        /// </summary>
-        internal static string un_chkbx_Match {
-            get {
-                return ResourceManager.GetString("un_chkbx_Match", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Unpack Option 的本地化字符串。
-        /// </summary>
-        internal static string un_gb_Option {
-            get {
-                return ResourceManager.GetString("un_gb_Option", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Name Encoding 的本地化字符串。
-        /// </summary>
-        internal static string un_lb_Encoding {
-            get {
-                return ResourceManager.GetString("un_lb_Encoding", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Engine 的本地化字符串。
-        /// </summary>
-        internal static string un_lb_Engine {
-            get {
-                return ResourceManager.GetString("un_lb_Engine", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Format 的本地化字符串。
-        /// </summary>
-        internal static string un_lb_Format {
-            get {
-                return ResourceManager.GetString("un_lb_Format", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Input File 的本地化字符串。
-        /// </summary>
-        internal static string un_lb_InputFile {
-            get {
-                return ResourceManager.GetString("un_lb_InputFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Output Folder 的本地化字符串。
-        /// </summary>
-        internal static string un_lb_OutputFolder {
-            get {
-                return ResourceManager.GetString("un_lb_OutputFolder", resourceCulture);
+                return ResourceManager.GetString("nodePreference", resourceCulture);
             }
         }
     }

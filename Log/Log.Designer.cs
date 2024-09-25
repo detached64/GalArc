@@ -102,7 +102,8 @@
             // 
             // bar
             // 
-            this.bar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.bar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.bar.Location = new System.Drawing.Point(359, 252);
             this.bar.Name = "bar";
             this.bar.Size = new System.Drawing.Size(517, 30);
