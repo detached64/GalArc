@@ -48,7 +48,7 @@ namespace GalArc.GUI
             {
                 this.TopMost = true;
             }
-            this.lbCurrentVer.Text = string.Format(Resources.lbVersion, Resource.Settings.CurrentVer);
+            this.lbCurrentVer.Text = string.Format(Resources.lbVersion, Resource.Version.CurrentVer);
             UpdateDataGridView(engines);
             UpdateLicense();
         }

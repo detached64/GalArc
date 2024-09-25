@@ -1,12 +1,6 @@
-﻿using Log;
+﻿using GalArc.Properties;
+using Log;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GalArc.GUI
@@ -21,31 +15,33 @@ namespace GalArc.GUI
 
         private void GeneralSettings_Load(object sender, EventArgs e)
         {
-            this.chkbxAutoSave.Checked = Properties.Settings.Default.AutoSaveState;
-            this.chkbxTopMost.Checked = Properties.Settings.Default.TopMost;
+            this.chkbxAutoSave.Checked = Settings.Default.AutoSaveState;
+            this.chkbxTopMost.Checked = Settings.Default.TopMost;
+            chkbxTopMost_CheckedChanged(null, null);
         }
 
         private void chkbxAutoSave_CheckedChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.AutoSaveState = this.chkbxAutoSave.Checked;
-            Properties.Settings.Default.Save();
+            Settings.Default.AutoSaveState = this.chkbxAutoSave.Checked;
+            Settings.Default.Save();
+            LogWindow.ChangeLocalSettings(this.chkbxAutoSave.Checked);
         }
 
         private void chkbxTopMost_CheckedChanged(object sender, EventArgs e)
         {
             if (this.chkbxTopMost.Checked)
             {
-                LogWindow.Instance.TopMost = true;
+                Log.LogWindow.Instance.TopMost = true;
                 MainWindow.Instance.TopMost = true;
-                Properties.Settings.Default.TopMost = true;
-                Properties.Settings.Default.Save();
+                Settings.Default.TopMost = true;
+                Settings.Default.Save();
             }
             else
             {
-                LogWindow.Instance.TopMost = false;
+                Log.LogWindow.Instance.TopMost = false;
                 MainWindow.Instance.TopMost = false;
-                Properties.Settings.Default.TopMost = false;
-                Properties.Settings.Default.Save();
+                Settings.Default.TopMost = false;
+                Settings.Default.Save();
             }
         }
     }

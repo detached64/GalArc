@@ -17,7 +17,7 @@ namespace GalArc.GUI
             InitializeComponent();
             Controller.Localize.SetLocalCulture(MainWindow.LocalCulture);
 
-            LogWindow.Instance.LogFormHidden += new EventHandler(LogForm_LogFormHidden);
+            Log.LogWindow.Instance.LogFormHidden += new EventHandler(LogForm_LogFormHidden);
         }
         private void LogForm_LogFormHidden(object sender, EventArgs e)
         {
@@ -31,7 +31,7 @@ namespace GalArc.GUI
 
         private void LoadState()
         {
-            if (Resource.Settings.AutoSaveState)
+            if (Properties.Settings.Default.AutoSaveState)
             {
                 this.un_chkbxShowLog.Checked = Properties.Settings.Default.chkbxShowLog_checked;
             }
@@ -70,7 +70,7 @@ namespace GalArc.GUI
                     LogUtility.Error(ex.InnerException.Message, false);
                     LogUtility.Debug(ex.InnerException.ToString());
                 }
-                LogWindow.Instance.bar.Value = 0;
+                Log.LogWindow.Instance.bar.Value = 0;
             }
         }
 
@@ -80,19 +80,14 @@ namespace GalArc.GUI
             {
                 PackWindow.Instance.pa_chkbxShowLog.Checked = this.un_chkbxShowLog.Checked;
             }
-            LogWindow.Instance.ChangePosition(MainWindow.Instance.Location.X, MainWindow.Instance.Location.Y);
-            LogWindow.Instance.Visible = this.un_chkbxShowLog.Checked;
+            Log.LogWindow.Instance.ChangePosition(MainWindow.Instance.Location.X, MainWindow.Instance.Location.Y);
+            Log.LogWindow.Instance.Visible = this.un_chkbxShowLog.Checked;
             MainWindow.Instance.BringMainToFront();
-            if (Resource.Settings.AutoSaveState)
+            if (Properties.Settings.Default.AutoSaveState)
             {
                 Properties.Settings.Default.chkbxShowLog_checked = this.un_chkbxShowLog.Checked;
                 Properties.Settings.Default.Save();
             }
-        }
-
-        private void un_chkbxDecScr_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

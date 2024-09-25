@@ -18,9 +18,9 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+using Log.Properties;
 using System;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace Log
@@ -38,13 +38,26 @@ namespace Log
         private static int Width_delta = 0;
 
         public event EventHandler LogFormHidden;
+
         public LogWindow()
         {
             Instance = this;
             InitializeComponent();
-            LoadState();
             m_Width = this.Size.Width;
             m_Height = this.Size.Height;
+        }
+
+        private void LogWindow_Load(object sender, EventArgs e)
+        {
+            if (Settings.Default.AutoSaveState)
+            {
+                this.log_chkbxDebug.Checked = Settings.Default.chkbxDebug;
+            }
+
+            if (Settings.Default.AutoSaveState)
+            {
+                this.log_chkbxSave.Checked = Settings.Default.chkbxSave;
+            }
         }
 
         private void Log_FormClosing(object sender, FormClosingEventArgs e)
@@ -90,32 +103,19 @@ namespace Log
 
         private void log_chkbxDebug_CheckedChanged(object sender, EventArgs e)
         {
-            if (Resource.Global.AutoSaveLogVerbose)
+            if (Settings.Default.AutoSaveState)
             {
-                Properties.Settings.Default.log_chkbxDebug = this.log_chkbxDebug.Checked;
-                Properties.Settings.Default.Save();
+                Settings.Default.chkbxDebug = this.log_chkbxDebug.Checked;
+                Settings.Default.Save();
             }
         }
 
         private void log_chkbxSave_CheckedChanged(object sender, EventArgs e)
         {
-            if (Resource.Global.AutoSaveLogSave)
+            if (Settings.Default.AutoSaveState)
             {
-                Properties.Settings.Default.log_chkbxSave = this.log_chkbxSave.Checked;
-                Properties.Settings.Default.Save();
-            }
-        }
-
-        private void LoadState()
-        {
-            if (Resource.Global.AutoSaveLogVerbose)
-            {
-                this.log_chkbxDebug.Checked = Properties.Settings.Default.log_chkbxDebug;
-            }
-
-            if (Resource.Global.AutoSaveLogSave)
-            {
-                this.log_chkbxSave.Checked = Properties.Settings.Default.log_chkbxSave;
+                Settings.Default.chkbxSave = this.log_chkbxSave.Checked;
+                Settings.Default.Save();
             }
         }
 
@@ -123,5 +123,12 @@ namespace Log
         {
             LogFormHidden?.Invoke(this, e);
         }
+
+        public static void ChangeLocalSettings(bool autoSaveState)
+        {
+            Settings.Default.AutoSaveState = autoSaveState;
+            Settings.Default.Save();
+        }
+
     }
 }

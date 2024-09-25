@@ -50,13 +50,14 @@
             this.btClear = new System.Windows.Forms.Button();
             this.chkbxMatch = new System.Windows.Forms.CheckBox();
             this.btExecute = new System.Windows.Forms.Button();
+            this.chkbxShowLog = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbStatus
             // 
-            this.lbStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             resources.ApplyResources(this.lbStatus, "lbStatus");
+            this.lbStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lbStatus.Name = "lbStatus";
             // 
             // menuStrip
@@ -131,6 +132,7 @@
             this.chkbxUnpack.Name = "chkbxUnpack";
             this.chkbxUnpack.UseVisualStyleBackColor = true;
             this.chkbxUnpack.CheckedChanged += new System.EventHandler(this.chkbxUnpack_CheckedChanged);
+            this.chkbxUnpack.SizeChanged += new System.EventHandler(this.chkbxUnpack_SizeChanged);
             // 
             // chkbxPack
             // 
@@ -199,11 +201,22 @@
             resources.ApplyResources(this.btExecute, "btExecute");
             this.btExecute.Name = "btExecute";
             this.btExecute.UseVisualStyleBackColor = true;
+            this.btExecute.Click += new System.EventHandler(this.btExecute_Click);
+            // 
+            // chkbxShowLog
+            // 
+            resources.ApplyResources(this.chkbxShowLog, "chkbxShowLog");
+            this.chkbxShowLog.Name = "chkbxShowLog";
+            this.chkbxShowLog.UseVisualStyleBackColor = true;
+            this.chkbxShowLog.CheckedChanged += new System.EventHandler(this.chkbxShowLog_CheckedChanged);
+            this.chkbxShowLog.SizeChanged += new System.EventHandler(this.chkbxShowLog_SizeChanged);
             // 
             // MainWindow
             // 
+            this.AllowDrop = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chkbxShowLog);
             this.Controls.Add(this.btClear);
             this.Controls.Add(this.chkbxMatch);
             this.Controls.Add(this.btExecute);
@@ -255,6 +268,7 @@
         internal System.Windows.Forms.Button btClear;
         internal System.Windows.Forms.CheckBox chkbxMatch;
         internal System.Windows.Forms.Button btExecute;
+        private System.Windows.Forms.CheckBox chkbxShowLog;
     }
 }
 

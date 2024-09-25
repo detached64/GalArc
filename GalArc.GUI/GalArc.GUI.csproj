@@ -79,7 +79,7 @@
       <DependentUpon>UpdateBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Resource\Encodings.cs" />
-    <Compile Include="Resource\Settings.cs" />
+    <Compile Include="Resource\Version.cs" />
     <Compile Include="Controller\Localize.cs" />
     <Compile Include="Controller\SyncPath.cs" />
     <Compile Include="GUI\AboutBox.cs">

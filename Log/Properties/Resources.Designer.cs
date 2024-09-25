@@ -59,50 +59,5 @@ namespace Log.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   查找类似 Clear 的本地化字符串。
-        /// </summary>
-        internal static string log_btn_Clear {
-            get {
-                return ResourceManager.GetString("log_btn_Clear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Hide 的本地化字符串。
-        /// </summary>
-        internal static string log_btn_Hide {
-            get {
-                return ResourceManager.GetString("log_btn_Hide", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Resize 的本地化字符串。
-        /// </summary>
-        internal static string log_btn_Resize {
-            get {
-                return ResourceManager.GetString("log_btn_Resize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Debug 的本地化字符串。
-        /// </summary>
-        internal static string log_chkbx_Debug {
-            get {
-                return ResourceManager.GetString("log_chkbx_Debug", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Save log 的本地化字符串。
-        /// </summary>
-        internal static string log_chkbx_SaveLog {
-            get {
-                return ResourceManager.GetString("log_chkbx_SaveLog", resourceCulture);
-            }
-        }
     }
 }

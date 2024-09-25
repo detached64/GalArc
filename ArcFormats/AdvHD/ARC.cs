@@ -116,7 +116,7 @@ namespace ArcFormats.AdvHD
                     bwentry.Write((uint)file.Length);
                     bwentry.Write((uint)(4 + 12 * header.typeCount + 21 * header.fileCountAll + msdata.Length));
                     bwdata.Write(File.ReadAllBytes(file.FullName));
-                    LogWindow.Instance.bar.PerformStep();
+                    LogUtility.UpdateBar();
                 }
                 bwtype.Write(Encoding.ASCII.GetBytes(ext[i]));
                 bwtype.Write((byte)0);
