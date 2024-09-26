@@ -476,11 +476,6 @@ namespace GalArc
 
         private void btExecute_Click(object sender, EventArgs e)
         {
-            if (this.treeViewEngines.SelectedNode == null || this.treeViewEngines.SelectedNode.Parent == null)
-            {
-                LogUtility.Error("Please select engine and format.", false);
-                return;
-            }
             if (this.chkbxUnpack.Checked)
             {
                 if (string.IsNullOrEmpty(this.txtInputPath.Text))
