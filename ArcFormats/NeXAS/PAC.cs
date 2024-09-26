@@ -36,7 +36,7 @@ namespace ArcFormats.NeXAS
 
         private static byte[] signature = { 0x50, 0x41, 0x43 };       //"PAC"
 
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader reader = new BinaryReader(fs);

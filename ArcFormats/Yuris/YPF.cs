@@ -45,7 +45,7 @@ namespace ArcFormats.Yuris
         static readonly List<byte[]> tables = new List<byte[]> { Table3, Table2, Table1 };
         static readonly List<int> extraLens = new List<int> { 8, 4 };
 
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);

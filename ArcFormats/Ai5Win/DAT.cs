@@ -9,7 +9,7 @@ namespace ArcFormats.Ai5Win
     public class DAT
     {
         private readonly static int NameLength = 0x14;
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);

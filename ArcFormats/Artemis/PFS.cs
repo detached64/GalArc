@@ -33,7 +33,7 @@ namespace ArcFormats.Artemis
             public string path { get; set; }
         }
 
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             //init
             Header header = new Header()
@@ -170,7 +170,7 @@ namespace ArcFormats.Artemis
             }
         }
 
-        public static void Pack(string folderPath, string filePath)
+        public void Pack(string folderPath, string filePath)
         {
             //init
             Header header = new Header()

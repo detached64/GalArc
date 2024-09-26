@@ -28,7 +28,7 @@ namespace ArcFormats.Kirikiri
             internal string path { get; set; }
         }
 
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             BinaryReader br = new BinaryReader(fs);
@@ -151,7 +151,7 @@ NextEntry:      ms.Position = nextPos;
             br.Dispose();
         }
 
-        public static void Pack(string folderPath, string filePath)
+        public void Pack(string folderPath, string filePath)
         {
             Stream xp3Stream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
             BinaryWriter bw = new BinaryWriter(xp3Stream);

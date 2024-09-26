@@ -18,7 +18,7 @@ namespace ArcFormats.Triangle
             internal uint offset;
         }
 
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -45,7 +45,7 @@ namespace ArcFormats.Triangle
             }
         }
 
-        public static void Pack(string folderPath, string filePath)
+        public void Pack(string folderPath, string filePath)
         {
             if (Global.Version == "1")
             {

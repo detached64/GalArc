@@ -65,7 +65,7 @@ namespace ArcFormats.EntisGLS
             public ushort year { get; set; }
         }
 
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -138,7 +138,7 @@ namespace ArcFormats.EntisGLS
             br.Dispose();
         }
 
-        public static void Pack(string folderPath, string filePath)
+        public void Pack(string folderPath, string filePath)
         {
             //string jsonPath = folderPath + "\\" + "TimestampInfo.json";
             FileStream fw = File.Create(filePath);

@@ -18,7 +18,7 @@ namespace ArcFormats.SystemNNN
             public string filePath { get; set; }
         }
 
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             //init
             string gpkPath;
@@ -108,7 +108,7 @@ namespace ArcFormats.SystemNNN
             br2.Dispose();
         }
 
-        public static void Pack(string folderPath, string filePath)
+        public void Pack(string folderPath, string filePath)
         {
             DirectoryInfo d = new DirectoryInfo(folderPath);
             uint filecount = (uint)Utilities.GetFileCount_All(folderPath);

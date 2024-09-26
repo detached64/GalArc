@@ -256,7 +256,7 @@ namespace ArcFormats.AdvHD
             bw.Dispose();
         }
 
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             char a;
             using (FileStream fs = File.OpenRead(filePath))
@@ -280,7 +280,7 @@ namespace ArcFormats.AdvHD
             }
         }
 
-        public static void Pack(string folderPath, string filePath)
+        public void Pack(string folderPath, string filePath)
         {
             if (Global.Version == "1")
             {

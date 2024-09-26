@@ -19,7 +19,7 @@ namespace ArcFormats.Ai6Win
             public bool isPacked;
         }
 
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             List<Action> actions = new List<Action>
             {
