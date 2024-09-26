@@ -57,7 +57,11 @@
             this.Controls.Add(this.panel);
             this.Controls.Add(this.treeViewOption);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "SettingsWindow";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Load += new System.EventHandler(this.SettingsWindow_Load);
             this.ResumeLayout(false);
 
