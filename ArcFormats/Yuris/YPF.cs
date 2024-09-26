@@ -8,7 +8,7 @@ using Utility.Compression;
 
 namespace ArcFormats.Yuris
 {
-    internal class YPF
+    public class YPF
     {
         internal class Entry
         {

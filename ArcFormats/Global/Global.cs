@@ -1,4 +1,5 @@
-﻿using Log;
+﻿using ArcFormats.Properties;
+using Log;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -34,18 +35,25 @@ namespace ArcFormats
             {
                 object instance = Activator.CreateInstance(type);
                 MethodInfo unpack = type.GetMethod("Unpack", BindingFlags.Instance | BindingFlags.Public);
-                object[] parameters = new List<object>
+                if (unpack != null)
                 {
-                    FilePath,
-                    FolderPath
-                }.ToArray();
-                LogUtility.InitUnpack(FilePath, FolderPath);
-                unpack.Invoke(instance, parameters);
-                LogUtility.FinishUnpack();
+                    object[] parameters = new List<object>
+                    {
+                        FilePath,
+                        FolderPath
+                    }.ToArray();
+                    LogUtility.InitUnpack(FilePath, FolderPath);
+                    unpack.Invoke(instance, parameters);
+                    LogUtility.FinishUnpack();
+                }
+                else
+                {
+                    LogUtility.Error(Resources.logUnpackMethodNotFound);
+                }
             }
             else
             {
-                throw new Exception("Error:Specified format not found.");
+                throw new Exception(Resources.logClassNotFound);
             }
         }
 
@@ -57,18 +65,25 @@ namespace ArcFormats
             {
                 object instance = Activator.CreateInstance(type);
                 MethodInfo pack = type.GetMethod("Pack", BindingFlags.Instance | BindingFlags.Public);
-                object[] parameters = new List<object>
+                if (pack != null)
                 {
-                    FolderPath,
-                    FilePath
-                }.ToArray();
-                LogUtility.InitPack(FolderPath, FilePath);
-                pack.Invoke(instance, parameters);
-                LogUtility.FinishPack();
+                    object[] parameters = new List<object>
+                    {
+                        FolderPath,
+                        FilePath
+                    }.ToArray();
+                    LogUtility.InitPack(FolderPath, FilePath);
+                    pack.Invoke(instance, parameters);
+                    LogUtility.FinishPack();
+                }
+                else
+                {
+                    LogUtility.Error(Resources.logPackMethodNotFound);
+                }
             }
             else
             {
-                throw new Exception("Error:Specified format not found.");
+                throw new Exception(Resources.logClassNotFound);
             }
         }
     }
