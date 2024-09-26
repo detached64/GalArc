@@ -1,5 +1,5 @@
-﻿using GalArc.GUI;
-using GalArc.Properties;
+﻿using GalArc.Properties;
+using GalArc.Resource;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -18,20 +18,21 @@ namespace GalArc.Controller
         internal static string GetLocalCulture()
         {
             string LocalCulture;
-            if (string.IsNullOrEmpty(Properties.Settings.Default.lastLang))
+            if (string.IsNullOrEmpty(Settings.Default.lastLang))
             {
                 LocalCulture = CultureInfo.CurrentCulture.Name;
             }
             else
             {
-                LocalCulture = Properties.Settings.Default.lastLang;
+                LocalCulture = Settings.Default.lastLang;
             }
-            if (!Resource.Languages.languages.Values.ToArray().Contains(LocalCulture))
+            if (!Languages.languages.Values.ToArray().Contains(LocalCulture))
             {
                 LocalCulture = "en-US";
             }
             return LocalCulture;
         }
+
         internal static void SetLocalCulture(string LocalCulture)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo(LocalCulture);

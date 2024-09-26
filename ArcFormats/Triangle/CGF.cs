@@ -1,16 +1,18 @@
-﻿using Log;
+﻿using ArcFormats.Templates;
+using Log;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Windows.Forms;
 using Utility;
 
 namespace ArcFormats.Triangle
 {
     public class CGF
     {
-        struct Entry
+        public static UserControl PackExtraOptions = new VersionOnly("1");
+
+        private struct Entry
         {
             internal string fileName;
             internal uint offset;

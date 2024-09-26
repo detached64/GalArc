@@ -6,12 +6,15 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
+using System.Windows.Forms;
 using Utility;
 
 namespace ArcFormats.Artemis
 {
     public class PFS
     {
+        public static UserControl PackExtraOptions = new Templates.VersionOnly("8/6/2");
+
         private struct Header
         {
             public string Magic { get; set; }
@@ -71,7 +74,7 @@ namespace ArcFormats.Artemis
                     {
                         Entry entry = new Entry();
                         entry.pathLen = br.ReadInt32();
-                        entry.filePath = folderPath + "\\" + Global.UnpackEncoding.GetString(br.ReadBytes(entry.pathLen));
+                        entry.filePath = folderPath + "\\" + Global.Encoding.GetString(br.ReadBytes(entry.pathLen));
                         br.ReadUInt32(); // skip 4 unused bytes:0x00000000
                         entry.Offset = br.ReadUInt32();
                         entry.Size = br.ReadUInt32();
@@ -110,7 +113,7 @@ namespace ArcFormats.Artemis
                     {
                         Entry entry = new Entry();
                         entry.pathLen = (int)br.ReadUInt32();
-                        entry.filePath = folderPath + "/" + Global.UnpackEncoding.GetString(br.ReadBytes(entry.pathLen)).Replace("\\", "/");
+                        entry.filePath = folderPath + "/" + Global.Encoding.GetString(br.ReadBytes(entry.pathLen)).Replace("\\", "/");
                         br.ReadUInt32();//0x10000000
                         br.ReadUInt32();//0x00000000
                         br.ReadUInt32();//0x00000000
@@ -143,7 +146,7 @@ namespace ArcFormats.Artemis
                     {
                         Entry entry = new Entry();
                         entry.pathLen = br.ReadInt32();
-                        entry.filePath = folderPath + "/" + Global.UnpackEncoding.GetString(br.ReadBytes(entry.pathLen)).Replace("\\", "/");
+                        entry.filePath = folderPath + "/" + Global.Encoding.GetString(br.ReadBytes(entry.pathLen)).Replace("\\", "/");
                         br.ReadUInt32(); // skip 4 unused bytes:0x00000000
                         entry.Offset = br.ReadUInt32();
                         entry.Size = br.ReadUInt32();
@@ -202,7 +205,7 @@ namespace ArcFormats.Artemis
                     Size = (uint)new FileInfo(folderPath + "\\" + pathString[j]).Length,
                     path = pathString[j],
                     filePath = folderPath + "\\" + pathString[j],
-                    pathLen = Global.PackEncoding.GetByteCount(pathString[j])
+                    pathLen = Global.Encoding.GetByteCount(pathString[j])
                 };
 
                 index.Add(artemisEntry);
@@ -231,7 +234,7 @@ namespace ArcFormats.Artemis
                     foreach (var file in index)
                     {
                         writer8.Write(file.pathLen);
-                        writer8.Write(Global.PackEncoding.GetBytes(file.path));
+                        writer8.Write(Global.Encoding.GetBytes(file.path));
                         writer8.Write(0); // reserved
                         writer8.Write(offset8);
                         writer8.Write(file.Size);
@@ -294,7 +297,7 @@ namespace ArcFormats.Artemis
                     foreach (var file in index)
                     {
                         writer2.Write((uint)file.pathLen);
-                        writer2.Write(Global.PackEncoding.GetBytes(file.path));
+                        writer2.Write(Global.Encoding.GetBytes(file.path));
                         writer2.Write((uint)16);
                         writer2.Write((uint)0);
                         writer2.Write((uint)0);
@@ -335,7 +338,7 @@ namespace ArcFormats.Artemis
                     {
                         uint filenameSize = (uint)file.pathLen;//use utf-8 for japanese character in file name
                         writer6.Write(filenameSize);
-                        writer6.Write(Global.PackEncoding.GetBytes(file.path));
+                        writer6.Write(Global.Encoding.GetBytes(file.path));
                         writer6.Write(0); // reserved
                         writer6.Write(offset6);
                         writer6.Write(file.Size);

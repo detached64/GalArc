@@ -117,61 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="preferenceToolStripMenuItem.Text" xml:space="preserve">
-    <value>设置</value>
-  </data>
-  <data name="optionToolStripMenuItem.Text" xml:space="preserve">
-    <value>选项</value>
-  </data>
-  <data name="checkUpdateToolStripMenuItem.Text" xml:space="preserve">
-    <value>检查更新</value>
-  </data>
-  <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
-    <value>关于</value>
-  </data>
-  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
-    <value>帮助</value>
-  </data>
-  <data name="menuStrip.Text" xml:space="preserve">
-    <value>menuStrip</value>
-  </data>
-  <data name="languagesToolStripMenuItem.Text" xml:space="preserve">
-    <value>语言</value>
-  </data>
-  <data name="chkbxUnpack.Text" xml:space="preserve">
-    <value>解包</value>
-  </data>
-  <data name="chkbxPack.Text" xml:space="preserve">
-    <value>封包</value>
-  </data>
-  <data name="lbInput.Text" xml:space="preserve">
-    <value>输入</value>
-  </data>
-  <data name="lbOutput.Text" xml:space="preserve">
-    <value>输出</value>
-  </data>
-  <data name="btSelInput.Text" xml:space="preserve">
-    <value>…</value>
-  </data>
-  <data name="btSelOutput.Text" xml:space="preserve">
-    <value>…</value>
-  </data>
-  <data name="btClear.Text" xml:space="preserve">
-    <value>清空路径</value>
-  </data>
-  <data name="chkbxMatch.Text" xml:space="preserve">
-    <value>匹配路径</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>GalArc</value>
-  </data>
-  <data name="chkbxShowLog.Text" xml:space="preserve">
-    <value>显示日志</value>
-  </data>
-  <data name="btExecute.Text" xml:space="preserve">
-    <value>--</value>
-  </data>
-  <data name="gbOptions.Text" xml:space="preserve">
-    <value>额外选项</value>
+  <data name="lbEmpty.Text" xml:space="preserve">
+    <value>空</value>
   </data>
 </root>

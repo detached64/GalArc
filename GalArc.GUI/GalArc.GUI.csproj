@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Execute.cs" />
-    <Compile Include="Controller\UpdateContent.cs" />
     <Compile Include="Controller\UpdateVersion.cs" />
     <Compile Include="GUI\GeneralSettings.cs">
       <SubType>UserControl</SubType>
@@ -94,18 +93,6 @@
     <Compile Include="GUI\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\PackWindow.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\PackWindow.Designer.cs">
-      <DependentUpon>PackWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\UnpackWindow.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\UnpackWindow.Designer.cs">
-      <DependentUpon>UnpackWindow.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource\EngineInfo.cs" />
@@ -129,9 +116,6 @@
     <EmbeddedResource Include="GUI\MainWindow.zh-Hans.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\PackWindow.resx">
-      <DependentUpon>PackWindow.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GUI\PreferenceSettings.resx">
       <DependentUpon>PreferenceSettings.cs</DependentUpon>
     </EmbeddedResource>
@@ -143,9 +127,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\SettingsWindow.zh-Hans.resx">
       <DependentUpon>SettingsWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\UnpackWindow.resx">
-      <DependentUpon>UnpackWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\UpdateBox.resx">
       <DependentUpon>UpdateBox.cs</DependentUpon>

@@ -1,9 +1,8 @@
-﻿using GalArc.GUI;
-using GalArc.Properties;
+﻿using GalArc.Properties;
 using Log;
 using System;
 using System.IO;
-using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace GalArc.Controller
@@ -30,7 +29,7 @@ namespace GalArc.Controller
 
             try
             {
-                using (System.Net.WebClient webClient = new System.Net.WebClient())
+                using (WebClient webClient = new WebClient())
                 {
                     webClient.DownloadFile(versionUrl, versionPath);
                 }

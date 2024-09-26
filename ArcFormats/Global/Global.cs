@@ -1,7 +1,6 @@
 ﻿using Log;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using Utility;
@@ -12,20 +11,17 @@ namespace ArcFormats
     {
         private static string FilePath = null;
         private static string FolderPath = null;
-        public static Encoding UnpackEncoding = ArcEncoding.Shift_JIS;
-        public static Encoding PackEncoding = ArcEncoding.Shift_JIS;
-        public static bool ToDecryptScript = false;
-        public static string Version = null;
         private static string typeString = null;
 
-        public Global(string filePath, string folderPath, string typeStr, Encoding unpackEnc, Encoding packEnc, bool toDecScr, string ver)
+        public static Encoding Encoding = ArcEncoding.Shift_JIS;
+        public static bool ToDecryptScript = false;
+
+        public static string Version = null;
+
+        public Global(string filePath, string folderPath, string typeStr)
         {
             FilePath = filePath;
             FolderPath = folderPath;
-            UnpackEncoding = unpackEnc;
-            PackEncoding = packEnc;
-            Version = ver;
-            ToDecryptScript = toDecScr;
             typeString = typeStr;
         }
 

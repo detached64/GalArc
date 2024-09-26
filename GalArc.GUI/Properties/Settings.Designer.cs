@@ -130,5 +130,53 @@ namespace GalArc.Properties {
                 this["DefaultEncoding"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int UnpackSelectedNode0 {
+            get {
+                return ((int)(this["UnpackSelectedNode0"]));
+            }
+            set {
+                this["UnpackSelectedNode0"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int UnpackSelectedNode1 {
+            get {
+                return ((int)(this["UnpackSelectedNode1"]));
+            }
+            set {
+                this["UnpackSelectedNode1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PackSelectedNode0 {
+            get {
+                return ((int)(this["PackSelectedNode0"]));
+            }
+            set {
+                this["PackSelectedNode0"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PackSelectedNode1 {
+            get {
+                return ((int)(this["PackSelectedNode1"]));
+            }
+            set {
+                this["PackSelectedNode1"] = value;
+            }
+        }
     }
 }

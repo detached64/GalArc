@@ -41,7 +41,7 @@ namespace ArcFormats.NeXAS
             FileStream fs = File.OpenRead(filePath);
             BinaryReader reader = new BinaryReader(fs);
             FolderPath = folderPath;
-            encodings = Global.UnpackEncoding;
+            encodings = Global.Encoding;
             if (!reader.ReadBytes(3).SequenceEqual(signature))
             {
                 LogUtility.Error_NotValidArchive();

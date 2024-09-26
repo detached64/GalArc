@@ -51,6 +51,7 @@
             this.chkbxMatch = new System.Windows.Forms.CheckBox();
             this.btExecute = new System.Windows.Forms.Button();
             this.chkbxShowLog = new System.Windows.Forms.CheckBox();
+            this.gbOptions = new System.Windows.Forms.GroupBox();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -124,7 +125,7 @@
             this.treeViewEngines.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.treeViewEngines.Name = "treeViewEngines";
             this.treeViewEngines.PathSeparator = "/";
-            this.treeViewEngines.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewEngines_NodeMouseClick);
+            this.treeViewEngines.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEngines_AfterSelect);
             // 
             // chkbxUnpack
             // 
@@ -211,11 +212,18 @@
             this.chkbxShowLog.CheckedChanged += new System.EventHandler(this.chkbxShowLog_CheckedChanged);
             this.chkbxShowLog.SizeChanged += new System.EventHandler(this.chkbxShowLog_SizeChanged);
             // 
+            // gbOptions
+            // 
+            resources.ApplyResources(this.gbOptions, "gbOptions");
+            this.gbOptions.Name = "gbOptions";
+            this.gbOptions.TabStop = false;
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.gbOptions);
             this.Controls.Add(this.chkbxShowLog);
             this.Controls.Add(this.btClear);
             this.Controls.Add(this.chkbxMatch);
@@ -269,6 +277,7 @@
         internal System.Windows.Forms.CheckBox chkbxMatch;
         internal System.Windows.Forms.Button btExecute;
         private System.Windows.Forms.CheckBox chkbxShowLog;
+        private System.Windows.Forms.GroupBox gbOptions;
     }
 }
 

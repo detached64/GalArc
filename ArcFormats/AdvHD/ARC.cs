@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 using Utility;
 
 namespace ArcFormats.AdvHD
 {
     public class ARC
     {
+        public static UserControl PackExtraOptions = new Templates.VersionOnly("1/2");
+
         private struct HeaderV1
         {
             public uint typeCount { get; set; }
