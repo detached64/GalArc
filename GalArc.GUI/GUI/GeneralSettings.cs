@@ -31,14 +31,14 @@ namespace GalArc.GUI
         {
             if (this.chkbxTopMost.Checked)
             {
-                Log.LogWindow.Instance.TopMost = true;
+                LogWindow.Instance.TopMost = true;
                 MainWindow.Instance.TopMost = true;
                 Settings.Default.TopMost = true;
                 Settings.Default.Save();
             }
             else
             {
-                Log.LogWindow.Instance.TopMost = false;
+                LogWindow.Instance.TopMost = false;
                 MainWindow.Instance.TopMost = false;
                 Settings.Default.TopMost = false;
                 Settings.Default.Save();
