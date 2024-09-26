@@ -37,8 +37,6 @@ namespace Log
 
         private static int Width_delta = 0;
 
-        public event EventHandler LogFormHidden;
-
         public LogWindow()
         {
             Instance = this;
@@ -64,13 +62,6 @@ namespace Log
         {
             e.Cancel = true;
             this.Hide();
-            OnLogFormHidden(EventArgs.Empty);
-        }
-
-        private void log_btnHide_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            OnLogFormHidden(EventArgs.Empty);
         }
 
         private void log_btnClear_Click(object sender, EventArgs e)
@@ -117,11 +108,6 @@ namespace Log
                 Settings.Default.chkbxSave = this.log_chkbxSave.Checked;
                 Settings.Default.Save();
             }
-        }
-
-        internal virtual void OnLogFormHidden(EventArgs e)
-        {
-            LogFormHidden?.Invoke(this, e);
         }
 
         public static void ChangeLocalSettings(bool autoSaveState)

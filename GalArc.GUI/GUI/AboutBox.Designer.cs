@@ -65,6 +65,7 @@
             this.dataGridViewEngines.RowHeadersVisible = false;
             this.dataGridViewEngines.RowTemplate.Height = 30;
             this.dataGridViewEngines.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dataGridViewEngines.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridViewEngines_RowPrePaint);
             // 
             // searchText
             // 
