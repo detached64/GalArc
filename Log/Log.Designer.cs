@@ -35,7 +35,6 @@
             this.log_btnResize = new System.Windows.Forms.Button();
             this.log_chkbxSave = new System.Windows.Forms.CheckBox();
             this.bar = new System.Windows.Forms.ProgressBar();
-            this.log_btnHide = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // log_txtLog
@@ -82,13 +81,6 @@
             this.bar.Step = 1;
             this.bar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             // 
-            // log_btnHide
-            // 
-            resources.ApplyResources(this.log_btnHide, "log_btnHide");
-            this.log_btnHide.Name = "log_btnHide";
-            this.log_btnHide.UseVisualStyleBackColor = true;
-            this.log_btnHide.Click += new System.EventHandler(this.log_btnHide_Click);
-            // 
             // LogWindow
             // 
             resources.ApplyResources(this, "$this");
@@ -97,7 +89,6 @@
             this.Controls.Add(this.bar);
             this.Controls.Add(this.log_chkbxSave);
             this.Controls.Add(this.log_btnResize);
-            this.Controls.Add(this.log_btnHide);
             this.Controls.Add(this.log_btnClear);
             this.Controls.Add(this.log_chkbxDebug);
             this.Controls.Add(this.log_txtLog);
@@ -120,6 +111,5 @@
         public System.Windows.Forms.Button log_btnResize;
         public System.Windows.Forms.CheckBox log_chkbxDebug;
         public System.Windows.Forms.CheckBox log_chkbxSave;
-        public System.Windows.Forms.Button log_btnHide;
     }
 }

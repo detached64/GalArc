@@ -36,10 +36,6 @@ namespace GalArc.GUI
             Type type = this.dataGridViewEngines.GetType();
             PropertyInfo pi = type.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
             pi.SetValue(this.dataGridViewEngines, true, null);
-
-            this.dataGridViewEngines.RowPrePaint += new DataGridViewRowPrePaintEventHandler(dataGridViewEngines_RowPrePaint);
-
-            Localize.SetLocalCulture(MainWindow.LocalCulture);
         }
 
         private void AboutBox_Load(object sender, EventArgs e)
