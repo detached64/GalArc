@@ -59,5 +59,185 @@ namespace Log.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   查找类似 Error: Not a valid archive. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorNotValidArc {
+            get {
+                return ResourceManager.GetString("logErrorNotValidArc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Error occurs. Please refer to log for detail. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorOccur {
+            get {
+                return ResourceManager.GetString("logErrorOccur", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Error: Original {0} file not found. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorOriginalFileNotFound {
+            get {
+                return ResourceManager.GetString("logErrorOriginalFileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Error: {0} and {1} file with the same name should be in the same directory. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorSameNameNotFound {
+            get {
+                return ResourceManager.GetString("logErrorSameNameNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 {0} files inside. 的本地化字符串。
+        /// </summary>
+        internal static string logFileCountInside {
+            get {
+                return ResourceManager.GetString("logFileCountInside", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 New update available! 的本地化字符串。
+        /// </summary>
+        internal static string logHasUpdate {
+            get {
+                return ResourceManager.GetString("logHasUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Input file path: 的本地化字符串。
+        /// </summary>
+        internal static string logInputFile {
+            get {
+                return ResourceManager.GetString("logInputFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Input folder path: 的本地化字符串。
+        /// </summary>
+        internal static string logInputFolder {
+            get {
+                return ResourceManager.GetString("logInputFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 New Instance 的本地化字符串。
+        /// </summary>
+        internal static string logNewInstance {
+            get {
+                return ResourceManager.GetString("logNewInstance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 (no extension) 的本地化字符串。
+        /// </summary>
+        internal static string logNoExtension {
+            get {
+                return ResourceManager.GetString("logNoExtension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 You are using the latest version of GalArc. 的本地化字符串。
+        /// </summary>
+        internal static string logNoUpdate {
+            get {
+                return ResourceManager.GetString("logNoUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Output file path: 的本地化字符串。
+        /// </summary>
+        internal static string logOutputFile {
+            get {
+                return ResourceManager.GetString("logOutputFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Output folder path: 的本地化字符串。
+        /// </summary>
+        internal static string logOutputFolder {
+            get {
+                return ResourceManager.GetString("logOutputFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Pack finished. 的本地化字符串。
+        /// </summary>
+        internal static string logPackFinished {
+            get {
+                return ResourceManager.GetString("logPackFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Packing…… 的本地化字符串。
+        /// </summary>
+        internal static string logPacking {
+            get {
+                return ResourceManager.GetString("logPacking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unpack finished. 的本地化字符串。
+        /// </summary>
+        internal static string logUnpackFinished {
+            get {
+                return ResourceManager.GetString("logUnpackFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unpacking…… 的本地化字符串。
+        /// </summary>
+        internal static string logUnpacking {
+            get {
+                return ResourceManager.GetString("logUnpacking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Error occurs while checking for update. 的本地化字符串。
+        /// </summary>
+        internal static string logUpdateError {
+            get {
+                return ResourceManager.GetString("logUpdateError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Checking for update…… 的本地化字符串。
+        /// </summary>
+        internal static string logUpdating {
+            get {
+                return ResourceManager.GetString("logUpdating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Valid {0} v{1} archive detected. 的本地化字符串。
+        /// </summary>
+        internal static string logValidArchiveDetected {
+            get {
+                return ResourceManager.GetString("logValidArchiveDetected", resourceCulture);
+            }
+        }
     }
 }

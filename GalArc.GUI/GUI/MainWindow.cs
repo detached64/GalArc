@@ -246,7 +246,7 @@ namespace GalArc
                     selectedEngineInfo_Unpack = EngineInfos.engineInfos.Where(x => x.EngineName == e.Node.Parent.Text).FirstOrDefault();
                     chkbxMatch_CheckedChanged(null, null);
                     GetExtraOptions(selectedNodeUnpack, "UnpackExtraOptions");
-                    LogUtility.InfoRevoke($"Unpack: {e.Node.Parent.Text} {e.Node.Text} selected.");
+                    LogUtility.InfoRevoke(string.Format(Resources.logSelectUnpackNode, e.Node.Parent.Text, e.Node.Text));
                 }
                 else if (this.chkbxPack.Checked)
                 {
@@ -260,7 +260,7 @@ namespace GalArc
                     selectedEngineInfo_Pack = EngineInfos.engineInfos.Where(x => x.EngineName == e.Node.Parent.Text).FirstOrDefault();
                     chkbxMatch_CheckedChanged(null, null);
                     GetExtraOptions(selectedNodePack, "PackExtraOptions");
-                    LogUtility.InfoRevoke($"Pack: {e.Node.Parent.Text} {e.Node.Text} selected.");
+                    LogUtility.InfoRevoke(string.Format(Resources.logSelectPackNode, e.Node.Parent.Text, e.Node.Text));
                 }
             }
         }

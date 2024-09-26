@@ -117,45 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="main_unpackPage_Text" xml:space="preserve">
-    <value>Unpack</value>
-  </data>
-  <data name="main_packPage_Text" xml:space="preserve">
-    <value>Pack</value>
-  </data>
-  <data name="main_optionPage_Text" xml:space="preserve">
-    <value>Option</value>
-  </data>
-  <data name="main_aboutPage_Text" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="ab_lb_Search" xml:space="preserve">
-    <value>Search:</value>
-  </data>
-  <data name="ab_gb_About" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="ab_gb_Update" xml:space="preserve">
-    <value>Update</value>
-  </data>
-  <data name="ab_gb_Format" xml:space="preserve">
-    <value>Supported Formats</value>
-  </data>
-  <data name="ab_link_Site" xml:space="preserve">
-    <value>Development Site</value>
-  </data>
-  <data name="ab_link_Issue" xml:space="preserve">
-    <value>Report Issue</value>
-  </data>
-  <data name="ab_lb_CurrentVersion" xml:space="preserve">
-    <value>Current Version:</value>
-  </data>
-  <data name="ab_lb_LatestVersion" xml:space="preserve">
-    <value>Latest Version:</value>
-  </data>
-  <data name="ab_lb_LatestVer" xml:space="preserve">
-    <value>Unknown</value>
-  </data>
   <data name="lbVersion" xml:space="preserve">
     <value>Version {0}</value>
   </data>
@@ -173,5 +134,11 @@
   </data>
   <data name="columnPackFormat" xml:space="preserve">
     <value>Pack Format</value>
+  </data>
+  <data name="logSelectUnpackNode" xml:space="preserve">
+    <value>Unpack mode: {0} {1} selected.</value>
+  </data>
+  <data name="logSelectPackNode" xml:space="preserve">
+    <value>Pack mode: {0} {1} selected.</value>
   </data>
 </root>

@@ -18,7 +18,9 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+using Log.Properties;
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -39,7 +41,7 @@ namespace Log
 
         private static void SaveLog(string log)
         {
-            System.IO.File.AppendAllText("log.txt", "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "]" + log);
+            File.AppendAllText("log.txt", "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "]" + log);
         }
         private static void WriteAndSaveLog(string log, int logLevel = 1)
         {
@@ -55,7 +57,7 @@ namespace Log
         }
         public static void NewInstance()
         {
-            System.IO.File.AppendAllText("log.txt", Environment.NewLine + "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "][New Instance]" + Environment.NewLine);
+            File.AppendAllText("log.txt", Environment.NewLine + "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "][" + Resources.logNewInstance + "]" + Environment.NewLine);
         }
         /// <summary>
         /// Show error log and throw exception if <paramref name="toThrow"/> is true.
@@ -68,7 +70,7 @@ namespace Log
             if (!toThrow)
             {
                 WriteAndSaveLog(log, 0);
-                OnErrorOccur("Error occurs.");
+                OnErrorOccur(Resources.logErrorOccur);
             }
             else
             {
@@ -95,45 +97,43 @@ namespace Log
         }
         public static void Error_NotValidArchive()
         {
-            throw new Exception("Error:Not a valid archive.");
+            throw new Exception(Resources.logErrorNotValidArc);
         }
         public static void Error_NeedAnotherFile(string ext1, string ext2)
         {
-            ext1 = ext1?.ToUpper().Replace(".", string.Empty) ?? "(no extension)";
-            ext2 = ext2?.ToUpper().Replace(".", string.Empty) ?? "(no extension)";
-            throw new Exception("Error:" + ext1 + " and " + ext2 + " file with the same name should be in the same directory.");
+            ext1 = ext1?.ToUpper().Replace(".", string.Empty) ?? Resources.logNoExtension;
+            ext2 = ext2?.ToUpper().Replace(".", string.Empty) ?? Resources.logNoExtension;
+            throw new Exception(string.Format(Resources.logErrorSameNameNotFound, ext1, ext2));
         }
         public static void Error_NeedOriginalFile(string ext)
         {
-            ext = ext?.ToUpper().Replace(".", string.Empty) ?? "(no extension)";
-            throw new Exception("Error:Original " + ext + " file not found.");
+            ext = ext?.ToUpper().Replace(".", string.Empty) ?? Resources.logNoExtension;
+            throw new Exception(string.Format(Resources.logErrorOriginalFileNotFound, ext));
         }
 
         public static void InitPack(string inputFolderPath, string outputFilePath)
         {
-            Debug("Input folder path:\t" + inputFolderPath);
-            Debug("Output file path:\t" + outputFilePath);
-            Info("Packing……");
+            Debug(Resources.logInputFolder + "\t" + inputFolderPath);
+            Debug(Resources.logOutputFile + "\t" + outputFilePath);
+            Info(Resources.logPacking);
             LogWindow.Instance.bar.Value = 0;
         }
         public static void FinishPack()
         {
-            Info("Pack finished.");
             LogWindow.Instance.bar.Value = LogWindow.Instance.bar.Maximum;
-            OnProcess("Pack finished.");
+            InfoRevoke(Resources.logPackFinished);
         }
         public static void InitUnpack(string inputFilePath, string outputFolderPath)
         {
-            Debug("Input file path:\t" + inputFilePath);
-            Debug("Output folder path:\t" + outputFolderPath);
-            Info("Unpacking……");
+            Debug(Resources.logInputFile + "\t" + inputFilePath);
+            Debug(Resources.logOutputFolder + "\t" + outputFolderPath);
+            Info(Resources.logUnpacking);
             LogWindow.Instance.bar.Value = 0;
         }
         public static void FinishUnpack()
         {
-            Info("Unpack finished.");
             LogWindow.Instance.bar.Value = LogWindow.Instance.bar.Maximum;
-            OnProcess("Unpack finished.");
+            InfoRevoke(Resources.logUnpackFinished);
         }
 
         internal static void OnProcess(string message)
@@ -169,12 +169,12 @@ namespace Log
         public static void InitBar(int max)
         {
             LogWindow.Instance.bar.Maximum = max;
-            Debug(max.ToString() + " files inside.");
+            Debug(string.Format(Resources.logFileCountInside, max));
         }
         public static void InitBar(uint max)
         {
             LogWindow.Instance.bar.Maximum = (int)max;
-            Debug(max.ToString() + " files inside.");
+            Debug(string.Format(Resources.logFileCountInside, max));
         }
         public static void UpdateBar()
         {
@@ -183,30 +183,29 @@ namespace Log
 
         public static void ShowCheckingUpdate()
         {
-            Info("Checking for update……");
-            OnProcess("Checking for update……");
+            InfoRevoke(Resources.logUpdating);
         }
         public static async void ShowCheckSuccess(bool existNewer)
         {
             if (existNewer)
             {
-                Info("New update available!");
-                await OnShowAndDisappear("New update available!");
+                Info(Resources.logHasUpdate);
+                await OnShowAndDisappear(Resources.logHasUpdate);
             }
             else
             {
-                Info("You are using the latest version of GalArc.");
-                await OnShowAndDisappear("You are using the latest version of GalArc.");
+                Info(Resources.logNoUpdate);
+                await OnShowAndDisappear(Resources.logNoUpdate);
             }
         }
         public static void ShowCheckError()
         {
-            Error("Error occurs while checking for update.",false);
+            Error(Resources.logUpdateError, false);
         }
 
         public static void ShowVersion(string extension, int version)
         {
-            Info($"Valid {extension} v{version} archive detected.");
+            Info(string.Format(Resources.logValidArchiveDetected, extension, version));
         }
     }
 }
