@@ -570,6 +570,9 @@
   <data name="&gt;&gt;chkbxShowLog.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="gbOptions.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
   <data name="gbOptions.Location" type="System.Drawing.Point, System.Drawing">
     <value>249, 283</value>
   </data>
