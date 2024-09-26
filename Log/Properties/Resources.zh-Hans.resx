@@ -117,4 +117,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="logHasUpdate" xml:space="preserve">
+    <value>有新版本可用！</value>
+  </data>
+  <data name="logNoUpdate" xml:space="preserve">
+    <value>GalArc已是最新版本。</value>
+  </data>
+  <data name="logUpdating" xml:space="preserve">
+    <value>检查更新……</value>
+  </data>
+  <data name="logUpdateError" xml:space="preserve">
+    <value>检查更新时出现错误。</value>
+  </data>
+  <data name="logValidArchiveDetected" xml:space="preserve">
+    <value>检测到{0} v{1}封包。</value>
+  </data>
+  <data name="logUnpackFinished" xml:space="preserve">
+    <value>解包已完成。</value>
+  </data>
+  <data name="logPackFinished" xml:space="preserve">
+    <value>封包已完成。</value>
+  </data>
+  <data name="logInputFile" xml:space="preserve">
+    <value>输入文件路径：</value>
+  </data>
+  <data name="logOutputFolder" xml:space="preserve">
+    <value>输出文件夹路径：</value>
+  </data>
+  <data name="logInputFolder" xml:space="preserve">
+    <value>输入文件夹路径：</value>
+  </data>
+  <data name="logOutputFile" xml:space="preserve">
+    <value>输出文件路径：</value>
+  </data>
+  <data name="logFileCountInside" xml:space="preserve">
+    <value>内部有{0}个文件。</value>
+  </data>
+  <data name="logNewInstance" xml:space="preserve">
+    <value>启动新实例</value>
+  </data>
+  <data name="logErrorNotValidArc" xml:space="preserve">
+    <value>错误：不是有效的封包。</value>
+  </data>
+  <data name="logErrorSameNameNotFound" xml:space="preserve">
+    <value>错误：同名的{0}和{1}文件必须在同一目录下。</value>
+  </data>
+  <data name="logNoExtension" xml:space="preserve">
+    <value>(无后缀名)</value>
+  </data>
+  <data name="logErrorOriginalFileNotFound" xml:space="preserve">
+    <value>错误；当前目录下未找到后缀为{0}的原文件。</value>
+  </data>
+  <data name="logUnpacking" xml:space="preserve">
+    <value>解包中……</value>
+  </data>
+  <data name="logPacking" xml:space="preserve">
+    <value>封包中……</value>
+  </data>
+  <data name="logErrorOccur" xml:space="preserve">
+    <value>出现错误。详情请转到日志界面。</value>
+  </data>
 </root>

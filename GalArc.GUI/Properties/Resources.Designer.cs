@@ -61,87 +61,6 @@ namespace GalArc.Properties {
         }
         
         /// <summary>
-        ///   查找类似 About 的本地化字符串。
-        /// </summary>
-        internal static string ab_gb_About {
-            get {
-                return ResourceManager.GetString("ab_gb_About", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Supported Formats 的本地化字符串。
-        /// </summary>
-        internal static string ab_gb_Format {
-            get {
-                return ResourceManager.GetString("ab_gb_Format", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Update 的本地化字符串。
-        /// </summary>
-        internal static string ab_gb_Update {
-            get {
-                return ResourceManager.GetString("ab_gb_Update", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Current Version: 的本地化字符串。
-        /// </summary>
-        internal static string ab_lb_CurrentVersion {
-            get {
-                return ResourceManager.GetString("ab_lb_CurrentVersion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Unknown 的本地化字符串。
-        /// </summary>
-        internal static string ab_lb_LatestVer {
-            get {
-                return ResourceManager.GetString("ab_lb_LatestVer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Latest Version: 的本地化字符串。
-        /// </summary>
-        internal static string ab_lb_LatestVersion {
-            get {
-                return ResourceManager.GetString("ab_lb_LatestVersion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Search: 的本地化字符串。
-        /// </summary>
-        internal static string ab_lb_Search {
-            get {
-                return ResourceManager.GetString("ab_lb_Search", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Report Issue 的本地化字符串。
-        /// </summary>
-        internal static string ab_link_Issue {
-            get {
-                return ResourceManager.GetString("ab_link_Issue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Development Site 的本地化字符串。
-        /// </summary>
-        internal static string ab_link_Site {
-            get {
-                return ResourceManager.GetString("ab_link_Site", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Engine Name 的本地化字符串。
         /// </summary>
         internal static string columnEngineName {
@@ -178,38 +97,20 @@ namespace GalArc.Properties {
         }
         
         /// <summary>
-        ///   查找类似 About 的本地化字符串。
+        ///   查找类似 Pack mode: {0} {1} selected. 的本地化字符串。
         /// </summary>
-        internal static string main_aboutPage_Text {
+        internal static string logSelectPackNode {
             get {
-                return ResourceManager.GetString("main_aboutPage_Text", resourceCulture);
+                return ResourceManager.GetString("logSelectPackNode", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Option 的本地化字符串。
+        ///   查找类似 Unpack mode: {0} {1} selected. 的本地化字符串。
         /// </summary>
-        internal static string main_optionPage_Text {
+        internal static string logSelectUnpackNode {
             get {
-                return ResourceManager.GetString("main_optionPage_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Pack 的本地化字符串。
-        /// </summary>
-        internal static string main_packPage_Text {
-            get {
-                return ResourceManager.GetString("main_packPage_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Unpack 的本地化字符串。
-        /// </summary>
-        internal static string main_unpackPage_Text {
-            get {
-                return ResourceManager.GetString("main_unpackPage_Text", resourceCulture);
+                return ResourceManager.GetString("logSelectUnpackNode", resourceCulture);
             }
         }
         

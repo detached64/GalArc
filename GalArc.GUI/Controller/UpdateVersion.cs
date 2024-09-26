@@ -12,7 +12,7 @@ namespace GalArc.Controller
 
         internal static string currentVersion = Resource.Version.CurrentVer;
 
-        internal static string latestVersion = Resources.ab_lb_LatestVer;
+        internal static string latestVersion;
 
         private const string versionPath = "version.txt";
 
