@@ -24,7 +24,7 @@ namespace ArcFormats.Ai5Win
 
         private static string FolderPath;
 
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);

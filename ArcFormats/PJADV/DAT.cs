@@ -1,4 +1,5 @@
-﻿using Log;
+﻿using ArcFormats.Templates;
+using Log;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,7 @@ namespace ArcFormats.PJADV
 {
     public class DAT
     {
-        public static UserControl PackExtraOptions = new Templates.VersionOnly("1/2");
+        public static UserControl PackExtraOptions = new VersionOnly("1/2");
 
         private class Entry
         {
@@ -21,7 +22,7 @@ namespace ArcFormats.PJADV
             public uint size;
         }
 
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -82,7 +83,7 @@ namespace ArcFormats.PJADV
             br.Dispose();
         }
 
-        public static void Pack(string folderPath, string filePath)
+        public void Pack(string folderPath, string filePath)
         {
             FileStream fs = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fs);
@@ -135,8 +136,8 @@ namespace ArcFormats.PJADV
             }
         }
     }
-    public class PAK:DAT
+    public class PAK : DAT
     {
-
+        public static new UserControl PackExtraOptions = new VersionOnly("1/2");
     }
 }

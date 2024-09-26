@@ -27,7 +27,7 @@ namespace ArcFormats.InnocentGrey
             public bool isCompressed { get; set; }
         }
 
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -76,7 +76,7 @@ namespace ArcFormats.InnocentGrey
             fs.Dispose();
         }
 
-        public static void Pack(string folderPath, string filePath)
+        public void Pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);

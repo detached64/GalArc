@@ -170,7 +170,7 @@ namespace ArcFormats.Cmvs
             ReadHeaderV6(br, header);
         }
 
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -197,7 +197,7 @@ namespace ArcFormats.Cmvs
             }
         }
 
-        public static void Pack(string folderPath, string filePath)
+        public void Pack(string folderPath, string filePath)
         {
             switch (Global.Version)
             {

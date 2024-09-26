@@ -29,16 +29,18 @@ namespace ArcFormats
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             Type type = assembly.GetType(typeString);
+
             if (assembly != null && type != null)
             {
-                MethodInfo unpack = type.GetMethod("Unpack", BindingFlags.Static | BindingFlags.Public);
+                object instance = Activator.CreateInstance(type);
+                MethodInfo unpack = type.GetMethod("Unpack", BindingFlags.Instance | BindingFlags.Public);
                 object[] parameters = new List<object>
                 {
                     FilePath,
                     FolderPath
                 }.ToArray();
                 LogUtility.InitUnpack(FilePath, FolderPath);
-                unpack.Invoke(null, parameters);
+                unpack.Invoke(instance, parameters);
                 LogUtility.FinishUnpack();
             }
             else
@@ -53,14 +55,15 @@ namespace ArcFormats
             Type type = assembly.GetType(typeString);
             if (assembly != null && type != null)
             {
-                MethodInfo pack = type.GetMethod("Pack", BindingFlags.Static | BindingFlags.Public);
+                object instance = Activator.CreateInstance(type);
+                MethodInfo pack = type.GetMethod("Pack", BindingFlags.Instance | BindingFlags.Public);
                 object[] parameters = new List<object>
                 {
                     FolderPath,
                     FilePath
                 }.ToArray();
                 LogUtility.InitPack(FolderPath, FilePath);
-                pack.Invoke(null, parameters);
+                pack.Invoke(instance, parameters);
                 LogUtility.FinishPack();
             }
             else

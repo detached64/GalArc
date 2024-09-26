@@ -19,7 +19,7 @@ namespace ArcFormats.NextonLikeC
             //1:SNX 3:PNG 4,5:OGG
         }
 
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             string arcPath;
             string lstPath;

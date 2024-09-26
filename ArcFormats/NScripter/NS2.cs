@@ -16,7 +16,7 @@ namespace ArcFormats.NScripter
             public string filePathDivided { get; set; }
         }
 
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             BinaryReader br = new BinaryReader(fs);
@@ -51,7 +51,7 @@ namespace ArcFormats.NScripter
             br.Dispose();
         }
 
-        public static void Pack(string folderPath, string filePath)
+        public void Pack(string folderPath, string filePath)
         {
             int fileCount = Utilities.GetFileCount_All(folderPath);
             LogUtility.InitBar(fileCount);

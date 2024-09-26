@@ -1,4 +1,5 @@
-﻿using Log;
+﻿using ArcFormats.Templates;
+using Log;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -7,9 +8,9 @@ namespace ArcFormats.RPGMaker
 {
     public class RGSSAD
     {
-        public static UserControl PackExtraOptions = new Templates.VersionOnly("1");
+        public static UserControl PackExtraOptions = new VersionOnly("1");
 
-        public static void Unpack(string filePath, string folderPath)
+        public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -38,7 +39,7 @@ namespace ArcFormats.RPGMaker
             }
         }
 
-        public static void Pack(string folderPath, string filePath)
+        public void Pack(string folderPath, string filePath)
         {
             switch (Global.Version)
             {
@@ -67,7 +68,6 @@ namespace ArcFormats.RPGMaker
                 File.WriteAllBytes(fullPath, DecryptData(br.ReadBytes((int)size), new KeyGen(keygen.GetCurrent())));
                 fileCount++;
             }
-            LogUtility.Debug(fileCount + " files inside.");
             fs.Dispose();
             br.Dispose();
         }
@@ -100,9 +100,7 @@ namespace ArcFormats.RPGMaker
                 File.WriteAllBytes(fullPath, DecryptData(br.ReadBytes((int)fileSize), new KeyGen(thisKey)));
                 fs.Position = pos;
                 fileCount++;
-                //LogUtility.Debug(thisKey.ToString());
             }
-            LogUtility.Debug(fileCount + " files inside.");
             fs.Dispose();
             br.Dispose();
         }
@@ -124,6 +122,7 @@ namespace ArcFormats.RPGMaker
                 byte[] data = File.ReadAllBytes(file);
                 bw.Write((uint)data.Length ^ keygen.Compute());
                 bw.Write(DecryptData(data, new KeyGen(keygen.GetCurrent())));
+                LogUtility.UpdateBar();
             }
             bw.Dispose();
             fw.Dispose();
@@ -222,13 +221,13 @@ namespace ArcFormats.RPGMaker
         }
     }
 
-    public class RGSS2A:RGSSAD
+    public class RGSS2A : RGSSAD
     {
-
+        public static new UserControl PackExtraOptions = new VersionOnly("1");
     }
 
     public class RGSS3A : RGSSAD
     {
-
+        public static new UserControl PackExtraOptions = new VersionOnly("1");
     }
 }
