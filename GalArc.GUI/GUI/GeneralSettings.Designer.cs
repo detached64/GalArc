@@ -36,6 +36,8 @@
             // chkbxAutoSave
             // 
             resources.ApplyResources(this.chkbxAutoSave, "chkbxAutoSave");
+            this.chkbxAutoSave.Checked = true;
+            this.chkbxAutoSave.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkbxAutoSave.Name = "chkbxAutoSave";
             this.chkbxAutoSave.UseVisualStyleBackColor = true;
             this.chkbxAutoSave.CheckedChanged += new System.EventHandler(this.chkbxAutoSave_CheckedChanged);

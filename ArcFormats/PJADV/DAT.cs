@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using Utility;
 
 namespace ArcFormats.PJADV
 {
     public class DAT
     {
+        public static UserControl PackExtraOptions = new Templates.VersionOnly("1/2");
+
         private class Entry
         {
             public string name;
@@ -131,5 +134,9 @@ namespace ArcFormats.PJADV
                 key += 0x5C;
             }
         }
+    }
+    public class PAK:DAT
+    {
+
     }
 }

@@ -1,16 +1,19 @@
 ﻿using Log;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 
 namespace ArcFormats.RPGMaker
 {
-    public class RGSS
+    public class RGSSAD
     {
+        public static UserControl PackExtraOptions = new Templates.VersionOnly("1");
+
         public static void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            if (br.ReadUInt32() != 0x53534752) // 'RGSS'
+            if (br.ReadUInt32() != 0x53534752) // "RGSS"
             {
                 LogUtility.Error_NotValidArchive();
             }
@@ -217,5 +220,15 @@ namespace ArcFormats.RPGMaker
                 return m_seed;
             }
         }
+    }
+
+    public class RGSS2A:RGSSAD
+    {
+
+    }
+
+    public class RGSS3A : RGSSAD
+    {
+
     }
 }

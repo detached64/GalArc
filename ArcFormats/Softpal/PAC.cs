@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using Utility;
 
 namespace ArcFormats.Softpal
 {
     public class PAC
     {
+        public static UserControl PackExtraOptions = new Templates.VersionOnly("1/2");
+
         private static byte[] magicV2 = { 0x50, 0x41, 0x43, 0x20 };//"PAC "
         private struct Entry
         {

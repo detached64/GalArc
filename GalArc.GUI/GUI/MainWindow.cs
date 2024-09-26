@@ -1,4 +1,5 @@
-﻿using GalArc.Controller;
+﻿using ArcFormats.Templates;
+using GalArc.Controller;
 using GalArc.GUI;
 using GalArc.Properties;
 using GalArc.Resource;
@@ -48,8 +49,8 @@ namespace GalArc
 
             InitializeComponent();
 
-            LogUtility.Process += ChangeLabel;
-            LogUtility.ErrorOccured += ChangeLabel;
+            LogUtility.Process += ChangeStatus;
+            LogUtility.ErrorOccured += ChangeStatus;
 
             this.txtInputPath.DragEnter += new DragEventHandler(txtInputPath_DragEnter);
             this.txtInputPath.DragDrop += new DragEventHandler(txtInputPath_DragDrop);
@@ -61,6 +62,7 @@ namespace GalArc
         {
             this.combLang.Items.AddRange(Languages.languages.Keys.ToArray());
             this.TopMost = Settings.Default.TopMost;
+            LogWindow.Instance.TopMost = this.TopMost;
             this.combLang.Text = Languages.languages.FirstOrDefault(x => x.Value == LocalCulture).Key;
             if (Settings.Default.AutoSaveState)
             {
@@ -117,12 +119,13 @@ namespace GalArc
         {
             LogWindow.Instance.Dispose();
         }
+
         private void main_LocationChanged(object sender, EventArgs e)
         {
             LogWindow.Instance.ChangePosition(this.Location.X, this.Location.Y);
         }
 
-        private void ChangeLabel(object sender, string message)
+        private void ChangeStatus(object sender, string message)
         {
             this.lbStatus.Text = message;
         }
@@ -199,6 +202,7 @@ namespace GalArc
 
         private void chkbxUnpack_CheckedChanged(object sender, EventArgs e)
         {
+            this.gbOptions.Controls.Clear();
             if (this.chkbxUnpack.Checked)
             {
                 UpdateTreeUnpack();
@@ -213,6 +217,7 @@ namespace GalArc
 
         private void chkbxPack_CheckedChanged(object sender, EventArgs e)
         {
+            this.gbOptions.Controls.Clear();
             if (this.chkbxPack.Checked)
             {
                 UpdateTreePack();
@@ -225,25 +230,61 @@ namespace GalArc
             }
         }
 
-        private void treeViewEngines_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void treeViewEngines_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Parent != null)
             {
-                LogUtility.InfoRevoke($"{e.Node.Parent.Text} {e.Node.Text} selected.");
                 if (this.chkbxUnpack.Checked)
                 {
+                    if (Settings.Default.AutoSaveState)
+                    {
+                        Settings.Default.UnpackSelectedNode0 = e.Node.Parent.Index;
+                        Settings.Default.UnpackSelectedNode1 = e.Node.Index;
+                        Settings.Default.Save();
+                    }
                     selectedNodeUnpack = e.Node;
                     selectedEngineInfo_Unpack = EngineInfos.engineInfos.Where(x => x.EngineName == e.Node.Parent.Text).FirstOrDefault();
+                    chkbxMatch_CheckedChanged(null, null);
+                    GetExtraOptions(selectedNodeUnpack, "UnpackExtraOptions");
+                    LogUtility.InfoRevoke($"Unpack: {e.Node.Parent.Text} {e.Node.Text} selected.");
+                }
+                else if (this.chkbxPack.Checked)
+                {
+                    if (Settings.Default.AutoSaveState)
+                    {
+                        Settings.Default.PackSelectedNode0 = e.Node.Parent.Index;
+                        Settings.Default.PackSelectedNode1 = e.Node.Index;
+                        Settings.Default.Save();
+                    }
+                    selectedNodePack = e.Node;
+                    selectedEngineInfo_Pack = EngineInfos.engineInfos.Where(x => x.EngineName == e.Node.Parent.Text).FirstOrDefault();
+                    chkbxMatch_CheckedChanged(null, null);
+                    GetExtraOptions(selectedNodePack, "PackExtraOptions");
+                    LogUtility.InfoRevoke($"Pack: {e.Node.Parent.Text} {e.Node.Text} selected.");
+                }
+            }
+        }
+
+        private void GetExtraOptions(TreeNode node, string fieldName)
+        {
+            string[] infos = node.FullPath.Split('/');
+            Assembly assembly = Assembly.Load("ArcFormats");
+            Type type = assembly.GetType($"ArcFormats.{infos[0]}.{infos[1]}");
+            this.gbOptions.Controls.Clear();
+            if (type != null)
+            {
+                FieldInfo fieldInfo = type.GetField(fieldName);
+                UserControl userControl = null;
+                if (fieldInfo != null)
+                {
+                    userControl = fieldInfo.GetValue(null) as UserControl;
                 }
                 else
                 {
-                    selectedNodePack = e.Node;
-                    selectedEngineInfo_Pack = EngineInfos.engineInfos.Where(x => x.EngineName == e.Node.Parent.Text).FirstOrDefault();
-                    if (selectedEngineInfo_Pack != null)
-                    {
-                        UpdateContent.UpdatePackVersion();
-                    }
+                    userControl = new Empty();
                 }
+                this.gbOptions.Controls.Add(userControl);
+                userControl.Dock = DockStyle.Fill;
             }
         }
 
@@ -378,6 +419,13 @@ namespace GalArc
                     this.treeViewEngines.Nodes.Add(rootNode);
                 }
             }
+            if (Settings.Default.AutoSaveState)
+            {
+                TreeNode node0 = treeViewEngines.Nodes[Settings.Default.UnpackSelectedNode0];
+                TreeNode node1 = node0.Nodes[Settings.Default.UnpackSelectedNode1];
+                node1.EnsureVisible();
+                treeViewEngines.SelectedNode = node1;
+            }
         }
 
         private void UpdateTreePack()
@@ -407,6 +455,13 @@ namespace GalArc
                     }
                 }
             }
+            if (Settings.Default.AutoSaveState)
+            {
+                TreeNode node0 = treeViewEngines.Nodes[Settings.Default.PackSelectedNode0];
+                TreeNode node1 = node0.Nodes[Settings.Default.PackSelectedNode1];
+                node1.EnsureVisible();
+                treeViewEngines.SelectedNode = node1;
+            }
         }
 
         private void chkbxShowLog_SizeChanged(object sender, EventArgs e)
@@ -421,6 +476,11 @@ namespace GalArc
 
         private void btExecute_Click(object sender, EventArgs e)
         {
+            if (this.treeViewEngines.SelectedNode == null || this.treeViewEngines.SelectedNode.Parent == null)
+            {
+                LogUtility.Error("Please select engine and format.", false);
+                return;
+            }
             if (this.chkbxUnpack.Checked)
             {
                 if (string.IsNullOrEmpty(this.txtInputPath.Text))
@@ -457,6 +517,47 @@ namespace GalArc
                     LogWindow.Instance.bar.Value = 0;
                 }
             }
+            else if (this.chkbxPack.Checked)
+            {
+                if (string.IsNullOrEmpty(this.txtInputPath.Text))
+                {
+                    LogUtility.Error("Please specify input folder path.", false);
+                    return;
+                }
+                if (string.IsNullOrEmpty(this.txtOutputPath.Text))
+                {
+                    LogUtility.Error("Please specify output file path.", false);
+                    return;
+                }
+                if (!Directory.Exists(this.txtInputPath.Text))
+                {
+                    LogUtility.Error("Folder specified does not exist.", false);
+                    return;
+                }
+                try
+                {
+                    Execute.InitPack(this.txtInputPath.Text, this.txtOutputPath.Text);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException == null)
+                    {
+                        LogUtility.Error(ex.Message, false);
+                        LogUtility.Debug(ex.ToString());
+                    }
+                    else
+                    {
+                        LogUtility.Error(ex.InnerException.Message, false);
+                        LogUtility.Debug(ex.InnerException.ToString());
+                    }
+                    LogWindow.Instance.bar.Value = 0;
+                }
+            }
+            else
+            {
+                LogUtility.Error("Please select operation.", false);
+                return;
+            }
         }
 
         private void chkbxShowLog_CheckedChanged(object sender, EventArgs e)
@@ -470,5 +571,6 @@ namespace GalArc
                 Settings.Default.Save();
             }
         }
+
     }
 }

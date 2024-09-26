@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using Utility;
 
 namespace ArcFormats.BiShop
 {
     public class BSA
     {
+        public static UserControl PackExtraOptions = new Templates.VersionOnly("1/2");
+
         private static byte[] magic = { 0x42, 0x53, 0x41, 0x72, 0x63, 0x00, 0x00, 0x00 };
 
         private static List<string> m_path = new List<string> { };

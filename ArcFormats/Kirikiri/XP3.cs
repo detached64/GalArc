@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using Utility;
 using Utility.Compression;
 
@@ -9,6 +10,8 @@ namespace ArcFormats.Kirikiri
 {
     public class XP3
     {
+        public static UserControl PackExtraOptions = new Templates.VersionOnly("1/2");
+
         private struct Header
         {
             internal static byte[] magic = { 0x58, 0x50, 0x33, 0x0d, 0x0a, 0x20, 0x0a, 0x1a, 0x8b, 0x67, 0x01 };

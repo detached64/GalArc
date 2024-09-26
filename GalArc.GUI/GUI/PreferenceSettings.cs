@@ -32,7 +32,7 @@ namespace GalArc.GUI
         {
             Properties.Settings.Default.DefaultEncoding = this.combEncoding.Text;
             Properties.Settings.Default.Save();
-            ArcFormats.Global.UnpackEncoding = Encoding.GetEncoding(Encodings.CodePages[this.combEncoding.Text]);
+            ArcFormats.Global.Encoding = Encoding.GetEncoding(Encodings.CodePages[this.combEncoding.Text]);
         }
 
         private void chkbxTryDecScr_CheckedChanged(object sender, EventArgs e)

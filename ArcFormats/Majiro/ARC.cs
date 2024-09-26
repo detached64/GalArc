@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 using Utility;
 
 namespace ArcFormats.Majiro
 {
     public class ARC
     {
+        public static UserControl PackExtraOptions = new Templates.VersionOnly("1/2");
+
         private static readonly string magicV1 = "MajiroArcV1.000\x00";
 
         private static readonly string magicV2 = "MajiroArcV2.000\x00";

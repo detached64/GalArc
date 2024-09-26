@@ -2,12 +2,15 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 using Utility;
 
 namespace ArcFormats.SystemNNN
 {
     public class GPK
     {
+        public static UserControl PackExtraOptions = new Templates.VersionOnly("1/2");
+
         private struct SystemNNN_gtb_entry
         {
             public uint size { get; set; }

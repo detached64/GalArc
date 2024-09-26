@@ -3,12 +3,15 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using Utility;
 
 namespace ArcFormats.Cmvs
 {
     public class CPZ
     {
+        public static UserControl PackExtraOptions = new Templates.VersionOnly("1");
+
         static byte[] KeyV1 =
         {
             0x92, 0xCD, 0x97, 0x90, 0x8C, 0xD7, 0x8C, 0xD5, 0x8B, 0x4B, 0x93, 0xFA, 0x9A, 0xD7, 0x8C, 0xBF,
