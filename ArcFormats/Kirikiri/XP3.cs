@@ -10,7 +10,7 @@ namespace ArcFormats.Kirikiri
 {
     public class XP3
     {
-        public static UserControl PackExtraOptions = new Templates.VersionOnly("1/2");
+        public static UserControl PackExtraOptions = new PackXP3Options("1/2");
 
         private struct Header
         {
@@ -156,7 +156,7 @@ NextEntry:      ms.Position = nextPos;
             Stream xp3Stream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
             BinaryWriter bw = new BinaryWriter(xp3Stream);
             bw.Write(Header.magic);
-            if (Global.Version == "2")
+            if (PackXP3Options.version == "2")
             {
                 bw.Write((long)0x17);
                 bw.Write(1);
@@ -173,7 +173,16 @@ NextEntry:      ms.Position = nextPos;
             foreach (FileInfo f in d.GetFiles("*", SearchOption.AllDirectories))
             {
                 long offset = xp3Stream.Position;
-                Zlib.AppendCompressedFile(xp3Stream, f.FullName, out long originalSize, out long compressedSize);
+                long originalSize = f.Length;
+                long compressedSize = originalSize;
+                if (PackXP3Options.CompressContents)
+                {
+                    Zlib.AppendCompressedFile(xp3Stream, f.FullName, out originalSize, out compressedSize);
+                }
+                else
+                {
+                    bw.Write(File.ReadAllBytes(f.FullName));
+                }
                 //File
                 bwEntry.Write(Encoding.ASCII.GetBytes("File"));
                 string thisFilePath = f.FullName.Substring(folderPath.Length + 1).Replace("\\", "/");
@@ -182,17 +191,16 @@ NextEntry:      ms.Position = nextPos;
                 bwEntry.Write(Encoding.ASCII.GetBytes("info"));
                 bwEntry.Write((long)(22 + 2 * thisFilePath.Length));
                 bwEntry.Write(0);           //no crypt
-                bwEntry.Write(f.Length);
+                bwEntry.Write(originalSize);
                 bwEntry.Write(compressedSize);
                 bwEntry.Write((ushort)thisFilePath.Length);
                 bwEntry.Write(Encoding.Unicode.GetBytes(thisFilePath));
                 //segment
                 bwEntry.Write(Encoding.ASCII.GetBytes("segm"));
                 bwEntry.Write((long)0x1c);  //fixed
-                bwEntry.Write(1);
+                bwEntry.Write(compressedSize == originalSize ? 0 : 1);
                 bwEntry.Write(offset);
-                offset += compressedSize;
-                bwEntry.Write(f.Length);
+                bwEntry.Write(originalSize);
                 bwEntry.Write(compressedSize);
                 //adler
                 bwEntry.Write(Encoding.ASCII.GetBytes("adlr"));
@@ -200,19 +208,33 @@ NextEntry:      ms.Position = nextPos;
                 bwEntry.Write(0);
                 LogUtility.UpdateBar();
             }
-            bw.Write((byte)1);          //1     compress index
+
+            long indexOffset = 0;
             long uncomLen = ms.Length;
-            byte[] compressedIndex = Zlib.CompressBytes(ms.ToArray());
-            long comLen = compressedIndex.Length;
-            bw.Write(comLen);           //8
-            bw.Write(uncomLen);         //8
-            bw.Write(compressedIndex);
-            //index offset
-            long indexOffset = xp3Stream.Length - 8 - 1 - 8 - comLen;
-            xp3Stream.Position = Global.Version == "1" ? Header.magic.Length : 32;
+            if (PackXP3Options.CompressIndex)
+            {
+                bw.Write((byte)1);
+                byte[] compressedIndex = Zlib.CompressBytes(ms.ToArray());
+                long comLen = compressedIndex.Length;
+                bw.Write(comLen);           //8
+                bw.Write(uncomLen);         //8
+                bw.Write(compressedIndex);
+                indexOffset = xp3Stream.Length - 8 - 1 - 8 - comLen;
+            }
+            else
+            {
+                bw.Write((byte)0);
+                bw.Write(uncomLen);
+                bw.Write(ms.ToArray());
+                indexOffset = xp3Stream.Length - 8 - 1 - uncomLen;
+            }
+            xp3Stream.Position = PackXP3Options.version == "1" ? Header.magic.Length : 32;
             bw.Write(indexOffset);
 
+            ms.Dispose();
+            bwEntry.Dispose();
             xp3Stream.Dispose();
+            bw.Dispose();
         }
     }
 }
