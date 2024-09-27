@@ -63,6 +63,12 @@
     <Compile Include="InnocentGrey\DAT.cs" />
     <Compile Include="InnocentGrey\IGA.cs" />
     <Compile Include="KID\DAT.cs" />
+    <Compile Include="Kirikiri\PackXP3Options.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Kirikiri\PackXP3Options.Designer.cs">
+      <DependentUpon>PackXP3Options.cs</DependentUpon>
+    </Compile>
     <Compile Include="Kirikiri\XP3.cs" />
     <Compile Include="Majiro\ARC.cs" />
     <Compile Include="NeXAS\PAC.cs" />
@@ -109,6 +115,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Kirikiri\PackXP3Options.resx">
+      <DependentUpon>PackXP3Options.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kirikiri\PackXP3Options.zh-Hans.resx">
+      <DependentUpon>PackXP3Options.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

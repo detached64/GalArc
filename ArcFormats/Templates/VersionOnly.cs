@@ -5,6 +5,10 @@ namespace ArcFormats.Templates
 {
     public partial class VersionOnly : UserControl
     {
+        public VersionOnly()
+        {
+            InitializeComponent();
+        }
         public VersionOnly(string versions)
         {
             InitializeComponent();
