@@ -36,7 +36,6 @@ namespace GalArc.Controller
 
         internal static void ExportSettings()
         {
-            Global.ToDecryptScript = Settings.Default.chkbxDecScr_checked;
             Global.Encoding = Encoding.GetEncoding(Encodings.CodePages[Settings.Default.DefaultEncoding]);
         }
 

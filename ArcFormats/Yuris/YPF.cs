@@ -1,8 +1,10 @@
-﻿using Log;
+﻿using ArcFormats.Properties;
+using Log;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using Utility;
 using Utility.Compression;
 
@@ -10,6 +12,8 @@ namespace ArcFormats.Yuris
 {
     public class YPF
     {
+        public static UserControl UnpackExtraOptions = new UnpackYPFOptions();
+
         internal class Entry
         {
             public int nameLen;
@@ -31,19 +35,19 @@ namespace ArcFormats.Yuris
             public byte[] scriptKeyBytes;
         }
 
-        static List<Entry> entries = new List<Entry>();
-        static Scheme scheme = new Scheme();
+        private static List<Entry> entries = new List<Entry>();
+        private static Scheme scheme = new Scheme();
 
-        static bool isFirstGuessYpf = true;
-        static bool isFirstGuessYst = true;
-        static string FolderPath { get; set; }
+        private static bool isFirstGuessYpf = true;
+        private static bool isFirstGuessYst = true;
+        private static string FolderPath { get; set; }
 
         // most freqently used combination (as far as I guess) : table3 , extraLen = 8
-        static readonly byte[] Table1 = { 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
-        static readonly byte[] Table2 = { 0x0C, 0x10, 0x11, 0x19, 0x1C, 0x1E, 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
-        static readonly byte[] Table3 = { 0x03, 0x48, 0x06, 0x35, 0x0C, 0x10, 0x11, 0x19, 0x1C, 0x1E, 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
-        static readonly List<byte[]> tables = new List<byte[]> { Table3, Table2, Table1 };
-        static readonly List<int> extraLens = new List<int> { 8, 4 };
+        private static readonly byte[] Table1 = { 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
+        private static readonly byte[] Table2 = { 0x0C, 0x10, 0x11, 0x19, 0x1C, 0x1E, 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
+        private static readonly byte[] Table3 = { 0x03, 0x48, 0x06, 0x35, 0x0C, 0x10, 0x11, 0x19, 0x1C, 0x1E, 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
+        private static readonly List<byte[]> tables = new List<byte[]> { Table3, Table2, Table1 };
+        private static readonly List<int> extraLens = new List<int> { 8, 4 };
 
         public void Unpack(string filePath, string folderPath)
         {
@@ -79,9 +83,9 @@ namespace ArcFormats.Yuris
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(entry.filePath));
                 }
-                if (Global.ToDecryptScript && Path.GetExtension(entry.filePath) == ".ybn" && BitConverter.ToUInt32(entry.fileData, 0) == 0x42545359)
+                if (UnpackYPFOptions.toDecryptScripts && Path.GetExtension(entry.filePath) == ".ybn" && BitConverter.ToUInt32(entry.fileData, 0) == 0x42545359)
                 {
-                    LogUtility.Debug("Try to decrypt script:" + entry.fileName);
+                    LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.fileName));
                     entry.fileData = TryDecryptScript(entry.fileData);
                 }
                 File.WriteAllBytes(entry.filePath, entry.fileData);
@@ -179,7 +183,7 @@ namespace ArcFormats.Yuris
                 catch
                 {
                     isFirstGuessYst = true;
-                    LogUtility.Error("Decryption failed.", false);
+                    LogUtility.Error(Resources.logErrorDecScrFailed, false);
                     return script;
                 }
             }

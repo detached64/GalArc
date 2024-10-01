@@ -117,13 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="logUnpackMethodNotFound" xml:space="preserve">
+  <data name="logErrorUnpackMethodNotFound" xml:space="preserve">
     <value>错误：对应的解包方法未找到。</value>
   </data>
-  <data name="logPackMethodNotFound" xml:space="preserve">
+  <data name="logErrorPackMethodNotFound" xml:space="preserve">
     <value>错误：对应的封包方法未找到。</value>
   </data>
-  <data name="logClassNotFound" xml:space="preserve">
+  <data name="logErrorClassNotFound" xml:space="preserve">
     <value>错误：对应的类未找到。</value>
+  </data>
+  <data name="logTryDecScr" xml:space="preserve">
+    <value>尝试解密：{0}……</value>
+  </data>
+  <data name="logErrorDecScrFailed" xml:space="preserve">
+    <value>解密失败。</value>
   </data>
 </root>

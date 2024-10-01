@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PreferenceSettings));
             this.lbDefaultEncoding = new System.Windows.Forms.Label();
             this.combEncoding = new System.Windows.Forms.ComboBox();
-            this.chkbxTryDecScr = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lbDefaultEncoding
@@ -47,18 +46,10 @@
             this.combEncoding.Name = "combEncoding";
             this.combEncoding.SelectedIndexChanged += new System.EventHandler(this.combEncoding_SelectedIndexChanged);
             // 
-            // chkbxTryDecScr
-            // 
-            resources.ApplyResources(this.chkbxTryDecScr, "chkbxTryDecScr");
-            this.chkbxTryDecScr.Name = "chkbxTryDecScr";
-            this.chkbxTryDecScr.UseVisualStyleBackColor = true;
-            this.chkbxTryDecScr.CheckedChanged += new System.EventHandler(this.chkbxTryDecScr_CheckedChanged);
-            // 
             // PreferenceSettings
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.chkbxTryDecScr);
             this.Controls.Add(this.combEncoding);
             this.Controls.Add(this.lbDefaultEncoding);
             this.Name = "PreferenceSettings";
@@ -72,6 +63,5 @@
 
         private System.Windows.Forms.Label lbDefaultEncoding;
         internal System.Windows.Forms.ComboBox combEncoding;
-        private System.Windows.Forms.CheckBox chkbxTryDecScr;
     }
 }

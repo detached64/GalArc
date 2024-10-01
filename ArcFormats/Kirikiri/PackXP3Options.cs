@@ -5,7 +5,7 @@ namespace ArcFormats.Kirikiri
 {
     public partial class PackXP3Options : UserControl
     {
-        internal static string version;
+        internal static string Version;
 
         internal static bool CompressIndex = true;
 
@@ -23,7 +23,7 @@ namespace ArcFormats.Kirikiri
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            version = this.combVersion.Text;
+            Version = this.combVersion.Text;
         }
 
         private void chkbxComIndex_CheckedChanged(object sender, EventArgs e)

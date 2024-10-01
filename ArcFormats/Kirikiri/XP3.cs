@@ -156,7 +156,7 @@ NextEntry:      ms.Position = nextPos;
             Stream xp3Stream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
             BinaryWriter bw = new BinaryWriter(xp3Stream);
             bw.Write(Header.magic);
-            if (PackXP3Options.version == "2")
+            if (PackXP3Options.Version == "2")
             {
                 bw.Write((long)0x17);
                 bw.Write(1);
@@ -228,7 +228,7 @@ NextEntry:      ms.Position = nextPos;
                 bw.Write(ms.ToArray());
                 indexOffset = xp3Stream.Length - 8 - 1 - uncomLen;
             }
-            xp3Stream.Position = PackXP3Options.version == "1" ? Header.magic.Length : 32;
+            xp3Stream.Position = PackXP3Options.Version == "1" ? Header.magic.Length : 32;
             bw.Write(indexOffset);
 
             ms.Dispose();

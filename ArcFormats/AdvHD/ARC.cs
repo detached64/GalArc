@@ -1,6 +1,9 @@
-﻿using Log;
+﻿using ArcFormats.Properties;
+using ArcFormats.Templates;
+using Log;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using Utility;
@@ -9,7 +12,9 @@ namespace ArcFormats.AdvHD
 {
     public class ARC
     {
-        public static UserControl PackExtraOptions = new Templates.VersionOnly("1/2");
+        public static UserControl UnpackExtraOptions = new UnpackARCOptions();
+
+        public static UserControl PackExtraOptions = new VersionOnly("1/2");
 
         private struct HeaderV1
         {
@@ -66,9 +71,9 @@ namespace ArcFormats.AdvHD
                     index.filePath = Path.Combine(folderPath, index.fileName);
                     fs.Seek(index.offset, SeekOrigin.Begin);
                     byte[] buffer = br.ReadBytes((int)index.fileSize);
-                    if (Global.ToDecryptScript && IsScriptFile(Path.GetExtension(index.filePath), "1"))
+                    if (UnpackARCOptions.toDecryptScripts && IsScriptFile(Path.GetExtension(index.filePath), "1"))
                     {
-                        LogUtility.Debug("Try to decrypt script:" + index.fileName);
+                        LogUtility.Debug(string.Format(Resources.logTryDecScr, index.fileName));
                         DecryptScript(buffer);
                     }
                     File.WriteAllBytes(index.filePath, buffer);
@@ -186,9 +191,9 @@ namespace ArcFormats.AdvHD
             for (int i = 0; i < header.fileCount; i++)
             {
                 byte[] buffer = br1.ReadBytes((int)l[i].fileSize);
-                if (Global.ToDecryptScript && IsScriptFile(Path.GetExtension(l[i].filePath), "2"))
+                if (UnpackARCOptions.toDecryptScripts && IsScriptFile(Path.GetExtension(l[i].filePath), "2"))
                 {
-                    LogUtility.Debug("Try to decrypt script:" + l[i].fileName);
+                    LogUtility.Debug(string.Format(Resources.logTryDecScr, l[i].fileName));
                     DecryptScript(buffer);
                 }
                 File.WriteAllBytes(l[i].filePath, buffer);

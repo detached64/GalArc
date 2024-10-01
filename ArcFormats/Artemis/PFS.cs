@@ -1,4 +1,5 @@
-﻿using Log;
+﻿using ArcFormats.Templates;
+using Log;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +14,7 @@ namespace ArcFormats.Artemis
 {
     public class PFS
     {
-        public static UserControl PackExtraOptions = new Templates.VersionOnly("8/6/2");
+        public static UserControl PackExtraOptions = new VersionOnly("8/6/2");
 
         private struct Header
         {
@@ -48,7 +49,7 @@ namespace ArcFormats.Artemis
             {
                 LogUtility.Error_NotValidArchive();
             }
-            header.Version = Encoding.ASCII.GetString(br.ReadBytes(1));
+            header.Version = br.ReadByte().ToString();
 
             switch (header.Version)
             {
@@ -113,7 +114,7 @@ namespace ArcFormats.Artemis
                     {
                         Entry entry = new Entry();
                         entry.pathLen = (int)br.ReadUInt32();
-                        entry.filePath = folderPath + "/" + Global.Encoding.GetString(br.ReadBytes(entry.pathLen)).Replace("\\", "/");
+                        entry.filePath = folderPath + "\\" + Global.Encoding.GetString(br.ReadBytes(entry.pathLen));
                         br.ReadUInt32();//0x10000000
                         br.ReadUInt32();//0x00000000
                         br.ReadUInt32();//0x00000000
@@ -146,7 +147,7 @@ namespace ArcFormats.Artemis
                     {
                         Entry entry = new Entry();
                         entry.pathLen = br.ReadInt32();
-                        entry.filePath = folderPath + "/" + Global.Encoding.GetString(br.ReadBytes(entry.pathLen)).Replace("\\", "/");
+                        entry.filePath = folderPath + "\\" + Global.Encoding.GetString(br.ReadBytes(entry.pathLen));
                         br.ReadUInt32(); // skip 4 unused bytes:0x00000000
                         entry.Offset = br.ReadUInt32();
                         entry.Size = br.ReadUInt32();

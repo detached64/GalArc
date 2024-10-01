@@ -1,4 +1,6 @@
-﻿using Log;
+﻿using ArcFormats.Properties;
+using ArcFormats.Templates;
+using Log;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +13,9 @@ namespace ArcFormats.Softpal
 {
     public class PAC
     {
-        public static UserControl PackExtraOptions = new Templates.VersionOnly("1/2");
+        public static UserControl UnpackExtraOptions = new UnpackPACOptions();
+
+        public static UserControl PackExtraOptions = new VersionOnly("1/2");
 
         private static byte[] magicV2 = { 0x50, 0x41, 0x43, 0x20 };//"PAC "
         private struct Entry
@@ -61,16 +65,16 @@ namespace ArcFormats.Softpal
             for (int i = 0; i < fileCount; i++)
             {
                 byte[] data = br.ReadBytes((int)entries[i].fileSize);
-                if (Global.ToDecryptScript && data.Length >= 16 && data[0] == 36)  //'$'
+                if (UnpackPACOptions.toDecryptScripts && data.Length >= 16 && data[0] == 36)  //'$'
                 {
                     try
                     {
-                        LogUtility.Debug($"Try to decrypt script:{entries[i].fileName}");
+                        LogUtility.Debug(string.Format(Resources.logTryDecScr, entries[i].fileName));
                         DecryptScript(data);
                     }
                     catch
                     {
-                        LogUtility.Error($"Decrypting {entries[i].fileName} failed.", false);
+                        LogUtility.Error(Resources.logErrorDecScrFailed, false);
                     }
                 }
                 File.WriteAllBytes(folderPath + "\\" + entries[i].fileName, data);
@@ -101,16 +105,16 @@ namespace ArcFormats.Softpal
                 long pos = fs.Position;
                 fs.Position = entry.offset;
                 byte[] fileData = br.ReadBytes((int)entry.fileSize);
-                if (Global.ToDecryptScript && fileData.Length >= 16 && fileData[0] == 36)  //'$'
+                if (UnpackPACOptions.toDecryptScripts && fileData.Length >= 16 && fileData[0] == 36)  //'$'
                 {
                     try
                     {
-                        LogUtility.Debug($"Try to decrypt script:{entry.fileName}");
+                        LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.fileName));
                         DecryptScript(fileData);
                     }
                     catch
                     {
-                        LogUtility.Error($"Decrypting {entry.fileName} failed.", false);
+                        LogUtility.Error(Resources.logErrorDecScrFailed, false);
                     }
                 }
 
