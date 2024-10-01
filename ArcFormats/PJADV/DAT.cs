@@ -1,9 +1,11 @@
-﻿using ArcFormats.Templates;
+﻿using ArcFormats.Properties;
+using ArcFormats.Templates;
 using Log;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using Utility;
@@ -12,6 +14,8 @@ namespace ArcFormats.PJADV
 {
     public class DAT
     {
+        public static UserControl UnpackExtraOptions = new UnpackDATOptions();
+
         public static UserControl PackExtraOptions = new VersionOnly("1/2");
 
         private class Entry
@@ -71,9 +75,9 @@ namespace ArcFormats.PJADV
             {
                 fs.Position = entry.offset;
                 byte[] buffer = br.ReadBytes((int)entry.size);
-                if (Global.ToDecryptScript && entry.name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(new byte[] { 0x95, 0x6b, 0x3c, 0x9d, 0x63 }))
+                if (UnpackDATOptions.toDecryptScripts && entry.name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(new byte[] { 0x95, 0x6b, 0x3c, 0x9d, 0x63 }))
                 {
-                    LogUtility.Debug("Try to decrypt script:" + entry.name);
+                    LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.name));
                     DecryptScript(buffer);
                 }
                 File.WriteAllBytes(entry.path, buffer);

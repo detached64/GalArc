@@ -1,5 +1,4 @@
-﻿using GalArc.Properties;
-using Log;
+﻿using Log;
 using System;
 using System.IO;
 using System.Net;

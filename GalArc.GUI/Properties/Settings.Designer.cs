@@ -73,18 +73,6 @@ namespace GalArc.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool chkbxDecScr_checked {
-            get {
-                return ((bool)(this["chkbxDecScr_checked"]));
-            }
-            set {
-                this["chkbxDecScr_checked"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool chkbxUnpack_checked {
             get {

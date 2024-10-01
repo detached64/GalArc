@@ -15,7 +15,6 @@ namespace ArcFormats
         private static string typeString = null;
 
         public static Encoding Encoding = ArcEncoding.Shift_JIS;
-        public static bool ToDecryptScript = false;
 
         public static string Version = null;
 
@@ -48,12 +47,12 @@ namespace ArcFormats
                 }
                 else
                 {
-                    LogUtility.Error(Resources.logUnpackMethodNotFound);
+                    LogUtility.Error(Resources.logErrorUnpackMethodNotFound);
                 }
             }
             else
             {
-                throw new Exception(Resources.logClassNotFound);
+                throw new Exception(Resources.logErrorClassNotFound);
             }
         }
 
@@ -78,12 +77,12 @@ namespace ArcFormats
                 }
                 else
                 {
-                    LogUtility.Error(Resources.logPackMethodNotFound);
+                    LogUtility.Error(Resources.logErrorPackMethodNotFound);
                 }
             }
             else
             {
-                throw new Exception(Resources.logClassNotFound);
+                throw new Exception(Resources.logErrorClassNotFound);
             }
         }
     }

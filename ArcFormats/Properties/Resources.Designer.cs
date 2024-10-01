@@ -63,27 +63,45 @@ namespace ArcFormats.Properties {
         /// <summary>
         ///   查找类似 Error: Specified class not found. 的本地化字符串。
         /// </summary>
-        internal static string logClassNotFound {
+        internal static string logErrorClassNotFound {
             get {
-                return ResourceManager.GetString("logClassNotFound", resourceCulture);
+                return ResourceManager.GetString("logErrorClassNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Decryption failed. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorDecScrFailed {
+            get {
+                return ResourceManager.GetString("logErrorDecScrFailed", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Error: Specified pack method not found. 的本地化字符串。
         /// </summary>
-        internal static string logPackMethodNotFound {
+        internal static string logErrorPackMethodNotFound {
             get {
-                return ResourceManager.GetString("logPackMethodNotFound", resourceCulture);
+                return ResourceManager.GetString("logErrorPackMethodNotFound", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Error: Specified unpack method not found. 的本地化字符串。
         /// </summary>
-        internal static string logUnpackMethodNotFound {
+        internal static string logErrorUnpackMethodNotFound {
             get {
-                return ResourceManager.GetString("logUnpackMethodNotFound", resourceCulture);
+                return ResourceManager.GetString("logErrorUnpackMethodNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Try to decrypt: {0}…… 的本地化字符串。
+        /// </summary>
+        internal static string logTryDecScr {
+            get {
+                return ResourceManager.GetString("logTryDecScr", resourceCulture);
             }
         }
     }

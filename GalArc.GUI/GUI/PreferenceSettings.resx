@@ -144,7 +144,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbDefaultEncoding.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="combEncoding.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
@@ -169,33 +169,6 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;combEncoding.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="chkbxTryDecScr.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkbxTryDecScr.Location" type="System.Drawing.Point, System.Drawing">
-    <value>62, 173</value>
-  </data>
-  <data name="chkbxTryDecScr.Size" type="System.Drawing.Size, System.Drawing">
-    <value>219, 28</value>
-  </data>
-  <data name="chkbxTryDecScr.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="chkbxTryDecScr.Text" xml:space="preserve">
-    <value>Try to decrypt scripts</value>
-  </data>
-  <data name="&gt;&gt;chkbxTryDecScr.Name" xml:space="preserve">
-    <value>chkbxTryDecScr</value>
-  </data>
-  <data name="&gt;&gt;chkbxTryDecScr.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkbxTryDecScr.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;chkbxTryDecScr.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
