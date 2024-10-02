@@ -1,66 +1,59 @@
-﻿using Log;
+﻿using GalArc.Properties;
+using Log;
 using System;
-using System.IO;
-using System.Net;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GalArc.Controller
 {
     internal class UpdateVersion
     {
+        private static readonly HttpClient httpClient = new HttpClient();
 
-        internal static string currentVersion = Resource.Version.CurrentVer;
+        private static readonly string url = "https://pastebin.com/raw/4pvccgbk";
+
+        internal static readonly string currentVersion = Resource.Version.CurrentVer;
 
         internal static string latestVersion;
 
-        private const string versionPath = "version.txt";
-
-        private const string versionUrl = "https://pastebin.com/raw/4pvccgbk";
-
         internal static bool isNewVerExist = false;
 
-        internal static void DownloadVersion()
-        {
-            if (File.Exists(versionPath))
-            {
-                File.Delete(versionPath);
-            }
 
-            try
+        public async Task DownloadFileAsync()
+        {
+            LogUtility.ShowCheckingUpdate();
+            using (var cts = new CancellationTokenSource())
             {
-                using (WebClient webClient = new WebClient())
+                cts.CancelAfter(10000);     // 10s
+                try
                 {
-                    webClient.DownloadFile(versionUrl, versionPath);
+                    latestVersion = await DownloadContentAsync(cts.Token);
+                    CompareVersion(latestVersion);
+                }
+                catch (OperationCanceledException)
+                {
+                    LogUtility.Error(Resources.logTimedOut, false);
+                }
+                catch (Exception)
+                {
+                    LogUtility.ShowCheckError();
                 }
             }
-            catch (Exception)
-            {
-                LogUtility.ShowCheckError();
-            }
+            LogUtility.ShowCheckSuccess(isNewVerExist);
         }
-        internal static string OpenVersion()
+
+        private async Task<string> DownloadContentAsync(CancellationToken cancellationToken)
         {
-            if (!File.Exists(versionPath))
-            {
-                return "Unknown";
-            }
-            else
-            {
-                latestVersion = File.ReadAllText(versionPath);
-                return latestVersion;
-            }
+            var response = await httpClient.GetAsync(url, cancellationToken);
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsStringAsync();
         }
-        internal static void CompareVersion(string latestVersion)
+
+        private void CompareVersion(string latestVersion)
         {
             isNewVerExist = false;
-            if (latestVersion == "Unknown" || !latestVersion.Contains("."))
-            {
-                return;
-            }
-            if (File.Exists(versionPath))
-            {
-                File.Delete(versionPath);
-            }
 
             string[] parts1 = currentVersion.Split('.');
             string[] parts2 = latestVersion.Split('.');
@@ -79,15 +72,6 @@ namespace GalArc.Controller
                     break;
                 }
             }
-        }
-
-        internal static async Task UpdateProgram()
-        {
-            await Task.Run(() =>
-            {
-                DownloadVersion();
-                CompareVersion(OpenVersion());
-            });
         }
     }
 }

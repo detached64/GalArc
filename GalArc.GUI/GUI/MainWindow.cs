@@ -11,6 +11,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GalArc
@@ -162,22 +164,8 @@ namespace GalArc
 
         private async void checkUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                LogUtility.ShowCheckingUpdate();
-                await UpdateVersion.UpdateProgram();
-            }
-            catch
-            {
-                LogUtility.ShowCheckError();
-                return;
-            }
-            LogUtility.ShowCheckSuccess(UpdateVersion.isNewVerExist);
-            if (UpdateVersion.isNewVerExist)
-            {
-                UpdateBox box = new UpdateBox();
-                box.ShowDialog();
-            }
+            var downloader = new UpdateVersion();
+            await downloader.DownloadFileAsync();
         }
 
         private void combLang_SelectedIndexChanged(object sender, EventArgs e)
