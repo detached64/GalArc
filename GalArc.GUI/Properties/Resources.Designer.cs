@@ -115,6 +115,15 @@ namespace GalArc.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Timed out. 的本地化字符串。
+        /// </summary>
+        internal static string logTimedOut {
+            get {
+                return ResourceManager.GetString("logTimedOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 General 的本地化字符串。
         /// </summary>
         internal static string nodeGeneral {

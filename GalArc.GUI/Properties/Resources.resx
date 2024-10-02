@@ -141,4 +141,7 @@
   <data name="logSelectPackNode" xml:space="preserve">
     <value>Pack mode: {0} {1} selected.</value>
   </data>
+  <data name="logTimedOut" xml:space="preserve">
+    <value>Timed out.</value>
+  </data>
 </root>
