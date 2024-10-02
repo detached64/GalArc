@@ -1,4 +1,5 @@
-﻿using GalArc.Properties;
+﻿using GalArc.GUI;
+using GalArc.Properties;
 using Log;
 using System;
 using System.Net.Http;
@@ -41,6 +42,11 @@ namespace GalArc.Controller
                 }
             }
             LogUtility.ShowCheckSuccess(isNewVerExist);
+            if (isNewVerExist)
+            {
+                UpdateBox box = new UpdateBox();
+                box.ShowDialog();
+            }
         }
 
         private async Task<string> DownloadContentAsync(CancellationToken cancellationToken)
