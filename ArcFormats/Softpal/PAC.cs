@@ -1,5 +1,4 @@
 ﻿using ArcFormats.Properties;
-using ArcFormats.Templates;
 using Log;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace ArcFormats.Softpal
     {
         public static UserControl UnpackExtraOptions = new UnpackPACOptions();
 
-        public static UserControl PackExtraOptions = new VersionOnly("1/2");
+        public static UserControl PackExtraOptions = new PackPACOptions();
 
         private static byte[] magicV2 = { 0x50, 0x41, 0x43, 0x20 };//"PAC "
         private struct Entry
@@ -46,9 +45,9 @@ namespace ArcFormats.Softpal
 
         private static void pacV1_unpack(string filePath, string folderPath)
         {
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            int fileCount = br.ReadInt32();
+            int fileCount = br.ReadUInt16();
             fs.Position = 0x3fe;
             List<Entry> entries = new List<Entry>();
             LogUtility.InitBar(fileCount);
@@ -77,7 +76,7 @@ namespace ArcFormats.Softpal
                         LogUtility.Error(Resources.logErrorDecScrFailed, false);
                     }
                 }
-                File.WriteAllBytes(folderPath + "\\" + entries[i].fileName, data);
+                File.WriteAllBytes(Path.Combine(folderPath, entries[i].fileName), data);
                 LogUtility.UpdateBar();
             }
             fs.Dispose();
@@ -158,65 +157,133 @@ namespace ArcFormats.Softpal
 
         private static void pacV1_pack(string folderPath, string filePath)
         {
-            FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            string[] files = Directory.GetFiles(folderPath);
+            var characterCount = CountFirstCharacters(files);
+            FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
-            int fileCount = Utilities.GetFileCount_TopOnly(folderPath);
+            int fileCount = files.Length;
             LogUtility.InitBar(fileCount);
-            bw.Write(fileCount);
-            bw.Write(new byte[1018]);
-            DirectoryInfo d = new DirectoryInfo(folderPath);
-            uint offset = 0x3fe + (uint)(40 * fileCount);
-            foreach (var file in d.GetFiles("*.*", SearchOption.TopDirectoryOnly))
+            LogWindow.Instance.bar.Maximum = fileCount + 1;
+
+            bw.Write((ushort)fileCount);
+            ushort countToThis = 0;
+            for (int i = 0; i < 255; i++)
             {
-                bw.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(32, '\0')));
-                bw.Write((int)file.Length);
-                bw.Write(offset);
-                offset += (uint)file.Length;
+                characterCount.TryGetValue((char)i, out int count);
+                ushort thisCount = (ushort)count;
+                bw.Write(countToThis);
+                countToThis += thisCount;
+                bw.Write(thisCount);
             }
-            foreach (var file in d.GetFiles("*.*", SearchOption.TopDirectoryOnly))
+
+            uint offset = 0x3fe + (uint)(40 * fileCount);
+            foreach (var str in files)
             {
-                bw.Write(File.ReadAllBytes(file.FullName));
+                bw.Write(ArcEncoding.Shift_JIS.GetBytes(Path.GetFileName(str).PadRight(32, '\0')));
+                uint size = (uint)new FileInfo(str).Length;
+                bw.Write(size);
+                bw.Write(offset);
+                offset += size;
+            }
+
+            foreach (var str in files)
+            {
+                bw.Write(File.ReadAllBytes(str));
                 LogUtility.UpdateBar();
             }
+
             bw.Write(Encoding.ASCII.GetBytes("EOF "));
             fw.Dispose();
+            bw.Dispose();
         }
 
         private static void pacV2_pack(string folderPath, string filePath)
         {
-            uint fileCount = (uint)Utilities.GetFileCount_All(folderPath);
-            LogUtility.InitBar((int)fileCount);
-            FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            string[] files = Directory.GetFiles(folderPath);
+            var characterCount = CountFirstCharacters(files);
+            uint fileCount = (uint)files.Length;
+
+            LogUtility.InitBar(fileCount);
+            LogWindow.Instance.bar.Maximum = (int)fileCount + 1;
+
+            FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
             BinaryWriter bw = new BinaryWriter(fw);
             //header
             bw.Write(Encoding.ASCII.GetBytes("PAC "));
             bw.Write(0);
             bw.Write(fileCount);
-            bw.Write(new byte[532]);
-            bw.Write(new byte[1508]);
-            //entries
-            DirectoryInfo d = new DirectoryInfo(folderPath);
-            uint baseOffset = 2052 + 40 * fileCount;
-            uint currentOffset = baseOffset;
-            foreach (FileInfo fi in d.GetFiles())
+            //index
+            int countToThis = 0;
+            for (int i = 0; i < 255; i++)
             {
-                bw.Write(ArcEncoding.Shift_JIS.GetBytes(fi.Name.PadRight(32, '\0')));
-                bw.Write((uint)fi.Length);
+                characterCount.TryGetValue((char)i, out int count);
+                bw.Write(countToThis);
+                countToThis += count;
+                bw.Write(count);
+            }
+            //entries
+            uint currentOffset = 2052 + 40 * fileCount;
+            foreach (string str in files)
+            {
+                bw.Write(ArcEncoding.Shift_JIS.GetBytes(Path.GetFileName(str).PadRight(32, '\0')));
+                uint size = (uint)new FileInfo(str).Length;
+                bw.Write(size);
                 bw.Write(currentOffset);
-                currentOffset += (uint)fi.Length;
+                currentOffset += size;
             }
             //data
-            foreach (FileInfo fi in d.GetFiles())
+            foreach (string str in files)
             {
-                byte[] fileData = File.ReadAllBytes(fi.FullName);
+                byte[] fileData = File.ReadAllBytes(str);
                 bw.Write(fileData);
                 LogUtility.UpdateBar();
             }
             //end
-            bw.Write(0);
-            bw.Write(Encoding.ASCII.GetBytes("EOF "));
+            if (PackPACOptions.toCompute)
+            {
+                uint checksum = 0;
+                fw.Position = 0;
+                using (BufferedStream bufferedStream = new BufferedStream(fw, 65536))
+                {
+                    int b;
+                    while ((b = bufferedStream.ReadByte()) != -1)
+                    {
+                        checksum += (uint)b;
+                    }
+                    bw.Write(checksum);
+                    bw.Write(Encoding.ASCII.GetBytes("EOF "));
+                }
+            }
+            else
+            {
+                bw.Write(0);
+                bw.Write(Encoding.ASCII.GetBytes("EOF "));
+            }
+            LogUtility.UpdateBar();
             fw.Dispose();
             bw.Dispose();
+        }
+
+        private static Dictionary<char, int> CountFirstCharacters(string[] strings)
+        {
+            var countDict = new Dictionary<char, int>();
+
+            foreach (var str in strings)
+            {
+                if (str.Length > 0)
+                {
+                    char firstChar = Path.GetFileName(str)[0];
+                    if (countDict.ContainsKey(firstChar))
+                    {
+                        countDict[firstChar]++;
+                    }
+                    else
+                    {
+                        countDict[firstChar] = 1;
+                    }
+                }
+            }
+            return countDict;
         }
     }
 }
