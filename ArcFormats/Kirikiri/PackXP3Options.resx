@@ -123,7 +123,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lbVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>64, 60</value>
+    <value>63, 70</value>
   </data>
   <data name="lbVersion.Size" type="System.Drawing.Size, System.Drawing">
     <value>74, 24</value>
@@ -147,7 +147,7 @@
     <value>3</value>
   </data>
   <data name="combVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>68, 98</value>
+    <value>67, 109</value>
   </data>
   <data name="combVersion.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 32</value>
