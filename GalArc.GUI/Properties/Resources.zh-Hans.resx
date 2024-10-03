@@ -142,6 +142,6 @@
     <value>已选择：封包{0}引擎的{1}文件。</value>
   </data>
   <data name="logTimedOut" xml:space="preserve">
-    <value>下载超时。</value>
+    <value>连接超时。</value>
   </data>
 </root>

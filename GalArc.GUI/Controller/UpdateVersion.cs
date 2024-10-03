@@ -35,10 +35,12 @@ namespace GalArc.Controller
                 catch (OperationCanceledException)
                 {
                     LogUtility.Error(Resources.logTimedOut, false);
+                    return;
                 }
                 catch (Exception)
                 {
                     LogUtility.ShowCheckError();
+                    return;
                 }
             }
             LogUtility.ShowCheckSuccess(isNewVerExist);

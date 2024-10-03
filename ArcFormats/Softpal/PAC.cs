@@ -16,7 +16,7 @@ namespace ArcFormats.Softpal
 
         public static UserControl PackExtraOptions = new PackPACOptions();
 
-        private static byte[] magicV2 = { 0x50, 0x41, 0x43, 0x20 };//"PAC "
+        private static byte[] magicV2 = { 0x50, 0x41, 0x43, 0x20 };     //"PAC "
         private struct Entry
         {
             public string fileName { get; set; }
