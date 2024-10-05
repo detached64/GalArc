@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using Utility;
@@ -140,8 +139,12 @@ namespace ArcFormats.PJADV
             }
         }
     }
+
     public class PAK : DAT
     {
+        public static new UserControl UnpackExtraOptions = new UnpackDATOptions();
+
         public static new UserControl PackExtraOptions = new VersionOnly("1/2");
     }
+
 }
