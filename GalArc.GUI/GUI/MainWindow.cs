@@ -11,8 +11,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GalArc
@@ -262,15 +260,7 @@ namespace GalArc
             if (type != null)
             {
                 FieldInfo fieldInfo = type.GetField(fieldName);
-                UserControl userControl = null;
-                if (fieldInfo != null)
-                {
-                    userControl = fieldInfo.GetValue(null) as UserControl;
-                }
-                else
-                {
-                    userControl = new Empty();
-                }
+                UserControl userControl = fieldInfo != null ? fieldInfo.GetValue(null) as UserControl : new Empty();
                 this.gbOptions.Controls.Add(userControl);
                 userControl.Dock = DockStyle.Fill;
             }

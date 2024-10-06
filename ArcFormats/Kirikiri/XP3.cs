@@ -129,8 +129,11 @@ namespace ArcFormats.Kirikiri
                 }
 
                 fs.Position = entry.dataOffset;
-
-                Directory.CreateDirectory(Path.GetDirectoryName(entry.path));
+                string dir = Path.GetDirectoryName(entry.path);
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
                 //LogUtility.Debug(entry.packedFileSize.ToString());
                 byte[] data = br.ReadBytes((int)entry.packedFileSize);
                 if (entry.unpackedFileSize == entry.packedFileSize)
@@ -143,7 +146,8 @@ namespace ArcFormats.Kirikiri
                 }
                 LogUtility.Debug(entry.path);
 
-NextEntry:      ms.Position = nextPos;
+NextEntry:
+                ms.Position = nextPos;
             }
             ms.Dispose();
             brIndex.Dispose();

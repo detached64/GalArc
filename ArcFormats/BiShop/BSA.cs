@@ -1,4 +1,5 @@
-﻿using Log;
+﻿using ArcFormats.Templates;
+using Log;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace ArcFormats.BiShop
 {
     public class BSA
     {
-        public static UserControl PackExtraOptions = new Templates.VersionOnly("1/2");
+        public static UserControl PackExtraOptions = new VersionOnly("1/2");
 
         private static byte[] magic = { 0x42, 0x53, 0x41, 0x72, 0x63, 0x00, 0x00, 0x00 };
 
