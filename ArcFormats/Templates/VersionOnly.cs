@@ -9,6 +9,7 @@ namespace ArcFormats.Templates
         {
             InitializeComponent();
         }
+
         public VersionOnly(string versions)
         {
             InitializeComponent();
