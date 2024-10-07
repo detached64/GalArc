@@ -46,11 +46,11 @@ namespace Log
         private static void WriteAndSaveLog(string log, int logLevel = 1)
         {
             LogLevel level = (LogLevel)logLevel;
-            if (level == LogLevel.Debug && LogWindow.Instance.log_chkbxDebug.Checked || level == LogLevel.Info || level == LogLevel.Error)
+            if (level == LogLevel.Debug && Settings.Default.chkbxDebug || level == LogLevel.Info || level == LogLevel.Error)
             {
                 LogWindow.Instance.log_txtLog.AppendText(log + Environment.NewLine);
             }
-            if (LogWindow.Instance.log_chkbxSave.Checked)
+            if (Settings.Default.chkbxSave)
             {
                 SaveLog("[" + level.ToString() + "]" + log + Environment.NewLine);
             }

@@ -17,15 +17,7 @@ namespace GalArc.Controller
         /// 
         internal static string GetLocalCulture()
         {
-            string LocalCulture;
-            if (string.IsNullOrEmpty(Settings.Default.lastLang))
-            {
-                LocalCulture = CultureInfo.CurrentCulture.Name;
-            }
-            else
-            {
-                LocalCulture = Settings.Default.lastLang;
-            }
+            string LocalCulture = string.IsNullOrEmpty(Settings.Default.lastLang) ? CultureInfo.CurrentCulture.Name : Settings.Default.lastLang;
             if (!Languages.languages.Values.ToArray().Contains(LocalCulture))
             {
                 LocalCulture = "en-US";
