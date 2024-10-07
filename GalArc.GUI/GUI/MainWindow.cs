@@ -39,10 +39,11 @@ namespace GalArc
         public MainWindow()
         {
             Instance = this;
-            LogUtility.NewInstance();
 
             LocalCulture = Localize.GetLocalCulture();
             Localize.SetLocalCulture(LocalCulture);
+
+            LogUtility.NewInstance();
 
             LogWindow logWindow = new LogWindow();
             LogWindow.ChangeLocalSettings(Settings.Default.AutoSaveState);
