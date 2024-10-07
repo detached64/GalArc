@@ -95,6 +95,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RPGMaker\PackRGSSOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RPGMaker\PackRGSSOptions.Designer.cs">
+      <DependentUpon>PackRGSSOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="RPGMaker\RGSSAD.cs" />
     <Compile Include="Softpal\PAC.cs" />
     <Compile Include="Softpal\PackPACOptions.cs">
@@ -168,6 +174,12 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.zh-Hans.resx" />
+    <EmbeddedResource Include="RPGMaker\PackRGSSOptions.resx">
+      <DependentUpon>PackRGSSOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RPGMaker\PackRGSSOptions.zh-Hans.resx">
+      <DependentUpon>PackRGSSOptions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Softpal\PackPACOptions.resx">
       <DependentUpon>PackPACOptions.cs</DependentUpon>
     </EmbeddedResource>
