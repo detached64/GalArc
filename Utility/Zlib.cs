@@ -150,7 +150,9 @@ namespace Utility.Compression
         /// <returns></returns>
         public static byte[] DecompressBytes(byte[] inputData)
         {
-            using (MemoryStream inputStream = new MemoryStream(inputData))
+            byte[] result = new byte[inputData.Length];
+            Array.Copy(inputData, result, inputData.Length);
+            using (MemoryStream inputStream = new MemoryStream(result))
             using (BinaryReader br = new BinaryReader(inputStream))
             {
                 byte magic1 = br.ReadByte();

@@ -289,7 +289,7 @@ namespace GalArc
             }
             else
             {
-                this.txtOutputPath.Text = ChooseFile() ?? this.txtOutputPath.Text;
+                this.txtOutputPath.Text = SaveFile() ?? this.txtOutputPath.Text;
             }
         }
 
@@ -300,6 +300,18 @@ namespace GalArc
                 if (openFileDialog.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(openFileDialog.FileName))
                 {
                     return openFileDialog.FileName;
+                }
+                return null;
+            }
+        }
+
+        private static string SaveFile()
+        {
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                if (saveFileDialog.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(saveFileDialog.FileName))
+                {
+                    return saveFileDialog.FileName;
                 }
                 return null;
             }
