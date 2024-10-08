@@ -7,6 +7,8 @@ namespace ArcFormats.Softpal
     {
         internal static bool toCompute = false;
 
+        internal static bool toEncryptScripts = true;
+
         private static string versions = "1/2";
 
         public PackPACOptions()
@@ -35,6 +37,11 @@ namespace ArcFormats.Softpal
             {
                 this.chkbxCompute.Enabled = true;
             }
+        }
+
+        private void chkbxEncScr_CheckedChanged(object sender, EventArgs e)
+        {
+            toEncryptScripts = this.chkbxEncScr.Checked;
         }
     }
 }

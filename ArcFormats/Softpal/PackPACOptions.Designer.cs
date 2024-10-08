@@ -32,6 +32,7 @@
             this.chkbxCompute = new System.Windows.Forms.CheckBox();
             this.combVersion = new System.Windows.Forms.ComboBox();
             this.lbVersion = new System.Windows.Forms.Label();
+            this.chkbxEncScr = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // chkbxCompute
@@ -54,10 +55,20 @@
             resources.ApplyResources(this.lbVersion, "lbVersion");
             this.lbVersion.Name = "lbVersion";
             // 
+            // chkbxEncScr
+            // 
+            resources.ApplyResources(this.chkbxEncScr, "chkbxEncScr");
+            this.chkbxEncScr.Checked = true;
+            this.chkbxEncScr.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkbxEncScr.Name = "chkbxEncScr";
+            this.chkbxEncScr.UseVisualStyleBackColor = true;
+            this.chkbxEncScr.CheckedChanged += new System.EventHandler(this.chkbxEncScr_CheckedChanged);
+            // 
             // PackPACOptions
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chkbxEncScr);
             this.Controls.Add(this.combVersion);
             this.Controls.Add(this.lbVersion);
             this.Controls.Add(this.chkbxCompute);
@@ -72,5 +83,6 @@
         private System.Windows.Forms.CheckBox chkbxCompute;
         private System.Windows.Forms.ComboBox combVersion;
         private System.Windows.Forms.Label lbVersion;
+        private System.Windows.Forms.CheckBox chkbxEncScr;
     }
 }

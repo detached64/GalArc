@@ -123,4 +123,7 @@
   <data name="lbVersion.Text" xml:space="preserve">
     <value>版本</value>
   </data>
+  <data name="chkbxEncScr.Text" xml:space="preserve">
+    <value>加密脚本文件</value>
+  </data>
 </root>
