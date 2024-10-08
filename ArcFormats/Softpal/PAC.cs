@@ -135,8 +135,26 @@ namespace ArcFormats.Softpal
                 uint value = BitConverter.ToUInt32(data, index);
 
                 byte rotatedByte = Binary.RotByteL((byte)value, shift++);
-                value = (value & 0xFFFFFF00u) | rotatedByte;
+                value = (value & 0xFFFFFF00u) | rotatedByte;            // 高24位不变，低8位左旋
                 value ^= 0x084DF873u ^ 0xFF987DEEu;
+
+                byte[] bytes = BitConverter.GetBytes(value);
+                Buffer.BlockCopy(bytes, 0, data, index, 4);
+            }
+        }
+
+        private static void EncryptScript(byte[] data)
+        {
+            int count = (data.Length - 16) / 4;
+            int shift = 4;
+            for (int i = 0; i < count; i++)
+            {
+                int index = 16 + i * 4;
+                uint value = BitConverter.ToUInt32(data, index);
+                value ^= 0x084DF873u ^ 0xFF987DEEu;
+
+                byte rotatedByte = Binary.RotByteR((byte)value, shift++);
+                value = (value & 0xFFFFFF00u) | rotatedByte;            // 高24位不变，低8位右旋
 
                 byte[] bytes = BitConverter.GetBytes(value);
                 Buffer.BlockCopy(bytes, 0, data, index, 4);
@@ -188,7 +206,20 @@ namespace ArcFormats.Softpal
 
             foreach (var str in files)
             {
-                bw.Write(File.ReadAllBytes(str));
+                byte[] buffer = File.ReadAllBytes(str);
+                if (PackPACOptions.toEncryptScripts && buffer.Length >= 16 && buffer[0] == 36)  //'$'
+                {
+                    try
+                    {
+                        LogUtility.Debug(string.Format(Resources.logTryEncScr, Path.GetFileName(str)));
+                        EncryptScript(buffer);
+                    }
+                    catch
+                    {
+                        LogUtility.Error(Resources.logErrorEncScrFailed, false);
+                    }
+                }
+                bw.Write(buffer);
                 LogUtility.UpdateBar();
             }
 
@@ -209,7 +240,7 @@ namespace ArcFormats.Softpal
             FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
             BinaryWriter bw = new BinaryWriter(fw);
             //header
-            bw.Write(Encoding.ASCII.GetBytes("PAC "));
+            bw.Write(magicV2);
             bw.Write(0);
             bw.Write(fileCount);
             //index
@@ -234,8 +265,20 @@ namespace ArcFormats.Softpal
             //data
             foreach (string str in files)
             {
-                byte[] fileData = File.ReadAllBytes(str);
-                bw.Write(fileData);
+                byte[] buffer = File.ReadAllBytes(str);
+                if (PackPACOptions.toEncryptScripts && buffer.Length >= 16 && buffer[0] == 36)  //'$'
+                {
+                    try
+                    {
+                        LogUtility.Debug(string.Format(Resources.logTryEncScr, Path.GetFileName(str)));
+                        EncryptScript(buffer);
+                    }
+                    catch
+                    {
+                        LogUtility.Error(Resources.logErrorEncScrFailed, false);
+                    }
+                }
+                bw.Write(buffer);
                 LogUtility.UpdateBar();
             }
             //end
