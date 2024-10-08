@@ -85,6 +85,12 @@
     <Compile Include="Majiro\ARC.cs" />
     <Compile Include="NeXAS\PAC.cs" />
     <Compile Include="NextonLikeC\LST.cs" />
+    <Compile Include="NitroPlus\PackPAKOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NitroPlus\PackPAKOptions.Designer.cs">
+      <DependentUpon>PackPAKOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="NitroPlus\PAK.cs" />
     <Compile Include="NScripter\NS2.cs" />
     <Compile Include="Palette\PAK.cs" />
@@ -174,6 +180,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Kirikiri\PackXP3Options.zh-Hans.resx">
       <DependentUpon>PackXP3Options.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NitroPlus\PackPAKOptions.resx">
+      <DependentUpon>PackPAKOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NitroPlus\PackPAKOptions.zh-Hans.resx">
+      <DependentUpon>PackPAKOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PJADV\UnpackDATOptions.resx">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>

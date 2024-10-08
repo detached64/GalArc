@@ -1,5 +1,7 @@
 ﻿using Log;
 using System.IO;
+using System.IO.Compression;
+using System.Windows.Forms;
 using Utility;
 using Utility.Compression;
 
@@ -7,14 +9,17 @@ namespace ArcFormats.NitroPlus
 {
     public class PAK
     {
+        public static UserControl PackExtraOptions = new PackPAKOptions();
+
         private struct Entry
         {
             public uint pathLen { get; set; }
             public string path { get; set; }
             public uint offset { get; set; }
+            public uint unpackedSize { get; set; }
             public uint size { get; set; }
-            public uint reserve { get; set; }
             public string fullPath { get; set; }
+            public bool isPacked { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)
@@ -40,12 +45,34 @@ namespace ArcFormats.NitroPlus
                         Entry entry = new Entry();
                         entry.pathLen = brEntry.ReadUInt32();
                         entry.path = ArcEncoding.Shift_JIS.GetString(brEntry.ReadBytes((int)entry.pathLen));
-                        entry.offset = brEntry.ReadUInt32() + (uint)dataOffset;
-                        entry.size = brEntry.ReadUInt32();
                         entry.fullPath = Path.Combine(folderPath, entry.path);
-                        Directory.CreateDirectory(Path.GetDirectoryName(entry.fullPath));
-                        File.WriteAllBytes(entry.fullPath, br.ReadBytes((int)entry.size));
-                        ms.Position += 12;
+
+                        entry.offset = brEntry.ReadUInt32() + (uint)dataOffset;
+                        entry.unpackedSize = brEntry.ReadUInt32();
+                        entry.size = brEntry.ReadUInt32();
+                        entry.isPacked = brEntry.ReadUInt32() != 0;
+                        uint size = brEntry.ReadUInt32();
+                        if (entry.isPacked)
+                        {
+                            entry.size = size;
+                        }
+
+                        string dir = Path.GetDirectoryName(entry.fullPath);
+                        if (!Directory.Exists(dir))
+                        {
+                            Directory.CreateDirectory(dir);
+                        }
+
+                        byte[] data = br.ReadBytes((int)entry.size);
+                        try
+                        {
+                            byte[] result = Zlib.DecompressBytes(data);
+                            File.WriteAllBytes(entry.fullPath, result);
+                        }
+                        catch
+                        {
+                            File.WriteAllBytes(entry.fullPath, data);
+                        }
                         LogUtility.UpdateBar();
                     }
                 }
@@ -57,37 +84,33 @@ namespace ArcFormats.NitroPlus
 
         public void Pack(string folderPath, string filePath)
         {
-            FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
             bw.Write(2);
             int fileCount = Utilities.GetFileCount_All(folderPath);
             bw.Write(fileCount);
             LogUtility.InitBar(fileCount);
 
-            string[] filePaths = new string[fileCount];
-            DirectoryInfo d = new DirectoryInfo(folderPath);
+            string[] filePaths = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
+
             int pathLenSum = 0;
-            int i = 0;
-            foreach (FileInfo file in d.GetFiles("*.*", SearchOption.AllDirectories))
+            foreach (string fullPath in filePaths)
             {
-                filePaths[i] = file.FullName.Replace(folderPath + "\\", string.Empty);
-                pathLenSum += ArcEncoding.Shift_JIS.GetByteCount(filePaths[i]);
-                i++;
+                pathLenSum += ArcEncoding.Shift_JIS.GetByteCount(fullPath.Substring(folderPath.Length + 1));
             }
-            Utilities.InsertSort(filePaths);
 
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 using (BinaryWriter bwIndex = new BinaryWriter(memoryStream))
                 {
-                    int offset = 0;
-                    for (int j = 0; j < fileCount; j++)
+                    uint offset = 0;
+                    foreach (string fullPath in filePaths)
                     {
-                        string path = Path.Combine(folderPath, filePaths[j]);
-                        bwIndex.Write(ArcEncoding.Shift_JIS.GetByteCount(filePaths[j]));
-                        bwIndex.Write(ArcEncoding.Shift_JIS.GetBytes(filePaths[j]));
+                        string relativePath = fullPath.Substring(folderPath.Length + 1);
+                        bwIndex.Write(ArcEncoding.Shift_JIS.GetByteCount(relativePath));
+                        bwIndex.Write(ArcEncoding.Shift_JIS.GetBytes(relativePath));
                         bwIndex.Write(offset);
-                        int fileSize = (int)new FileInfo(path).Length;
+                        uint fileSize = (uint)new FileInfo(fullPath).Length;
                         bwIndex.Write(fileSize);
                         bwIndex.Write(fileSize);
                         bwIndex.Write((long)0);
@@ -100,23 +123,28 @@ namespace ArcFormats.NitroPlus
                     byte[] comIndex = Zlib.CompressBytes(uncomIndex);
                     bw.Write(comIndex.Length);
 
+                    if (!string.IsNullOrEmpty(PackPAKOptions.OriginalFilePath) && File.Exists(PackPAKOptions.OriginalFilePath))
+                    {
+                        FileStream fs = new FileStream(PackPAKOptions.OriginalFilePath, FileMode.Open, FileAccess.Read);
+                        BinaryReader br = new BinaryReader(fs);
+                        fs.Position = 16;
+                        byte[] reserve = br.ReadBytes(260);
+                        fs.Dispose();
+                        br.Dispose();
 
-                    FileStream fs = new FileStream(folderPath + ".pak", FileMode.Open, FileAccess.Read);
-                    BinaryReader br = new BinaryReader(fs);
-                    fs.Position = 16;
-                    byte[] reserve = br.ReadBytes(260);
-                    fs.Dispose();
-                    br.Dispose();
-
-                    bw.Write(reserve);
+                        bw.Write(reserve);
+                    }
+                    else
+                    {
+                        bw.Write(new byte[260]);
+                    }
                     bw.Write(comIndex);
                 }
             }
 
-            for (int j = 0; j < fileCount; j++)
+            foreach (string fullPath in filePaths)
             {
-                string path = Path.Combine(folderPath, filePaths[j]);
-                bw.Write(File.ReadAllBytes(path));
+                bw.Write(File.ReadAllBytes(fullPath));
                 LogUtility.UpdateBar();
             }
 
