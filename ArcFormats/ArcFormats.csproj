@@ -48,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdvHD\ARC.cs" />
+    <Compile Include="AdvHD\PackARCOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AdvHD\PackARCOptions.Designer.cs">
+      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="AdvHD\PNA.cs" />
     <Compile Include="AdvHD\UnpackARCOptions.cs">
       <SubType>UserControl</SubType>
@@ -151,6 +157,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AdvHD\PackARCOptions.resx">
+      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdvHD\PackARCOptions.zh-Hans.resx">
+      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AdvHD\UnpackARCOptions.resx">
       <DependentUpon>UnpackARCOptions.cs</DependentUpon>
     </EmbeddedResource>
