@@ -130,13 +130,13 @@
     <value>63, 70</value>
   </data>
   <data name="chkbxDecScr.Size" type="System.Drawing.Size, System.Drawing">
-    <value>243, 28</value>
+    <value>166, 28</value>
   </data>
   <data name="chkbxDecScr.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="chkbxDecScr.Text" xml:space="preserve">
-    <value>Decrypt wsc/ws2 scripts</value>
+    <value>Decrypt scripts</value>
   </data>
   <data name="&gt;&gt;chkbxDecScr.Name" xml:space="preserve">
     <value>chkbxDecScr</value>

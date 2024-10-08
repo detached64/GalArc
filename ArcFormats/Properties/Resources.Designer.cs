@@ -79,6 +79,15 @@ namespace ArcFormats.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Encryption failed. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorEncScrFailed {
+            get {
+                return ResourceManager.GetString("logErrorEncScrFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Error: Specified pack method not found. 的本地化字符串。
         /// </summary>
         internal static string logErrorPackMethodNotFound {
@@ -102,6 +111,15 @@ namespace ArcFormats.Properties {
         internal static string logTryDecScr {
             get {
                 return ResourceManager.GetString("logTryDecScr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Try to encrypt: {0}…… 的本地化字符串。
+        /// </summary>
+        internal static string logTryEncScr {
+            get {
+                return ResourceManager.GetString("logTryEncScr", resourceCulture);
             }
         }
     }

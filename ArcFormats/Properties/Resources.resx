@@ -112,4 +112,10 @@
   <data name="logErrorDecScrFailed" xml:space="preserve">
     <value>Decryption failed.</value>
   </data>
+  <data name="logTryEncScr" xml:space="preserve">
+    <value>Try to encrypt: {0}……</value>
+  </data>
+  <data name="logErrorEncScrFailed" xml:space="preserve">
+    <value>Encryption failed.</value>
+  </data>
 </root>

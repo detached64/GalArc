@@ -132,4 +132,10 @@
   <data name="logErrorDecScrFailed" xml:space="preserve">
     <value>解密失败。</value>
   </data>
+  <data name="logTryEncScr" xml:space="preserve">
+    <value>尝试加密：{0}……</value>
+  </data>
+  <data name="logErrorEncScrFailed" xml:space="preserve">
+    <value>加密失败。</value>
+  </data>
 </root>
