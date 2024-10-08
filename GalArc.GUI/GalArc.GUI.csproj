@@ -128,6 +128,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\MainWindow.zh-Hans.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>

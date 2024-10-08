@@ -7,11 +7,9 @@ namespace ArcFormats.AdvHD
     {
         internal static bool toEncryptScripts = true;
 
+        private static string versions = "1/2";
+
         public PackARCOptions()
-        {
-            InitializeComponent();
-        }
-        public PackARCOptions(string versions)
         {
             InitializeComponent();
             this.combVersion.Items.AddRange(versions.Split('/'));

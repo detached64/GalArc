@@ -12,7 +12,7 @@ namespace ArcFormats.AdvHD
     {
         public static UserControl UnpackExtraOptions = new UnpackARCOptions();
 
-        public static UserControl PackExtraOptions = new PackARCOptions("1/2");
+        public static UserControl PackExtraOptions = new PackARCOptions();
 
         private struct HeaderV1
         {
