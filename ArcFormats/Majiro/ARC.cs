@@ -1,4 +1,5 @@
-﻿using Log;
+﻿using ArcFormats.Templates;
+using Log;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -9,11 +10,19 @@ namespace ArcFormats.Majiro
 {
     public class ARC
     {
-        public static UserControl PackExtraOptions = new Templates.VersionOnly("1/2");
+        public static UserControl PackExtraOptions = new VersionOnly("1/2/3");
+
+        private static readonly string Magic = "MajiroArcV";
 
         private static readonly string magicV1 = "MajiroArcV1.000\x00";
 
         private static readonly string magicV2 = "MajiroArcV2.000\x00";
+
+        private static readonly string magicV3 = "MajiroArcV3.000\x00";
+
+        private static int UnpackVersion;
+
+        private static int PackVersion;
 
         private struct Entry
         {
@@ -26,18 +35,23 @@ namespace ArcFormats.Majiro
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            string magic = Encoding.ASCII.GetString(br.ReadBytes(16));
+            string magic = Encoding.ASCII.GetString(br.ReadBytes(10));
+            UnpackVersion = br.ReadByte() - '0';
             fs.Dispose();
             br.Dispose();
-            if (magic == magicV1)
+            if (magic == Magic)
             {
-                LogUtility.ShowVersion("arc", 1);
-                arcV1_unpack(filePath, folderPath);
-            }
-            else if (magic == magicV2)
-            {
-                LogUtility.ShowVersion("arc", 2);
-                arcV2_unpack(filePath, folderPath);
+                LogUtility.ShowVersion("arc", UnpackVersion);
+                switch (UnpackVersion)
+                {
+                    case 1:
+                        arcV1_unpack(filePath, folderPath);
+                        break;
+                    case 2:
+                    case 3:
+                        arcV2_unpack(filePath, folderPath);
+                        break;
+                }
             }
             else
             {
@@ -71,7 +85,7 @@ namespace ArcFormats.Majiro
                 entries.Add(entry);
             }
             Entry lastEntry = new Entry();
-            brIndex.ReadBytes(4);            //skip crc32:0x00000000
+            brIndex.ReadBytes(4);               //skip crc32:0x00000000
             lastEntry.dataOffset = brIndex.ReadUInt32();
             entries.Add(lastEntry);
 
@@ -96,7 +110,7 @@ namespace ArcFormats.Majiro
             uint nameOffset = br.ReadUInt32();
             uint dataOffset = br.ReadUInt32();
 
-            uint indexLength = 12 * (uint)fileCount;
+            uint indexLength = (uint)((UnpackVersion + 1) * 4 * fileCount);
             MemoryStream ms = new MemoryStream(br.ReadBytes((int)indexLength));
             BinaryReader brIndex = new BinaryReader(ms);
 
@@ -106,13 +120,13 @@ namespace ArcFormats.Majiro
             for (int i = 0; i < fileCount; i++)
             {
                 Entry entry = new Entry();
-                brIndex.ReadBytes(4);            //skip crc32
+                brIndex.ReadBytes(4 * (UnpackVersion - 1));            //skip checksum
                 entry.dataOffset = brIndex.ReadUInt32();
                 entry.size = brIndex.ReadUInt32();
                 entry.name = Utilities.ReadCString(br, ArcEncoding.Shift_JIS);
                 long pos = fs.Position;
                 fs.Position = entry.dataOffset;
-                File.WriteAllBytes(folderPath + "\\" + entry.name, br.ReadBytes((int)entry.size));
+                File.WriteAllBytes(Path.Combine(folderPath, entry.name), br.ReadBytes((int)entry.size));
                 fs.Position = pos;
                 LogUtility.UpdateBar();
             }
@@ -124,13 +138,16 @@ namespace ArcFormats.Majiro
 
         public void Pack(string folderPath, string filePath)
         {
-            if (Global.Version == "1")
+            PackVersion = int.Parse(Global.Version);
+            switch (PackVersion)
             {
-                arcV1_pack(folderPath, filePath);
-            }
-            else if (Global.Version == "2")
-            {
-                arcV2_pack(folderPath, filePath);
+                case 1:
+                    arcV1_pack(folderPath, filePath);
+                    break;
+                case 2:
+                case 3:
+                    arcV2_pack(folderPath, filePath);
+                    break;
             }
         }
 
@@ -184,16 +201,16 @@ namespace ArcFormats.Majiro
             BinaryWriter bw = new BinaryWriter(fw);
             int fileCount = Utilities.GetFileCount_TopOnly(folderPath);
             LogUtility.InitBar(fileCount);
-            bw.Write(Encoding.ASCII.GetBytes(magicV2));
+            bw.Write(Encoding.ASCII.GetBytes(PackVersion == 2 ? magicV2 : magicV3));
             bw.Write(fileCount);
-            uint nameOffset = 28 + 12 * (uint)fileCount;
+            uint nameOffset = 28 + (uint)((PackVersion + 1) * 4 * fileCount);
             uint dataOffset = 0;
             bw.Write(nameOffset);
             bw.Write(dataOffset);       // pos = 24
 
             // write name
             bw.BaseStream.Position = nameOffset;
-            string[] files = Directory.GetFiles(folderPath, "*", SearchOption.TopDirectoryOnly);
+            string[] files = Directory.GetFiles(folderPath);
             for (int i = 0; i < fileCount; i++)
             {
                 bw.Write(ArcEncoding.Shift_JIS.GetBytes(Path.GetFileName(files[i])));
@@ -210,7 +227,14 @@ namespace ArcFormats.Majiro
             bw.Write(dataOffset);
             for (int i = 0; i < fileCount; i++)
             {
-                bw.Write(Crc32.Calculate(ArcEncoding.Shift_JIS.GetBytes(Path.GetFileName(files[i]))));
+                if (PackVersion == 2)
+                {
+                    bw.Write(Crc32.Calculate(ArcEncoding.Shift_JIS.GetBytes(Path.GetFileName(files[i]))));
+                }
+                else
+                {
+                    bw.Write((long)0);      // don't know what this 8 bytes are , set to 0
+                }
                 bw.Write(dataOffset);
                 uint fileSize = (uint)new FileInfo(files[i]).Length;
                 bw.Write(fileSize);
