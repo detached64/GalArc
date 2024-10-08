@@ -257,14 +257,16 @@ namespace GalArc
             string[] infos = node.FullPath.Split('/');
             Assembly assembly = Assembly.Load("ArcFormats");
             Type type = assembly.GetType($"ArcFormats.{infos[0]}.{infos[1]}");
+            this.SuspendLayout();
             this.gbOptions.Controls.Clear();
             if (type != null)
             {
                 FieldInfo fieldInfo = type.GetField(fieldName);
-                UserControl userControl = fieldInfo != null ? fieldInfo.GetValue(null) as UserControl : new Empty();
+                UserControl userControl = fieldInfo != null ? fieldInfo.GetValue(null) as UserControl : Empty.Instance;
                 this.gbOptions.Controls.Add(userControl);
                 userControl.Dock = DockStyle.Fill;
             }
+            this.ResumeLayout();
         }
 
         private void btSelInput_Click(object sender, EventArgs e)
