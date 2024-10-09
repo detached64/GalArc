@@ -70,6 +70,15 @@ namespace ArcFormats.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Decompression failed. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorDecompressFailed {
+            get {
+                return ResourceManager.GetString("logErrorDecompressFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Decryption failed. 的本地化字符串。
         /// </summary>
         internal static string logErrorDecScrFailed {
@@ -102,6 +111,24 @@ namespace ArcFormats.Properties {
         internal static string logErrorUnpackMethodNotFound {
             get {
                 return ResourceManager.GetString("logErrorUnpackMethodNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Try to decompress: {0}…… 的本地化字符串。
+        /// </summary>
+        internal static string logTryDecompress {
+            get {
+                return ResourceManager.GetString("logTryDecompress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Try to decompress {0} with {1}…… 的本地化字符串。
+        /// </summary>
+        internal static string logTryDecompressWithMethod {
+            get {
+                return ResourceManager.GetString("logTryDecompressWithMethod", resourceCulture);
             }
         }
         

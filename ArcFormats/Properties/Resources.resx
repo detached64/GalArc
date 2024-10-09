@@ -118,4 +118,13 @@
   <data name="logErrorEncScrFailed" xml:space="preserve">
     <value>Encryption failed.</value>
   </data>
+  <data name="logTryDecompress" xml:space="preserve">
+    <value>Try to decompress: {0}……</value>
+  </data>
+  <data name="logErrorDecompressFailed" xml:space="preserve">
+    <value>Decompression failed.</value>
+  </data>
+  <data name="logTryDecompressWithMethod" xml:space="preserve">
+    <value>Try to decompress {0} with {1}……</value>
+  </data>
 </root>
