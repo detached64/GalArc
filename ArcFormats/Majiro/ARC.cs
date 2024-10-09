@@ -55,7 +55,7 @@ namespace ArcFormats.Majiro
             }
             else
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
         }
 

@@ -13,7 +13,7 @@ namespace ArcFormats.Ai5Win
             BinaryReader br = new BinaryReader(fs);
             if (Encoding.ASCII.GetString(br.ReadBytes(4)) != "VSD1" || !File.Exists(filePath))
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
             LogUtility.InitBar(1);
             uint offset = br.ReadUInt32() + 8;

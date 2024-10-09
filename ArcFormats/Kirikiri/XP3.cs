@@ -35,7 +35,7 @@ namespace ArcFormats.Kirikiri
 
             if (!br.ReadBytes(11).SequenceEqual(Header.magic))
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
             if (br.ReadByte() == 0x17)
             {
@@ -77,7 +77,7 @@ namespace ArcFormats.Kirikiri
                     break;
 
                 default:
-                    LogUtility.Error_NotValidArchive();
+                    LogUtility.ErrorInvalidArchive();
                     return;
             }
             MemoryStream ms = new MemoryStream(Index);
@@ -88,7 +88,7 @@ namespace ArcFormats.Kirikiri
                 string m1 = Encoding.ASCII.GetString(brIndex.ReadBytes(4));     //"File"
                 if (m1 != "File")
                 {
-                    LogUtility.Error_NotValidArchive();
+                    LogUtility.ErrorInvalidArchive();
                 }
                 Entry entry = new Entry();
                 long _remaining = brIndex.ReadInt64();

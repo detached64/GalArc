@@ -48,7 +48,7 @@ namespace ArcFormats.Artemis
 
             if (Encoding.ASCII.GetString(br.ReadBytes(2)) != header.magic)
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
             header.version = br.ReadChar().ToString();
             if (!Versions.Contains(header.version))

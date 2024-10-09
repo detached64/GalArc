@@ -29,7 +29,7 @@ namespace ArcFormats.SystemNNN
 
             if (!File.Exists(gtbPath))
             {
-                LogUtility.Error_NeedAnotherFile(".gtb", ".gpk");
+                LogUtility.ErrorNeedAnotherFile(".gtb", ".gpk");
             }
 
             //open&make dir

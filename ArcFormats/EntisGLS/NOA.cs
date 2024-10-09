@@ -76,7 +76,7 @@ namespace ArcFormats.EntisGLS
 
             if (!header.magic1.SequenceEqual(Header.magic1_valid) || !header.magic2.SequenceEqual(Header.magic2_valid))
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
 
             br.ReadBytes(22);
@@ -87,7 +87,7 @@ namespace ArcFormats.EntisGLS
             entry_header.magic = Encoding.ASCII.GetString(br.ReadBytes(8));
             if (entry_header.magic != "DirEntry")
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
 
             entry_header.indexSize = br.ReadUInt64();

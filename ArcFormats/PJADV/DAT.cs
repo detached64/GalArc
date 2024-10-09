@@ -31,7 +31,7 @@ namespace ArcFormats.PJADV
 
             if (Encoding.ASCII.GetString(br.ReadBytes(11)) != "GAMEDAT PAC")
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
             int version = br.ReadByte();
             int nameLen;

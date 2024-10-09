@@ -95,17 +95,17 @@ namespace Log
             WriteAndSaveLog(log, 2);
             OnProcess(log);
         }
-        public static void Error_NotValidArchive()
+        public static void ErrorInvalidArchive()
         {
             throw new Exception(Resources.logErrorNotValidArc);
         }
-        public static void Error_NeedAnotherFile(string ext1, string ext2)
+        public static void ErrorNeedAnotherFile(string ext1, string ext2)
         {
             ext1 = ext1?.ToUpper().Replace(".", string.Empty) ?? Resources.logNoExtension;
             ext2 = ext2?.ToUpper().Replace(".", string.Empty) ?? Resources.logNoExtension;
             throw new Exception(string.Format(Resources.logErrorSameNameNotFound, ext1, ext2));
         }
-        public static void Error_NeedOriginalFile(string ext)
+        public static void ErrorNeedOriginalFile(string ext)
         {
             ext = ext?.ToUpper().Replace(".", string.Empty) ?? Resources.logNoExtension;
             throw new Exception(string.Format(Resources.logErrorOriginalFileNotFound, ext));

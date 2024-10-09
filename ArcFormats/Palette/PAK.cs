@@ -16,7 +16,7 @@ namespace ArcFormats.Palette
             BinaryReader br = new BinaryReader(fs);
             if (!br.ReadBytes(6).SequenceEqual(magic))
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
             int count = br.ReadInt32();
             LogUtility.InitBar(count);

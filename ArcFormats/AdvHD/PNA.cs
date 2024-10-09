@@ -40,7 +40,7 @@ namespace ArcFormats.AdvHD
             header.magic = Encoding.UTF8.GetString(br.ReadBytes(4));
             if (header.magic != "PNAP" || Path.GetExtension(filePath) != ".pna")
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
 
             header.unknown1 = br.ReadUInt32();
@@ -94,7 +94,7 @@ namespace ArcFormats.AdvHD
             }
             if (!File.Exists(spath))
             {
-                LogUtility.Error_NeedOriginalFile(".pna");
+                LogUtility.ErrorNeedOriginalFile(".pna");
             }
 
             File.Copy(spath, tpath, true);

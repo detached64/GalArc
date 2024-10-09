@@ -56,7 +56,7 @@ namespace ArcFormats.Yuris
             BinaryReader br = new BinaryReader(fs);
             if (!br.ReadBytes(4).SequenceEqual(new byte[] { 0x59, 0x50, 0x46, 0x00 }))
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
 
             FolderPath = folderPath;

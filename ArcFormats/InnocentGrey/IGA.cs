@@ -33,7 +33,7 @@ namespace ArcFormats.InnocentGrey
             List<Entry> entriesUpdate = new List<Entry>();
             if (Encoding.ASCII.GetString(br.ReadBytes(4)) != "IGA0")
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
 
             fs.Position = 16;

@@ -29,7 +29,7 @@ namespace ArcFormats.NextonLikeC
             arcPath = Path.ChangeExtension(filePath, string.Empty);
             if (!File.Exists(arcPath))
             {
-                LogUtility.Error_NeedAnotherFile(".lst", string.Empty);
+                LogUtility.ErrorNeedAnotherFile(".lst", string.Empty);
             }
 
             FileStream fsLst = new FileStream(lstPath, FileMode.Open, FileAccess.Read);

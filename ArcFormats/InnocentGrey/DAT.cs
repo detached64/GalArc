@@ -33,14 +33,14 @@ namespace ArcFormats.InnocentGrey
             BinaryReader br = new BinaryReader(fs);
             if (Encoding.ASCII.GetString(br.ReadBytes(7)) != "PACKDAT" || br.ReadByte() != '\x2e')
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
             Header header = new Header();
             header.fileCount = br.ReadUInt32();
             header.fileCount1 = br.ReadUInt32();
             if (header.fileCount != header.fileCount1)
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
 
             LogUtility.InitBar(header.fileCount);

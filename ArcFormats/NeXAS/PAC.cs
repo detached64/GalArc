@@ -45,7 +45,7 @@ namespace ArcFormats.NeXAS
             encodings = Global.Encoding;
             if (!reader.ReadBytes(3).SequenceEqual(signature))
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
             reader.ReadByte();
             long fileSize = reader.BaseStream.Length;
