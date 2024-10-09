@@ -92,7 +92,7 @@ namespace ArcFormats.Softpal
             }
             br.ReadInt32();
             uint fileCount = br.ReadUInt32();
-            LogUtility.InitBar((int)fileCount);
+            LogUtility.InitBar(fileCount);
             fs.Position = 0x804;
             Directory.CreateDirectory(folderPath);
             for (int i = 0; i < fileCount; i++)

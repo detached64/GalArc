@@ -146,17 +146,27 @@ namespace Utility
         /// <summary>
         /// Get file name length sum among all files in specified folder and all subfolders.
         /// </summary>
-        /// <param name="fileSet"></param>
+        /// <param name="strings"></param>
         /// <param name="encoding"></param>
         /// <returns></returns>
-        public static int GetNameLenSum(IEnumerable<string> fileSet, Encoding encoding)
+        public static int GetNameLengthSum(IEnumerable<string> strings, Encoding encoding)
         {
             int sum = 0;
-            foreach (string s in fileSet)
+            foreach (string s in strings)
             {
                 sum += encoding.GetByteCount(Path.GetFileName(s));
             }
             return sum;
+        }
+
+        public static int GetLengthSum(IEnumerable<string> strings, Encoding encoding)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var str in strings)
+            {
+                sb.Append(str);
+            }
+            return encoding.GetByteCount(sb.ToString());
         }
     }
 }

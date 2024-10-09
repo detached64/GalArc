@@ -125,7 +125,7 @@ namespace ArcFormats.NitroPlus
 
                     if (!string.IsNullOrEmpty(PackPAKOptions.OriginalFilePath) && File.Exists(PackPAKOptions.OriginalFilePath))
                     {
-                        FileStream fs = new FileStream(PackPAKOptions.OriginalFilePath, FileMode.Open, FileAccess.Read);
+                        FileStream fs = File.OpenRead(PackPAKOptions.OriginalFilePath);
                         BinaryReader br = new BinaryReader(fs);
                         fs.Position = 16;
                         byte[] reserve = br.ReadBytes(260);

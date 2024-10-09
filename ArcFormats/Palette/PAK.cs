@@ -41,7 +41,7 @@ namespace ArcFormats.Palette
         public void Pack(string folderPath, string filePath)
         {
             string[] files = Directory.GetFiles(folderPath, "*.*", SearchOption.TopDirectoryOnly);
-            int nameLenSum = Utilities.GetNameLenSum(files, ArcEncoding.Shift_JIS);
+            int nameLenSum = Utilities.GetNameLengthSum(files, ArcEncoding.Shift_JIS);
             int fileCount = files.Length;
             int baseOffset = 10 + nameLenSum + 9 * fileCount;
 
