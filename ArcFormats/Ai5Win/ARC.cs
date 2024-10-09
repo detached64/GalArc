@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Utility;
 using Utility.Compression;
+using Utility.Extensions;
 
 namespace ArcFormats.Ai5Win
 {
@@ -19,8 +19,6 @@ namespace ArcFormats.Ai5Win
         }
 
         private readonly static int[] NameLengths = { 0x14, 0x18, 0x1E, 0x20, 0x100 };
-
-        private readonly static string[] ExtNeedLzss = { "mes", "lib", "a", "a6", "msk", "x" };
 
         private static string FolderPath;
 
@@ -41,7 +39,7 @@ namespace ArcFormats.Ai5Win
             {
                 fs.Position = entry.offset;
                 byte[] data = br.ReadBytes((int)entry.size);
-                if (ExtNeedLzss.Contains(Path.GetExtension(entry.filePath).TrimStart('.').ToLower()))
+                if (entry.filePath.HaveAnyOfExtensions("mes", "lib", "a", "a6", "msk", "x"))
                 {
                     File.WriteAllBytes(entry.filePath, Lzss.Decompress(data));
                 }

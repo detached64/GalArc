@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Utility;
 using Utility.Compression;
+using Utility.Extensions;
 
 namespace ArcFormats.Yuris
 {
@@ -127,6 +128,10 @@ namespace ArcFormats.Yuris
                 Entry entry = new Entry();
                 entry.nameLen = DecryptNameLength((byte)(br.ReadByte() ^ 0xff));
                 entry.fileName = ArcEncoding.Shift_JIS.GetString(DecryptName(br.ReadBytes(entry.nameLen)));
+                if (entry.fileName.ContainsInvalidChars())
+                {
+                    throw new Exception();
+                }
                 entry.filePath = Path.Combine(FolderPath, entry.fileName);
                 br.BaseStream.Position++;
                 entry.isPacked = br.ReadByte() != 0;
