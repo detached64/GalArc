@@ -38,7 +38,7 @@ namespace ArcFormats.Ai6Win
                 catch
                 { }
             }
-            LogUtility.Error_NotValidArchive();
+            LogUtility.ErrorInvalidArchive();
         }
 
         private static void UnpackAi6Win(string filePath, string folderPath)

@@ -37,7 +37,7 @@ namespace ArcFormats.BiShop
 
             if (!br.ReadBytes(8).SequenceEqual(magic)) // 'BSA'
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
 
             ushort version = br.ReadUInt16();
@@ -55,7 +55,7 @@ namespace ArcFormats.BiShop
             }
             else
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
         }
 

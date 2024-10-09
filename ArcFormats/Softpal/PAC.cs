@@ -88,7 +88,7 @@ namespace ArcFormats.Softpal
             BinaryReader br = new BinaryReader(fs);
             if (Encoding.ASCII.GetString(br.ReadBytes(4)) != "PAC ")
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
             br.ReadInt32();
             uint fileCount = br.ReadUInt32();

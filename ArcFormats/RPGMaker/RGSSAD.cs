@@ -19,7 +19,7 @@ namespace ArcFormats.RPGMaker
                 {
                     if (br.ReadUInt32() != 0x53534752) // "RGSS"
                     {
-                        LogUtility.Error_NotValidArchive();
+                        LogUtility.ErrorInvalidArchive();
                     }
                     fs.Position = 7;
                     version = br.ReadByte();

@@ -1,4 +1,5 @@
-﻿using ArcFormats.Templates;
+﻿using ArcFormats.Properties;
+using ArcFormats.Templates;
 using Log;
 using System;
 using System.IO;
@@ -176,7 +177,7 @@ namespace ArcFormats.Cmvs
             BinaryReader br = new BinaryReader(fs);
             if (Encoding.ASCII.GetString(br.ReadBytes(3)) != "CPZ")
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
 
             int version = br.ReadChar() - '0';
@@ -192,7 +193,7 @@ namespace ArcFormats.Cmvs
                     cpzV6_unpack(filePath, folderPath);
                     break;
                 default:
-                    LogUtility.Error($"cpz v{version} not implemented.");
+                    LogUtility.Error(Resources.logErrorNotSupportedVersion);
                     break;
             }
         }

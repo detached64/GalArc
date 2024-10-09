@@ -41,7 +41,7 @@ namespace ArcFormats.Triangle
             }
             else
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
         }
 

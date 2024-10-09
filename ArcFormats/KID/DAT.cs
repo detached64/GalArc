@@ -27,7 +27,7 @@ namespace ArcFormats.KID
             BinaryReader br = new BinaryReader(fs);
             if (Encoding.ASCII.GetString(br.ReadBytes(4)).TrimEnd('\0') != "LNK")
             {
-                LogUtility.Error_NotValidArchive();
+                LogUtility.ErrorInvalidArchive();
             }
             int fileCount = br.ReadInt32();
             br.ReadBytes(8);
