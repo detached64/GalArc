@@ -1,4 +1,5 @@
-﻿using Log;
+﻿using ArcFormats.Properties;
+using Log;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -80,7 +81,7 @@ namespace ArcFormats.NeXAS
 
                 if (entries[i].UnpackedSize != entries[i].PackedSize && method != Method.None && Enum.IsDefined(typeof(Method), method)) // compressed
                 {
-                    LogUtility.Debug("Packed file detected:" + entries[i].FileName + ".Try " + method.ToString() + "……");
+                    LogUtility.Debug(string.Format(Properties.Resources.logTryDecompressWithMethod, entries[i].FileName, method.ToString()));
                     try
                     {
                         switch (method)
@@ -104,7 +105,7 @@ namespace ArcFormats.NeXAS
                     }
                     catch (Exception ex)
                     {
-                        LogUtility.Error("Decompress " + method.ToString() + " failed:" + entries[i].FileName, false);
+                        LogUtility.Error(Resources.logErrorDecompressFailed, false);
                         LogUtility.Debug(ex.Message);
                     }
                 }

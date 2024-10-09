@@ -138,4 +138,13 @@
   <data name="logErrorEncScrFailed" xml:space="preserve">
     <value>加密失败。</value>
   </data>
+  <data name="logTryDecompress" xml:space="preserve">
+    <value>尝试解压缩：{0}……</value>
+  </data>
+  <data name="logErrorDecompressFailed" xml:space="preserve">
+    <value>解压缩失败。</value>
+  </data>
+  <data name="logTryDecompressWithMethod" xml:space="preserve">
+    <value>尝试以{1}方式解压缩：{0}……</value>
+  </data>
 </root>
