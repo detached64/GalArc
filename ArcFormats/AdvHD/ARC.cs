@@ -14,20 +14,20 @@ namespace ArcFormats.AdvHD
 
         public static UserControl PackExtraOptions = new PackARCOptions();
 
-        private struct HeaderV1
+        private class HeaderV1
         {
             public uint typeCount { get; set; }
             public uint fileCountAll { get; set; }
         }
 
-        private struct TypeHeaderV1
+        private class TypeHeaderV1
         {
-            public string ext { get; set; }
+            public string extension { get; set; }
             public uint fileCount { get; set; }
             public uint indexOffset { get; set; }
         }
 
-        private struct EntryV1
+        private class EntryV1
         {
             public string fileName { get; set; }
             public uint fileSize { get; set; }
@@ -48,21 +48,21 @@ namespace ArcFormats.AdvHD
             for (int i = 0; i < header.typeCount; i++)
             {
                 TypeHeaderV1 typeHeader = new TypeHeaderV1();
-                typeHeader.ext = Encoding.ASCII.GetString(br.ReadBytes(3));
+                typeHeader.extension = Encoding.ASCII.GetString(br.ReadBytes(3));
                 br.ReadByte();
                 typeHeader.fileCount = br.ReadUInt32();
                 typeHeader.indexOffset = br.ReadUInt32();
                 typeHeaders.Add(typeHeader);
                 header.fileCountAll += typeHeader.fileCount;
             }
-            LogUtility.InitBar((int)header.fileCountAll);
+            LogUtility.InitBar(header.fileCountAll);
 
             for (int i = 0; i < header.typeCount; i++)
             {
                 for (int j = 0; j < typeHeaders[i].fileCount; j++)
                 {
                     EntryV1 index = new EntryV1();
-                    index.fileName = Encoding.ASCII.GetString(br.ReadBytes(13)).Replace("\0", string.Empty) + "." + typeHeaders[i].ext;
+                    index.fileName = Encoding.ASCII.GetString(br.ReadBytes(13)).Replace("\0", string.Empty) + "." + typeHeaders[i].extension;
                     index.fileSize = br.ReadUInt32();
                     index.offset = br.ReadUInt32();
                     long pos = fs.Position;
@@ -89,7 +89,7 @@ namespace ArcFormats.AdvHD
 
             HeaderV1 header = new HeaderV1();
             header.fileCountAll = (uint)Utilities.GetFileCount_All(folderPath);
-            LogUtility.InitBar((int)header.fileCountAll);
+            LogUtility.InitBar(header.fileCountAll);
             string[] exts = Utilities.GetFileExtensions(folderPath);
             Utilities.InsertSort(exts);
             int extCount = exts.Length;
@@ -152,13 +152,13 @@ namespace ArcFormats.AdvHD
             bwdata.Dispose();
         }
 
-        private struct HeaderV2
+        private class HeaderV2
         {
             public uint fileCount { get; set; }
             public uint entrySize { get; set; }
         }
 
-        private struct EntryV2
+        private class EntryV2
         {
             public uint fileSize { get; set; }
             public uint offset { get; set; }
@@ -178,7 +178,7 @@ namespace ArcFormats.AdvHD
 
             header.fileCount = br1.ReadUInt32();
             header.entrySize = br1.ReadUInt32();
-            LogUtility.InitBar((int)header.fileCount);
+            LogUtility.InitBar(header.fileCount);
 
             for (int i = 0; i < header.fileCount; i++)
             {

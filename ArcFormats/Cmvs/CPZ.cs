@@ -70,7 +70,7 @@ namespace ArcFormats.Cmvs
             int fileCount = files.Length;
             bw.Write(fileCount);
             LogUtility.InitBar(fileCount);
-            long indexSize = 26 * fileCount + Utilities.GetNameLenSum(files, ArcEncoding.Shift_JIS);
+            long indexSize = 26 * fileCount + Utilities.GetNameLengthSum(files, ArcEncoding.Shift_JIS);
             bw.Write(indexSize * 2);
 
             long offset = 0;

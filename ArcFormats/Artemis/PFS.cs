@@ -69,8 +69,10 @@ namespace ArcFormats.Artemis
             if (header.version == "8")
             {
                 fs.Position = 7;
-                SHA1 sha = SHA1.Create();
-                key = sha.ComputeHash(br.ReadBytes((int)header.indexSize));
+                using (SHA1 sha = SHA1.Create())
+                {
+                    key = sha.ComputeHash(br.ReadBytes((int)header.indexSize));
+                }
                 fs.Position = 11;
             }
             // read index and save files
@@ -122,7 +124,7 @@ namespace ArcFormats.Artemis
                 version = Global.Version,
                 pathLenSum = 0
             };
-            List<Entry> index = new List<Entry>();
+            List<Entry> entries = new List<Entry>();
 
             header.fileCount = (uint)Utilities.GetFileCount_All(folderPath);
             LogUtility.InitBar(header.fileCount);
@@ -131,11 +133,11 @@ namespace ArcFormats.Artemis
             string[] pathString = new string[header.fileCount];
 
             //get path len and restore file info to pathString
-            DirectoryInfo d = new DirectoryInfo(folderPath);
+            string[] files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
             int i = 0;
-            foreach (FileInfo file in d.GetFiles("*.*", SearchOption.AllDirectories))
+            foreach (string file in files)
             {
-                pathString[i] = file.FullName.Replace(folderPath + "\\", string.Empty);
+                pathString[i] = file.Substring(folderPath.Length + 1);
                 i++;
             }
             Utilities.InsertSort(pathString);
@@ -143,7 +145,7 @@ namespace ArcFormats.Artemis
             //add entry
             for (int j = 0; j < header.fileCount; j++)
             {
-                Entry artemisEntry = new Entry()
+                Entry entry = new Entry()
                 {
                     size = (uint)new FileInfo(folderPath + "\\" + pathString[j]).Length,
                     relativePath = pathString[j],
@@ -151,8 +153,8 @@ namespace ArcFormats.Artemis
                     relativePathLen = Global.Encoding.GetByteCount(pathString[j])
                 };
 
-                index.Add(artemisEntry);
-                header.pathLenSum += (uint)artemisEntry.relativePathLen;
+                entries.Add(entry);
+                header.pathLenSum += (uint)entry.relativePathLen;
             }
 
             switch (Global.Version)
@@ -174,7 +176,7 @@ namespace ArcFormats.Artemis
                     long posIndexStart = ms8.Position - sizeof(uint);//0x7
                     uint offset8 = header.indexSize + 7;
 
-                    foreach (var file in index)
+                    foreach (var file in entries)
                     {
                         writer8.Write(file.relativePathLen);
                         writer8.Write(Global.Encoding.GetBytes(file.relativePath));
@@ -190,7 +192,7 @@ namespace ArcFormats.Artemis
                     uint total = 4;
 
                     //write table
-                    foreach (var file in index)
+                    foreach (var file in entries)
                     {
                         total = total + 4 + (uint)file.relativePathLen;
                         uint posOffset = total;
@@ -204,21 +206,21 @@ namespace ArcFormats.Artemis
                     writer8.Write(tablePos);
 
                     //write data
-                    byte[] xorKey = new byte[20];
+                    byte[] key = new byte[20];
                     using (SHA1 sha1 = SHA1.Create())
                     {
                         byte[] xorBuf = ms8.ToArray().Skip((int)posIndexStart).Take((int)header.indexSize).ToArray();
-                        xorKey = sha1.ComputeHash(xorBuf);
+                        key = sha1.ComputeHash(xorBuf);
                     }
-                    FileStream arc = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-                    ms8.WriteTo(arc);
-                    foreach (var file in index)
+                    FileStream fw8 = File.Create(filePath);
+                    ms8.WriteTo(fw8);
+                    foreach (var file in entries)
                     {
                         byte[] fileData = File.ReadAllBytes(file.fullPath);
-                        arc.Write(Xor.xor(fileData, xorKey), 0, fileData.Length);
+                        fw8.Write(Xor.xor(fileData, key), 0, fileData.Length);
                         LogUtility.UpdateBar();
                     }
-                    arc.Dispose();
+                    fw8.Dispose();
                     ms8.Dispose();
                     writer8.Dispose();
                     return;
@@ -237,7 +239,7 @@ namespace ArcFormats.Artemis
                     uint offset2 = header.indexSize + 7;
 
                     //write entry
-                    foreach (var file in index)
+                    foreach (var file in entries)
                     {
                         writer2.Write((uint)file.relativePathLen);
                         writer2.Write(Global.Encoding.GetBytes(file.relativePath));
@@ -250,17 +252,18 @@ namespace ArcFormats.Artemis
                     }
 
                     //write data
-                    FileStream arc1 = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-                    ms2.WriteTo(arc1);
+                    FileStream fw2 = File.Create(filePath);
+                    ms2.WriteTo(fw2);
 
-                    foreach (var file in index)
+                    foreach (var file in entries)
                     {
                         byte[] fileData = File.ReadAllBytes(file.fullPath);
-                        arc1.Write(fileData, 0, fileData.Length);
-
+                        fw2.Write(fileData, 0, fileData.Length);
                         LogUtility.UpdateBar();
                     }
-                    arc1.Dispose();
+                    fw2.Dispose();
+                    ms2.Dispose();
+                    writer2.Dispose();
                     return;
 
                 case "6":
@@ -277,7 +280,7 @@ namespace ArcFormats.Artemis
 
                     //write entry
                     uint offset6 = header.indexSize + 7;
-                    foreach (var file in index)
+                    foreach (var file in entries)
                     {
                         uint filenameSize = (uint)file.relativePathLen;//use utf-8 for japanese character in file name
                         writer6.Write(filenameSize);
@@ -294,7 +297,7 @@ namespace ArcFormats.Artemis
                     uint total6 = 4;
 
                     //write table
-                    foreach (var file in index)
+                    foreach (var file in entries)
                     {
                         total6 = total6 + 4 + (uint)file.relativePathLen;//use utf-8 for japanese character in file name
                         uint posOffset = total6;
@@ -308,16 +311,17 @@ namespace ArcFormats.Artemis
                     writer6.Write(tablePos6);
 
                     //write data
-                    FileStream arc2 = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-                    ms6.WriteTo(arc2);
-                    foreach (var file in index)
+                    FileStream fw6 = File.Create(filePath);
+                    ms6.WriteTo(fw6);
+                    foreach (var file in entries)
                     {
                         byte[] fileData = File.ReadAllBytes(file.fullPath);
-                        arc2.Write(fileData, 0, fileData.Length);
-
+                        fw6.Write(fileData, 0, fileData.Length);
                         LogUtility.UpdateBar();
                     }
-                    arc2.Close();
+                    fw6.Dispose();
+                    ms6.Dispose();
+                    writer6.Dispose();
                     return;
             }
         }

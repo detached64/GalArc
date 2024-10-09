@@ -1,6 +1,5 @@
 ﻿using Log;
 using System.IO;
-using System.Text;
 
 namespace ArcFormats.Triangle
 {
@@ -8,7 +7,7 @@ namespace ArcFormats.Triangle
     {
         public void Unpack(string filePath, string folderPath)
         {
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
             Directory.CreateDirectory(folderPath);
             int index = 1;
@@ -20,21 +19,23 @@ namespace ArcFormats.Triangle
                 index++;
             }
             fs.Dispose();
+            br.Dispose();
         }
 
         public void Pack(string folderPath, string filePath)
         {
-            FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
-            DirectoryInfo d = new DirectoryInfo(folderPath);
-            LogUtility.InitBar(d.GetFiles("*.ogg", SearchOption.TopDirectoryOnly).Length);
-            foreach (FileInfo file in d.GetFiles("*.ogg", SearchOption.TopDirectoryOnly))
+            string[] files = Directory.GetFiles(folderPath, ".ogg");
+            LogUtility.InitBar(files.Length);
+            foreach (string file in files)
             {
-                bw.Write((uint)file.Length);
-                bw.Write(File.ReadAllBytes(file.FullName));
+                bw.Write((uint)new FileInfo(file).Length);
+                bw.Write(File.ReadAllBytes(file));
                 LogUtility.UpdateBar();
             }
             fw.Dispose();
+            bw.Dispose();
         }
     }
 }
