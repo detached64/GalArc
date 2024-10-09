@@ -469,21 +469,22 @@ namespace GalArc
 
         private void btExecute_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(this.txtInputPath.Text))
+            {
+                LogUtility.Error(Resources.logErrorNeedSpecifyInput, false);
+                return;
+            }
+            if (string.IsNullOrEmpty(this.txtOutputPath.Text))
+            {
+                LogUtility.Error(Resources.logErrorNeedSpecifyOutput, false);
+                return;
+            }
+
             if (this.chkbxUnpack.Checked)
             {
-                if (string.IsNullOrEmpty(this.txtInputPath.Text))
-                {
-                    LogUtility.Error("Please specify input file path.", false);
-                    return;
-                }
-                if (string.IsNullOrEmpty(this.txtOutputPath.Text))
-                {
-                    LogUtility.Error("Please specify output folder path.", false);
-                    return;
-                }
                 if (!File.Exists(this.txtInputPath.Text))
                 {
-                    LogUtility.Error("File specified does not exist.", false);
+                    LogUtility.Error(Resources.logErrorFileNotFound, false);
                     return;
                 }
                 try
@@ -507,19 +508,9 @@ namespace GalArc
             }
             else if (this.chkbxPack.Checked)
             {
-                if (string.IsNullOrEmpty(this.txtInputPath.Text))
-                {
-                    LogUtility.Error("Please specify input folder path.", false);
-                    return;
-                }
-                if (string.IsNullOrEmpty(this.txtOutputPath.Text))
-                {
-                    LogUtility.Error("Please specify output file path.", false);
-                    return;
-                }
                 if (!Directory.Exists(this.txtInputPath.Text))
                 {
-                    LogUtility.Error("Folder specified does not exist.", false);
+                    LogUtility.Error(Resources.logErrorDirNotFound, false);
                     return;
                 }
                 try
@@ -543,7 +534,7 @@ namespace GalArc
             }
             else
             {
-                LogUtility.Error("Please select operation.", false);
+                LogUtility.Error(Resources.logErrorNeedSelectOperation, false);
                 return;
             }
         }

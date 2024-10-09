@@ -97,6 +97,51 @@ namespace GalArc.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Folder specified does not exist. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorDirNotFound {
+            get {
+                return ResourceManager.GetString("logErrorDirNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 File specified does not exist. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorFileNotFound {
+            get {
+                return ResourceManager.GetString("logErrorFileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Please select operation. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorNeedSelectOperation {
+            get {
+                return ResourceManager.GetString("logErrorNeedSelectOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Please specify input path. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorNeedSpecifyInput {
+            get {
+                return ResourceManager.GetString("logErrorNeedSpecifyInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Please specify output path. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorNeedSpecifyOutput {
+            get {
+                return ResourceManager.GetString("logErrorNeedSpecifyOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Pack mode: {0} {1} selected. 的本地化字符串。
         /// </summary>
         internal static string logSelectPackNode {

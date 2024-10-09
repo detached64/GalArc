@@ -207,5 +207,10 @@ namespace Log
         {
             Info(string.Format(Resources.logValidArchiveDetected, extension, version));
         }
+
+        public static void ShowVersion(string extension, string version)
+        {
+            Info(string.Format(Resources.logValidArchiveDetected, extension, version));
+        }
     }
 }

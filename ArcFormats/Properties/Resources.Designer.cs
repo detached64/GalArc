@@ -70,6 +70,15 @@ namespace ArcFormats.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Path contains invalid characters. Switching the encoding in the settings might work. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorContainsInvalid {
+            get {
+                return ResourceManager.GetString("logErrorContainsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Decompression failed. 的本地化字符串。
         /// </summary>
         internal static string logErrorDecompressFailed {
@@ -93,6 +102,15 @@ namespace ArcFormats.Properties {
         internal static string logErrorEncScrFailed {
             get {
                 return ResourceManager.GetString("logErrorEncScrFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 {0} v{1} archive temporarily not supported. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorNotSupportedVersion {
+            get {
+                return ResourceManager.GetString("logErrorNotSupportedVersion", resourceCulture);
             }
         }
         

@@ -120,4 +120,7 @@
   <data name="lbOriginalArc.Text" xml:space="preserve">
     <value>原压缩文件：</value>
   </data>
+  <data name="btSelect.Text" xml:space="preserve">
+    <value>…</value>
+  </data>
 </root>

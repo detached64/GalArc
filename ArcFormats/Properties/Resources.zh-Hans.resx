@@ -147,4 +147,10 @@
   <data name="logTryDecompressWithMethod" xml:space="preserve">
     <value>尝试以{1}方式解压缩：{0}……</value>
   </data>
+  <data name="logErrorContainsInvalid" xml:space="preserve">
+    <value>路径中有非法字符。在设置里切换编码或许能解决此问题。</value>
+  </data>
+  <data name="logErrorNotSupportedVersion" xml:space="preserve">
+    <value>{0} v{1}封包暂时不支持。</value>
+  </data>
 </root>

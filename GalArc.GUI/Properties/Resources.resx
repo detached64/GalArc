@@ -144,4 +144,19 @@
   <data name="logTimedOut" xml:space="preserve">
     <value>Timed out.</value>
   </data>
+  <data name="logErrorNeedSpecifyInput" xml:space="preserve">
+    <value>Please specify input path.</value>
+  </data>
+  <data name="logErrorNeedSpecifyOutput" xml:space="preserve">
+    <value>Please specify output path.</value>
+  </data>
+  <data name="logErrorFileNotFound" xml:space="preserve">
+    <value>File specified does not exist.</value>
+  </data>
+  <data name="logErrorDirNotFound" xml:space="preserve">
+    <value>Folder specified does not exist.</value>
+  </data>
+  <data name="logErrorNeedSelectOperation" xml:space="preserve">
+    <value>Please select operation.</value>
+  </data>
 </root>
