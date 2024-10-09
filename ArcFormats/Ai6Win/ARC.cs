@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Utility;
 using Utility.Compression;
+using Utility.Extensions;
 
 namespace ArcFormats.Ai6Win
 {
@@ -27,7 +28,7 @@ namespace ArcFormats.Ai6Win
                 () => UnpackArcNew(filePath, folderPath),
 
             };
-            foreach(var action in actions)
+            foreach (var action in actions)
             {
                 try
                 {
@@ -65,6 +66,10 @@ namespace ArcFormats.Ai6Win
                     key--;
                 }
                 entry.name = ArcEncoding.Shift_JIS.GetString(nameBuf, 0, nameLen);
+                if (entry.name.ContainsInvalidChars())
+                {
+                    throw new Exception();
+                }
                 entry.filePath = Path.Combine(folderPath, entry.name);
                 entry.packedSize = BigEndian.Read(br.ReadUInt32());
                 entry.unpackedSize = BigEndian.Read(br.ReadUInt32());
@@ -95,6 +100,10 @@ namespace ArcFormats.Ai6Win
                 byte[] nameBuf = br.ReadBytes(nameLen);
                 DecryptName(nameBuf, (byte)nameLen);
                 entry.name = ArcEncoding.Shift_JIS.GetString(nameBuf);
+                if (entry.name.ContainsInvalidChars())
+                {
+                    throw new Exception();
+                }
                 entry.filePath = Path.Combine(folderPath, entry.name);
                 entry.packedSize = BigEndian.Read(br.ReadUInt32());
                 entry.unpackedSize = BigEndian.Read(br.ReadUInt32());

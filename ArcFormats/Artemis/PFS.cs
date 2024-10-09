@@ -1,4 +1,5 @@
-﻿using ArcFormats.Templates;
+﻿using ArcFormats.Properties;
+using ArcFormats.Templates;
 using Log;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
 using Utility;
+using Utility.Extensions;
 
 namespace ArcFormats.Artemis
 {
@@ -16,159 +18,100 @@ namespace ArcFormats.Artemis
     {
         public static UserControl PackExtraOptions = new VersionOnly("8/6/2");
 
-        private struct Header
+        private static readonly string[] Versions = { "8", "6", "2" };
+
+        private class Header
         {
-            public string Magic { get; set; }
-            public string Version { get; set; }
-            public uint IndexSize { get; set; }
-            public uint FileCount { get; set; }
+            public string magic { get; } = "pf";
+            public string version { get; set; }
+            public uint indexSize { get; set; }
+            public uint fileCount { get; set; }
             public uint pathLenSum { get; set; }
         }
 
         private struct Entry
         {
-            public string filePath { get; set; }
-            public uint Size { get; set; }
-            public uint Offset { get; set; }
-            public int pathLen { get; set; }
-            public string path { get; set; }
+            public string fullPath { get; set; }
+            public uint size { get; set; }
+            public uint offset { get; set; }
+            public int relativePathLen { get; set; }
+            public string relativePath { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)
         {
             //init
-            Header header = new Header()
-            {
-                Magic = "pf",
-                FileCount = 0
-            };
+            Header header = new Header();
 
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            if (Encoding.ASCII.GetString(br.ReadBytes(2)) != header.Magic)
+
+            if (Encoding.ASCII.GetString(br.ReadBytes(2)) != header.magic)
             {
                 LogUtility.Error_NotValidArchive();
             }
-            header.Version = br.ReadByte().ToString();
-
-            switch (header.Version)
+            header.version = br.ReadChar().ToString();
+            if (!Versions.Contains(header.version))
             {
-                case "8":
-                    header.IndexSize = br.ReadUInt32();
-                    LogUtility.ShowVersion("pfs", 8);
-
-                    byte[] xorKey;
-                    byte[] headerBytes = br.ReadBytes((int)header.IndexSize);
-                    SHA1 sha = SHA1.Create();
-                    xorKey = sha.ComputeHash(headerBytes);
-
-                    fs.Seek(-header.IndexSize, SeekOrigin.Current);
-
-                    header.FileCount = br.ReadUInt32();
-
-                    long presPos8 = 0;
-
-                    //process
-                    LogUtility.InitBar((int)header.FileCount);
-
-                    for (int i = 0; i < header.FileCount; i++)
-                    {
-                        Entry entry = new Entry();
-                        entry.pathLen = br.ReadInt32();
-                        entry.filePath = folderPath + "\\" + Global.Encoding.GetString(br.ReadBytes(entry.pathLen));
-                        br.ReadUInt32(); // skip 4 unused bytes:0x00000000
-                        entry.Offset = br.ReadUInt32();
-                        entry.Size = br.ReadUInt32();
-
-                        Directory.CreateDirectory(Path.GetDirectoryName(entry.filePath));
-
-                        LogUtility.Debug(entry.filePath);
-                        using (FileStream fo = new FileStream(entry.filePath, FileMode.Create, FileAccess.Write))
-                        {
-                            presPos8 = fs.Position;
-                            fs.Seek(entry.Offset, SeekOrigin.Begin);
-
-                            for (int j = 0; j < entry.Size + 1; j += xorKey.Length)
-                            {
-                                int toRead = (int)Math.Min(entry.Size - j, xorKey.Length);
-                                byte[] buffer = br.ReadBytes(toRead);
-                                fo.Write(Xor.xor(buffer, xorKey), 0, toRead);
-                            }
-                            fs.Seek(presPos8, SeekOrigin.Begin);
-                        }
-                        LogUtility.UpdateBar();
-                    }
-                    fs.Dispose();
-                    br.Dispose();
-                    return;
-
-                case "2":
-                    header.IndexSize = br.ReadUInt32();
-                    LogUtility.ShowVersion("pfs", 2);
-                    br.ReadUInt32();//reserve 0x00000000
-                    header.FileCount = br.ReadUInt32();
-                    long presPos2 = 0;
-                    LogUtility.InitBar((int)header.FileCount);
-
-                    for (int i = 0; i < header.FileCount; i++)
-                    {
-                        Entry entry = new Entry();
-                        entry.pathLen = (int)br.ReadUInt32();
-                        entry.filePath = folderPath + "\\" + Global.Encoding.GetString(br.ReadBytes(entry.pathLen));
-                        br.ReadUInt32();//0x10000000
-                        br.ReadUInt32();//0x00000000
-                        br.ReadUInt32();//0x00000000
-                        entry.Offset = br.ReadUInt32();
-                        entry.Size = br.ReadUInt32();
-
-                        Directory.CreateDirectory(Path.GetDirectoryName(entry.filePath));
-
-                        presPos2 = fs.Position;
-                        fs.Seek(entry.Offset, SeekOrigin.Begin);
-                        byte[] buffer = br.ReadBytes((int)entry.Size);
-                        File.WriteAllBytes(entry.filePath, buffer);
-                        fs.Seek(presPos2, SeekOrigin.Begin);
-
-                        LogUtility.UpdateBar();
-                    }
-                    fs.Dispose();
-                    br.Dispose();
-                    return;
-
-                case "6":
-                    header.IndexSize = br.ReadUInt32();
-                    LogUtility.ShowVersion("pfs", 6);
-                    header.FileCount = br.ReadUInt32();
-                    long presPos6 = 0;//position at present
-                    LogUtility.InitBar((int)header.FileCount);
-
-                    //process
-                    for (int i = 0; i < header.FileCount; i++)
-                    {
-                        Entry entry = new Entry();
-                        entry.pathLen = br.ReadInt32();
-                        entry.filePath = folderPath + "\\" + Global.Encoding.GetString(br.ReadBytes(entry.pathLen));
-                        br.ReadUInt32(); // skip 4 unused bytes:0x00000000
-                        entry.Offset = br.ReadUInt32();
-                        entry.Size = br.ReadUInt32();
-
-                        Directory.CreateDirectory(Path.GetDirectoryName(entry.filePath));
-
-                        presPos6 = fs.Position;
-                        fs.Seek(entry.Offset, SeekOrigin.Begin);
-                        byte[] buffer = br.ReadBytes((int)entry.Size);
-                        File.WriteAllBytes(entry.filePath, buffer);
-                        fs.Seek(presPos6, SeekOrigin.Begin);
-
-                        LogUtility.UpdateBar();
-                    }
-                    fs.Dispose();
-                    br.Dispose();
-                    return;
-
-                default:
-                    throw new NotImplementedException($"pfs v{header.Version} archive temporarily not supported.");
+                LogUtility.Error(string.Format(Resources.logErrorNotSupportedVersion, "pfs", header.version));
             }
+            LogUtility.ShowVersion("pfs", header.version);
+            // read header
+            header.indexSize = br.ReadUInt32();
+            if (header.version == "2")
+            {
+                br.ReadUInt32();
+            }
+            header.fileCount = br.ReadUInt32();
+            LogUtility.InitBar(header.fileCount);
+            // compute key
+            byte[] key = new byte[20];  // SHA1 hash of index
+            if (header.version == "8")
+            {
+                fs.Position = 7;
+                SHA1 sha = SHA1.Create();
+                key = sha.ComputeHash(br.ReadBytes((int)header.indexSize));
+                fs.Position = 11;
+            }
+            // read index and save files
+            for (int i = 0; i < header.fileCount; i++)
+            {
+                Entry entry = new Entry();
+                entry.relativePathLen = br.ReadInt32();
+                string name = Global.Encoding.GetString(br.ReadBytes(entry.relativePathLen));
+                if (name.ContainsInvalidChars())
+                {
+                    throw new Exception(Resources.logErrorContainsInvalid);
+                }
+                entry.fullPath = Path.Combine(folderPath, name);
+
+                br.ReadUInt32();
+                if (header.version == "2")
+                {
+                    br.ReadBytes(8);
+                }
+                entry.offset = br.ReadUInt32();
+                entry.size = br.ReadUInt32();
+
+                string dir = Path.GetDirectoryName(entry.fullPath);
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+
+                long pos = fs.Position;
+                fs.Position = entry.offset;
+                byte[] buffer = br.ReadBytes((int)entry.size);
+                if (header.version == "8")
+                {
+                    buffer = Xor.xor(buffer, key);
+                }
+                File.WriteAllBytes(entry.fullPath, buffer);
+                fs.Position = pos;
+                LogUtility.UpdateBar();
+            }
+            fs.Dispose();
+            br.Dispose();
         }
 
         public void Pack(string folderPath, string filePath)
@@ -176,17 +119,16 @@ namespace ArcFormats.Artemis
             //init
             Header header = new Header()
             {
-                Magic = "pf",
-                Version = Global.Version,
+                version = Global.Version,
                 pathLenSum = 0
             };
             List<Entry> index = new List<Entry>();
 
-            header.FileCount = (uint)Utilities.GetFileCount_All(folderPath);
-            LogUtility.InitBar((int)header.FileCount);
+            header.fileCount = (uint)Utilities.GetFileCount_All(folderPath);
+            LogUtility.InitBar(header.fileCount);
 
             //new pathString array
-            string[] pathString = new string[header.FileCount];
+            string[] pathString = new string[header.fileCount];
 
             //get path len and restore file info to pathString
             DirectoryInfo d = new DirectoryInfo(folderPath);
@@ -199,58 +141,58 @@ namespace ArcFormats.Artemis
             Utilities.InsertSort(pathString);
 
             //add entry
-            for (int j = 0; j < header.FileCount; j++)
+            for (int j = 0; j < header.fileCount; j++)
             {
                 Entry artemisEntry = new Entry()
                 {
-                    Size = (uint)new FileInfo(folderPath + "\\" + pathString[j]).Length,
-                    path = pathString[j],
-                    filePath = folderPath + "\\" + pathString[j],
-                    pathLen = Global.Encoding.GetByteCount(pathString[j])
+                    size = (uint)new FileInfo(folderPath + "\\" + pathString[j]).Length,
+                    relativePath = pathString[j],
+                    fullPath = folderPath + "\\" + pathString[j],
+                    relativePathLen = Global.Encoding.GetByteCount(pathString[j])
                 };
 
                 index.Add(artemisEntry);
-                header.pathLenSum += (uint)artemisEntry.pathLen;
+                header.pathLenSum += (uint)artemisEntry.relativePathLen;
             }
 
             switch (Global.Version)
             {
                 case "8":
                     //compute indexsize
-                    header.IndexSize = 4 + 16 * header.FileCount + header.pathLenSum + 4 + 8 * header.FileCount + 12;
+                    header.indexSize = 4 + 16 * header.fileCount + header.pathLenSum + 4 + 8 * header.fileCount + 12;
                     //indexsize=(filecount)4byte+(pathlen+0x00000000+offset to begin+file size)16byte*filecount+pathlensum+(file count+1)4byte+8*filecount+(0x00000000)4byte*2+(offsettablebegin-0x7)4byte
 
                     //write header
-                    MemoryStream ms8 = new MemoryStream((int)(header.IndexSize + Marshal.SizeOf<Header>()));
+                    MemoryStream ms8 = new MemoryStream((int)(header.indexSize + Marshal.SizeOf<Header>()));
                     BinaryWriter writer8 = new BinaryWriter(ms8);
-                    writer8.Write(Encoding.ASCII.GetBytes(header.Magic));
-                    writer8.Write(Encoding.ASCII.GetBytes(header.Version));
-                    writer8.Write(header.IndexSize);
-                    writer8.Write(header.FileCount);
+                    writer8.Write(Encoding.ASCII.GetBytes(header.magic));
+                    writer8.Write(Encoding.ASCII.GetBytes(header.version));
+                    writer8.Write(header.indexSize);
+                    writer8.Write(header.fileCount);
 
                     //write entry
                     long posIndexStart = ms8.Position - sizeof(uint);//0x7
-                    uint offset8 = header.IndexSize + 7;
+                    uint offset8 = header.indexSize + 7;
 
                     foreach (var file in index)
                     {
-                        writer8.Write(file.pathLen);
-                        writer8.Write(Global.Encoding.GetBytes(file.path));
+                        writer8.Write(file.relativePathLen);
+                        writer8.Write(Global.Encoding.GetBytes(file.relativePath));
                         writer8.Write(0); // reserved
                         writer8.Write(offset8);
-                        writer8.Write(file.Size);
-                        offset8 += file.Size;
+                        writer8.Write(file.size);
+                        offset8 += file.size;
                     }
 
                     long posOffsetTable = ms8.Position;
-                    uint offsetCount = header.FileCount + 1;
+                    uint offsetCount = header.fileCount + 1;
                     writer8.Write(offsetCount);//filecount + 1
                     uint total = 4;
 
                     //write table
                     foreach (var file in index)
                     {
-                        total = total + 4 + (uint)file.pathLen;
+                        total = total + 4 + (uint)file.relativePathLen;
                         uint posOffset = total;
                         writer8.Write(posOffset);
                         writer8.Write(0); // reserved
@@ -265,14 +207,14 @@ namespace ArcFormats.Artemis
                     byte[] xorKey = new byte[20];
                     using (SHA1 sha1 = SHA1.Create())
                     {
-                        byte[] xorBuf = ms8.ToArray().Skip((int)posIndexStart).Take((int)header.IndexSize).ToArray();
+                        byte[] xorBuf = ms8.ToArray().Skip((int)posIndexStart).Take((int)header.indexSize).ToArray();
                         xorKey = sha1.ComputeHash(xorBuf);
                     }
                     FileStream arc = new FileStream(filePath, FileMode.Create, FileAccess.Write);
                     ms8.WriteTo(arc);
                     foreach (var file in index)
                     {
-                        byte[] fileData = File.ReadAllBytes(file.filePath);
+                        byte[] fileData = File.ReadAllBytes(file.fullPath);
                         arc.Write(Xor.xor(fileData, xorKey), 0, fileData.Length);
                         LogUtility.UpdateBar();
                     }
@@ -282,29 +224,29 @@ namespace ArcFormats.Artemis
                     return;
 
                 case "2":
-                    header.IndexSize = 8 + 24 * header.FileCount + header.pathLenSum;
+                    header.indexSize = 8 + 24 * header.fileCount + header.pathLenSum;
 
                     //write header
                     MemoryStream ms2 = new MemoryStream();
                     BinaryWriter writer2 = new BinaryWriter(ms2);
-                    writer2.Write(Encoding.ASCII.GetBytes(header.Magic));
-                    writer2.Write(Encoding.ASCII.GetBytes(header.Version));
-                    writer2.Write(header.IndexSize);
+                    writer2.Write(Encoding.ASCII.GetBytes(header.magic));
+                    writer2.Write(Encoding.ASCII.GetBytes(header.version));
+                    writer2.Write(header.indexSize);
                     writer2.Write((uint)0);
-                    writer2.Write(header.FileCount);
-                    uint offset2 = header.IndexSize + 7;
+                    writer2.Write(header.fileCount);
+                    uint offset2 = header.indexSize + 7;
 
                     //write entry
                     foreach (var file in index)
                     {
-                        writer2.Write((uint)file.pathLen);
-                        writer2.Write(Global.Encoding.GetBytes(file.path));
+                        writer2.Write((uint)file.relativePathLen);
+                        writer2.Write(Global.Encoding.GetBytes(file.relativePath));
                         writer2.Write((uint)16);
                         writer2.Write((uint)0);
                         writer2.Write((uint)0);
                         writer2.Write(offset2);
-                        writer2.Write(file.Size);
-                        offset2 += file.Size;
+                        writer2.Write(file.size);
+                        offset2 += file.size;
                     }
 
                     //write data
@@ -313,7 +255,7 @@ namespace ArcFormats.Artemis
 
                     foreach (var file in index)
                     {
-                        byte[] fileData = File.ReadAllBytes(file.filePath);
+                        byte[] fileData = File.ReadAllBytes(file.fullPath);
                         arc1.Write(fileData, 0, fileData.Length);
 
                         LogUtility.UpdateBar();
@@ -322,39 +264,39 @@ namespace ArcFormats.Artemis
                     return;
 
                 case "6":
-                    header.IndexSize = 4 + 16 * header.FileCount + header.pathLenSum + 4 + 8 * header.FileCount + 12;
+                    header.indexSize = 4 + 16 * header.fileCount + header.pathLenSum + 4 + 8 * header.fileCount + 12;
                     //indexsize=(filecount)4byte+(pathlen+0x00000000+offset to begin+file size)16byte*filecount+pathlensum+(file count+1)4byte+8*filecount+(0x00000000)4byte*2+(offsettablebegin-0x7)4byte
 
                     //write header
-                    MemoryStream ms6 = new MemoryStream((int)(header.IndexSize + Marshal.SizeOf<Header>()));
+                    MemoryStream ms6 = new MemoryStream((int)(header.indexSize + Marshal.SizeOf<Header>()));
                     BinaryWriter writer6 = new BinaryWriter(ms6);
-                    writer6.Write(Encoding.ASCII.GetBytes(header.Magic));
-                    writer6.Write(Encoding.ASCII.GetBytes(header.Version));
-                    writer6.Write(header.IndexSize);
-                    writer6.Write(header.FileCount);
+                    writer6.Write(Encoding.ASCII.GetBytes(header.magic));
+                    writer6.Write(Encoding.ASCII.GetBytes(header.version));
+                    writer6.Write(header.indexSize);
+                    writer6.Write(header.fileCount);
 
                     //write entry
-                    uint offset6 = header.IndexSize + 7;
+                    uint offset6 = header.indexSize + 7;
                     foreach (var file in index)
                     {
-                        uint filenameSize = (uint)file.pathLen;//use utf-8 for japanese character in file name
+                        uint filenameSize = (uint)file.relativePathLen;//use utf-8 for japanese character in file name
                         writer6.Write(filenameSize);
-                        writer6.Write(Global.Encoding.GetBytes(file.path));
+                        writer6.Write(Global.Encoding.GetBytes(file.relativePath));
                         writer6.Write(0); // reserved
                         writer6.Write(offset6);
-                        writer6.Write(file.Size);
-                        offset6 += file.Size;
+                        writer6.Write(file.size);
+                        offset6 += file.size;
                     }
 
                     long posOffsetTable6 = ms6.Position;
-                    uint offsetCount6 = header.FileCount + 1;
+                    uint offsetCount6 = header.fileCount + 1;
                     writer6.Write(offsetCount6);//filecount + 1
                     uint total6 = 4;
 
                     //write table
                     foreach (var file in index)
                     {
-                        total6 = total6 + 4 + (uint)file.pathLen;//use utf-8 for japanese character in file name
+                        total6 = total6 + 4 + (uint)file.relativePathLen;//use utf-8 for japanese character in file name
                         uint posOffset = total6;
                         writer6.Write(posOffset);
                         writer6.Write(0); // reserved
@@ -370,7 +312,7 @@ namespace ArcFormats.Artemis
                     ms6.WriteTo(arc2);
                     foreach (var file in index)
                     {
-                        byte[] fileData = File.ReadAllBytes(file.filePath);
+                        byte[] fileData = File.ReadAllBytes(file.fullPath);
                         arc2.Write(fileData, 0, fileData.Length);
 
                         LogUtility.UpdateBar();

@@ -55,6 +55,7 @@
     <Compile Include="Binary.cs" />
     <Compile Include="Bits.cs" />
     <Compile Include="Crc32.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Huffman.cs" />
     <Compile Include="Lzss.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
