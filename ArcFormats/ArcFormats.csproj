@@ -95,6 +95,12 @@
     <Compile Include="NScripter\NS2.cs" />
     <Compile Include="Palette\PAK.cs" />
     <Compile Include="PJADV\DAT.cs" />
+    <Compile Include="PJADV\PackDATOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PJADV\PackDATOptions.Designer.cs">
+      <DependentUpon>PackDATOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="PJADV\UnpackDATOptions.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -186,6 +192,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NitroPlus\PackPAKOptions.zh-Hans.resx">
       <DependentUpon>PackPAKOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PJADV\PackDATOptions.resx">
+      <DependentUpon>PackDATOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PJADV\PackDATOptions.zh-Hans.resx">
+      <DependentUpon>PackDATOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PJADV\UnpackDATOptions.resx">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
