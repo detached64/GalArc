@@ -127,4 +127,10 @@
   <data name="logTryDecompressWithMethod" xml:space="preserve">
     <value>Try to decompress {0} with {1}……</value>
   </data>
+  <data name="logErrorContainsInvalid" xml:space="preserve">
+    <value>Path contains invalid characters. Switching the encoding in the settings might work.</value>
+  </data>
+  <data name="logErrorNotSupportedVersion" xml:space="preserve">
+    <value>{0} v{1} archive temporarily not supported.</value>
+  </data>
 </root>

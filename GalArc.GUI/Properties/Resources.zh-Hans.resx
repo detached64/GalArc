@@ -144,4 +144,19 @@
   <data name="logTimedOut" xml:space="preserve">
     <value>连接超时。</value>
   </data>
+  <data name="logErrorNeedSpecifyInput" xml:space="preserve">
+    <value>请指定输入路径。</value>
+  </data>
+  <data name="logErrorNeedSpecifyOutput" xml:space="preserve">
+    <value>请指定输出路径。</value>
+  </data>
+  <data name="logErrorFileNotFound" xml:space="preserve">
+    <value>指定的文件不存在。</value>
+  </data>
+  <data name="logErrorDirNotFound" xml:space="preserve">
+    <value>指定的文件夹不存在。</value>
+  </data>
+  <data name="logErrorNeedSelectOperation" xml:space="preserve">
+    <value>请选择要执行的操作。</value>
+  </data>
 </root>
