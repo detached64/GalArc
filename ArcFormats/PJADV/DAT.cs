@@ -1,5 +1,4 @@
 ﻿using ArcFormats.Properties;
-using ArcFormats.Templates;
 using Log;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace ArcFormats.PJADV
     {
         public static UserControl UnpackExtraOptions = new UnpackDATOptions();
 
-        public static UserControl PackExtraOptions = new VersionOnly("1/2");
+        public static UserControl PackExtraOptions = new PackDATOptions();
 
         private class Entry
         {
@@ -122,6 +121,11 @@ namespace ArcFormats.PJADV
             foreach (Entry entry in entries)
             {
                 byte[] buffer = File.ReadAllBytes(entry.path);
+                if (PackDATOptions.toEncryptScripts && entry.name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(new byte[] { 0x95, 0x6b, 0x3c, 0x9d, 0x63 }))
+                {
+                    LogUtility.Debug(string.Format(Resources.logTryEncScr, entry.name));
+                    DecryptScript(buffer);
+                }
                 bw.Write(buffer);
                 LogUtility.UpdateBar();
             }
@@ -142,9 +146,9 @@ namespace ArcFormats.PJADV
 
     public class PAK : DAT
     {
-        public static new UserControl UnpackExtraOptions = new UnpackDATOptions();
+        public static new UserControl UnpackExtraOptions = DAT.UnpackExtraOptions;
 
-        public static new UserControl PackExtraOptions = new VersionOnly("1/2");
+        public static new UserControl PackExtraOptions = DAT.PackExtraOptions;
     }
 
 }
