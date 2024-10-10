@@ -123,7 +123,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="log_txtLog.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 12</value>
+    <value>30, 12</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="log_txtLog.Multiline" type="System.Boolean, mscorlib">
@@ -133,7 +133,7 @@
     <value>Vertical</value>
   </data>
   <data name="log_txtLog.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1097, 230</value>
+    <value>1069, 230</value>
   </data>
   <data name="log_txtLog.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -157,7 +157,7 @@
     <value>True</value>
   </data>
   <data name="log_chkbxDebug.Location" type="System.Drawing.Point, System.Drawing">
-    <value>904, 254</value>
+    <value>890, 254</value>
   </data>
   <data name="log_chkbxDebug.Size" type="System.Drawing.Size, System.Drawing">
     <value>95, 28</value>
@@ -187,7 +187,7 @@
     <value>True</value>
   </data>
   <data name="log_btnClear.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 250</value>
+    <value>137, 250</value>
   </data>
   <data name="log_btnClear.Size" type="System.Drawing.Size, System.Drawing">
     <value>101, 34</value>
@@ -214,7 +214,7 @@
     <value>Bottom, Left</value>
   </data>
   <data name="log_btnResize.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 250</value>
+    <value>30, 250</value>
   </data>
   <data name="log_btnResize.Size" type="System.Drawing.Size, System.Drawing">
     <value>101, 34</value>
@@ -244,7 +244,7 @@
     <value>True</value>
   </data>
   <data name="log_chkbxSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1005, 254</value>
+    <value>991, 254</value>
   </data>
   <data name="log_chkbxSave.Size" type="System.Drawing.Size, System.Drawing">
     <value>108, 28</value>
@@ -274,7 +274,7 @@
     <value>311, 252</value>
   </data>
   <data name="bar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>517, 30</value>
+    <value>513, 30</value>
   </data>
   <data name="bar.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -298,16 +298,19 @@
     <value>11, 24</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1129, 293</value>
+    <value>1125, 306</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>微软雅黑, 9pt</value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
   <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>1151, 200</value>
+    <value>1147, 200</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>Manual</value>

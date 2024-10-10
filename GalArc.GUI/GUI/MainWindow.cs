@@ -45,10 +45,11 @@ namespace GalArc
 
             LogUtility.NewInstance();
 
-            LogWindow logWindow = new LogWindow();
-            LogWindow.ChangeLocalSettings(Settings.Default.AutoSaveState);
-
             InitializeComponent();
+
+            LogWindow logWindow = new LogWindow(this.Width, this.Height);
+            LogWindow.ChangeLocalSettings(Settings.Default.AutoSaveState);
+            LogWindow.Instance.Owner = this;
 
             LogUtility.Process += ChangeStatus;
             LogUtility.ErrorOccured += ChangeStatus;
@@ -116,11 +117,6 @@ namespace GalArc
             }
         }
 
-        private void main_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            LogWindow.Instance.Dispose();
-        }
-
         private void main_LocationChanged(object sender, EventArgs e)
         {
             LogWindow.Instance.ChangePosition(this.Location.X, this.Location.Y);
@@ -138,21 +134,6 @@ namespace GalArc
                 this.chkbxShowLog.Checked = !this.chkbxShowLog.Checked;
             }
             e.Handled = true;
-        }
-
-        internal void BringMainToFront()
-        {
-            if (this.TopMost)
-            {
-                this.TopMost = false;
-                this.TopMost = true;
-            }
-            else
-            {
-                this.TopMost = true;
-                this.TopMost = false;
-            }
-            this.BringToFront();
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -543,13 +524,11 @@ namespace GalArc
         {
             LogWindow.Instance.ChangePosition(this.Location.X, this.Location.Y);
             LogWindow.Instance.Visible = this.chkbxShowLog.Checked;
-            this.BringMainToFront();
             if (Settings.Default.AutoSaveState)
             {
                 Settings.Default.chkbxShowLog_checked = this.chkbxShowLog.Checked;
                 Settings.Default.Save();
             }
         }
-
     }
 }

@@ -34,15 +34,20 @@ namespace Log
 
         private static int m_main_X;
         private static int m_main_Y;
+        private static int m_main_Width;
+        private static int m_main_Height;
 
-        private static int Width_delta = 0;
+        private static readonly int HeightDelta = 12;
 
-        public LogWindow()
+        public LogWindow(int w, int h)
         {
             Instance = this;
             InitializeComponent();
             m_Width = this.Size.Width;
             m_Height = this.Size.Height;
+
+            m_main_Width = w;
+            m_main_Height = h;
         }
 
         private void LogWindow_Load(object sender, EventArgs e)
@@ -58,12 +63,6 @@ namespace Log
             }
         }
 
-        private void Log_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            e.Cancel = true;
-            this.Hide();
-        }
-
         private void log_btnClear_Click(object sender, EventArgs e)
         {
             this.log_txtLog.Clear();
@@ -71,25 +70,15 @@ namespace Log
 
         public void ChangePosition(int main_X, int main_Y)
         {
-            Width_delta = this.Location.X - m_main_X;
-            this.Location = new Point(main_X + Width_delta, main_Y + 788 - 12);
+            this.Location = new Point(main_X, main_Y + m_main_Height - HeightDelta);
             m_main_X = main_X;
             m_main_Y = main_Y;
-            //this.Location.Y = main_Y + main.Main.Location.Y - delta
-            //delta = 12
-        }
-        private void ChangePositionWithoutDelta(int main_X, int main_Y)
-        {
-            this.Location = new Point(main_X, main_Y + 788 - 12);
-            m_main_X = main_X;
-            m_main_Y = main_Y;
-            Width_delta = 0;
         }
 
         private void log_btnResize_Click(object sender, EventArgs e)
         {
             this.Size = new Size(Width = m_Width, Height = m_Height);
-            ChangePositionWithoutDelta(m_main_X, m_main_Y);
+            ChangePosition(m_main_X, m_main_Y);
         }
 
         private void log_chkbxDebug_CheckedChanged(object sender, EventArgs e)
