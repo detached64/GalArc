@@ -57,8 +57,8 @@
             // 
             // lbStatus
             // 
-            resources.ApplyResources(this.lbStatus, "lbStatus");
             this.lbStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.lbStatus, "lbStatus");
             this.lbStatus.Name = "lbStatus";
             // 
             // menuStrip
@@ -121,8 +121,10 @@
             // 
             // treeViewEngines
             // 
-            resources.ApplyResources(this.treeViewEngines, "treeViewEngines");
             this.treeViewEngines.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.treeViewEngines.HideSelection = false;
+            this.treeViewEngines.HotTracking = true;
+            resources.ApplyResources(this.treeViewEngines, "treeViewEngines");
             this.treeViewEngines.Name = "treeViewEngines";
             this.treeViewEngines.PathSeparator = "/";
             this.treeViewEngines.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEngines_AfterSelect);
@@ -150,15 +152,15 @@
             // txtOutputPath
             // 
             this.txtOutputPath.AllowDrop = true;
-            resources.ApplyResources(this.txtOutputPath, "txtOutputPath");
             this.txtOutputPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.txtOutputPath, "txtOutputPath");
             this.txtOutputPath.Name = "txtOutputPath";
             // 
             // txtInputPath
             // 
             this.txtInputPath.AllowDrop = true;
-            resources.ApplyResources(this.txtInputPath, "txtInputPath");
             this.txtInputPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.txtInputPath, "txtInputPath");
             this.txtInputPath.Name = "txtInputPath";
             this.txtInputPath.TextChanged += new System.EventHandler(this.txtInputPath_TextChanged);
             // 
@@ -244,7 +246,6 @@
             this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
             this.Name = "MainWindow";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.main_FormClosing);
             this.Load += new System.EventHandler(this.main_Load);
             this.LocationChanged += new System.EventHandler(this.main_LocationChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.main_KeyDown);

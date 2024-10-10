@@ -117,16 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lbStatus.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left, Right</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lbStatus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 691</value>
+    <value>30, 691</value>
   </data>
   <data name="lbStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1018, 27</value>
+    <value>966, 27</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="lbStatus.TabIndex" type="System.Int32, mscorlib">
@@ -159,6 +155,7 @@
   <data name="preferenceToolStripMenuItem.Text" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="combLang.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>System</value>
   </data>
@@ -199,7 +196,7 @@
     <value>0, 0</value>
   </data>
   <data name="menuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1129, 32</value>
+    <value>1125, 32</value>
   </data>
   <data name="menuStrip.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -219,14 +216,11 @@
   <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
     <value>15</value>
   </data>
-  <data name="treeViewEngines.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left</value>
-  </data>
   <data name="treeViewEngines.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 91</value>
+    <value>30, 91</value>
   </data>
   <data name="treeViewEngines.Size" type="System.Drawing.Size, System.Drawing">
-    <value>201, 593</value>
+    <value>201, 585</value>
   </data>
   <data name="treeViewEngines.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -247,7 +241,7 @@
     <value>True</value>
   </data>
   <data name="chkbxUnpack.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 53</value>
+    <value>30, 53</value>
   </data>
   <data name="chkbxUnpack.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 28</value>
@@ -274,7 +268,7 @@
     <value>True</value>
   </data>
   <data name="chkbxPack.Location" type="System.Drawing.Point, System.Drawing">
-    <value>122, 53</value>
+    <value>136, 53</value>
   </data>
   <data name="chkbxPack.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 28</value>
@@ -301,7 +295,7 @@
     <value>True</value>
   </data>
   <data name="lbInput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>269, 52</value>
+    <value>259, 53</value>
   </data>
   <data name="lbInput.Size" type="System.Drawing.Size, System.Drawing">
     <value>56, 24</value>
@@ -324,14 +318,11 @@
   <data name="&gt;&gt;lbInput.ZOrder" xml:space="preserve">
     <value>10</value>
   </data>
-  <data name="txtOutputPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
   <data name="txtOutputPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>273, 183</value>
+    <value>263, 183</value>
   </data>
   <data name="txtOutputPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>762, 31</value>
+    <value>786, 31</value>
   </data>
   <data name="txtOutputPath.TabIndex" type="System.Int32, mscorlib">
     <value>21</value>
@@ -348,14 +339,11 @@
   <data name="&gt;&gt;txtOutputPath.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
-  <data name="txtInputPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
   <data name="txtInputPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>273, 91</value>
+    <value>263, 91</value>
   </data>
   <data name="txtInputPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>762, 31</value>
+    <value>786, 31</value>
   </data>
   <data name="txtInputPath.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
@@ -376,7 +364,7 @@
     <value>True</value>
   </data>
   <data name="lbOutput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>269, 144</value>
+    <value>259, 144</value>
   </data>
   <data name="lbOutput.Size" type="System.Drawing.Size, System.Drawing">
     <value>73, 24</value>
@@ -399,11 +387,8 @@
   <data name="&gt;&gt;lbOutput.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="btSelInput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
   <data name="btSelInput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1041, 91</value>
+    <value>1055, 91</value>
   </data>
   <data name="btSelInput.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 31</value>
@@ -426,11 +411,8 @@
   <data name="&gt;&gt;btSelInput.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="btSelOutput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
   <data name="btSelOutput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1041, 183</value>
+    <value>1055, 183</value>
   </data>
   <data name="btSelOutput.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 31</value>
@@ -453,11 +435,8 @@
   <data name="&gt;&gt;btSelOutput.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="btClear.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
   <data name="btClear.Location" type="System.Drawing.Point, System.Drawing">
-    <value>751, 236</value>
+    <value>765, 236</value>
   </data>
   <data name="btClear.Size" type="System.Drawing.Size, System.Drawing">
     <value>133, 38</value>
@@ -487,7 +466,7 @@
     <value>True</value>
   </data>
   <data name="chkbxMatch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>644, 242</value>
+    <value>658, 242</value>
   </data>
   <data name="chkbxMatch.Size" type="System.Drawing.Size, System.Drawing">
     <value>91, 28</value>
@@ -513,11 +492,8 @@
   <data name="&gt;&gt;chkbxMatch.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="btExecute.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
   <data name="btExecute.Location" type="System.Drawing.Point, System.Drawing">
-    <value>902, 236</value>
+    <value>916, 236</value>
   </data>
   <data name="btExecute.Size" type="System.Drawing.Size, System.Drawing">
     <value>133, 38</value>
@@ -547,7 +523,7 @@
     <value>True</value>
   </data>
   <data name="chkbxShowLog.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1049, 690</value>
+    <value>1018, 691</value>
   </data>
   <data name="chkbxShowLog.Size" type="System.Drawing.Size, System.Drawing">
     <value>68, 28</value>
@@ -570,11 +546,8 @@
   <data name="&gt;&gt;chkbxShowLog.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="gbOptions.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
   <data name="gbOptions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>249, 283</value>
+    <value>263, 283</value>
   </data>
   <data name="gbOptions.Size" type="System.Drawing.Size, System.Drawing">
     <value>823, 393</value>
@@ -604,7 +577,7 @@
     <value>11, 24</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1129, 732</value>
+    <value>1125, 739</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>微软雅黑, 9pt</value>
