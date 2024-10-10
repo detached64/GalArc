@@ -27,7 +27,6 @@ using Log;
 using System;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 
 namespace Utility.Compression
 {
@@ -103,6 +102,18 @@ namespace Utility.Compression
             }
         }
 
+        public static void AppendCompressedFile(Stream Stream, string inputFilePath, CompressionLevel compressionLevel = CompressionLevel.Optimal)
+        {
+            using (Stream fileStream = File.OpenRead(inputFilePath))
+            {
+                using (ZlibCompressStream compressionStream = new ZlibCompressStream(Stream, compressionLevel))
+                {
+                    fileStream.CopyTo(compressionStream);
+                }
+            }
+        }
+
+
         /// <summary>
         /// Compress byte array.
         /// </summary>
@@ -146,23 +157,25 @@ namespace Utility.Compression
         /// <summary>
         /// Decompress byte array.
         /// </summary>
-        /// <param name="inputData"></param>
+        /// <param name="input"></param>
         /// <returns></returns>
-        public static byte[] DecompressBytes(byte[] inputData)
+        public static byte[] DecompressBytes(byte[] input)
         {
-            byte[] result = new byte[inputData.Length];
-            Array.Copy(inputData, result, inputData.Length);
+            byte[] result = new byte[input.Length];
+            Array.Copy(input, result, input.Length);
             using (MemoryStream inputStream = new MemoryStream(result))
-            using (BinaryReader br = new BinaryReader(inputStream))
             {
-                byte magic1 = br.ReadByte();
-                byte magic2 = br.ReadByte();
-                using (MemoryStream outputStream = new MemoryStream())
+                using (BinaryReader br = new BinaryReader(inputStream))
                 {
-                    if (magic1 != 0x78 || (magic2 != 0x01 && magic2 != 0x9c && magic2 != 0xda))
+                    byte magic1 = br.ReadByte();
+                    byte magic2 = br.ReadByte();
+                    using (MemoryStream outputStream = new MemoryStream())
                     {
-                        //raw deflate
-                        inputStream.Position -= 2;
+                        if (magic1 != 0x78 || (magic2 != 0x01 && magic2 != 0x9c && magic2 != 0xda))
+                        {
+                            // raw deflate
+                            inputStream.Position -= 2;
+                        }
                         try
                         {
                             using (DeflateStream decompressed = new DeflateStream(inputStream, CompressionMode.Decompress, true))
@@ -174,17 +187,9 @@ namespace Utility.Compression
                         {
                             LogUtility.Error(e.Message);
                         }
+
+                        return outputStream.ToArray();
                     }
-                    else
-                    {
-                        //zlib
-                        inputStream.SetLength(inputStream.Length - 4);          //remove checksum
-                        using (DeflateStream decompressed = new DeflateStream(inputStream, CompressionMode.Decompress, true))
-                        {
-                            decompressed.CopyTo(outputStream);
-                        }
-                    }
-                    return outputStream.ToArray();
                 }
             }
         }
