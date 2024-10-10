@@ -32,6 +32,7 @@ namespace GalArc.Resource
             new EngineInfo("KID","DAT","DAT"),
             new EngineInfo("Kirikiri","XP3","XP3"),
             new EngineInfo("Majiro","ARC","ARC"),
+            new EngineInfo("NekoSDK","PAK","PAK"),
             new EngineInfo("NeXAS","PAC", string.Empty),
             new EngineInfo("NextonLikeC","LST",string.Empty),
             new EngineInfo("NitroPlus","PAK","PAK"),
