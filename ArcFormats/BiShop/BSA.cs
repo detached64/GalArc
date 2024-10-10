@@ -156,7 +156,8 @@ namespace ArcFormats.BiShop
             bw.Write(magic);
             bw.Write((ushort)1);
             int fileCount = Utilities.GetFileCount_TopOnly(folderPath);
-            LogUtility.InitBar(fileCount + 1);
+            LogUtility.InitBar(fileCount);
+            LogWindow.Instance.bar.Maximum = fileCount + 1;
             bw.Write((ushort)fileCount);
             bw.Write(0);
             // data

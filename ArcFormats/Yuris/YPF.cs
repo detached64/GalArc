@@ -108,10 +108,14 @@ namespace ArcFormats.Yuris
                     LogUtility.Debug($"Try Table {tables.Count - tables.IndexOf(table)} , Extra Length = {length}……");
                     try
                     {
+                        entries.Clear();
                         ReadIndex(br, fileCount);
                         return;
                     }
-                    catch { }
+                    catch
+                    {
+                        continue;
+                    }
                 }
             }
             LogUtility.Error("Failed to read index.");
@@ -120,7 +124,6 @@ namespace ArcFormats.Yuris
         private static void ReadIndex(BinaryReader br, int fileCount)
         {
             br.BaseStream.Position = 32;
-            entries.Clear();
 
             for (int i = 0; i < fileCount; i++)
             {

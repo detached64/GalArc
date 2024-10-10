@@ -16,7 +16,7 @@ namespace ArcFormats.Softpal
 
         public static UserControl PackExtraOptions = new PackPACOptions();
 
-        private static byte[] magicV2 = { 0x50, 0x41, 0x43, 0x20 };     //"PAC "
+        private static byte[] magic = { 0x50, 0x41, 0x43, 0x20 };     //"PAC "
         private struct Entry
         {
             public string fileName { get; set; }
@@ -28,7 +28,7 @@ namespace ArcFormats.Softpal
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            bool isVer1 = !br.ReadBytes(4).SequenceEqual(magicV2);
+            bool isVer1 = !br.ReadBytes(4).SequenceEqual(magic);
             fs.Dispose();
             br.Dispose();
             if (isVer1)
@@ -61,14 +61,14 @@ namespace ArcFormats.Softpal
                 entry.offset = br.ReadUInt32();
                 entries.Add(entry);
             }
-            for (int i = 0; i < fileCount; i++)
+            foreach (Entry entry in entries)
             {
-                byte[] data = br.ReadBytes((int)entries[i].fileSize);
+                byte[] data = br.ReadBytes((int)entry.fileSize);
                 if (UnpackPACOptions.toDecryptScripts && data.Length >= 16 && data[0] == 36)  //'$'
                 {
                     try
                     {
-                        LogUtility.Debug(string.Format(Resources.logTryDecScr, entries[i].fileName));
+                        LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.fileName));
                         DecryptScript(data);
                     }
                     catch
@@ -76,7 +76,7 @@ namespace ArcFormats.Softpal
                         LogUtility.Error(Resources.logErrorDecScrFailed, false);
                     }
                 }
-                File.WriteAllBytes(Path.Combine(folderPath, entries[i].fileName), data);
+                File.WriteAllBytes(Path.Combine(folderPath, entry.fileName), data);
                 LogUtility.UpdateBar();
             }
             fs.Dispose();
@@ -240,7 +240,7 @@ namespace ArcFormats.Softpal
             FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
             BinaryWriter bw = new BinaryWriter(fw);
             //header
-            bw.Write(magicV2);
+            bw.Write(magic);
             bw.Write(0);
             bw.Write(fileCount);
             //index
