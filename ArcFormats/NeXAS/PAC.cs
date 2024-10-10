@@ -18,31 +18,34 @@ namespace ArcFormats.NeXAS
             Lzss,
             Huffman,
             Zlib,
+            Zlib1,
+            Zlib2,
             Zstd = 7
         }
 
-        private struct Entry
+        private class Entry
         {
-            public string FileName;
-            public string FilePath;
-            public int Offset;
-            public int UnpackedSize;
-            public int PackedSize;
+            public string FileName { get; set; }
+            public string FilePath { get; set; }
+            public int Offset { get; set; }
+            public int UnpackedSize { get; set; }
+            public int PackedSize { get; set; }
         }
+
         private static string FolderPath = string.Empty;
 
-        private static Encoding encodings = Encoding.UTF8;
+        private static Encoding encoding = Encoding.UTF8;
 
-        private static List<Entry> entries = new List<Entry>();
+        private static readonly List<Entry> entries = new List<Entry>();
 
-        private static byte[] signature = { 0x50, 0x41, 0x43 };       //"PAC"
+        private static readonly byte[] signature = { 0x50, 0x41, 0x43 };       // "PAC"
 
         public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader reader = new BinaryReader(fs);
             FolderPath = folderPath;
-            encodings = Global.Encoding;
+            encoding = Global.Encoding;
             if (!reader.ReadBytes(3).SequenceEqual(signature))
             {
                 LogUtility.ErrorInvalidArchive();
@@ -50,56 +53,44 @@ namespace ArcFormats.NeXAS
             reader.ReadByte();
             long fileSize = reader.BaseStream.Length;
             int fileCount = reader.ReadInt32();
-            int methodCount = reader.ReadInt32();
-            switch (methodCount)
+
+            Method method = (Method)reader.ReadInt32();
+            if (method == Method.Zlib1 || method == Method.Zlib2)
             {
-                case 4:
-                case 5:
-                    methodCount = 3;
-                    break;
+                method = Method.Zlib;
             }
-            Method method = (Method)methodCount;
+
             Directory.CreateDirectory(folderPath);
             LogUtility.InitBar(fileCount);
 
-            ReadOldIndex(reader, fileCount, out bool isSuccess);
-            if (!isSuccess)
-            {
-                entries.Clear();
-                ReadNewIndex(reader, fileCount, out isSuccess);
-            }
-            if (!isSuccess)
-            {
-                LogUtility.Error("Failed to read index.");
-                return;
-            }
+            TryReadIndex(reader, fileCount);
 
-            for (int i = 0; i < fileCount; i++)
+            foreach (Entry entry in entries)
             {
-                fs.Seek(entries[i].Offset, SeekOrigin.Begin);
-                byte[] fileData = reader.ReadBytes(entries[i].PackedSize);
+                fs.Seek(entry.Offset, SeekOrigin.Begin);
+                byte[] fileData = reader.ReadBytes(entry.PackedSize);
 
-                if (entries[i].UnpackedSize != entries[i].PackedSize && method != Method.None && Enum.IsDefined(typeof(Method), method)) // compressed
+                if (entry.UnpackedSize != entry.PackedSize && method != Method.None && Enum.IsDefined(typeof(Method), method)) // compressed
                 {
-                    LogUtility.Debug(string.Format(Properties.Resources.logTryDecompressWithMethod, entries[i].FileName, method.ToString()));
+                    LogUtility.Debug(string.Format(Resources.logTryDecompressWithMethod, entry.FileName, method.ToString()));
                     try
                     {
                         switch (method)
                         {
                             case Method.Huffman:
-                                File.WriteAllBytes(entries[i].FilePath, Huffman.Decompress(fileData, entries[i].UnpackedSize));
+                                File.WriteAllBytes(entry.FilePath, Huffman.Decompress(fileData, entry.UnpackedSize));
                                 break;
 
                             case Method.Lzss:
-                                File.WriteAllBytes(entries[i].FilePath, Lzss.Decompress(fileData));
+                                File.WriteAllBytes(entry.FilePath, Lzss.Decompress(fileData));
                                 break;
 
                             case Method.Zlib:
-                                File.WriteAllBytes(entries[i].FilePath, Zlib.DecompressBytes(fileData));
+                                File.WriteAllBytes(entry.FilePath, Zlib.DecompressBytes(fileData));
                                 break;
 
                             case Method.Zstd:
-                                File.WriteAllBytes(entries[i].FilePath, Zstd.Decompress(fileData));
+                                File.WriteAllBytes(entry.FilePath, Zstd.Decompress(fileData));
                                 break;
                         }
                     }
@@ -109,42 +100,55 @@ namespace ArcFormats.NeXAS
                         LogUtility.Debug(ex.Message);
                     }
                 }
-                else                                                    // No compression or unknown method
+                else    // No compression or unknown method
                 {
-                    File.WriteAllBytes(entries[i].FilePath, fileData);
+                    File.WriteAllBytes(entry.FilePath, fileData);
                 }
                 LogUtility.UpdateBar();
             }
-            entries.Clear();
             fs.Dispose();
             reader.Dispose();
         }
 
-        private static void ReadOldIndex(BinaryReader reader, int fileCount, out bool isSuccess)
+        private static void TryReadIndex(BinaryReader reader, int fileCount)
         {
-            reader.BaseStream.Position = 12;
-            try
+            List<Action> actions = new List<Action>()
             {
-                for (int i = 0; i < fileCount; i++)
+                () => ReadNewIndex(reader, fileCount),
+                () => ReadOldIndex(reader, fileCount),
+            };
+            foreach (Action action in actions)
+            {
+                try
                 {
-                    Entry entry = new Entry();
-                    entry.FileName = encodings.GetString(reader.ReadBytes(64)).TrimEnd('\0');
-                    entry.FilePath = Path.Combine(FolderPath, entry.FileName);
-                    entry.Offset = reader.ReadInt32();
-                    entry.UnpackedSize = reader.ReadInt32();
-                    entry.PackedSize = reader.ReadInt32();
-                    entries.Add(entry);
+                    entries.Clear();
+                    action();
+                    return;
+                }
+                catch
+                {
+                    continue;
                 }
             }
-            catch
-            {
-                isSuccess = false;
-                return;
-            }
-            isSuccess = true;
+            LogUtility.Error(Resources.logErrorContainsInvalid);
         }
 
-        private static void ReadNewIndex(BinaryReader reader, int fileCount, out bool isSuccess)
+        private static void ReadOldIndex(BinaryReader reader, int fileCount)
+        {
+            reader.BaseStream.Position = 12;
+            for (int i = 0; i < fileCount; i++)
+            {
+                Entry entry = new Entry();
+                entry.FileName = encoding.GetString(reader.ReadBytes(64)).TrimEnd('\0');
+                entry.FilePath = Path.Combine(FolderPath, entry.FileName);
+                entry.Offset = reader.ReadInt32();
+                entry.UnpackedSize = reader.ReadInt32();
+                entry.PackedSize = reader.ReadInt32();
+                entries.Add(entry);
+            }
+        }
+
+        private static void ReadNewIndex(BinaryReader reader, int fileCount)
         {
             reader.BaseStream.Seek(-4, SeekOrigin.End);
             int packedLen = reader.ReadInt32();
@@ -154,25 +158,16 @@ namespace ArcFormats.NeXAS
             byte[] index = Huffman.Decompress(packedIndex, unpackedLen);
             MemoryStream msIndex = new MemoryStream(index);
             BinaryReader readerIndex = new BinaryReader(msIndex);
-            try
+            for (int i = 0; i < fileCount; i++)
             {
-                for (int i = 0; i < fileCount; i++)
-                {
-                    Entry entry = new Entry();
-                    entry.FileName = encodings.GetString(readerIndex.ReadBytes(64)).TrimEnd('\0');
-                    entry.FilePath = Path.Combine(FolderPath, entry.FileName);
-                    entry.Offset = readerIndex.ReadInt32();
-                    entry.UnpackedSize = readerIndex.ReadInt32();
-                    entry.PackedSize = readerIndex.ReadInt32();
-                    entries.Add(entry);
-                }
+                Entry entry = new Entry();
+                entry.FileName = encoding.GetString(readerIndex.ReadBytes(64)).TrimEnd('\0');
+                entry.FilePath = Path.Combine(FolderPath, entry.FileName);
+                entry.Offset = readerIndex.ReadInt32();
+                entry.UnpackedSize = readerIndex.ReadInt32();
+                entry.PackedSize = readerIndex.ReadInt32();
+                entries.Add(entry);
             }
-            catch
-            {
-                isSuccess = false;
-                return;
-            }
-            isSuccess = true;
         }
     }
 }

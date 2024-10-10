@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
@@ -165,7 +164,7 @@ namespace ArcFormats.Artemis
                     //indexsize=(filecount)4byte+(pathlen+0x00000000+offset to begin+file size)16byte*filecount+pathlensum+(file count+1)4byte+8*filecount+(0x00000000)4byte*2+(offsettablebegin-0x7)4byte
 
                     //write header
-                    MemoryStream ms8 = new MemoryStream((int)(header.indexSize + Marshal.SizeOf<Header>()));
+                    MemoryStream ms8 = new MemoryStream();
                     BinaryWriter writer8 = new BinaryWriter(ms8);
                     writer8.Write(Encoding.ASCII.GetBytes(header.magic));
                     writer8.Write(Encoding.ASCII.GetBytes(header.version));
@@ -271,7 +270,7 @@ namespace ArcFormats.Artemis
                     //indexsize=(filecount)4byte+(pathlen+0x00000000+offset to begin+file size)16byte*filecount+pathlensum+(file count+1)4byte+8*filecount+(0x00000000)4byte*2+(offsettablebegin-0x7)4byte
 
                     //write header
-                    MemoryStream ms6 = new MemoryStream((int)(header.indexSize + Marshal.SizeOf<Header>()));
+                    MemoryStream ms6 = new MemoryStream();
                     BinaryWriter writer6 = new BinaryWriter(ms6);
                     writer6.Write(Encoding.ASCII.GetBytes(header.magic));
                     writer6.Write(Encoding.ASCII.GetBytes(header.version));

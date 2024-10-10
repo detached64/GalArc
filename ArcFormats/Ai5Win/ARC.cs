@@ -76,7 +76,9 @@ namespace ArcFormats.Ai5Win
                     return;
                 }
                 catch
-                { }
+                {
+                    continue;
+                }
             }
             LogUtility.Error("Failed to read index.");
         }
