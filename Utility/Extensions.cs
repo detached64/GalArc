@@ -35,7 +35,7 @@ namespace Utility.Extensions
         /// <param name="extensions"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public static bool HaveAnyOfExtensions(this string source, params string[] extensions)
+        public static bool HasAnyOfExtensions(this string source, params string[] extensions)
         {
             if (source == null)
             {
@@ -43,7 +43,6 @@ namespace Utility.Extensions
             }
 
             string thisExtension = Path.GetExtension(source).TrimStart('.');
-
             foreach (var extension in extensions)
             {
                 if (string.Equals(thisExtension, extension, StringComparison.OrdinalIgnoreCase))
@@ -51,7 +50,6 @@ namespace Utility.Extensions
                     return true;
                 }
             }
-
             return false;
         }
     }

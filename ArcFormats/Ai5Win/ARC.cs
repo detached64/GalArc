@@ -39,7 +39,7 @@ namespace ArcFormats.Ai5Win
             {
                 fs.Position = entry.offset;
                 byte[] data = br.ReadBytes((int)entry.size);
-                if (entry.filePath.HaveAnyOfExtensions("mes", "lib", "a", "a6", "msk", "x"))
+                if (entry.filePath.HasAnyOfExtensions("mes", "lib", "a", "a6", "msk", "x"))
                 {
                     File.WriteAllBytes(entry.filePath, Lzss.Decompress(data));
                 }
@@ -89,7 +89,6 @@ namespace ArcFormats.Ai5Win
         internal byte nameKey;
         internal uint sizeKey;
         internal uint offsetKey;
-
 
         internal void GuessScheme(BinaryReader br, int fileCount, int nameLen)
         {

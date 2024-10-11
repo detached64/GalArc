@@ -256,9 +256,13 @@ namespace GalArc
             {
                 this.txtInputPath.Text = ChooseFile() ?? this.txtInputPath.Text;
             }
-            else
+            else if (this.chkbxPack.Checked)
             {
                 this.txtInputPath.Text = ChooseFolder() ?? this.txtInputPath.Text;
+            }
+            else
+            {
+                LogUtility.Error(Resources.logErrorNeedSelectOperation, false);
             }
         }
 
@@ -268,9 +272,13 @@ namespace GalArc
             {
                 this.txtOutputPath.Text = ChooseFolder() ?? this.txtOutputPath.Text;
             }
-            else
+            else if (this.chkbxPack.Checked)
             {
                 this.txtOutputPath.Text = SaveFile() ?? this.txtOutputPath.Text;
+            }
+            else
+            {
+                LogUtility.Error(Resources.logErrorNeedSelectOperation, false);
             }
         }
 
@@ -333,7 +341,7 @@ namespace GalArc
                         this.txtOutputPath.Text = SyncPath.PackPathSync(this.txtInputPath.Text, selectedNodePack.Text);
                     }
                 }
-                else
+                else if (this.chkbxUnpack.Checked)
                 {
                     if (!string.IsNullOrEmpty(this.txtInputPath.Text) && File.Exists(this.txtInputPath.Text))
                     {
@@ -359,7 +367,7 @@ namespace GalArc
                         this.txtOutputPath.Text = SyncPath.PackPathSync(this.txtInputPath.Text, selectedNodePack.Text);
                     }
                 }
-                else
+                else if (this.chkbxUnpack.Checked)
                 {
                     if (!string.IsNullOrEmpty(this.txtInputPath.Text) && File.Exists(this.txtInputPath.Text))
                     {
@@ -516,7 +524,6 @@ namespace GalArc
             else
             {
                 LogUtility.Error(Resources.logErrorNeedSelectOperation, false);
-                return;
             }
         }
 
