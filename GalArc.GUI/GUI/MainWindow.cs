@@ -476,6 +476,7 @@ namespace GalArc
                     LogUtility.Error(Resources.logErrorFileNotFound, false);
                     return;
                 }
+                this.btExecute.Enabled = false;     // avoid multi click
                 try
                 {
                     Execute.InitUnpack(this.txtInputPath.Text, this.txtOutputPath.Text);
@@ -494,6 +495,7 @@ namespace GalArc
                     }
                     LogWindow.Instance.bar.Value = 0;
                 }
+                this.btExecute.Enabled = true;
             }
             else if (this.chkbxPack.Checked)
             {
@@ -502,6 +504,7 @@ namespace GalArc
                     LogUtility.Error(Resources.logErrorDirNotFound, false);
                     return;
                 }
+                this.btExecute.Enabled = false;
                 try
                 {
                     Execute.InitPack(this.txtInputPath.Text, this.txtOutputPath.Text);
@@ -520,6 +523,7 @@ namespace GalArc
                     }
                     LogWindow.Instance.bar.Value = 0;
                 }
+                this.btExecute.Enabled = true;
             }
             else
             {
