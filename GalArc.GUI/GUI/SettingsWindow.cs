@@ -1,5 +1,6 @@
 ﻿using GalArc.Properties;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace GalArc.GUI
@@ -17,6 +18,7 @@ namespace GalArc.GUI
             {
                 this.TopMost = true;
             }
+            this.panel.BackColor = Color.FromArgb(249, 249, 249);
             this.treeViewOption.SelectedNode = treeViewOption.Nodes[0];
             this.treeViewOption.Nodes[0].Text = Resources.nodeGeneral;
             this.treeViewOption.Nodes[1].Text = Resources.nodePreference;
@@ -36,8 +38,8 @@ namespace GalArc.GUI
             }
             if (userControl != null)
             {
-                userControl.Dock = DockStyle.Fill;
                 this.panel.Controls.Clear();
+                userControl.Dock = DockStyle.Fill;
                 this.panel.Controls.Add(userControl);
             }
         }

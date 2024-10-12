@@ -35,11 +35,10 @@
             // 
             // treeViewOption
             // 
-            this.treeViewOption.BackColor = System.Drawing.SystemColors.Control;
+            resources.ApplyResources(this.treeViewOption, "treeViewOption");
             this.treeViewOption.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.treeViewOption.HideSelection = false;
             this.treeViewOption.HotTracking = true;
-            resources.ApplyResources(this.treeViewOption, "treeViewOption");
             this.treeViewOption.Name = "treeViewOption";
             this.treeViewOption.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             ((System.Windows.Forms.TreeNode)(resources.GetObject("treeViewOption.Nodes"))),
@@ -48,8 +47,9 @@
             // 
             // panel
             // 
-            this.panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             resources.ApplyResources(this.panel, "panel");
+            this.panel.BackColor = System.Drawing.SystemColors.Window;
+            this.panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel.Name = "panel";
             // 
             // SettingsWindow

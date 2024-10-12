@@ -187,7 +187,7 @@
     <value>4, 4, 4, 4</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>752, 576</value>
+    <value>574, 428</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>GeneralSettings</value>
