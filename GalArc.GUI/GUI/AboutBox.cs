@@ -47,6 +47,7 @@ namespace GalArc.GUI
             this.lbCurrentVer.Text = string.Format(Resources.lbVersion, Resource.Version.CurrentVer);
             UpdateDataGridView(engines);
             UpdateLicense();
+            this.dataGridViewEngines.ClearSelection();
         }
 
         private void searchText_TextChanged(object sender, EventArgs e)

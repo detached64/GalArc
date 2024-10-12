@@ -56,8 +56,8 @@
             this.dataGridViewEngines.AllowUserToResizeRows = false;
             this.dataGridViewEngines.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewEngines.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dataGridViewEngines.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridViewEngines.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
+            this.dataGridViewEngines.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dataGridViewEngines.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             resources.ApplyResources(this.dataGridViewEngines, "dataGridViewEngines");
             this.dataGridViewEngines.Name = "dataGridViewEngines";

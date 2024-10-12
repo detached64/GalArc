@@ -127,7 +127,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkbxEncScr.Location" type="System.Drawing.Point, System.Drawing">
-    <value>67, 244</value>
+    <value>87, 244</value>
   </data>
   <data name="chkbxEncScr.Size" type="System.Drawing.Size, System.Drawing">
     <value>163, 28</value>
@@ -151,7 +151,7 @@
     <value>0</value>
   </data>
   <data name="combVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>67, 109</value>
+    <value>87, 109</value>
   </data>
   <data name="combVersion.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 32</value>
@@ -178,7 +178,7 @@
     <value>NoControl</value>
   </data>
   <data name="lbVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>63, 70</value>
+    <value>83, 70</value>
   </data>
   <data name="lbVersion.Size" type="System.Drawing.Size, System.Drawing">
     <value>74, 24</value>
@@ -214,7 +214,7 @@
     <value>4, 4, 4, 4</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>785, 393</value>
+    <value>823, 393</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>PackDATOptions</value>

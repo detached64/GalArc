@@ -25,13 +25,13 @@ namespace ArcFormats.RPGMaker
             Global.Version = this.combVersion.Text;
             if (this.combVersion.Text == "1")
             {
-                this.txtSeed.Enabled = false;
-                this.lbSeed.Enabled = false;
+                this.txtSeed.Visible = false;
+                this.lbSeed.Visible = false;
             }
             else
             {
-                this.txtSeed.Enabled = true;
-                this.lbSeed.Enabled = true;
+                this.txtSeed.Visible = true;
+                this.lbSeed.Visible = true;
             }
         }
 

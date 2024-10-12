@@ -123,7 +123,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lbEmpty.Location" type="System.Drawing.Point, System.Drawing">
-    <value>64, 60</value>
+    <value>83, 70</value>
   </data>
   <data name="lbEmpty.Size" type="System.Drawing.Size, System.Drawing">
     <value>66, 24</value>
@@ -160,7 +160,7 @@
     <value>4, 4, 4, 4</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>785, 393</value>
+    <value>823, 393</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Empty</value>
