@@ -8,6 +8,7 @@ namespace GalArc.GUI
     public partial class GeneralSettings : UserControl
     {
         public static GeneralSettings Instance;
+
         public GeneralSettings()
         {
             InitializeComponent();
@@ -29,20 +30,9 @@ namespace GalArc.GUI
 
         private void chkbxTopMost_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.chkbxTopMost.Checked)
-            {
-                LogWindow.Instance.TopMost = true;
-                MainWindow.Instance.TopMost = true;
-                Settings.Default.TopMost = true;
-                Settings.Default.Save();
-            }
-            else
-            {
-                LogWindow.Instance.TopMost = false;
-                MainWindow.Instance.TopMost = false;
-                Settings.Default.TopMost = false;
-                Settings.Default.Save();
-            }
+            MainWindow.Instance.TopMost = this.chkbxTopMost.Checked;
+            Settings.Default.TopMost = this.chkbxTopMost.Checked;
+            Settings.Default.Save();
         }
     }
 }

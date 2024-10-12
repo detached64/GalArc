@@ -36,7 +36,14 @@ namespace GalArc.Controller
 
         internal static void ExportSettings()
         {
-            Global.Encoding = Encoding.GetEncoding(Encodings.CodePages[Settings.Default.DefaultEncoding]);
+            if (!string.IsNullOrEmpty(Settings.Default.DefaultEncoding))
+            {
+                Global.Encoding = Encoding.GetEncoding(Encodings.CodePages[Settings.Default.DefaultEncoding]);
+            }
+            else
+            {
+                Global.Encoding = Encoding.UTF8;
+            }
         }
 
     }
