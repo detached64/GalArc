@@ -4,6 +4,6 @@ namespace GalArc.Resource
 {
     internal class Version
     {
-        internal static string CurrentVer = "1.2.2";
+        internal static string CurrentVer = "1.2.3";
     }
 }
