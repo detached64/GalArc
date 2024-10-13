@@ -2,14 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Utility;
 
 namespace ArcFormats.NextonLikeC
 {
     public class LST
     {
-        private struct NextonLikeC_lst_entry
+        private class Entry
         {
             public uint fileOffset { get; set; }
             public uint fileSize { get; set; }
@@ -32,7 +31,7 @@ namespace ArcFormats.NextonLikeC
                 LogUtility.ErrorNeedAnotherFile(".lst", string.Empty);
             }
 
-            FileStream fsLst = new FileStream(lstPath, FileMode.Open, FileAccess.Read);
+            FileStream fsLst = File.OpenRead(lstPath);
             BinaryReader brtemp = new BinaryReader(fsLst);
             fsLst.Position = 3;
             byte keyLst = brtemp.ReadByte();
@@ -44,13 +43,12 @@ namespace ArcFormats.NextonLikeC
             BinaryReader brLst = new BinaryReader(ms);
 
             uint fileCount = brLst.ReadUInt32();
-            //main.Main.txtlog.AppendText(fileCount.ToString());
-            List<NextonLikeC_lst_entry> l = new List<NextonLikeC_lst_entry>();
+            List<Entry> l = new List<Entry>();
             LogUtility.InitBar(fileCount);
 
             for (int i = 0; i < (int)fileCount; i++)
             {
-                NextonLikeC_lst_entry entry = new NextonLikeC_lst_entry();
+                Entry entry = new Entry();
                 entry.fileOffset = brLst.ReadUInt32();
                 entry.fileSize = brLst.ReadUInt32();
                 entry.fileName = ArcEncoding.Shift_JIS.GetString(brLst.ReadBytes(64)).TrimEnd('\x02');
@@ -60,7 +58,7 @@ namespace ArcFormats.NextonLikeC
             }
             Directory.CreateDirectory(folderPath);
 
-            FileStream fsArc = new FileStream(arcPath, FileMode.Open, FileAccess.Read);
+            FileStream fsArc = File.OpenRead(arcPath);
             BinaryReader brArc = new BinaryReader(fsArc);
             fsArc.Position = 3;
             byte keyArc = brArc.ReadByte();
@@ -96,6 +94,12 @@ namespace ArcFormats.NextonLikeC
                 }
                 LogUtility.UpdateBar();
             }
+            ms.Dispose();
+            fsArc.Dispose();
+            fsLst.Dispose();
+            brArc.Dispose();
+            brLst.Dispose();
+            brtemp.Dispose();
         }
     }
 }

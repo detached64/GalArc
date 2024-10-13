@@ -12,16 +12,16 @@ namespace ArcFormats.Kirikiri
     {
         public static UserControl PackExtraOptions = new PackXP3Options("1/2");
 
-        private struct Header
+        private class Header
         {
-            internal static byte[] magic = { 0x58, 0x50, 0x33, 0x0d, 0x0a, 0x20, 0x0a, 0x1a, 0x8b, 0x67, 0x01 };
+            internal static byte[] magic { get; } = Utilities.HexStringToByteArray("5850330d0a200a1a8b6701");
             internal ulong indexOffset { get; set; }
         }
 
-        private struct Entry
+        private class Entry
         {
-            internal ulong unpackedFileSize { get; set; }
-            internal ulong packedFileSize { get; set; }
+            internal ulong unpackedSize { get; set; }
+            internal ulong packedSize { get; set; }
             internal string relativePath { get; set; }
             internal long dataOffset { get; set; }
             internal bool isCompressed { get; set; }
@@ -30,13 +30,13 @@ namespace ArcFormats.Kirikiri
 
         public void Unpack(string filePath, string folderPath)
         {
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-
             if (!br.ReadBytes(11).SequenceEqual(Header.magic))
             {
                 LogUtility.ErrorInvalidArchive();
             }
+
             if (br.ReadByte() == 0x17)
             {
                 LogUtility.ShowVersion("xp3", 2);
@@ -47,6 +47,7 @@ namespace ArcFormats.Kirikiri
                 LogUtility.ShowVersion("xp3", 1);
                 fs.Position--;
             }
+
             uint indexOffset = br.ReadUInt32();
             fs.Position = indexOffset;
             byte[] Index;
@@ -109,8 +110,8 @@ namespace ArcFormats.Kirikiri
                                 LogUtility.Info("Encrypted file detected, skipping...");
                                 goto NextEntry;
                             }
-                            entry.unpackedFileSize = brIndex.ReadUInt64();
-                            entry.packedFileSize = brIndex.ReadUInt64();
+                            entry.unpackedSize = brIndex.ReadUInt64();
+                            entry.packedSize = brIndex.ReadUInt64();
                             ushort fileNameLen = brIndex.ReadUInt16();
                             entry.relativePath = Encoding.Unicode.GetString(brIndex.ReadBytes(fileNameLen * 2));
                             entry.path = folderPath + "\\" + entry.relativePath.Replace("/", "\\");
@@ -134,9 +135,9 @@ namespace ArcFormats.Kirikiri
                 {
                     Directory.CreateDirectory(dir);
                 }
-                //LogUtility.Debug(entry.packedFileSize.ToString());
-                byte[] data = br.ReadBytes((int)entry.packedFileSize);
-                if (entry.unpackedFileSize == entry.packedFileSize)
+
+                byte[] data = br.ReadBytes((int)entry.packedSize);
+                if (entry.unpackedSize == entry.packedSize)
                 {
                     File.WriteAllBytes(entry.path, data);
                 }
@@ -157,7 +158,7 @@ NextEntry:
 
         public void Pack(string folderPath, string filePath)
         {
-            Stream xp3Stream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            Stream xp3Stream = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(xp3Stream);
             bw.Write(Header.magic);
             if (PackXP3Options.Version == "2")

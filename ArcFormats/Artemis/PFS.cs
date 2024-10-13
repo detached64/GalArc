@@ -124,44 +124,28 @@ namespace ArcFormats.Artemis
                 pathLenSum = 0
             };
             List<Entry> entries = new List<Entry>();
-
-            header.fileCount = (uint)Utilities.GetFileCount_All(folderPath);
-            LogUtility.InitBar(header.fileCount);
-
-            //new pathString array
-            string[] pathString = new string[header.fileCount];
-
-            //get path len and restore file info to pathString
             string[] files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
-            int i = 0;
-            foreach (string file in files)
-            {
-                pathString[i] = file.Substring(folderPath.Length + 1);
-                i++;
-            }
-            Utilities.InsertSort(pathString);
+            string[] relativePaths = Utilities.GetRelativePaths(files, folderPath);
+            header.pathLenSum = (uint)Utilities.GetLengthSum(relativePaths, Global.Encoding);
+            header.fileCount = (uint)files.Length;
+            LogUtility.InitBar(header.fileCount);
+            Utilities.InsertSort(relativePaths);
 
             //add entry
-            for (int j = 0; j < header.fileCount; j++)
+            for (int i = 0; i < header.fileCount; i++)
             {
-                Entry entry = new Entry()
-                {
-                    size = (uint)new FileInfo(folderPath + "\\" + pathString[j]).Length,
-                    relativePath = pathString[j],
-                    fullPath = folderPath + "\\" + pathString[j],
-                    relativePathLen = Global.Encoding.GetByteCount(pathString[j])
-                };
-
+                Entry entry = new Entry();
+                entry.fullPath = Path.Combine(folderPath, relativePaths[i]);
+                entry.size = (uint)new FileInfo(entry.fullPath).Length;
+                entry.relativePath = relativePaths[i];
+                entry.relativePathLen = Global.Encoding.GetByteCount(relativePaths[i]);
                 entries.Add(entry);
-                header.pathLenSum += (uint)entry.relativePathLen;
             }
 
             switch (Global.Version)
             {
                 case "8":
-                    //compute indexsize
                     header.indexSize = 4 + 16 * header.fileCount + header.pathLenSum + 4 + 8 * header.fileCount + 12;
-                    //indexsize=(filecount)4byte+(pathlen+0x00000000+offset to begin+file size)16byte*filecount+pathlensum+(file count+1)4byte+8*filecount+(0x00000000)4byte*2+(offsettablebegin-0x7)4byte
 
                     //write header
                     MemoryStream ms8 = new MemoryStream();
@@ -172,7 +156,6 @@ namespace ArcFormats.Artemis
                     writer8.Write(header.fileCount);
 
                     //write entry
-                    long posIndexStart = ms8.Position - sizeof(uint);//0x7
                     uint offset8 = header.indexSize + 7;
 
                     foreach (var file in entries)
@@ -191,9 +174,9 @@ namespace ArcFormats.Artemis
                     uint total = 4;
 
                     //write table
-                    foreach (var file in entries)
+                    foreach (var entry in entries)
                     {
-                        total = total + 4 + (uint)file.relativePathLen;
+                        total = total + 4 + (uint)entry.relativePathLen;
                         uint posOffset = total;
                         writer8.Write(posOffset);
                         writer8.Write(0); // reserved
@@ -206,16 +189,18 @@ namespace ArcFormats.Artemis
 
                     //write data
                     byte[] key = new byte[20];
+                    byte[] buf = ms8.ToArray();
                     using (SHA1 sha1 = SHA1.Create())
                     {
-                        byte[] xorBuf = ms8.ToArray().Skip((int)posIndexStart).Take((int)header.indexSize).ToArray();
+                        byte[] xorBuf = new byte[buf.Length - 7];
+                        Array.Copy(buf, 7, xorBuf, 0, buf.Length - 7);
                         key = sha1.ComputeHash(xorBuf);
                     }
                     FileStream fw8 = File.Create(filePath);
-                    ms8.WriteTo(fw8);
-                    foreach (var file in entries)
+                    fw8.Write(buf, 0, buf.Length);
+                    foreach (var entry in entries)
                     {
-                        byte[] fileData = File.ReadAllBytes(file.fullPath);
+                        byte[] fileData = File.ReadAllBytes(entry.fullPath);
                         fw8.Write(Xor.xor(fileData, key), 0, fileData.Length);
                         LogUtility.UpdateBar();
                     }

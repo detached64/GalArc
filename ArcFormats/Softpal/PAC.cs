@@ -16,8 +16,9 @@ namespace ArcFormats.Softpal
 
         public static UserControl PackExtraOptions = new PackPACOptions();
 
-        private static byte[] magic = { 0x50, 0x41, 0x43, 0x20 };     //"PAC "
-        private struct Entry
+        private static byte[] magic = Utilities.HexStringToByteArray("50414320");
+
+        private class Entry
         {
             public string fileName { get; set; }
             public uint fileSize { get; set; }
@@ -84,9 +85,9 @@ namespace ArcFormats.Softpal
 
         private static void pacV2_unpack(string filePath, string folderPath)
         {
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            if (Encoding.ASCII.GetString(br.ReadBytes(4)) != "PAC ")
+            if (!br.ReadBytes(4).SequenceEqual(magic))
             {
                 LogUtility.ErrorInvalidArchive();
             }

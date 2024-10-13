@@ -15,10 +15,8 @@ namespace ArcFormats.EntisGLS
             public byte[] magic2 { get; set; }
             public uint noaSizeWithout { get; set; }
             public uint reserve { get; set; }
-
-            public static readonly byte[] magic1Valid = { 0x45, 0x6e, 0x74, 0x69, 0x73, 0x1a, 0x00, 0x00, 0x00, 0x04, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00 };
-
-            public static readonly byte[] magic2Valid = { 0x45, 0x52, 0x49, 0x53, 0x41, 0x2d, 0x41, 0x72, 0x63, 0x68, 0x69, 0x76, 0x65, 0x20, 0x66, 0x69, 0x6c, 0x65 };
+            public static byte[] magic1Valid { get; } = Utilities.HexStringToByteArray("456e7469731a00000004000200000000");
+            public static byte[] magic2Valid { get; } = Utilities.HexStringToByteArray("45524953412d417263686976652066696c65");
         }
 
         private struct EntryHeader
