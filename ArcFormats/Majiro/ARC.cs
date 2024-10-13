@@ -166,7 +166,7 @@ namespace ArcFormats.Majiro
 
             // write name
             bw.BaseStream.Position = nameOffset;
-            string[] files = Directory.GetFiles(folderPath, "*", SearchOption.TopDirectoryOnly);
+            string[] files = Directory.GetFiles(folderPath);
             for (int i = 0; i < fileCount; i++)
             {
                 bw.Write(ArcEncoding.Shift_JIS.GetBytes(Path.GetFileName(files[i])));

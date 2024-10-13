@@ -26,19 +26,19 @@ namespace ArcFormats.RPGMaker
                 }
             }
 
-            if (version == 1)
+            switch (version)
             {
-                LogUtility.ShowVersion(Path.GetExtension(filePath).Replace(".", string.Empty), version);
-                rgssV1_unpack(filePath, folderPath);
-            }
-            else if (version == 3)
-            {
-                LogUtility.ShowVersion(Path.GetExtension(filePath).Replace(".", string.Empty), version);
-                rgssV3_unpack(filePath, folderPath);
-            }
-            else
-            {
-                LogUtility.Error($"Error:version{version} not recognized.");
+                case 1:
+                    LogUtility.ShowVersion(Path.GetExtension(filePath).Trim('.'), version);
+                    rgssV1_unpack(filePath, folderPath);
+                    break;
+                case 3:
+                    LogUtility.ShowVersion(Path.GetExtension(filePath).Trim('.'), version);
+                    rgssV3_unpack(filePath, folderPath);
+                    break;
+                default:
+                    LogUtility.Error($"Error: version {version} not recognized.");
+                    break;
             }
         }
 

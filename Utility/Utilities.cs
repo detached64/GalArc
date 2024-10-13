@@ -21,7 +21,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace Utility
@@ -167,6 +166,50 @@ namespace Utility
                 sb.Append(str);
             }
             return encoding.GetByteCount(sb.ToString());
+        }
+
+        public static string GetRelativePath(string fullPath, string basePath)
+        {
+            if (fullPath.StartsWith(basePath))
+            {
+                return fullPath.Substring(basePath.Length).TrimStart(Path.DirectorySeparatorChar);
+            }
+            throw new ArgumentException("fullPath does not start with basePath.");
+        }
+
+        public static string[] GetRelativePaths(string[] fullPaths, string basePath)
+        {
+            string[] results = new string[fullPaths.Length];
+            for (int i = 0; i < fullPaths.Length; i++)
+            {
+                results[i] = GetRelativePath(fullPaths[i], basePath);
+            }
+            return results;
+        }
+
+        public static int GetRelativePathLenSum(string[] fullPaths, string basePath, Encoding encoding)
+        {
+            string[] relativePaths = GetRelativePaths(fullPaths, basePath);
+            StringBuilder sb = new StringBuilder();
+            foreach (string relativePath in relativePaths)
+            {
+                sb.Append(relativePath);
+            }
+            return encoding.GetByteCount(sb.ToString());
+        }
+
+        public static byte[] HexStringToByteArray(string hexString)
+        {
+            if (hexString.Length % 2 != 0)
+            {
+                throw new ArgumentException("hexString length must be even.");
+            }
+            byte[] bytes = new byte[hexString.Length / 2];
+            for (int i = 0; i < hexString.Length; i += 2)
+            {
+                bytes[i / 2] = Convert.ToByte(hexString.Substring(i, 2), 16);
+            }
+            return bytes;
         }
     }
 }

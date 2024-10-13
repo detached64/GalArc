@@ -9,7 +9,7 @@ namespace ArcFormats.AdvHD
 {
     public class PNA
     {
-        private struct AdvHD_pna_header
+        private class Header
         {
             internal string magic { get; set; }
             internal uint unknown1 { get; set; }
@@ -18,7 +18,7 @@ namespace ArcFormats.AdvHD
             internal uint fileCount { get; set; }
         }
 
-        private struct AdvHD_pna_entry
+        private class Entry
         {
             internal uint fileType { get; set; }
             internal uint fileNumber { get; set; }
@@ -34,8 +34,8 @@ namespace ArcFormats.AdvHD
 
         public void Unpack(string filePath, string folderPath)
         {
-            AdvHD_pna_header header = new AdvHD_pna_header();
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            Header header = new Header();
+            FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
             header.magic = Encoding.UTF8.GetString(br.ReadBytes(4));
             if (header.magic != "PNAP" || Path.GetExtension(filePath) != ".pna")
@@ -49,11 +49,11 @@ namespace ArcFormats.AdvHD
             header.fileCount = br.ReadUInt32();
 
             Directory.CreateDirectory(folderPath);
-            List<AdvHD_pna_entry> l = new List<AdvHD_pna_entry>();
+            List<Entry> l = new List<Entry>();
 
             for (int i = 0; i < header.fileCount; i++)
             {
-                AdvHD_pna_entry entry = new AdvHD_pna_entry();
+                Entry entry = new Entry();
                 entry.fileType = br.ReadUInt32();
                 entry.fileNumber = header.fileCount - br.ReadUInt32();
                 entry.offsetX = br.ReadUInt32();
@@ -73,11 +73,8 @@ namespace ArcFormats.AdvHD
                 {
                     continue;
                 }
-
-                FileStream fw = new FileStream(folderPath + "\\" + Path.GetFileNameWithoutExtension(filePath) + "_" + l[i].fileNumber.ToString("000") + ".png", FileMode.Create, FileAccess.Write);
                 byte[] buffer = br.ReadBytes((int)l[i].fileSize);
-                fw.Write(buffer, 0, buffer.Length);
-                fw.Dispose();
+                File.WriteAllBytes(Path.Combine(folderPath, Path.GetFileNameWithoutExtension(filePath) + "_" + l[i].fileNumber.ToString("000") + ".png"), buffer);
                 validCount++;
             }
             fs.Dispose();
@@ -99,30 +96,29 @@ namespace ArcFormats.AdvHD
 
             File.Copy(spath, tpath, true);
 
-            int fileCount = Utilities.GetFileCount_All(folderPath);
+            string[] files = Directory.GetFiles(folderPath);
+            int fileCount = files.Length;
 
             FileStream fs = new FileStream(tpath, FileMode.Open, FileAccess.ReadWrite);
             BinaryWriter bw = new BinaryWriter(fs);
             BinaryReader br = new BinaryReader(fs);
             fs.Seek(16, SeekOrigin.Begin);
             uint fileCountWithInvalid = br.ReadUInt32();
-
-            DirectoryInfo dir = new DirectoryInfo(folderPath);
-            foreach (FileInfo fi in dir.GetFiles())
+            foreach (string file in files)
             {
                 while (br.ReadUInt32() != 0)
                 {
                     fs.Seek(-4 + 40, SeekOrigin.Current);
                 }
                 fs.Seek(-4 + 36, SeekOrigin.Current);
-                bw.Write((uint)new FileInfo(fi.FullName).Length);
+                bw.Write((uint)new FileInfo(file).Length);
                 //fs.Seek(4, SeekOrigin.Current);
             }
             fs.Seek(20 + 40 * fileCountWithInvalid, SeekOrigin.Begin);
 
-            foreach (FileInfo fi in dir.GetFiles())
+            foreach (string file in files)
             {
-                byte[] buffer = File.ReadAllBytes(fi.FullName);
+                byte[] buffer = File.ReadAllBytes(file);
                 bw.Write(buffer);
             }
 

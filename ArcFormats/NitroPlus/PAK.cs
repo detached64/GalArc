@@ -1,6 +1,5 @@
 ﻿using Log;
 using System.IO;
-using System.IO.Compression;
 using System.Windows.Forms;
 using Utility;
 using Utility.Compression;
@@ -11,7 +10,7 @@ namespace ArcFormats.NitroPlus
     {
         public static UserControl PackExtraOptions = new PackPAKOptions();
 
-        private struct Entry
+        private class Entry
         {
             public uint pathLen { get; set; }
             public string path { get; set; }
@@ -91,26 +90,20 @@ namespace ArcFormats.NitroPlus
             bw.Write(fileCount);
             LogUtility.InitBar(fileCount);
 
-            string[] filePaths = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
-
-            int pathLenSum = 0;
-            foreach (string fullPath in filePaths)
-            {
-                pathLenSum += ArcEncoding.Shift_JIS.GetByteCount(fullPath.Substring(folderPath.Length + 1));
-            }
+            string[] fullPaths = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
+            string[] relativePaths = Utilities.GetRelativePaths(fullPaths, folderPath);
 
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 using (BinaryWriter bwIndex = new BinaryWriter(memoryStream))
                 {
                     uint offset = 0;
-                    foreach (string fullPath in filePaths)
+                    foreach (string relativePath in relativePaths)
                     {
-                        string relativePath = fullPath.Substring(folderPath.Length + 1);
                         bwIndex.Write(ArcEncoding.Shift_JIS.GetByteCount(relativePath));
                         bwIndex.Write(ArcEncoding.Shift_JIS.GetBytes(relativePath));
                         bwIndex.Write(offset);
-                        uint fileSize = (uint)new FileInfo(fullPath).Length;
+                        uint fileSize = (uint)new FileInfo(Path.Combine(folderPath, relativePath)).Length;
                         bwIndex.Write(fileSize);
                         bwIndex.Write(fileSize);
                         bwIndex.Write((long)0);
@@ -142,7 +135,7 @@ namespace ArcFormats.NitroPlus
                 }
             }
 
-            foreach (string fullPath in filePaths)
+            foreach (string fullPath in fullPaths)
             {
                 bw.Write(File.ReadAllBytes(fullPath));
                 LogUtility.UpdateBar();
