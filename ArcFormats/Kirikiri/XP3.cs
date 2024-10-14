@@ -169,28 +169,30 @@ NextEntry:
                 bw.Write((long)0);
             }
             bw.Write((long)0);//index offset to 0x00
-            LogUtility.InitBar(Utilities.GetFileCount_All(folderPath));
 
             DirectoryInfo d = new DirectoryInfo(folderPath);
+            FileInfo[] files = d.GetFiles("*", SearchOption.AllDirectories);
+            LogUtility.InitBar(files.Length);
+
             MemoryStream ms = new MemoryStream();
             BinaryWriter bwEntry = new BinaryWriter(ms);
 
-            foreach (FileInfo f in d.GetFiles("*", SearchOption.AllDirectories))
+            foreach (FileInfo file in files)
             {
                 long offset = xp3Stream.Position;
-                long originalSize = f.Length;
+                long originalSize = file.Length;
                 long compressedSize = originalSize;
                 if (PackXP3Options.CompressContents)
                 {
-                    Zlib.AppendCompressedFile(xp3Stream, f.FullName, out originalSize, out compressedSize);
+                    Zlib.AppendCompressedFile(xp3Stream, file.FullName, out originalSize, out compressedSize);
                 }
                 else
                 {
-                    bw.Write(File.ReadAllBytes(f.FullName));
+                    bw.Write(File.ReadAllBytes(file.FullName));
                 }
                 //File
                 bwEntry.Write(Encoding.ASCII.GetBytes("File"));
-                string thisFilePath = f.FullName.Substring(folderPath.Length + 1).Replace("\\", "/");
+                string thisFilePath = file.FullName.Substring(folderPath.Length + 1).Replace("\\", "/");
                 bwEntry.Write((long)(90 + 2 * thisFilePath.Length));
                 //info
                 bwEntry.Write(Encoding.ASCII.GetBytes("info"));

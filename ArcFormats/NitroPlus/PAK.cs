@@ -86,7 +86,7 @@ namespace ArcFormats.NitroPlus
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
             bw.Write(2);
-            int fileCount = Utilities.GetFileCount_All(folderPath);
+            int fileCount = Utilities.GetFileCount(folderPath);
             bw.Write(fileCount);
             LogUtility.InitBar(fileCount);
 

@@ -123,15 +123,17 @@ namespace ArcFormats.RPGMaker
             BinaryWriter bw = new BinaryWriter(fw);
             bw.Write(Encoding.ASCII.GetBytes("RGSSAD\0"));
             bw.Write((byte)1);
-            string[] files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
+            DirectoryInfo d = new DirectoryInfo(folderPath);
+            FileInfo[] files = d.GetFiles("*", SearchOption.AllDirectories);
+
             LogUtility.InitBar(files.Length);
             KeyGen keygen = new KeyGen(0xDEADCAFE);
-            foreach (string file in files)
+            foreach (FileInfo file in files)
             {
-                byte[] relativePath = Encoding.UTF8.GetBytes(file.Substring(folderPath.Length + 1));
+                byte[] relativePath = Encoding.UTF8.GetBytes(file.FullName.Substring(folderPath.Length + 1));
                 bw.Write((uint)relativePath.Length ^ keygen.Compute());
                 bw.Write(DecryptName(relativePath, keygen));
-                byte[] data = File.ReadAllBytes(file);
+                byte[] data = File.ReadAllBytes(file.FullName);
                 bw.Write((uint)data.Length ^ keygen.Compute());
                 bw.Write(DecryptData(data, new KeyGen(keygen.GetCurrent())));
                 LogUtility.UpdateBar();

@@ -7,14 +7,14 @@ namespace ArcFormats.KID
 {
     public class DAT
     {
-        private struct KID_dat_header
+        private class Header
         {
             public string magic { get; set; }
             public uint fileCount { get; set; }
             public long reserve { get; set; }
         }
 
-        private struct KID_dat_entry
+        private class Entry
         {
             public uint offset { get; set; }
             public uint size { get; set; }
@@ -23,9 +23,9 @@ namespace ArcFormats.KID
 
         public void Unpack(string filePath, string folderPath)
         {
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            if (Encoding.ASCII.GetString(br.ReadBytes(4)).TrimEnd('\0') != "LNK")
+            if (Encoding.ASCII.GetString(br.ReadBytes(4)) != "LNK\0")
             {
                 LogUtility.ErrorInvalidArchive();
             }
@@ -36,14 +36,14 @@ namespace ArcFormats.KID
             LogUtility.InitBar(fileCount);
             for (int i = 0; i < fileCount; i++)
             {
-                KID_dat_entry entry = new KID_dat_entry();
+                Entry entry = new Entry();
                 entry.offset = br.ReadUInt32() + dataOffset;
                 entry.size = br.ReadUInt32() >> 1;
                 entry.name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(24)).TrimEnd('\0');
                 long thisPos = fs.Position;
                 fs.Position = entry.offset;
                 byte[] data = br.ReadBytes((int)entry.size);
-                File.WriteAllBytes(folderPath + "\\" + entry.name, data);
+                File.WriteAllBytes(Path.Combine(folderPath, entry.name), data);
                 fs.Position = thisPos;
                 LogUtility.UpdateBar();
             }
@@ -56,20 +56,21 @@ namespace ArcFormats.KID
             BinaryWriter bw = new BinaryWriter(fw);
             bw.Write(Encoding.ASCII.GetBytes("LNK"));
             bw.Write((byte)0);
-            int fileCount = Utilities.GetFileCount_TopOnly(folderPath);
+            DirectoryInfo d = new DirectoryInfo(folderPath);
+            FileInfo[] files = d.GetFiles();
+            int fileCount = files.Length;
             bw.Write(fileCount);
             bw.Write((long)0);
-            DirectoryInfo d = new DirectoryInfo(folderPath);
             LogUtility.InitBar(fileCount);
             uint offset = 0;
-            foreach (var file in d.GetFiles("*.*", SearchOption.TopDirectoryOnly))
+            foreach (FileInfo file in files)
             {
                 bw.Write(offset);
                 bw.Write((uint)file.Length << 1);
                 bw.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(24, '\0')));
                 offset += (uint)file.Length;
             }
-            foreach (var file in d.GetFiles("*.*", SearchOption.TopDirectoryOnly))
+            foreach (FileInfo file in files)
             {
                 bw.Write(File.ReadAllBytes(file.FullName));
                 LogUtility.UpdateBar();

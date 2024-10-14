@@ -9,17 +9,18 @@ namespace ArcFormats.EntisGLS
 {
     public class NOA
     {
-        private struct Header
+        private class Header
         {
             public byte[] magic1 { get; set; }
             public byte[] magic2 { get; set; }
             public uint noaSizeWithout { get; set; }
             public uint reserve { get; set; }
-            public static byte[] magic1Valid { get; } = Utilities.HexStringToByteArray("456e7469731a00000004000200000000");
-            public static byte[] magic2Valid { get; } = Utilities.HexStringToByteArray("45524953412d417263686976652066696c65");
+
+            public static readonly byte[] magic1Valid = Utilities.HexStringToByteArray("456e7469731a00000004000200000000");
+            public static readonly byte[] magic2Valid = Utilities.HexStringToByteArray("45524953412d417263686976652066696c65");
         }
 
-        private struct EntryHeader
+        private class EntryHeader
         {
             public string magic { get; set; }
             public ulong indexSize { get; set; }
@@ -144,7 +145,7 @@ namespace ArcFormats.EntisGLS
             string[] files = Directory.GetFiles(folderPath);
             //string[] excludedNames = new string[] { "TimestampInfo.json" };
             //var filteredFiles = files.Where(file => !excludedNames.Contains(Path.GetFileName(file)));
-            int fileCount = Utilities.GetFileCount_All(folderPath);
+            int fileCount = Utilities.GetFileCount(folderPath);
             //string jsonStr;
             //List<EntisGLS_noa_timeStamp> time = new();
             //if (File.Exists(jsonPath))

@@ -92,19 +92,20 @@ namespace ArcFormats.PJADV
             bw.Write(Encoding.ASCII.GetBytes("GAMEDAT PAC"));
             int nameLength = Global.Version == "1" ? 16 : 32;
             bw.Write(Global.Version == "1" ? (byte)'K' : (byte)'2');
+            DirectoryInfo d = new DirectoryInfo(folderPath);
+            FileInfo[] files = d.GetFiles();
 
-            string[] files = Directory.GetFiles(folderPath);
             bw.Write(files.Length);
             List<Entry> entries = new List<Entry>();
             LogUtility.InitBar(files.Length);
             uint thisOffset = 0;
 
-            foreach (string file in files)
+            foreach (FileInfo file in files)
             {
                 Entry entry = new Entry();
-                entry.name = Path.GetFileName(file);
-                entry.path = file;
-                entry.size = (uint)new FileInfo(file).Length;
+                entry.name = file.Name;
+                entry.path = file.FullName;
+                entry.size = (uint)file.Length;
                 entry.offset = thisOffset;
                 thisOffset += entry.size;
                 entries.Add(entry);

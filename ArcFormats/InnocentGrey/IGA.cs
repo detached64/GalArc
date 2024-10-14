@@ -7,7 +7,7 @@ namespace ArcFormats.InnocentGrey
 {
     public class IGA
     {
-        private struct Header
+        private class Header
         {
             public byte[] magic { get; set; }   //IGA0
             public uint unknown1 { get; set; }  //checksum?
@@ -15,7 +15,7 @@ namespace ArcFormats.InnocentGrey
             public uint unknown3 { get; set; }  //2
         }
 
-        private struct Entry
+        private class Entry
         {
             public uint nameOffset { get; set; }
             public uint dataOffset { get; set; }
@@ -100,10 +100,10 @@ namespace ArcFormats.InnocentGrey
             List<Entry> l = new List<Entry>();
 
             DirectoryInfo dir = new DirectoryInfo(folderPath);
-            FileInfo[] fileInfos = dir.GetFiles();
+            FileInfo[] files = dir.GetFiles();
             uint nameOffset = 0;
             uint dataOffset = 0;
-            foreach (FileInfo file in fileInfos)
+            foreach (FileInfo file in files)
             {
                 Entry entry = new Entry();
                 entry.fileName = file.Name;
@@ -115,7 +115,7 @@ namespace ArcFormats.InnocentGrey
                 nameOffset += entry.nameLen;
                 dataOffset += entry.fileSize;
             }
-            int fileCount = fileInfos.Length;
+            int fileCount = files.Length;
             LogUtility.InitBar(fileCount);
 
             using (MemoryStream msEntry = new MemoryStream())

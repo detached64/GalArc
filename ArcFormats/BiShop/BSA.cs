@@ -155,21 +155,22 @@ namespace ArcFormats.BiShop
             // header
             bw.Write(magic);
             bw.Write((ushort)1);
-            int fileCount = Utilities.GetFileCount_TopOnly(folderPath);
+            DirectoryInfo d = new DirectoryInfo(folderPath);
+            FileInfo[] files = d.GetFiles();
+            int fileCount = files.Length;
             LogUtility.InitBar(fileCount);
             LogWindow.Instance.bar.Maximum = fileCount + 1;
             bw.Write((ushort)fileCount);
             bw.Write(0);
             // data
-            string[] files = Directory.GetFiles(folderPath, "*", SearchOption.TopDirectoryOnly);
             MemoryStream ms = new MemoryStream();
             BinaryWriter bwIndex = new BinaryWriter(ms);
-            for (int i = 0; i < fileCount; i++)
+            foreach (FileInfo file in files)
             {
-                bwIndex.Write(ArcEncoding.Shift_JIS.GetBytes(Path.GetFileName(files[i]).PadRight(32, '\0')));
+                bwIndex.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(32, '\0')));
                 bwIndex.Write((uint)fw.Position);
-                bwIndex.Write((uint)new FileInfo(files[i]).Length);
-                bw.Write(File.ReadAllBytes(files[i]));
+                bwIndex.Write((uint)file.Length);
+                bw.Write(File.ReadAllBytes(file.FullName));
                 LogUtility.UpdateBar();
             }
             // entry
@@ -199,7 +200,7 @@ namespace ArcFormats.BiShop
             // header
             bw.Write(magic);
             bw.Write((ushort)3);
-            int fileCount = Utilities.GetFileCount_All(folderPath);
+            int fileCount = Utilities.GetFileCount(folderPath);
             LogUtility.InitBar(fileCount);
             bw.Write((ushort)fileCount);
             bw.Write(0);

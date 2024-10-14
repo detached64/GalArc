@@ -9,14 +9,14 @@ namespace ArcFormats.InnocentGrey
 {
     public class DAT
     {
-        private struct Header
+        private class Header
         {
             public string magic { get; set; }   //"PACKDAT."
             public uint fileCount { get; set; }
             public uint fileCount1 { get; set; }
         }
 
-        private struct Entry
+        private class Entry
         {
             public string fileName { get; set; }
             public uint offset { get; set; }
@@ -80,10 +80,10 @@ namespace ArcFormats.InnocentGrey
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
-            DirectoryInfo d = new DirectoryInfo(folderPath);
             Header header = new Header();
             header.magic = "PACKDAT.";
-            string[] files = Directory.GetFiles(folderPath);
+            DirectoryInfo d = new DirectoryInfo(folderPath);
+            FileInfo[] files = d.GetFiles();
             header.fileCount = (uint)files.Length;
             header.fileCount1 = header.fileCount;
             LogUtility.InitBar(header.fileCount);
@@ -92,21 +92,21 @@ namespace ArcFormats.InnocentGrey
             bw.Write(header.fileCount1);
             uint dataOffset = 16 + header.fileCount * 48;
 
-            foreach (string file in files)
+            foreach (FileInfo file in files)
             {
-                bw.Write(Encoding.ASCII.GetBytes(Path.GetFileName(file).PadRight(32, '\0')));
+                bw.Write(Encoding.ASCII.GetBytes(file.Name.PadRight(32, '\0')));
                 bw.Write(dataOffset);
-                uint size = (uint)new FileInfo(file).Length;
+                uint size = (uint)file.Length;
                 dataOffset += size;
                 bw.Write(0x20000000);
                 bw.Write(size);
                 bw.Write(size);
             }
 
-            foreach (string file in files)
+            foreach (FileInfo file in files)
             {
-                byte[] data = File.ReadAllBytes(file);
-                byte key = (byte)(Path.GetExtension(file) == ".s" ? 0xFF : 0);
+                byte[] data = File.ReadAllBytes(file.FullName);
+                byte key = (byte)(file.Extension == ".s" ? 0xFF : 0);
                 data = Xor.xor(data, key);
                 bw.Write(data);
                 LogUtility.UpdateBar();

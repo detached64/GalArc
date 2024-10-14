@@ -3,7 +3,6 @@ using Log;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using Utility;
 using Utility.Compression;
@@ -54,7 +53,7 @@ namespace ArcFormats.Yuris
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            if (!br.ReadBytes(4).SequenceEqual(new byte[] { 0x59, 0x50, 0x46, 0x00 }))
+            if (br.ReadUInt32() != 0x00465059)
             {
                 LogUtility.ErrorInvalidArchive();
             }
@@ -80,9 +79,10 @@ namespace ArcFormats.Yuris
                 {
                     entry.fileData = Zlib.DecompressBytes(entry.fileData);
                 }
-                if (!Directory.Exists(Path.GetDirectoryName(entry.filePath)))
+                string dir = Path.GetDirectoryName(entry.filePath);
+                if (!Directory.Exists(dir))
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(entry.filePath));
+                    Directory.CreateDirectory(dir);
                 }
                 if (UnpackYPFOptions.toDecryptScripts && Path.GetExtension(entry.filePath) == ".ybn" && BitConverter.ToUInt32(entry.fileData, 0) == 0x42545359)
                 {
@@ -198,6 +198,7 @@ namespace ArcFormats.Yuris
             isFirstGuessYst = false;
             return result;
         }
+
         private static void FindXorKey(byte[] script, string flag)
         {
             if (flag == "old")

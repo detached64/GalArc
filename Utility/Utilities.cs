@@ -107,21 +107,11 @@ namespace Utility
         /// </summary>
         /// <param name="folderPath"></param>
         /// <returns></returns>
-        public static int GetFileCount_All(string folderPath)
+        public static int GetFileCount(string folderPath, SearchOption searchOption = SearchOption.AllDirectories)
         {
-            string[] allFiles = Directory.GetFiles(folderPath, "*.*", SearchOption.AllDirectories);
-            return allFiles.Length;
-        }
-
-        /// <summary>
-        /// Get file count in specified folder only.
-        /// </summary>
-        /// <param name="folderPath"></param>
-        /// <returns></returns>
-        public static int GetFileCount_TopOnly(string folderPath)
-        {
-            string[] allFiles = Directory.GetFiles(folderPath, "*.*", SearchOption.TopDirectoryOnly);
-            return allFiles.Length;
+            DirectoryInfo dir = new DirectoryInfo(folderPath);
+            FileInfo[] files = dir.GetFiles("*.*", searchOption);
+            return files.Length;
         }
 
         /// <summary>

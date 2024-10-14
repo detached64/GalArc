@@ -24,7 +24,7 @@ namespace ArcFormats.Majiro
 
         private static int PackVersion;
 
-        private struct Entry
+        private class Entry
         {
             internal string name;
             internal uint dataOffset;
@@ -155,7 +155,9 @@ namespace ArcFormats.Majiro
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
-            int fileCount = Utilities.GetFileCount_TopOnly(folderPath);
+            DirectoryInfo d = new DirectoryInfo(folderPath);
+            FileInfo[] files = d.GetFiles();
+            int fileCount = files.Length;
             LogUtility.InitBar(fileCount);
             bw.Write(Encoding.ASCII.GetBytes(magicV1));
             bw.Write(fileCount);
@@ -166,27 +168,26 @@ namespace ArcFormats.Majiro
 
             // write name
             bw.BaseStream.Position = nameOffset;
-            string[] files = Directory.GetFiles(folderPath);
-            for (int i = 0; i < fileCount; i++)
+            foreach (FileInfo file in files)
             {
-                bw.Write(ArcEncoding.Shift_JIS.GetBytes(Path.GetFileName(files[i])));
+                bw.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name));
                 bw.Write('\0');
             }
             // write data
             dataOffset = (uint)fw.Position;
-            for (int i = 0; i < fileCount; i++)
+            foreach (FileInfo file in files)
             {
-                bw.Write(File.ReadAllBytes(files[i]));
+                bw.Write(File.ReadAllBytes(file.FullName));
             }
             uint maxOffset = (uint)fw.Position;
             // write index
             bw.BaseStream.Position = 24;
             bw.Write(dataOffset);
-            for (int i = 0; i < fileCount; i++)
+            foreach (FileInfo file in files)
             {
-                bw.Write(Crc32.Calculate(ArcEncoding.Shift_JIS.GetBytes(Path.GetFileName(files[i]))));
+                bw.Write(Crc32.Calculate(ArcEncoding.Shift_JIS.GetBytes(file.Name)));
                 bw.Write(dataOffset);
-                dataOffset += (uint)new FileInfo(files[i]).Length;
+                dataOffset += (uint)file.Length;
                 LogUtility.UpdateBar();
             }
             bw.Write(0);
@@ -199,8 +200,11 @@ namespace ArcFormats.Majiro
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
-            int fileCount = Utilities.GetFileCount_TopOnly(folderPath);
+            DirectoryInfo d = new DirectoryInfo(folderPath);
+            FileInfo[] files = d.GetFiles();
+            int fileCount = files.Length;
             LogUtility.InitBar(fileCount);
+
             bw.Write(Encoding.ASCII.GetBytes(PackVersion == 2 ? magicV2 : magicV3));
             bw.Write(fileCount);
             uint nameOffset = 28 + (uint)((PackVersion + 1) * 4 * fileCount);
@@ -210,33 +214,32 @@ namespace ArcFormats.Majiro
 
             // write name
             bw.BaseStream.Position = nameOffset;
-            string[] files = Directory.GetFiles(folderPath);
-            for (int i = 0; i < fileCount; i++)
+            foreach (FileInfo file in files)
             {
-                bw.Write(ArcEncoding.Shift_JIS.GetBytes(Path.GetFileName(files[i])));
+                bw.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name));
                 bw.Write('\0');
             }
             // write data
             dataOffset = (uint)fw.Position;
-            for (int i = 0; i < fileCount; i++)
+            foreach (FileInfo file in files)
             {
-                bw.Write(File.ReadAllBytes(files[i]));
+                bw.Write(File.ReadAllBytes(file.FullName));
             }
             // write index
             bw.BaseStream.Position = 24;
             bw.Write(dataOffset);
-            for (int i = 0; i < fileCount; i++)
+            foreach (FileInfo file in files)
             {
                 if (PackVersion == 2)
                 {
-                    bw.Write(Crc32.Calculate(ArcEncoding.Shift_JIS.GetBytes(Path.GetFileName(files[i]))));
+                    bw.Write(Crc32.Calculate(ArcEncoding.Shift_JIS.GetBytes(file.Name)));
                 }
                 else
                 {
                     bw.Write((long)0);      // don't know what this 8 bytes are , set to 0
                 }
                 bw.Write(dataOffset);
-                uint fileSize = (uint)new FileInfo(files[i]).Length;
+                uint fileSize = (uint)file.Length;
                 bw.Write(fileSize);
                 dataOffset += fileSize;
                 LogUtility.UpdateBar();
