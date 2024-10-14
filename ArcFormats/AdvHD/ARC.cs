@@ -88,7 +88,7 @@ namespace ArcFormats.AdvHD
             HashSet<string> uniqueExtension = new HashSet<string>();
 
             HeaderV1 header = new HeaderV1();
-            header.fileCountAll = (uint)Utilities.GetFileCount_All(folderPath);
+            header.fileCountAll = (uint)Utilities.GetFileCount(folderPath);
             LogUtility.InitBar(header.fileCountAll);
             string[] exts = Utilities.GetFileExtensions(folderPath);
             Utilities.InsertSort(exts);
@@ -213,16 +213,17 @@ namespace ArcFormats.AdvHD
             uint sizeToNow = 0;
 
             //make header
-            string[] files = Directory.GetFiles(folderPath);
+            DirectoryInfo d = new DirectoryInfo(folderPath);
+            FileInfo[] files = d.GetFiles();
             header.fileCount = (uint)files.Length;
             header.entrySize = 0;
             LogUtility.InitBar(header.fileCount);
 
-            foreach (string file in files)
+            foreach (FileInfo file in files)
             {
                 EntryV2 entry = new EntryV2();
-                entry.fileName = Path.GetFileName(file);
-                entry.fileSize = (uint)new FileInfo(file).Length;
+                entry.fileName = file.Name;
+                entry.fileSize = (uint)file.Length;
                 entry.offset = sizeToNow;
                 sizeToNow += entry.fileSize;
                 l.Add(entry);
@@ -250,12 +251,12 @@ namespace ArcFormats.AdvHD
                     }
 
                     //write data
-                    foreach (string file in files)
+                    foreach (FileInfo file in files)
                     {
-                        byte[] buffer = File.ReadAllBytes(file);
-                        if (PackARCOptions.toEncryptScripts && IsScriptFile(Path.GetExtension(file), "2"))
+                        byte[] buffer = File.ReadAllBytes(file.FullName);
+                        if (PackARCOptions.toEncryptScripts && IsScriptFile(file.Extension, "2"))
                         {
-                            LogUtility.Debug(string.Format(Resources.logTryEncScr, Path.GetFileName(file)));
+                            LogUtility.Debug(string.Format(Resources.logTryEncScr, file.Name));
                             EncryptScript(buffer);
                         }
                         bw.Write(buffer);

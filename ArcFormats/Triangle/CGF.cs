@@ -68,12 +68,12 @@ namespace ArcFormats.Triangle
 
             for (int i = 0; i < fileCount; i++)
             {
-                Entry e = new Entry();
+                Entry entry = new Entry();
                 long pos = fs.Position;
-                e.fileName = Utilities.ReadCString(br, ArcEncoding.Shift_JIS);
+                entry.fileName = Utilities.ReadCString(br, ArcEncoding.Shift_JIS);
                 fs.Position = pos + 16;
-                e.offset = br.ReadUInt32();
-                entries.Add(e);
+                entry.offset = br.ReadUInt32();
+                entries.Add(entry);
             }
 
             for (int i = 0; i < fileCount - 1; i++)
@@ -86,24 +86,26 @@ namespace ArcFormats.Triangle
             fs.Dispose();
             br.Dispose();
         }
+
         private static void cgfV1_pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
-            string[] files = Directory.GetFiles(folderPath);
+            DirectoryInfo d = new DirectoryInfo(folderPath);
+            FileInfo[] files = d.GetFiles();
             int fileCount = files.Length;
             bw.Write(fileCount);
             uint baseOffset = 4 + 20 * (uint)fileCount;
             LogUtility.InitBar(fileCount);
-            foreach (string file in files)
+            foreach (FileInfo file in files)
             {
-                bw.Write(ArcEncoding.Shift_JIS.GetBytes(Path.GetFileName(file).PadRight(16, '\0')));
+                bw.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(16, '\0')));
                 bw.Write(baseOffset);
-                baseOffset += (uint)new FileInfo(file).Length;
+                baseOffset += (uint)file.Length;
             }
-            foreach (string file in files)
+            foreach (FileInfo file in files)
             {
-                byte[] data = File.ReadAllBytes(file);
+                byte[] data = File.ReadAllBytes(file.FullName);
                 bw.Write(data);
                 LogUtility.UpdateBar();
             }

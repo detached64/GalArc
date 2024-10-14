@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Utility;
 
 namespace ArcFormats.Triangle
 {
     public class CG
     {
-        private struct Triangle_CG_entry
+        private class Entry
         {
             public string name { get; set; }
             public uint offset { get; set; }
@@ -18,16 +17,16 @@ namespace ArcFormats.Triangle
 
         public void Unpack(string filePath, string folderPath)
         {
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            List<Triangle_CG_entry> entries = new List<Triangle_CG_entry>();
+            List<Entry> entries = new List<Entry>();
             uint fileCount = br.ReadUInt32();
             LogUtility.InitBar(fileCount);
             Directory.CreateDirectory(folderPath);
 
             for (int i = 0; i < fileCount; i++)
             {
-                Triangle_CG_entry entry = new Triangle_CG_entry();
+                Entry entry = new Entry();
                 entry.name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(16)).TrimEnd('\0');
                 //fs.Position = 4 + 20 * i + 16;
                 entry.offset = br.ReadUInt32();
@@ -51,22 +50,23 @@ namespace ArcFormats.Triangle
 
         public void Pack(string folderPath, string filePath)
         {
-            FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            FileStream fs = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fs);
             DirectoryInfo dir = new DirectoryInfo(folderPath);
-            uint fileCount = (uint)dir.GetFiles("*.*", SearchOption.TopDirectoryOnly).Count();
+            FileInfo[] files = dir.GetFiles();
+            int fileCount = files.Length;
             bw.Write(fileCount);
-            uint dataOffset = (uint)(4 + 20 * Utilities.GetFileCount_All(folderPath));
+            uint dataOffset = (uint)(4 + 20 * fileCount);
             LogUtility.InitBar(fileCount);
 
-            foreach (FileInfo file in dir.GetFiles("*.*", SearchOption.TopDirectoryOnly))
+            foreach (FileInfo file in files)
             {
                 bw.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(16, '\0')));
                 bw.Write(dataOffset);
                 dataOffset += (uint)file.Length;
             }
 
-            foreach (FileInfo file in dir.GetFiles("*.*", SearchOption.TopDirectoryOnly))
+            foreach (FileInfo file in files)
             {
                 byte[] data = File.ReadAllBytes(file.FullName);
                 bw.Write(data);

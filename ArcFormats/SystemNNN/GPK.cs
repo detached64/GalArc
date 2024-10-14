@@ -11,7 +11,7 @@ namespace ArcFormats.SystemNNN
     {
         public static UserControl PackExtraOptions = new Templates.VersionOnly("1/2");
 
-        private struct SystemNNN_gtb_entry
+        private class Entry
         {
             public uint size { get; set; }
             public uint offset { get; set; }
@@ -49,7 +49,7 @@ namespace ArcFormats.SystemNNN
             //i~n-1
             for (int i = 1; i < filecount; i++)
             {
-                SystemNNN_gtb_entry entry = new SystemNNN_gtb_entry();
+                Entry entry = new Entry();
 
                 //offset
                 entry.offset = br1.ReadUInt32();
@@ -83,7 +83,7 @@ namespace ArcFormats.SystemNNN
             fs1.Seek(8 * filecount, SeekOrigin.Begin);
             uint sizeWithoutLast = br1.ReadUInt32();
             fs1.Seek(offset + 4 + 8 * filecount, SeekOrigin.Begin);
-            SystemNNN_gtb_entry last = new SystemNNN_gtb_entry();
+            Entry last = new Entry();
             last.offset = gtbSize - (offset + 4 + 8 * filecount) - 1;
             last.filePath = folderPath + "\\" + Utilities.ReadCString(br1, Encoding.UTF8) + ".dwq";
             last.size = gpkSize - sizeWithoutLast;
@@ -111,13 +111,16 @@ namespace ArcFormats.SystemNNN
         public void Pack(string folderPath, string filePath)
         {
             DirectoryInfo d = new DirectoryInfo(folderPath);
-            uint filecount = (uint)Utilities.GetFileCount_All(folderPath);
-            LogUtility.InitBar(3 * filecount);
+            FileInfo[] files = d.GetFiles("*.dwq");
+            int filecount = files.Length;
+            LogUtility.InitBar(filecount);
+            LogWindow.Instance.bar.Maximum = 3 * filecount;
+
             string gpkPath = filePath;
             string gtbPath = filePath.Contains(".gpk") ? gpkPath.Replace(".gpk", ".gtb") : gpkPath + ".gtb";
 
-            FileStream fs1 = new FileStream(gtbPath, FileMode.Create, FileAccess.Write);
-            FileStream fs2 = new FileStream(gpkPath, FileMode.Create, FileAccess.Write);
+            FileStream fs1 = File.Create(gtbPath);
+            FileStream fs2 = File.Create(gpkPath);
             BinaryWriter writer1 = new BinaryWriter(fs1);
             BinaryWriter writer2 = new BinaryWriter(fs2);
 
@@ -125,36 +128,26 @@ namespace ArcFormats.SystemNNN
             uint offsetToNow = 0;
             writer1.Write(filecount);
 
-            foreach (FileInfo fi in d.GetFiles())
+            foreach (FileInfo file in files)
             {
-                if (Path.GetExtension(fi.FullName) != ".dwq")
-                {
-                    fs1.Dispose();
-                    fs2.Dispose();
-                    FileInfo deleteVpk = new FileInfo(gpkPath);
-                    FileInfo deleteVtb = new FileInfo(gtbPath);
-                    deleteVpk.Delete();
-                    deleteVtb.Delete();
-                    throw new Exception("Error:File extension " + fi.Extension + " not supported.");
-                }
                 writer1.Write(offsetToNow);
-                offsetToNow = offsetToNow + (uint)Path.GetFileNameWithoutExtension(fi.FullName).Length + 1;
+                offsetToNow = offsetToNow + (uint)Path.GetFileNameWithoutExtension(file.FullName).Length + 1;
 
-                byte[] buffer = File.ReadAllBytes(fi.FullName);
+                byte[] buffer = File.ReadAllBytes(file.FullName);
                 writer2.Write(buffer);
                 LogUtility.UpdateBar();
             }
 
-            foreach (FileInfo fi in d.GetFiles())
+            foreach (FileInfo file in files)
             {
                 writer1.Write(sizeToNow);
-                sizeToNow += (uint)fi.Length;
+                sizeToNow += (uint)file.Length;
                 LogUtility.UpdateBar();
             }
 
-            foreach (FileInfo fi in d.GetFiles())
+            foreach (FileInfo file in files)
             {
-                writer1.Write(Encoding.ASCII.GetBytes(Path.GetFileNameWithoutExtension(fi.FullName)));
+                writer1.Write(Encoding.ASCII.GetBytes(Path.GetFileNameWithoutExtension(file.FullName)));
                 writer1.Write('\0');
                 LogUtility.UpdateBar();
             }
@@ -170,10 +163,10 @@ namespace ArcFormats.SystemNNN
                     writer1.Write('\0');
                 }
                 ulong sizeToNowNew = 0;
-                foreach (FileInfo fi in d.GetFiles())
+                foreach (FileInfo file in files)
                 {
                     writer1.Write(sizeToNowNew);
-                    sizeToNowNew += (ulong)fi.Length;
+                    sizeToNowNew += (ulong)file.Length;
                 }
                 writer1.Write((ulong)0);
                 writer1.Write(Encoding.ASCII.GetBytes("over2G!"));

@@ -9,16 +9,16 @@ namespace ArcFormats.NScripter
 {
     public class NS2
     {
-        private struct Entry
+        private class Entry
         {
             public string filePath { get; set; }
             public uint fileSize { get; set; }
-            public string filePathDivided { get; set; }
+            public string relativePath { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)
         {
-            FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
             int dataOffset = br.ReadInt32();
             if (dataOffset > new FileInfo(filePath).Length || dataOffset <= 0)
@@ -53,29 +53,23 @@ namespace ArcFormats.NScripter
 
         public void Pack(string folderPath, string filePath)
         {
-            int fileCount = Utilities.GetFileCount_All(folderPath);
+            int fileCount = Utilities.GetFileCount(folderPath);
             LogUtility.InitBar(fileCount);
             uint dataOffset = 4;
 
-            string[] pathString = new string[fileCount];
-            DirectoryInfo d = new DirectoryInfo(folderPath);
-            int i = 0;
-            foreach (FileInfo file in d.GetFiles("*.*", SearchOption.AllDirectories))
-            {
-                pathString[i] = file.FullName.Substring(folderPath.Length + 1);
-                i++;
-            }
-            Utilities.InsertSort(pathString);//cannot use getfiles,like pf8
+            string[] fullPaths = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
+            string[] relativePaths = Utilities.GetRelativePaths(fullPaths, folderPath);
+            Utilities.InsertSort(fullPaths);
 
             List<Entry> entries = new List<Entry>();
 
-            for (int j = 0; j < fileCount; j++)
+            for (int i = 0; i < fileCount; i++)
             {
                 Entry entry = new Entry();
-                entry.filePathDivided = pathString[j];              //contains '/'
-                entry.filePath = folderPath + "\\" + pathString[j];
+                entry.relativePath = relativePaths[i];
+                entry.filePath = Path.Combine(folderPath, relativePaths[i]);
                 entry.fileSize = (uint)new FileInfo(entry.filePath).Length;
-                dataOffset += (uint)(ArcEncoding.Shift_JIS.GetBytes(entry.filePathDivided).Length + 2);//to avoid japanese character length error
+                dataOffset += (uint)(ArcEncoding.Shift_JIS.GetBytes(entry.relativePath).Length + 2);
                 dataOffset += 4;
                 entries.Add(entry);
             }
@@ -83,18 +77,18 @@ namespace ArcFormats.NScripter
             FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.Write);
             BinaryWriter bw = new BinaryWriter(fw);
             bw.Write(dataOffset);
-            for (int j = 0; j < fileCount; j++)
+            for (int i = 0; i < fileCount; i++)
             {
                 bw.Write('\"');
-                bw.Write(ArcEncoding.Shift_JIS.GetBytes(entries[j].filePathDivided));
+                bw.Write(ArcEncoding.Shift_JIS.GetBytes(entries[i].relativePath));
                 bw.Write('\"');
-                bw.Write(entries[j].fileSize);
+                bw.Write(entries[i].fileSize);
             }
             bw.Write('e');
 
-            for (int j = 0; j < fileCount; j++)
+            for (int i = 0; i < fileCount; i++)
             {
-                byte[] buffer = File.ReadAllBytes(entries[j].filePath);
+                byte[] buffer = File.ReadAllBytes(entries[i].filePath);
                 bw.Write(buffer);
                 LogUtility.UpdateBar();
             }

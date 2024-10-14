@@ -90,20 +90,22 @@ namespace ArcFormats.NekoSDK
 
             writer.Write(Encoding.ASCII.GetBytes(magic));
             writer.Write(Encoding.ASCII.GetBytes("4A"));
-            string[] files = Directory.GetFiles(folderPath);
+            DirectoryInfo d = new DirectoryInfo(folderPath);
+            FileInfo[] files = d.GetFiles();
+
             LogUtility.InitBar(files.Length);
             uint baseOffset = (uint)files.Length * 12 + 18;
 
             foreach (var file in files)
             {
-                baseOffset += (uint)ArcEncoding.Shift_JIS.GetByteCount(Path.GetFileName(file)) + 1;
+                baseOffset += (uint)ArcEncoding.Shift_JIS.GetByteCount(file.Name) + 1;
             }
             writer.Write(baseOffset);
             fw.Position = baseOffset;
 
             foreach (var file in files)
             {
-                string name = Path.GetFileName(file);
+                string name = file.Name;
                 byte[] nameBuf = ArcEncoding.Shift_JIS.GetBytes(name);
                 writer.Write(nameBuf.Length + 1);
                 writer.Write(nameBuf);
@@ -115,7 +117,7 @@ namespace ArcFormats.NekoSDK
                 }
                 writer.Write(baseOffset ^ (uint)key);
 
-                byte[] data = Zlib.CompressFile(file);
+                byte[] data = Zlib.CompressFile(file.FullName);
                 uint size = (uint)data.Length + 4;
                 uint dataKey = size / 8 + 0x22;
                 for (int i = 0; i < 4; i++)
@@ -124,7 +126,7 @@ namespace ArcFormats.NekoSDK
                     dataKey <<= 3;
                 }
                 bw.Write(data);
-                bw.Write((uint)new FileInfo(file).Length);
+                bw.Write((uint)file.Length);
 
                 writer.Write(size ^ (uint)key);
                 baseOffset += size;

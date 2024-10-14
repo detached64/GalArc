@@ -26,12 +26,13 @@ namespace ArcFormats.Triangle
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
-            string[] files = Directory.GetFiles(folderPath, ".ogg");
+            DirectoryInfo d = new DirectoryInfo(folderPath);
+            FileInfo[] files = d.GetFiles("*.ogg");
             LogUtility.InitBar(files.Length);
-            foreach (string file in files)
+            foreach (FileInfo file in files)
             {
-                bw.Write((uint)new FileInfo(file).Length);
-                bw.Write(File.ReadAllBytes(file));
+                bw.Write((uint)file.Length);
+                bw.Write(File.ReadAllBytes(file.FullName));
                 LogUtility.UpdateBar();
             }
             fw.Dispose();

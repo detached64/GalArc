@@ -2,13 +2,12 @@
 using System;
 using System.IO;
 using System.Text;
-using Utility;
 
 namespace ArcFormats.SystemNNN
 {
     public class VPK
     {
-        private struct SystemNNN_vtb_entry
+        private class Entry
         {
             public int size { get; set; }
             public string filePath { get; set; }
@@ -32,15 +31,15 @@ namespace ArcFormats.SystemNNN
             LogUtility.InitBar(filecount);
 
             //open&make dir
-            FileStream fs1 = new FileStream(vtbPath, FileMode.Open, FileAccess.Read);
+            FileStream fs1 = File.OpenRead(vtbPath);
             BinaryReader br1 = new BinaryReader(fs1);
-            FileStream fs2 = new FileStream(vpkPath, FileMode.Open, FileAccess.Read);
+            FileStream fs2 = File.OpenRead(vpkPath);
             BinaryReader br2 = new BinaryReader(fs2);
             Directory.CreateDirectory(folderPath);
             //1~n-1
             for (int i = 1; i < filecount; i++)
             {
-                SystemNNN_vtb_entry entry = new SystemNNN_vtb_entry();
+                Entry entry = new Entry();
                 entry.filePath = folderPath + "\\" + Encoding.UTF8.GetString(br1.ReadBytes(8)) + ".vaw";
                 int size1 = br1.ReadInt32();
                 fs1.Seek(8, SeekOrigin.Current);
@@ -52,7 +51,7 @@ namespace ArcFormats.SystemNNN
                 LogUtility.UpdateBar();
             }
             //the last
-            SystemNNN_vtb_entry last = new SystemNNN_vtb_entry();
+            Entry last = new Entry();
             last.filePath = folderPath + "\\" + Encoding.UTF8.GetString(br1.ReadBytes(8)) + ".vaw";
             int vpksizeBefore = br1.ReadInt32();
             fs1.Seek(8, SeekOrigin.Current);//reserve
@@ -74,32 +73,23 @@ namespace ArcFormats.SystemNNN
             //init
             int sizeToNow = 0;
             DirectoryInfo d = new DirectoryInfo(folderPath);
-            int filecount = Utilities.GetFileCount_All(folderPath);
+            FileInfo[] files = d.GetFiles("*.vaw");
+            int filecount = files.Length;
             string vpkPath = filePath;
             string vtbPath = vpkPath.Contains(".vpk") ? vpkPath.Replace(".vpk", ".vtb") : vpkPath + ".vtb";
-            FileStream fs1 = new FileStream(vtbPath, FileMode.Create, FileAccess.Write);
-            FileStream fs2 = new FileStream(vpkPath, FileMode.Create, FileAccess.Write);
+            FileStream fs1 = File.Create(vtbPath);
+            FileStream fs2 = File.Create(vpkPath);
             BinaryWriter writer1 = new BinaryWriter(fs1);
             BinaryWriter writer2 = new BinaryWriter(fs2);
             LogUtility.InitBar(filecount);
 
-            foreach (FileInfo fi in d.GetFiles())
+            foreach (FileInfo file in files)
             {
-                if (Path.GetExtension(fi.FullName) != ".vaw" || Path.GetFileNameWithoutExtension(fi.FullName).Length != 8)
-                {
-                    fs1.Close();
-                    fs2.Close();
-                    FileInfo deleteVpk = new FileInfo(vpkPath);
-                    FileInfo deleteVtb = new FileInfo(vtbPath);
-                    deleteVpk.Delete();
-                    deleteVtb.Delete();
-                    throw new Exception("Error:File extension " + fi.Extension + " not supported.");
-                }
-                writer1.Write(Encoding.UTF8.GetBytes(Path.GetFileNameWithoutExtension(fi.FullName)));
+                writer1.Write(Encoding.UTF8.GetBytes(Path.GetFileNameWithoutExtension(file.FullName)));
                 writer1.Write(sizeToNow);
-                sizeToNow += (int)fi.Length;
+                sizeToNow += (int)file.Length;
 
-                byte[] buffer = File.ReadAllBytes(fi.FullName);
+                byte[] buffer = File.ReadAllBytes(file.FullName);
                 writer2.Write(buffer);
                 LogUtility.UpdateBar();
             }
