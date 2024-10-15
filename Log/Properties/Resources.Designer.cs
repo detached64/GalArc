@@ -239,5 +239,14 @@ namespace Log.Properties {
                 return ResourceManager.GetString("logValidArchiveDetected", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找类似 Current version: {0} Latest version: {1} 的本地化字符串。
+        /// </summary>
+        internal static string logVersions {
+            get {
+                return ResourceManager.GetString("logVersions", resourceCulture);
+            }
+        }
     }
 }

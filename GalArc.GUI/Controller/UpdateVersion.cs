@@ -44,6 +44,7 @@ namespace GalArc.Controller
                 }
             }
             LogUtility.ShowCheckSuccess(isNewVerExist);
+            LogUtility.ShowVersions(currentVersion, latestVersion);
             if (isNewVerExist)
             {
                 UpdateBox box = new UpdateBox();

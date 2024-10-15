@@ -1,5 +1,4 @@
-﻿using GalArc.Controller;
-using GalArc.Properties;
+﻿using GalArc.Properties;
 using GalArc.Resource;
 using System;
 using System.Collections.Generic;
@@ -20,11 +19,11 @@ namespace GalArc.GUI
 
         public static AboutBox Instance;
 
-        private const int delta = 6;
+        private int delta { get; } = 6;
 
-        private const string programUrl = "https://github.com/detached64/GalArc";
+        private string programUrl { get; } = "https://github.com/detached64/GalArc";
 
-        private const string issueUrl = "https://github.com/detached64/GalArc/issues";
+        private string issueUrl { get; } = "https://github.com/detached64/GalArc/issues";
 
         public AboutBox()
         {

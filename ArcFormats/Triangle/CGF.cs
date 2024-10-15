@@ -12,7 +12,7 @@ namespace ArcFormats.Triangle
     {
         public static UserControl PackExtraOptions = new VersionOnly("1");
 
-        private struct Entry
+        private class Entry
         {
             internal string fileName;
             internal uint offset;
