@@ -202,6 +202,10 @@ namespace Log
         {
             Error(Resources.logUpdateError, false);
         }
+        public static void ShowVersions(string cv, string lv)
+        {
+            Debug(string.Format(Resources.logVersions, cv, lv));
+        }
 
         public static void ShowVersion(string extension, int version)
         {

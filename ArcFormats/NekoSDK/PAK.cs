@@ -15,9 +15,9 @@ namespace ArcFormats.NekoSDK
 
         private class Entry
         {
-            public string Name;
-            public uint Offset;
-            public uint Size;
+            public string Name { get; set; }
+            public uint Offset { get; set; }
+            public uint Size { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)

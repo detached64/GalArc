@@ -219,7 +219,7 @@ namespace ArcFormats.RPGMaker
             return data;
         }
 
-        internal class KeyGen
+        private class KeyGen
         {
             private uint m_seed;
 

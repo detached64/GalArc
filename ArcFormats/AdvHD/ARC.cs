@@ -304,7 +304,7 @@ namespace ArcFormats.AdvHD
 
         private static bool IsScriptFile(string ext, string version)
         {
-            string trimed = ext.ToLower().TrimStart('.');
+            string trimed = ext.TrimStart('.').ToLower();
             if (version == "1")
             {
                 return trimed == "scr" || trimed == "wsc";

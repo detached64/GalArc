@@ -177,4 +177,7 @@
   <data name="logErrorOccur" xml:space="preserve">
     <value>出现错误。详情请转到日志界面。</value>
   </data>
+  <data name="logVersions" xml:space="preserve">
+    <value>当前版本：{0} 最新版本：{1}</value>
+  </data>
 </root>
