@@ -30,30 +30,30 @@ namespace Utility
 {
     public class BigEndian
     {
-        public static uint Read(uint u)
+        public static uint Convert(uint u)
         {
             return u << 24 | (u & 0xff00) << 8 | (u & 0xff0000) >> 8 | u >> 24;
         }
-        public static int Read(int i)
+        public static int Convert(int i)
         {
-            return (int)Read((uint)i);
+            return (int)Convert((uint)i);
         }
-        public static ushort Read(ushort u)
+        public static ushort Convert(ushort u)
         {
             return (ushort)(u << 8 | u >> 8);
         }
-        public static short Read(short i)
+        public static short Convert(short i)
         {
-            return (short)Read((ushort)i);
+            return (short)Convert((ushort)i);
         }
-        public static ulong Read(ulong u)
+        public static ulong Convert(ulong u)
         {
-            return (ulong)Read((uint)(u & 0xffffffff)) << 32
-                 | (ulong)Read((uint)(u >> 32));
+            return (ulong)Convert((uint)(u & 0xffffffff)) << 32
+                 | (ulong)Convert((uint)(u >> 32));
         }
-        public static long Read(long i)
+        public static long Convert(long i)
         {
-            return (long)Read((ulong)i);
+            return (long)Convert((ulong)i);
         }
 
     }

@@ -36,7 +36,7 @@ namespace GalArc.Resource
             new EngineInfo("NeXAS","PAC", string.Empty),
             new EngineInfo("NextonLikeC","LST",string.Empty),
             new EngineInfo("NitroPlus","PAK","PAK"),
-            new EngineInfo("NScripter","NS2","NS2"),
+            new EngineInfo("NScripter","NS2/NSA","NS2/NSA"),
             new EngineInfo("Palette","PAK","PAK"),
             new EngineInfo("PJADV","DAT/PAK","DAT/PAK"),
             new EngineInfo("RPGMaker","RGSSAD/RGSS2A/RGSS3A","RGSSAD/RGSS2A/RGSS3A"),

@@ -71,9 +71,9 @@ namespace ArcFormats.Ai6Win
                     throw new Exception();
                 }
                 entry.filePath = Path.Combine(folderPath, entry.name);
-                entry.packedSize = BigEndian.Read(br.ReadUInt32());
-                entry.unpackedSize = BigEndian.Read(br.ReadUInt32());
-                entry.offset = BigEndian.Read(br.ReadUInt32());
+                entry.packedSize = BigEndian.Convert(br.ReadUInt32());
+                entry.unpackedSize = BigEndian.Convert(br.ReadUInt32());
+                entry.offset = BigEndian.Convert(br.ReadUInt32());
                 entry.isPacked = entry.packedSize != entry.unpackedSize;
                 l.Add(entry);
             }
@@ -105,9 +105,9 @@ namespace ArcFormats.Ai6Win
                     throw new Exception();
                 }
                 entry.filePath = Path.Combine(folderPath, entry.name);
-                entry.packedSize = BigEndian.Read(br.ReadUInt32());
-                entry.unpackedSize = BigEndian.Read(br.ReadUInt32());
-                entry.offset = BigEndian.Read(br.ReadUInt32());
+                entry.packedSize = BigEndian.Convert(br.ReadUInt32());
+                entry.unpackedSize = BigEndian.Convert(br.ReadUInt32());
+                entry.offset = BigEndian.Convert(br.ReadUInt32());
                 entry.isPacked = entry.packedSize != entry.unpackedSize;
                 l.Add(entry);
             }

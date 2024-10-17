@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using Utility;
+using Utility.Extensions;
 
 namespace ArcFormats.Cmvs
 {
@@ -45,7 +46,7 @@ namespace ArcFormats.Cmvs
                 int size = reader.ReadInt32();
                 long offset = reader.ReadInt64() + baseOffset;
                 ms.Position += 8;
-                string fileName = Utilities.ReadCString(reader, ArcEncoding.Shift_JIS);
+                string fileName = reader.ReadCString(ArcEncoding.Shift_JIS);
                 fs.Position = offset;
                 byte[] data = br.ReadBytes(size);
                 for (int j = 0; j < data.Length; j++)

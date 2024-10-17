@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using Utility;
+using Utility.Extensions;
 
 namespace ArcFormats.Majiro
 {
@@ -81,7 +82,7 @@ namespace ArcFormats.Majiro
                 Entry entry = new Entry();
                 brIndex.ReadBytes(4);            //skip crc32
                 entry.dataOffset = brIndex.ReadUInt32();
-                entry.name = Utilities.ReadCString(br, ArcEncoding.Shift_JIS);
+                entry.name = br.ReadCString(ArcEncoding.Shift_JIS);
                 entries.Add(entry);
             }
             Entry lastEntry = new Entry();
@@ -123,7 +124,7 @@ namespace ArcFormats.Majiro
                 brIndex.ReadBytes(4 * (UnpackVersion - 1));            //skip checksum
                 entry.dataOffset = brIndex.ReadUInt32();
                 entry.size = brIndex.ReadUInt32();
-                entry.name = Utilities.ReadCString(br, ArcEncoding.Shift_JIS);
+                entry.name = br.ReadCString(ArcEncoding.Shift_JIS);
                 long pos = fs.Position;
                 fs.Position = entry.dataOffset;
                 File.WriteAllBytes(Path.Combine(folderPath, entry.name), br.ReadBytes((int)entry.size));

@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Utility;
+using Utility.Extensions;
 
 namespace ArcFormats.NScripter
 {
@@ -32,7 +32,7 @@ namespace ArcFormats.NScripter
             {
                 Entry entry = new Entry();
                 br.ReadByte();//skip "
-                entry.filePath = folderPath + "\\" + Utilities.ReadCString(br, ArcEncoding.Shift_JIS, 0x22);
+                entry.filePath = Path.Combine(folderPath, br.ReadCString(ArcEncoding.Shift_JIS, 0x22));
                 entry.fileSize = br.ReadUInt32();
                 entries.Add(entry);
             }

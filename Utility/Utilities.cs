@@ -51,58 +51,6 @@ namespace Utility
         }
 
         /// <summary>
-        /// Used for continuous file names with a separator <paramref name="toThis"/> in between.
-        /// </summary>
-        /// <param name="br"></param>
-        /// <param name="encoding"></param>
-        /// <param name="toThis"></param>
-        /// <returns></returns>
-        public static string ReadCString(BinaryReader br, Encoding encoding, byte toThis = 0x00)
-        {
-            List<byte> byteList = new List<byte>();
-            bool isUnicode = encoding == Encoding.Unicode;
-
-            if (isUnicode)
-            {
-                while (true)
-                {
-                    byte b1 = br.ReadByte();
-                    byte b2 = br.ReadByte();
-                    if (b1 == 0 && b2 == 0)
-                    {
-                        break;
-                    }
-                    byteList.Add(b1);
-                    byteList.Add(b2);
-
-                }
-            }
-            else
-            {
-                while (true)
-                {
-                    byte b = br.ReadByte();
-                    if (b == toThis)
-                    {
-                        break;
-                    }
-                    byteList.Add(b);
-                }
-            }
-
-            return encoding.GetString(byteList.ToArray());
-        }
-
-        public static string GetCString(string str, Encoding encoding)
-        {
-            byte[] bytes = encoding.GetBytes(str);
-            byte[] cStringBytes = new byte[bytes.Length + 1];
-            Array.Copy(bytes, cStringBytes, bytes.Length);
-            cStringBytes[bytes.Length] = 0x00;
-            return encoding.GetString(cStringBytes);
-        }
-
-        /// <summary>
         /// Get file count in specified folder and all subfolders.
         /// </summary>
         /// <param name="folderPath"></param>

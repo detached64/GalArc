@@ -47,6 +47,7 @@ namespace ArcFormats.Yuris
         private static readonly byte[] Table2 = { 0x0C, 0x10, 0x11, 0x19, 0x1C, 0x1E, 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
         private static readonly byte[] Table3 = { 0x03, 0x48, 0x06, 0x35, 0x0C, 0x10, 0x11, 0x19, 0x1C, 0x1E, 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
         private static readonly List<byte[]> tables = new List<byte[]> { Table3, Table2, Table1 };
+        private static readonly string[] tableNames = { "Table3", "Table2", "Table1" };
         private static readonly List<int> extraLens = new List<int> { 8, 4 };
 
         public void Unpack(string filePath, string folderPath)
@@ -105,7 +106,7 @@ namespace ArcFormats.Yuris
                 {
                     scheme.table = table;
                     scheme.extraLen = length;
-                    LogUtility.Debug($"Try Table {tables.Count - tables.IndexOf(table)} , Extra Length = {length}……");
+                    LogUtility.Debug($"Try {tableNames[tables.IndexOf(table)]} , Extra Length = {length}……");
                     try
                     {
                         entries.Clear();

@@ -95,6 +95,7 @@
     </Compile>
     <Compile Include="NitroPlus\PAK.cs" />
     <Compile Include="NScripter\NS2.cs" />
+    <Compile Include="NScripter\NSA.cs" />
     <Compile Include="Palette\PAK.cs" />
     <Compile Include="PJADV\DAT.cs" />
     <Compile Include="PJADV\PackDATOptions.cs">

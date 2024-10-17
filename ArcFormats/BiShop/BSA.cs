@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Utility;
+using Utility.Extensions;
 
 namespace ArcFormats.BiShop
 {
@@ -111,7 +112,7 @@ namespace ArcFormats.BiShop
 
                 long pos = fs.Position;
                 fs.Position = entry.nameOffset;
-                string name = Utilities.ReadCString(br, ArcEncoding.Shift_JIS);
+                string name = br.ReadCString(ArcEncoding.Shift_JIS);
                 if (name[0] == '>')
                 {
                     m_path.Add(name.Substring(1));
