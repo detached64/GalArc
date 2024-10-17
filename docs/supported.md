@@ -20,10 +20,10 @@ Attention:this file may not be updated regularly.
 | NScripter        | `ns2`                      | ✔️      | ✔️    | unencrypted             |
 | Palette          | `pak`                      | ✔️      | ✔️    | All                     |
 | PJADV            | `dat` `pak`                | ✔️      | ✔️    | All                     |
-| RPGMaker         | `rgssad` `rgss2a` `rgss3a` | ✔️      | ✔️    | Pack:v1                 |
+| RPGMaker         | `rgssad` `rgss2a` `rgss3a` | ✔️      | ✔️    | All                     |
 | Softpal          | `pac`                      | ✔️      | ✔️    | All                     |
-| SystemNNN        | `gpk` `gtb` `vpk` `vtb`    | ✔️      | ✔️    | All                     |
-| Triangle         | `CG` `SUD` `CGF`           | ✔️      | ✔️    | All                     |
+| SystemNNN        | `gpk` `vpk`                | ✔️      | ✔️    | All                     |
+| Triangle         | `CG` `SUD` `CGF`           | ✔️      | ✔️    | cgf:v1 only             |
 | Yuris            | `ypf`                      | ✔️      | ❌    | All                     |
 
 

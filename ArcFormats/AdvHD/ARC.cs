@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using Utility;
+using Utility.Extensions;
 
 namespace ArcFormats.AdvHD
 {
@@ -185,7 +186,7 @@ namespace ArcFormats.AdvHD
                 EntryV2 entry = new EntryV2();
                 entry.fileSize = br1.ReadUInt32();
                 entry.offset = br1.ReadUInt32() + 8 + header.entrySize;
-                entry.fileName = Utilities.ReadCString(br1, Encoding.Unicode);
+                entry.fileName = br1.ReadCString(Encoding.Unicode);
                 entry.filePath = Path.Combine(folderPath, entry.fileName);
 
                 l.Add(entry);

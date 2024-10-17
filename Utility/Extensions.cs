@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Utility.Extensions
 {
@@ -52,5 +54,45 @@ namespace Utility.Extensions
             }
             return false;
         }
+    }
+
+    public static class BinaryReaderExtensions
+    {
+        public static string ReadCString(this BinaryReader br, Encoding encoding, byte toThis = 0x00)
+        {
+            List<byte> byteList = new List<byte>();
+            bool isUnicode = encoding == Encoding.Unicode;
+
+            if (isUnicode)
+            {
+                while (true)
+                {
+                    byte b1 = br.ReadByte();
+                    byte b2 = br.ReadByte();
+                    if (b1 == 0 && b2 == 0)
+                    {
+                        break;
+                    }
+                    byteList.Add(b1);
+                    byteList.Add(b2);
+
+                }
+            }
+            else
+            {
+                while (true)
+                {
+                    byte b = br.ReadByte();
+                    if (b == toThis)
+                    {
+                        break;
+                    }
+                    byteList.Add(b);
+                }
+            }
+
+            return encoding.GetString(byteList.ToArray());
+        }
+
     }
 }

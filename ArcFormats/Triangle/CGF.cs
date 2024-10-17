@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using Utility;
+using Utility.Extensions;
 
 namespace ArcFormats.Triangle
 {
@@ -70,7 +71,7 @@ namespace ArcFormats.Triangle
             {
                 Entry entry = new Entry();
                 long pos = fs.Position;
-                entry.fileName = Utilities.ReadCString(br, ArcEncoding.Shift_JIS);
+                entry.fileName = br.ReadCString(ArcEncoding.Shift_JIS);
                 fs.Position = pos + 16;
                 entry.offset = br.ReadUInt32();
                 entries.Add(entry);

@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using Utility;
+using Utility.Extensions;
 
 namespace ArcFormats.SystemNNN
 {
@@ -63,7 +64,7 @@ namespace ArcFormats.SystemNNN
 
                 fs1.Seek(4 + 8 * filecount + entry.offset, SeekOrigin.Begin);
 
-                entry.filePath = folderPath + "\\" + Utilities.ReadCString(br1, Encoding.UTF8) + ".dwq";
+                entry.filePath = Path.Combine(folderPath, br1.ReadCString(Encoding.UTF8) + ".dwq");
                 thisPos = (uint)fs1.Position;
                 maxPos = Math.Max(thisPos, maxPos);
 
@@ -85,7 +86,7 @@ namespace ArcFormats.SystemNNN
             fs1.Seek(offset + 4 + 8 * filecount, SeekOrigin.Begin);
             Entry last = new Entry();
             last.offset = gtbSize - (offset + 4 + 8 * filecount) - 1;
-            last.filePath = folderPath + "\\" + Utilities.ReadCString(br1, Encoding.UTF8) + ".dwq";
+            last.filePath = Path.Combine(folderPath, br1.ReadCString(Encoding.UTF8) + ".dwq");
             last.size = gpkSize - sizeWithoutLast;
 
             thisPos = (uint)fs1.Position;
