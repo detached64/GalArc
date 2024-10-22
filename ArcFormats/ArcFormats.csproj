@@ -70,7 +70,7 @@
     <Compile Include="BiShop\BSA.cs" />
     <Compile Include="Cmvs\CmvsMD5.cs" />
     <Compile Include="Cmvs\CPZ.cs" />
-    <Compile Include="Cmvs\Utils.cs" />
+    <Compile Include="Cmvs\CMVSUtils.cs" />
     <Compile Include="EntisGLS\NOA.cs" />
     <Compile Include="Global\Global.cs" />
     <Compile Include="InnocentGrey\DAT.cs" />

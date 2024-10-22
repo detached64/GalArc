@@ -193,5 +193,28 @@ namespace Utility.Compression
                 }
             }
         }
+
+        public static Stream Decompress(Stream input, bool leaveOpen = true)
+        {
+            using (BinaryReader br = new BinaryReader(input))
+            {
+                byte magic1 = br.ReadByte();
+                byte magic2 = br.ReadByte();
+                if (magic1 != 0x78 || (magic2 != 0x01 && magic2 != 0x9c && magic2 != 0xda))
+                {
+                    // raw deflate
+                    input.Position -= 2;
+                }
+                try
+                {
+                    return new DeflateStream(input, CompressionMode.Decompress, leaveOpen);
+                }
+                catch (Exception e)
+                {
+                    LogUtility.Error(e.Message);
+                    return null;
+                }
+            }
+        }
     }
 }

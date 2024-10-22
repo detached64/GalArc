@@ -20,34 +20,37 @@
 
 namespace Utility
 {
-	public class Xor
-	{
-		public static byte[] xor(byte[] data, byte[] key)
-		{
-			byte[] result = new byte[data.Length];
-			if (key.Length == 1)
-			{
-				for (int i = 0; i < data.Length; i++)
-				{
-					result[i] = (byte)(data[i] ^ key[0]);
-				}
-			}
-			else
-			{
-				for (int i = 0; i < data.Length; i++)
-				{
-					result[i] = (byte)(data[i] ^ key[i % key.Length]);
-				}
-			}
-			return result;
-		}
-		public static byte[] xor(byte[] data, byte key)
+    public class Xor
+    {
+        public static byte[] xor(byte[] data, byte[] key)
+        {
+            byte[] result = new byte[data.Length];
+            if (key.Length == 1)
+            {
+                for (int i = 0; i < data.Length; i++)
+                {
+                    result[i] = (byte)(data[i] ^ key[0]);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < data.Length; i++)
+                {
+                    result[i] = (byte)(data[i] ^ key[i % key.Length]);
+                }
+            }
+            data = null;
+            return result;
+        }
+
+        public static byte[] xor(byte[] data, byte key)
         {
             byte[] result = new byte[data.Length];
             for (int i = 0; i < data.Length; i++)
             {
                 result[i] = (byte)(data[i] ^ key);
             }
+            data = null;
             return result;
         }
     }

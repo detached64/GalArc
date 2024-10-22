@@ -56,11 +56,7 @@ namespace ArcFormats.NitroPlus
                             entry.size = size;
                         }
 
-                        string dir = Path.GetDirectoryName(entry.fullPath);
-                        if (!Directory.Exists(dir))
-                        {
-                            Directory.CreateDirectory(dir);
-                        }
+                        Utils.CreateParentDirectoryIfNotExists(entry.fullPath);
 
                         byte[] data = br.ReadBytes((int)entry.size);
                         try
@@ -86,12 +82,12 @@ namespace ArcFormats.NitroPlus
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
             bw.Write(2);
-            int fileCount = Utilities.GetFileCount(folderPath);
+            int fileCount = Utils.GetFileCount(folderPath);
             bw.Write(fileCount);
             LogUtility.InitBar(fileCount);
 
             string[] fullPaths = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
-            string[] relativePaths = Utilities.GetRelativePaths(fullPaths, folderPath);
+            string[] relativePaths = Utils.GetRelativePaths(fullPaths, folderPath);
 
             using (MemoryStream memoryStream = new MemoryStream())
             {

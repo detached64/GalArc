@@ -1,4 +1,4 @@
-﻿// File: Utility/Utilities.cs
+﻿// File: Utility/Utils.cs
 // Date: 2024/08/26
 // Description: 一些常用的工具函数
 //
@@ -25,7 +25,7 @@ using System.Text;
 
 namespace Utility
 {
-    public class Utilities
+    public class Utils
     {
         /// <summary>
         /// Sort the file paths. Use string.CompareOrdinal() to avoid culture influence.
@@ -148,6 +148,33 @@ namespace Utility
                 bytes[i / 2] = Convert.ToByte(hexString.Substring(i, 2), 16);
             }
             return bytes;
+        }
+
+        public static void CreateDirectoryIfNotExists(string path)
+        {
+            try
+            {
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public static void CreateParentDirectoryIfNotExists(string path)
+        {
+            try
+            {
+                CreateDirectoryIfNotExists(Path.GetDirectoryName(path));
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

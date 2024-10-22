@@ -30,11 +30,7 @@ namespace ArcFormats.NScripter
                 long pos = fs.Position;
                 fs.Position = offset;
                 string fullPath = Path.Combine(folderPath, relativePath);
-                string dir = Path.GetDirectoryName(fullPath);
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
+                Utils.CreateParentDirectoryIfNotExists(fullPath);
                 File.WriteAllBytes(fullPath, br.ReadBytes((int)packedSize));
                 fs.Position = pos;
                 LogUtility.UpdateBar();

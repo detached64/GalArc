@@ -14,7 +14,7 @@ namespace ArcFormats.BiShop
     {
         public static UserControl PackExtraOptions = new VersionOnly("1/2");
 
-        private static byte[] magic = Utilities.HexStringToByteArray("4253417263000000");
+        private static byte[] magic = Utils.HexStringToByteArray("4253417263000000");
 
         private static List<string> m_path = new List<string> { };
 
@@ -125,7 +125,7 @@ namespace ArcFormats.BiShop
                 {
                     fs.Position = entry.dataOffset;
                     string path = Path.Combine(Path.Combine(m_path.ToArray()), name);
-                    Directory.CreateDirectory(Path.GetDirectoryName(path));
+                    Utils.CreateParentDirectoryIfNotExists(path);
                     File.WriteAllBytes(path, br.ReadBytes((int)entry.dataSize));
                     RealCount++;
                 }
@@ -201,7 +201,7 @@ namespace ArcFormats.BiShop
             // header
             bw.Write(magic);
             bw.Write((ushort)3);
-            int fileCount = Utilities.GetFileCount(folderPath);
+            int fileCount = Utils.GetFileCount(folderPath);
             LogUtility.InitBar(fileCount);
             bw.Write((ushort)fileCount);
             bw.Write(0);
