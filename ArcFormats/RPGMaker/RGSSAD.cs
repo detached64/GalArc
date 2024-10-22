@@ -1,8 +1,10 @@
-﻿using Log;
+﻿using ArcFormats.Cmvs;
+using Log;
 using System;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using Utility;
 
 namespace ArcFormats.RPGMaker
 {
@@ -102,11 +104,7 @@ namespace ArcFormats.RPGMaker
                 uint thisKey = br.ReadUInt32() ^ key;
                 uint nameLen = br.ReadUInt32() ^ key;
                 string fullPath = Path.Combine(folderPath, Encoding.UTF8.GetString(DecryptName(br.ReadBytes((int)nameLen), key)));
-                string dir = Path.GetDirectoryName(fullPath);
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
+                Utils.CreateParentDirectoryIfNotExists(fullPath);
                 long pos = fs.Position;
                 fs.Position = dataOffset;
                 File.WriteAllBytes(fullPath, DecryptData(br.ReadBytes((int)fileSize), new KeyGen(thisKey)));

@@ -94,11 +94,7 @@ namespace ArcFormats.Artemis
                 entry.offset = br.ReadUInt32();
                 entry.size = br.ReadUInt32();
 
-                string dir = Path.GetDirectoryName(entry.fullPath);
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
+                Utils.CreateParentDirectoryIfNotExists(entry.fullPath);
 
                 long pos = fs.Position;
                 fs.Position = entry.offset;
@@ -125,11 +121,11 @@ namespace ArcFormats.Artemis
             };
             List<Entry> entries = new List<Entry>();
             string[] files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
-            string[] relativePaths = Utilities.GetRelativePaths(files, folderPath);
-            header.pathLenSum = (uint)Utilities.GetLengthSum(relativePaths, Global.Encoding);
+            string[] relativePaths = Utils.GetRelativePaths(files, folderPath);
+            header.pathLenSum = (uint)Utils.GetLengthSum(relativePaths, Global.Encoding);
             header.fileCount = (uint)files.Length;
             LogUtility.InitBar(header.fileCount);
-            Utilities.InsertSort(relativePaths);
+            Utils.InsertSort(relativePaths);
 
             //add entry
             for (int i = 0; i < header.fileCount; i++)

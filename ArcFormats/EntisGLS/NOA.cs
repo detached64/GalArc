@@ -16,8 +16,8 @@ namespace ArcFormats.EntisGLS
             public uint noaSizeWithout { get; set; }
             public uint reserve { get; set; }
 
-            public static readonly byte[] magic1Valid = Utilities.HexStringToByteArray("456e7469731a00000004000200000000");
-            public static readonly byte[] magic2Valid = Utilities.HexStringToByteArray("45524953412d417263686976652066696c65");
+            public static readonly byte[] magic1Valid = Utils.HexStringToByteArray("456e7469731a00000004000200000000");
+            public static readonly byte[] magic2Valid = Utils.HexStringToByteArray("45524953412d417263686976652066696c65");
         }
 
         private class EntryHeader
@@ -145,7 +145,7 @@ namespace ArcFormats.EntisGLS
             string[] files = Directory.GetFiles(folderPath);
             //string[] excludedNames = new string[] { "TimestampInfo.json" };
             //var filteredFiles = files.Where(file => !excludedNames.Contains(Path.GetFileName(file)));
-            int fileCount = Utilities.GetFileCount(folderPath);
+            int fileCount = Utils.GetFileCount(folderPath);
             //string jsonStr;
             //List<EntisGLS_noa_timeStamp> time = new();
             //if (File.Exists(jsonPath))
@@ -186,7 +186,7 @@ namespace ArcFormats.EntisGLS
                                    //entry header
             bw.Write(Encoding.ASCII.GetBytes("DirEntry"));
             //compute index size
-            ulong indexSize = 4 + (ulong)Utilities.GetNameLengthSum(files, Global.Encoding) + (ulong)fileCount + (ulong)(40 * fileCount);
+            ulong indexSize = 4 + (ulong)Utils.GetNameLengthSum(files, Global.Encoding) + (ulong)fileCount + (ulong)(40 * fileCount);
             bw.Write(indexSize);
             bw.Write(fileCount);
 

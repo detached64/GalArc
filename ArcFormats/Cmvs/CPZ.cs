@@ -71,7 +71,7 @@ namespace ArcFormats.Cmvs
             int fileCount = files.Length;
             bw.Write(fileCount);
             LogUtility.InitBar(fileCount);
-            long indexSize = 26 * fileCount + Utilities.GetNameLengthSum(files, ArcEncoding.Shift_JIS);
+            long indexSize = 26 * fileCount + Utility.Utils.GetNameLengthSum(files, ArcEncoding.Shift_JIS);
             bw.Write(indexSize * 2);
 
             long offset = 0;
@@ -152,8 +152,8 @@ namespace ArcFormats.Cmvs
             header.HeaderCRC = br.ReadUInt32();
 
             CmvsMD5.ComputeHash(header.Md5Data);
-            Utils.Swap(ref header.Md5Data[0], ref header.Md5Data[2]);
-            Utils.Swap(ref header.Md5Data[2], ref header.Md5Data[3]);
+            CMVSUtils.Swap(ref header.Md5Data[0], ref header.Md5Data[2]);
+            CMVSUtils.Swap(ref header.Md5Data[2], ref header.Md5Data[3]);
 
             header.Md5Data[0] ^= 0x45a76c2f;
             header.Md5Data[1] -= 0x5ba17fcb;

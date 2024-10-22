@@ -54,6 +54,17 @@ namespace Utility
                 _b = (_b + _a) % Modulus;
             }
         }
-    }
 
+        public static uint Compute(byte[] data, int offset, int length)
+        {
+            Adler32 adler32 = new Adler32();
+            adler32.Update(data, offset, length);
+            return adler32.Checksum;
+        }
+
+        public static uint Compute(byte[] data)
+        {
+            return Compute(data, 0, data.Length);
+        }
+    }
 }

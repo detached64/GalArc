@@ -14,7 +14,7 @@ namespace ArcFormats.Kirikiri
 
         private class Header
         {
-            internal static byte[] magic { get; } = Utilities.HexStringToByteArray("5850330d0a200a1a8b6701");
+            internal static byte[] magic { get; } = Utils.HexStringToByteArray("5850330d0a200a1a8b6701");
             internal ulong indexOffset { get; set; }
         }
 
@@ -130,21 +130,16 @@ namespace ArcFormats.Kirikiri
                 }
 
                 fs.Position = entry.dataOffset;
-                string dir = Path.GetDirectoryName(entry.path);
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
+
+                Utils.CreateParentDirectoryIfNotExists(entry.path);
 
                 byte[] data = br.ReadBytes((int)entry.packedSize);
-                if (entry.unpackedSize == entry.packedSize)
+                if (entry.unpackedSize != entry.packedSize)
                 {
-                    File.WriteAllBytes(entry.path, data);
+                    data = Zlib.DecompressBytes(data);
                 }
-                else
-                {
-                    File.WriteAllBytes(entry.path, Zlib.DecompressBytes(data));
-                }
+                File.WriteAllBytes(entry.path, data);
+                data = null;
                 LogUtility.Debug(entry.path);
 
 NextEntry:
@@ -182,13 +177,17 @@ NextEntry:
                 long offset = xp3Stream.Position;
                 long originalSize = file.Length;
                 long compressedSize = originalSize;
+                byte[] fileData = File.ReadAllBytes(file.FullName);
+                uint adler32 = Adler32.Compute(fileData);
                 if (PackXP3Options.CompressContents)
                 {
-                    Zlib.AppendCompressedFile(xp3Stream, file.FullName, out originalSize, out compressedSize);
+                    fileData = Zlib.CompressBytes(fileData);
+                    bw.Write(fileData);
+                    compressedSize = fileData.Length;
                 }
                 else
                 {
-                    bw.Write(File.ReadAllBytes(file.FullName));
+                    bw.Write(fileData);
                 }
                 //File
                 bwEntry.Write(Encoding.ASCII.GetBytes("File"));
@@ -212,7 +211,7 @@ NextEntry:
                 //adler
                 bwEntry.Write(Encoding.ASCII.GetBytes("adlr"));
                 bwEntry.Write((long)4);     //fixed
-                bwEntry.Write(0);
+                bwEntry.Write(adler32);
                 LogUtility.UpdateBar();
             }
 

@@ -46,9 +46,10 @@ namespace ArcFormats.Yuris
         private static readonly byte[] Table1 = { 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
         private static readonly byte[] Table2 = { 0x0C, 0x10, 0x11, 0x19, 0x1C, 0x1E, 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
         private static readonly byte[] Table3 = { 0x03, 0x48, 0x06, 0x35, 0x0C, 0x10, 0x11, 0x19, 0x1C, 0x1E, 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
+        private static readonly byte[] Table0x1F4 = { 0x3, 0xA, 0x6, 0x35, 0xC, 0x10, 0x11, 0x18, 0x1C, 0x1E, 0x9, 0xB, 0xD, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x14, 0x2E };
         private static readonly List<byte[]> tables = new List<byte[]> { Table3, Table2, Table1 };
         private static readonly string[] tableNames = { "Table3", "Table2", "Table1" };
-        private static readonly List<int> extraLens = new List<int> { 8, 4 };
+        private static readonly List<int> extraLens = new List<int> { 8, 4, 0 };
 
         public void Unpack(string filePath, string folderPath)
         {
@@ -60,7 +61,7 @@ namespace ArcFormats.Yuris
             }
 
             FolderPath = folderPath;
-            Reset();
+            ResetAll();
 
             uint version = br.ReadUInt32();
             int fileCount = br.ReadInt32();
@@ -68,7 +69,7 @@ namespace ArcFormats.Yuris
             fs.Position += 16;
             LogUtility.InitBar(fileCount);
 
-            TryReadIndex(br, fileCount);
+            TryReadIndex(br, version, fileCount);
 
             Directory.CreateDirectory(folderPath);
 
@@ -80,17 +81,14 @@ namespace ArcFormats.Yuris
                 {
                     entry.fileData = Zlib.DecompressBytes(entry.fileData);
                 }
-                string dir = Path.GetDirectoryName(entry.filePath);
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
+                Utils.CreateParentDirectoryIfNotExists(entry.filePath);
                 if (UnpackYPFOptions.toDecryptScripts && Path.GetExtension(entry.filePath) == ".ybn" && BitConverter.ToUInt32(entry.fileData, 0) == 0x42545359)
                 {
                     LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.fileName));
                     entry.fileData = TryDecryptScript(entry.fileData);
                 }
                 File.WriteAllBytes(entry.filePath, entry.fileData);
+                entry.fileData = null;
                 LogUtility.UpdateBar();
             }
 
@@ -98,7 +96,7 @@ namespace ArcFormats.Yuris
             br.Dispose();
         }
 
-        private static void TryReadIndex(BinaryReader br, int fileCount)
+        private static void TryReadIndex(BinaryReader br, uint version, int fileCount)
         {
             foreach (var table in tables)
             {
@@ -109,7 +107,26 @@ namespace ArcFormats.Yuris
                     LogUtility.Debug($"Try {tableNames[tables.IndexOf(table)]} , Extra Length = {length}……");
                     try
                     {
-                        entries.Clear();
+                        Reset();
+                        ReadIndex(br, fileCount);
+                        return;
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+            }
+            if (version == 0x1F4)
+            {
+                scheme.table = Table0x1F4;
+                foreach (var length in extraLens)
+                {
+                    scheme.extraLen = length;
+                    LogUtility.Debug($"Try special table , Extra Length = {length}……");
+                    try
+                    {
+                        Reset();
                         ReadIndex(br, fileCount);
                         return;
                     }
@@ -131,7 +148,9 @@ namespace ArcFormats.Yuris
                 br.BaseStream.Position += 4;
                 Entry entry = new Entry();
                 entry.nameLen = DecryptNameLength((byte)(br.ReadByte() ^ 0xff));
-                entry.fileName = ArcEncoding.Shift_JIS.GetString(DecryptName(br.ReadBytes(entry.nameLen)));
+                byte[] name = br.ReadBytes(entry.nameLen);
+                DecryptName(name);
+                entry.fileName = ArcEncoding.Shift_JIS.GetString(name);
                 if (entry.fileName.ContainsInvalidChars())
                 {
                     throw new Exception();
@@ -164,14 +183,17 @@ namespace ArcFormats.Yuris
             }
         }
 
-        private static byte[] DecryptName(byte[] name)
+        private static void DecryptName(byte[] name)
         {
             if (isFirstGuessYpf)
             {
                 scheme.key = (byte)(name[name.Length - 4] ^ '.');       // (maybe) all files inside the ypf archive has a 3-letter extension,so……
                 isFirstGuessYpf = false;
             }
-            return Xor.xor(name, scheme.key);
+            for (int i = 0; i < name.Length; i++)
+            {
+                name[i] ^= scheme.key;
+            }
         }
 
         private static byte[] TryDecryptScript(byte[] script)
@@ -271,7 +293,7 @@ namespace ArcFormats.Yuris
             return result;
         }
 
-        private static void Reset()
+        private static void ResetAll()
         {
             scheme.key = 0;
             scheme.scriptKeyBytes = new byte[] { };
@@ -280,6 +302,14 @@ namespace ArcFormats.Yuris
             entries.Clear();
             isFirstGuessYpf = true;
             isFirstGuessYst = true;
+        }
+
+        private static void Reset()
+        {
+            entries.Clear();
+            isFirstGuessYpf = true;
+            isFirstGuessYst = true;
+            scheme.key = 0;
         }
     }
 }

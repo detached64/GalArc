@@ -16,7 +16,7 @@ namespace ArcFormats.Softpal
 
         public static UserControl PackExtraOptions = new PackPACOptions();
 
-        private static byte[] magic = Utilities.HexStringToByteArray("50414320");
+        private static byte[] magic = Utils.HexStringToByteArray("50414320");
 
         private class Entry
         {

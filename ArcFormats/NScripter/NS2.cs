@@ -43,7 +43,7 @@ namespace ArcFormats.NScripter
             foreach (Entry entry in entries)
             {
                 byte[] data = br.ReadBytes((int)entry.fileSize);
-                Directory.CreateDirectory(Path.GetDirectoryName(entry.filePath));
+                Utils.CreateParentDirectoryIfNotExists(entry.filePath);
                 File.WriteAllBytes(entry.filePath, data);
                 LogUtility.UpdateBar();
             }
@@ -53,13 +53,13 @@ namespace ArcFormats.NScripter
 
         public void Pack(string folderPath, string filePath)
         {
-            int fileCount = Utilities.GetFileCount(folderPath);
+            int fileCount = Utils.GetFileCount(folderPath);
             LogUtility.InitBar(fileCount);
             uint dataOffset = 4;
 
             string[] fullPaths = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
-            string[] relativePaths = Utilities.GetRelativePaths(fullPaths, folderPath);
-            Utilities.InsertSort(fullPaths);
+            string[] relativePaths = Utils.GetRelativePaths(fullPaths, folderPath);
+            Utils.InsertSort(fullPaths);
 
             List<Entry> entries = new List<Entry>();
 

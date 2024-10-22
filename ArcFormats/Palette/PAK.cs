@@ -8,7 +8,7 @@ namespace ArcFormats.Palette
 {
     public class PAK
     {
-        private static byte[] magic = Utilities.HexStringToByteArray("055041434b32");
+        private static byte[] magic = Utils.HexStringToByteArray("055041434b32");
 
         public void Unpack(string filePath, string folderPath)
         {
@@ -44,7 +44,7 @@ namespace ArcFormats.Palette
             BinaryWriter bw = new BinaryWriter(fs);
 
             string[] files = Directory.GetFiles(folderPath, "*.*", SearchOption.TopDirectoryOnly);
-            int nameLenSum = Utilities.GetNameLengthSum(files, ArcEncoding.Shift_JIS);
+            int nameLenSum = Utils.GetNameLengthSum(files, ArcEncoding.Shift_JIS);
             int fileCount = files.Length;
             int baseOffset = 10 + nameLenSum + 9 * fileCount;
 

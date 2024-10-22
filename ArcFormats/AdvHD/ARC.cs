@@ -89,10 +89,10 @@ namespace ArcFormats.AdvHD
             HashSet<string> uniqueExtension = new HashSet<string>();
 
             HeaderV1 header = new HeaderV1();
-            header.fileCountAll = (uint)Utilities.GetFileCount(folderPath);
+            header.fileCountAll = (uint)Utils.GetFileCount(folderPath);
             LogUtility.InitBar(header.fileCountAll);
-            string[] exts = Utilities.GetFileExtensions(folderPath);
-            Utilities.InsertSort(exts);
+            string[] exts = Utils.GetFileExtensions(folderPath);
+            Utils.InsertSort(exts);
             int extCount = exts.Length;
 
             header.typeCount = (uint)extCount;
