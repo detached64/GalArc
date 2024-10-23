@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace GalArc
 {
@@ -456,7 +457,7 @@ namespace GalArc
             this.chkbxPack.Location = new Point(this.chkbxUnpack.Location.X + this.chkbxUnpack.Size.Width + delta, this.chkbxPack.Location.Y);
         }
 
-        private void btExecute_Click(object sender, EventArgs e)
+        private async void btExecute_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(this.txtInputPath.Text))
             {
@@ -468,7 +469,7 @@ namespace GalArc
                 LogUtility.Error(Resources.logErrorNeedSpecifyOutput, false);
                 return;
             }
-
+            Freeze();
             if (this.chkbxUnpack.Checked)
             {
                 if (!File.Exists(this.txtInputPath.Text))
@@ -476,10 +477,10 @@ namespace GalArc
                     LogUtility.Error(Resources.logErrorFileNotFound, false);
                     return;
                 }
-                this.btExecute.Enabled = false;     // avoid multi click
+                this.lbStatus.Text = Resources.logUnpacking;
                 try
                 {
-                    Execute.InitUnpack(this.txtInputPath.Text, this.txtOutputPath.Text);
+                    await Task.Run(() => Execute.InitUnpack(this.txtInputPath.Text, this.txtOutputPath.Text));
                 }
                 catch (Exception ex)
                 {
@@ -504,7 +505,7 @@ namespace GalArc
                     LogUtility.Error(Resources.logErrorDirNotFound, false);
                     return;
                 }
-                this.btExecute.Enabled = false;
+                this.lbStatus.Text = Resources.logPacking;
                 try
                 {
                     Execute.InitPack(this.txtInputPath.Text, this.txtOutputPath.Text);
@@ -529,6 +530,39 @@ namespace GalArc
             {
                 LogUtility.Error(Resources.logErrorNeedSelectOperation, false);
             }
+            Thaw();
+        }
+
+        private void Freeze()
+        {
+            this.chkbxUnpack.Enabled = false;
+            this.chkbxPack.Enabled = false;
+            this.chkbxMatch.Enabled = false;
+            this.btExecute.Enabled = false;
+            this.btClear.Enabled = false;
+            this.btSelInput.Enabled = false;
+            this.btSelOutput.Enabled = false;
+            this.treeViewEngines.Enabled = false;
+            this.txtInputPath.Enabled = false;
+            this.txtOutputPath.Enabled = false;
+            this.gbOptions.Enabled = false;
+            this.menuStrip.Enabled = false;
+        }
+
+        private void Thaw()
+        {
+            this.chkbxUnpack.Enabled = true;
+            this.chkbxPack.Enabled = true;
+            this.chkbxMatch.Enabled = true;
+            this.btExecute.Enabled = true;
+            this.btClear.Enabled = true;
+            this.btSelInput.Enabled = true;
+            this.btSelOutput.Enabled = true;
+            this.treeViewEngines.Enabled = true;
+            this.txtInputPath.Enabled = true;
+            this.txtOutputPath.Enabled = true;
+            this.gbOptions.Enabled = true;
+            this.menuStrip.Enabled = true;
         }
 
         private void chkbxShowLog_CheckedChanged(object sender, EventArgs e)

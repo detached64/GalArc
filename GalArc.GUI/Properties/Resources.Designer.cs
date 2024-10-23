@@ -142,6 +142,15 @@ namespace GalArc.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Packing…… 的本地化字符串。
+        /// </summary>
+        internal static string logPacking {
+            get {
+                return ResourceManager.GetString("logPacking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Pack mode: {0} {1} selected. 的本地化字符串。
         /// </summary>
         internal static string logSelectPackNode {
@@ -165,6 +174,15 @@ namespace GalArc.Properties {
         internal static string logTimedOut {
             get {
                 return ResourceManager.GetString("logTimedOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unpacking…… 的本地化字符串。
+        /// </summary>
+        internal static string logUnpacking {
+            get {
+                return ResourceManager.GetString("logUnpacking", resourceCulture);
             }
         }
         
