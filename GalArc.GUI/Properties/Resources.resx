@@ -159,4 +159,10 @@
   <data name="logErrorNeedSelectOperation" xml:space="preserve">
     <value>Please select operation.</value>
   </data>
+  <data name="logUnpacking" xml:space="preserve">
+    <value>Unpacking……</value>
+  </data>
+  <data name="logPacking" xml:space="preserve">
+    <value>Packing……</value>
+  </data>
 </root>
