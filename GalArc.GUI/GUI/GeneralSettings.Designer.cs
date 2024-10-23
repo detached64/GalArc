@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GeneralSettings));
             this.chkbxAutoSave = new System.Windows.Forms.CheckBox();
             this.chkbxTopMost = new System.Windows.Forms.CheckBox();
+            this.chkbxFreeze = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // chkbxAutoSave
@@ -49,10 +50,20 @@
             this.chkbxTopMost.UseVisualStyleBackColor = true;
             this.chkbxTopMost.CheckedChanged += new System.EventHandler(this.chkbxTopMost_CheckedChanged);
             // 
+            // chkbxFreeze
+            // 
+            resources.ApplyResources(this.chkbxFreeze, "chkbxFreeze");
+            this.chkbxFreeze.Checked = true;
+            this.chkbxFreeze.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkbxFreeze.Name = "chkbxFreeze";
+            this.chkbxFreeze.UseVisualStyleBackColor = true;
+            this.chkbxFreeze.CheckedChanged += new System.EventHandler(this.chkbxFreeze_CheckedChanged);
+            // 
             // GeneralSettings
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.chkbxFreeze);
             this.Controls.Add(this.chkbxTopMost);
             this.Controls.Add(this.chkbxAutoSave);
             this.Name = "GeneralSettings";
@@ -66,5 +77,6 @@
 
         private System.Windows.Forms.CheckBox chkbxAutoSave;
         private System.Windows.Forms.CheckBox chkbxTopMost;
+        private System.Windows.Forms.CheckBox chkbxFreeze;
     }
 }

@@ -469,7 +469,10 @@ namespace GalArc
                 LogUtility.Error(Resources.logErrorNeedSpecifyOutput, false);
                 return;
             }
-            Freeze();
+            if (Settings.Default.FreezeControls)
+            {
+                Freeze();
+            }
             if (this.chkbxUnpack.Checked)
             {
                 if (!File.Exists(this.txtInputPath.Text))
@@ -530,7 +533,10 @@ namespace GalArc
             {
                 LogUtility.Error(Resources.logErrorNeedSelectOperation, false);
             }
-            Thaw();
+            if (Settings.Default.FreezeControls)
+            {
+                Thaw();
+            }
         }
 
         private void Freeze()
