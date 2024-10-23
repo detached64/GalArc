@@ -9,8 +9,8 @@ namespace ArcFormats.SystemNNN
     {
         private class Entry
         {
-            public int size { get; set; }
-            public string filePath { get; set; }
+            public uint Size { get; set; }
+            public string Path { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)
@@ -40,26 +40,28 @@ namespace ArcFormats.SystemNNN
             for (int i = 1; i < filecount; i++)
             {
                 Entry entry = new Entry();
-                entry.filePath = folderPath + "\\" + Encoding.UTF8.GetString(br1.ReadBytes(8)) + ".vaw";
-                int size1 = br1.ReadInt32();
+                entry.Path = Path.Combine(folderPath, Encoding.UTF8.GetString(br1.ReadBytes(8)) + ".vaw");
+                uint size1 = br1.ReadUInt32();
                 fs1.Seek(8, SeekOrigin.Current);
-                int size2 = br1.ReadInt32();
-                entry.size = size2 - size1;
-                byte[] buffer = br2.ReadBytes(entry.size);
-                File.WriteAllBytes(entry.filePath, buffer);
+                uint size2 = br1.ReadUInt32();
+                entry.Size = size2 - size1;
+                byte[] buffer = br2.ReadBytes((int)entry.Size);
+                File.WriteAllBytes(entry.Path, buffer);
+                buffer = null;
                 fs1.Seek(12 * i, SeekOrigin.Begin);
                 LogUtility.UpdateBar();
             }
             //the last
             Entry last = new Entry();
-            last.filePath = folderPath + "\\" + Encoding.UTF8.GetString(br1.ReadBytes(8)) + ".vaw";
-            int vpksizeBefore = br1.ReadInt32();
+            last.Path = Path.Combine(folderPath, Encoding.UTF8.GetString(br1.ReadBytes(8)) + ".vaw");
+            uint vpksizeBefore = br1.ReadUInt32();
             fs1.Seek(8, SeekOrigin.Current);//reserve
 
-            int vpksize = br1.ReadInt32();
-            last.size = vpksize - vpksizeBefore;
-            byte[] buf = br2.ReadBytes(last.size);
-            File.WriteAllBytes(last.filePath, buf);
+            uint vpksize = br1.ReadUInt32();
+            last.Size = vpksize - vpksizeBefore;
+            byte[] buf = br2.ReadBytes((int)last.Size);
+            File.WriteAllBytes(last.Path, buf);
+            buf = null;
             LogUtility.UpdateBar();
 
             fs1.Dispose();
@@ -91,6 +93,7 @@ namespace ArcFormats.SystemNNN
 
                 byte[] buffer = File.ReadAllBytes(file.FullName);
                 writer2.Write(buffer);
+                buffer = null;
                 LogUtility.UpdateBar();
             }
             writer1.Write(0);

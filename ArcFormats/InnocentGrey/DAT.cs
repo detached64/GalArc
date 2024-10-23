@@ -1,75 +1,78 @@
-﻿using Log;
+﻿using ArcFormats.Properties;
+using Log;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Utility;
+using System.Windows.Forms;
+using static ArcFormats.Yuris.YPF;
 
 namespace ArcFormats.InnocentGrey
 {
     public class DAT
     {
-        private class Header
-        {
-            public string magic { get; set; }   //"PACKDAT."
-            public uint fileCount { get; set; }
-            public uint fileCount1 { get; set; }
-        }
+        public static UserControl UnpackExtraOptions = IGA.UnpackExtraOptions;
+
+        public static UserControl PackExtraOptions = IGA.PackExtraOptions;
+
+        private static readonly string Magic = "PACKDAT.";
 
         private class Entry
         {
-            public string fileName { get; set; }
-            public uint offset { get; set; }
-            public uint fileType { get; set; }
-            public uint unpackedSize { get; set; }
-            public uint packedSize { get; set; }
-            public bool isCompressed { get; set; }
+            public string FileName { get; set; }
+            public uint Offset { get; set; }
+            public uint FileType { get; set; }
+            public uint UnpackedSize { get; set; }
+            public uint PackedSize { get; set; }
+            public bool IsCompressed { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            if (Encoding.ASCII.GetString(br.ReadBytes(8)) != "PACKDAT.")
+            if (Encoding.ASCII.GetString(br.ReadBytes(8)) != Magic)
             {
                 LogUtility.ErrorInvalidArchive();
             }
-            Header header = new Header();
-            header.fileCount = br.ReadUInt32();
-            header.fileCount1 = br.ReadUInt32();
-            if (header.fileCount != header.fileCount1)
-            {
-                LogUtility.ErrorInvalidArchive();
-            }
+            int fileCount = br.ReadInt32();
+            br.BaseStream.Position += 4;
 
-            LogUtility.InitBar(header.fileCount);
+            LogUtility.InitBar(fileCount);
             List<Entry> entries = new List<Entry>();
             Directory.CreateDirectory(folderPath);
 
-            for (int i = 0; i < header.fileCount; i++)
+            for (int i = 0; i < fileCount; i++)
             {
                 Entry entry = new Entry();
-                entry.fileName = Encoding.ASCII.GetString(br.ReadBytes(32)).TrimEnd('\0');
-                entry.offset = br.ReadUInt32();
-                entry.fileType = br.ReadUInt32();
-                entry.unpackedSize = br.ReadUInt32();
-                entry.packedSize = br.ReadUInt32();
-                entry.isCompressed = entry.packedSize != entry.unpackedSize;
+                entry.FileName = Encoding.ASCII.GetString(br.ReadBytes(32)).TrimEnd('\0');
+                entry.Offset = br.ReadUInt32();
+                entry.FileType = br.ReadUInt32();
+                entry.UnpackedSize = br.ReadUInt32();
+                entry.PackedSize = br.ReadUInt32();
+                entry.IsCompressed = entry.PackedSize != entry.UnpackedSize;
 
-                if (entry.isCompressed)     //skip compressed data for now
+                if (entry.IsCompressed)     //skip compressed data for now
                 {
                     throw new NotImplementedException("Compressed data detected.Temporarily not supported.");
                 }
                 entries.Add(entry);
             }
 
-            for (int i = 0; i < header.fileCount; i++)
+            foreach (Entry entry in entries)
             {
-                fs.Position = entries[i].offset;//have to seek manually,or it will read the wrong data
-                byte[] data = br.ReadBytes((int)entries[i].unpackedSize);
-                byte key = (byte)(Path.GetExtension(entries[i].fileName) == ".s" ? 0xFF : 0);
-                data = Xor.xor(data, key);
-                File.WriteAllBytes(Path.Combine(folderPath, entries[i].fileName), data);
+                fs.Position = entry.Offset;
+                byte[] data = br.ReadBytes((int)entry.UnpackedSize);
+                if (UnpackIGAOptions.toDecryptScripts && Path.GetExtension(entry.FileName) == ".s")
+                {
+                    LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.FileName));
+                    for (int i = 0; i < data.Length; i++)
+                    {
+                        data[i] ^= 0xFF;
+                    }
+                }
+                File.WriteAllBytes(Path.Combine(folderPath, entry.FileName), data);
+                data = null;
                 LogUtility.UpdateBar();
             }
             br.Dispose();
@@ -80,17 +83,14 @@ namespace ArcFormats.InnocentGrey
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
-            Header header = new Header();
-            header.magic = "PACKDAT.";
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles();
-            header.fileCount = (uint)files.Length;
-            header.fileCount1 = header.fileCount;
-            LogUtility.InitBar(header.fileCount);
-            bw.Write(Encoding.ASCII.GetBytes(header.magic));
-            bw.Write(header.fileCount);
-            bw.Write(header.fileCount1);
-            uint dataOffset = 16 + header.fileCount * 48;
+            int fileCount = files.Length;
+            LogUtility.InitBar(fileCount);
+            bw.Write(Encoding.ASCII.GetBytes(Magic));
+            bw.Write(fileCount);
+            bw.Write(fileCount);
+            uint dataOffset = 16 + (uint)fileCount * 48;
 
             foreach (FileInfo file in files)
             {
@@ -106,9 +106,16 @@ namespace ArcFormats.InnocentGrey
             foreach (FileInfo file in files)
             {
                 byte[] data = File.ReadAllBytes(file.FullName);
-                byte key = (byte)(file.Extension == ".s" ? 0xFF : 0);
-                data = Xor.xor(data, key);
+                if (UnpackIGAOptions.toDecryptScripts && file.Extension == ".s")
+                {
+                    LogUtility.Debug(string.Format(Resources.logTryEncScr, file.Name));
+                    for (int i = 0; i < data.Length; i++)
+                    {
+                        data[i] ^= 0xFF;
+                    }
+                }
                 bw.Write(data);
+                data = null;
                 LogUtility.UpdateBar();
             }
             bw.Dispose();

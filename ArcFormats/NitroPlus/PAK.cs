@@ -1,4 +1,5 @@
 ﻿using Log;
+using System;
 using System.IO;
 using System.Windows.Forms;
 using Utility;
@@ -12,13 +13,13 @@ namespace ArcFormats.NitroPlus
 
         private class Entry
         {
-            public uint pathLen { get; set; }
-            public string path { get; set; }
-            public uint offset { get; set; }
-            public uint unpackedSize { get; set; }
-            public uint size { get; set; }
-            public string fullPath { get; set; }
-            public bool isPacked { get; set; }
+            public uint PathLen { get; set; }
+            public string Path { get; set; }
+            public uint Offset { get; set; }
+            public uint UnpackedSize { get; set; }
+            public uint Size { get; set; }
+            public string FullPath { get; set; }
+            public bool IsPacked { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)
@@ -42,32 +43,37 @@ namespace ArcFormats.NitroPlus
                     while (ms.Position != ms.Length)
                     {
                         Entry entry = new Entry();
-                        entry.pathLen = brEntry.ReadUInt32();
-                        entry.path = ArcEncoding.Shift_JIS.GetString(brEntry.ReadBytes((int)entry.pathLen));
-                        entry.fullPath = Path.Combine(folderPath, entry.path);
+                        entry.PathLen = brEntry.ReadUInt32();
+                        entry.Path = ArcEncoding.Shift_JIS.GetString(brEntry.ReadBytes((int)entry.PathLen));
+                        entry.FullPath = Path.Combine(folderPath, entry.Path);
 
-                        entry.offset = brEntry.ReadUInt32() + (uint)dataOffset;
-                        entry.unpackedSize = brEntry.ReadUInt32();
-                        entry.size = brEntry.ReadUInt32();
-                        entry.isPacked = brEntry.ReadUInt32() != 0;
+                        entry.Offset = brEntry.ReadUInt32() + (uint)dataOffset;
+                        entry.UnpackedSize = brEntry.ReadUInt32();
+                        entry.Size = brEntry.ReadUInt32();
+                        entry.IsPacked = brEntry.ReadUInt32() != 0;
                         uint size = brEntry.ReadUInt32();
-                        if (entry.isPacked)
+                        if (entry.IsPacked)
                         {
-                            entry.size = size;
+                            entry.Size = size;
                         }
 
-                        Utils.CreateParentDirectoryIfNotExists(entry.fullPath);
+                        Utils.CreateParentDirectoryIfNotExists(entry.FullPath);
 
-                        byte[] data = br.ReadBytes((int)entry.size);
+                        byte[] data = br.ReadBytes((int)entry.Size);
+                        byte[] backup = new byte[data.Length];
+                        Array.Copy(data, backup, data.Length);
                         try
                         {
                             byte[] result = Zlib.DecompressBytes(data);
-                            File.WriteAllBytes(entry.fullPath, result);
+                            File.WriteAllBytes(entry.FullPath, result);
+                            result = null;
                         }
                         catch
                         {
-                            File.WriteAllBytes(entry.fullPath, data);
+                            File.WriteAllBytes(entry.FullPath, backup);
                         }
+                        backup = null;
+                        data = null;
                         LogUtility.UpdateBar();
                     }
                 }
@@ -81,13 +87,14 @@ namespace ArcFormats.NitroPlus
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
+            string[] fullPaths = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
+            string[] relativePaths = Utils.GetRelativePaths(fullPaths, folderPath);
+
             bw.Write(2);
-            int fileCount = Utils.GetFileCount(folderPath);
+            int fileCount = fullPaths.Length;
             bw.Write(fileCount);
             LogUtility.InitBar(fileCount);
 
-            string[] fullPaths = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
-            string[] relativePaths = Utils.GetRelativePaths(fullPaths, folderPath);
 
             using (MemoryStream memoryStream = new MemoryStream())
             {
@@ -133,7 +140,9 @@ namespace ArcFormats.NitroPlus
 
             foreach (string fullPath in fullPaths)
             {
-                bw.Write(File.ReadAllBytes(fullPath));
+                byte[] data = File.ReadAllBytes(fullPath);
+                bw.Write(data);
+                data = null;
                 LogUtility.UpdateBar();
             }
 

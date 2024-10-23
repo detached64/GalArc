@@ -2,6 +2,7 @@
 using Log;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Utility;
@@ -15,25 +16,29 @@ namespace ArcFormats.AdvHD
 
         public static UserControl PackExtraOptions = new PackARCOptions();
 
+        private static readonly string[] EncryptedFileExtV1 = { "wsc", "scr" };
+
+        private static readonly string[] EncryptedFileExtV2 = { "ws2", "json" };
+
         private class HeaderV1
         {
-            public uint typeCount { get; set; }
-            public uint fileCountAll { get; set; }
+            public uint TypeCount { get; set; }
+            public uint FileCountAll { get; set; }
         }
 
         private class TypeHeaderV1
         {
-            public string extension { get; set; }
-            public uint fileCount { get; set; }
-            public uint indexOffset { get; set; }
+            public string Extension { get; set; }
+            public uint FileCount { get; set; }
+            public uint IndexOffset { get; set; }
         }
 
         private class EntryV1
         {
-            public string fileName { get; set; }
-            public uint fileSize { get; set; }
-            public uint offset { get; set; }
-            public string filePath { get; set; }
+            public string FileName { get; set; }
+            public uint FileSize { get; set; }
+            public uint Offset { get; set; }
+            public string FilePath { get; set; }
         }
 
         private static void arcV1_unpack(string filePath, string folderPath)
@@ -41,41 +46,42 @@ namespace ArcFormats.AdvHD
             HeaderV1 header = new HeaderV1();
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            header.fileCountAll = 0;
-            header.typeCount = br.ReadUInt32();
+            header.FileCountAll = 0;
+            header.TypeCount = br.ReadUInt32();
             List<TypeHeaderV1> typeHeaders = new List<TypeHeaderV1>();
             Directory.CreateDirectory(folderPath);
 
-            for (int i = 0; i < header.typeCount; i++)
+            for (int i = 0; i < header.TypeCount; i++)
             {
                 TypeHeaderV1 typeHeader = new TypeHeaderV1();
-                typeHeader.extension = Encoding.ASCII.GetString(br.ReadBytes(3));
+                typeHeader.Extension = Encoding.ASCII.GetString(br.ReadBytes(3));
                 br.ReadByte();
-                typeHeader.fileCount = br.ReadUInt32();
-                typeHeader.indexOffset = br.ReadUInt32();
+                typeHeader.FileCount = br.ReadUInt32();
+                typeHeader.IndexOffset = br.ReadUInt32();
                 typeHeaders.Add(typeHeader);
-                header.fileCountAll += typeHeader.fileCount;
+                header.FileCountAll += typeHeader.FileCount;
             }
-            LogUtility.InitBar(header.fileCountAll);
+            LogUtility.InitBar(header.FileCountAll);
 
-            for (int i = 0; i < header.typeCount; i++)
+            for (int i = 0; i < header.TypeCount; i++)
             {
-                for (int j = 0; j < typeHeaders[i].fileCount; j++)
+                for (int j = 0; j < typeHeaders[i].FileCount; j++)
                 {
                     EntryV1 index = new EntryV1();
-                    index.fileName = Encoding.ASCII.GetString(br.ReadBytes(13)).Replace("\0", string.Empty) + "." + typeHeaders[i].extension;
-                    index.fileSize = br.ReadUInt32();
-                    index.offset = br.ReadUInt32();
+                    index.FileName = Encoding.ASCII.GetString(br.ReadBytes(13)).Replace("\0", string.Empty) + "." + typeHeaders[i].Extension;
+                    index.FileSize = br.ReadUInt32();
+                    index.Offset = br.ReadUInt32();
                     long pos = fs.Position;
-                    index.filePath = Path.Combine(folderPath, index.fileName);
-                    fs.Seek(index.offset, SeekOrigin.Begin);
-                    byte[] buffer = br.ReadBytes((int)index.fileSize);
-                    if (UnpackARCOptions.toDecryptScripts && IsScriptFile(Path.GetExtension(index.filePath), "1"))
+                    index.FilePath = Path.Combine(folderPath, index.FileName);
+                    fs.Seek(index.Offset, SeekOrigin.Begin);
+                    byte[] buffer = br.ReadBytes((int)index.FileSize);
+                    if (UnpackARCOptions.toDecryptScripts && IsScriptFile(Path.GetExtension(index.FilePath), "1"))
                     {
-                        LogUtility.Debug(string.Format(Resources.logTryDecScr, index.fileName));
+                        LogUtility.Debug(string.Format(Resources.logTryDecScr, index.FileName));
                         DecryptScript(buffer);
                     }
-                    File.WriteAllBytes(index.filePath, buffer);
+                    File.WriteAllBytes(index.FilePath, buffer);
+                    buffer = null;
                     fs.Seek(pos, SeekOrigin.Begin);
                     LogUtility.UpdateBar();
                 }
@@ -89,13 +95,13 @@ namespace ArcFormats.AdvHD
             HashSet<string> uniqueExtension = new HashSet<string>();
 
             HeaderV1 header = new HeaderV1();
-            header.fileCountAll = (uint)Utils.GetFileCount(folderPath);
-            LogUtility.InitBar(header.fileCountAll);
+            header.FileCountAll = (uint)Utils.GetFileCount(folderPath);
+            LogUtility.InitBar(header.FileCountAll);
             string[] exts = Utils.GetFileExtensions(folderPath);
-            Utils.InsertSort(exts);
+            Utils.Sort(exts);
             int extCount = exts.Length;
 
-            header.typeCount = (uint)extCount;
+            header.TypeCount = (uint)extCount;
             int length = 13;
             DirectoryInfo d = new DirectoryInfo(folderPath);
             List<TypeHeaderV1> typeHeaders = new List<TypeHeaderV1>();
@@ -111,17 +117,17 @@ namespace ArcFormats.AdvHD
             BinaryWriter bwentry = new BinaryWriter(msentry);
             BinaryWriter bwdata = new BinaryWriter(msdata);
 
-            bwhead.Write(header.typeCount);
+            bwhead.Write(header.TypeCount);
             uint pos = (uint)(12 * extCount + 4);
 
             for (int i = 0; i < extCount; i++)
             {
-                foreach (FileInfo file in d.GetFiles("*" + exts[i]))
+                foreach (FileInfo file in d.GetFiles($"*{exts[i]}"))
                 {
                     type_fileCount[i]++;
-                    bwentry.Write(Encoding.ASCII.GetBytes(file.Name.Replace("." + exts[i], string.Empty).PadRight(length, '\0')));
+                    bwentry.Write(Encoding.ASCII.GetBytes(Path.GetFileNameWithoutExtension(file.Name).PadRight(length, '\0')));
                     bwentry.Write((uint)file.Length);
-                    bwentry.Write((uint)(4 + 12 * header.typeCount + 21 * header.fileCountAll + msdata.Length));
+                    bwentry.Write((uint)(4 + 12 * header.TypeCount + 21 * header.FileCountAll + msdata.Length));
                     byte[] buffer = File.ReadAllBytes(file.FullName);
                     if (PackARCOptions.toEncryptScripts && IsScriptFile(exts[i], "1"))
                     {
@@ -129,6 +135,7 @@ namespace ArcFormats.AdvHD
                         EncryptScript(buffer);
                     }
                     bwdata.Write(buffer);
+                    buffer = null;
                     LogUtility.UpdateBar();
                 }
                 bwtype.Write(Encoding.ASCII.GetBytes(exts[i]));
@@ -155,16 +162,16 @@ namespace ArcFormats.AdvHD
 
         private class HeaderV2
         {
-            public uint fileCount { get; set; }
-            public uint entrySize { get; set; }
+            public uint FileCount { get; set; }
+            public uint EntrySize { get; set; }
         }
 
         private class EntryV2
         {
-            public uint fileSize { get; set; }
-            public uint offset { get; set; }
-            public string fileName { get; set; }
-            public string filePath { get; set; }
+            public uint FileSize { get; set; }
+            public uint Offset { get; set; }
+            public string FileName { get; set; }
+            public string FilePath { get; set; }
         }
 
         private static void arcV2_unpack(string filePath, string folderPath)
@@ -177,30 +184,31 @@ namespace ArcFormats.AdvHD
 
             Directory.CreateDirectory(folderPath);
 
-            header.fileCount = br1.ReadUInt32();
-            header.entrySize = br1.ReadUInt32();
-            LogUtility.InitBar(header.fileCount);
+            header.FileCount = br1.ReadUInt32();
+            header.EntrySize = br1.ReadUInt32();
+            LogUtility.InitBar(header.FileCount);
 
-            for (int i = 0; i < header.fileCount; i++)
+            for (int i = 0; i < header.FileCount; i++)
             {
                 EntryV2 entry = new EntryV2();
-                entry.fileSize = br1.ReadUInt32();
-                entry.offset = br1.ReadUInt32() + 8 + header.entrySize;
-                entry.fileName = br1.ReadCString(Encoding.Unicode);
-                entry.filePath = Path.Combine(folderPath, entry.fileName);
+                entry.FileSize = br1.ReadUInt32();
+                entry.Offset = br1.ReadUInt32() + 8 + header.EntrySize;
+                entry.FileName = br1.ReadCString(Encoding.Unicode);
+                entry.FilePath = Path.Combine(folderPath, entry.FileName);
 
                 l.Add(entry);
             }
 
             foreach (var entry in l)
             {
-                byte[] buffer = br1.ReadBytes((int)entry.fileSize);
-                if (UnpackARCOptions.toDecryptScripts && IsScriptFile(Path.GetExtension(entry.filePath), "2"))
+                byte[] buffer = br1.ReadBytes((int)entry.FileSize);
+                if (UnpackARCOptions.toDecryptScripts && IsScriptFile(Path.GetExtension(entry.FilePath), "2"))
                 {
-                    LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.fileName));
+                    LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.FileName));
                     DecryptScript(buffer);
                 }
-                File.WriteAllBytes(entry.filePath, buffer);
+                File.WriteAllBytes(entry.FilePath, buffer);
+                buffer = null;
                 LogUtility.UpdateBar();
             }
             fs.Dispose();
@@ -216,21 +224,21 @@ namespace ArcFormats.AdvHD
             //make header
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles();
-            header.fileCount = (uint)files.Length;
-            header.entrySize = 0;
-            LogUtility.InitBar(header.fileCount);
+            header.FileCount = (uint)files.Length;
+            header.EntrySize = 0;
+            LogUtility.InitBar(header.FileCount);
 
             foreach (FileInfo file in files)
             {
                 EntryV2 entry = new EntryV2();
-                entry.fileName = file.Name;
-                entry.fileSize = (uint)file.Length;
-                entry.offset = sizeToNow;
-                sizeToNow += entry.fileSize;
+                entry.FileName = file.Name;
+                entry.FileSize = (uint)file.Length;
+                entry.Offset = sizeToNow;
+                sizeToNow += entry.FileSize;
                 l.Add(entry);
 
-                int nameLength = entry.fileName.Length;
-                header.entrySize = header.entrySize + (uint)nameLength * 2 + 2 + 8;
+                int nameLength = entry.FileName.Length;
+                header.EntrySize = header.EntrySize + (uint)nameLength * 2 + 2 + 8;
             }
 
             using (FileStream fs = File.Create(filePath))
@@ -238,15 +246,15 @@ namespace ArcFormats.AdvHD
                 using (BinaryWriter bw = new BinaryWriter(fs))
                 {
                     //write header
-                    bw.Write(header.fileCount);
-                    bw.Write(header.entrySize);
+                    bw.Write(header.FileCount);
+                    bw.Write(header.EntrySize);
 
                     //write entry
                     foreach (var file in l)
                     {
-                        bw.Write(file.fileSize);
-                        bw.Write(file.offset);
-                        bw.Write(Encoding.Unicode.GetBytes(file.fileName));
+                        bw.Write(file.FileSize);
+                        bw.Write(file.Offset);
+                        bw.Write(Encoding.Unicode.GetBytes(file.FileName));
                         bw.Write('\0');
                         bw.Write('\0');
                     }
@@ -261,6 +269,7 @@ namespace ArcFormats.AdvHD
                             EncryptScript(buffer);
                         }
                         bw.Write(buffer);
+                        buffer = null;
                         LogUtility.UpdateBar();
                     }
                 }
@@ -303,18 +312,18 @@ namespace ArcFormats.AdvHD
             }
         }
 
-        private static bool IsScriptFile(string ext, string version)
+        private static bool IsScriptFile(string extension, string version)
         {
-            string trimed = ext.TrimStart('.').ToLower();
-            if (version == "1")
+            string trimed = extension.TrimStart('.');
+            switch (version)
             {
-                return trimed == "scr" || trimed == "wsc";
+                case "1":
+                    return EncryptedFileExtV1.Contains(trimed);
+                case "2":
+                    return EncryptedFileExtV2.Contains(trimed);
+                default:
+                    return false;
             }
-            else if (version == "2")
-            {
-                return trimed == "json" || trimed == "ws2";
-            }
-            return false;
         }
 
         private static void DecryptScript(byte[] data)

@@ -14,7 +14,7 @@ namespace ArcFormats.BiShop
     {
         public static UserControl PackExtraOptions = new VersionOnly("1/2");
 
-        private static byte[] magic = Utils.HexStringToByteArray("4253417263000000");
+        private static byte[] Magic = Utils.HexStringToByteArray("4253417263000000");
 
         private static List<string> m_path = new List<string> { };
 
@@ -26,9 +26,9 @@ namespace ArcFormats.BiShop
 
         private struct Entry
         {
-            internal int nameOffset { get; set; }
-            internal uint dataOffset { get; set; }
-            internal uint dataSize { get; set; }
+            internal int NameOffset { get; set; }
+            internal uint DataOffset { get; set; }
+            internal uint Size { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)
@@ -36,7 +36,7 @@ namespace ArcFormats.BiShop
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
 
-            if (!br.ReadBytes(8).SequenceEqual(magic))
+            if (!br.ReadBytes(8).SequenceEqual(Magic))
             {
                 LogUtility.ErrorInvalidArchive();
             }
@@ -106,12 +106,12 @@ namespace ArcFormats.BiShop
             {
                 Entry entry = new Entry();
 
-                entry.nameOffset = br.ReadInt32() + (int)nameOffset;
-                entry.dataOffset = br.ReadUInt32();
-                entry.dataSize = br.ReadUInt32();
+                entry.NameOffset = br.ReadInt32() + (int)nameOffset;
+                entry.DataOffset = br.ReadUInt32();
+                entry.Size = br.ReadUInt32();
 
                 long pos = fs.Position;
-                fs.Position = entry.nameOffset;
+                fs.Position = entry.NameOffset;
                 string name = br.ReadCString(ArcEncoding.Shift_JIS);
                 if (name[0] == '>')
                 {
@@ -123,10 +123,10 @@ namespace ArcFormats.BiShop
                 }
                 else
                 {
-                    fs.Position = entry.dataOffset;
+                    fs.Position = entry.DataOffset;
                     string path = Path.Combine(Path.Combine(m_path.ToArray()), name);
                     Utils.CreateParentDirectoryIfNotExists(path);
-                    File.WriteAllBytes(path, br.ReadBytes((int)entry.dataSize));
+                    File.WriteAllBytes(path, br.ReadBytes((int)entry.Size));
                     RealCount++;
                 }
                 fs.Position = pos;
@@ -139,13 +139,14 @@ namespace ArcFormats.BiShop
 
         public void Pack(string folderPath, string filePath)
         {
-            if (Global.Version == "1")
+            switch (Global.Version)
             {
-                bsaV1_pack(folderPath, filePath);
-            }
-            else if (Global.Version == "2")
-            {
-                bsaV2_pack(folderPath, filePath);
+                case "1":
+                    bsaV1_pack(folderPath, filePath);
+                    break;
+                case "2":
+                    bsaV2_pack(folderPath, filePath);
+                    break;
             }
         }
 
@@ -154,7 +155,7 @@ namespace ArcFormats.BiShop
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
             // header
-            bw.Write(magic);
+            bw.Write(Magic);
             bw.Write((ushort)1);
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles();
@@ -171,7 +172,9 @@ namespace ArcFormats.BiShop
                 bwIndex.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(32, '\0')));
                 bwIndex.Write((uint)fw.Position);
                 bwIndex.Write((uint)file.Length);
-                bw.Write(File.ReadAllBytes(file.FullName));
+                byte[] data = File.ReadAllBytes(file.FullName);
+                bw.Write(data);
+                data = null;
                 LogUtility.UpdateBar();
             }
             // entry
@@ -199,7 +202,7 @@ namespace ArcFormats.BiShop
             RootDir = folderPath;
             FileCount = 0;
             // header
-            bw.Write(magic);
+            bw.Write(Magic);
             bw.Write((ushort)3);
             int fileCount = Utils.GetFileCount(folderPath);
             LogUtility.InitBar(fileCount);
@@ -243,7 +246,9 @@ namespace ArcFormats.BiShop
                 bwNames.Write(ArcEncoding.Shift_JIS.GetBytes(Path.GetFileName(file)));
                 bwNames.Write('\0');
 
-                bw.Write(File.ReadAllBytes(file));
+                byte[] data = File.ReadAllBytes(file);
+                bw.Write(data);
+                data = null;
 
                 FileCount++;
                 LogUtility.UpdateBar();

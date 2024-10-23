@@ -12,12 +12,12 @@ namespace ArcFormats.Ai6Win
     {
         private class Entry
         {
-            public string name;
-            public string filePath;
-            public uint packedSize;
-            public uint unpackedSize;
-            public uint offset;
-            public bool isPacked;
+            public string Name { get; set; }
+            public string FilePath { get; set; }
+            public uint PackedSize { get; set; }
+            public uint UnpackedSize { get; set; }
+            public uint Offset { get; set; }
+            public bool IsPacked { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)
@@ -65,16 +65,16 @@ namespace ArcFormats.Ai6Win
                     nameBuf[j] -= key;
                     key--;
                 }
-                entry.name = ArcEncoding.Shift_JIS.GetString(nameBuf, 0, nameLen);
-                if (entry.name.ContainsInvalidChars())
+                entry.Name = ArcEncoding.Shift_JIS.GetString(nameBuf, 0, nameLen);
+                if (entry.Name.ContainsInvalidChars())
                 {
                     throw new Exception();
                 }
-                entry.filePath = Path.Combine(folderPath, entry.name);
-                entry.packedSize = BigEndian.Convert(br.ReadUInt32());
-                entry.unpackedSize = BigEndian.Convert(br.ReadUInt32());
-                entry.offset = BigEndian.Convert(br.ReadUInt32());
-                entry.isPacked = entry.packedSize != entry.unpackedSize;
+                entry.FilePath = Path.Combine(folderPath, entry.Name);
+                entry.PackedSize = BigEndian.Convert(br.ReadUInt32());
+                entry.UnpackedSize = BigEndian.Convert(br.ReadUInt32());
+                entry.Offset = BigEndian.Convert(br.ReadUInt32());
+                entry.IsPacked = entry.PackedSize != entry.UnpackedSize;
                 l.Add(entry);
             }
 
@@ -99,16 +99,16 @@ namespace ArcFormats.Ai6Win
                 Entry entry = new Entry();
                 byte[] nameBuf = br.ReadBytes(nameLen);
                 DecryptName(nameBuf, (byte)nameLen);
-                entry.name = ArcEncoding.Shift_JIS.GetString(nameBuf);
-                if (entry.name.ContainsInvalidChars())
+                entry.Name = ArcEncoding.Shift_JIS.GetString(nameBuf);
+                if (entry.Name.ContainsInvalidChars())
                 {
                     throw new Exception();
                 }
-                entry.filePath = Path.Combine(folderPath, entry.name);
-                entry.packedSize = BigEndian.Convert(br.ReadUInt32());
-                entry.unpackedSize = BigEndian.Convert(br.ReadUInt32());
-                entry.offset = BigEndian.Convert(br.ReadUInt32());
-                entry.isPacked = entry.packedSize != entry.unpackedSize;
+                entry.FilePath = Path.Combine(folderPath, entry.Name);
+                entry.PackedSize = BigEndian.Convert(br.ReadUInt32());
+                entry.UnpackedSize = BigEndian.Convert(br.ReadUInt32());
+                entry.Offset = BigEndian.Convert(br.ReadUInt32());
+                entry.IsPacked = entry.PackedSize != entry.UnpackedSize;
                 l.Add(entry);
             }
 
@@ -132,15 +132,16 @@ namespace ArcFormats.Ai6Win
         {
             for (int i = 0; i < l.Count; i++)
             {
-                byte[] data = br.ReadBytes((int)l[i].packedSize);
-                if (l[i].isPacked)
+                byte[] data = br.ReadBytes((int)l[i].PackedSize);
+                if (l[i].IsPacked)
                 {
-                    File.WriteAllBytes(Path.Combine(l[i].filePath), Lzss.Decompress(data));
+                    File.WriteAllBytes(Path.Combine(l[i].FilePath), Lzss.Decompress(data));
                 }
                 else
                 {
-                    File.WriteAllBytes(Path.Combine(l[i].filePath), data);
+                    File.WriteAllBytes(Path.Combine(l[i].FilePath), data);
                 }
+                data = null;
                 LogUtility.UpdateBar();
             }
         }

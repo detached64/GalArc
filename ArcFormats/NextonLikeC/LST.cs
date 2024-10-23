@@ -10,10 +10,10 @@ namespace ArcFormats.NextonLikeC
     {
         private class Entry
         {
-            public uint fileOffset { get; set; }
-            public uint fileSize { get; set; }
-            public string fileName { get; set; }
-            public int fileType { get; set; }
+            public uint Offset { get; set; }
+            public uint Size { get; set; }
+            public string Name { get; set; }
+            public int Type { get; set; }
             //1:script 2,3:image 4,5:audio
             //1:SNX 3:PNG 4,5:OGG
         }
@@ -34,11 +34,15 @@ namespace ArcFormats.NextonLikeC
             FileStream fsLst = File.OpenRead(lstPath);
             BinaryReader brtemp = new BinaryReader(fsLst);
             fsLst.Position = 3;
-            byte keyLst = brtemp.ReadByte();
+            byte lstKey = brtemp.ReadByte();
             fsLst.Dispose();
             brtemp.Dispose();
 
-            byte[] lst = Xor.xor(File.ReadAllBytes(lstPath), keyLst);
+            byte[] lst = File.ReadAllBytes(lstPath);
+            for (int i = 0; i < lst.Length; i++)
+            {
+                lst[i] ^= lstKey;
+            }
             MemoryStream ms = new MemoryStream(lst);
             BinaryReader brLst = new BinaryReader(ms);
 
@@ -49,10 +53,10 @@ namespace ArcFormats.NextonLikeC
             for (int i = 0; i < (int)fileCount; i++)
             {
                 Entry entry = new Entry();
-                entry.fileOffset = brLst.ReadUInt32();
-                entry.fileSize = brLst.ReadUInt32();
-                entry.fileName = ArcEncoding.Shift_JIS.GetString(brLst.ReadBytes(64)).TrimEnd('\x02');
-                entry.fileType = brLst.ReadByte() ^ keyLst;//only read one byte to convert to int
+                entry.Offset = brLst.ReadUInt32();
+                entry.Size = brLst.ReadUInt32();
+                entry.Name = ArcEncoding.Shift_JIS.GetString(brLst.ReadBytes(64)).TrimEnd('\x02');
+                entry.Type = brLst.ReadByte() ^ lstKey;//only read one byte to convert to int
                 brLst.ReadBytes(3);//000000
                 l.Add(entry);
             }
@@ -61,35 +65,39 @@ namespace ArcFormats.NextonLikeC
             FileStream fsArc = File.OpenRead(arcPath);
             BinaryReader brArc = new BinaryReader(fsArc);
             fsArc.Position = 3;
-            byte keyArc = brArc.ReadByte();
+            byte arcKey = brArc.ReadByte();
             fsArc.Position = 0;
             for (int i = 0; i < (int)fileCount; i++)
             {
-                switch (l[i].fileType)
+                switch (l[i].Type)
                 {
                     case 1://script
-                        byte[] bufferSCR = Xor.xor(brArc.ReadBytes((int)l[i].fileSize), keyArc);
-                        File.WriteAllBytes(folderPath + "\\" + l[i].fileName + ".SNX", bufferSCR);
+                        byte[] bufferSCR = brArc.ReadBytes((int)l[i].Size);
+                        for (int j = 0; j < bufferSCR.Length; j++)
+                        {
+                            bufferSCR[j] ^= arcKey;
+                        }
+                        File.WriteAllBytes(Path.Combine(folderPath, l[i].Name + ".SNX"), bufferSCR);
                         break;
 
                     case 2:
                     case 3://image
-                        byte[] bufferIMG = brArc.ReadBytes((int)l[i].fileSize);
-                        File.WriteAllBytes(folderPath + "\\" + l[i].fileName + ".PNG", bufferIMG);
+                        byte[] bufferIMG = brArc.ReadBytes((int)l[i].Size);
+                        File.WriteAllBytes(Path.Combine(folderPath, l[i].Name + ".PNG"), bufferIMG);
                         break;
 
                     case 4://audio
-                        byte[] bufferAUD_WAV = brArc.ReadBytes((int)l[i].fileSize);
-                        File.WriteAllBytes(folderPath + "\\" + l[i].fileName + ".WAV", bufferAUD_WAV);
+                        byte[] bufferAUD_WAV = brArc.ReadBytes((int)l[i].Size);
+                        File.WriteAllBytes(Path.Combine(folderPath, l[i].Name + ".WAV"), bufferAUD_WAV);
                         break;
 
                     case 5:
-                        byte[] bufferAUD_OGG = brArc.ReadBytes((int)l[i].fileSize);
-                        File.WriteAllBytes(folderPath + "\\" + l[i].fileName + ".SNX", bufferAUD_OGG);
+                        byte[] bufferAUD_OGG = brArc.ReadBytes((int)l[i].Size);
+                        File.WriteAllBytes(Path.Combine(folderPath, l[i].Name + ".OGG"), bufferAUD_OGG);
                         break;
 
                     default:
-                        LogUtility.Info("Unrecognized file detected:" + l[i].fileName + "Skip." + Environment.NewLine);
+                        LogUtility.Info("Unrecognized file detected:" + l[i].Name + "Skip." + Environment.NewLine);
                         break;
                 }
                 LogUtility.UpdateBar();

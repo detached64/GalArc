@@ -15,8 +15,8 @@ namespace ArcFormats.Triangle
 
         private class Entry
         {
-            internal string fileName;
-            internal uint offset;
+            internal string Name { get; set; }
+            internal uint Offset { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)
@@ -71,18 +71,22 @@ namespace ArcFormats.Triangle
             {
                 Entry entry = new Entry();
                 long pos = fs.Position;
-                entry.fileName = br.ReadCString(ArcEncoding.Shift_JIS);
+                entry.Name = br.ReadCString(ArcEncoding.Shift_JIS);
                 fs.Position = pos + 16;
-                entry.offset = br.ReadUInt32();
+                entry.Offset = br.ReadUInt32();
                 entries.Add(entry);
             }
 
             for (int i = 0; i < fileCount - 1; i++)
             {
-                File.WriteAllBytes(Path.Combine(folderPath, entries[i].fileName), br.ReadBytes((int)(entries[i + 1].offset - entries[i].offset)));
+                byte[] buf = br.ReadBytes((int)(entries[i + 1].Offset - entries[i].Offset));
+                File.WriteAllBytes(Path.Combine(folderPath, entries[i].Name), buf);
+                buf = null;
                 LogUtility.UpdateBar();
             }
-            File.WriteAllBytes(Path.Combine(folderPath, entries[fileCount - 1].fileName), br.ReadBytes((int)(fs.Length - entries[fileCount - 1].offset)));
+            byte[] bufLast = br.ReadBytes((int)(fs.Length - entries[fileCount - 1].Offset));
+            File.WriteAllBytes(Path.Combine(folderPath, entries[fileCount - 1].Name), bufLast);
+            bufLast = null;
             LogUtility.UpdateBar();
             fs.Dispose();
             br.Dispose();
@@ -108,6 +112,7 @@ namespace ArcFormats.Triangle
             {
                 byte[] data = File.ReadAllBytes(file.FullName);
                 bw.Write(data);
+                data = null;
                 LogUtility.UpdateBar();
             }
             fw.Dispose();

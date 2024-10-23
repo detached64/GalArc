@@ -75,6 +75,18 @@
     <Compile Include="Global\Global.cs" />
     <Compile Include="InnocentGrey\DAT.cs" />
     <Compile Include="InnocentGrey\IGA.cs" />
+    <Compile Include="InnocentGrey\PackIGAOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InnocentGrey\PackIGAOptions.Designer.cs">
+      <DependentUpon>PackIGAOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InnocentGrey\UnpackIGAOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InnocentGrey\UnpackIGAOptions.Designer.cs">
+      <DependentUpon>UnpackIGAOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="KID\DAT.cs" />
     <Compile Include="Kirikiri\PackXP3Options.cs">
       <SubType>UserControl</SubType>
@@ -183,6 +195,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AdvHD\UnpackARCOptions.zh-Hans.resx">
       <DependentUpon>UnpackARCOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InnocentGrey\PackIGAOptions.resx">
+      <DependentUpon>PackIGAOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InnocentGrey\PackIGAOptions.zh-Hans.resx">
+      <DependentUpon>PackIGAOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InnocentGrey\UnpackIGAOptions.resx">
+      <DependentUpon>UnpackIGAOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InnocentGrey\UnpackIGAOptions.zh-Hans.resx">
+      <DependentUpon>UnpackIGAOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Kirikiri\PackXP3Options.resx">
       <DependentUpon>PackXP3Options.cs</DependentUpon>

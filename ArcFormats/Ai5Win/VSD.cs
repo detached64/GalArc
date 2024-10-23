@@ -21,6 +21,7 @@ namespace ArcFormats.Ai5Win
             fs.Seek(offset, SeekOrigin.Begin);
             byte[] buffer = br.ReadBytes((int)size);
             File.WriteAllBytes(Path.Combine(folderPath, Path.GetFileNameWithoutExtension(filePath) + ".mpg"), buffer);
+            buffer = null;
             LogUtility.UpdateBar();
             fs.Dispose();
             br.Dispose();

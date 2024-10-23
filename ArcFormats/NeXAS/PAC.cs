@@ -34,19 +34,19 @@ namespace ArcFormats.NeXAS
 
         private static string FolderPath = string.Empty;
 
-        private static Encoding encoding = Encoding.UTF8;
+        private static Encoding DefaultEncoding = Encoding.UTF8;
 
         private static readonly List<Entry> entries = new List<Entry>();
 
-        private static readonly byte[] signature = { 0x50, 0x41, 0x43 };       // "PAC"
+        private static readonly byte[] Magic = { 0x50, 0x41, 0x43 };       // "PAC"
 
         public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader reader = new BinaryReader(fs);
             FolderPath = folderPath;
-            encoding = Global.Encoding;
-            if (!reader.ReadBytes(3).SequenceEqual(signature))
+            DefaultEncoding = Global.Encoding;
+            if (!reader.ReadBytes(3).SequenceEqual(Magic))
             {
                 LogUtility.ErrorInvalidArchive();
             }
@@ -139,7 +139,7 @@ namespace ArcFormats.NeXAS
             for (int i = 0; i < fileCount; i++)
             {
                 Entry entry = new Entry();
-                entry.FileName = encoding.GetString(reader.ReadBytes(64)).TrimEnd('\0');
+                entry.FileName = DefaultEncoding.GetString(reader.ReadBytes(64)).TrimEnd('\0');
                 entry.FilePath = Path.Combine(FolderPath, entry.FileName);
                 entry.Offset = reader.ReadInt32();
                 entry.UnpackedSize = reader.ReadInt32();
@@ -154,14 +154,19 @@ namespace ArcFormats.NeXAS
             int packedLen = reader.ReadInt32();
             int unpackedLen = fileCount * 76;
             reader.BaseStream.Seek(-4 - packedLen, SeekOrigin.End);
-            byte[] packedIndex = Xor.xor(reader.ReadBytes(packedLen), 0xff);
+            byte[] packedIndex = reader.ReadBytes(packedLen);
+            for (int i = 0; i < packedLen; i++)
+            {
+                packedIndex[i] ^= 0xff;
+            }
             byte[] index = Huffman.Decompress(packedIndex, unpackedLen);
+            packedIndex = null;
             MemoryStream msIndex = new MemoryStream(index);
             BinaryReader readerIndex = new BinaryReader(msIndex);
             for (int i = 0; i < fileCount; i++)
             {
                 Entry entry = new Entry();
-                entry.FileName = encoding.GetString(readerIndex.ReadBytes(64)).TrimEnd('\0');
+                entry.FileName = DefaultEncoding.GetString(readerIndex.ReadBytes(64)).TrimEnd('\0');
                 entry.FilePath = Path.Combine(FolderPath, entry.FileName);
                 entry.Offset = readerIndex.ReadInt32();
                 entry.UnpackedSize = readerIndex.ReadInt32();

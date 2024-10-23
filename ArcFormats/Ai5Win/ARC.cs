@@ -12,10 +12,10 @@ namespace ArcFormats.Ai5Win
     {
         private class Entry
         {
-            internal string name;
-            internal string filePath;
-            internal uint size;
-            internal uint offset;
+            internal string Name { get; set; }
+            internal string FilePath { get; set; }
+            internal uint Size { get; set; }
+            internal uint Offset { get; set; }
         }
 
         private readonly static int[] NameLengths = { 0x14, 0x18, 0x1E, 0x20, 0x100 };
@@ -37,16 +37,17 @@ namespace ArcFormats.Ai5Win
 
             foreach (Entry entry in entries)
             {
-                fs.Position = entry.offset;
-                byte[] data = br.ReadBytes((int)entry.size);
-                if (entry.filePath.HasAnyOfExtensions("mes", "lib", "a", "a6", "msk", "x"))
+                fs.Position = entry.Offset;
+                byte[] data = br.ReadBytes((int)entry.Size);
+                if (entry.FilePath.HasAnyOfExtensions("mes", "lib", "a", "a6", "msk", "x"))
                 {
-                    File.WriteAllBytes(entry.filePath, Lzss.Decompress(data));
+                    File.WriteAllBytes(entry.FilePath, Lzss.Decompress(data));
                 }
                 else
                 {
-                    File.WriteAllBytes(entry.filePath, data);
+                    File.WriteAllBytes(entry.FilePath, data);
                 }
+                data = null;
                 LogUtility.UpdateBar();
             }
             fs.Dispose();
@@ -67,10 +68,15 @@ namespace ArcFormats.Ai5Win
                     for (int i = 0; i < fileCount; i++)
                     {
                         Entry entry = new Entry();
-                        entry.name = ArcEncoding.Shift_JIS.GetString(Xor.xor(br.ReadBytes(nameLength), scheme.nameKey)).TrimEnd('\0');
-                        entry.filePath = Path.Combine(FolderPath, entry.name);
-                        entry.size = br.ReadUInt32() ^ scheme.sizeKey;
-                        entry.offset = br.ReadUInt32() ^ scheme.offsetKey;
+                        byte[] nameBuf = br.ReadBytes(nameLength);
+                        for (int j = 0; j < nameLength; j++)
+                        {
+                            nameBuf[j] ^= scheme.NameKey;
+                        }
+                        entry.Name = ArcEncoding.Shift_JIS.GetString(nameBuf).TrimEnd('\0');
+                        entry.FilePath = Path.Combine(FolderPath, entry.Name);
+                        entry.Size = br.ReadUInt32() ^ scheme.SizeKey;
+                        entry.Offset = br.ReadUInt32() ^ scheme.OffsetKey;
                         entries.Add(entry);
                     }
                     return;
@@ -86,24 +92,24 @@ namespace ArcFormats.Ai5Win
 
     internal class ArcScheme
     {
-        internal byte nameKey;
-        internal uint sizeKey;
-        internal uint offsetKey;
+        internal byte NameKey { get; set; }
+        internal uint SizeKey { get; set; }
+        internal uint OffsetKey { get; set; }
 
         internal void GuessScheme(BinaryReader br, int fileCount, int nameLen)
         {
             // guess name key
             br.BaseStream.Position = nameLen + 3;    // last byte of name , hopefully 0x00
-            nameKey = br.ReadByte();
+            NameKey = br.ReadByte();
             // guess offset key
             uint dataOffset = (uint)((nameLen + 8) * fileCount + 4);
             uint size = br.ReadUInt32();
             uint offset1 = br.ReadUInt32();
-            offsetKey = offset1 ^ dataOffset;
+            OffsetKey = offset1 ^ dataOffset;
             // guess size key
             br.BaseStream.Position += nameLen + 4;
-            uint offset2 = br.ReadUInt32() ^ offsetKey;
-            sizeKey = size ^ (offset2 - dataOffset);
+            uint offset2 = br.ReadUInt32() ^ OffsetKey;
+            SizeKey = size ^ (offset2 - dataOffset);
         }
     }
 }

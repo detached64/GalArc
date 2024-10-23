@@ -15,11 +15,11 @@ namespace ArcFormats.Majiro
 
         private static readonly string Magic = "MajiroArcV";
 
-        private static readonly string magicV1 = "MajiroArcV1.000\x00";
+        private static readonly string MagicV1 = "MajiroArcV1.000\x00";
 
-        private static readonly string magicV2 = "MajiroArcV2.000\x00";
+        private static readonly string MagicV2 = "MajiroArcV2.000\x00";
 
-        private static readonly string magicV3 = "MajiroArcV3.000\x00";
+        private static readonly string MagicV3 = "MajiroArcV3.000\x00";
 
         private static int UnpackVersion;
 
@@ -27,9 +27,9 @@ namespace ArcFormats.Majiro
 
         private class Entry
         {
-            internal string name;
-            internal uint dataOffset;
-            internal uint size;
+            internal string Name { get; set; }
+            internal uint Offset { get; set; }
+            internal uint Size { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)
@@ -81,18 +81,20 @@ namespace ArcFormats.Majiro
             {
                 Entry entry = new Entry();
                 brIndex.ReadBytes(4);            //skip crc32
-                entry.dataOffset = brIndex.ReadUInt32();
-                entry.name = br.ReadCString(ArcEncoding.Shift_JIS);
+                entry.Offset = brIndex.ReadUInt32();
+                entry.Name = br.ReadCString(ArcEncoding.Shift_JIS);
                 entries.Add(entry);
             }
             Entry lastEntry = new Entry();
             brIndex.ReadBytes(4);               //skip crc32:0x00000000
-            lastEntry.dataOffset = brIndex.ReadUInt32();
+            lastEntry.Offset = brIndex.ReadUInt32();
             entries.Add(lastEntry);
 
             for (int i = 0; i < fileCount; i++)
             {
-                File.WriteAllBytes(folderPath + "\\" + entries[i].name, br.ReadBytes((int)(entries[i + 1].dataOffset - entries[i].dataOffset)));
+                byte[] data = br.ReadBytes((int)(entries[i + 1].Offset - entries[i].Offset));
+                File.WriteAllBytes(Path.Combine(folderPath, entries[i].Name), data);
+                data = null;
                 LogUtility.UpdateBar();
             }
 
@@ -122,12 +124,14 @@ namespace ArcFormats.Majiro
             {
                 Entry entry = new Entry();
                 brIndex.ReadBytes(4 * (UnpackVersion - 1));            //skip checksum
-                entry.dataOffset = brIndex.ReadUInt32();
-                entry.size = brIndex.ReadUInt32();
-                entry.name = br.ReadCString(ArcEncoding.Shift_JIS);
+                entry.Offset = brIndex.ReadUInt32();
+                entry.Size = brIndex.ReadUInt32();
+                entry.Name = br.ReadCString(ArcEncoding.Shift_JIS);
                 long pos = fs.Position;
-                fs.Position = entry.dataOffset;
-                File.WriteAllBytes(Path.Combine(folderPath, entry.name), br.ReadBytes((int)entry.size));
+                fs.Position = entry.Offset;
+                byte[] data = br.ReadBytes((int)entry.Size);
+                File.WriteAllBytes(Path.Combine(folderPath, entry.Name), data);
+                data = null;
                 fs.Position = pos;
                 LogUtility.UpdateBar();
             }
@@ -160,7 +164,7 @@ namespace ArcFormats.Majiro
             FileInfo[] files = d.GetFiles();
             int fileCount = files.Length;
             LogUtility.InitBar(fileCount);
-            bw.Write(Encoding.ASCII.GetBytes(magicV1));
+            bw.Write(Encoding.ASCII.GetBytes(MagicV1));
             bw.Write(fileCount);
             uint nameOffset = 28 + 8 * ((uint)fileCount + 1);
             uint dataOffset = 0;
@@ -178,7 +182,9 @@ namespace ArcFormats.Majiro
             dataOffset = (uint)fw.Position;
             foreach (FileInfo file in files)
             {
-                bw.Write(File.ReadAllBytes(file.FullName));
+                byte[] data = File.ReadAllBytes(file.FullName);
+                bw.Write(data);
+                data = null;
             }
             uint maxOffset = (uint)fw.Position;
             // write index
@@ -206,7 +212,7 @@ namespace ArcFormats.Majiro
             int fileCount = files.Length;
             LogUtility.InitBar(fileCount);
 
-            bw.Write(Encoding.ASCII.GetBytes(PackVersion == 2 ? magicV2 : magicV3));
+            bw.Write(Encoding.ASCII.GetBytes(PackVersion == 2 ? MagicV2 : MagicV3));
             bw.Write(fileCount);
             uint nameOffset = 28 + (uint)((PackVersion + 1) * 4 * fileCount);
             uint dataOffset = 0;
@@ -224,7 +230,9 @@ namespace ArcFormats.Majiro
             dataOffset = (uint)fw.Position;
             foreach (FileInfo file in files)
             {
-                bw.Write(File.ReadAllBytes(file.FullName));
+                byte[] data = File.ReadAllBytes(file.FullName);
+                bw.Write(data);
+                data = null;
             }
             // write index
             bw.BaseStream.Position = 24;

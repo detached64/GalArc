@@ -31,7 +31,9 @@ namespace ArcFormats.NScripter
                 fs.Position = offset;
                 string fullPath = Path.Combine(folderPath, relativePath);
                 Utils.CreateParentDirectoryIfNotExists(fullPath);
-                File.WriteAllBytes(fullPath, br.ReadBytes((int)packedSize));
+                byte[] buffer = br.ReadBytes((int)packedSize);
+                File.WriteAllBytes(fullPath, buffer);
+                buffer = null;
                 fs.Position = pos;
                 LogUtility.UpdateBar();
             }
@@ -67,6 +69,7 @@ namespace ArcFormats.NScripter
             {
                 byte[] data = File.ReadAllBytes(file.FullName);
                 bw.Write(data);
+                data = null;
                 LogUtility.UpdateBar();
             }
             fw.Position = 2;
