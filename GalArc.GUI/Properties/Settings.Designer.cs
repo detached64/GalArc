@@ -166,5 +166,17 @@ namespace GalArc.Properties {
                 this["PackSelectedNode1"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool FreezeControls {
+            get {
+                return ((bool)(this["FreezeControls"]));
+            }
+            set {
+                this["FreezeControls"] = value;
+            }
+        }
     }
 }
