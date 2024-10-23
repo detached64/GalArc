@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Utility;
 
 namespace ArcFormats.AdvHD
 {
@@ -11,25 +10,25 @@ namespace ArcFormats.AdvHD
     {
         private class Header
         {
-            internal string magic { get; set; }
-            internal uint unknown1 { get; set; }
-            internal uint width { get; set; }
-            internal uint height { get; set; }
-            internal uint fileCount { get; set; }
+            internal string Magic { get; set; }
+            internal uint Unknown1 { get; set; }
+            internal uint Width { get; set; }
+            internal uint Height { get; set; }
+            internal uint FileCount { get; set; }
         }
 
         private class Entry
         {
-            internal uint fileType { get; set; }
-            internal uint fileNumber { get; set; }
-            internal uint offsetX { get; set; }
-            internal uint offsetY { get; set; }
-            internal uint width { get; set; }
-            internal uint height { get; set; }
-            internal uint add1 { get; set; }
-            internal uint add2 { get; set; }
-            internal uint remark3 { get; set; }
-            internal uint fileSize { get; set; }
+            internal uint FileType { get; set; }
+            internal uint FileNumber { get; set; }
+            internal uint OffsetX { get; set; }
+            internal uint OffsetY { get; set; }
+            internal uint Width { get; set; }
+            internal uint Height { get; set; }
+            internal uint Add1 { get; set; }
+            internal uint Add2 { get; set; }
+            internal uint Remark3 { get; set; }
+            internal uint FileSize { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)
@@ -37,44 +36,45 @@ namespace ArcFormats.AdvHD
             Header header = new Header();
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            header.magic = Encoding.UTF8.GetString(br.ReadBytes(4));
-            if (header.magic != "PNAP" || Path.GetExtension(filePath) != ".pna")
+            header.Magic = Encoding.UTF8.GetString(br.ReadBytes(4));
+            if (header.Magic != "PNAP")
             {
                 LogUtility.ErrorInvalidArchive();
             }
 
-            header.unknown1 = br.ReadUInt32();
-            header.width = br.ReadUInt32();
-            header.height = br.ReadUInt32();
-            header.fileCount = br.ReadUInt32();
+            header.Unknown1 = br.ReadUInt32();
+            header.Width = br.ReadUInt32();
+            header.Height = br.ReadUInt32();
+            header.FileCount = br.ReadUInt32();
 
             Directory.CreateDirectory(folderPath);
             List<Entry> l = new List<Entry>();
 
-            for (int i = 0; i < header.fileCount; i++)
+            for (int i = 0; i < header.FileCount; i++)
             {
                 Entry entry = new Entry();
-                entry.fileType = br.ReadUInt32();
-                entry.fileNumber = header.fileCount - br.ReadUInt32();
-                entry.offsetX = br.ReadUInt32();
-                entry.offsetY = br.ReadUInt32();
-                entry.width = br.ReadUInt32();
-                entry.height = br.ReadUInt32();
-                entry.add1 = br.ReadUInt32();
-                entry.add2 = br.ReadUInt32();
-                entry.remark3 = br.ReadUInt32();
-                entry.fileSize = br.ReadUInt32();
+                entry.FileType = br.ReadUInt32();
+                entry.FileNumber = header.FileCount - br.ReadUInt32();
+                entry.OffsetX = br.ReadUInt32();
+                entry.OffsetY = br.ReadUInt32();
+                entry.Width = br.ReadUInt32();
+                entry.Height = br.ReadUInt32();
+                entry.Add1 = br.ReadUInt32();
+                entry.Add2 = br.ReadUInt32();
+                entry.Remark3 = br.ReadUInt32();
+                entry.FileSize = br.ReadUInt32();
                 l.Add(entry);
             }
             int validCount = 0;
-            for (int i = 0; i < header.fileCount; i++)
+            for (int i = 0; i < header.FileCount; i++)
             {
-                if (l[i].fileType == 1 || l[i].fileType == 2)
+                if (l[i].FileType == 1 || l[i].FileType == 2)
                 {
                     continue;
                 }
-                byte[] buffer = br.ReadBytes((int)l[i].fileSize);
-                File.WriteAllBytes(Path.Combine(folderPath, Path.GetFileNameWithoutExtension(filePath) + "_" + l[i].fileNumber.ToString("000") + ".png"), buffer);
+                byte[] buffer = br.ReadBytes((int)l[i].FileSize);
+                File.WriteAllBytes(Path.Combine(folderPath, Path.GetFileNameWithoutExtension(filePath) + "_" + l[i].FileNumber.ToString("000") + ".png"), buffer);
+                buffer = null;
                 validCount++;
             }
             fs.Dispose();
@@ -120,6 +120,7 @@ namespace ArcFormats.AdvHD
             {
                 byte[] buffer = File.ReadAllBytes(file);
                 bw.Write(buffer);
+                buffer = null;
             }
 
             fs.Dispose();

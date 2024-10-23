@@ -16,23 +16,23 @@ namespace ArcFormats.Yuris
 
         internal class Entry
         {
-            public int nameLen;
-            public string fileName;
-            public string filePath;
-            public byte[] fileData;
-            public uint unpackedSize;
-            public uint packedSize;
-            public uint offset;
-            public bool isPacked;
+            public int NameLen { get; set; }
+            public string Name { get; set; }
+            public string Path { get; set; }
+            public byte[] Data { get; set; }
+            public uint UnpackedSize { get; set; }
+            public uint PackedSize { get; set; }
+            public uint Offset { get; set; }
+            public bool IsPacked { get; set; }
         }
 
         internal class Scheme
         {
-            public byte key;
-            public byte[] table;
-            public uint scriptKey;
-            public int extraLen;
-            public byte[] scriptKeyBytes;
+            public byte Key { get; set; }
+            public byte[] Table { get; set; }
+            public int ExtraLen { get; set; }
+            public byte[] ScriptKeyBytes { get; set; }
+            public uint ScriptKey { get; set; }
         }
 
         private static List<Entry> entries = new List<Entry>();
@@ -75,20 +75,20 @@ namespace ArcFormats.Yuris
 
             foreach (Entry entry in entries)
             {
-                fs.Position = entry.offset;
-                entry.fileData = br.ReadBytes((int)entry.packedSize);
-                if (entry.isPacked)
+                fs.Position = entry.Offset;
+                entry.Data = br.ReadBytes((int)entry.PackedSize);
+                if (entry.IsPacked)
                 {
-                    entry.fileData = Zlib.DecompressBytes(entry.fileData);
+                    entry.Data = Zlib.DecompressBytes(entry.Data);
                 }
-                Utils.CreateParentDirectoryIfNotExists(entry.filePath);
-                if (UnpackYPFOptions.toDecryptScripts && Path.GetExtension(entry.filePath) == ".ybn" && BitConverter.ToUInt32(entry.fileData, 0) == 0x42545359)
+                Utils.CreateParentDirectoryIfNotExists(entry.Path);
+                if (UnpackYPFOptions.toDecryptScripts && Path.GetExtension(entry.Path) == ".ybn" && BitConverter.ToUInt32(entry.Data, 0) == 0x42545359)
                 {
-                    LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.fileName));
-                    entry.fileData = TryDecryptScript(entry.fileData);
+                    LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.Name));
+                    entry.Data = TryDecryptScript(entry.Data);
                 }
-                File.WriteAllBytes(entry.filePath, entry.fileData);
-                entry.fileData = null;
+                File.WriteAllBytes(entry.Path, entry.Data);
+                entry.Data = null;
                 LogUtility.UpdateBar();
             }
 
@@ -102,8 +102,8 @@ namespace ArcFormats.Yuris
             {
                 foreach (var length in extraLens)
                 {
-                    scheme.table = table;
-                    scheme.extraLen = length;
+                    scheme.Table = table;
+                    scheme.ExtraLen = length;
                     LogUtility.Debug($"Try {tableNames[tables.IndexOf(table)]} , Extra Length = {length}……");
                     try
                     {
@@ -119,10 +119,10 @@ namespace ArcFormats.Yuris
             }
             if (version == 0x1F4)
             {
-                scheme.table = Table0x1F4;
+                scheme.Table = Table0x1F4;
                 foreach (var length in extraLens)
                 {
-                    scheme.extraLen = length;
+                    scheme.ExtraLen = length;
                     LogUtility.Debug($"Try special table , Extra Length = {length}……");
                     try
                     {
@@ -147,39 +147,39 @@ namespace ArcFormats.Yuris
             {
                 br.BaseStream.Position += 4;
                 Entry entry = new Entry();
-                entry.nameLen = DecryptNameLength((byte)(br.ReadByte() ^ 0xff));
-                byte[] name = br.ReadBytes(entry.nameLen);
+                entry.NameLen = DecryptNameLength((byte)(br.ReadByte() ^ 0xff));
+                byte[] name = br.ReadBytes(entry.NameLen);
                 DecryptName(name);
-                entry.fileName = ArcEncoding.Shift_JIS.GetString(name);
-                if (entry.fileName.ContainsInvalidChars())
+                entry.Name = ArcEncoding.Shift_JIS.GetString(name);
+                if (entry.Name.ContainsInvalidChars())
                 {
                     throw new Exception();
                 }
-                entry.filePath = Path.Combine(FolderPath, entry.fileName);
+                entry.Path = Path.Combine(FolderPath, entry.Name);
                 br.BaseStream.Position++;
-                entry.isPacked = br.ReadByte() != 0;
-                entry.unpackedSize = br.ReadUInt32();
-                entry.packedSize = br.ReadUInt32();
-                entry.offset = br.ReadUInt32();
-                br.BaseStream.Position += scheme.extraLen;
+                entry.IsPacked = br.ReadByte() != 0;
+                entry.UnpackedSize = br.ReadUInt32();
+                entry.PackedSize = br.ReadUInt32();
+                entry.Offset = br.ReadUInt32();
+                br.BaseStream.Position += scheme.ExtraLen;
                 entries.Add(entry);
             }
         }
 
         private static int DecryptNameLength(byte len)
         {
-            int pos = Array.IndexOf(scheme.table, len);
+            int pos = Array.IndexOf(scheme.Table, len);
             if (pos == -1)
             {
                 return len;
             }
             else if ((pos & 1) != 0)
             {
-                return scheme.table[pos - 1];
+                return scheme.Table[pos - 1];
             }
             else
             {
-                return scheme.table[pos + 1];
+                return scheme.Table[pos + 1];
             }
         }
 
@@ -187,12 +187,12 @@ namespace ArcFormats.Yuris
         {
             if (isFirstGuessYpf)
             {
-                scheme.key = (byte)(name[name.Length - 4] ^ '.');       // (maybe) all files inside the ypf archive has a 3-letter extension,so……
+                scheme.Key = (byte)(name[name.Length - 4] ^ '.');       // (maybe) all files inside the ypf archive has a 3-letter extension,so……
                 isFirstGuessYpf = false;
             }
             for (int i = 0; i < name.Length; i++)
             {
-                name[i] ^= scheme.key;
+                name[i] ^= scheme.Key;
             }
         }
 
@@ -230,7 +230,7 @@ namespace ArcFormats.Yuris
                 {
                     return;
                 }
-                Array.Copy(script, 44, scheme.scriptKeyBytes, 0, 4);
+                Array.Copy(script, 44, scheme.ScriptKeyBytes, 0, 4);
             }
             else
             {
@@ -244,8 +244,8 @@ namespace ArcFormats.Yuris
                 uint a = br.ReadUInt32();
 
                 ms.Position = a + 40;
-                scheme.scriptKey = br.ReadUInt32();
-                scheme.scriptKeyBytes = BitConverter.GetBytes(scheme.scriptKey);
+                scheme.ScriptKey = br.ReadUInt32();
+                scheme.ScriptKeyBytes = BitConverter.GetBytes(scheme.ScriptKey);
             }
         }
 
@@ -256,22 +256,22 @@ namespace ArcFormats.Yuris
             uint pos = 32;
             for (uint i = 0; i < len1; i++)
             {
-                result[i + pos] ^= scheme.scriptKeyBytes[i & 3];
+                result[i + pos] ^= scheme.ScriptKeyBytes[i & 3];
             }
             pos += len1;
             for (uint i = 0; i < len2; i++)
             {
-                result[i + pos] ^= scheme.scriptKeyBytes[i & 3];
+                result[i + pos] ^= scheme.ScriptKeyBytes[i & 3];
             }
             pos += len2;
             for (uint i = 0; i < len3; i++)
             {
-                result[i + pos] ^= scheme.scriptKeyBytes[i & 3];
+                result[i + pos] ^= scheme.ScriptKeyBytes[i & 3];
             }
             pos += len3;
             for (uint i = 0; i < len4; i++)
             {
-                result[i + pos] ^= scheme.scriptKeyBytes[i & 3];
+                result[i + pos] ^= scheme.ScriptKeyBytes[i & 3];
             }
             return result;
         }
@@ -283,22 +283,22 @@ namespace ArcFormats.Yuris
             uint pos = 32;
             for (uint i = 0; i < len1; i++)
             {
-                result[i + pos] ^= scheme.scriptKeyBytes[i & 3];
+                result[i + pos] ^= scheme.ScriptKeyBytes[i & 3];
             }
             pos += len1;
             for (uint i = 0; i < len2; i++)
             {
-                result[i + pos] ^= scheme.scriptKeyBytes[i & 3];
+                result[i + pos] ^= scheme.ScriptKeyBytes[i & 3];
             }
             return result;
         }
 
         private static void ResetAll()
         {
-            scheme.key = 0;
-            scheme.scriptKeyBytes = new byte[] { };
-            scheme.table = tables[0];
-            scheme.extraLen = extraLens[0];
+            scheme.Key = 0;
+            scheme.ScriptKeyBytes = new byte[] { };
+            scheme.Table = tables[0];
+            scheme.ExtraLen = extraLens[0];
             entries.Clear();
             isFirstGuessYpf = true;
             isFirstGuessYst = true;
@@ -309,7 +309,7 @@ namespace ArcFormats.Yuris
             entries.Clear();
             isFirstGuessYpf = true;
             isFirstGuessYst = true;
-            scheme.key = 0;
+            scheme.Key = 0;
         }
     }
 }

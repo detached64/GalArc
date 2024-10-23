@@ -1,5 +1,4 @@
-﻿using ArcFormats.Cmvs;
-using Log;
+﻿using Log;
 using System;
 using System.IO;
 using System.Text;
@@ -71,9 +70,12 @@ namespace ArcFormats.RPGMaker
                 byte[] nameBytes = br.ReadBytes((int)nameLen);
                 string name = Encoding.UTF8.GetString(DecryptName(nameBytes, keygen));
                 string fullPath = Path.Combine(folderPath, name);
-                Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+                Utils.CreateParentDirectoryIfNotExists(fullPath);
                 uint size = br.ReadUInt32() ^ keygen.Compute();
-                File.WriteAllBytes(fullPath, DecryptData(br.ReadBytes((int)size), new KeyGen(keygen.GetCurrent())));
+                byte[] data = br.ReadBytes((int)size);
+                DecryptData(data, new KeyGen(keygen.GetCurrent()));
+                File.WriteAllBytes(fullPath, data);
+                data = null;
                 fileCount++;
             }
             fs.Dispose();
@@ -107,7 +109,10 @@ namespace ArcFormats.RPGMaker
                 Utils.CreateParentDirectoryIfNotExists(fullPath);
                 long pos = fs.Position;
                 fs.Position = dataOffset;
-                File.WriteAllBytes(fullPath, DecryptData(br.ReadBytes((int)fileSize), new KeyGen(thisKey)));
+                byte[] data = br.ReadBytes((int)fileSize);
+                DecryptData(data, new KeyGen(thisKey));
+                File.WriteAllBytes(fullPath, data);
+                data = null;
                 fs.Position = pos;
                 fileCount++;
             }
@@ -133,7 +138,9 @@ namespace ArcFormats.RPGMaker
                 bw.Write(DecryptName(relativePath, keygen));
                 byte[] data = File.ReadAllBytes(file.FullName);
                 bw.Write((uint)data.Length ^ keygen.Compute());
-                bw.Write(DecryptData(data, new KeyGen(keygen.GetCurrent())));
+                DecryptData(data, new KeyGen(keygen.GetCurrent()));
+                bw.Write(data);
+                data = null;
                 LogUtility.UpdateBar();
             }
             bw.Dispose();
@@ -171,8 +178,10 @@ namespace ArcFormats.RPGMaker
                 bw.Write(DecryptName(relativePath, key));
                 long pos = fw.Position;
                 fw.Position = baseOffset;
-                bw.Write(DecryptData(data, new KeyGen(thisKey)));
+                DecryptData(data, new KeyGen(thisKey));
+                bw.Write(data);
                 baseOffset += (uint)data.Length;
+                data = null;
                 fw.Position = pos;
                 LogUtility.UpdateBar();
             }
@@ -202,7 +211,7 @@ namespace ArcFormats.RPGMaker
             return data;
         }
 
-        private static byte[] DecryptData(byte[] data, KeyGen keygen)
+        private static void DecryptData(byte[] data, KeyGen keygen)
         {
             uint key = keygen.Compute();
             for (int i = 0; i < data.Length;)
@@ -214,7 +223,6 @@ namespace ArcFormats.RPGMaker
                     key = keygen.Compute();
                 }
             }
-            return data;
         }
 
         private class KeyGen

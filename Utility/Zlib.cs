@@ -161,9 +161,7 @@ namespace Utility.Compression
         /// <returns></returns>
         public static byte[] DecompressBytes(byte[] input)
         {
-            byte[] result = new byte[input.Length];
-            Array.Copy(input, result, input.Length);
-            using (MemoryStream inputStream = new MemoryStream(result))
+            using (MemoryStream inputStream = new MemoryStream(input))
             {
                 using (BinaryReader br = new BinaryReader(inputStream))
                 {
@@ -187,7 +185,7 @@ namespace Utility.Compression
                         {
                             LogUtility.Error(e.Message);
                         }
-
+                        input = null;
                         return outputStream.ToArray();
                     }
                 }

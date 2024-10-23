@@ -1,20 +1,19 @@
 ﻿using Log;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Utility;
 
 namespace ArcFormats.Palette
 {
     public class PAK
     {
-        private static byte[] magic = Utils.HexStringToByteArray("055041434b32");
+        private static readonly byte[] Magic = Utils.HexStringToByteArray("055041434b32");
 
         public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            if (!br.ReadBytes(6).SequenceEqual(magic))
+            if (!br.ReadBytes(6).SequenceEqual(Magic))
             {
                 LogUtility.ErrorInvalidArchive();
             }
@@ -25,12 +24,19 @@ namespace ArcFormats.Palette
             for (int i = 0; i < count; i++)
             {
                 byte nameLen = br.ReadByte();
-                string name = ArcEncoding.Shift_JIS.GetString(Xor.xor(br.ReadBytes(nameLen), 0xff));
+                byte[] buffer = br.ReadBytes(nameLen);
+                for (int j = 0; j < nameLen; j++)
+                {
+                    buffer[j] ^= 0xff;
+                }
+                string name = ArcEncoding.Shift_JIS.GetString(buffer);
                 int offset = br.ReadInt32();
                 int size = br.ReadInt32();
                 long pos = fs.Position;
                 fs.Position = offset;
-                File.WriteAllBytes(Path.Combine(folderPath, name), br.ReadBytes(size));
+                byte[] data = br.ReadBytes(size);
+                File.WriteAllBytes(Path.Combine(folderPath, name), data);
+                data = null;
                 fs.Position = pos;
                 LogUtility.UpdateBar();
             }
@@ -48,7 +54,7 @@ namespace ArcFormats.Palette
             int fileCount = files.Length;
             int baseOffset = 10 + nameLenSum + 9 * fileCount;
 
-            bw.Write(magic);
+            bw.Write(Magic);
             bw.Write(fileCount);
             LogUtility.InitBar(fileCount);
 
@@ -57,7 +63,11 @@ namespace ArcFormats.Palette
                 byte[] name = ArcEncoding.Shift_JIS.GetBytes(Path.GetFileName(file));
                 int fileSize = (int)new FileInfo(file).Length;
                 bw.Write((byte)name.Length);
-                bw.Write(Xor.xor(name, 0xff));
+                for (int i = 0; i < name.Length; i++)
+                {
+                    bw.Write((byte)(name[i] ^ 0xff));
+                }
+                bw.Write(name);
                 bw.Write(baseOffset);
                 baseOffset += fileSize;
                 bw.Write(fileSize);
@@ -65,7 +75,9 @@ namespace ArcFormats.Palette
             }
             foreach (string file in files)
             {
-                bw.Write(File.ReadAllBytes(file));
+                byte[] data = File.ReadAllBytes(file);
+                bw.Write(data);
+                data = null;
             }
             fs.Dispose();
             bw.Dispose();

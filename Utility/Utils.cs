@@ -31,7 +31,7 @@ namespace Utility
         /// Sort the file paths. Use string.CompareOrdinal() to avoid culture influence.
         /// </summary>
         /// <param name="pathString"></param>
-        public static void InsertSort(string[] pathString)
+        public static void Sort(string[] pathString)
         {
             for (int i = 1; i < pathString.Length; i++)
             {

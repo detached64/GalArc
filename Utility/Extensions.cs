@@ -44,7 +44,7 @@ namespace Utility.Extensions
                 throw new ArgumentNullException(nameof(source));
             }
 
-            string thisExtension = Path.GetExtension(source).TrimStart('.');
+            string thisExtension = source[0] == '.' ? source.TrimStart('.') : Path.GetExtension(source).TrimStart('.');
             foreach (var extension in extensions)
             {
                 if (string.Equals(thisExtension, extension, StringComparison.OrdinalIgnoreCase))

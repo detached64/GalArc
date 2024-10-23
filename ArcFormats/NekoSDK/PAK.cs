@@ -11,7 +11,7 @@ namespace ArcFormats.NekoSDK
 {
     public class PAK
     {
-        private static readonly string magic = "NEKOPACK";
+        private static readonly string Magic = "NEKOPACK";
 
         private class Entry
         {
@@ -24,7 +24,7 @@ namespace ArcFormats.NekoSDK
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            if (Encoding.ASCII.GetString(br.ReadBytes(8)) != magic)
+            if (Encoding.ASCII.GetString(br.ReadBytes(8)) != Magic)
             {
                 LogUtility.ErrorInvalidArchive();
             }
@@ -74,7 +74,10 @@ namespace ArcFormats.NekoSDK
                     header[i] ^= (byte)key;
                     key <<= 3;
                 }
-                File.WriteAllBytes(Path.Combine(folderPath, entry.Name), Zlib.DecompressBytes(header.Concat(data).ToArray()));
+                byte[] fileData = Zlib.DecompressBytes(header.Concat(data).ToArray());
+                File.WriteAllBytes(Path.Combine(folderPath, entry.Name), fileData);
+                fileData = null;
+                data = null;
                 LogUtility.UpdateBar();
             }
             fs.Dispose();
@@ -88,7 +91,7 @@ namespace ArcFormats.NekoSDK
             MemoryStream stream = new MemoryStream();
             BinaryWriter writer = new BinaryWriter(stream);
 
-            writer.Write(Encoding.ASCII.GetBytes(magic));
+            writer.Write(Encoding.ASCII.GetBytes(Magic));
             writer.Write(Encoding.ASCII.GetBytes("4A"));
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles();
@@ -126,6 +129,7 @@ namespace ArcFormats.NekoSDK
                     dataKey <<= 3;
                 }
                 bw.Write(data);
+                data = null;
                 bw.Write((uint)file.Length);
 
                 writer.Write(size ^ (uint)key);

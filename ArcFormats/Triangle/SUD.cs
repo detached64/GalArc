@@ -15,7 +15,8 @@ namespace ArcFormats.Triangle
             {
                 uint size = br.ReadUInt32();
                 byte[] data = br.ReadBytes((int)size);
-                File.WriteAllBytes(folderPath + "\\" + index.ToString("D6") + ".ogg", data);
+                File.WriteAllBytes(Path.Combine(folderPath, index.ToString("D6") + ".ogg"), data);
+                data = null;
                 index++;
             }
             fs.Dispose();
@@ -32,7 +33,9 @@ namespace ArcFormats.Triangle
             foreach (FileInfo file in files)
             {
                 bw.Write((uint)file.Length);
-                bw.Write(File.ReadAllBytes(file.FullName));
+                byte[] data = File.ReadAllBytes(file.FullName);
+                bw.Write(data);
+                data = null;
                 LogUtility.UpdateBar();
             }
             fw.Dispose();

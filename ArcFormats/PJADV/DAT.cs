@@ -16,12 +16,14 @@ namespace ArcFormats.PJADV
 
         public static UserControl PackExtraOptions = new PackDATOptions();
 
+        private static readonly string Magic = "GAMEDAT PAC";
+
         private class Entry
         {
-            public string name;
-            public string path;
-            public uint offset;
-            public uint size;
+            public string Name { get; set; }
+            public string Path { get; set; }
+            public uint Offset { get; set; }
+            public uint Size { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)
@@ -29,7 +31,7 @@ namespace ArcFormats.PJADV
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
 
-            if (Encoding.ASCII.GetString(br.ReadBytes(11)) != "GAMEDAT PAC")
+            if (Encoding.ASCII.GetString(br.ReadBytes(11)) != Magic)
             {
                 LogUtility.ErrorInvalidArchive();
             }
@@ -60,25 +62,26 @@ namespace ArcFormats.PJADV
             for (int i = 0; i < count; i++)
             {
                 Entry entry = new Entry();
-                entry.name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(nameLen)).TrimEnd('\0');
-                entry.path = Path.Combine(folderPath, entry.name);
+                entry.Name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(nameLen)).TrimEnd('\0');
+                entry.Path = Path.Combine(folderPath, entry.Name);
                 entries.Add(entry);
             }
             for (int i = 0; i < count; i++)
             {
-                entries[i].offset = br.ReadUInt32() + (uint)baseOffset;
-                entries[i].size = br.ReadUInt32();
+                entries[i].Offset = br.ReadUInt32() + (uint)baseOffset;
+                entries[i].Size = br.ReadUInt32();
             }
             foreach (Entry entry in entries)
             {
-                fs.Position = entry.offset;
-                byte[] buffer = br.ReadBytes((int)entry.size);
-                if (UnpackDATOptions.toDecryptScripts && entry.name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(new byte[] { 0x95, 0x6b, 0x3c, 0x9d, 0x63 }))
+                fs.Position = entry.Offset;
+                byte[] buffer = br.ReadBytes((int)entry.Size);
+                if (UnpackDATOptions.toDecryptScripts && entry.Name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(new byte[] { 0x95, 0x6b, 0x3c, 0x9d, 0x63 }))
                 {
-                    LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.name));
+                    LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.Name));
                     DecryptScript(buffer);
                 }
-                File.WriteAllBytes(entry.path, buffer);
+                File.WriteAllBytes(entry.Path, buffer);
+                buffer = null;
                 LogUtility.UpdateBar();
             }
             fs.Dispose();
@@ -89,7 +92,7 @@ namespace ArcFormats.PJADV
         {
             FileStream fs = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fs);
-            bw.Write(Encoding.ASCII.GetBytes("GAMEDAT PAC"));
+            bw.Write(Encoding.ASCII.GetBytes(Magic));
             int nameLength = Global.Version == "1" ? 16 : 32;
             bw.Write(Global.Version == "1" ? (byte)'K' : (byte)'2');
             DirectoryInfo d = new DirectoryInfo(folderPath);
@@ -103,31 +106,32 @@ namespace ArcFormats.PJADV
             foreach (FileInfo file in files)
             {
                 Entry entry = new Entry();
-                entry.name = file.Name;
-                entry.path = file.FullName;
-                entry.size = (uint)file.Length;
-                entry.offset = thisOffset;
-                thisOffset += entry.size;
+                entry.Name = file.Name;
+                entry.Path = file.FullName;
+                entry.Size = (uint)file.Length;
+                entry.Offset = thisOffset;
+                thisOffset += entry.Size;
                 entries.Add(entry);
             }
             foreach (Entry entry in entries)
             {
-                bw.Write(ArcEncoding.Shift_JIS.GetBytes(entry.name.PadRight(nameLength, '\0')));
+                bw.Write(ArcEncoding.Shift_JIS.GetBytes(entry.Name.PadRight(nameLength, '\0')));
             }
             foreach (Entry entry in entries)
             {
-                bw.Write(entry.offset);
-                bw.Write(entry.size);
+                bw.Write(entry.Offset);
+                bw.Write(entry.Size);
             }
             foreach (Entry entry in entries)
             {
-                byte[] buffer = File.ReadAllBytes(entry.path);
-                if (PackDATOptions.toEncryptScripts && entry.name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(new byte[] { 0x95, 0x6b, 0x3c, 0x9d, 0x63 }))
+                byte[] buffer = File.ReadAllBytes(entry.Path);
+                if (PackDATOptions.toEncryptScripts && entry.Name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(new byte[] { 0x95, 0x6b, 0x3c, 0x9d, 0x63 }))
                 {
-                    LogUtility.Debug(string.Format(Resources.logTryEncScr, entry.name));
+                    LogUtility.Debug(string.Format(Resources.logTryEncScr, entry.Name));
                     DecryptScript(buffer);
                 }
                 bw.Write(buffer);
+                buffer = null;
                 LogUtility.UpdateBar();
             }
             fs.Dispose();

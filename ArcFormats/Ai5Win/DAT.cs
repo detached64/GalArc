@@ -1,14 +1,14 @@
 ﻿using Log;
 using System;
 using System.IO;
-using System.Linq;
 using Utility;
 
 namespace ArcFormats.Ai5Win
 {
     public class DAT
     {
-        private readonly static int NameLength = 0x14;
+        private static readonly int NameLength = 0x14;
+
         public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
@@ -21,9 +21,9 @@ namespace ArcFormats.Ai5Win
             fs.Position = 0x23;
             ArcScheme scheme = new ArcScheme()
             {
-                nameKey = br.ReadByte(),
-                sizeKey = key,
-                offsetKey = key
+                NameKey = br.ReadByte(),
+                SizeKey = key,
+                OffsetKey = key
             };
 
             fs.Position = 8;
@@ -32,13 +32,20 @@ namespace ArcFormats.Ai5Win
 
             for (int i = 0; i < fileCount; i++)
             {
-                uint size = br.ReadUInt32() ^ scheme.sizeKey;
-                uint offset = br.ReadUInt32() ^ scheme.offsetKey;
-                string name = ArcEncoding.Shift_JIS.GetString(Xor.xor(br.ReadBytes(NameLength), scheme.nameKey)).TrimEnd('\0');
+                uint size = br.ReadUInt32() ^ scheme.SizeKey;
+                uint offset = br.ReadUInt32() ^ scheme.OffsetKey;
+                byte[] nameBuffer = br.ReadBytes(NameLength);
+                for (int j = 0; j < NameLength; j++)
+                {
+                    nameBuffer[j] ^= scheme.NameKey;
+                }
+                string name = ArcEncoding.Shift_JIS.GetString(nameBuffer).TrimEnd('\0');
                 string path = Path.Combine(folderPath, name);
                 long pos = fs.Position;
                 fs.Position = offset;
-                File.WriteAllBytes(path, br.ReadBytes((int)size));
+                byte[] data = br.ReadBytes((int)size);
+                File.WriteAllBytes(path, data);
+                data = null;
                 fs.Position = pos;
                 LogUtility.UpdateBar();
             }

@@ -14,9 +14,9 @@ namespace ArcFormats.SystemNNN
 
         private class Entry
         {
-            public uint size { get; set; }
-            public uint offset { get; set; }
-            public string filePath { get; set; }
+            public uint Size { get; set; }
+            public uint Offset { get; set; }
+            public string Path { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)
@@ -34,12 +34,12 @@ namespace ArcFormats.SystemNNN
             }
 
             //open&make dir
-            FileStream fs1 = new FileStream(gtbPath, FileMode.Open, FileAccess.Read);
+            FileStream fs1 = File.OpenRead(gtbPath);
             BinaryReader br1 = new BinaryReader(fs1);
             uint filecount = br1.ReadUInt32();
             LogUtility.InitBar(filecount);
 
-            FileStream fs2 = new FileStream(gpkPath, FileMode.Open, FileAccess.Read);
+            FileStream fs2 = File.OpenRead(gpkPath);
             BinaryReader br2 = new BinaryReader(fs2);
 
             Directory.CreateDirectory(folderPath);
@@ -53,26 +53,27 @@ namespace ArcFormats.SystemNNN
                 Entry entry = new Entry();
 
                 //offset
-                entry.offset = br1.ReadUInt32();
+                entry.Offset = br1.ReadUInt32();
 
                 fs1.Seek(4 * filecount - 4, SeekOrigin.Current);
 
                 //size
                 uint size1 = br1.ReadUInt32();
                 uint size2 = br1.ReadUInt32();
-                entry.size = size2 - size1;
+                entry.Size = size2 - size1;
 
-                fs1.Seek(4 + 8 * filecount + entry.offset, SeekOrigin.Begin);
+                fs1.Seek(4 + 8 * filecount + entry.Offset, SeekOrigin.Begin);
 
-                entry.filePath = Path.Combine(folderPath, br1.ReadCString(Encoding.UTF8) + ".dwq");
+                entry.Path = Path.Combine(folderPath, br1.ReadCString(Encoding.UTF8) + ".dwq");
                 thisPos = (uint)fs1.Position;
                 maxPos = Math.Max(thisPos, maxPos);
 
                 //get file content
-                byte[] buffer = br2.ReadBytes((int)entry.size);
+                byte[] buffer = br2.ReadBytes((int)entry.Size);
 
                 //write file
-                File.WriteAllBytes(entry.filePath, buffer);
+                File.WriteAllBytes(entry.Path, buffer);
+                buffer = null;
                 fs1.Seek(4 + 4 * i, SeekOrigin.Begin);
 
                 LogUtility.UpdateBar();
@@ -85,14 +86,15 @@ namespace ArcFormats.SystemNNN
             uint sizeWithoutLast = br1.ReadUInt32();
             fs1.Seek(offset + 4 + 8 * filecount, SeekOrigin.Begin);
             Entry last = new Entry();
-            last.offset = gtbSize - (offset + 4 + 8 * filecount) - 1;
-            last.filePath = Path.Combine(folderPath, br1.ReadCString(Encoding.UTF8) + ".dwq");
-            last.size = gpkSize - sizeWithoutLast;
+            last.Offset = gtbSize - (offset + 4 + 8 * filecount) - 1;
+            last.Path = Path.Combine(folderPath, br1.ReadCString(Encoding.UTF8) + ".dwq");
+            last.Size = gpkSize - sizeWithoutLast;
 
             thisPos = (uint)fs1.Position;
             maxPos = Math.Max(thisPos, maxPos);
-            byte[] buf = br2.ReadBytes((int)last.size);
-            File.WriteAllBytes(last.filePath, buf);
+            byte[] buf = br2.ReadBytes((int)last.Size);
+            File.WriteAllBytes(last.Path, buf);
+            buf = null;
             LogUtility.UpdateBar();
             if (maxPos == gtbSize)
             {
@@ -136,6 +138,7 @@ namespace ArcFormats.SystemNNN
 
                 byte[] buffer = File.ReadAllBytes(file.FullName);
                 writer2.Write(buffer);
+                buffer = null;
                 LogUtility.UpdateBar();
             }
 
@@ -170,8 +173,7 @@ namespace ArcFormats.SystemNNN
                     sizeToNowNew += (ulong)file.Length;
                 }
                 writer1.Write((ulong)0);
-                writer1.Write(Encoding.ASCII.GetBytes("over2G!"));
-                writer1.Write('\0');
+                writer1.Write(Encoding.ASCII.GetBytes("over2G!\0"));
             }
 
             fs1.Dispose();

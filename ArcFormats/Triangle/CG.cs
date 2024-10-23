@@ -1,7 +1,6 @@
 ﻿using Log;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Utility;
 
 namespace ArcFormats.Triangle
@@ -10,9 +9,9 @@ namespace ArcFormats.Triangle
     {
         private class Entry
         {
-            public string name { get; set; }
-            public uint offset { get; set; }
-            public uint size { get; set; }
+            public string Name { get; set; }
+            public uint Offset { get; set; }
+            public uint Size { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)
@@ -27,22 +26,24 @@ namespace ArcFormats.Triangle
             for (int i = 0; i < fileCount; i++)
             {
                 Entry entry = new Entry();
-                entry.name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(16)).TrimEnd('\0');
+                entry.Name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(16)).TrimEnd('\0');
                 //fs.Position = 4 + 20 * i + 16;
-                entry.offset = br.ReadUInt32();
+                entry.Offset = br.ReadUInt32();
                 entries.Add(entry);
             }
 
             for (int i = 0; i < entries.Count - 1; i++)
             {
-                byte[] data = br.ReadBytes((int)(entries[i + 1].offset - entries[i].offset));
-                string fileName = folderPath + "\\" + entries[i].name;
+                byte[] data = br.ReadBytes((int)(entries[i + 1].Offset - entries[i].Offset));
+                string fileName = Path.Combine(folderPath, entries[i].Name);
                 File.WriteAllBytes(fileName, data);
+                data = null;
                 LogUtility.UpdateBar();
             }
-            byte[] dataLast = br.ReadBytes((int)(fs.Length - entries[entries.Count - 1].offset));
-            string fileNameLast = folderPath + "\\" + entries[entries.Count - 1].name;
+            byte[] dataLast = br.ReadBytes((int)(fs.Length - entries[entries.Count - 1].Offset));
+            string fileNameLast = Path.Combine(folderPath, entries[entries.Count - 1].Name);
             File.WriteAllBytes(fileNameLast, dataLast);
+            dataLast = null;
             LogUtility.UpdateBar();
             fs.Dispose();
             br.Dispose();
@@ -70,6 +71,7 @@ namespace ArcFormats.Triangle
             {
                 byte[] data = File.ReadAllBytes(file.FullName);
                 bw.Write(data);
+                data = null;
                 LogUtility.UpdateBar();
             }
             fs.Dispose();

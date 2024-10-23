@@ -16,20 +16,20 @@ namespace ArcFormats.Softpal
 
         public static UserControl PackExtraOptions = new PackPACOptions();
 
-        private static byte[] magic = Utils.HexStringToByteArray("50414320");
+        private static readonly byte[] Magic = Utils.HexStringToByteArray("50414320");
 
         private class Entry
         {
-            public string fileName { get; set; }
-            public uint fileSize { get; set; }
-            public uint offset { get; set; }
+            public string Name { get; set; }
+            public uint Size { get; set; }
+            public uint Offset { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            bool isVer1 = !br.ReadBytes(4).SequenceEqual(magic);
+            bool isVer1 = !br.ReadBytes(4).SequenceEqual(Magic);
             fs.Dispose();
             br.Dispose();
             if (isVer1)
@@ -57,19 +57,19 @@ namespace ArcFormats.Softpal
             for (int i = 0; i < fileCount; i++)
             {
                 Entry entry = new Entry();
-                entry.fileName = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(32)).TrimEnd('\0');
-                entry.fileSize = br.ReadUInt32();
-                entry.offset = br.ReadUInt32();
+                entry.Name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(32)).TrimEnd('\0');
+                entry.Size = br.ReadUInt32();
+                entry.Offset = br.ReadUInt32();
                 entries.Add(entry);
             }
             foreach (Entry entry in entries)
             {
-                byte[] data = br.ReadBytes((int)entry.fileSize);
+                byte[] data = br.ReadBytes((int)entry.Size);
                 if (UnpackPACOptions.toDecryptScripts && data.Length >= 16 && data[0] == 36)  //'$'
                 {
                     try
                     {
-                        LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.fileName));
+                        LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.Name));
                         DecryptScript(data);
                     }
                     catch
@@ -77,7 +77,8 @@ namespace ArcFormats.Softpal
                         LogUtility.Error(Resources.logErrorDecScrFailed, false);
                     }
                 }
-                File.WriteAllBytes(Path.Combine(folderPath, entry.fileName), data);
+                File.WriteAllBytes(Path.Combine(folderPath, entry.Name), data);
+                data = null;
                 LogUtility.UpdateBar();
             }
             fs.Dispose();
@@ -87,7 +88,7 @@ namespace ArcFormats.Softpal
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            if (!br.ReadBytes(4).SequenceEqual(magic))
+            if (!br.ReadBytes(4).SequenceEqual(Magic))
             {
                 LogUtility.ErrorInvalidArchive();
             }
@@ -99,17 +100,17 @@ namespace ArcFormats.Softpal
             for (int i = 0; i < fileCount; i++)
             {
                 Entry entry = new Entry();
-                entry.fileName = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(32)).TrimEnd('\0');
-                entry.fileSize = br.ReadUInt32();
-                entry.offset = br.ReadUInt32();
+                entry.Name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(32)).TrimEnd('\0');
+                entry.Size = br.ReadUInt32();
+                entry.Offset = br.ReadUInt32();
                 long pos = fs.Position;
-                fs.Position = entry.offset;
-                byte[] fileData = br.ReadBytes((int)entry.fileSize);
+                fs.Position = entry.Offset;
+                byte[] fileData = br.ReadBytes((int)entry.Size);
                 if (UnpackPACOptions.toDecryptScripts && fileData.Length >= 16 && fileData[0] == 36)  //'$'
                 {
                     try
                     {
-                        LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.fileName));
+                        LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.Name));
                         DecryptScript(fileData);
                     }
                     catch
@@ -118,7 +119,8 @@ namespace ArcFormats.Softpal
                     }
                 }
 
-                File.WriteAllBytes(folderPath + "\\" + entry.fileName, fileData);
+                File.WriteAllBytes(folderPath + "\\" + entry.Name, fileData);
+                fileData = null;
                 fs.Position = pos;
                 LogUtility.UpdateBar();
             }
@@ -221,6 +223,7 @@ namespace ArcFormats.Softpal
                     }
                 }
                 bw.Write(buffer);
+                buffer = null;
                 LogUtility.UpdateBar();
             }
 
@@ -241,7 +244,7 @@ namespace ArcFormats.Softpal
             FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
             BinaryWriter bw = new BinaryWriter(fw);
             //header
-            bw.Write(magic);
+            bw.Write(Magic);
             bw.Write(0);
             bw.Write(fileCount);
             //index
@@ -280,6 +283,7 @@ namespace ArcFormats.Softpal
                     }
                 }
                 bw.Write(buffer);
+                buffer = null;
                 LogUtility.UpdateBar();
             }
             //end
