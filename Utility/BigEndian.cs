@@ -1,6 +1,6 @@
 ﻿// File: Utility/BigEndian.cs
 // Date: 2024/08/28
-// Description: 基于morkt的相关代码，对BigEndian的读取进行封装：uint、int、ushort、short、ulong、long
+// Description: 提供对uint、int、ushort、short、ulong、long的le/be转换
 //
 // Copyright (C) 2014 by morkt
 //
@@ -24,7 +24,6 @@
 //
 
 using System;
-using System.Linq;
 
 namespace Utility
 {

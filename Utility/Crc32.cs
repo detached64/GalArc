@@ -1,6 +1,6 @@
 ﻿// File: Utility/Crc32.cs
 // Date: 2024/09/04
-// Description: crc32校验和计算
+// Description: Crc32校验和计算
 //
 // Copyright (C) 2024 detached64
 //
@@ -19,7 +19,6 @@
 //
 
 using System;
-using System.Linq;
 
 namespace Utility
 {
