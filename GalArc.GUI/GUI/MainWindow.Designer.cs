@@ -127,6 +127,7 @@
             resources.ApplyResources(this.treeViewEngines, "treeViewEngines");
             this.treeViewEngines.Name = "treeViewEngines";
             this.treeViewEngines.PathSeparator = "/";
+            this.treeViewEngines.ShowPlusMinus = false;
             this.treeViewEngines.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEngines_AfterSelect);
             // 
             // chkbxUnpack

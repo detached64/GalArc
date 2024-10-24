@@ -21,7 +21,6 @@
 using System;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using Zstandard.Net;
 
 namespace Utility.Compression
@@ -31,22 +30,28 @@ namespace Utility.Compression
         public static byte[] Decompress(byte[] data)
         {
             using (Stream input = new MemoryStream(data))
-            using (ZstandardStream stream = new ZstandardStream(input, CompressionMode.Decompress))
-            using (MemoryStream memoryStream = new MemoryStream())
             {
-                stream.CopyTo(memoryStream);
-                return memoryStream.ToArray();
+                using (ZstandardStream stream = new ZstandardStream(input, CompressionMode.Decompress))
+                {
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        stream.CopyTo(memoryStream);
+                        return memoryStream.ToArray();
+                    }
+                }
             }
         }
 
         public static byte[] Compress(byte[] data)
         {
             using (var memoryStream = new MemoryStream())
-            using (var compressionStream = new ZstandardStream(memoryStream, CompressionMode.Compress))
             {
-                compressionStream.Write(data, 0, data.Length);
-                compressionStream.Close();
-                return memoryStream.ToArray();
+                using (var compressionStream = new ZstandardStream(memoryStream, CompressionMode.Compress))
+                {
+                    compressionStream.Write(data, 0, data.Length);
+                    compressionStream.Close();
+                    return memoryStream.ToArray();
+                }
             }
         }
     }
