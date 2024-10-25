@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows.Forms;
 using Utility;
 using Utility.Compression;
 using Utility.Extensions;
@@ -10,10 +11,12 @@ namespace ArcFormats.Ai6Win
 {
     public class ARC
     {
+        public static UserControl PackExtraOptions = new PackARCOptions("1/2/3");
+
         private class Entry
         {
             public string Name { get; set; }
-            public string FilePath { get; set; }
+            public string FullPath { get; set; }
             public uint PackedSize { get; set; }
             public uint UnpackedSize { get; set; }
             public uint Offset { get; set; }
@@ -24,9 +27,9 @@ namespace ArcFormats.Ai6Win
         {
             List<Action> actions = new List<Action>
             {
-                () => UnpackAi6Win(filePath, folderPath),
-                () => UnpackArcNew(filePath, folderPath),
-
+                () => UnpackV3(filePath, folderPath),
+                () => UnpackV2(filePath, folderPath),
+                () => UnpackV1(filePath, folderPath),
             };
             foreach (var action in actions)
             {
@@ -41,7 +44,23 @@ namespace ArcFormats.Ai6Win
             LogUtility.ErrorInvalidArchive();
         }
 
-        private static void UnpackAi6Win(string filePath, string folderPath)
+        public void Pack(string folderPath, string filePath)
+        {
+            switch (Config.Version)
+            {
+                case "1":
+                    PackV1(folderPath, filePath);
+                    break;
+                case "2":
+                    PackV2(folderPath, filePath);
+                    break;
+                case "3":
+                    PackV3(folderPath, filePath);
+                    break;
+            }
+        }
+
+        private static void UnpackV1(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -51,8 +70,40 @@ namespace ArcFormats.Ai6Win
             for (int i = 0; i < fileCount; i++)
             {
                 Entry entry = new Entry();
-                byte[] nameBuf = new byte[260];
-                br.Read(nameBuf, 0, 260);
+                entry.Name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(32)).TrimEnd('\0');
+                if (entry.Name.ContainsInvalidChars())
+                {
+                    throw new Exception();
+                }
+                entry.FullPath = Path.Combine(folderPath, entry.Name);
+                entry.Offset = br.ReadUInt32();
+                entry.PackedSize = br.ReadUInt32();
+                entry.IsPacked = false;
+                l.Add(entry);
+            }
+
+            LogUtility.InitBar(fileCount);
+            Directory.CreateDirectory(folderPath);
+            LogUtility.ShowVersion("arc", 1);
+
+            ExtractData(l, br);
+
+            fs.Dispose();
+            br.Dispose();
+
+        }
+
+        private static void UnpackV2(string filePath, string folderPath)
+        {
+            FileStream fs = File.OpenRead(filePath);
+            BinaryReader br = new BinaryReader(fs);
+            int fileCount = br.ReadInt32();
+
+            List<Entry> l = new List<Entry>();
+            for (int i = 0; i < fileCount; i++)
+            {
+                Entry entry = new Entry();
+                byte[] nameBuf = br.ReadBytes(260);
                 int nameLen = Array.IndexOf<byte>(nameBuf, 0);
                 if (nameLen == -1)
                 {
@@ -70,7 +121,7 @@ namespace ArcFormats.Ai6Win
                 {
                     throw new Exception();
                 }
-                entry.FilePath = Path.Combine(folderPath, entry.Name);
+                entry.FullPath = Path.Combine(folderPath, entry.Name);
                 entry.PackedSize = BigEndian.Convert(br.ReadUInt32());
                 entry.UnpackedSize = BigEndian.Convert(br.ReadUInt32());
                 entry.Offset = BigEndian.Convert(br.ReadUInt32());
@@ -80,13 +131,15 @@ namespace ArcFormats.Ai6Win
 
             LogUtility.InitBar(fileCount);
             Directory.CreateDirectory(folderPath);
+            LogUtility.ShowVersion("arc", 2);
+
             ExtractData(l, br);
 
             fs.Dispose();
             br.Dispose();
         }
 
-        private static void UnpackArcNew(string filePath, string folderPath)
+        private static void UnpackV3(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -98,13 +151,17 @@ namespace ArcFormats.Ai6Win
                 int nameLen = br.ReadByte();
                 Entry entry = new Entry();
                 byte[] nameBuf = br.ReadBytes(nameLen);
-                DecryptName(nameBuf, (byte)nameLen);
+                byte key = (byte)nameLen;
+                for (int i = 0; i < nameBuf.Length; i++)
+                {
+                    nameBuf[i] += key--;
+                }
                 entry.Name = ArcEncoding.Shift_JIS.GetString(nameBuf);
                 if (entry.Name.ContainsInvalidChars())
                 {
                     throw new Exception();
                 }
-                entry.FilePath = Path.Combine(folderPath, entry.Name);
+                entry.FullPath = Path.Combine(folderPath, entry.Name);
                 entry.PackedSize = BigEndian.Convert(br.ReadUInt32());
                 entry.UnpackedSize = BigEndian.Convert(br.ReadUInt32());
                 entry.Offset = BigEndian.Convert(br.ReadUInt32());
@@ -114,18 +171,12 @@ namespace ArcFormats.Ai6Win
 
             LogUtility.InitBar(l.Count);
             Directory.CreateDirectory(folderPath);
+            LogUtility.ShowVersion("arc", 3);
+
             ExtractData(l, br);
 
             fs.Dispose();
             br.Dispose();
-        }
-
-        private static void DecryptName(byte[] name, byte key)
-        {
-            for (int i = 0; i < name.Length; i++)
-            {
-                name[i] += key--;
-            }
         }
 
         private static void ExtractData(List<Entry> l, BinaryReader br)
@@ -135,15 +186,128 @@ namespace ArcFormats.Ai6Win
                 byte[] data = br.ReadBytes((int)l[i].PackedSize);
                 if (l[i].IsPacked)
                 {
-                    File.WriteAllBytes(Path.Combine(l[i].FilePath), Lzss.Decompress(data));
+                    data = Lzss.Decompress(data);
                 }
-                else
-                {
-                    File.WriteAllBytes(Path.Combine(l[i].FilePath), data);
-                }
+                File.WriteAllBytes(Path.Combine(l[i].FullPath), data);
                 data = null;
                 LogUtility.UpdateBar();
             }
+        }
+
+        private static void PackV1(string folderPath, string filePath)
+        {
+            FileStream fw = File.Create(filePath);
+            BinaryWriter bw = new BinaryWriter(fw);
+            FileInfo[] files = new DirectoryInfo(folderPath).GetFiles();
+            int fileCount = files.Length;
+            bw.Write(fileCount);
+            uint baseOffset = 4 + 40 * (uint)fileCount;
+            LogUtility.InitBar(fileCount);
+            foreach (FileInfo file in files)
+            {
+                bw.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(32, '\0')));
+                bw.Write(baseOffset);
+                uint size = (uint)file.Length;
+                bw.Write(size);
+                baseOffset += size;
+            }
+            foreach (FileInfo file in files)
+            {
+                byte[] data = File.ReadAllBytes(file.FullName);
+                bw.Write(data);
+                data = null;
+                LogUtility.UpdateBar();
+            }
+            fw.Dispose();
+            bw.Dispose();
+        }
+
+        private static void PackV2(string folderPath, string filePath)
+        {
+            FileStream fw = File.Create(filePath);
+            BinaryWriter bw = new BinaryWriter(fw);
+            FileInfo[] files = new DirectoryInfo(folderPath).GetFiles();
+            int fileCount = files.Length;
+            bw.Write(fileCount);
+            uint dataOffset = 4 + 272 * (uint)fileCount;
+            LogUtility.InitBar(fileCount);
+            foreach (FileInfo file in files)
+            {
+                byte[] nameBuffer = ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(260, '\0'));
+                int nameLen = Array.IndexOf<byte>(nameBuffer, 0);
+                if (nameLen == -1)
+                {
+                    nameLen = nameBuffer.Length;
+                }
+
+                byte key = (byte)(nameLen + 1);
+                for (int i = 0; i < nameLen; i++)
+                {
+                    nameBuffer[i] += key--;
+                }
+                bw.Write(nameBuffer);
+                uint unpackedSize = (uint)file.Length;
+                byte[] data = File.ReadAllBytes(file.FullName);
+                if (PackARCOptions.toCompressContents)
+                {
+                    data = Lzss.Compress(data);
+                }
+                uint packedSize = (uint)data.Length;
+                bw.Write(BigEndian.Convert(packedSize));
+                bw.Write(BigEndian.Convert(unpackedSize));
+                bw.Write(BigEndian.Convert(dataOffset));
+                long pos = fw.Position;
+                fw.Position = dataOffset;
+                bw.Write(data);
+                fw.Position = pos;
+                dataOffset += packedSize;
+                data = null;
+                LogUtility.UpdateBar();
+            }
+            fw.Dispose();
+            bw.Dispose();
+        }
+
+        private static void PackV3(string folderPath, string filePath)
+        {
+            FileStream fw = File.Create(filePath);
+            BinaryWriter bw = new BinaryWriter(fw);
+            FileInfo[] files = new DirectoryInfo(folderPath).GetFiles();
+            int fileCount = files.Length;
+            LogUtility.InitBar(fileCount);
+            uint dataOffset = (uint)(4 + Utils.GetNameLengthSum(files, ArcEncoding.Shift_JIS) + 13 * fileCount);
+            bw.Write(dataOffset - 4);
+
+            foreach (FileInfo file in files)
+            {
+                byte[] nameBuf = ArcEncoding.Shift_JIS.GetBytes(file.Name);
+                byte key = (byte)nameBuf.Length;
+                bw.Write(key);
+                for (int i = 0; i < nameBuf.Length; i++)
+                {
+                    nameBuf[i] -= key--;
+                }
+                bw.Write(nameBuf);
+                uint unpackedSize = (uint)file.Length;
+                byte[] data = File.ReadAllBytes(file.FullName);
+                if (PackARCOptions.toCompressContents)
+                {
+                    data = Lzss.Compress(data);
+                }
+                uint packedSize = (uint)data.Length;
+                bw.Write(BigEndian.Convert(packedSize));
+                bw.Write(BigEndian.Convert(unpackedSize));
+                bw.Write(BigEndian.Convert(dataOffset));
+                long pos = fw.Position;
+                fw.Position = dataOffset;
+                bw.Write(data);
+                fw.Position = pos;
+                dataOffset += packedSize;
+                data = null;
+                LogUtility.UpdateBar();
+            }
+            bw.Dispose();
+            fw.Dispose();
         }
     }
 }
