@@ -66,6 +66,12 @@
     <Compile Include="Ai5Win\DAT.cs" />
     <Compile Include="Ai5Win\VSD.cs" />
     <Compile Include="Ai6Win\ARC.cs" />
+    <Compile Include="Ai6Win\PackARCOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ai6Win\PackARCOptions.Designer.cs">
+      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Artemis\PFS.cs" />
     <Compile Include="BiShop\BSA.cs" />
     <Compile Include="Cmvs\CmvsMD5.cs" />
@@ -195,6 +201,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AdvHD\UnpackARCOptions.zh-Hans.resx">
       <DependentUpon>UnpackARCOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ai6Win\PackARCOptions.resx">
+      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ai6Win\PackARCOptions.zh-Hans.resx">
+      <DependentUpon>PackARCOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InnocentGrey\PackIGAOptions.resx">
       <DependentUpon>PackIGAOptions.cs</DependentUpon>
