@@ -473,6 +473,11 @@ namespace GalArc
             {
                 Freeze();
             }
+            else
+            {
+                this.btExecute.Enabled = false;
+            }
+
             if (this.chkbxUnpack.Checked)
             {
                 if (!File.Exists(this.txtInputPath.Text))
@@ -511,7 +516,7 @@ namespace GalArc
                 this.lbStatus.Text = Resources.logPacking;
                 try
                 {
-                    Execute.InitPack(this.txtInputPath.Text, this.txtOutputPath.Text);
+                    await Task.Run(() => Execute.InitPack(this.txtInputPath.Text, this.txtOutputPath.Text));
                 }
                 catch (Exception ex)
                 {
@@ -533,9 +538,14 @@ namespace GalArc
             {
                 LogUtility.Error(Resources.logErrorNeedSelectOperation, false);
             }
+
             if (Settings.Default.FreezeControls)
             {
                 Thaw();
+            }
+            else
+            {
+                this.btExecute.Enabled = true;
             }
         }
 
