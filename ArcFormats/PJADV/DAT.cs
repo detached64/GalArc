@@ -93,8 +93,8 @@ namespace ArcFormats.PJADV
             FileStream fs = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fs);
             bw.Write(Encoding.ASCII.GetBytes(Magic));
-            int nameLength = Global.Version == "1" ? 16 : 32;
-            bw.Write(Global.Version == "1" ? (byte)'K' : (byte)'2');
+            int nameLength = Config.Version == "1" ? 16 : 32;
+            bw.Write(Config.Version == "1" ? (byte)'K' : (byte)'2');
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles();
 

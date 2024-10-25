@@ -45,7 +45,7 @@ namespace ArcFormats.NeXAS
             FileStream fs = File.OpenRead(filePath);
             BinaryReader reader = new BinaryReader(fs);
             FolderPath = folderPath;
-            DefaultEncoding = Global.Encoding;
+            DefaultEncoding = Config.Encoding;
             if (!reader.ReadBytes(3).SequenceEqual(Magic))
             {
                 LogUtility.ErrorInvalidArchive();

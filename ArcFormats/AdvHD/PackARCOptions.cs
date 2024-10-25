@@ -26,7 +26,7 @@ namespace ArcFormats.AdvHD
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Global.Version = this.combVersion.Text;
+            Config.Version = this.combVersion.Text;
         }
     }
 }

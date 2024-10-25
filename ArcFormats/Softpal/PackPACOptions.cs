@@ -28,7 +28,7 @@ namespace ArcFormats.Softpal
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Global.Version = this.combVersion.Text;
+            Config.Version = this.combVersion.Text;
             if (this.combVersion.Text == "1")
             {
                 this.chkbxCompute.Enabled = false;

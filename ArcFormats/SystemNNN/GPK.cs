@@ -156,7 +156,7 @@ namespace ArcFormats.SystemNNN
                 LogUtility.UpdateBar();
             }
 
-            if (Global.Version == "1")
+            if (Config.Version == "1")
             {
                 //skip this
             }

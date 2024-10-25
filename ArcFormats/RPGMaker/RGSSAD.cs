@@ -45,7 +45,7 @@ namespace ArcFormats.RPGMaker
 
         public void Pack(string folderPath, string filePath)
         {
-            switch (Global.Version)
+            switch (Config.Version)
             {
                 case "1":
                     rgssV1_pack(folderPath, filePath);
