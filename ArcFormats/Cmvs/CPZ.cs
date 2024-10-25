@@ -201,7 +201,7 @@ namespace ArcFormats.Cmvs
 
         public void Pack(string folderPath, string filePath)
         {
-            switch (Global.Version)
+            switch (Config.Version)
             {
                 case "1":
                     cpzV1_pack(folderPath, filePath);

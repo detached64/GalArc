@@ -302,7 +302,7 @@ namespace ArcFormats.AdvHD
 
         public void Pack(string folderPath, string filePath)
         {
-            if (Global.Version == "1")
+            if (Config.Version == "1")
             {
                 arcV1_pack(folderPath, filePath);
             }

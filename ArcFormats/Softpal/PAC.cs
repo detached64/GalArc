@@ -166,7 +166,7 @@ namespace ArcFormats.Softpal
 
         public void Pack(string folderPath, string filePath)
         {
-            if (Global.Version == "1")
+            if (Config.Version == "1")
             {
                 pacV1_pack(folderPath, filePath);
             }

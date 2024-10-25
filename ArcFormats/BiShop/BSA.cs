@@ -139,7 +139,7 @@ namespace ArcFormats.BiShop
 
         public void Pack(string folderPath, string filePath)
         {
-            switch (Global.Version)
+            switch (Config.Version)
             {
                 case "1":
                     bsaV1_pack(folderPath, filePath);

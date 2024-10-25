@@ -17,7 +17,7 @@ namespace GalArc.Controller
             string fullTypeName = $"ArcFormats.{engineName}.{extension}";
             ExportSettings();
 
-            Global global = new Global(inputFilePath, outputFolderPath, fullTypeName);
+            Config global = new Config(inputFilePath, outputFolderPath, fullTypeName);
             global.Unpack();
         }
 
@@ -30,7 +30,7 @@ namespace GalArc.Controller
             string fullTypeName = $"ArcFormats.{engineName}.{extension}";
             ExportSettings();
 
-            Global global = new Global(outputFilePath, inputFolderPath, fullTypeName);
+            Config global = new Config(outputFilePath, inputFolderPath, fullTypeName);
             global.Pack();
         }
 
@@ -38,11 +38,11 @@ namespace GalArc.Controller
         {
             if (!string.IsNullOrEmpty(Settings.Default.DefaultEncoding))
             {
-                Global.Encoding = Encoding.GetEncoding(Encodings.CodePages[Settings.Default.DefaultEncoding]);
+                Config.Encoding = Encoding.GetEncoding(Encodings.CodePages[Settings.Default.DefaultEncoding]);
             }
             else
             {
-                Global.Encoding = Encoding.UTF8;
+                Config.Encoding = Encoding.UTF8;
             }
         }
 

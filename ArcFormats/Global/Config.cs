@@ -8,7 +8,7 @@ using Utility;
 
 namespace ArcFormats
 {
-    public class Global
+    public class Config
     {
         private static string FilePath = null;
         private static string FolderPath = null;
@@ -18,7 +18,7 @@ namespace ArcFormats
 
         public static string Version = null;
 
-        public Global(string filePath, string folderPath, string typeStr)
+        public Config(string filePath, string folderPath, string typeStr)
         {
             FilePath = filePath;
             FolderPath = folderPath;

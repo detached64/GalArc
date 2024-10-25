@@ -143,7 +143,7 @@ namespace ArcFormats.Majiro
 
         public void Pack(string folderPath, string filePath)
         {
-            PackVersion = int.Parse(Global.Version);
+            PackVersion = int.Parse(Config.Version);
             switch (PackVersion)
             {
                 case 1:

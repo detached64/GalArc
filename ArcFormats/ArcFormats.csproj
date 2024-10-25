@@ -72,7 +72,7 @@
     <Compile Include="Cmvs\CPZ.cs" />
     <Compile Include="Cmvs\CMVSUtils.cs" />
     <Compile Include="EntisGLS\NOA.cs" />
-    <Compile Include="Global\Global.cs" />
+    <Compile Include="Global\Config.cs" />
     <Compile Include="InnocentGrey\DAT.cs" />
     <Compile Include="InnocentGrey\IGA.cs" />
     <Compile Include="InnocentGrey\PackIGAOptions.cs">

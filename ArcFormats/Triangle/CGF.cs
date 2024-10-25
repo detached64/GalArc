@@ -48,11 +48,11 @@ namespace ArcFormats.Triangle
 
         public void Pack(string folderPath, string filePath)
         {
-            if (Global.Version == "1")
+            if (Config.Version == "1")
             {
                 cgfV1_pack(folderPath, filePath);
             }
-            else if (Global.Version == "2")
+            else if (Config.Version == "2")
             {
 
             }

@@ -121,7 +121,7 @@ namespace ArcFormats.EntisGLS
                 entry.ExtraInfoLen = br.ReadUInt32();
                 entry.ExtraInfo = Encoding.ASCII.GetString(br.ReadBytes((int)entry.ExtraInfoLen));
                 entry.NameLen = br.ReadUInt32();
-                entry.Name = Global.Encoding.GetString(br.ReadBytes((int)(entry.NameLen - 1)));
+                entry.Name = Config.Encoding.GetString(br.ReadBytes((int)(entry.NameLen - 1)));
                 br.ReadByte();
                 pos = fs.Position;
                 fs.Seek((long)entry.Offset, SeekOrigin.Begin);
@@ -187,7 +187,7 @@ namespace ArcFormats.EntisGLS
                                    //entry header
             bw.Write(Encoding.ASCII.GetBytes("DirEntry"));
             //compute index size
-            ulong indexSize = 4 + (ulong)Utils.GetNameLengthSum(files, Global.Encoding) + (ulong)fileCount + (ulong)(40 * fileCount);
+            ulong indexSize = 4 + (ulong)Utils.GetNameLengthSum(files, Config.Encoding) + (ulong)fileCount + (ulong)(40 * fileCount);
             bw.Write(indexSize);
             bw.Write(fileCount);
 
@@ -210,8 +210,8 @@ namespace ArcFormats.EntisGLS
                 //bw.Write(time[i].year);
                 bw.Write((long)0);//timestamp disabled
                 bw.Write(0);
-                bw.Write(Global.Encoding.GetBytes(Path.GetFileName(file)).Length + 1);
-                bw.Write(Global.Encoding.GetBytes(Path.GetFileName(file)));
+                bw.Write(Config.Encoding.GetBytes(Path.GetFileName(file)).Length + 1);
+                bw.Write(Config.Encoding.GetBytes(Path.GetFileName(file)));
                 bw.Write('\0');
                 i++;
             }
