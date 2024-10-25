@@ -96,6 +96,16 @@ namespace Utility
             return sum;
         }
 
+        public static int GetNameLengthSum(FileInfo[] files, Encoding encoding)
+        {
+            int sum = 0;
+            foreach (FileInfo file in files)
+            {
+                sum += encoding.GetByteCount(file.Name);
+            }
+            return sum;
+        }
+
         public static int GetLengthSum(IEnumerable<string> strings, Encoding encoding)
         {
             StringBuilder sb = new StringBuilder();

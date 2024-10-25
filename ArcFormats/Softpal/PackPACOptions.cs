@@ -31,11 +31,11 @@ namespace ArcFormats.Softpal
             Config.Version = this.combVersion.Text;
             if (this.combVersion.Text == "1")
             {
-                this.chkbxCompute.Enabled = false;
+                this.chkbxCompute.Visible = false;
             }
             else
             {
-                this.chkbxCompute.Enabled = true;
+                this.chkbxCompute.Visible = true;
             }
         }
 
