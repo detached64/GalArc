@@ -43,6 +43,8 @@ namespace Log
         {
             Instance = this;
             InitializeComponent();
+            //Control.CheckForIllegalCrossThreadCalls = false;
+
             m_Width = this.Size.Width;
             m_Height = this.Size.Height;
 

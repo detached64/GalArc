@@ -48,7 +48,17 @@ namespace Log
             LogLevel level = (LogLevel)logLevel;
             if (level == LogLevel.Debug && Settings.Default.chkbxDebug || level == LogLevel.Info || level == LogLevel.Error)
             {
-                LogWindow.Instance.log_txtLog.AppendText(log + Environment.NewLine);
+                if (LogWindow.Instance.log_txtLog.InvokeRequired)
+                {
+                    LogWindow.Instance.log_txtLog.Invoke(new Action(() =>
+                    {
+                        LogWindow.Instance.log_txtLog.AppendText(log + Environment.NewLine);
+                    }));
+                }
+                else
+                {
+                    LogWindow.Instance.log_txtLog.AppendText(log + Environment.NewLine);
+                }
             }
             if (Settings.Default.chkbxSave)
             {
