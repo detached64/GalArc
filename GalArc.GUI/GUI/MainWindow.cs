@@ -469,14 +469,6 @@ namespace GalArc
                 LogUtility.Error(Resources.logErrorNeedSpecifyOutput, false);
                 return;
             }
-            if (Settings.Default.FreezeControls)
-            {
-                Freeze();
-            }
-            else
-            {
-                this.btExecute.Enabled = false;
-            }
 
             if (this.chkbxUnpack.Checked)
             {
@@ -485,7 +477,16 @@ namespace GalArc
                     LogUtility.Error(Resources.logErrorFileNotFound, false);
                     return;
                 }
+                if (Settings.Default.FreezeControls)
+                {
+                    Freeze();
+                }
+                else
+                {
+                    this.btExecute.Enabled = false;
+                }
                 this.lbStatus.Text = Resources.logUnpacking;
+
                 try
                 {
                     await Task.Run(() => Execute.InitUnpack(this.txtInputPath.Text, this.txtOutputPath.Text));
@@ -513,7 +514,16 @@ namespace GalArc
                     LogUtility.Error(Resources.logErrorDirNotFound, false);
                     return;
                 }
+                if (Settings.Default.FreezeControls)
+                {
+                    Freeze();
+                }
+                else
+                {
+                    this.btExecute.Enabled = false;
+                }
                 this.lbStatus.Text = Resources.logPacking;
+
                 try
                 {
                     await Task.Run(() => Execute.InitPack(this.txtInputPath.Text, this.txtOutputPath.Text));
