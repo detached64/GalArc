@@ -178,17 +178,26 @@ namespace Log
 
         public static void InitBar(int max)
         {
-            LogWindow.Instance.bar.Maximum = max;
+            LogWindow.Instance.bar.Invoke(new Action(() =>
+            {
+                LogWindow.Instance.bar.Maximum = max;
+            }));
             Debug(string.Format(Resources.logFileCountInside, max));
         }
         public static void InitBar(uint max)
         {
-            LogWindow.Instance.bar.Maximum = (int)max;
+            LogWindow.Instance.bar.Invoke(new Action(() =>
+            {
+                LogWindow.Instance.bar.Maximum = (int)max;
+            }));
             Debug(string.Format(Resources.logFileCountInside, max));
         }
         public static void UpdateBar()
         {
-            LogWindow.Instance.bar.PerformStep();
+            LogWindow.Instance.bar.Invoke(new Action(() =>
+            {
+                LogWindow.Instance.bar.PerformStep();
+            }));
         }
 
         public static void ShowCheckingUpdate()
