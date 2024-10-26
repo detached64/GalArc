@@ -13,7 +13,7 @@ namespace ArcFormats.Ai5Win
         private class Entry
         {
             internal string Name { get; set; }
-            internal string FilePath { get; set; }
+            internal string Path { get; set; }
             internal uint Size { get; set; }
             internal uint Offset { get; set; }
         }
@@ -39,13 +39,13 @@ namespace ArcFormats.Ai5Win
             {
                 fs.Position = entry.Offset;
                 byte[] data = br.ReadBytes((int)entry.Size);
-                if (entry.FilePath.HasAnyOfExtensions("mes", "lib", "a", "a6", "msk", "x"))
+                if (entry.Path.HasAnyOfExtensions("mes", "lib", "a", "a6", "msk", "x"))
                 {
-                    File.WriteAllBytes(entry.FilePath, Lzss.Decompress(data));
+                    File.WriteAllBytes(entry.Path, Lzss.Decompress(data));
                 }
                 else
                 {
-                    File.WriteAllBytes(entry.FilePath, data);
+                    File.WriteAllBytes(entry.Path, data);
                 }
                 data = null;
                 LogUtility.UpdateBar();
@@ -74,7 +74,11 @@ namespace ArcFormats.Ai5Win
                             nameBuf[j] ^= scheme.NameKey;
                         }
                         entry.Name = ArcEncoding.Shift_JIS.GetString(nameBuf).TrimEnd('\0');
-                        entry.FilePath = Path.Combine(FolderPath, entry.Name);
+                        if (entry.Name.ContainsInvalidChars())
+                        {
+                            throw new Exception();
+                        }
+                        entry.Path = Path.Combine(FolderPath, entry.Name);
                         entry.Size = br.ReadUInt32() ^ scheme.SizeKey;
                         entry.Offset = br.ReadUInt32() ^ scheme.OffsetKey;
                         entries.Add(entry);
