@@ -17,8 +17,8 @@ namespace GalArc.Controller
             string fullTypeName = $"ArcFormats.{engineName}.{extension}";
             ExportSettings();
 
-            Config global = new Config(inputFilePath, outputFolderPath, fullTypeName);
-            global.Unpack();
+            Worker worker = new Worker(inputFilePath, outputFolderPath, fullTypeName);
+            worker.UnpackOne();
         }
 
         internal static void InitPack(string inputFolderPath, string outputFilePath)
@@ -30,8 +30,8 @@ namespace GalArc.Controller
             string fullTypeName = $"ArcFormats.{engineName}.{extension}";
             ExportSettings();
 
-            Config global = new Config(outputFilePath, inputFolderPath, fullTypeName);
-            global.Pack();
+            Worker worker = new Worker(outputFilePath, inputFolderPath, fullTypeName);
+            worker.Pack();
         }
 
         internal static void ExportSettings()
@@ -45,6 +45,7 @@ namespace GalArc.Controller
                 Config.Encoding = Encoding.UTF8;
             }
         }
+
 
     }
 }
