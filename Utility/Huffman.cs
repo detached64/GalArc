@@ -30,8 +30,8 @@ namespace Utility.Compression
         private const ushort max = 512;
         private static int offset = 0;
 
-        private static ushort[] lct = new ushort[max];// left child tree
-        private static ushort[] rct = new ushort[max];// right child tree
+        private static ushort[] lct = new ushort[max];  // left child tree
+        private static ushort[] rct = new ushort[max];  // right child tree
 
         private static byte[] data;
 
@@ -42,6 +42,7 @@ namespace Utility.Compression
             lct = new ushort[max];
             rct = new ushort[max];
         }
+
         private static ushort CreateTree()
         {
             int bit = Bits.ReadBits(data, ref offset, 1);
@@ -62,6 +63,7 @@ namespace Utility.Compression
                     throw new Exception("Invalid bit.");
             }
         }
+
         public static byte[] Decompress(byte[] Data, int decompressedLen)
         {
             Reset();
