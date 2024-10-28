@@ -78,6 +78,7 @@
     <Compile Include="Cmvs\CPZ.cs" />
     <Compile Include="Cmvs\CMVSUtils.cs" />
     <Compile Include="EntisGLS\NOA.cs" />
+    <Compile Include="Eushully\ALF.cs" />
     <Compile Include="Global\Config.cs" />
     <Compile Include="Global\Worker.cs" />
     <Compile Include="InnocentGrey\DAT.cs" />
