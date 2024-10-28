@@ -23,7 +23,7 @@ namespace ArcFormats.SystemNNN
 
             if (!File.Exists(vtbPath))
             {
-                LogUtility.ErrorNeedAnotherFile(".vtb", ".vpk");
+                LogUtility.ErrorNeedAnotherFile(Path.GetFileName(vtbPath));
             }
 
             int vtbSize = (int)new FileInfo(vtbPath).Length;

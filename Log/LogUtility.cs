@@ -109,16 +109,13 @@ namespace Log
         {
             throw new Exception(Resources.logErrorNotValidArc);
         }
-        public static void ErrorNeedAnotherFile(string ext1, string ext2)
+        public static void ErrorNeedAnotherFile(string file)
         {
-            ext1 = ext1?.ToUpper().Replace(".", string.Empty) ?? Resources.logNoExtension;
-            ext2 = ext2?.ToUpper().Replace(".", string.Empty) ?? Resources.logNoExtension;
-            throw new Exception(string.Format(Resources.logErrorSameNameNotFound, ext1, ext2));
+            throw new Exception(string.Format(Resources.logErrorSpecifiedFileNotFound, file));
         }
-        public static void ErrorNeedOriginalFile(string ext)
+        public static void ErrorNeedOriginalFile(string file)
         {
-            ext = ext?.ToUpper().Replace(".", string.Empty) ?? Resources.logNoExtension;
-            throw new Exception(string.Format(Resources.logErrorOriginalFileNotFound, ext));
+            throw new Exception(string.Format(Resources.logErrorOriginalFileNotFound, file));
         }
 
         public static void InitPack(string inputFolderPath, string outputFilePath)

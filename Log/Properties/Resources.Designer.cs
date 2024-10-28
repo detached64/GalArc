@@ -79,7 +79,7 @@ namespace Log.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Error: Original {0} file not found. 的本地化字符串。
+        ///   查找类似 Error: Original {0} file not found in the same directory. 的本地化字符串。
         /// </summary>
         internal static string logErrorOriginalFileNotFound {
             get {
@@ -88,11 +88,11 @@ namespace Log.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Error: {0} and {1} file with the same name should be in the same directory. 的本地化字符串。
+        ///   查找类似 Error: {0} file not found in the same directory. 的本地化字符串。
         /// </summary>
-        internal static string logErrorSameNameNotFound {
+        internal static string logErrorSpecifiedFileNotFound {
             get {
-                return ResourceManager.GetString("logErrorSameNameNotFound", resourceCulture);
+                return ResourceManager.GetString("logErrorSpecifiedFileNotFound", resourceCulture);
             }
         }
         
@@ -138,15 +138,6 @@ namespace Log.Properties {
         internal static string logNewInstance {
             get {
                 return ResourceManager.GetString("logNewInstance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 (no extension) 的本地化字符串。
-        /// </summary>
-        internal static string logNoExtension {
-            get {
-                return ResourceManager.GetString("logNoExtension", resourceCulture);
             }
         }
         
