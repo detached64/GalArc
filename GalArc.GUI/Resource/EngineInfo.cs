@@ -28,12 +28,13 @@ namespace GalArc.Resource
             new EngineInfo("BiShop","BSA", "BSA"),
             new EngineInfo("Cmvs","CPZ","CPZ"),
             new EngineInfo("EntisGLS","NOA","NOA"),
+            new EngineInfo("Eushully","ALF",string.Empty),
             new EngineInfo("InnocentGrey","IGA/DAT","IGA/DAT"),
             new EngineInfo("KID","DAT","DAT"),
             new EngineInfo("Kirikiri","XP3","XP3"),
             new EngineInfo("Majiro","ARC","ARC"),
             new EngineInfo("NekoSDK","PAK","PAK"),
-            new EngineInfo("NeXAS","PAC", string.Empty),
+            new EngineInfo("NeXAS","PAC",string.Empty),
             new EngineInfo("NextonLikeC","LST",string.Empty),
             new EngineInfo("NitroPlus","PAK","PAK"),
             new EngineInfo("NScripter","NS2/NSA","NS2/NSA"),
@@ -43,7 +44,7 @@ namespace GalArc.Resource
             new EngineInfo("Softpal","PAC","PAC"),
             new EngineInfo("SystemNNN","GPK/VPK","GPK/VPK"),
             new EngineInfo("Triangle","CG/CGF/SUD","CG/CGF/SUD"),
-            new EngineInfo("Yuris","YPF", string.Empty),
+            new EngineInfo("Yuris","YPF",string.Empty),
         };
     }
 }
