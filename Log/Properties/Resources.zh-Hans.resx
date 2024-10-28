@@ -159,14 +159,8 @@
   <data name="logErrorNotValidArc" xml:space="preserve">
     <value>错误：不是有效的封包。</value>
   </data>
-  <data name="logErrorSameNameNotFound" xml:space="preserve">
-    <value>错误：同名的{0}和{1}文件必须在同一目录下。</value>
-  </data>
-  <data name="logNoExtension" xml:space="preserve">
-    <value>(无后缀名)</value>
-  </data>
   <data name="logErrorOriginalFileNotFound" xml:space="preserve">
-    <value>错误；当前目录下未找到后缀为{0}的原文件。</value>
+    <value>错误：同目录下未找到{0}原文件。</value>
   </data>
   <data name="logUnpacking" xml:space="preserve">
     <value>解包中……</value>
@@ -179,5 +173,8 @@
   </data>
   <data name="logVersions" xml:space="preserve">
     <value>当前版本：{0} 最新版本：{1}</value>
+  </data>
+  <data name="logErrorSpecifiedFileNotFound" xml:space="preserve">
+    <value>错误：同目录下未找到{0}文件。</value>
   </data>
 </root>

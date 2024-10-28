@@ -156,14 +156,8 @@
   <data name="logErrorNotValidArc" xml:space="preserve">
     <value>Error: Not a valid archive.</value>
   </data>
-  <data name="logErrorSameNameNotFound" xml:space="preserve">
-    <value>Error: {0} and {1} file with the same name should be in the same directory.</value>
-  </data>
-  <data name="logNoExtension" xml:space="preserve">
-    <value>(no extension)</value>
-  </data>
   <data name="logErrorOriginalFileNotFound" xml:space="preserve">
-    <value>Error: Original {0} file not found.</value>
+    <value>Error: Original {0} file not found in the same directory.</value>
   </data>
   <data name="logUnpacking" xml:space="preserve">
     <value>Unpacking……</value>
@@ -176,5 +170,8 @@
   </data>
   <data name="logVersions" xml:space="preserve">
     <value>Current version: {0} Latest version: {1}</value>
+  </data>
+  <data name="logErrorSpecifiedFileNotFound" xml:space="preserve">
+    <value>Error: {0} file not found in the same directory.</value>
   </data>
 </root>

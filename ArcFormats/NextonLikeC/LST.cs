@@ -28,7 +28,7 @@ namespace ArcFormats.NextonLikeC
             arcPath = Path.ChangeExtension(filePath, string.Empty);
             if (!File.Exists(arcPath))
             {
-                LogUtility.ErrorNeedAnotherFile(".lst", string.Empty);
+                LogUtility.ErrorNeedAnotherFile(Path.GetFileName(arcPath));
             }
 
             FileStream fsLst = File.OpenRead(lstPath);

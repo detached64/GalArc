@@ -91,7 +91,7 @@ namespace ArcFormats.AdvHD
             }
             if (!File.Exists(spath))
             {
-                LogUtility.ErrorNeedOriginalFile(".pna");
+                LogUtility.ErrorNeedOriginalFile(Path.GetFileName(spath));
             }
 
             File.Copy(spath, tpath, true);
