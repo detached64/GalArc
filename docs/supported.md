@@ -6,12 +6,13 @@ Attention:this file may not be updated regularly.
 | ---------------- | -------------------------- | ------ | ---- | ----------------------- |
 | AdvHD            | `arc` `pna`                | ✔️      | ✔️    | All                     |
 | Ai5Win           | `arc` `dat` `VSD`          | ✔️      | ❌    | All                     |
-| Ai6Win           | `arc`                      | ✔️      | ❌    | All                     |
+| Ai6Win           | `arc`                      | ✔️      | ✔️    | All                     |
 | Artemis          | `pfs`                      | ✔️      | ✔️    | All                     |
 | BiShop           | `bsa`                      | ✔️      | ✔️    | All                     |
 | Cmvs             | `cpz`                      | ✔️      | ✔️    | v1                      |
 | EntisGLS         | `noa`                      | ✔️      | ✔️    | unencrypted             |
-| InnocentGray     | `iga` `dat`                | ✔️      | ✔️    | `iga`:All `dat`:Limited |
+| Eushully         | `alf`                      | ✔️      | ❌    | All                     |
+| InnocentGrey     | `iga` `dat`                | ✔️      | ✔️    | `iga`:All `dat`:Limited |
 | KID              | `dat`                      | ✔️      | ✔️    | All                     |
 | Kirikiri         | `xp3`                      | ✔️      | ✔️    | unencrypted             |
 | Majiro           | `arc`                      | ✔️      | ✔️    | All                     |
