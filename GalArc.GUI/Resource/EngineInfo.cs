@@ -41,6 +41,7 @@ namespace GalArc.Resource
             new EngineInfo("Palette","PAK","PAK"),
             new EngineInfo("PJADV","DAT/PAK","DAT/PAK"),
             new EngineInfo("RPGMaker","RGSSAD/RGSS2A/RGSS3A","RGSSAD/RGSS2A/RGSS3A"),
+            new EngineInfo("Seraph","DAT",string.Empty),
             new EngineInfo("Softpal","PAC","PAC"),
             new EngineInfo("SystemNNN","GPK/VPK","GPK/VPK"),
             new EngineInfo("Triangle","CG/CGF/SUD","CG/CGF/SUD"),
