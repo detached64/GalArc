@@ -96,14 +96,16 @@ namespace ArcFormats.Seraph
 
         private void AddIndex(long index, long maxOffset)
         {
-            for (int i = -1; i < 0; i++)
+            //for (int i = -1; i < 0; i++)
+            //{
+            // indices.count like: 40 00 00 00(hex)
+            // we have limited indices.count to be less than 0x40, so we just need to back 1 byte to get the index.
+            long pos = index - 1;
+            if (pos < maxOffset && pos >= 0)
             {
-                long pos = index + i;
-                if (pos < maxOffset && pos >= 0)
-                {
-                    Indices.Add(pos);
-                }
+                Indices.Add(pos);
             }
+            //}
         }
 
         private void TryReadIndexArchPac(BinaryReader br)
