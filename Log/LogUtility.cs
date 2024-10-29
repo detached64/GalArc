@@ -197,6 +197,30 @@ namespace Log
             }));
         }
 
+        public static void SetBarValue(int value)
+        {
+            LogWindow.Instance.bar.Invoke(new Action(() =>
+            {
+                LogWindow.Instance.bar.Value = value;
+            }));
+        }
+
+        public static void SetBarMax(int max)
+        {
+            LogWindow.Instance.bar.Invoke(new Action(() =>
+            {
+                LogWindow.Instance.bar.Maximum = max;
+            }));
+        }
+
+        public static void ResetBar()
+        {
+            LogWindow.Instance.bar.Invoke(new Action(() =>
+            {
+                LogWindow.Instance.bar.Value = 0;
+            }));
+        }
+
         public static void ShowCheckingUpdate()
         {
             InfoRevoke(Resources.logUpdating);
