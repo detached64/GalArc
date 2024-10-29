@@ -117,43 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="logErrorUnpackMethodNotFound" xml:space="preserve">
-    <value>错误：对应的解包方法未找到。</value>
-  </data>
-  <data name="logErrorPackMethodNotFound" xml:space="preserve">
-    <value>错误：对应的封包方法未找到。</value>
-  </data>
-  <data name="logErrorClassNotFound" xml:space="preserve">
-    <value>错误：对应的类未找到。</value>
-  </data>
-  <data name="logTryDecScr" xml:space="preserve">
-    <value>尝试解密：{0}……</value>
-  </data>
-  <data name="logErrorDecScrFailed" xml:space="preserve">
-    <value>解密失败。</value>
-  </data>
-  <data name="logTryEncScr" xml:space="preserve">
-    <value>尝试加密：{0}……</value>
-  </data>
-  <data name="logErrorEncScrFailed" xml:space="preserve">
-    <value>加密失败。</value>
-  </data>
-  <data name="logTryDecompress" xml:space="preserve">
-    <value>尝试解压缩：{0}……</value>
-  </data>
-  <data name="logErrorDecompressFailed" xml:space="preserve">
-    <value>解压缩失败。</value>
-  </data>
-  <data name="logTryDecompressWithMethod" xml:space="preserve">
-    <value>尝试以{1}方式解压缩：{0}……</value>
-  </data>
-  <data name="logErrorContainsInvalid" xml:space="preserve">
-    <value>路径中有非法字符。在设置里切换编码或许能解决此问题。</value>
-  </data>
-  <data name="logErrorNotSupportedVersion" xml:space="preserve">
-    <value>{0} v{1}封包暂时不支持。</value>
-  </data>
-  <data name="logErrorReadIndexFailed" xml:space="preserve">
-    <value>读取索引失败。</value>
+  <data name="logSeed" xml:space="preserve">
+    <value>种子：{0}</value>
   </data>
 </root>

@@ -88,7 +88,7 @@ namespace ArcFormats.RPGMaker
             BinaryReader br = new BinaryReader(fs);
             fs.Position = 8;
             uint seed = br.ReadUInt32();
-            LogUtility.Info($"Seed = {seed:X8}");
+            LogUtility.Debug(string.Format(RPGMaker.logSeed, $"{seed:X8}"));
             uint key = seed * 9 + 3;
             long fileCount = 0;
             bool isFirst = true;
