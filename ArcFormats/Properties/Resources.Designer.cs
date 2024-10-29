@@ -124,6 +124,15 @@ namespace ArcFormats.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Failed to read index. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorReadIndexFailed {
+            get {
+                return ResourceManager.GetString("logErrorReadIndexFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Error: Specified unpack method not found. 的本地化字符串。
         /// </summary>
         internal static string logErrorUnpackMethodNotFound {

@@ -64,7 +64,7 @@ namespace ArcFormats.Seraph
                 {
                     using (BinaryReader br = new BinaryReader(fs))
                     {
-                        LogUtility.Debug(string.Format(Seraph.logIndexOffset, "00000000"));
+                        LogUtility.Info(string.Format(Seraph.logIndexOffset, "00000000"));
                         ReadIndexScnPac(br, folderPath);
                     }
                 }
@@ -166,7 +166,7 @@ namespace ArcFormats.Seraph
                 }
                 baseOffset = Groups[i].Entries[Groups[i].FileCount - 1].Offset + Groups[i].Entries[Groups[i].FileCount - 1].Size;
             }
-            LogUtility.Debug(string.Format(Seraph.logIndexOffset, $"{indexOffset:X8}"));
+            LogUtility.Info(string.Format(Seraph.logIndexOffset, $"{indexOffset:X8}"));
             LogUtility.ResetBar();
             LogUtility.InitBar(fileCount);
             return true;

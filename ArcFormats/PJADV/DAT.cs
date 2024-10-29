@@ -49,7 +49,7 @@ namespace ArcFormats.PJADV
             }
             else
             {
-                LogUtility.Error($"Version {version} not supported");
+                LogUtility.Error(string.Format(Resources.logErrorNotSupportedVersion, "dat", version));
                 return;
             }
 
