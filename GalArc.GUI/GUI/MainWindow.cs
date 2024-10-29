@@ -125,7 +125,10 @@ namespace GalArc
 
         private void ChangeStatus(object sender, string message)
         {
-            this.lbStatus.Text = message;
+            this.lbStatus.Invoke(new Action(() =>
+            {
+                this.lbStatus.Text = message;
+            }));
         }
 
         private void main_KeyDown(object sender, KeyEventArgs e)
