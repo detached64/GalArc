@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Utility;
 using Utility.Compression;
@@ -29,6 +30,8 @@ namespace ArcFormats.Seraph
         private static readonly string ArchPacName = "ArchPac.dat";
 
         private static readonly string ScnPacName = "ScnPac.dat";
+
+        private static readonly string VoicePacName = @"^Voice(?:\d|pac)\.dat$";
 
         private List<Group> Groups { get; set; } = new List<Group>(0x40);
 
@@ -65,13 +68,23 @@ namespace ArcFormats.Seraph
                     using (BinaryReader br = new BinaryReader(fs))
                     {
                         LogUtility.Info(string.Format(Seraph.logIndexOffset, "00000000"));
-                        ReadIndexScnPac(br, folderPath);
+                        UnpackScnPac(br, folderPath);
+                    }
+                }
+            }
+            else if (Regex.IsMatch(name, VoicePacName, RegexOptions.IgnoreCase))
+            {
+                using (FileStream fs = File.OpenRead(filePath))
+                {
+                    using (BinaryReader br = new BinaryReader(fs))
+                    {
+                        UnpackVoicePac(br, folderPath);
                     }
                 }
             }
             else
             {
-                LogUtility.Error("Invaild archive type.");
+                LogUtility.Error(Seraph.logInvalidArchiveType);
             }
         }
 
@@ -214,7 +227,7 @@ namespace ArcFormats.Seraph
             }
         }
 
-        private void ReadIndexScnPac(BinaryReader br, string folderPath)
+        private void UnpackScnPac(BinaryReader br, string folderPath)
         {
             Group group = new Group();
             group.FileCount = br.ReadInt32();
@@ -289,6 +302,72 @@ namespace ArcFormats.Seraph
                 {
                     File.WriteAllBytes(Path.Combine(folderPath, entry.Name), buffer);
                 }
+                buffer = null;
+                LogUtility.UpdateBar();
+            }
+        }
+
+        private void UnpackVoicePac(BinaryReader br, string folderPath)
+        {
+            int fileCount = br.ReadUInt16();
+            uint dataOffset = 2 + 4 * (uint)(fileCount + 1);
+            uint nextOffset = br.ReadUInt32();
+            if (nextOffset < dataOffset || nextOffset > br.BaseStream.Length)
+            {
+                UnpackVoicePacV2(br, fileCount, folderPath);
+            }
+            else
+            {
+                UnpackVoicePacV1(br, fileCount, folderPath);
+            }
+        }
+
+        private void UnpackVoicePacV2(BinaryReader br, int fileCount, string folderPath)
+        {
+            br.BaseStream.Position = 2;
+            List<Entry> entries = new List<Entry>(fileCount);
+            for (int i = 0; i < fileCount; i++)
+            {
+                br.BaseStream.Position += 4;
+                Entry entry = new Entry();
+                entry.Offset = br.ReadUInt32();
+                entry.Size = br.ReadUInt32();
+                entry.Name = $"{i:D5}.wav";
+                entries.Add(entry);
+            }
+            LogUtility.InitBar(fileCount);
+            Directory.CreateDirectory(folderPath);
+            foreach (var entry in entries)
+            {
+                br.BaseStream.Position = entry.Offset;
+                byte[] buffer = br.ReadBytes((int)entry.Size);
+                File.WriteAllBytes(Path.Combine(folderPath, entry.Name), buffer);
+                buffer = null;
+                LogUtility.UpdateBar();
+            }
+        }
+
+        private void UnpackVoicePacV1(BinaryReader br, int fileCount, string folderPath)
+        {
+            br.BaseStream.Position = 2;
+            List<Entry> entries = new List<Entry>(fileCount);
+            uint thisOffset = br.ReadUInt32();
+            for (int i = 0; i < fileCount; i++)
+            {
+                Entry entry = new Entry();
+                entry.Offset = thisOffset;
+                thisOffset = br.ReadUInt32();
+                entry.Size = thisOffset - entry.Offset;
+                entry.Name = $"{i:D5}.wav";
+                entries.Add(entry);
+            }
+            LogUtility.InitBar(fileCount);
+            Directory.CreateDirectory(folderPath);
+            foreach (var entry in entries)
+            {
+                br.BaseStream.Position = entry.Offset;
+                byte[] buffer = br.ReadBytes((int)entry.Size);
+                File.WriteAllBytes(Path.Combine(folderPath, entry.Name), buffer);
                 buffer = null;
                 LogUtility.UpdateBar();
             }
