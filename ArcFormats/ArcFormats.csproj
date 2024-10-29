@@ -143,6 +143,18 @@
       <DependentUpon>PackRGSSOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="RPGMaker\RGSSAD.cs" />
+    <Compile Include="Seraph\DAT.cs" />
+    <Compile Include="Seraph\Seraph.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Seraph.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Seraph\UnpackDATOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Seraph\UnpackDATOptions.Designer.cs">
+      <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Softpal\PAC.cs" />
     <Compile Include="Softpal\PackPACOptions.cs">
       <SubType>UserControl</SubType>
@@ -257,6 +269,17 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RPGMaker\PackRGSSOptions.zh-Hans.resx">
       <DependentUpon>PackRGSSOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Seraph\Seraph.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Seraph.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Seraph\Seraph.zh-Hans.resx" />
+    <EmbeddedResource Include="Seraph\UnpackDATOptions.resx">
+      <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Seraph\UnpackDATOptions.zh-Hans.resx">
+      <DependentUpon>UnpackDATOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Softpal\PackPACOptions.resx">
       <DependentUpon>PackPACOptions.cs</DependentUpon>
