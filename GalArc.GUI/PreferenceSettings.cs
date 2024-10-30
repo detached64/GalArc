@@ -41,7 +41,7 @@ namespace GalArc.GUI
             }
             else
             {
-                this.combEncoding.Text = "Shift-JIS";
+                this.combEncoding.Text = "UTF-8";
             }
         }
 

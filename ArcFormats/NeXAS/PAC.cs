@@ -160,7 +160,6 @@ namespace ArcFormats.NeXAS
                 packedIndex[i] ^= 0xff;
             }
             byte[] index = Huffman.Decompress(packedIndex, unpackedLen);
-            File.WriteAllBytes("C:\\Users\\refrain69\\Desktop\\1.1", index);
             packedIndex = null;
             MemoryStream msIndex = new MemoryStream(index);
             BinaryReader readerIndex = new BinaryReader(msIndex);
