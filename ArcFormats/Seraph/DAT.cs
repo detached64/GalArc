@@ -1,7 +1,10 @@
-﻿using Log;
+﻿using ArcFormats.Properties;
+using GalArc.Extensions.GARbroDB;
+using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Utility;
@@ -37,6 +40,8 @@ namespace ArcFormats.Seraph
 
         private HashSet<long> Indices { get; set; } = new HashSet<long>();
 
+        private static Dictionary<string, Dictionary<string, Scheme>> schemes = null;
+
         public void Unpack(string filePath, string folderPath)
         {
             string name = Path.GetFileName(filePath);
@@ -47,16 +52,20 @@ namespace ArcFormats.Seraph
                     using (BinaryReader br = new BinaryReader(fs))
                     {
                         Indices.Clear();
+                        bool isGiven = false;
                         if (UnpackDATOptions.useBrutalForce)
                         {
-                            LogUtility.Debug(Seraph.logBrutalForcing);
+                            Logger.Debug(Seraph.logBrutalForcing);
+                            ReadSchemesFromGARbroDB();
+                            AddIndexFromGARbroDB();
                             GuessIndexArchPac(br);
                         }
                         else if (UnpackDATOptions.useSpecifiedIndexOffset)
                         {
-                            AddIndex(Convert.ToUInt32(UnpackDATOptions.specifiedIndexOffsetString, 16), br.BaseStream.Length);
+                            isGiven = true;
+                            Indices.Add(Convert.ToUInt32(UnpackDATOptions.specifiedIndexOffsetString, 16));
                         }
-                        TryReadIndexArchPac(br);
+                        TryReadIndexArchPac(br, isGiven);
                         ExtractArchPac(br, folderPath);
                     }
                 }
@@ -67,7 +76,7 @@ namespace ArcFormats.Seraph
                 {
                     using (BinaryReader br = new BinaryReader(fs))
                     {
-                        LogUtility.Info(string.Format(Seraph.logIndexOffset, "00000000"));
+                        Logger.Info(string.Format(Seraph.logIndexOffset, "00000000"));
                         UnpackScnPac(br, folderPath);
                     }
                 }
@@ -84,7 +93,7 @@ namespace ArcFormats.Seraph
             }
             else
             {
-                LogUtility.Error(Seraph.logInvalidArchiveType);
+                Logger.Error(Seraph.logInvalidArchiveType);
             }
         }
 
@@ -121,25 +130,36 @@ namespace ArcFormats.Seraph
             //}
         }
 
-        private void TryReadIndexArchPac(BinaryReader br)
+        private void TryReadIndexArchPac(BinaryReader br, bool isGiven)
         {
-            LogUtility.SetBarMax(1000);
+            Logger.SetBarMax(1000);
             int count = 1;
             foreach (var i in Indices)
             {
                 Groups.Clear();
-                LogUtility.SetBarValue(count * 1000 / Indices.Count);
+                Logger.SetBarValue(count * 1000 / Indices.Count);
                 if (ReadIndexArchPac(br, i))
                 {
                     return;
                 }
                 count++;
             }
-            LogUtility.Error(Seraph.logBrutalForceFailed);
+            if (isGiven)
+            {
+                Logger.Error(Seraph.logSpecifiedIndexOffsetFailed);
+            }
+            else
+            {
+                Logger.Error(Seraph.logBrutalForceFailed);
+            }
         }
 
         private bool ReadIndexArchPac(BinaryReader br, long indexOffset)
         {
+            if (indexOffset >= br.BaseStream.Length)
+            {
+                return false;
+            }
             br.BaseStream.Seek(indexOffset, SeekOrigin.Begin);
             int groupCount = br.ReadInt32();
             int fileCount = br.ReadInt32();
@@ -179,9 +199,9 @@ namespace ArcFormats.Seraph
                 }
                 baseOffset = Groups[i].Entries[Groups[i].FileCount - 1].Offset + Groups[i].Entries[Groups[i].FileCount - 1].Size;
             }
-            LogUtility.Info(string.Format(Seraph.logIndexOffset, $"{indexOffset:X8}"));
-            LogUtility.ResetBar();
-            LogUtility.InitBar(fileCount);
+            Logger.Info(string.Format(Seraph.logIndexOffset, $"{indexOffset:X8}"));
+            Logger.ResetBar();
+            Logger.InitBar(fileCount);
             return true;
         }
 
@@ -222,7 +242,7 @@ namespace ArcFormats.Seraph
                         File.WriteAllBytes(Path.Combine(folderPath, entry.Name), buffer);
                     }
                     buffer = null;
-                    LogUtility.UpdateBar();
+                    Logger.UpdateBar();
                 }
             }
         }
@@ -247,7 +267,7 @@ namespace ArcFormats.Seraph
                 entry.Name = $"{i:D5}";
                 group.Entries.Add(entry);
             }
-            LogUtility.InitBar(group.FileCount);
+            Logger.InitBar(group.FileCount);
             Directory.CreateDirectory(folderPath);
             foreach (var entry in group.Entries)
             {
@@ -303,7 +323,7 @@ namespace ArcFormats.Seraph
                     File.WriteAllBytes(Path.Combine(folderPath, entry.Name), buffer);
                 }
                 buffer = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
         }
 
@@ -335,7 +355,7 @@ namespace ArcFormats.Seraph
                 entry.Name = $"{i:D5}.wav";
                 entries.Add(entry);
             }
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             Directory.CreateDirectory(folderPath);
             foreach (var entry in entries)
             {
@@ -343,7 +363,7 @@ namespace ArcFormats.Seraph
                 byte[] buffer = br.ReadBytes((int)entry.Size);
                 File.WriteAllBytes(Path.Combine(folderPath, entry.Name), buffer);
                 buffer = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
         }
 
@@ -361,7 +381,7 @@ namespace ArcFormats.Seraph
                 entry.Name = $"{i:D5}.wav";
                 entries.Add(entry);
             }
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             Directory.CreateDirectory(folderPath);
             foreach (var entry in entries)
             {
@@ -369,7 +389,32 @@ namespace ArcFormats.Seraph
                 byte[] buffer = br.ReadBytes((int)entry.Size);
                 File.WriteAllBytes(Path.Combine(folderPath, entry.Name), buffer);
                 buffer = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
+            }
+        }
+
+        private void ReadSchemesFromGARbroDB()
+        {
+            if (schemes == null)
+            {
+                schemes = Deserializer.Deserialize(SeraphScheme.Instance);
+                if (schemes != null)
+                {
+                    Logger.Info(string.Format(Resources.logReadGARbroDBSchemeSuccess, schemes[SeraphScheme.JsonNodeName].Count));
+                }
+            }
+
+        }
+
+        private void AddIndexFromGARbroDB()
+        {
+            if (schemes == null)
+            {
+                return;
+            }
+            foreach (SeraphScheme scheme in schemes[SeraphScheme.JsonNodeName].Values.Cast<SeraphScheme>())
+            {
+                Indices.Add(scheme.IndexOffset);
             }
         }
     }
