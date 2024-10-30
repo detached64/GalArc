@@ -1,5 +1,5 @@
 ﻿using ArcFormats.Properties;
-using Log;
+using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,30 +33,30 @@ namespace ArcFormats.PJADV
 
             if (Encoding.ASCII.GetString(br.ReadBytes(11)) != Magic)
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
             int version = br.ReadByte();
             int nameLen;
             if (version == 'K')
             {
                 nameLen = 16;
-                LogUtility.ShowVersion("dat", 1);
+                Logger.ShowVersion("dat", 1);
             }
             else if (version == '2')
             {
                 nameLen = 32;
-                LogUtility.ShowVersion("dat", 2);
+                Logger.ShowVersion("dat", 2);
             }
             else
             {
-                LogUtility.Error(string.Format(Resources.logErrorNotSupportedVersion, "dat", version));
+                Logger.Error(string.Format(Resources.logErrorNotSupportedVersion, "dat", version));
                 return;
             }
 
             int count = br.ReadInt32();
             int baseOffset = 0x10 + count * (nameLen + 8);
             List<Entry> entries = new List<Entry>();
-            LogUtility.InitBar(count);
+            Logger.InitBar(count);
             Directory.CreateDirectory(folderPath);
 
             for (int i = 0; i < count; i++)
@@ -77,12 +77,12 @@ namespace ArcFormats.PJADV
                 byte[] buffer = br.ReadBytes((int)entry.Size);
                 if (UnpackDATOptions.toDecryptScripts && entry.Name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(new byte[] { 0x95, 0x6b, 0x3c, 0x9d, 0x63 }))
                 {
-                    LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.Name));
+                    Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
                     DecryptScript(buffer);
                 }
                 File.WriteAllBytes(entry.Path, buffer);
                 buffer = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
             br.Dispose();
@@ -100,7 +100,7 @@ namespace ArcFormats.PJADV
 
             bw.Write(files.Length);
             List<Entry> entries = new List<Entry>();
-            LogUtility.InitBar(files.Length);
+            Logger.InitBar(files.Length);
             uint thisOffset = 0;
 
             foreach (FileInfo file in files)
@@ -127,12 +127,12 @@ namespace ArcFormats.PJADV
                 byte[] buffer = File.ReadAllBytes(entry.Path);
                 if (PackDATOptions.toEncryptScripts && entry.Name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(new byte[] { 0x95, 0x6b, 0x3c, 0x9d, 0x63 }))
                 {
-                    LogUtility.Debug(string.Format(Resources.logTryEncScr, entry.Name));
+                    Logger.Debug(string.Format(Resources.logTryEncScr, entry.Name));
                     DecryptScript(buffer);
                 }
                 bw.Write(buffer);
                 buffer = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
             bw.Dispose();

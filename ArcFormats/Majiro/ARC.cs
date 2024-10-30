@@ -1,5 +1,5 @@
 ﻿using ArcFormats.Templates;
-using Log;
+using GalArc.Logs;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -42,7 +42,7 @@ namespace ArcFormats.Majiro
             br.Dispose();
             if (magic == Magic)
             {
-                LogUtility.ShowVersion("arc", UnpackVersion);
+                Logger.ShowVersion("arc", UnpackVersion);
                 switch (UnpackVersion)
                 {
                     case 1:
@@ -56,7 +56,7 @@ namespace ArcFormats.Majiro
             }
             else
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
         }
 
@@ -75,7 +75,7 @@ namespace ArcFormats.Majiro
 
             List<Entry> entries = new List<Entry>();
             Directory.CreateDirectory(folderPath);
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
 
             for (int i = 0; i < fileCount; i++)
             {
@@ -95,7 +95,7 @@ namespace ArcFormats.Majiro
                 byte[] data = br.ReadBytes((int)(entries[i + 1].Offset - entries[i].Offset));
                 File.WriteAllBytes(Path.Combine(folderPath, entries[i].Name), data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
 
             fs.Dispose();
@@ -118,7 +118,7 @@ namespace ArcFormats.Majiro
             BinaryReader brIndex = new BinaryReader(ms);
 
             Directory.CreateDirectory(folderPath);
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
 
             for (int i = 0; i < fileCount; i++)
             {
@@ -133,7 +133,7 @@ namespace ArcFormats.Majiro
                 File.WriteAllBytes(Path.Combine(folderPath, entry.Name), data);
                 data = null;
                 fs.Position = pos;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
             br.Dispose();
@@ -163,7 +163,7 @@ namespace ArcFormats.Majiro
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles();
             int fileCount = files.Length;
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             bw.Write(Encoding.ASCII.GetBytes(MagicV1));
             bw.Write(fileCount);
             uint nameOffset = 28 + 8 * ((uint)fileCount + 1);
@@ -195,7 +195,7 @@ namespace ArcFormats.Majiro
                 bw.Write(Crc32.Calculate(ArcEncoding.Shift_JIS.GetBytes(file.Name)));
                 bw.Write(dataOffset);
                 dataOffset += (uint)file.Length;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             bw.Write(0);
             bw.Write(maxOffset);
@@ -210,7 +210,7 @@ namespace ArcFormats.Majiro
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles();
             int fileCount = files.Length;
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
 
             bw.Write(Encoding.ASCII.GetBytes(PackVersion == 2 ? MagicV2 : MagicV3));
             bw.Write(fileCount);
@@ -251,7 +251,7 @@ namespace ArcFormats.Majiro
                 uint fileSize = (uint)file.Length;
                 bw.Write(fileSize);
                 dataOffset += fileSize;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             bw.Dispose();
             fw.Dispose();

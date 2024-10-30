@@ -1,5 +1,5 @@
 ﻿using ArcFormats.Properties;
-using Log;
+using GalArc.Logs;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -61,7 +61,7 @@ namespace ArcFormats.AdvHD
                 typeHeaders.Add(typeHeader);
                 header.FileCountAll += typeHeader.FileCount;
             }
-            LogUtility.InitBar(header.FileCountAll);
+            Logger.InitBar(header.FileCountAll);
 
             for (int i = 0; i < header.TypeCount; i++)
             {
@@ -77,13 +77,13 @@ namespace ArcFormats.AdvHD
                     byte[] buffer = br.ReadBytes((int)index.FileSize);
                     if (UnpackARCOptions.toDecryptScripts && IsScriptFile(Path.GetExtension(index.FilePath), "1"))
                     {
-                        LogUtility.Debug(string.Format(Resources.logTryDecScr, index.FileName));
+                        Logger.Debug(string.Format(Resources.logTryDecScr, index.FileName));
                         DecryptScript(buffer);
                     }
                     File.WriteAllBytes(index.FilePath, buffer);
                     buffer = null;
                     fs.Seek(pos, SeekOrigin.Begin);
-                    LogUtility.UpdateBar();
+                    Logger.UpdateBar();
                 }
             }
             fs.Dispose();
@@ -96,7 +96,7 @@ namespace ArcFormats.AdvHD
 
             HeaderV1 header = new HeaderV1();
             header.FileCountAll = (uint)Utils.GetFileCount(folderPath);
-            LogUtility.InitBar(header.FileCountAll);
+            Logger.InitBar(header.FileCountAll);
             string[] exts = Utils.GetFileExtensions(folderPath);
             Utils.Sort(exts);
             int extCount = exts.Length;
@@ -131,12 +131,12 @@ namespace ArcFormats.AdvHD
                     byte[] buffer = File.ReadAllBytes(file.FullName);
                     if (PackARCOptions.toEncryptScripts && IsScriptFile(exts[i], "1"))
                     {
-                        LogUtility.Debug(string.Format(Resources.logTryEncScr, file.Name));
+                        Logger.Debug(string.Format(Resources.logTryEncScr, file.Name));
                         EncryptScript(buffer);
                     }
                     bwdata.Write(buffer);
                     buffer = null;
-                    LogUtility.UpdateBar();
+                    Logger.UpdateBar();
                 }
                 bwtype.Write(Encoding.ASCII.GetBytes(exts[i]));
                 bwtype.Write((byte)0);
@@ -186,7 +186,7 @@ namespace ArcFormats.AdvHD
 
             header.FileCount = br1.ReadUInt32();
             header.EntrySize = br1.ReadUInt32();
-            LogUtility.InitBar(header.FileCount);
+            Logger.InitBar(header.FileCount);
 
             for (int i = 0; i < header.FileCount; i++)
             {
@@ -204,12 +204,12 @@ namespace ArcFormats.AdvHD
                 byte[] buffer = br1.ReadBytes((int)entry.FileSize);
                 if (UnpackARCOptions.toDecryptScripts && IsScriptFile(Path.GetExtension(entry.FilePath), "2"))
                 {
-                    LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.FileName));
+                    Logger.Debug(string.Format(Resources.logTryDecScr, entry.FileName));
                     DecryptScript(buffer);
                 }
                 File.WriteAllBytes(entry.FilePath, buffer);
                 buffer = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
             br1.Dispose();
@@ -226,7 +226,7 @@ namespace ArcFormats.AdvHD
             FileInfo[] files = d.GetFiles();
             header.FileCount = (uint)files.Length;
             header.EntrySize = 0;
-            LogUtility.InitBar(header.FileCount);
+            Logger.InitBar(header.FileCount);
 
             foreach (FileInfo file in files)
             {
@@ -265,12 +265,12 @@ namespace ArcFormats.AdvHD
                         byte[] buffer = File.ReadAllBytes(file.FullName);
                         if (PackARCOptions.toEncryptScripts && IsScriptFile(file.Extension, "2"))
                         {
-                            LogUtility.Debug(string.Format(Resources.logTryEncScr, file.Name));
+                            Logger.Debug(string.Format(Resources.logTryEncScr, file.Name));
                             EncryptScript(buffer);
                         }
                         bw.Write(buffer);
                         buffer = null;
-                        LogUtility.UpdateBar();
+                        Logger.UpdateBar();
                     }
                 }
             }
@@ -290,12 +290,12 @@ namespace ArcFormats.AdvHD
 
             if (a >= 'A')   //extension
             {
-                LogUtility.ShowVersion("arc", 1);
+                Logger.ShowVersion("arc", 1);
                 arcV1_unpack(filePath, folderPath);
             }
             else
             {
-                LogUtility.ShowVersion("arc", 2);
+                Logger.ShowVersion("arc", 2);
                 arcV2_unpack(filePath, folderPath);
             }
         }

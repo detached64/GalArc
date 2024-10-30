@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System.Collections.Generic;
 using System.IO;
 using Utility;
@@ -20,7 +20,7 @@ namespace ArcFormats.Triangle
             BinaryReader br = new BinaryReader(fs);
             List<Entry> entries = new List<Entry>();
             uint fileCount = br.ReadUInt32();
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             Directory.CreateDirectory(folderPath);
 
             for (int i = 0; i < fileCount; i++)
@@ -38,13 +38,13 @@ namespace ArcFormats.Triangle
                 string fileName = Path.Combine(folderPath, entries[i].Name);
                 File.WriteAllBytes(fileName, data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             byte[] dataLast = br.ReadBytes((int)(fs.Length - entries[entries.Count - 1].Offset));
             string fileNameLast = Path.Combine(folderPath, entries[entries.Count - 1].Name);
             File.WriteAllBytes(fileNameLast, dataLast);
             dataLast = null;
-            LogUtility.UpdateBar();
+            Logger.UpdateBar();
             fs.Dispose();
             br.Dispose();
         }
@@ -58,7 +58,7 @@ namespace ArcFormats.Triangle
             int fileCount = files.Length;
             bw.Write(fileCount);
             uint dataOffset = (uint)(4 + 20 * fileCount);
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
 
             foreach (FileInfo file in files)
             {
@@ -72,7 +72,7 @@ namespace ArcFormats.Triangle
                 byte[] data = File.ReadAllBytes(file.FullName);
                 bw.Write(data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
             bw.Dispose();

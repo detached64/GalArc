@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5C1C4793-5CD1-44C1-8654-42E10A151188}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>GalArc</RootNamespace>
-    <AssemblyName>GalArc</AssemblyName>
+    <RootNamespace>GalArc.GUI</RootNamespace>
+    <AssemblyName>GalArc.GUI</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -67,89 +67,108 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\Execute.cs" />
-    <Compile Include="Controller\UpdateVersion.cs" />
-    <Compile Include="GUI\GeneralSettings.cs">
+    <Compile Include="ArchivePackager.cs" />
+    <Compile Include="ExtensionGARbroDB.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\GeneralSettings.Designer.cs">
+    <Compile Include="ExtensionGARbroDB.Designer.cs">
+      <DependentUpon>ExtensionGARbroDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExtensionsSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExtensionsSettings.Designer.cs">
+      <DependentUpon>ExtensionsSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsExporter.cs" />
+    <Compile Include="Updater.cs" />
+    <Compile Include="GeneralSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GeneralSettings.Designer.cs">
       <DependentUpon>GeneralSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\PreferenceSettings.cs">
+    <Compile Include="PreferenceSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\PreferenceSettings.Designer.cs">
+    <Compile Include="PreferenceSettings.Designer.cs">
       <DependentUpon>PreferenceSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\SettingsWindow.cs">
+    <Compile Include="SettingsWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\SettingsWindow.Designer.cs">
+    <Compile Include="SettingsWindow.Designer.cs">
       <DependentUpon>SettingsWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\UpdateBox.cs">
+    <Compile Include="UpdateBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\UpdateBox.Designer.cs">
+    <Compile Include="UpdateBox.Designer.cs">
       <DependentUpon>UpdateBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Resource\Encodings.cs" />
-    <Compile Include="Resource\Version.cs" />
-    <Compile Include="Controller\Localize.cs" />
-    <Compile Include="Controller\SyncPath.cs" />
-    <Compile Include="GUI\AboutBox.cs">
+    <Compile Include="AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\AboutBox.Designer.cs">
+    <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\MainWindow.cs">
+    <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\MainWindow.Designer.cs">
+    <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resource\EngineInfo.cs" />
-    <Compile Include="Resource\Languages.cs" />
     <Compile Include="Settings.cs" />
-    <EmbeddedResource Include="GUI\AboutBox.resx">
+    <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\AboutBox.zh-Hans.resx">
+    <EmbeddedResource Include="AboutBox.zh-Hans.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\GeneralSettings.resx">
+    <EmbeddedResource Include="ExtensionGARbroDB.resx">
+      <DependentUpon>ExtensionGARbroDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtensionGARbroDB.zh-Hans.resx">
+      <DependentUpon>ExtensionGARbroDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtensionsSettings.resx">
+      <DependentUpon>ExtensionsSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtensionsSettings.zh-Hans.resx">
+      <DependentUpon>ExtensionsSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GeneralSettings.resx">
       <DependentUpon>GeneralSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\GeneralSettings.zh-Hans.resx">
+    <EmbeddedResource Include="GeneralSettings.zh-Hans.resx">
       <DependentUpon>GeneralSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\MainWindow.resx">
+    <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\MainWindow.zh-Hans.resx">
+    <EmbeddedResource Include="MainWindow.zh-Hans.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\PreferenceSettings.resx">
+    <EmbeddedResource Include="PreferenceSettings.resx">
       <DependentUpon>PreferenceSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\PreferenceSettings.zh-Hans.resx">
+    <EmbeddedResource Include="PreferenceSettings.zh-Hans.resx">
       <DependentUpon>PreferenceSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\SettingsWindow.resx">
+    <EmbeddedResource Include="SettingsWindow.resx">
       <DependentUpon>SettingsWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\SettingsWindow.zh-Hans.resx">
+    <EmbeddedResource Include="SettingsWindow.zh-Hans.resx">
       <DependentUpon>SettingsWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\UpdateBox.resx">
+    <EmbeddedResource Include="UpdateBox.resx">
       <DependentUpon>UpdateBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\UpdateBox.zh-Hans.resx">
+    <EmbeddedResource Include="UpdateBox.zh-Hans.resx">
       <DependentUpon>UpdateBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -182,9 +201,9 @@
       <Project>{c53fcac6-d4e7-4544-b03c-56f9d637e345}</Project>
       <Name>ArcFormats</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Log\Log.csproj">
+    <ProjectReference Include="..\GalArc\GalArc.csproj">
       <Project>{76e72c4e-7f17-4d75-a596-c0280530a4eb}</Project>
-      <Name>Log</Name>
+      <Name>GalArc</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -202,5 +221,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

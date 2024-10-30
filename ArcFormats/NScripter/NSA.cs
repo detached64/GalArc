@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System;
 using System.IO;
 using Utility;
@@ -14,7 +14,7 @@ namespace ArcFormats.NScripter
             BinaryReader br = new BinaryReader(fs);
             ushort fileCount = BigEndian.Convert(br.ReadUInt16());
             uint baseOffset = BigEndian.Convert(br.ReadUInt32());
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             Directory.CreateDirectory(folderPath);
             for (int i = 0; i < fileCount; i++)
             {
@@ -35,7 +35,7 @@ namespace ArcFormats.NScripter
                 File.WriteAllBytes(fullPath, buffer);
                 buffer = null;
                 fs.Position = pos;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
             br.Dispose();
@@ -50,7 +50,7 @@ namespace ArcFormats.NScripter
             ushort fileCount = (ushort)files.Length;
             bw.Write(BigEndian.Convert(fileCount));
             bw.Write(0);
-            LogUtility.InitBar(files.Length);
+            Logger.InitBar(files.Length);
             uint offset = 0;
             foreach (FileInfo file in files)
             {
@@ -70,7 +70,7 @@ namespace ArcFormats.NScripter
                 byte[] data = File.ReadAllBytes(file.FullName);
                 bw.Write(data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fw.Position = 2;
             bw.Write(BigEndian.Convert(baseOffset));

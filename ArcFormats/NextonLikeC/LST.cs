@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,7 +28,7 @@ namespace ArcFormats.NextonLikeC
             arcPath = Path.ChangeExtension(filePath, string.Empty);
             if (!File.Exists(arcPath))
             {
-                LogUtility.ErrorNeedAnotherFile(Path.GetFileName(arcPath));
+                Logger.ErrorNeedAnotherFile(Path.GetFileName(arcPath));
             }
 
             FileStream fsLst = File.OpenRead(lstPath);
@@ -48,7 +48,7 @@ namespace ArcFormats.NextonLikeC
 
             uint fileCount = brLst.ReadUInt32();
             List<Entry> l = new List<Entry>();
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
 
             for (int i = 0; i < (int)fileCount; i++)
             {
@@ -97,10 +97,10 @@ namespace ArcFormats.NextonLikeC
                         break;
 
                     default:
-                        LogUtility.Info("Unrecognized file detected:" + l[i].Name + "Skip." + Environment.NewLine);
+                        Logger.Info("Unrecognized file detected:" + l[i].Name + "Skip." + Environment.NewLine);
                         break;
                 }
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             ms.Dispose();
             fsArc.Dispose();

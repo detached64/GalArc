@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("Utility")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Utility for ArcFormats.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("detached64")]
 [assembly: AssemblyProduct("Utility")]
-[assembly: AssemblyCopyright("Copyright ©  2024")]
+[assembly: AssemblyCopyright("Copyright © 2024 detached64")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

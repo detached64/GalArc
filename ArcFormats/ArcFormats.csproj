@@ -204,9 +204,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Log\Log.csproj">
+    <ProjectReference Include="..\GalArc\GalArc.csproj">
       <Project>{76e72c4e-7f17-4d75-a596-c0280530a4eb}</Project>
-      <Name>Log</Name>
+      <Name>GalArc</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utility\Utility.csproj">
       <Project>{15110f75-a0f4-4cea-8b68-324a82aafa17}</Project>

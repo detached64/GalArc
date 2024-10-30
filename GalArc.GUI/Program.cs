@@ -6,7 +6,7 @@ namespace GalArc
     internal static class Program
     {
         /// <summary>
-        /// 应用程序的主入口点。
+        /// Entry point.
         /// </summary>
         [STAThread]
         private static void Main()

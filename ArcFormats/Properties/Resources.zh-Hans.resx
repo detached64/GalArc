@@ -156,4 +156,7 @@
   <data name="logErrorReadIndexFailed" xml:space="preserve">
     <value>读取索引失败。</value>
   </data>
+  <data name="logReadGARbroDBSchemeSuccess" xml:space="preserve">
+    <value>从GARbroDB获取到{0}个密钥。</value>
+  </data>
 </root>

@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System;
 using System.IO;
 using System.Text;
@@ -23,12 +23,12 @@ namespace ArcFormats.SystemNNN
 
             if (!File.Exists(vtbPath))
             {
-                LogUtility.ErrorNeedAnotherFile(Path.GetFileName(vtbPath));
+                Logger.ErrorNeedAnotherFile(Path.GetFileName(vtbPath));
             }
 
             int vtbSize = (int)new FileInfo(vtbPath).Length;
             int filecount = (vtbSize / 12) - 1;//file size = 12*file count + 12
-            LogUtility.InitBar(filecount);
+            Logger.InitBar(filecount);
 
             //open&make dir
             FileStream fs1 = File.OpenRead(vtbPath);
@@ -49,7 +49,7 @@ namespace ArcFormats.SystemNNN
                 File.WriteAllBytes(entry.Path, buffer);
                 buffer = null;
                 fs1.Seek(12 * i, SeekOrigin.Begin);
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             //the last
             Entry last = new Entry();
@@ -62,7 +62,7 @@ namespace ArcFormats.SystemNNN
             byte[] buf = br2.ReadBytes((int)last.Size);
             File.WriteAllBytes(last.Path, buf);
             buf = null;
-            LogUtility.UpdateBar();
+            Logger.UpdateBar();
 
             fs1.Dispose();
             fs2.Dispose();
@@ -83,7 +83,7 @@ namespace ArcFormats.SystemNNN
             FileStream fs2 = File.Create(vpkPath);
             BinaryWriter writer1 = new BinaryWriter(fs1);
             BinaryWriter writer2 = new BinaryWriter(fs2);
-            LogUtility.InitBar(filecount);
+            Logger.InitBar(filecount);
 
             foreach (FileInfo file in files)
             {
@@ -94,7 +94,7 @@ namespace ArcFormats.SystemNNN
                 byte[] buffer = File.ReadAllBytes(file.FullName);
                 writer2.Write(buffer);
                 buffer = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             writer1.Write(0);
             writer1.Write(0);

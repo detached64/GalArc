@@ -1,11 +1,10 @@
 ﻿using ArcFormats.Properties;
-using Log;
+using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Utility;
 using Utility.Compression;
 
 namespace ArcFormats.NeXAS
@@ -43,36 +42,36 @@ namespace ArcFormats.NeXAS
         public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
-            BinaryReader reader = new BinaryReader(fs);
+            BinaryReader br = new BinaryReader(fs);
             FolderPath = folderPath;
             DefaultEncoding = Config.Encoding;
-            if (!reader.ReadBytes(3).SequenceEqual(Magic))
+            if (!br.ReadBytes(3).SequenceEqual(Magic))
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
-            reader.ReadByte();
-            long fileSize = reader.BaseStream.Length;
-            int fileCount = reader.ReadInt32();
+            fs.Position++;
+            long fileSize = br.BaseStream.Length;
+            int fileCount = br.ReadInt32();
 
-            Method method = (Method)reader.ReadInt32();
+            Method method = (Method)br.ReadInt32();
             if (method == Method.Zlib1 || method == Method.Zlib2)
             {
                 method = Method.Zlib;
             }
 
             Directory.CreateDirectory(folderPath);
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
 
-            TryReadIndex(reader, fileCount);
+            TryReadIndex(br, fileCount);
 
             foreach (Entry entry in entries)
             {
                 fs.Seek(entry.Offset, SeekOrigin.Begin);
-                byte[] fileData = reader.ReadBytes(entry.PackedSize);
+                byte[] fileData = br.ReadBytes(entry.PackedSize);
 
                 if (entry.UnpackedSize != entry.PackedSize && method != Method.None && Enum.IsDefined(typeof(Method), method)) // compressed
                 {
-                    LogUtility.Debug(string.Format(Resources.logTryDecompressWithMethod, entry.FileName, method.ToString()));
+                    Logger.Debug(string.Format(Resources.logTryDecompressWithMethod, entry.FileName, method.ToString()));
                     try
                     {
                         switch (method)
@@ -96,18 +95,19 @@ namespace ArcFormats.NeXAS
                     }
                     catch (Exception ex)
                     {
-                        LogUtility.Error(Resources.logErrorDecompressFailed, false);
-                        LogUtility.Debug(ex.Message);
+                        Logger.Error(Resources.logErrorDecompressFailed, false);
+                        Logger.Debug(ex.Message);
                     }
                 }
                 else    // No compression or unknown method
                 {
                     File.WriteAllBytes(entry.FilePath, fileData);
                 }
-                LogUtility.UpdateBar();
+                fileData = null;
+                Logger.UpdateBar();
             }
             fs.Dispose();
-            reader.Dispose();
+            br.Dispose();
         }
 
         private static void TryReadIndex(BinaryReader reader, int fileCount)
@@ -130,7 +130,7 @@ namespace ArcFormats.NeXAS
                     continue;
                 }
             }
-            LogUtility.Error(Resources.logErrorContainsInvalid);
+            Logger.Error(Resources.logErrorContainsInvalid);
         }
 
         private static void ReadOldIndex(BinaryReader reader, int fileCount)
@@ -160,6 +160,7 @@ namespace ArcFormats.NeXAS
                 packedIndex[i] ^= 0xff;
             }
             byte[] index = Huffman.Decompress(packedIndex, unpackedLen);
+            File.WriteAllBytes("C:\\Users\\refrain69\\Desktop\\1.1", index);
             packedIndex = null;
             MemoryStream msIndex = new MemoryStream(index);
             BinaryReader readerIndex = new BinaryReader(msIndex);

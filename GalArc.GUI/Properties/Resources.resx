@@ -165,4 +165,7 @@
   <data name="logPacking" xml:space="preserve">
     <value>Packing……</value>
   </data>
+  <data name="nodeExtensions" xml:space="preserve">
+    <value>Extensions</value>
+  </data>
 </root>

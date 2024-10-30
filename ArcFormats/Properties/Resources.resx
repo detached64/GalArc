@@ -136,4 +136,7 @@
   <data name="logErrorReadIndexFailed" xml:space="preserve">
     <value>Failed to read index.</value>
   </data>
+  <data name="logReadGARbroDBSchemeSuccess" xml:space="preserve">
+    <value>Get {0} schemes from GARbroDB.</value>
+  </data>
 </root>

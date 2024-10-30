@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System;
 using System.IO;
 using System.Linq;
@@ -75,7 +75,7 @@ namespace ArcFormats.EntisGLS
 
             if (!header.Magic1.SequenceEqual(Magic1) || !header.Magic2.SequenceEqual(Magic2))
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
 
             br.ReadBytes(22);
@@ -86,13 +86,13 @@ namespace ArcFormats.EntisGLS
             entry_header.Magic = Encoding.ASCII.GetString(br.ReadBytes(8));
             if (entry_header.Magic != "DirEntry")
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
 
             entry_header.IndexSize = br.ReadUInt64();
             entry_header.FileCount = br.ReadUInt32();
             Directory.CreateDirectory(folderPath);
-            LogUtility.InitBar(entry_header.FileCount);
+            Logger.InitBar(entry_header.FileCount);
             //List<EntisGLS_noa_timeStamp> l = new List<EntisGLS_noa_timeStamp>();
 
             long pos = 0;
@@ -130,7 +130,7 @@ namespace ArcFormats.EntisGLS
                 File.WriteAllBytes(Path.Combine(folderPath, entry.Name), buffer);
                 buffer = null;
                 fs.Position = pos;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             //string jsonStr = JsonSerializer.Serialize(l);
             //File.WriteAllText(folderPath + "\\" + "TimestampInfo.json", jsonStr);
@@ -159,7 +159,7 @@ namespace ArcFormats.EntisGLS
             //    fileCount = Util.GetFileCount_All(folderPath);
             //    jsonStr = string.Empty;
             //}
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             //if (string.IsNullOrEmpty(jsonStr))
             //{
             //    for (int j = 0; j < fileCount; j++)
@@ -222,7 +222,7 @@ namespace ArcFormats.EntisGLS
                 byte[] data = File.ReadAllBytes(file);
                 bw.Write(data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             int size = (int)fw.Position;
             fw.Position = 56;//write size

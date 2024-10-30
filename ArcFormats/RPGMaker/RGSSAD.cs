@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System;
 using System.IO;
 using System.Text;
@@ -20,7 +20,7 @@ namespace ArcFormats.RPGMaker
                 {
                     if (br.ReadUInt32() != 0x53534752) // "RGSS"
                     {
-                        LogUtility.ErrorInvalidArchive();
+                        Logger.ErrorInvalidArchive();
                     }
                     fs.Position = 7;
                     version = br.ReadByte();
@@ -30,15 +30,15 @@ namespace ArcFormats.RPGMaker
             switch (version)
             {
                 case 1:
-                    LogUtility.ShowVersion(Path.GetExtension(filePath).Trim('.'), version);
+                    Logger.ShowVersion(Path.GetExtension(filePath).Trim('.'), version);
                     rgssV1_unpack(filePath, folderPath);
                     break;
                 case 3:
-                    LogUtility.ShowVersion(Path.GetExtension(filePath).Trim('.'), version);
+                    Logger.ShowVersion(Path.GetExtension(filePath).Trim('.'), version);
                     rgssV3_unpack(filePath, folderPath);
                     break;
                 default:
-                    LogUtility.Error($"Error: version {version} not recognized.");
+                    Logger.Error($"Error: version {version} not recognized.");
                     break;
             }
         }
@@ -88,7 +88,7 @@ namespace ArcFormats.RPGMaker
             BinaryReader br = new BinaryReader(fs);
             fs.Position = 8;
             uint seed = br.ReadUInt32();
-            LogUtility.Debug(string.Format(RPGMaker.logSeed, $"{seed:X8}"));
+            Logger.Debug(string.Format(RPGMaker.logSeed, $"{seed:X8}"));
             uint key = seed * 9 + 3;
             long fileCount = 0;
             bool isFirst = true;
@@ -129,7 +129,7 @@ namespace ArcFormats.RPGMaker
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles("*", SearchOption.AllDirectories);
 
-            LogUtility.InitBar(files.Length);
+            Logger.InitBar(files.Length);
             KeyGen keygen = new KeyGen(0xDEADCAFE);
             foreach (FileInfo file in files)
             {
@@ -141,7 +141,7 @@ namespace ArcFormats.RPGMaker
                 DecryptData(data, new KeyGen(keygen.GetCurrent()));
                 bw.Write(data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             bw.Dispose();
             fw.Dispose();
@@ -165,7 +165,7 @@ namespace ArcFormats.RPGMaker
                 baseOffset += (uint)Encoding.UTF8.GetByteCount(file.Substring(folderPath.Length + 1));
             }
 
-            LogUtility.InitBar(files.Length);
+            Logger.InitBar(files.Length);
             foreach (string file in files)
             {
                 byte[] relativePath = Encoding.UTF8.GetBytes(file.Substring(folderPath.Length + 1));
@@ -183,7 +183,7 @@ namespace ArcFormats.RPGMaker
                 baseOffset += (uint)data.Length;
                 data = null;
                 fw.Position = pos;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             bw.Write(key);
             bw.Write(0);

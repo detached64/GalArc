@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,7 +38,7 @@ namespace ArcFormats.NScripter
             }
             br.ReadByte(); //skip e
 
-            LogUtility.InitBar(entries.Count);
+            Logger.InitBar(entries.Count);
 
             foreach (Entry entry in entries)
             {
@@ -46,7 +46,7 @@ namespace ArcFormats.NScripter
                 Utils.CreateParentDirectoryIfNotExists(entry.FullPath);
                 File.WriteAllBytes(entry.FullPath, data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
             br.Dispose();
@@ -61,7 +61,7 @@ namespace ArcFormats.NScripter
             string[] relativePaths = Utils.GetRelativePaths(fullPaths, folderPath);
 
             int fileCount = fullPaths.Length;
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             uint dataOffset = 4;
 
             Utils.Sort(fullPaths);
@@ -94,7 +94,7 @@ namespace ArcFormats.NScripter
                 byte[] buffer = File.ReadAllBytes(entry.FullPath);
                 bw.Write(buffer);
                 buffer = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fw.Dispose();
             bw.Dispose();

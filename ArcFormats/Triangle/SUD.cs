@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System.IO;
 
 namespace ArcFormats.Triangle
@@ -29,14 +29,14 @@ namespace ArcFormats.Triangle
             BinaryWriter bw = new BinaryWriter(fw);
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles("*.ogg");
-            LogUtility.InitBar(files.Length);
+            Logger.InitBar(files.Length);
             foreach (FileInfo file in files)
             {
                 bw.Write((uint)file.Length);
                 byte[] data = File.ReadAllBytes(file.FullName);
                 bw.Write(data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fw.Dispose();
             bw.Dispose();

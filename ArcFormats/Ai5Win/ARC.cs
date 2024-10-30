@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,7 +30,7 @@ namespace ArcFormats.Ai5Win
             FolderPath = folderPath;
 
             int fileCount = br.ReadInt32();
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             Directory.CreateDirectory(folderPath);
 
             TryReadIndex(br, fileCount, out List<Entry> entries);
@@ -48,7 +48,7 @@ namespace ArcFormats.Ai5Win
                     File.WriteAllBytes(entry.Path, data);
                 }
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
             br.Dispose();
@@ -90,7 +90,7 @@ namespace ArcFormats.Ai5Win
                     continue;
                 }
             }
-            LogUtility.Error("Failed to read index.");
+            Logger.Error("Failed to read index.");
         }
     }
 

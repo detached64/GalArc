@@ -5,16 +5,16 @@ namespace ArcFormats.Templates
 {
     public partial class Empty : UserControl
     {
-        private static Empty _instance;
+        private static Empty instance;
         public static Empty Instance
         {
             get
             {
-                if (_instance == null)
+                if (instance == null)
                 {
-                    _instance = new Empty();
+                    instance = new Empty();
                 }
-                return _instance;
+                return instance;
             }
         }
 

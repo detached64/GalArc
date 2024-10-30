@@ -1,5 +1,5 @@
 ﻿using ArcFormats.Templates;
-using Log;
+using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,11 +38,11 @@ namespace ArcFormats.Triangle
             }
             else if ((offset2 & ~0xc0000000) == 4 + 32 * (uint)fileCount)
             {
-                LogUtility.Error("cgf v2 archive not implemented.");
+                Logger.Error("cgf v2 archive not implemented.");
             }
             else
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
         }
 
@@ -64,7 +64,7 @@ namespace ArcFormats.Triangle
             BinaryReader br = new BinaryReader(fs);
             int fileCount = br.ReadInt32();
             Directory.CreateDirectory(folderPath);
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             List<Entry> entries = new List<Entry>();
 
             for (int i = 0; i < fileCount; i++)
@@ -82,12 +82,12 @@ namespace ArcFormats.Triangle
                 byte[] buf = br.ReadBytes((int)(entries[i + 1].Offset - entries[i].Offset));
                 File.WriteAllBytes(Path.Combine(folderPath, entries[i].Name), buf);
                 buf = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             byte[] bufLast = br.ReadBytes((int)(fs.Length - entries[fileCount - 1].Offset));
             File.WriteAllBytes(Path.Combine(folderPath, entries[fileCount - 1].Name), bufLast);
             bufLast = null;
-            LogUtility.UpdateBar();
+            Logger.UpdateBar();
             fs.Dispose();
             br.Dispose();
         }
@@ -101,7 +101,7 @@ namespace ArcFormats.Triangle
             int fileCount = files.Length;
             bw.Write(fileCount);
             uint baseOffset = 4 + 20 * (uint)fileCount;
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             foreach (FileInfo file in files)
             {
                 bw.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(16, '\0')));
@@ -113,7 +113,7 @@ namespace ArcFormats.Triangle
                 byte[] data = File.ReadAllBytes(file.FullName);
                 bw.Write(data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fw.Dispose();
             bw.Dispose();

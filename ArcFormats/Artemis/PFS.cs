@@ -1,6 +1,6 @@
 ﻿using ArcFormats.Properties;
 using ArcFormats.Templates;
-using Log;
+using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -47,14 +47,14 @@ namespace ArcFormats.Artemis
 
             if (Encoding.ASCII.GetString(br.ReadBytes(2)) != header.Magic)
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
             header.Version = br.ReadChar().ToString();
             if (!Versions.Contains(header.Version))
             {
-                LogUtility.Error(string.Format(Resources.logErrorNotSupportedVersion, "pfs", header.Version));
+                Logger.Error(string.Format(Resources.logErrorNotSupportedVersion, "pfs", header.Version));
             }
-            LogUtility.ShowVersion("pfs", header.Version);
+            Logger.ShowVersion("pfs", header.Version);
             // read header
             header.IndexSize = br.ReadUInt32();
             if (header.Version == "2")
@@ -62,7 +62,7 @@ namespace ArcFormats.Artemis
                 br.ReadUInt32();
             }
             header.FileCount = br.ReadUInt32();
-            LogUtility.InitBar(header.FileCount);
+            Logger.InitBar(header.FileCount);
             // compute key
             byte[] key = new byte[20];  // SHA1 hash of index
             if (header.Version == "8")
@@ -109,7 +109,7 @@ namespace ArcFormats.Artemis
                 File.WriteAllBytes(entry.FullPath, buffer);
                 buffer = null;
                 fs.Position = pos;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
             br.Dispose();
@@ -128,7 +128,7 @@ namespace ArcFormats.Artemis
             string[] relativePaths = Utils.GetRelativePaths(files, folderPath);
             header.PathLenSum = (uint)Utils.GetLengthSum(relativePaths, Config.Encoding);
             header.FileCount = (uint)files.Length;
-            LogUtility.InitBar(header.FileCount);
+            Logger.InitBar(header.FileCount);
             Utils.Sort(relativePaths);
 
             //add entry
@@ -207,7 +207,7 @@ namespace ArcFormats.Artemis
                         }
                         fw8.Write(fileData, 0, fileData.Length);
                         fileData = null;
-                        LogUtility.UpdateBar();
+                        Logger.UpdateBar();
                     }
                     fw8.Dispose();
                     ms8.Dispose();
@@ -249,7 +249,7 @@ namespace ArcFormats.Artemis
                         byte[] fileData = File.ReadAllBytes(file.FullPath);
                         fw2.Write(fileData, 0, fileData.Length);
                         fileData = null;
-                        LogUtility.UpdateBar();
+                        Logger.UpdateBar();
                     }
                     fw2.Dispose();
                     ms2.Dispose();
@@ -308,7 +308,7 @@ namespace ArcFormats.Artemis
                         byte[] fileData = File.ReadAllBytes(file.FullPath);
                         fw6.Write(fileData, 0, fileData.Length);
                         fileData = null;
-                        LogUtility.UpdateBar();
+                        Logger.UpdateBar();
                     }
                     fw6.Dispose();
                     ms6.Dispose();

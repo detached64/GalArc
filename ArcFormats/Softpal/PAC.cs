@@ -1,5 +1,5 @@
 ﻿using ArcFormats.Properties;
-using Log;
+using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,12 +34,12 @@ namespace ArcFormats.Softpal
             br.Dispose();
             if (isVer1)
             {
-                LogUtility.ShowVersion("pac", 1);
+                Logger.ShowVersion("pac", 1);
                 pacV1_unpack(filePath, folderPath);
             }
             else
             {
-                LogUtility.ShowVersion("pac", 2);
+                Logger.ShowVersion("pac", 2);
                 pacV2_unpack(filePath, folderPath);
             }
         }
@@ -51,7 +51,7 @@ namespace ArcFormats.Softpal
             int fileCount = br.ReadUInt16();
             fs.Position = 0x3fe;
             List<Entry> entries = new List<Entry>();
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             Directory.CreateDirectory(folderPath);
 
             for (int i = 0; i < fileCount; i++)
@@ -69,17 +69,17 @@ namespace ArcFormats.Softpal
                 {
                     try
                     {
-                        LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.Name));
+                        Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
                         DecryptScript(data);
                     }
                     catch
                     {
-                        LogUtility.Error(Resources.logErrorDecScrFailed, false);
+                        Logger.Error(Resources.logErrorDecScrFailed, false);
                     }
                 }
                 File.WriteAllBytes(Path.Combine(folderPath, entry.Name), data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
         }
@@ -90,11 +90,11 @@ namespace ArcFormats.Softpal
             BinaryReader br = new BinaryReader(fs);
             if (!br.ReadBytes(4).SequenceEqual(Magic))
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
             br.ReadInt32();
             uint fileCount = br.ReadUInt32();
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             fs.Position = 0x804;
             Directory.CreateDirectory(folderPath);
             for (int i = 0; i < fileCount; i++)
@@ -110,19 +110,19 @@ namespace ArcFormats.Softpal
                 {
                     try
                     {
-                        LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.Name));
+                        Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
                         DecryptScript(fileData);
                     }
                     catch
                     {
-                        LogUtility.Error(Resources.logErrorDecScrFailed, false);
+                        Logger.Error(Resources.logErrorDecScrFailed, false);
                     }
                 }
 
                 File.WriteAllBytes(folderPath + "\\" + entry.Name, fileData);
                 fileData = null;
                 fs.Position = pos;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
             br.Dispose();
@@ -183,7 +183,7 @@ namespace ArcFormats.Softpal
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
             int fileCount = files.Length;
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             LogWindow.Instance.bar.Maximum = fileCount + 1;
 
             bw.Write((ushort)fileCount);
@@ -214,17 +214,17 @@ namespace ArcFormats.Softpal
                 {
                     try
                     {
-                        LogUtility.Debug(string.Format(Resources.logTryEncScr, Path.GetFileName(str)));
+                        Logger.Debug(string.Format(Resources.logTryEncScr, Path.GetFileName(str)));
                         EncryptScript(buffer);
                     }
                     catch
                     {
-                        LogUtility.Error(Resources.logErrorEncScrFailed, false);
+                        Logger.Error(Resources.logErrorEncScrFailed, false);
                     }
                 }
                 bw.Write(buffer);
                 buffer = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
 
             bw.Write(Encoding.ASCII.GetBytes("EOF "));
@@ -238,7 +238,7 @@ namespace ArcFormats.Softpal
             var characterCount = CountFirstCharacters(files);
             uint fileCount = (uint)files.Length;
 
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             LogWindow.Instance.bar.Maximum = (int)fileCount + 1;
 
             FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
@@ -274,17 +274,17 @@ namespace ArcFormats.Softpal
                 {
                     try
                     {
-                        LogUtility.Debug(string.Format(Resources.logTryEncScr, Path.GetFileName(str)));
+                        Logger.Debug(string.Format(Resources.logTryEncScr, Path.GetFileName(str)));
                         EncryptScript(buffer);
                     }
                     catch
                     {
-                        LogUtility.Error(Resources.logErrorEncScrFailed, false);
+                        Logger.Error(Resources.logErrorEncScrFailed, false);
                     }
                 }
                 bw.Write(buffer);
                 buffer = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             //end
             if (PackPACOptions.toCompute)
@@ -307,7 +307,7 @@ namespace ArcFormats.Softpal
                 bw.Write(0);
                 bw.Write(Encoding.ASCII.GetBytes("EOF "));
             }
-            LogUtility.UpdateBar();
+            Logger.UpdateBar();
             fw.Dispose();
             bw.Dispose();
         }

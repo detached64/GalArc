@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,7 +41,7 @@ namespace ArcFormats.Ai6Win
                 catch
                 { }
             }
-            LogUtility.ErrorInvalidArchive();
+            Logger.ErrorInvalidArchive();
         }
 
         public void Pack(string folderPath, string filePath)
@@ -82,9 +82,9 @@ namespace ArcFormats.Ai6Win
                 l.Add(entry);
             }
 
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             Directory.CreateDirectory(folderPath);
-            LogUtility.ShowVersion("arc", 1);
+            Logger.ShowVersion("arc", 1);
 
             ExtractData(l, br);
 
@@ -129,9 +129,9 @@ namespace ArcFormats.Ai6Win
                 l.Add(entry);
             }
 
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             Directory.CreateDirectory(folderPath);
-            LogUtility.ShowVersion("arc", 2);
+            Logger.ShowVersion("arc", 2);
 
             ExtractData(l, br);
 
@@ -169,9 +169,9 @@ namespace ArcFormats.Ai6Win
                 l.Add(entry);
             }
 
-            LogUtility.InitBar(l.Count);
+            Logger.InitBar(l.Count);
             Directory.CreateDirectory(folderPath);
-            LogUtility.ShowVersion("arc", 3);
+            Logger.ShowVersion("arc", 3);
 
             ExtractData(l, br);
 
@@ -190,7 +190,7 @@ namespace ArcFormats.Ai6Win
                 }
                 File.WriteAllBytes(Path.Combine(l[i].FullPath), data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
         }
 
@@ -202,7 +202,7 @@ namespace ArcFormats.Ai6Win
             int fileCount = files.Length;
             bw.Write(fileCount);
             uint baseOffset = 4 + 40 * (uint)fileCount;
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             foreach (FileInfo file in files)
             {
                 bw.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(32, '\0')));
@@ -216,7 +216,7 @@ namespace ArcFormats.Ai6Win
                 byte[] data = File.ReadAllBytes(file.FullName);
                 bw.Write(data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fw.Dispose();
             bw.Dispose();
@@ -230,7 +230,7 @@ namespace ArcFormats.Ai6Win
             int fileCount = files.Length;
             bw.Write(fileCount);
             uint dataOffset = 4 + 272 * (uint)fileCount;
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             foreach (FileInfo file in files)
             {
                 byte[] nameBuffer = ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(260, '\0'));
@@ -262,7 +262,7 @@ namespace ArcFormats.Ai6Win
                 fw.Position = pos;
                 dataOffset += packedSize;
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fw.Dispose();
             bw.Dispose();
@@ -274,7 +274,7 @@ namespace ArcFormats.Ai6Win
             BinaryWriter bw = new BinaryWriter(fw);
             FileInfo[] files = new DirectoryInfo(folderPath).GetFiles();
             int fileCount = files.Length;
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             uint dataOffset = (uint)(4 + Utils.GetNameLengthSum(files, ArcEncoding.Shift_JIS) + 13 * fileCount);
             bw.Write(dataOffset - 4);
 
@@ -304,7 +304,7 @@ namespace ArcFormats.Ai6Win
                 fw.Position = pos;
                 dataOffset += packedSize;
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             bw.Dispose();
             fw.Dispose();

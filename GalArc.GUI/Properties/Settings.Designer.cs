@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GalArc.Properties {
+namespace GalArc.GUI.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -176,6 +176,42 @@ namespace GalArc.Properties {
             }
             set {
                 this["FreezeControls"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableExtensions {
+            get {
+                return ((bool)(this["EnableExtensions"]));
+            }
+            set {
+                this["EnableExtensions"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableGARbroDB {
+            get {
+                return ((bool)(this["EnableGARbroDB"]));
+            }
+            set {
+                this["EnableGARbroDB"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GARbroDBPath {
+            get {
+                return ((string)(this["GARbroDBPath"]));
+            }
+            set {
+                this["GARbroDBPath"] = value;
             }
         }
     }

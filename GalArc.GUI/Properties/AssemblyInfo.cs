@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("GalArc")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("The GUI of GalArc.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("GalArc")]
-[assembly: AssemblyCopyright("Copyright ©  2024")]
+[assembly: AssemblyCompany("detached64")]
+[assembly: AssemblyProduct("GalArc.GUI")]
+[assembly: AssemblyCopyright("Copyright © 2024 detached64")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

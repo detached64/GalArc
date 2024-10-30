@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System.IO;
 using System.Linq;
 using Utility;
@@ -15,10 +15,10 @@ namespace ArcFormats.Palette
             BinaryReader br = new BinaryReader(fs);
             if (!br.ReadBytes(6).SequenceEqual(Magic))
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
             int count = br.ReadInt32();
-            LogUtility.InitBar(count);
+            Logger.InitBar(count);
             Directory.CreateDirectory(folderPath);
 
             for (int i = 0; i < count; i++)
@@ -38,7 +38,7 @@ namespace ArcFormats.Palette
                 File.WriteAllBytes(Path.Combine(folderPath, name), data);
                 data = null;
                 fs.Position = pos;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
             br.Dispose();
@@ -56,7 +56,7 @@ namespace ArcFormats.Palette
 
             bw.Write(Magic);
             bw.Write(fileCount);
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
 
             foreach (string file in files)
             {
@@ -71,7 +71,7 @@ namespace ArcFormats.Palette
                 bw.Write(baseOffset);
                 baseOffset += fileSize;
                 bw.Write(fileSize);
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             foreach (string file in files)
             {
