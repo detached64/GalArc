@@ -23,7 +23,7 @@
 // SOFTWARE.
 //
 
-using Log;
+using GalArc.Logs;
 using System;
 using System.IO;
 using System.IO.Compression;
@@ -183,7 +183,7 @@ namespace Utility.Compression
                         }
                         catch (Exception e)
                         {
-                            LogUtility.Error(e.Message);
+                            Logger.Error(e.Message);
                         }
                         input = null;
                         return outputStream.ToArray();
@@ -209,7 +209,7 @@ namespace Utility.Compression
                 }
                 catch (Exception e)
                 {
-                    LogUtility.Error(e.Message);
+                    Logger.Error(e.Message);
                     return null;
                 }
             }

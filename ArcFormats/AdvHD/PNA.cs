@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,7 +39,7 @@ namespace ArcFormats.AdvHD
             header.Magic = Encoding.UTF8.GetString(br.ReadBytes(4));
             if (header.Magic != "PNAP")
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
 
             header.Unknown1 = br.ReadUInt32();
@@ -91,7 +91,7 @@ namespace ArcFormats.AdvHD
             }
             if (!File.Exists(spath))
             {
-                LogUtility.ErrorNeedOriginalFile(Path.GetFileName(spath));
+                Logger.ErrorNeedOriginalFile(Path.GetFileName(spath));
             }
 
             File.Copy(spath, tpath, true);

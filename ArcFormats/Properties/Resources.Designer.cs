@@ -142,6 +142,15 @@ namespace ArcFormats.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Get {0} schemes from GARbroDB. 的本地化字符串。
+        /// </summary>
+        internal static string logReadGARbroDBSchemeSuccess {
+            get {
+                return ResourceManager.GetString("logReadGARbroDBSchemeSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Try to decompress: {0}…… 的本地化字符串。
         /// </summary>
         internal static string logTryDecompress {

@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,7 +40,7 @@ namespace ArcFormats.Eushully
             }
             else
             {
-                LogUtility.ErrorNeedAnotherFile($"{IndexFileNameV4}/{IndexFileNameV5}");
+                Logger.ErrorNeedAnotherFile($"{IndexFileNameV4}/{IndexFileNameV5}");
             }
         }
 
@@ -54,7 +54,7 @@ namespace ArcFormats.Eushully
                 {
                     if (Encoding.ASCII.GetString(br.ReadBytes(8)) != IndexFileMagicV4)
                     {
-                        LogUtility.ErrorInvalidArchive();
+                        Logger.ErrorInvalidArchive();
                     }
                     fs.Position = 312;
                     byte[] raw = br.ReadBytes((int)fs.Length - 312);
@@ -83,11 +83,11 @@ namespace ArcFormats.Eushully
                     archiveIndex = archives.IndexOf(Path.GetFileName(filePath).ToLower());
                     if (archiveIndex == -1)
                     {
-                        LogUtility.ErrorInvalidArchive();
+                        Logger.ErrorInvalidArchive();
                     }
                     else
                     {
-                        LogUtility.ShowVersion("alf", 4);
+                        Logger.ShowVersion("alf", 4);
                         ms.Position = pos;
                         int fileCount = br.ReadInt32();
                         for (int i = 0; i < fileCount; i++)
@@ -109,7 +109,7 @@ namespace ArcFormats.Eushully
                 }
             }
 
-            LogUtility.InitBar(entries.Count);
+            Logger.InitBar(entries.Count);
             Directory.CreateDirectory(folderPath);
             using (FileStream fs = File.OpenRead(filePath))
             {
@@ -121,7 +121,7 @@ namespace ArcFormats.Eushully
                         byte[] buffer = br.ReadBytes((int)entry.Size);
                         File.WriteAllBytes(Path.Combine(folderPath, entry.Name), buffer);
                         buffer = null;
-                        LogUtility.UpdateBar();
+                        Logger.UpdateBar();
                     }
                 }
             }
@@ -138,7 +138,7 @@ namespace ArcFormats.Eushully
                 {
                     if (Encoding.Unicode.GetString(br.ReadBytes(16)) != IndexFileMagicV5)
                     {
-                        LogUtility.ErrorInvalidArchive();
+                        Logger.ErrorInvalidArchive();
                     }
                     fs.Position = 552;
                     byte[] raw = br.ReadBytes((int)fs.Length - 552);
@@ -167,11 +167,11 @@ namespace ArcFormats.Eushully
                     archiveIndex = archives.IndexOf(Path.GetFileName(filePath).ToLower());
                     if (archiveIndex == -1)
                     {
-                        LogUtility.ErrorInvalidArchive();
+                        Logger.ErrorInvalidArchive();
                     }
                     else
                     {
-                        LogUtility.ShowVersion("alf", 5);
+                        Logger.ShowVersion("alf", 5);
                         ms.Position = pos;
                         int fileCount = br.ReadInt32();
                         for (int i = 0; i < fileCount; i++)
@@ -192,7 +192,7 @@ namespace ArcFormats.Eushully
                     }
                 }
             }
-            LogUtility.InitBar(entries.Count);
+            Logger.InitBar(entries.Count);
             Directory.CreateDirectory(folderPath);
             using (FileStream fs = File.OpenRead(filePath))
             {
@@ -204,7 +204,7 @@ namespace ArcFormats.Eushully
                         byte[] buffer = br.ReadBytes((int)entry.Size);
                         File.WriteAllBytes(Path.Combine(folderPath, entry.Name), buffer);
                         buffer = null;
-                        LogUtility.UpdateBar();
+                        Logger.UpdateBar();
                     }
                 }
             }

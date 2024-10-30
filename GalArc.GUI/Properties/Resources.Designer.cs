@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GalArc.Properties {
+namespace GalArc.GUI.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace GalArc.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GalArc.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GalArc.GUI.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -183,6 +183,15 @@ namespace GalArc.Properties {
         internal static string logUnpacking {
             get {
                 return ResourceManager.GetString("logUnpacking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Extensions 的本地化字符串。
+        /// </summary>
+        internal static string nodeExtensions {
+            get {
+                return ResourceManager.GetString("nodeExtensions", resourceCulture);
             }
         }
         

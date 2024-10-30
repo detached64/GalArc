@@ -1,6 +1,6 @@
 ﻿using ArcFormats.Properties;
 using ArcFormats.Templates;
-using Log;
+using GalArc.Logs;
 using System;
 using System.IO;
 using System.Text;
@@ -27,7 +27,7 @@ namespace ArcFormats.Cmvs
             BinaryReader br = new BinaryReader(fs);
             fs.Position = 4;
             int fileCount = br.ReadInt32();
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             long indexSize = br.ReadInt64();
             byte[] index = br.ReadBytes((int)indexSize);
             for (int i = 0; i < index.Length; i++)
@@ -56,7 +56,7 @@ namespace ArcFormats.Cmvs
                 string path = Path.Combine(folderPath, fileName);
                 File.WriteAllBytes(path, data);
                 ms.Position++;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
 
             fs.Dispose();
@@ -70,7 +70,7 @@ namespace ArcFormats.Cmvs
             bw.Write(Encoding.ASCII.GetBytes("CPZ1"));
             int fileCount = files.Length;
             bw.Write(fileCount);
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             long indexSize = 26 * fileCount + Utility.Utils.GetNameLengthSum(files, ArcEncoding.Shift_JIS);
             bw.Write(indexSize * 2);
 
@@ -105,7 +105,7 @@ namespace ArcFormats.Cmvs
                     data[i] = (byte)((data[i] + 0x6C) ^ KeyV1[i & 0x3F]);
                 }
                 bw.Write(data);
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fw.Dispose();
             bw.Dispose();
@@ -178,7 +178,7 @@ namespace ArcFormats.Cmvs
             BinaryReader br = new BinaryReader(fs);
             if (Encoding.ASCII.GetString(br.ReadBytes(3)) != "CPZ")
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
 
             int version = br.ReadChar() - '0';
@@ -194,7 +194,7 @@ namespace ArcFormats.Cmvs
                     cpzV6_unpack(filePath, folderPath);
                     break;
                 default:
-                    LogUtility.Error(Resources.logErrorNotSupportedVersion);
+                    Logger.Error(Resources.logErrorNotSupportedVersion);
                     break;
             }
         }

@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,7 +26,7 @@ namespace ArcFormats.NekoSDK
             BinaryReader br = new BinaryReader(fs);
             if (Encoding.ASCII.GetString(br.ReadBytes(8)) != Magic)
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
             string version = Encoding.ASCII.GetString(br.ReadBytes(2));
             int dataOffset;
@@ -39,7 +39,7 @@ namespace ArcFormats.NekoSDK
                     dataOffset = 16 + br.ReadInt16();
                     break;
                 default:
-                    LogUtility.Error("Unknown version: " + version);
+                    Logger.Error("Unknown version: " + version);
                     return;
             }
             List<Entry> entries = new List<Entry>();
@@ -60,7 +60,7 @@ namespace ArcFormats.NekoSDK
                 entry.Size = br.ReadUInt32() ^ (uint)key;
                 entries.Add(entry);
             }
-            LogUtility.InitBar(entries.Count);
+            Logger.InitBar(entries.Count);
             Directory.CreateDirectory(folderPath);
 
             foreach (var entry in entries)
@@ -78,7 +78,7 @@ namespace ArcFormats.NekoSDK
                 File.WriteAllBytes(Path.Combine(folderPath, entry.Name), fileData);
                 fileData = null;
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
             br.Dispose();
@@ -96,7 +96,7 @@ namespace ArcFormats.NekoSDK
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles();
 
-            LogUtility.InitBar(files.Length);
+            Logger.InitBar(files.Length);
             uint baseOffset = (uint)files.Length * 12 + 18;
 
             foreach (var file in files)
@@ -134,7 +134,7 @@ namespace ArcFormats.NekoSDK
 
                 writer.Write(size ^ (uint)key);
                 baseOffset += size;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             writer.Write(0);
             fw.Position = 0;

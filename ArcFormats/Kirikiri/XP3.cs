@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,17 +31,17 @@ namespace ArcFormats.Kirikiri
             BinaryReader br = new BinaryReader(fs);
             if (!br.ReadBytes(11).SequenceEqual(Magic))
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
 
             if (br.ReadByte() == 0x17)
             {
-                LogUtility.ShowVersion("xp3", 2);
+                Logger.ShowVersion("xp3", 2);
                 br.BaseStream.Position += 20;
             }
             else
             {
-                LogUtility.ShowVersion("xp3", 1);
+                Logger.ShowVersion("xp3", 1);
                 br.BaseStream.Position--;
             }
 
@@ -55,7 +55,7 @@ namespace ArcFormats.Kirikiri
                     Index = br.ReadBytes((int)indexSize);
                     if (fs.Position != new FileInfo(filePath).Length)
                     {
-                        LogUtility.Error("Error: additional bytes beyond index.");
+                        Logger.Error("Error: additional bytes beyond index.");
                     }
                     break;
 
@@ -65,17 +65,17 @@ namespace ArcFormats.Kirikiri
                     byte[] packedIndex = br.ReadBytes((int)packedIndexSize);
                     if (fs.Position != new FileInfo(filePath).Length)
                     {
-                        LogUtility.Error("Error: additional bytes beyond index.");
+                        Logger.Error("Error: additional bytes beyond index.");
                     }
                     Index = Zlib.DecompressBytes(packedIndex);
                     if (Index.Length != unpackedIndexSize)
                     {
-                        LogUtility.Info("Index size fails to match.Try reading……");
+                        Logger.Info("Index size fails to match.Try reading……");
                     }
                     break;
 
                 default:
-                    LogUtility.ErrorInvalidArchive();
+                    Logger.ErrorInvalidArchive();
                     return;
             }
             List<Entry> entries = new List<Entry>();
@@ -87,7 +87,7 @@ namespace ArcFormats.Kirikiri
                     string secSig = Encoding.ASCII.GetString(brIndex.ReadBytes(4));
                     if (secSig != "File")
                     {
-                        LogUtility.ErrorInvalidArchive();
+                        Logger.ErrorInvalidArchive();
                     }
                     Entry entry = new Entry();
                     long thisRemaining = brIndex.ReadInt64();
@@ -106,7 +106,7 @@ namespace ArcFormats.Kirikiri
                                 int flag = brIndex.ReadInt32();
                                 if (flag != 0)
                                 {
-                                    LogUtility.Info("Encrypted file detected, skipping...");
+                                    Logger.Info("Encrypted file detected, skipping...");
                                     goto NextEntry;
                                 }
                                 entry.UnpackedSize = brIndex.ReadUInt64();
@@ -133,7 +133,7 @@ NextEntry:
                     ms.Position = nextPos;
                 }
             }
-            LogUtility.InitBar(entries.Count);
+            Logger.InitBar(entries.Count);
             foreach (Entry entry in entries)
             {
                 fs.Position = entry.DataOffset;
@@ -148,7 +148,7 @@ NextEntry:
                 File.WriteAllBytes(entry.FullPath, data);
                 data = null;
                 //LogUtility.Debug(entry.path);
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
             br.Dispose();
@@ -170,7 +170,7 @@ NextEntry:
 
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles("*", SearchOption.AllDirectories);
-            LogUtility.InitBar(files.Length);
+            Logger.InitBar(files.Length);
 
             MemoryStream ms = new MemoryStream();
             BinaryWriter bwEntry = new BinaryWriter(ms);
@@ -217,7 +217,7 @@ NextEntry:
                 bwEntry.Write((long)4);
                 bwEntry.Write(adler32);
                 //bwEntry.Write(0);
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
 
             long indexOffset = 0;

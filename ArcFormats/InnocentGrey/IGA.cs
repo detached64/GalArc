@@ -1,5 +1,5 @@
 ﻿using ArcFormats.Properties;
-using Log;
+using GalArc.Logs;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -32,7 +32,7 @@ namespace ArcFormats.InnocentGrey
             List<Entry> entriesUpdate = new List<Entry>();
             if (Encoding.ASCII.GetString(br.ReadBytes(4)) != Magic)
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
 
             fs.Position = 16;
@@ -48,7 +48,7 @@ namespace ArcFormats.InnocentGrey
                 entries.Add(entry);
             }
 
-            LogUtility.InitBar(entries.Count);
+            Logger.InitBar(entries.Count);
             uint nameIndexSize = VarInt.UnpackUint(br);
             long endName = fs.Position + nameIndexSize;
 
@@ -80,7 +80,7 @@ namespace ArcFormats.InnocentGrey
                 int key = UnpackIGAOptions.toDecryptScripts && Path.GetExtension(entry.FileName) == ".s" ? 0xFF : 0;
                 if (key != 0)
                 {
-                    LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.FileName));
+                    Logger.Debug(string.Format(Resources.logTryDecScr, entry.FileName));
                 }
                 for (uint j = 0; j < entry.Size; j++)
                 {
@@ -88,7 +88,7 @@ namespace ArcFormats.InnocentGrey
                 }
                 File.WriteAllBytes(Path.Combine(folderPath, entry.FileName), buffer);
                 buffer = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
             br.Dispose();
@@ -121,7 +121,7 @@ namespace ArcFormats.InnocentGrey
                 dataOffset += entry.Size;
             }
             int fileCount = files.Length;
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
 
             using (MemoryStream msEntry = new MemoryStream())
             {
@@ -154,7 +154,7 @@ namespace ArcFormats.InnocentGrey
                 int key = PackIGAOptions.toEncryptScripts && Path.GetExtension(entry.FileName) == ".s" ? 0xFF : 0;
                 if (key != 0)
                 {
-                    LogUtility.Debug(string.Format(Resources.logTryEncScr, entry.FileName));
+                    Logger.Debug(string.Format(Resources.logTryEncScr, entry.FileName));
                 }
                 for (uint j = 0; j < entry.Size; j++)
                 {
@@ -162,7 +162,7 @@ namespace ArcFormats.InnocentGrey
                 }
                 bw.Write(buffer);
                 buffer = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fw.Dispose();
             bw.Dispose();

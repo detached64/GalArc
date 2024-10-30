@@ -1,5 +1,5 @@
 ﻿using ArcFormats.Templates;
-using Log;
+using GalArc.Logs;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -38,7 +38,7 @@ namespace ArcFormats.BiShop
 
             if (!br.ReadBytes(8).SequenceEqual(Magic))
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
 
             ushort version = br.ReadUInt16();
@@ -46,17 +46,17 @@ namespace ArcFormats.BiShop
             br.Dispose();
             if (version > 1)
             {
-                LogUtility.ShowVersion("bsa", 2);
+                Logger.ShowVersion("bsa", 2);
                 bsaV2_unpack(filePath, folderPath);
             }
             else if (version == 1)
             {
-                LogUtility.ShowVersion("bsa", 1);
+                Logger.ShowVersion("bsa", 1);
                 bsaV1_unpack(filePath, folderPath);
             }
             else
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
         }
 
@@ -68,7 +68,7 @@ namespace ArcFormats.BiShop
             ushort fileCount = br.ReadUInt16();
             uint indexOffset = br.ReadUInt32();
             Directory.CreateDirectory(folderPath);
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
 
             fs.Seek(indexOffset, SeekOrigin.Begin);
             for (int i = 0; i < fileCount; i++)
@@ -80,7 +80,7 @@ namespace ArcFormats.BiShop
                 fs.Position = dataOffset;
                 File.WriteAllBytes(path, br.ReadBytes((int)dataSize));
                 fs.Position = pos;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
             br.Dispose();
@@ -95,7 +95,7 @@ namespace ArcFormats.BiShop
             uint indexOffset = br.ReadUInt32();
             uint nameOffset = indexOffset + (uint)fileCount * 12;
             Directory.CreateDirectory(folderPath);
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
 
             fs.Seek(indexOffset, SeekOrigin.Begin);
             m_path.Clear();
@@ -130,9 +130,9 @@ namespace ArcFormats.BiShop
                     RealCount++;
                 }
                 fs.Position = pos;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
-            LogUtility.Debug(RealCount.ToString() + " among them are actually files.");
+            Logger.Debug(RealCount.ToString() + " among them are actually files.");
             fs.Dispose();
             br.Dispose();
         }
@@ -160,7 +160,7 @@ namespace ArcFormats.BiShop
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles();
             int fileCount = files.Length;
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             LogWindow.Instance.bar.Maximum = fileCount + 1;
             bw.Write((ushort)fileCount);
             bw.Write(0);
@@ -175,14 +175,14 @@ namespace ArcFormats.BiShop
                 byte[] data = File.ReadAllBytes(file.FullName);
                 bw.Write(data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             // entry
             uint indexOffset = (uint)fw.Position;
             fw.Position = 12;
             bw.Write(indexOffset);
             fw.Position = indexOffset;
-            LogUtility.UpdateBar();
+            Logger.UpdateBar();
             ms.WriteTo(fw);
             ms.Dispose();
             fw.Dispose();
@@ -205,7 +205,7 @@ namespace ArcFormats.BiShop
             bw.Write(Magic);
             bw.Write((ushort)3);
             int fileCount = Utils.GetFileCount(folderPath);
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             bw.Write((ushort)fileCount);
             bw.Write(0);
             // others
@@ -251,7 +251,7 @@ namespace ArcFormats.BiShop
                 data = null;
 
                 FileCount++;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
 
             foreach (string dir in Directory.GetDirectories(path))

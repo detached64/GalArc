@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System;
 using System.IO;
 using System.Text;
@@ -30,14 +30,14 @@ namespace ArcFormats.SystemNNN
 
             if (!File.Exists(gtbPath))
             {
-                LogUtility.ErrorNeedAnotherFile(Path.GetFileName(gtbPath));
+                Logger.ErrorNeedAnotherFile(Path.GetFileName(gtbPath));
             }
 
             //open&make dir
             FileStream fs1 = File.OpenRead(gtbPath);
             BinaryReader br1 = new BinaryReader(fs1);
             uint filecount = br1.ReadUInt32();
-            LogUtility.InitBar(filecount);
+            Logger.InitBar(filecount);
 
             FileStream fs2 = File.OpenRead(gpkPath);
             BinaryReader br2 = new BinaryReader(fs2);
@@ -76,7 +76,7 @@ namespace ArcFormats.SystemNNN
                 buffer = null;
                 fs1.Seek(4 + 4 * i, SeekOrigin.Begin);
 
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
 
             uint offset = br1.ReadUInt32();
@@ -95,14 +95,14 @@ namespace ArcFormats.SystemNNN
             byte[] buf = br2.ReadBytes((int)last.Size);
             File.WriteAllBytes(last.Path, buf);
             buf = null;
-            LogUtility.UpdateBar();
+            Logger.UpdateBar();
             if (maxPos == gtbSize)
             {
-                LogUtility.ShowVersion("gpk", 1);
+                Logger.ShowVersion("gpk", 1);
             }
             else
             {
-                LogUtility.ShowVersion("gpk", 2);
+                Logger.ShowVersion("gpk", 2);
             }
 
             fs1.Dispose();
@@ -116,7 +116,7 @@ namespace ArcFormats.SystemNNN
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles("*.dwq");
             int filecount = files.Length;
-            LogUtility.InitBar(filecount);
+            Logger.InitBar(filecount);
             LogWindow.Instance.bar.Maximum = 3 * filecount;
 
             string gpkPath = filePath;
@@ -139,21 +139,21 @@ namespace ArcFormats.SystemNNN
                 byte[] buffer = File.ReadAllBytes(file.FullName);
                 writer2.Write(buffer);
                 buffer = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
 
             foreach (FileInfo file in files)
             {
                 writer1.Write(sizeToNow);
                 sizeToNow += (uint)file.Length;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
 
             foreach (FileInfo file in files)
             {
                 writer1.Write(Encoding.ASCII.GetBytes(Path.GetFileNameWithoutExtension(file.FullName)));
                 writer1.Write('\0');
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
 
             if (Config.Version == "1")

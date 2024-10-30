@@ -1,5 +1,5 @@
 ﻿using ArcFormats.Properties;
-using Log;
+using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,12 +33,12 @@ namespace ArcFormats.InnocentGrey
             BinaryReader br = new BinaryReader(fs);
             if (Encoding.ASCII.GetString(br.ReadBytes(8)) != Magic)
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
             int fileCount = br.ReadInt32();
             br.BaseStream.Position += 4;
 
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             List<Entry> entries = new List<Entry>();
             Directory.CreateDirectory(folderPath);
 
@@ -65,7 +65,7 @@ namespace ArcFormats.InnocentGrey
                 byte[] data = br.ReadBytes((int)entry.UnpackedSize);
                 if (UnpackIGAOptions.toDecryptScripts && Path.GetExtension(entry.FileName) == ".s")
                 {
-                    LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.FileName));
+                    Logger.Debug(string.Format(Resources.logTryDecScr, entry.FileName));
                     for (int i = 0; i < data.Length; i++)
                     {
                         data[i] ^= 0xFF;
@@ -73,7 +73,7 @@ namespace ArcFormats.InnocentGrey
                 }
                 File.WriteAllBytes(Path.Combine(folderPath, entry.FileName), data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             br.Dispose();
             fs.Dispose();
@@ -86,7 +86,7 @@ namespace ArcFormats.InnocentGrey
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles();
             int fileCount = files.Length;
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             bw.Write(Encoding.ASCII.GetBytes(Magic));
             bw.Write(fileCount);
             bw.Write(fileCount);
@@ -108,7 +108,7 @@ namespace ArcFormats.InnocentGrey
                 byte[] data = File.ReadAllBytes(file.FullName);
                 if (UnpackIGAOptions.toDecryptScripts && file.Extension == ".s")
                 {
-                    LogUtility.Debug(string.Format(Resources.logTryEncScr, file.Name));
+                    Logger.Debug(string.Format(Resources.logTryEncScr, file.Name));
                     for (int i = 0; i < data.Length; i++)
                     {
                         data[i] ^= 0xFF;
@@ -116,7 +116,7 @@ namespace ArcFormats.InnocentGrey
                 }
                 bw.Write(data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             bw.Dispose();
             fw.Dispose();

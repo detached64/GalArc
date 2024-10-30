@@ -1,5 +1,5 @@
 ﻿using ArcFormats.Properties;
-using Log;
+using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -37,13 +37,13 @@ namespace ArcFormats
                         FilePath,
                         FolderPath
                     }.ToArray();
-                    LogUtility.InitUnpack(FilePath, FolderPath);
+                    Logger.InitUnpack(FilePath, FolderPath);
                     unpack.Invoke(instance, parameters);
-                    LogUtility.FinishUnpack();
+                    Logger.FinishUnpack();
                 }
                 else
                 {
-                    LogUtility.Error(Resources.logErrorUnpackMethodNotFound);
+                    Logger.Error(Resources.logErrorUnpackMethodNotFound);
                 }
             }
             else
@@ -67,13 +67,13 @@ namespace ArcFormats
                         FolderPath,
                         FilePath
                     }.ToArray();
-                    LogUtility.InitPack(FolderPath, FilePath);
+                    Logger.InitPack(FolderPath, FilePath);
                     pack.Invoke(instance, parameters);
-                    LogUtility.FinishPack();
+                    Logger.FinishPack();
                 }
                 else
                 {
-                    LogUtility.Error(Resources.logErrorPackMethodNotFound);
+                    Logger.Error(Resources.logErrorPackMethodNotFound);
                 }
             }
             else

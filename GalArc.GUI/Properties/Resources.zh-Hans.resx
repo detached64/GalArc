@@ -165,4 +165,7 @@
   <data name="logPacking" xml:space="preserve">
     <value>封包中……</value>
   </data>
+  <data name="nodeExtensions" xml:space="preserve">
+    <value>扩展</value>
+  </data>
 </root>

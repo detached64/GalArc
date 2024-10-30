@@ -18,7 +18,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-using Log;
+using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 
@@ -54,7 +54,7 @@ namespace Utility.Compression
                     ushort v = token++;
                     if (v >= max)
                     {
-                        LogUtility.Error("Exceeded huffman tree.");
+                        Logger.Error("Exceeded huffman tree.");
                     }
                     lct[v] = CreateTree();
                     rct[v] = CreateTree();

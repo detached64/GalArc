@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -28,7 +28,7 @@ namespace ArcFormats.NitroPlus
             BinaryReader br = new BinaryReader(fs);
             fs.Position = 4;
             int fileCount = br.ReadInt32();
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             fs.Position += 4;
             int comSize = br.ReadInt32();
             fs.Position = 0x114;
@@ -74,7 +74,7 @@ namespace ArcFormats.NitroPlus
                         }
                         backup = null;
                         data = null;
-                        LogUtility.UpdateBar();
+                        Logger.UpdateBar();
                     }
                 }
             }
@@ -93,7 +93,7 @@ namespace ArcFormats.NitroPlus
             bw.Write(2);
             int fileCount = fullPaths.Length;
             bw.Write(fileCount);
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
 
 
             using (MemoryStream memoryStream = new MemoryStream())
@@ -143,7 +143,7 @@ namespace ArcFormats.NitroPlus
                 byte[] data = File.ReadAllBytes(fullPath);
                 bw.Write(data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
 
             fw.Dispose();

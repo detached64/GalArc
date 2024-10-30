@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System.IO;
 using System.Text;
 using Utility;
@@ -22,13 +22,13 @@ namespace ArcFormats.KID
             BinaryReader br = new BinaryReader(fs);
             if (Encoding.ASCII.GetString(br.ReadBytes(4)) != Magic)
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
             int fileCount = br.ReadInt32();
             br.ReadBytes(8);
             uint dataOffset = 16 + 32 * (uint)fileCount;
             Directory.CreateDirectory(folderPath);
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             for (int i = 0; i < fileCount; i++)
             {
                 Entry entry = new Entry();
@@ -41,7 +41,7 @@ namespace ArcFormats.KID
                 File.WriteAllBytes(Path.Combine(folderPath, entry.Name), data);
                 data = null;
                 fs.Position = thisPos;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fs.Dispose();
             br.Dispose();
@@ -58,7 +58,7 @@ namespace ArcFormats.KID
             int fileCount = files.Length;
             bw.Write(fileCount);
             bw.Write((long)0);
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             uint offset = 0;
             foreach (FileInfo file in files)
             {
@@ -72,7 +72,7 @@ namespace ArcFormats.KID
                 byte[] data = File.ReadAllBytes(file.FullName);
                 bw.Write(data);
                 data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
             fw.Dispose();
         }

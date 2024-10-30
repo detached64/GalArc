@@ -1,4 +1,4 @@
-﻿using Log;
+﻿using GalArc.Logs;
 using System;
 using System.IO;
 using Utility;
@@ -27,7 +27,7 @@ namespace ArcFormats.Ai5Win
             };
 
             fs.Position = 8;
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
             Directory.CreateDirectory(folderPath);
 
             for (int i = 0; i < fileCount; i++)
@@ -47,7 +47,7 @@ namespace ArcFormats.Ai5Win
                 File.WriteAllBytes(path, data);
                 data = null;
                 fs.Position = pos;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
 
             fs.Dispose();

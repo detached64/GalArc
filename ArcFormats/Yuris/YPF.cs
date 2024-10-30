@@ -1,5 +1,5 @@
 ﻿using ArcFormats.Properties;
-using Log;
+using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -57,7 +57,7 @@ namespace ArcFormats.Yuris
             BinaryReader br = new BinaryReader(fs);
             if (br.ReadUInt32() != 0x00465059)
             {
-                LogUtility.ErrorInvalidArchive();
+                Logger.ErrorInvalidArchive();
             }
 
             FolderPath = folderPath;
@@ -67,7 +67,7 @@ namespace ArcFormats.Yuris
             int fileCount = br.ReadInt32();
             uint indexSize = br.ReadUInt32();
             fs.Position += 16;
-            LogUtility.InitBar(fileCount);
+            Logger.InitBar(fileCount);
 
             TryReadIndex(br, version, fileCount);
 
@@ -84,12 +84,12 @@ namespace ArcFormats.Yuris
                 Utils.CreateParentDirectoryIfNotExists(entry.Path);
                 if (UnpackYPFOptions.toDecryptScripts && Path.GetExtension(entry.Path) == ".ybn" && BitConverter.ToUInt32(entry.Data, 0) == 0x42545359)
                 {
-                    LogUtility.Debug(string.Format(Resources.logTryDecScr, entry.Name));
+                    Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
                     entry.Data = TryDecryptScript(entry.Data);
                 }
                 File.WriteAllBytes(entry.Path, entry.Data);
                 entry.Data = null;
-                LogUtility.UpdateBar();
+                Logger.UpdateBar();
             }
 
             fs.Dispose();
@@ -104,7 +104,7 @@ namespace ArcFormats.Yuris
                 {
                     scheme.Table = table;
                     scheme.ExtraLen = length;
-                    LogUtility.Debug($"Try {tableNames[tables.IndexOf(table)]} , Extra Length = {length}……");
+                    Logger.Debug($"Try {tableNames[tables.IndexOf(table)]} , Extra Length = {length}……");
                     try
                     {
                         Reset();
@@ -123,7 +123,7 @@ namespace ArcFormats.Yuris
                 foreach (var length in extraLens)
                 {
                     scheme.ExtraLen = length;
-                    LogUtility.Debug($"Try special table , Extra Length = {length}……");
+                    Logger.Debug($"Try special table , Extra Length = {length}……");
                     try
                     {
                         Reset();
@@ -136,7 +136,7 @@ namespace ArcFormats.Yuris
                     }
                 }
             }
-            LogUtility.Error("Failed to read index.");
+            Logger.Error("Failed to read index.");
         }
 
         private static void ReadIndex(BinaryReader br, int fileCount)
@@ -214,7 +214,7 @@ namespace ArcFormats.Yuris
                 catch
                 {
                     isFirstGuessYst = true;
-                    LogUtility.Error(Resources.logErrorDecScrFailed, false);
+                    Logger.Error(Resources.logErrorDecScrFailed, false);
                     return script;
                 }
             }
