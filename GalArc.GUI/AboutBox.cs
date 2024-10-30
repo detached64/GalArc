@@ -83,7 +83,7 @@ namespace GalArc.GUI
         {
             if (e.RowIndex % 2 == 0)
             {
-                this.dataGridViewEngines.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(242, 245, 249);
+                this.dataGridViewEngines.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(249, 249, 249);
             }
             else
             {

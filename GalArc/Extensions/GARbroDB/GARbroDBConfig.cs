@@ -7,7 +7,9 @@ namespace GalArc.Extensions.GARbroDB
     {
         public static bool IsGARbroDBEnabled { get; set; } = true;
 
-        public static string GARbroDBPath { get; set; } = Path.Combine(Environment.CurrentDirectory, "Extensions\\GARbroDB\\Formats.json");
+        public static string GARbroDBPath { get; set; }
+
+        public static string DefaultGARbroDBPath { get; } = Path.Combine(Environment.CurrentDirectory, "Extensions\\Formats.json");
 
     }
 }
