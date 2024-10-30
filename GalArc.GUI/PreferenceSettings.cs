@@ -29,7 +29,11 @@ namespace GalArc.GUI
 
         private void PreferenceSettings_Load(object sender, EventArgs e)
         {
-            this.combEncoding.Items.AddRange(Encodings.CodePages.Keys.ToArray());
+            if (this.combEncoding.Items.Count == 0)
+            {
+                this.combEncoding.Items.AddRange(Encodings.CodePages.Keys.ToArray());
+            }
+
             string encoding = Settings.Default.DefaultEncoding;
             if (this.combEncoding.Items.Contains(encoding))
             {

@@ -192,6 +192,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\Formats.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -223,4 +224,12 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if not exist "$(TargetDir)\Extensions" mkdir "$(TargetDir)\Extensions"
+xcopy "$(ProjectDir)\Resources\Formats.json" "$(TargetDir)\Extensions\" /D /Y &gt;NUL</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>
