@@ -101,12 +101,15 @@
     <value>Brutal forcing……</value>
   </data>
   <data name="logBrutalForceFailed" xml:space="preserve">
-    <value>Failed. Index offset not found.</value>
+    <value>Error: Index offset not found.</value>
   </data>
   <data name="logIndexOffset" xml:space="preserve">
     <value>Index offset: {0}</value>
   </data>
   <data name="logInvalidArchiveType" xml:space="preserve">
     <value>Error: Invalid archive type.</value>
+  </data>
+  <data name="logSpecifiedIndexOffsetFailed" xml:space="preserve">
+    <value>Error: Invalid index offset.</value>
   </data>
 </root>

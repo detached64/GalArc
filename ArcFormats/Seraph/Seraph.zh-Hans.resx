@@ -121,12 +121,15 @@
     <value>暴力破解中……</value>
   </data>
   <data name="logBrutalForceFailed" xml:space="preserve">
-    <value>破解失败。未找到正确的索引偏移。</value>
+    <value>错误：未找到正确的索引偏移。</value>
   </data>
   <data name="logIndexOffset" xml:space="preserve">
     <value>索引偏移：{0}</value>
   </data>
   <data name="logInvalidArchiveType" xml:space="preserve">
     <value>错误：非法的文件类型。</value>
+  </data>
+  <data name="logSpecifiedIndexOffsetFailed" xml:space="preserve">
+    <value>错误：给定的索引偏移有误。</value>
   </data>
 </root>

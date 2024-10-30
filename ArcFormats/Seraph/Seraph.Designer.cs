@@ -61,7 +61,7 @@ namespace ArcFormats.Seraph {
         }
         
         /// <summary>
-        ///   查找类似 Failed. Index offset not found. 的本地化字符串。
+        ///   查找类似 Error: Index offset not found. 的本地化字符串。
         /// </summary>
         internal static string logBrutalForceFailed {
             get {
@@ -93,6 +93,15 @@ namespace ArcFormats.Seraph {
         internal static string logInvalidArchiveType {
             get {
                 return ResourceManager.GetString("logInvalidArchiveType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Error: Invalid index offset. 的本地化字符串。
+        /// </summary>
+        internal static string logSpecifiedIndexOffsetFailed {
+            get {
+                return ResourceManager.GetString("logSpecifiedIndexOffsetFailed", resourceCulture);
             }
         }
     }
