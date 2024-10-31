@@ -1,6 +1,5 @@
 ﻿using ArcFormats.Templates;
 using GalArc.Common;
-using GalArc.Extensions.GARbroDB;
 using GalArc.GUI;
 using GalArc.GUI.Properties;
 using GalArc.Logs;
@@ -54,7 +53,7 @@ namespace GalArc
             LogWindow logWindow = new LogWindow(this.Width, this.Height);
             LogWindow.Instance.Owner = this;
 
-            SettingsExporter.ExportSettings();
+            SettingsExporter.ExportSettingsToGalArc();
 
             Logger.Process += ChangeStatus;
             Logger.ErrorOccured += ChangeStatus;
@@ -65,7 +64,7 @@ namespace GalArc
             this.txtOutputPath.DragDrop += new DragEventHandler(txtOutputPath_DragDrop);
         }
 
-        private void main_Load(object sender, EventArgs e)
+        private void MainWindow_Load(object sender, EventArgs e)
         {
             this.combLang.Items.AddRange(Languages.languages.Keys.ToArray());
             this.TopMost = Settings.Default.TopMost;
@@ -122,7 +121,7 @@ namespace GalArc
             }
         }
 
-        private void main_LocationChanged(object sender, EventArgs e)
+        private void MainWindow_LocationChanged(object sender, EventArgs e)
         {
             LogWindow.Instance.ChangePosition(this.Location.X, this.Location.Y);
         }
@@ -133,15 +132,6 @@ namespace GalArc
             {
                 this.lbStatus.Text = message;
             }));
-        }
-
-        private void main_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.L)
-            {
-                this.chkbxShowLog.Checked = !this.chkbxShowLog.Checked;
-            }
-            e.Handled = true;
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

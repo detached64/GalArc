@@ -133,7 +133,7 @@
     <value>463, 358</value>
   </data>
   <data name="dataGridViewEngines.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;dataGridViewEngines.Name" xml:space="preserve">
     <value>dataGridViewEngines</value>
@@ -147,31 +147,31 @@
   <data name="&gt;&gt;dataGridViewEngines.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="searchText.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="txtSearchText.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
-  <data name="searchText.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="txtSearchText.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>Hangul</value>
   </data>
-  <data name="searchText.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="txtSearchText.Location" type="System.Drawing.Point, System.Drawing">
     <value>78, 364</value>
   </data>
-  <data name="searchText.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="txtSearchText.Size" type="System.Drawing.Size, System.Drawing">
     <value>377, 31</value>
   </data>
-  <data name="searchText.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="txtSearchText.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;searchText.Name" xml:space="preserve">
-    <value>searchText</value>
+  <data name="&gt;&gt;txtSearchText.Name" xml:space="preserve">
+    <value>txtSearchText</value>
   </data>
-  <data name="&gt;&gt;searchText.Type" xml:space="preserve">
+  <data name="&gt;&gt;txtSearchText.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;searchText.Parent" xml:space="preserve">
+  <data name="&gt;&gt;txtSearchText.Parent" xml:space="preserve">
     <value>pageEngines</value>
   </data>
-  <data name="&gt;&gt;searchText.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;txtSearchText.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="lbSearch.AutoSize" type="System.Boolean, mscorlib">

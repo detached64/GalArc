@@ -98,6 +98,8 @@ namespace GalArc.Extensions.GARbroDB
 
                 // hash
                 result.AppendLine(string.Format(GARbroDB.DBHash, GARbroDBContent.GetHashCode()));
+
+                jsonObject = null;
                 return result.ToString();
             }
             catch

@@ -1,8 +1,7 @@
 ﻿using ArcFormats;
-using GalArc.Common;
-using GalArc.GUI.Properties;
+using GalArc.Extensions;
+using GalArc.Extensions.GARbroDB;
 using System;
-using System.Text;
 
 namespace GalArc.GUI
 {
@@ -15,7 +14,7 @@ namespace GalArc.GUI
             string extension = selectedInfos[1];
 
             string fullTypeName = $"ArcFormats.{engineName}.{extension}";
-            ExportSettings();
+            SettingsExporter.ExportSettingsToArcFormats();
             LoadSchemes();
 
             Worker worker = new Worker(inputFilePath, outputFolderPath, fullTypeName);
@@ -29,30 +28,18 @@ namespace GalArc.GUI
             string extension = selectedInfos[1];
 
             string fullTypeName = $"ArcFormats.{engineName}.{extension}";
-            ExportSettings();
+            SettingsExporter.ExportSettingsToArcFormats();
             LoadSchemes();
 
             Worker worker = new Worker(outputFilePath, inputFolderPath, fullTypeName);
             worker.Pack();
         }
 
-        internal static void ExportSettings()
-        {
-            if (!string.IsNullOrEmpty(Settings.Default.DefaultEncoding))
-            {
-                Config.Encoding = Encoding.GetEncoding(Encodings.CodePages[Settings.Default.DefaultEncoding]);
-            }
-            else
-            {
-                Config.Encoding = Encoding.UTF8;
-            }
-        }
-
         internal static void LoadSchemes()
         {
-            if (Extensions.ExtensionsConfig.IsEnabled)
+            if (ExtensionsConfig.IsEnabled)
             {
-                Extensions.GARbroDB.Deserializer.LoadScheme();
+                Deserializer.LoadScheme();
             }
         }
     }

@@ -19,11 +19,9 @@ namespace GalArc.GUI
 
         public static AboutBox Instance;
 
-        private int delta { get; } = 6;
+        private static readonly string ProgramUrl = "https://github.com/detached64/GalArc";
 
-        private string programUrl { get; } = "https://github.com/detached64/GalArc";
-
-        private string issueUrl { get; } = "https://github.com/detached64/GalArc/issues";
+        private static readonly string IssueUrl = "https://github.com/detached64/GalArc/issues";
 
         public AboutBox()
         {
@@ -49,11 +47,11 @@ namespace GalArc.GUI
             this.dataGridViewEngines.ClearSelection();
         }
 
-        private void searchText_TextChanged(object sender, EventArgs e)
+        private void txtSearchText_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(this.searchText.Text))
+            if (!string.IsNullOrEmpty(this.txtSearchText.Text))
             {
-                searchedEngines = engines.Where(engine => engine.EngineName.IndexOf(this.searchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.UnpackFormat.IndexOf(this.searchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.PackFormat.IndexOf(this.searchText.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                searchedEngines = engines.Where(engine => engine.EngineName.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.UnpackFormat.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.PackFormat.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
                 UpdateDataGridView(searchedEngines);
             }
             else
@@ -62,28 +60,28 @@ namespace GalArc.GUI
             }
         }
 
-        private void ab_lbSearch_SizeChanged(object sender, EventArgs e)
+        private void lbSearch_SizeChanged(object sender, EventArgs e)
         {
-            this.searchText.Location = new Point(this.lbSearch.Location.X + this.lbSearch.Width + delta, this.searchText.Location.Y);
+            this.txtSearchText.Location = new Point(this.lbSearch.Location.X + this.lbSearch.Width + 6, this.txtSearchText.Location.Y);
         }
 
-        private void ab_linkSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void linkSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             this.linkSite.LinkVisited = true;
-            Process.Start(new ProcessStartInfo(programUrl) { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo(ProgramUrl) { UseShellExecute = true });
         }
 
-        private void ab_linkIssue_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void linkIssue_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             this.linkIssue.LinkVisited = true;
-            Process.Start(new ProcessStartInfo(issueUrl) { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo(IssueUrl) { UseShellExecute = true });
         }
 
         private void dataGridViewEngines_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
             if (e.RowIndex % 2 == 0)
             {
-                this.dataGridViewEngines.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(249, 249, 249);
+                this.dataGridViewEngines.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(242, 245, 249);
             }
             else
             {

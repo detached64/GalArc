@@ -247,9 +247,8 @@
             this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
             this.Name = "MainWindow";
-            this.Load += new System.EventHandler(this.main_Load);
-            this.LocationChanged += new System.EventHandler(this.main_LocationChanged);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.main_KeyDown);
+            this.Load += new System.EventHandler(this.MainWindow_Load);
+            this.LocationChanged += new System.EventHandler(this.MainWindow_LocationChanged);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
