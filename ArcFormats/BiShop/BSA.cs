@@ -26,7 +26,7 @@ namespace ArcFormats.BiShop
 
         private struct Entry
         {
-            internal int NameOffset { get; set; }
+            internal uint NameOffset { get; set; }
             internal uint DataOffset { get; set; }
             internal uint Size { get; set; }
         }
@@ -106,7 +106,7 @@ namespace ArcFormats.BiShop
             {
                 Entry entry = new Entry();
 
-                entry.NameOffset = br.ReadInt32() + (int)nameOffset;
+                entry.NameOffset = br.ReadUInt32() + nameOffset;
                 entry.DataOffset = br.ReadUInt32();
                 entry.Size = br.ReadUInt32();
 

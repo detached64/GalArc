@@ -29,14 +29,14 @@ namespace ArcFormats.NekoSDK
                 Logger.ErrorInvalidArchive();
             }
             string version = Encoding.ASCII.GetString(br.ReadBytes(2));
-            int dataOffset;
+            uint dataOffset;
             switch (version)
             {
                 case "4A":
-                    dataOffset = 10 + br.ReadInt32();
+                    dataOffset = 10 + br.ReadUInt32();
                     break;
                 case "4S":
-                    dataOffset = 16 + br.ReadInt16();
+                    dataOffset = 16 + (uint)br.ReadUInt16();
                     break;
                 default:
                     Logger.Error("Unknown version: " + version);

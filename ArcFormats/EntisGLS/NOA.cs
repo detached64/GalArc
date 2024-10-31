@@ -32,7 +32,7 @@ namespace ArcFormats.EntisGLS
             public ulong Size { get; set; }
             public uint Attribute { get; set; }
             public uint EncType { get; set; }
-            public ulong Offset { get; set; }
+            public long Offset { get; set; }
             public TimeStamp TimeStamp { get; set; }
             public uint ExtraInfoLen { get; set; }
             public string ExtraInfo { get; set; }
@@ -102,7 +102,7 @@ namespace ArcFormats.EntisGLS
                 entry.Size = br.ReadUInt64();
                 entry.Attribute = br.ReadUInt32();
                 entry.EncType = br.ReadUInt32();
-                entry.Offset = br.ReadUInt64() + 64;
+                entry.Offset = br.ReadInt64() + 64;
 
                 if (entry.EncType != 0)
                 {
@@ -124,7 +124,7 @@ namespace ArcFormats.EntisGLS
                 entry.Name = Config.Encoding.GetString(br.ReadBytes((int)(entry.NameLen - 1)));
                 br.ReadByte();
                 pos = fs.Position;
-                fs.Seek((long)entry.Offset, SeekOrigin.Begin);
+                fs.Seek(entry.Offset, SeekOrigin.Begin);
                 br.ReadBytes(16);
                 byte[] buffer = br.ReadBytes((int)entry.Size);
                 File.WriteAllBytes(Path.Combine(folderPath, entry.Name), buffer);
@@ -187,11 +187,11 @@ namespace ArcFormats.EntisGLS
                                    //entry header
             bw.Write(Encoding.ASCII.GetBytes("DirEntry"));
             //compute index size
-            ulong indexSize = 4 + (ulong)Utils.GetNameLengthSum(files, Config.Encoding) + (ulong)fileCount + (ulong)(40 * fileCount);
+            long indexSize = 4 + Utils.GetNameLengthSum(files, Config.Encoding) + fileCount + (40 * fileCount);
             bw.Write(indexSize);
             bw.Write(fileCount);
 
-            ulong offset = 16 + indexSize;
+            long offset = 16 + indexSize;
             int i = 0;
             //entry
             foreach (var file in files)
@@ -199,7 +199,7 @@ namespace ArcFormats.EntisGLS
                 bw.Write(new FileInfo(file).Length);
                 bw.Write((long)0);//attribute&encType
                 bw.Write(offset);
-                offset += (ulong)new FileInfo(file).Length + 16;//"filedata" + file size
+                offset += new FileInfo(file).Length + 16;//"filedata" + file size
 
                 //bw.Write(time[i].second);
                 //bw.Write(time[i].minute);

@@ -1,16 +1,16 @@
-﻿using GalArc.Logs;
+﻿using ArcFormats.Templates;
+using GalArc.Logs;
 using System;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using Utility;
 using Utility.Extensions;
 
 namespace ArcFormats.SystemNNN
 {
     public class GPK
     {
-        public static UserControl PackExtraOptions = new Templates.VersionOnly("1/2");
+        public static UserControl PackExtraOptions = new VersionOnly("1/2");
 
         private class Entry
         {

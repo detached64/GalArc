@@ -20,7 +20,7 @@ namespace ArcFormats.NScripter
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            int dataOffset = br.ReadInt32();
+            uint dataOffset = br.ReadUInt32();
             if (dataOffset > new FileInfo(filePath).Length || dataOffset <= 0)
             {
                 throw new Exception("Error:Encrypted data detected.");

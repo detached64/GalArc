@@ -54,7 +54,7 @@ namespace ArcFormats.PJADV
             }
 
             int count = br.ReadInt32();
-            int baseOffset = 0x10 + count * (nameLen + 8);
+            uint baseOffset = 0x10 + (uint)(count * (nameLen + 8));
             List<Entry> entries = new List<Entry>();
             Logger.InitBar(count);
             Directory.CreateDirectory(folderPath);
