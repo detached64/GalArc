@@ -4,6 +4,6 @@ namespace GalArc.Common
 {
     public class Version
     {
-        public static string CurrentVer = "1.2.4";
+        public static string CurrentVer = "1.3.0";
     }
 }
