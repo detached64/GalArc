@@ -26,7 +26,7 @@ namespace ArcFormats.NeXAS
         {
             public string FileName { get; set; }
             public string FilePath { get; set; }
-            public int Offset { get; set; }
+            public uint Offset { get; set; }
             public int UnpackedSize { get; set; }
             public int PackedSize { get; set; }
         }
@@ -141,7 +141,7 @@ namespace ArcFormats.NeXAS
                 Entry entry = new Entry();
                 entry.FileName = DefaultEncoding.GetString(reader.ReadBytes(64)).TrimEnd('\0');
                 entry.FilePath = Path.Combine(FolderPath, entry.FileName);
-                entry.Offset = reader.ReadInt32();
+                entry.Offset = reader.ReadUInt32();
                 entry.UnpackedSize = reader.ReadInt32();
                 entry.PackedSize = reader.ReadInt32();
                 entries.Add(entry);
@@ -168,7 +168,7 @@ namespace ArcFormats.NeXAS
                 Entry entry = new Entry();
                 entry.FileName = DefaultEncoding.GetString(readerIndex.ReadBytes(64)).TrimEnd('\0');
                 entry.FilePath = Path.Combine(FolderPath, entry.FileName);
-                entry.Offset = readerIndex.ReadInt32();
+                entry.Offset = readerIndex.ReadUInt32();
                 entry.UnpackedSize = readerIndex.ReadInt32();
                 entry.PackedSize = readerIndex.ReadInt32();
                 entries.Add(entry);

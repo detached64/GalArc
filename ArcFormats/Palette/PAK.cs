@@ -30,7 +30,7 @@ namespace ArcFormats.Palette
                     buffer[j] ^= 0xff;
                 }
                 string name = ArcEncoding.Shift_JIS.GetString(buffer);
-                int offset = br.ReadInt32();
+                uint offset = br.ReadUInt32();
                 int size = br.ReadInt32();
                 long pos = fs.Position;
                 fs.Position = offset;
