@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
             this.dataGridViewEngines = new System.Windows.Forms.DataGridView();
-            this.searchText = new System.Windows.Forms.TextBox();
+            this.txtSearchText = new System.Windows.Forms.TextBox();
             this.lbSearch = new System.Windows.Forms.Label();
             this.lbLicense = new System.Windows.Forms.Label();
             this.linkIssue = new System.Windows.Forms.LinkLabel();
@@ -67,18 +67,18 @@
             this.dataGridViewEngines.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridViewEngines.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridViewEngines_RowPrePaint);
             // 
-            // searchText
+            // txtSearchText
             // 
-            resources.ApplyResources(this.searchText, "searchText");
-            this.searchText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.searchText.Name = "searchText";
-            this.searchText.TextChanged += new System.EventHandler(this.searchText_TextChanged);
+            resources.ApplyResources(this.txtSearchText, "txtSearchText");
+            this.txtSearchText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSearchText.Name = "txtSearchText";
+            this.txtSearchText.TextChanged += new System.EventHandler(this.txtSearchText_TextChanged);
             // 
             // lbSearch
             // 
             resources.ApplyResources(this.lbSearch, "lbSearch");
             this.lbSearch.Name = "lbSearch";
-            this.lbSearch.SizeChanged += new System.EventHandler(this.ab_lbSearch_SizeChanged);
+            this.lbSearch.SizeChanged += new System.EventHandler(this.lbSearch_SizeChanged);
             // 
             // lbLicense
             // 
@@ -91,7 +91,7 @@
             this.linkIssue.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.linkIssue.Name = "linkIssue";
             this.linkIssue.TabStop = true;
-            this.linkIssue.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ab_linkIssue_LinkClicked);
+            this.linkIssue.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkIssue_LinkClicked);
             // 
             // linkSite
             // 
@@ -99,7 +99,7 @@
             this.linkSite.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.linkSite.Name = "linkSite";
             this.linkSite.TabStop = true;
-            this.linkSite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ab_linkSite_LinkClicked);
+            this.linkSite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSite_LinkClicked);
             // 
             // lbCopyright
             // 
@@ -126,11 +126,11 @@
             // 
             // pageEngines
             // 
-            this.pageEngines.BackColor = System.Drawing.Color.White;
+            this.pageEngines.BackColor = System.Drawing.SystemColors.Control;
             this.pageEngines.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pageEngines.Controls.Add(this.dataGridViewEngines);
             this.pageEngines.Controls.Add(this.lbSearch);
-            this.pageEngines.Controls.Add(this.searchText);
+            this.pageEngines.Controls.Add(this.txtSearchText);
             resources.ApplyResources(this.pageEngines, "pageEngines");
             this.pageEngines.Name = "pageEngines";
             // 
@@ -187,7 +187,7 @@
         internal System.Windows.Forms.LinkLabel linkSite;
         internal System.Windows.Forms.Label lbLicense;
         internal System.Windows.Forms.LinkLabel linkIssue;
-        internal System.Windows.Forms.TextBox searchText;
+        internal System.Windows.Forms.TextBox txtSearchText;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage pageEngines;
         private System.Windows.Forms.TabPage pageLicense;
