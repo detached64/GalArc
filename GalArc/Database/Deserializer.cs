@@ -42,28 +42,25 @@ namespace GalArc.DataBase
             }
         }
 
-        public static Dictionary<string, Dictionary<string, Scheme>> Deserialize(string name, object instance)
+        public static Dictionary<string, Scheme> Deserialize(string jsonEngineName, string jsonNodeName, object instance)
         {
             if (!DataBaseConfig.IsDataBaseEnabled)
             {
                 return null;
             }
 
-            if (!LoadedJsons.TryGetValue(name, out var jsonToDeserialize))
+            if (!LoadedJsons.TryGetValue(jsonEngineName, out var jsonToDeserialize))
             {
                 return null;
             }
-
-            var result = new Dictionary<string, Dictionary<string, Scheme>>();
-
-            Type scheme = instance.GetType();
-            string jsonNodeName = scheme.GetField("JsonNodeName").GetValue(null).ToString();
-            result.Add(jsonNodeName, new Dictionary<string, Scheme>());
-
             if (string.IsNullOrEmpty(jsonToDeserialize))
             {
                 return null;
             }
+
+            var result = new Dictionary<string, Scheme>();
+            Type scheme = instance.GetType();
+
             try
             {
                 JObject jsonObject = JObject.Parse(jsonToDeserialize);
@@ -73,32 +70,32 @@ namespace GalArc.DataBase
                 {
                     string schemeName = token.Name;
                     var schemeData = token.Value.ToObject(scheme);
-                    result[jsonNodeName][schemeName] = (Scheme)schemeData;
+                    result[schemeName] = (Scheme)schemeData;
                 }
                 return result;
             }
             catch (Exception ex)
             {
-                Logger.Error($"Failed to deserialize {name} scheme: {ex.Message}", false);
+                Logger.Error($"Failed to deserialize {jsonEngineName} scheme: {ex.Message}", false);
                 return null;
             }
         }
 
-        public static Dictionary<string, Dictionary<string, Scheme>> ReadScheme(string name, object instance)
+        public static Dictionary<string, Scheme> ReadScheme(string name, string nodeName, object instance)
         {
             if (!DataBaseConfig.IsDataBaseEnabled)
             {
                 return null;
             }
             LoadSpecificScheme(name);
-            return Deserialize(name, instance);
+            return Deserialize(name, nodeName, instance);
         }
 
         private static string GetSpecificJsonInfo(Scheme instance)
         {
             Type scheme = instance.GetType();
             string name = scheme.GetField("EngineName").GetValue(null).ToString();
-            string jsonNodeName = scheme.GetField("JsonNodeName").GetValue(null).ToString();
+            string[] jsonNodeNames = (string[])scheme.GetField("JsonNodeName").GetValue(null);
             string path = Path.Combine(DataBaseConfig.DataBasePath, name + ".json");
 
             try
@@ -118,9 +115,12 @@ namespace GalArc.DataBase
                 result.AppendLine(SchemeInfos.InfoContents);
 
                 // scheme count
-                JObject thisNode = (JObject)jsonObject[$"{jsonNodeName}"];
-                int count = thisNode.Count;
-                result.AppendLine(string.Format(SchemeInfos.InfoItems, $"{jsonNodeName}", count));
+                foreach (var jsonNodeName in jsonNodeNames)
+                {
+                    JObject thisNode = (JObject)jsonObject[$"{jsonNodeName}"];
+                    int count = thisNode.Count;
+                    result.AppendLine(string.Format(SchemeInfos.InfoItems, $"{jsonNodeName}", count));
+                }
 
                 // file size
                 FileInfo fileInfo = new FileInfo(path);

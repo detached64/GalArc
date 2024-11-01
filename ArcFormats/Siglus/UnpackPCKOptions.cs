@@ -28,21 +28,21 @@ namespace ArcFormats.Siglus
         {
             if (ScenePCK.KnownSchemes == null)
             {
-                ScenePCK.KnownSchemes = Deserializer.ReadScheme(SiglusScheme.EngineName, SiglusScheme.Instance);
+                ScenePCK.KnownSchemes = Deserializer.ReadScheme(SiglusScheme.EngineName, "KnownSchemes", SiglusScheme.Instance);
                 if (ScenePCK.KnownSchemes != null)
                 {
-                    Logger.Debug(string.Format(Resources.logImportDataBaseSuccess, ScenePCK.KnownSchemes[SiglusScheme.JsonNodeName].Count));
+                    Logger.Debug(string.Format(Resources.logImportDataBaseSuccess, ScenePCK.KnownSchemes.Count));
                 }
             }
         }
 
         private void AddSchemesToComboBox()
         {
-            if (ScenePCK.KnownSchemes != null && ScenePCK.KnownSchemes.TryGetValue(SiglusScheme.JsonNodeName, out var schemes))
+            if (ScenePCK.KnownSchemes != null)
             {
                 this.combSchemes.Items.Add(Siglus.combItemTryEachScheme);
 
-                foreach (var scheme in schemes)
+                foreach (var scheme in ScenePCK.KnownSchemes)
                 {
                     this.combSchemes.Items.Add(scheme.Key);
                 }
@@ -56,15 +56,23 @@ namespace ArcFormats.Siglus
             {
                 ScenePCK.SelectedScheme = null;
                 ScenePCK.TryEachKey = true;
-                this.lbKey.Text = string.Format(Siglus.lbKey, string.Empty);
+                this.lbKey.Text = string.Empty;
                 return;
             }
             else
             {
-                SiglusScheme scheme = (SiglusScheme)ScenePCK.KnownSchemes[SiglusScheme.JsonNodeName][this.combSchemes.Text];
-                ScenePCK.SelectedScheme = new Tuple<string, byte[]>(scheme.KnownKey, Utils.HexStringToByteArray(scheme.KnownKey, '-'));
+                SiglusScheme scheme = (SiglusScheme)ScenePCK.KnownSchemes[this.combSchemes.Text];
+                try
+                {
+                    ScenePCK.SelectedScheme = new Tuple<string, byte[]>(scheme.KnownKey, Utils.HexStringToByteArray(scheme.KnownKey, '-'));
+                    this.lbKey.Text = string.Format(Siglus.lbKey, scheme.KnownKey);
+                }
+                catch
+                {
+                    ScenePCK.SelectedScheme = null;
+                    this.lbKey.Text = Siglus.lbKeyParseError;
+                }
                 ScenePCK.TryEachKey = false;
-                this.lbKey.Text = string.Format(Siglus.lbKey, scheme.KnownKey);
             }
         }
     }

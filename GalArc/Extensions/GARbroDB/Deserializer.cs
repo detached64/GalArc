@@ -24,18 +24,15 @@ namespace GalArc.Extensions.GARbroDB
             }
         }
 
-        public static Dictionary<string, Dictionary<string, Scheme>> Deserialize(Scheme instance)
+        public static Dictionary<string, Scheme> Deserialize(string jsonEngineName, string jsonNodeName, Scheme instance)
         {
             if (!ExtensionsConfig.IsEnabled || !GARbroDBConfig.IsGARbroDBEnabled)
             {
                 return null;
             }
-            var result = new Dictionary<string, Dictionary<string, Scheme>>();
+            var result = new Dictionary<string, Scheme>();
 
             Type scheme = instance.GetType();
-            string jsonEngineName = scheme.GetField("JsonEngineName").GetValue(null).ToString();
-            string jsonNodeName = scheme.GetField("JsonNodeName").GetValue(null).ToString();
-            result.Add(jsonNodeName, new Dictionary<string, Scheme>());
 
             if (string.IsNullOrEmpty(GARbroDBContent))
             {
@@ -50,7 +47,7 @@ namespace GalArc.Extensions.GARbroDB
                 {
                     string schemeName = token.Name;
                     var schemeData = token.Value.ToObject(scheme);
-                    result[jsonNodeName][schemeName] = (Scheme)schemeData;
+                    result[schemeName] = (Scheme)schemeData;
                 }
                 return result;
             }

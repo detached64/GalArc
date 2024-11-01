@@ -61,6 +61,15 @@ namespace ArcFormats.Siglus {
         }
         
         /// <summary>
+        ///   查找类似 123 的本地化字符串。
+        /// </summary>
+        internal static string _Empty_1_ {
+            get {
+                return ResourceManager.GetString("_Empty[1]", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Try each encryption scheme 的本地化字符串。
         /// </summary>
         internal static string combItemTryEachScheme {
@@ -75,6 +84,15 @@ namespace ArcFormats.Siglus {
         internal static string lbKey {
             get {
                 return ResourceManager.GetString("lbKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to parse key. 的本地化字符串。
+        /// </summary>
+        internal static string lbKeyParseError {
+            get {
+                return ResourceManager.GetString("lbKeyParseError", resourceCulture);
             }
         }
         
