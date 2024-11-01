@@ -1,4 +1,8 @@
-﻿using System;
+﻿using ArcFormats.Properties;
+using GalArc.Extensions;
+using GalArc.Extensions.GARbroDB;
+using GalArc.Logs;
+using System;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -17,6 +21,7 @@ namespace ArcFormats.Seraph
         {
             InitializeComponent();
             this.txtIndexOffset.Enabled = false;
+            ImportSchemesFromGARbroDB();
         }
 
         private void chkbxSpecifyIndex_SizeChanged(object sender, EventArgs e)
@@ -47,5 +52,23 @@ namespace ArcFormats.Seraph
         {
             useBrutalForce = this.chkbxBrutalForce.Checked;
         }
+
+        private void ImportSchemesFromGARbroDB()
+        {
+            if (ExtensionsConfig.IsEnabled)
+            {
+                Deserializer.LoadScheme();
+            }
+
+            if (DAT.KnownSchemes == null)
+            {
+                DAT.KnownSchemes = Deserializer.Deserialize(SeraphScheme.Instance);
+                if (DAT.KnownSchemes != null)
+                {
+                    Logger.Debug(string.Format(Resources.logImportGARbroDBSchemeSuccess, DAT.KnownSchemes[SeraphScheme.JsonNodeName].Count));
+                }
+            }
+        }
+
     }
 }

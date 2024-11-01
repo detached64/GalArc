@@ -1,5 +1,4 @@
-﻿using ArcFormats.Properties;
-using GalArc.Extensions.GARbroDB;
+﻿using GalArc.Extensions.GARbroDB;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Utility;
 using Utility.Compression;
 
 namespace ArcFormats.Seraph
@@ -40,7 +38,7 @@ namespace ArcFormats.Seraph
 
         private HashSet<long> Indices { get; set; } = new HashSet<long>();
 
-        private static Dictionary<string, Dictionary<string, Scheme>> schemes = null;
+        internal static Dictionary<string, Dictionary<string, Scheme>> KnownSchemes;
 
         public void Unpack(string filePath, string folderPath)
         {
@@ -56,8 +54,7 @@ namespace ArcFormats.Seraph
                         if (UnpackDATOptions.useBrutalForce)
                         {
                             Logger.Debug(Seraph.logBrutalForcing);
-                            ReadSchemesFromGARbroDB();
-                            AddIndexFromGARbroDB();
+                            AddIndex();
                             GuessIndexArchPac(br);
                         }
                         else if (UnpackDATOptions.useSpecifiedIndexOffset)
@@ -287,7 +284,7 @@ namespace ArcFormats.Seraph
                     raw = Zlib.DecompressBytes(raw);
                     try
                     {
-                        byte[] lz = Lz.Decompress(raw);
+                        byte[] lz = SeraphUtils.Decompress(raw);
                         File.WriteAllBytes(Path.Combine(folderPath, entry.Name), lz);
                     }
                     catch
@@ -306,7 +303,7 @@ namespace ArcFormats.Seraph
                     raw = Zlib.DecompressBytes(raw);
                     try
                     {
-                        byte[] lz = Lz.Decompress(raw);
+                        byte[] lz = SeraphUtils.Decompress(raw);
                         File.WriteAllBytes(Path.Combine(folderPath, entry.Name), lz);
                     }
                     catch
@@ -393,26 +390,13 @@ namespace ArcFormats.Seraph
             }
         }
 
-        private void ReadSchemesFromGARbroDB()
+        private void AddIndex()
         {
-            if (schemes == null)
-            {
-                schemes = Deserializer.Deserialize(SeraphScheme.Instance);
-                if (schemes != null)
-                {
-                    Logger.Info(string.Format(Resources.logReadGARbroDBSchemeSuccess, schemes[SeraphScheme.JsonNodeName].Count));
-                }
-            }
-
-        }
-
-        private void AddIndexFromGARbroDB()
-        {
-            if (schemes == null)
+            if (KnownSchemes == null)
             {
                 return;
             }
-            foreach (SeraphScheme scheme in schemes[SeraphScheme.JsonNodeName].Values.Cast<SeraphScheme>())
+            foreach (SeraphScheme scheme in KnownSchemes[SeraphScheme.JsonNodeName].Values.Cast<SeraphScheme>())
             {
                 Indices.Add(scheme.IndexOffset);
             }
