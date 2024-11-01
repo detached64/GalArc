@@ -162,6 +162,7 @@
     <Compile Include="Seraph\UnpackDATOptions.Designer.cs">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Siglus\GameexeDAT.cs" />
     <Compile Include="Siglus\ScenePCK.cs" />
     <Compile Include="Siglus\Siglus.Designer.cs">
       <AutoGen>True</AutoGen>
