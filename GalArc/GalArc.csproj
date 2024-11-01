@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>GalArc</RootNamespace>
     <AssemblyName>GalArc</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
