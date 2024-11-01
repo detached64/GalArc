@@ -14,6 +14,7 @@ namespace GalArc.GUI
             ExtensionsConfig.IsEnabled = Settings.Default.EnableExtensions;
             Extensions.GARbroDB.GARbroDBConfig.IsGARbroDBEnabled = Settings.Default.EnableGARbroDB;
             Extensions.GARbroDB.GARbroDBConfig.GARbroDBPath = Settings.Default.GARbroDBPath;
+            DataBase.DataBaseConfig.DataBasePath = Settings.Default.DataBasePath;
             Logs.LogConfig.autoSaveState = Settings.Default.AutoSaveState;
         }
 
