@@ -59,6 +59,7 @@ namespace ArcFormats.NekoSDK
                 entry.Offset = br.ReadUInt32() ^ (uint)key;
                 entry.Size = br.ReadUInt32() ^ (uint)key;
                 entries.Add(entry);
+                nameBuf = null;
             }
             Logger.InitBar(entries.Count);
             Directory.CreateDirectory(folderPath);
