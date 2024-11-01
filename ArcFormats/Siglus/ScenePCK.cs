@@ -37,7 +37,7 @@ namespace ArcFormats.Siglus
             public uint UnpackedLength { get; set; }
         }
 
-        internal static Dictionary<string, Dictionary<string, Scheme>> KnownSchemes;
+        internal static Dictionary<string, Scheme> KnownSchemes;
 
         internal static Tuple<string, byte[]> SelectedScheme;
 
@@ -89,7 +89,7 @@ namespace ArcFormats.Siglus
             }
             Directory.CreateDirectory(folderPath);
 
-            byte[] key = header.UseExtraKey ? (TryEachKey ? TryKeys(entries[0], 0) : SelectedScheme.Item2) : null;
+            byte[] key = header.UseExtraKey ? (TryEachKey ? TryKeys(entries[0], 0) : (SelectedScheme != null ? SelectedScheme.Item2 : null)) : null;
             foreach (ScenePckEntry entry in entries)
             {
                 SiglusUtils.DecryptWithKey(entry.Data, key);
@@ -153,7 +153,7 @@ namespace ArcFormats.Siglus
         protected static byte[] TryKeys(ScenePckEntry entry, int type)
         {
             byte[] key;
-            foreach (var scheme in KnownSchemes[SiglusScheme.JsonNodeName].Values.Cast<SiglusScheme>())
+            foreach (var scheme in KnownSchemes.Values.Cast<SiglusScheme>())
             {
                 key = Utils.HexStringToByteArray(scheme.KnownKey, '-');
                 if (key.Length != 16)
@@ -173,7 +173,7 @@ namespace ArcFormats.Siglus
 
         protected static string FindKeyFromValue(string key)
         {
-            foreach (var dic in KnownSchemes[SiglusScheme.JsonNodeName])
+            foreach (var dic in KnownSchemes)
             {
                 SiglusScheme scheme = (SiglusScheme)dic.Value;
                 if (scheme.KnownKey == key)

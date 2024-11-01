@@ -316,7 +316,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Siglus.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Siglus\Siglus.zh-Hans.resx" />
+    <EmbeddedResource Include="Siglus\Siglus.zh-Hans.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Siglus\UnpackPCKOptions.resx">
       <DependentUpon>UnpackPCKOptions.cs</DependentUpon>
     </EmbeddedResource>

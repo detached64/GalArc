@@ -38,7 +38,7 @@ namespace ArcFormats.Seraph
 
         private HashSet<long> Indices { get; set; } = new HashSet<long>();
 
-        internal static Dictionary<string, Dictionary<string, Scheme>> KnownSchemes;
+        internal static Dictionary<string, Scheme> KnownSchemes;
 
         public void Unpack(string filePath, string folderPath)
         {
@@ -51,16 +51,16 @@ namespace ArcFormats.Seraph
                     {
                         Indices.Clear();
                         bool isGiven = false;
-                        if (UnpackDATOptions.useBrutalForce)
+                        if (UnpackDATOptions.UseBrutalForce)
                         {
                             Logger.Debug(Seraph.logBrutalForcing);
                             AddIndex();
                             GuessIndexArchPac(br);
                         }
-                        else if (UnpackDATOptions.useSpecifiedIndexOffset)
+                        else if (UnpackDATOptions.UseSpecifiedIndexOffset)
                         {
                             isGiven = true;
-                            Indices.Add(Convert.ToUInt32(UnpackDATOptions.specifiedIndexOffsetString, 16));
+                            Indices.Add(Convert.ToUInt32(UnpackDATOptions.SpecifiedIndexOffsetString, 16));
                         }
                         TryReadIndexArchPac(br, isGiven);
                         ExtractArchPac(br, folderPath);
@@ -396,7 +396,7 @@ namespace ArcFormats.Seraph
             {
                 return;
             }
-            foreach (SeraphScheme scheme in KnownSchemes[SeraphScheme.JsonNodeName].Values.Cast<SeraphScheme>())
+            foreach (SeraphScheme scheme in KnownSchemes.Values.Cast<SeraphScheme>())
             {
                 Indices.Add(scheme.IndexOffset);
             }

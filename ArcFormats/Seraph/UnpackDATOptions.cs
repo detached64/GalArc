@@ -11,11 +11,11 @@ namespace ArcFormats.Seraph
 {
     public partial class UnpackDATOptions : UserControl
     {
-        internal static string specifiedIndexOffsetString = "00000000";
+        internal static string SpecifiedIndexOffsetString = "00000000";
 
-        internal static bool useSpecifiedIndexOffset = false;
+        internal static bool UseSpecifiedIndexOffset = false;
 
-        internal static bool useBrutalForce = true;
+        internal static bool UseBrutalForce = true;
 
         public UnpackDATOptions()
         {
@@ -32,14 +32,14 @@ namespace ArcFormats.Seraph
         private void chkbxSpecifyIndex_CheckedChanged(object sender, EventArgs e)
         {
             this.txtIndexOffset.Enabled = this.chkbxSpecifyIndex.Checked;
-            useSpecifiedIndexOffset = this.chkbxSpecifyIndex.Checked;
+            UseSpecifiedIndexOffset = this.chkbxSpecifyIndex.Checked;
         }
 
         private void txtIndexOffset_TextChanged(object sender, EventArgs e)
         {
             if (IsValidHex(this.txtIndexOffset.Text))
             {
-                specifiedIndexOffsetString = this.txtIndexOffset.Text;
+                SpecifiedIndexOffsetString = this.txtIndexOffset.Text;
             }
         }
 
@@ -50,7 +50,7 @@ namespace ArcFormats.Seraph
 
         private void chkbxBrutalForce_CheckedChanged(object sender, EventArgs e)
         {
-            useBrutalForce = this.chkbxBrutalForce.Checked;
+            UseBrutalForce = this.chkbxBrutalForce.Checked;
         }
 
         private void ImportSchemesFromGARbroDB()
@@ -62,10 +62,10 @@ namespace ArcFormats.Seraph
 
             if (DAT.KnownSchemes == null)
             {
-                DAT.KnownSchemes = Deserializer.Deserialize(SeraphScheme.Instance);
+                DAT.KnownSchemes = Deserializer.Deserialize(SeraphScheme.JsonEngineName, "KnownSchemes", SeraphScheme.Instance);
                 if (DAT.KnownSchemes != null)
                 {
-                    Logger.Debug(string.Format(Resources.logImportGARbroDBSchemeSuccess, DAT.KnownSchemes[SeraphScheme.JsonNodeName].Count));
+                    Logger.Debug(string.Format(Resources.logImportGARbroDBSchemeSuccess, DAT.KnownSchemes.Count));
                 }
             }
         }
