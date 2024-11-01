@@ -57,13 +57,16 @@
     <Compile Include="Common\EngineInfo.cs" />
     <Compile Include="Common\Languages.cs" />
     <Compile Include="Common\Version.cs" />
+    <Compile Include="Database\DatabaseConfig.cs" />
+    <Compile Include="Database\Deserializer.cs" />
+    <Compile Include="Database\Siglus\Scheme.cs" />
     <Compile Include="Extensions\ExtensionsConfig.cs" />
     <Compile Include="Extensions\GARbroDB\GARbroDBConfig.cs" />
     <Compile Include="Extensions\GARbroDB\Deserializer.cs" />
-    <Compile Include="Extensions\GARbroDB\GARbroDB.Designer.cs">
+    <Compile Include="Strings\SchemeInfos.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GARbroDB.resx</DependentUpon>
+      <DependentUpon>SchemeInfos.resx</DependentUpon>
     </Compile>
     <Compile Include="Extensions\GARbroDB\Scheme.cs" />
     <Compile Include="Logs\LogConfig.cs" />
@@ -75,11 +78,11 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Logs\Logger.cs" />
-    <EmbeddedResource Include="Extensions\GARbroDB\GARbroDB.resx">
+    <EmbeddedResource Include="Strings\SchemeInfos.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>GARbroDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>SchemeInfos.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Extensions\GARbroDB\GARbroDB.zh-Hans.resx" />
+    <EmbeddedResource Include="Strings\SchemeInfos.zh-Hans.resx" />
     <EmbeddedResource Include="Logs\LogWindow.resx">
       <DependentUpon>LogWindow.cs</DependentUpon>
       <SubType>Designer</SubType>

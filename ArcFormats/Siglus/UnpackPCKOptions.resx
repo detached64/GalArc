@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,28 +117,103 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DBVersion" xml:space="preserve">
-    <value>版本：{0}</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lbChoose.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="DBSize" xml:space="preserve">
-    <value>大小：{0}字节</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="lbChoose.Location" type="System.Drawing.Point, System.Drawing">
+    <value>83, 70</value>
   </data>
-  <data name="DBContents" xml:space="preserve">
-    <value>内容：</value>
+  <data name="lbChoose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>241, 24</value>
   </data>
-  <data name="DBHash" xml:space="preserve">
-    <value>哈希：{0}</value>
+  <data name="lbChoose.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="DBFailedToReadInfos" xml:space="preserve">
-    <value>读取信息失败。</value>
+  <data name="lbChoose.Text" xml:space="preserve">
+    <value>Choose encryption scheme</value>
   </data>
-  <data name="DBItems" xml:space="preserve">
-    <value>{0}：{1}个项</value>
+  <data name="&gt;&gt;lbChoose.Name" xml:space="preserve">
+    <value>lbChoose</value>
   </data>
-  <data name="DBLastModified" xml:space="preserve">
-    <value>修改时间：{0}</value>
+  <data name="&gt;&gt;lbChoose.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="DBFileNotFound" xml:space="preserve">
-    <value>未找到指定的文件。</value>
+  <data name="&gt;&gt;lbChoose.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbChoose.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="combSchemes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 109</value>
+  </data>
+  <data name="combSchemes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>624, 32</value>
+  </data>
+  <data name="combSchemes.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;combSchemes.Name" xml:space="preserve">
+    <value>combSchemes</value>
+  </data>
+  <data name="&gt;&gt;combSchemes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;combSchemes.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;combSchemes.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lbKey.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbKey.Location" type="System.Drawing.Point, System.Drawing">
+    <value>83, 166</value>
+  </data>
+  <data name="lbKey.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 24</value>
+  </data>
+  <data name="lbKey.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="lbKey.Text" xml:space="preserve">
+    <value>Key: Empty</value>
+  </data>
+  <data name="&gt;&gt;lbKey.Name" xml:space="preserve">
+    <value>lbKey</value>
+  </data>
+  <data name="&gt;&gt;lbKey.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbKey.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lbKey.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>11, 24</value>
+  </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>微软雅黑, 9pt</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>823, 393</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>UnpackPCKOptions</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

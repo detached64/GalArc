@@ -97,28 +97,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DBVersion" xml:space="preserve">
-    <value>Version: {0}</value>
+  <data name="lbKey" xml:space="preserve">
+    <value>Key: {0}</value>
   </data>
-  <data name="DBSize" xml:space="preserve">
-    <value>Size: {0} bytes</value>
+  <data name="combItemTryEachScheme" xml:space="preserve">
+    <value>Try each encryption scheme</value>
   </data>
-  <data name="DBContents" xml:space="preserve">
-    <value>Contents:</value>
+  <data name="logFound" xml:space="preserve">
+    <value>Key found: {0}</value>
   </data>
-  <data name="DBHash" xml:space="preserve">
-    <value>Hash: {0}</value>
+  <data name="logNotFound" xml:space="preserve">
+    <value>Key not found.</value>
   </data>
-  <data name="DBFailedToReadInfos" xml:space="preserve">
-    <value>Failed to read information.</value>
+  <data name="logMatchedGame" xml:space="preserve">
+    <value>Matched game: {0}</value>
   </data>
-  <data name="DBItems" xml:space="preserve">
-    <value>{0}: {1} items</value>
-  </data>
-  <data name="DBLastModified" xml:space="preserve">
-    <value>Last modified time: {0}</value>
-  </data>
-  <data name="DBFileNotFound" xml:space="preserve">
-    <value>Specified file not found.</value>
+  <data name="logWrongKey" xml:space="preserve">
+    <value>Wrong key!</value>
   </data>
 </root>

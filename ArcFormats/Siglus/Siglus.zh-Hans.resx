@@ -117,49 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="logErrorUnpackMethodNotFound" xml:space="preserve">
-    <value>错误：对应的解包方法未找到。</value>
+  <data name="lbKey" xml:space="preserve">
+    <value>密钥：{0}</value>
   </data>
-  <data name="logErrorPackMethodNotFound" xml:space="preserve">
-    <value>错误：对应的封包方法未找到。</value>
+  <data name="combItemTryEachScheme" xml:space="preserve">
+    <value>尝试所有加密方案</value>
   </data>
-  <data name="logErrorClassNotFound" xml:space="preserve">
-    <value>错误：对应的类未找到。</value>
+  <data name="logFound" xml:space="preserve">
+    <value>已找到密钥：{0}</value>
   </data>
-  <data name="logTryDecScr" xml:space="preserve">
-    <value>尝试解密：{0}……</value>
+  <data name="logNotFound" xml:space="preserve">
+    <value>未找到密钥。</value>
   </data>
-  <data name="logErrorDecScrFailed" xml:space="preserve">
-    <value>解密失败。</value>
+  <data name="logMatchedGame" xml:space="preserve">
+    <value>对应游戏：{0}</value>
   </data>
-  <data name="logTryEncScr" xml:space="preserve">
-    <value>尝试加密：{0}……</value>
-  </data>
-  <data name="logErrorEncScrFailed" xml:space="preserve">
-    <value>加密失败。</value>
-  </data>
-  <data name="logTryDecompress" xml:space="preserve">
-    <value>尝试解压缩：{0}……</value>
-  </data>
-  <data name="logErrorDecompressFailed" xml:space="preserve">
-    <value>解压缩失败。</value>
-  </data>
-  <data name="logTryDecompressWithMethod" xml:space="preserve">
-    <value>尝试以{1}方式解压缩：{0}……</value>
-  </data>
-  <data name="logErrorContainsInvalid" xml:space="preserve">
-    <value>路径中有非法字符。在设置里切换编码或许能解决此问题。</value>
-  </data>
-  <data name="logErrorNotSupportedVersion" xml:space="preserve">
-    <value>{0} v{1}封包暂时不支持。</value>
-  </data>
-  <data name="logErrorReadIndexFailed" xml:space="preserve">
-    <value>读取索引失败。</value>
-  </data>
-  <data name="logImportGARbroDBSchemeSuccess" xml:space="preserve">
-    <value>从GARbroDB导入{0}个密钥。</value>
-  </data>
-  <data name="logImportDataBaseSuccess" xml:space="preserve">
-    <value>从数据库导入{0}个密钥。</value>
+  <data name="logWrongKey" xml:space="preserve">
+    <value>密钥错误！</value>
   </data>
 </root>
