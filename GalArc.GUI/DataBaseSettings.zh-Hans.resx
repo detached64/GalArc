@@ -117,61 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lbVersion" xml:space="preserve">
-    <value>版本 {0}</value>
+  <data name="chkbxEnableDataBase.Text" xml:space="preserve">
+    <value>启用数据库</value>
   </data>
-  <data name="nodeGeneral" xml:space="preserve">
-    <value>常规</value>
+  <data name="lbDBPath.Text" xml:space="preserve">
+    <value>数据库路径</value>
   </data>
-  <data name="nodePreference" xml:space="preserve">
-    <value>偏好设置</value>
+  <data name="lbDBInfo.Text" xml:space="preserve">
+    <value>数据库信息</value>
   </data>
-  <data name="columnEngineName" xml:space="preserve">
-    <value>引擎名称</value>
-  </data>
-  <data name="columnPackFormat" xml:space="preserve">
-    <value>封包格式</value>
-  </data>
-  <data name="columnUnpackFormat" xml:space="preserve">
-    <value>解包格式</value>
-  </data>
-  <data name="logSelectUnpackNode" xml:space="preserve">
-    <value>已选择：解包{0}引擎的{1}文件。</value>
-  </data>
-  <data name="logSelectPackNode" xml:space="preserve">
-    <value>已选择：封包{0}引擎的{1}文件。</value>
-  </data>
-  <data name="logTimedOut" xml:space="preserve">
-    <value>连接超时。</value>
-  </data>
-  <data name="logErrorNeedSpecifyInput" xml:space="preserve">
-    <value>请指定输入路径。</value>
-  </data>
-  <data name="logErrorNeedSpecifyOutput" xml:space="preserve">
-    <value>请指定输出路径。</value>
-  </data>
-  <data name="logErrorFileNotFound" xml:space="preserve">
-    <value>指定的文件不存在。</value>
-  </data>
-  <data name="logErrorDirNotFound" xml:space="preserve">
-    <value>指定的文件夹不存在。</value>
-  </data>
-  <data name="logErrorNeedSelectOperation" xml:space="preserve">
-    <value>请选择要执行的操作。</value>
-  </data>
-  <data name="logUnpacking" xml:space="preserve">
-    <value>解包中……</value>
-  </data>
-  <data name="logPacking" xml:space="preserve">
-    <value>封包中……</value>
-  </data>
-  <data name="nodeExtensions" xml:space="preserve">
-    <value>扩展</value>
-  </data>
-  <data name="nodeDataBase" xml:space="preserve">
-    <value>数据库</value>
-  </data>
-  <data name="logFileNameFailToMatch" xml:space="preserve">
-    <value>错误：文件名必须为{0}。</value>
+  <data name="btSelect.Text" xml:space="preserve">
+    <value>…</value>
   </data>
 </root>

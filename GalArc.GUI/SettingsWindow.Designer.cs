@@ -29,9 +29,16 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsWindow));
-            this.treeViewOption = new System.Windows.Forms.TreeView();
             this.panel = new System.Windows.Forms.Panel();
+            this.treeViewOption = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
+            // 
+            // panel
+            // 
+            resources.ApplyResources(this.panel, "panel");
+            this.panel.BackColor = System.Drawing.SystemColors.Window;
+            this.panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel.Name = "panel";
             // 
             // treeViewOption
             // 
@@ -43,16 +50,10 @@
             this.treeViewOption.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             ((System.Windows.Forms.TreeNode)(resources.GetObject("treeViewOption.Nodes"))),
             ((System.Windows.Forms.TreeNode)(resources.GetObject("treeViewOption.Nodes1"))),
-            ((System.Windows.Forms.TreeNode)(resources.GetObject("treeViewOption.Nodes2")))});
+            ((System.Windows.Forms.TreeNode)(resources.GetObject("treeViewOption.Nodes2"))),
+            ((System.Windows.Forms.TreeNode)(resources.GetObject("treeViewOption.Nodes3")))});
             this.treeViewOption.ShowPlusMinus = false;
             this.treeViewOption.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewOption_AfterSelect);
-            // 
-            // panel
-            // 
-            resources.ApplyResources(this.panel, "panel");
-            this.panel.BackColor = System.Drawing.SystemColors.Window;
-            this.panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel.Name = "panel";
             // 
             // SettingsWindow
             // 
@@ -72,8 +73,7 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TreeView treeViewOption;
         private System.Windows.Forms.Panel panel;
+        private System.Windows.Forms.TreeView treeViewOption;
     }
 }

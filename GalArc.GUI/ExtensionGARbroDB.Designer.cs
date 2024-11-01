@@ -33,7 +33,7 @@
             this.btSelect = new System.Windows.Forms.Button();
             this.txtJsonPath = new System.Windows.Forms.TextBox();
             this.txtDBInfo = new System.Windows.Forms.TextBox();
-            this.lbDBInfos = new System.Windows.Forms.Label();
+            this.lbDBInfo = new System.Windows.Forms.Label();
             this.panel = new System.Windows.Forms.Panel();
             this.chkbxEnableGARbroDB = new System.Windows.Forms.CheckBox();
             this.panel.SuspendLayout();
@@ -66,15 +66,15 @@
             this.txtDBInfo.Name = "txtDBInfo";
             this.txtDBInfo.ReadOnly = true;
             // 
-            // lbDBInfos
+            // lbDBInfo
             // 
-            resources.ApplyResources(this.lbDBInfos, "lbDBInfos");
-            this.lbDBInfos.Name = "lbDBInfos";
+            resources.ApplyResources(this.lbDBInfo, "lbDBInfo");
+            this.lbDBInfo.Name = "lbDBInfo";
             // 
             // panel
             // 
             this.panel.Controls.Add(this.lbFormatsJson);
-            this.panel.Controls.Add(this.lbDBInfos);
+            this.panel.Controls.Add(this.lbDBInfo);
             this.panel.Controls.Add(this.txtJsonPath);
             this.panel.Controls.Add(this.txtDBInfo);
             this.panel.Controls.Add(this.btSelect);
@@ -111,7 +111,7 @@
         private System.Windows.Forms.Button btSelect;
         private System.Windows.Forms.TextBox txtJsonPath;
         private System.Windows.Forms.TextBox txtDBInfo;
-        private System.Windows.Forms.Label lbDBInfos;
+        private System.Windows.Forms.Label lbDBInfo;
         private System.Windows.Forms.Panel panel;
         private System.Windows.Forms.CheckBox chkbxEnableGARbroDB;
     }

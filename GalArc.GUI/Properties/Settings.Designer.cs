@@ -214,5 +214,17 @@ namespace GalArc.GUI.Properties {
                 this["GARbroDBPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DataBasePath {
+            get {
+                return ((string)(this["DataBasePath"]));
+            }
+            set {
+                this["DataBasePath"] = value;
+            }
+        }
     }
 }

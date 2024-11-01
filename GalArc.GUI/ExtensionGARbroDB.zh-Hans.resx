@@ -123,10 +123,10 @@
   <data name="btSelect.Text" xml:space="preserve">
     <value>…</value>
   </data>
-  <data name="lbDBInfos.Text" xml:space="preserve">
-    <value>GARbroDB信息</value>
-  </data>
   <data name="chkbxEnableGARbroDB.Text" xml:space="preserve">
     <value>启用此扩展</value>
+  </data>
+  <data name="lbDBInfo.Text" xml:space="preserve">
+    <value>GARbroDB信息</value>
   </data>
 </root>

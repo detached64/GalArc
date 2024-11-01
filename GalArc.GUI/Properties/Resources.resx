@@ -168,4 +168,10 @@
   <data name="nodeExtensions" xml:space="preserve">
     <value>Extensions</value>
   </data>
+  <data name="nodeDataBase" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="logFileNameFailToMatch" xml:space="preserve">
+    <value>Error: File name must be {0}.</value>
+  </data>
 </root>
