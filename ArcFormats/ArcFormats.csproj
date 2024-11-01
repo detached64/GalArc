@@ -76,7 +76,7 @@
     <Compile Include="BiShop\BSA.cs" />
     <Compile Include="Cmvs\CmvsMD5.cs" />
     <Compile Include="Cmvs\CPZ.cs" />
-    <Compile Include="Cmvs\CMVSUtils.cs" />
+    <Compile Include="Cmvs\CmvsUtils.cs" />
     <Compile Include="EntisGLS\NOA.cs" />
     <Compile Include="Eushully\ALF.cs" />
     <Compile Include="Global\Config.cs" />
@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="Kirikiri\XP3.cs" />
     <Compile Include="Majiro\ARC.cs" />
+    <Compile Include="NekoSDK\DAT.cs" />
     <Compile Include="NekoSDK\PAK.cs" />
     <Compile Include="NeXAS\PAC.cs" />
     <Compile Include="NextonLikeC\LST.cs" />
@@ -154,11 +155,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Seraph.resx</DependentUpon>
     </Compile>
+    <Compile Include="Seraph\SeraphUtils.cs" />
     <Compile Include="Seraph\UnpackDATOptions.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Seraph\UnpackDATOptions.Designer.cs">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Siglus\ScenePCK.cs" />
+    <Compile Include="Siglus\Siglus.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Siglus.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Siglus\SiglusUtils.cs" />
+    <Compile Include="Siglus\UnpackPCKOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Siglus\UnpackPCKOptions.Designer.cs">
+      <DependentUpon>UnpackPCKOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="Softpal\PAC.cs" />
     <Compile Include="Softpal\PackPACOptions.cs">
@@ -295,6 +310,17 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Seraph\UnpackDATOptions.zh-Hans.resx">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Siglus\Siglus.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Siglus.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Siglus\Siglus.zh-Hans.resx" />
+    <EmbeddedResource Include="Siglus\UnpackPCKOptions.resx">
+      <DependentUpon>UnpackPCKOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Siglus\UnpackPCKOptions.zh-Hans.resx">
+      <DependentUpon>UnpackPCKOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Softpal\PackPACOptions.resx">
       <DependentUpon>PackPACOptions.cs</DependentUpon>

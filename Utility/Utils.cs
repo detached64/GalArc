@@ -146,6 +146,12 @@ namespace Utility
             return encoding.GetByteCount(sb.ToString());
         }
 
+        /// <summary>
+        /// 123456 -> 0x12 0x34 0x56
+        /// </summary>
+        /// <param name="hexString"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public static byte[] HexStringToByteArray(string hexString)
         {
             if (hexString.Length % 2 != 0)
@@ -156,6 +162,23 @@ namespace Utility
             for (int i = 0; i < hexString.Length; i += 2)
             {
                 bytes[i / 2] = Convert.ToByte(hexString.Substring(i, 2), 16);
+            }
+            return bytes;
+        }
+
+        /// <summary>
+        /// 12-34-56 -> 0x12 0x34 0x56
+        /// </summary>
+        /// <param name="hexString"></param>
+        /// <param name="separator"></param>
+        /// <returns></returns>
+        public static byte[] HexStringToByteArray(string hexString, char separator)
+        {
+            string[] hexValues = hexString.Split(separator);
+            byte[] bytes = new byte[hexValues.Length];
+            for (int i = 0; i < hexValues.Length; i++)
+            {
+                bytes[i] = Convert.ToByte(hexValues[i], 16);
             }
             return bytes;
         }
