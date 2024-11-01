@@ -211,8 +211,8 @@ namespace GalArc
                     selectedNodeUnpack = e.Node;
                     selectedEngineInfo_Unpack = EngineInfos.engineInfos.Where(x => x.EngineName == e.Node.Parent.Text).FirstOrDefault();
                     chkbxMatch_CheckedChanged(null, null);
-                    GetExtraOptions(selectedNodeUnpack, "UnpackExtraOptions");
                     Logger.InfoRevoke(string.Format(Resources.logSelectUnpackNode, e.Node.Parent.Text, e.Node.Text));
+                    GetExtraOptions(selectedNodeUnpack, "UnpackExtraOptions");
                 }
                 else if (this.chkbxPack.Checked)
                 {
@@ -225,8 +225,8 @@ namespace GalArc
                     selectedNodePack = e.Node;
                     selectedEngineInfo_Pack = EngineInfos.engineInfos.Where(x => x.EngineName == e.Node.Parent.Text).FirstOrDefault();
                     chkbxMatch_CheckedChanged(null, null);
-                    GetExtraOptions(selectedNodePack, "PackExtraOptions");
                     Logger.InfoRevoke(string.Format(Resources.logSelectPackNode, e.Node.Parent.Text, e.Node.Text));
+                    GetExtraOptions(selectedNodePack, "PackExtraOptions");
                 }
             }
         }
@@ -235,7 +235,7 @@ namespace GalArc
         {
             string[] infos = node.FullPath.Split('/');
             Assembly assembly = Assembly.Load("ArcFormats");
-            Type type = assembly.GetType($"ArcFormats.{infos[0]}.{infos[1]}");
+            Type type = assembly.GetType($"ArcFormats.{infos[0]}.{infos[1].Replace(".", string.Empty)}");
             this.SuspendLayout();
             this.gbOptions.Controls.Clear();
             if (type != null)

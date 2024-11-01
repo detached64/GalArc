@@ -1,0 +1,230 @@
+{
+  "Version": "1",
+  "KnownSchemes": {
+    "神待ちサナちゃん　DL版": {
+      "KnownKey": "2E-4B-DD-2A-7B-B0-0A-BA-F8-1A-F9-61-B0-18-98-5C"
+    },
+    "神待ちサナちゃん　PKG版": {
+      "KnownKey": "2E-4B-DD-2A-7B-B0-0A-BA-F8-1A-F9-61-B0-47-DC-10"
+    },
+    "円交少女　～陸上部ゆっきーの場合～": {
+      "KnownKey": "71-31-A6-00-5A-98-59-D1-8B-13-B6-26-E5-5C-83-0F"
+    },
+    "円交少女２　～ＪＫアイドル真鈴の場合～": {
+      "KnownKey": "36-5E-C9-42-AD-D2-8A-33-67-DF-71-34-21-A0-6F-3A"
+    },
+    "清楚で真面目な彼女が、最凶ヤリサーに勧誘されたら…？": {
+      "KnownKey": "54-38-A2-16-5C-D4-7D-CE-85-2E-93-01-C7-46-8D-08"
+    },
+    "初恋１／１": {
+      "KnownKey": "5B-30-A2-1A-41-C1-66-D7-8D-27-9B-1D-CD-59-85-17"
+    },
+    "初恋１／１ Memorical Collection Version": {
+      "KnownKey": "36-40-CE-7F-35-A4-04-B8-F5-27-9B-1D-CD-6B-8F-13"
+    },
+    "星織ユメミライ": {
+      "KnownKey": "71-31-A6-00-5A-98-58-CE-85-3E-9D-2D-CA-5B-9F-08"
+    },
+    "星織ユメミライ Memorical Collection Version": {
+      "KnownKey": "01-5D-C3-74-3F-FA-37-B6-85-3E-9D-35-FD-57-83-11"
+    },
+    "星織ユメミライ　律佳とあなたの１周年記念、いちゃらぶバースデー": {
+      "KnownKey": "44-30-A2-18-4F-EA-66-CE-85-22-80-03-C9-5F-8D-23"
+    },
+    "星織ユメミライ Perfect Edition": {
+      "KnownKey": "A6-F6-59-37-AD-33-8B-CD-67-32-71-E3-20-47-7C-D3"
+    },
+    "銀色、遥か": {
+      "KnownKey": "03-5E-A6-00-5A-98-24-97-C9-61-DF-47-8F-65-98-1D"
+    },
+    "銀色、遥か Memorical Collection Version": {
+      "KnownKey": "03-5E-F9-63-35-F5-54-FB-AC-15-BA-25-E0-1D-98-1D"
+    },
+    "月の彼方で逢いましょう　体験版": {
+      "KnownKey": "79-01-C8-00-73-88-0B-9D-89-4A-C8-7E-B0-0B-AA-62"
+    },
+    "月の彼方で逢いましょう": {
+      "KnownKey": "7D-32-9B-22-17-F2-7D-F2-AC-04-A7-0C-E9-5F-BE-2D"
+    },
+    "月の彼方で逢いましょうSSR 体験版": {
+      "KnownKey": "01-1A-8A-34-4C-87-5A-DE-D3-0F-B1-2D-C0-06-BF-18"
+    },
+    "月の彼方で逢いましょうSSR DL版": {
+      "KnownKey": "64-34-FD-2B-6A-C2-78-DD-BB-08-BE-38-CF-00-B4-38"
+    },
+    "月の彼方で逢いましょうSSR PKG版": {
+      "KnownKey": "64-34-FD-2B-6A-C2-78-DD-B6-21-C6-32-E6-43-9D-1B"
+    },
+    "AIR Android Version": {
+      "KnownKey": "5B-32-A4-18-57-C0-62-D1-C9-61-DF-07-C9-59-87-05"
+    },
+    "Kanon Android Version": {
+      "KnownKey": "57-20-BC-12-57-C0-68-C3-91-39-87-1F-C3-55-95-09"
+    },
+    "Rewrite": {
+      "KnownKey": "36-0F-C9-6E-2E-D3-8B-0F-66-A5-70-C3-23-A3-6E-94"
+    },
+    "Rewrite Harvest festa!": {
+      "KnownKey": "36-25-CA-97-2E-C2-09-B8-E4-63-70-C3-20-8B-6D-EB"
+    },
+    "Rewriteオカ研活動記録外伝　前編": {
+      "KnownKey": "B4-B0-C9-37-2E-BA-09-CF-E4-47-F2-73-A1-52-EC-36"
+    },
+    "Rewriteオカ研活動記録外伝　後編": {
+      "KnownKey": "36-0F-C9-37-2E-BA-09-CF-E4-47-F2-73-A1-52-EC-5D"
+    },
+    "Rewrite＋": {
+      "KnownKey": "36-0F-C9-37-2E-BA-09-DC-E4-0D-F2-00-23-A3-6E-94"
+    },
+    "Rewrite＋ Steam English Version": {
+      "KnownKey": "C0-A1-8A-52-E9-8D-16-22-8B-F7-CE-CC-F8-7A-56-AF"
+    },
+    "Harmonia": {
+      "KnownKey": "7F-0D-88-21-7B-EA-41-F3-AA-03-A7-2F-EB-60-AD-2E"
+    },
+    "Angel Beats! -1st beat-": {
+      "KnownKey": "5F-07-8A-2A-66-A7-11-A6-84-6D-9D-46-9F-7A-B9-7E"
+    },
+    "Summer Pockets": {
+      "KnownKey": "7E-23-BA-0A-4B-A8-29-9A-F6-7C-FD-19-88-34-D1-77"
+    },
+    "Summer Pockets Mobile Version": {
+      "KnownKey": "BB-82-0F-E9-31-DC-11-F2-1A-BA-F8-4C-F3-53-6B-D2"
+    },
+    "Summer Pockets Steam English Version": {
+      "KnownKey": "CC-CF-57-C8-6B-92-14-90-93-2D-B7-16-88-57-15-30"
+    },
+    "Summer Pockets REFLECTION BLUE DL版": {
+      "KnownKey": "08-63-80-0B-79-E9-51-F1-E7-2A-E7-60-F0-7C-97-4E"
+    },
+    "Summer Pockets REFLECTION BLUE PKG版": {
+      "KnownKey": "08-63-80-0B-79-E9-51-F1-E7-2A-E7-60-AF-38-DB-4E"
+    },
+    "CLANNAD Steam Chinese Version": {
+      "KnownKey": "3B-54-DC-74-2F-BA-0C-D6-AC-08-D2-23-EC-60-A9-2E"
+    },
+    "LOOPERS 体験版": {
+      "KnownKey": "13-49-8A-5E-6F-A7-64-9A-DE-5F-CB-63-B2-12-E8-78"
+    },
+    "LOOPERS DL版": {
+      "KnownKey": "71-13-B1-15-09-FA-0D-E3-D3-45-D6-78-AE-29-E6-05"
+    },
+    "LOOPERS Mobile Version": {
+      "KnownKey": "4B-17-C9-2E-09-98-21-8B-C9-33-E9-6D-88-58-F6-57"
+    },
+    "LUNARiA 体験版": {
+      "KnownKey": "06-0D-DF-63-08-A0-6B-A2-DB-72-DE-5F-A8-4F-EE-7E"
+    },
+    "LUNARiA DL版": {
+      "KnownKey": "63-03-F9-3E-05-F4-2D-96-F9-1E-99-3E-98-36-D4-53"
+    },
+    "LUNARiA PKG版": {
+      "KnownKey": "63-5C-BD-72-05-F4-2D-96-F9-1E-99-3E-98-36-D4-53"
+    },
+    "LUNARiA Mobile Version": {
+      "KnownKey": "9B-94-7C-36-83-0B-AE-E9-A0-6E-ED-7E-C4-77-89-75"
+    },
+    "終のステラ 体験版": {
+      "KnownKey": "55-31-9D-18-4C-FB-30-EE-BB-1F-86-0F-CE-58-8D-1F"
+    },
+    "終のステラ DL版": {
+      "KnownKey": "4E-2A-B3-14-4C-8C-7D-ED-BB-08-BE-12-D1-4E-8B-1E"
+    },
+    "LAMUNATION!": {
+      "KnownKey": "B5-24-4A-26-AF-EE-8A-CE-67-0C-71-08-21-7E-6D-27"
+    },
+    "ゆめいろアルエット！": {
+      "KnownKey": "B7-CE-4B-AF-AC-7D-0A-84-E4-45-F2-17-A3-D7-ED-11"
+    },
+    "ましろサマー": {
+      "KnownKey": "35-B3-C1-D9-2E-A1-08-06-E6-53-71-E7-21-60-6F-01"
+    },
+    "ノーブルリージュ！": {
+      "KnownKey": "7D-18-9B-3A-60-FA-4B-FF-AA-16-BD-21-E3-66-A5-32"
+    },
+    "キサラギGOLD★STAR": {
+      "KnownKey": "F4-47-4A-27-AD-3C-8A-F7-A3-03-BE-2E-23-AE-BF-28"
+    },
+    "はつゆきさくら": {
+      "KnownKey": "DD-E0-2E-F6-DE-30-EF-64-07-8B-19-A8-4E-D3-BB-14"
+    },
+    "カルマルカ＊サークル": {
+      "KnownKey": "19-72-A2-11-4F-E5-05-C0-97-6B-6D-7B-EB-B5-B7-FE"
+    },
+    "花咲ワークスプリング！": {
+      "KnownKey": "B9-1D-47-E6-BD-0D-09-BF-E7-E8-FD-7E-AC-17-FD-3A"
+    },
+    "フローラル·フローラブ": {
+      "KnownKey": "36-6D-C9-4C-21-5B-07-D3-F5-54-FF-E5-AB-3C-FE-DD"
+    },
+    "金色ラブリッチェ": {
+      "KnownKey": "A5-B7-C9-27-23-4B-18-A0-EA-25-E3-4F-AF-80-FD-4C"
+    },
+    "歪んだ嘘の恋とレッテル": {
+      "KnownKey": "5B-38-A2-1A-03-D1-68-D1-81-22-9B-07-C3-5F-85-51"
+    },
+    "星逢のプリズムギア": {
+      "KnownKey": "B4-64-46-4E-AC-60-8B-C6-E4-5C-F9-67-AE-D4-ED-B9"
+    },
+    "地味っ子むちむち委員長とドスケベ調教性活": {
+      "KnownKey": "B5-1E-4A-FE-B5-6B-86-2D-B7-24-9B-05-D0-5D-82-FF"
+    },
+    "勇者と踊れ【体験版】": {
+      "KnownKey": "C0-A1-8A-52-E9-8D-16-22-8B-F7-CE-CC-F8-7A-56-AF"
+    },
+    "勇者と踊れ！": {
+      "KnownKey": "24-AD-C9-0E-2E-B7-8A-D5-67-0F-71-24-35-4A-6E-C9"
+    },
+    "LOVE・デスティネーション【体験版】": {
+      "KnownKey": "5A-36-BF-16-56-D1-6C-C9-9C-38-80-03-C3-58-80-13"
+    },
+    "LOVE・デスティネーション": {
+      "KnownKey": "5A-36-BF-16-56-D1-6C-C9-88-23-84-0F-DA-50-89-0F"
+    },
+    "アインシュタインより愛を込めて【体験版】": {
+      "KnownKey": "C0-A1-8A-52-E9-8D-16-22-8B-F7-CE-CC-F8-7A-56-AF"
+    },
+    "アインシュタインより愛を込めて": {
+      "KnownKey": "B5-06-4A-2C-AD-EA-8A-E5-BB-08-BE-E9-FD-B7-B3-FF"
+    },
+    "アインシュタインより愛を込めて APOLLOCRISIS": {
+      "KnownKey": "B5-0C-4A-26-AD-E0-8A-EF-67-19-71-3F-21-61-6F-29"
+    },
+    "妹サポ": {
+      "KnownKey": "29-77-C9-43-2E-BF-16-9E-39-D4-3C-80-20-F0-7A-F9"
+    },
+    "痴漢専用車両～未発達な身体のテニス少女・蛍～【Android版】": {
+      "KnownKey": "6D-0E-8F-07-4F-C7-7C-D2-8B-38-86-0B-D0-41-D8-45"
+    },
+    "聖娼女～気高きご令嬢・紫苑～【Android版】": {
+      "KnownKey": "36-55-C9-79-2E-F1-8B-5F-66-E8-70-DC-20-D1-6E-B0"
+    },
+    "聖娼女～現役アイドル・彩葉～【Android版】": {
+      "KnownKey": "36-5B-C9-7A-2E-B5-09-B2-E4-4B-70-A2-20-96-6E-BA"
+    },
+    "聖娼女～優しき女子校生・優莉～【Android版】": {
+      "KnownKey": "36-17-CA-FA-AC-7A-8B-18-66-E4-70-C2-20-9F-6E-DE"
+    },
+    "聖娼女～バレー部のエース・翼～【Android版】": {
+      "KnownKey": "B5-36-4A-FF-AF-EE-9C-2E-67-23-71-E6-23-6F-79-E8"
+    },
+    "聖娼女～人妻女教師・涼香～【Android版】": {
+      "KnownKey": "36-4C-4B-C8-AC-03-8B-67-66-F7-70-DC-20-96-6E-D8"
+    },
+    "キミベタ～キミをベタベタにさせてあげる～【Android版】": {
+      "KnownKey": "81-63-2D-0D-AD-CD-8A-E4-82-2D-98-53-D5-44-9B-16"
+    },
+    "しゅきしゅきだいしゅき！！【Android版】": {
+      "KnownKey": "48-3F-BC-26-76-F0-76-DD-84-77-A4-7C-AE-21-E3-7A"
+    },
+    "沙耶の唄【Android版】": {
+      "KnownKey": "37-8F-C8-C9-2F-46-8B-4B-66-90-70-DC-21-7B-6F-F1"
+    },
+    "メアメアメアＳＰ【Android版】": {
+      "KnownKey": "B5-1A-4A-F8-AD-34-8A-31-67-C7-71-E0-21-77-6F-F7"
+    },
+    "彼女たちの流儀【Android版】": {
+      "KnownKey": "1D-72-E2-00-4B-C6-6C-C8-96-3E-DD-45-89-1F-C7-0F"
+    }
+  }
+}

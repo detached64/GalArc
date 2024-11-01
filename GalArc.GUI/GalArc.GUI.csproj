@@ -68,6 +68,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArchivePackager.cs" />
+    <Compile Include="DataBaseSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataBaseSettings.Designer.cs">
+      <DependentUpon>DataBaseSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExtensionGARbroDB.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -127,6 +133,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AboutBox.zh-Hans.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataBaseSettings.resx">
+      <DependentUpon>DataBaseSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataBaseSettings.zh-Hans.resx">
+      <DependentUpon>DataBaseSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExtensionGARbroDB.resx">
       <DependentUpon>ExtensionGARbroDB.cs</DependentUpon>
@@ -192,7 +204,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\Formats.json" />
+    <None Include="Resources\Database\Siglus.json" />
+    <None Include="Resources\Extensions\Formats.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -226,7 +239,9 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if not exist "$(TargetDir)\Extensions" mkdir "$(TargetDir)\Extensions"
-xcopy "$(ProjectDir)\Resources\Formats.json" "$(TargetDir)\Extensions\" /D /Y &gt;NUL</PostBuildEvent>
+if not exist "$(TargetDir)\Database" mkdir "$(TargetDir)\Database"
+xcopy /E /I /Y "$(ProjectDir)\Resources\Extensions" "$(TargetDir)\Extensions"
+xcopy /E /I /Y "$(ProjectDir)\Resources\Database" "$(TargetDir)\Database"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

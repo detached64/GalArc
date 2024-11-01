@@ -142,6 +142,15 @@ namespace GalArc.GUI.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Error: File name must be {0}. 的本地化字符串。
+        /// </summary>
+        internal static string logFileNameFailToMatch {
+            get {
+                return ResourceManager.GetString("logFileNameFailToMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Packing…… 的本地化字符串。
         /// </summary>
         internal static string logPacking {
@@ -183,6 +192,15 @@ namespace GalArc.GUI.Properties {
         internal static string logUnpacking {
             get {
                 return ResourceManager.GetString("logUnpacking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Database 的本地化字符串。
+        /// </summary>
+        internal static string nodeDataBase {
+            get {
+                return ResourceManager.GetString("nodeDataBase", resourceCulture);
             }
         }
         

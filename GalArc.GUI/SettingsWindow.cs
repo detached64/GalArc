@@ -24,7 +24,8 @@ namespace GalArc.GUI
             this.treeViewOption.SelectedNode = treeViewOption.Nodes[0];
             this.treeViewOption.Nodes[0].Text = Resources.nodeGeneral;
             this.treeViewOption.Nodes[1].Text = Resources.nodePreference;
-            this.treeViewOption.Nodes[2].Text = Resources.nodeExtensions;
+            this.treeViewOption.Nodes[2].Text = Resources.nodeDataBase;
+            this.treeViewOption.Nodes[3].Text = Resources.nodeExtensions;
         }
 
         private void treeViewOption_AfterSelect(object sender, TreeViewEventArgs e)
@@ -43,6 +44,9 @@ namespace GalArc.GUI
                     break;
                 case "nodeGARbroDB":
                     userControl = ExtensionGARbroDB.Instance;
+                    break;
+                case "nodeDataBase":
+                    userControl = DataBaseSettings.Instance;
                     break;
             }
             if (userControl != null)

@@ -1,7 +1,8 @@
 ﻿using ArcFormats;
-using GalArc.Extensions;
-using GalArc.Extensions.GARbroDB;
+using GalArc.Logs;
 using System;
+using System.IO;
+using GalArc.GUI.Properties;
 
 namespace GalArc.GUI
 {
@@ -12,10 +13,17 @@ namespace GalArc.GUI
             string[] selectedInfos = MainWindow.selectedNodeUnpack.FullPath.Split('/');
             string engineName = selectedInfos[0];
             string extension = selectedInfos[1];
+            if (selectedInfos[1].Contains("."))     // fixed file name
+            {
+                if (!String.Equals(extension, Path.GetFileName(inputFilePath), StringComparison.OrdinalIgnoreCase))
+                {
+                    Logger.Error(string.Format(Resources.logFileNameFailToMatch, extension));
+                }
+                extension = selectedInfos[1].Replace(".", string.Empty);
+            }
 
             string fullTypeName = $"ArcFormats.{engineName}.{extension}";
             SettingsExporter.ExportSettingsToArcFormats();
-            LoadSchemes();
 
             Worker worker = new Worker(inputFilePath, outputFolderPath, fullTypeName);
             worker.UnpackOne();
@@ -29,18 +37,9 @@ namespace GalArc.GUI
 
             string fullTypeName = $"ArcFormats.{engineName}.{extension}";
             SettingsExporter.ExportSettingsToArcFormats();
-            LoadSchemes();
 
             Worker worker = new Worker(outputFilePath, inputFolderPath, fullTypeName);
             worker.Pack();
-        }
-
-        internal static void LoadSchemes()
-        {
-            if (ExtensionsConfig.IsEnabled)
-            {
-                Deserializer.LoadScheme();
-            }
         }
     }
 }

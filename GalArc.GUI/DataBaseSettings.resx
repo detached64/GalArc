@@ -117,56 +117,89 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lbFormatsJson.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left, Right</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lbFormatsJson.AutoSize" type="System.Boolean, mscorlib">
+  <data name="chkbxEnableDataBase.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lbFormatsJson.Location" type="System.Drawing.Point, System.Drawing">
-    <value>81, 29</value>
+  <data name="chkbxEnableDataBase.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
-  <data name="lbFormatsJson.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 24</value>
-  </data>
-  <data name="lbFormatsJson.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lbFormatsJson.Text" xml:space="preserve">
-    <value>Formats.json Path</value>
-  </data>
-  <data name="&gt;&gt;lbFormatsJson.Name" xml:space="preserve">
-    <value>lbFormatsJson</value>
-  </data>
-  <data name="&gt;&gt;lbFormatsJson.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbFormatsJson.Parent" xml:space="preserve">
-    <value>panel</value>
-  </data>
-  <data name="&gt;&gt;lbFormatsJson.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="btSelect.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left, Right</value>
-  </data>
-  <data name="btSelect.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="chkbxEnableDataBase.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="btSelect.Location" type="System.Drawing.Point, System.Drawing">
-    <value>660, 67</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="chkbxEnableDataBase.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 64</value>
   </data>
-  <data name="btSelect.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 31</value>
+  <data name="chkbxEnableDataBase.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 28</value>
   </data>
-  <data name="btSelect.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="chkbxEnableDataBase.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
-  <data name="btSelect.Text" xml:space="preserve">
-    <value>…</value>
+  <data name="chkbxEnableDataBase.Text" xml:space="preserve">
+    <value>Enable database</value>
+  </data>
+  <data name="&gt;&gt;chkbxEnableDataBase.Name" xml:space="preserve">
+    <value>chkbxEnableDataBase</value>
+  </data>
+  <data name="&gt;&gt;chkbxEnableDataBase.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkbxEnableDataBase.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;chkbxEnableDataBase.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;lbDBPath.Name" xml:space="preserve">
+    <value>lbDBPath</value>
+  </data>
+  <data name="&gt;&gt;lbDBPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbDBPath.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;lbDBPath.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;lbDBInfo.Name" xml:space="preserve">
+    <value>lbDBInfo</value>
+  </data>
+  <data name="&gt;&gt;lbDBInfo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbDBInfo.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;lbDBInfo.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;txtDBPath.Name" xml:space="preserve">
+    <value>txtDBPath</value>
+  </data>
+  <data name="&gt;&gt;txtDBPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtDBPath.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;txtDBPath.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;txtDBInfo.Name" xml:space="preserve">
+    <value>txtDBInfo</value>
+  </data>
+  <data name="&gt;&gt;txtDBInfo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtDBInfo.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;txtDBInfo.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
   <data name="&gt;&gt;btSelect.Name" xml:space="preserve">
     <value>btSelect</value>
@@ -175,33 +208,120 @@
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;btSelect.Parent" xml:space="preserve">
-    <value>panel</value>
+    <value>panel1</value>
   </data>
   <data name="&gt;&gt;btSelect.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="txtJsonPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 98</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>777, 472</value>
+  </data>
+  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lbDBPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
   </data>
-  <data name="txtJsonPath.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lbDBPath.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbDBPath.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lbDBPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>81, 29</value>
+  </data>
+  <data name="lbDBPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 24</value>
+  </data>
+  <data name="lbDBPath.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="lbDBPath.Text" xml:space="preserve">
+    <value>Database Path</value>
+  </data>
+  <data name="&gt;&gt;lbDBPath.Name" xml:space="preserve">
+    <value>lbDBPath</value>
+  </data>
+  <data name="&gt;&gt;lbDBPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbDBPath.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;lbDBPath.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="lbDBInfo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="lbDBInfo.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lbDBInfo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lbDBInfo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>81, 117</value>
+  </data>
+  <data name="lbDBInfo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>197, 24</value>
+  </data>
+  <data name="lbDBInfo.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="lbDBInfo.Text" xml:space="preserve">
+    <value>Database Information</value>
+  </data>
+  <data name="&gt;&gt;lbDBInfo.Name" xml:space="preserve">
+    <value>lbDBInfo</value>
+  </data>
+  <data name="&gt;&gt;lbDBInfo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbDBInfo.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;lbDBInfo.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="txtDBPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="txtDBPath.Location" type="System.Drawing.Point, System.Drawing">
     <value>85, 67</value>
   </data>
-  <data name="txtJsonPath.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="txtDBPath.Size" type="System.Drawing.Size, System.Drawing">
     <value>569, 31</value>
   </data>
-  <data name="txtJsonPath.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="txtDBPath.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
   </data>
-  <data name="&gt;&gt;txtJsonPath.Name" xml:space="preserve">
-    <value>txtJsonPath</value>
+  <data name="&gt;&gt;txtDBPath.Name" xml:space="preserve">
+    <value>txtDBPath</value>
   </data>
-  <data name="&gt;&gt;txtJsonPath.Type" xml:space="preserve">
+  <data name="&gt;&gt;txtDBPath.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;txtJsonPath.Parent" xml:space="preserve">
-    <value>panel</value>
+  <data name="&gt;&gt;txtDBPath.Parent" xml:space="preserve">
+    <value>panel1</value>
   </data>
-  <data name="&gt;&gt;txtJsonPath.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;txtDBPath.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="txtDBInfo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -217,7 +337,7 @@
     <value>606, 240</value>
   </data>
   <data name="txtDBInfo.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>15</value>
   </data>
   <data name="&gt;&gt;txtDBInfo.Name" xml:space="preserve">
     <value>txtDBInfo</value>
@@ -226,88 +346,40 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;txtDBInfo.Parent" xml:space="preserve">
-    <value>panel</value>
+    <value>panel1</value>
   </data>
   <data name="&gt;&gt;txtDBInfo.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="lbDBInfo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="btSelect.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
   </data>
-  <data name="lbDBInfo.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="btSelect.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="lbDBInfo.Location" type="System.Drawing.Point, System.Drawing">
-    <value>81, 117</value>
+  <data name="btSelect.Location" type="System.Drawing.Point, System.Drawing">
+    <value>660, 67</value>
   </data>
-  <data name="lbDBInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 24</value>
+  <data name="btSelect.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 31</value>
   </data>
-  <data name="lbDBInfo.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+  <data name="btSelect.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
   </data>
-  <data name="lbDBInfo.Text" xml:space="preserve">
-    <value>GARbroDB Information</value>
+  <data name="btSelect.Text" xml:space="preserve">
+    <value>…</value>
   </data>
-  <data name="&gt;&gt;lbDBInfo.Name" xml:space="preserve">
-    <value>lbDBInfo</value>
+  <data name="&gt;&gt;btSelect.Name" xml:space="preserve">
+    <value>btSelect</value>
   </data>
-  <data name="&gt;&gt;lbDBInfo.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;btSelect.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lbDBInfo.Parent" xml:space="preserve">
-    <value>panel</value>
+  <data name="&gt;&gt;btSelect.Parent" xml:space="preserve">
+    <value>panel1</value>
   </data>
-  <data name="&gt;&gt;lbDBInfo.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="panel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 98</value>
-  </data>
-  <data name="panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>777, 472</value>
-  </data>
-  <data name="panel.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="&gt;&gt;panel.Name" xml:space="preserve">
-    <value>panel</value>
-  </data>
-  <data name="&gt;&gt;panel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;panel.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="chkbxEnableGARbroDB.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkbxEnableGARbroDB.Location" type="System.Drawing.Point, System.Drawing">
-    <value>85, 64</value>
-  </data>
-  <data name="chkbxEnableGARbroDB.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 28</value>
-  </data>
-  <data name="chkbxEnableGARbroDB.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="chkbxEnableGARbroDB.Text" xml:space="preserve">
-    <value>Enable</value>
-  </data>
-  <data name="&gt;&gt;chkbxEnableGARbroDB.Name" xml:space="preserve">
-    <value>chkbxEnableGARbroDB</value>
-  </data>
-  <data name="&gt;&gt;chkbxEnableGARbroDB.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkbxEnableGARbroDB.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;chkbxEnableGARbroDB.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="&gt;&gt;btSelect.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -325,7 +397,7 @@
     <value>777, 570</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>ExtensionGARbroDB</value>
+    <value>DataBaseSettings</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
