@@ -117,49 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="logErrorUnpackMethodNotFound" xml:space="preserve">
-    <value>错误：对应的解包方法未找到。</value>
+  <data name="InfoVersion" xml:space="preserve">
+    <value>版本：{0}</value>
   </data>
-  <data name="logErrorPackMethodNotFound" xml:space="preserve">
-    <value>错误：对应的封包方法未找到。</value>
+  <data name="InfoSize" xml:space="preserve">
+    <value>大小：{0}字节</value>
   </data>
-  <data name="logErrorClassNotFound" xml:space="preserve">
-    <value>错误：对应的类未找到。</value>
+  <data name="InfoContents" xml:space="preserve">
+    <value>内容：</value>
   </data>
-  <data name="logTryDecScr" xml:space="preserve">
-    <value>尝试解密：{0}……</value>
+  <data name="InfoHash" xml:space="preserve">
+    <value>哈希：{0}</value>
   </data>
-  <data name="logErrorDecScrFailed" xml:space="preserve">
-    <value>解密失败。</value>
+  <data name="InfoFailedToReadInfos" xml:space="preserve">
+    <value>读取信息失败。</value>
   </data>
-  <data name="logTryEncScr" xml:space="preserve">
-    <value>尝试加密：{0}……</value>
+  <data name="InfoItems" xml:space="preserve">
+    <value>{0}：{1}个项</value>
   </data>
-  <data name="logErrorEncScrFailed" xml:space="preserve">
-    <value>加密失败。</value>
+  <data name="InfoLastModified" xml:space="preserve">
+    <value>修改时间：{0}</value>
   </data>
-  <data name="logTryDecompress" xml:space="preserve">
-    <value>尝试解压缩：{0}……</value>
+  <data name="InfoFileNotFound" xml:space="preserve">
+    <value>未找到指定的文件。</value>
   </data>
-  <data name="logErrorDecompressFailed" xml:space="preserve">
-    <value>解压缩失败。</value>
+  <data name="InfoDisabled" xml:space="preserve">
+    <value>未启用。</value>
   </data>
-  <data name="logTryDecompressWithMethod" xml:space="preserve">
-    <value>尝试以{1}方式解压缩：{0}……</value>
-  </data>
-  <data name="logErrorContainsInvalid" xml:space="preserve">
-    <value>路径中有非法字符。在设置里切换编码或许能解决此问题。</value>
-  </data>
-  <data name="logErrorNotSupportedVersion" xml:space="preserve">
-    <value>{0} v{1}封包暂时不支持。</value>
-  </data>
-  <data name="logErrorReadIndexFailed" xml:space="preserve">
-    <value>读取索引失败。</value>
-  </data>
-  <data name="logImportGARbroDBSchemeSuccess" xml:space="preserve">
-    <value>从GARbroDB导入{0}个密钥。</value>
-  </data>
-  <data name="logImportDataBaseSuccess" xml:space="preserve">
-    <value>从数据库导入{0}个密钥。</value>
+  <data name="InfoEngineName" xml:space="preserve">
+    <value>数据库名称：{0}</value>
   </data>
 </root>

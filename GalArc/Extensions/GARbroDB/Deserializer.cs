@@ -1,4 +1,5 @@
 ﻿using GalArc.Logs;
+using GalArc.Strings;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,6 @@ namespace GalArc.Extensions.GARbroDB
 {
     public class Deserializer
     {
-
         public static string GARbroDBContent { get; internal set; } = null;
 
         public static void LoadScheme()
@@ -24,7 +24,7 @@ namespace GalArc.Extensions.GARbroDB
             }
         }
 
-        public static Dictionary<string, Dictionary<string, Scheme>> Deserialize(object instance)
+        public static Dictionary<string, Dictionary<string, Scheme>> Deserialize(Scheme instance)
         {
             if (!ExtensionsConfig.IsEnabled || !GARbroDBConfig.IsGARbroDBEnabled)
             {
@@ -61,50 +61,51 @@ namespace GalArc.Extensions.GARbroDB
             }
         }
 
-        public static string TryReadJson(string path)
+        public static string GetJsonInfo(string path)
         {
-            StringBuilder result = new StringBuilder();
             if (!File.Exists(path))
             {
-                return GARbroDB.DBFileNotFound;
+                return SchemeInfos.InfoFileNotFound;
             }
             try
             {
+                StringBuilder result = new StringBuilder();
+
                 GARbroDBContent = File.ReadAllText(path);
                 JObject jsonObject = JObject.Parse(GARbroDBContent);
 
                 // version
                 int version = (int)jsonObject["Version"];
-                result.AppendLine(string.Format(GARbroDB.DBVersion, version));
+                result.AppendLine(string.Format(SchemeInfos.InfoVersion, version));
 
                 // contents
-                result.AppendLine(GARbroDB.DBContents);
+                result.AppendLine(SchemeInfos.InfoContents);
 
                 // scheme count
                 JObject schemeMap = (JObject)jsonObject["SchemeMap"];
                 int SchemeMapCount = schemeMap.Count;
-                result.AppendLine(string.Format(GARbroDB.DBItems, "SchemeMap", SchemeMapCount));
+                result.AppendLine(string.Format(SchemeInfos.InfoItems, "SchemeMap", SchemeMapCount));
                 JObject gameMap = (JObject)jsonObject["GameMap"];
                 int GameMapCount = gameMap.Count;
-                result.AppendLine(string.Format(GARbroDB.DBItems, "GameMap", GameMapCount));
+                result.AppendLine(string.Format(SchemeInfos.InfoItems, "GameMap", GameMapCount));
 
                 // file size
                 FileInfo fileInfo = new FileInfo(path);
-                result.AppendLine(string.Format(GARbroDB.DBSize, fileInfo.Length));
+                result.AppendLine(string.Format(SchemeInfos.InfoSize, fileInfo.Length));
 
                 // last modified time
                 DateTime lastModified = File.GetLastWriteTime(path);
-                result.AppendLine(string.Format(GARbroDB.DBLastModified, lastModified));
+                result.AppendLine(string.Format(SchemeInfos.InfoLastModified, lastModified));
 
                 // hash
-                result.AppendLine(string.Format(GARbroDB.DBHash, GARbroDBContent.GetHashCode()));
+                result.AppendLine(string.Format(SchemeInfos.InfoHash, GARbroDBContent.GetHashCode()));
 
                 jsonObject = null;
                 return result.ToString();
             }
             catch
             {
-                return GARbroDB.DBFailedToReadInfos;
+                return SchemeInfos.InfoFileNotFound;
             }
         }
     }

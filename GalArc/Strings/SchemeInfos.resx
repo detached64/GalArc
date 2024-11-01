@@ -97,49 +97,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="logErrorUnpackMethodNotFound" xml:space="preserve">
-    <value>Error: Specified unpack method not found.</value>
+  <data name="InfoVersion" xml:space="preserve">
+    <value>Version: {0}</value>
   </data>
-  <data name="logErrorPackMethodNotFound" xml:space="preserve">
-    <value>Error: Specified pack method not found.</value>
+  <data name="InfoSize" xml:space="preserve">
+    <value>Size: {0} bytes</value>
   </data>
-  <data name="logErrorClassNotFound" xml:space="preserve">
-    <value>Error: Specified class not found.</value>
+  <data name="InfoContents" xml:space="preserve">
+    <value>Contents:</value>
   </data>
-  <data name="logTryDecScr" xml:space="preserve">
-    <value>Try to decrypt: {0}……</value>
+  <data name="InfoHash" xml:space="preserve">
+    <value>Hash: {0}</value>
   </data>
-  <data name="logErrorDecScrFailed" xml:space="preserve">
-    <value>Decryption failed.</value>
+  <data name="InfoFailedToReadInfos" xml:space="preserve">
+    <value>Failed to read information.</value>
   </data>
-  <data name="logTryEncScr" xml:space="preserve">
-    <value>Try to encrypt: {0}……</value>
+  <data name="InfoItems" xml:space="preserve">
+    <value>{0}: {1} items</value>
   </data>
-  <data name="logErrorEncScrFailed" xml:space="preserve">
-    <value>Encryption failed.</value>
+  <data name="InfoLastModified" xml:space="preserve">
+    <value>Last modified time: {0}</value>
   </data>
-  <data name="logTryDecompress" xml:space="preserve">
-    <value>Try to decompress: {0}……</value>
+  <data name="InfoFileNotFound" xml:space="preserve">
+    <value>Specified file not found.</value>
   </data>
-  <data name="logErrorDecompressFailed" xml:space="preserve">
-    <value>Decompression failed.</value>
+  <data name="InfoDisabled" xml:space="preserve">
+    <value>Disabled.</value>
   </data>
-  <data name="logTryDecompressWithMethod" xml:space="preserve">
-    <value>Try to decompress {0} with {1}……</value>
-  </data>
-  <data name="logErrorContainsInvalid" xml:space="preserve">
-    <value>Path contains invalid characters. Switching the encoding in the settings might work.</value>
-  </data>
-  <data name="logErrorNotSupportedVersion" xml:space="preserve">
-    <value>{0} v{1} archive temporarily not supported.</value>
-  </data>
-  <data name="logErrorReadIndexFailed" xml:space="preserve">
-    <value>Failed to read index.</value>
-  </data>
-  <data name="logImportGARbroDBSchemeSuccess" xml:space="preserve">
-    <value>Get {0} schemes from GARbroDB.</value>
-  </data>
-  <data name="logImportDataBaseSuccess" xml:space="preserve">
-    <value>Get {0} schemes from Database.</value>
+  <data name="InfoEngineName" xml:space="preserve">
+    <value>Name: {0}</value>
   </data>
 </root>

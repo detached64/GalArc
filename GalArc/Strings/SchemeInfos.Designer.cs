@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GalArc.Extensions.GARbroDB {
+namespace GalArc.Strings {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace GalArc.Extensions.GARbroDB {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class GARbroDB {
+    internal class SchemeInfos {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal GARbroDB() {
+        internal SchemeInfos() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace GalArc.Extensions.GARbroDB {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GalArc.Extensions.GARbroDB.GARbroDB", typeof(GARbroDB).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GalArc.Strings.SchemeInfos", typeof(SchemeInfos).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,72 +63,90 @@ namespace GalArc.Extensions.GARbroDB {
         /// <summary>
         ///   查找类似 Contents: 的本地化字符串。
         /// </summary>
-        internal static string DBContents {
+        internal static string InfoContents {
             get {
-                return ResourceManager.GetString("DBContents", resourceCulture);
+                return ResourceManager.GetString("InfoContents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Disabled. 的本地化字符串。
+        /// </summary>
+        internal static string InfoDisabled {
+            get {
+                return ResourceManager.GetString("InfoDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Name: {0} 的本地化字符串。
+        /// </summary>
+        internal static string InfoEngineName {
+            get {
+                return ResourceManager.GetString("InfoEngineName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Failed to read information. 的本地化字符串。
         /// </summary>
-        internal static string DBFailedToReadInfos {
+        internal static string InfoFailedToReadInfos {
             get {
-                return ResourceManager.GetString("DBFailedToReadInfos", resourceCulture);
+                return ResourceManager.GetString("InfoFailedToReadInfos", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Specified file not found. 的本地化字符串。
         /// </summary>
-        internal static string DBFileNotFound {
+        internal static string InfoFileNotFound {
             get {
-                return ResourceManager.GetString("DBFileNotFound", resourceCulture);
+                return ResourceManager.GetString("InfoFileNotFound", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Hash: {0} 的本地化字符串。
         /// </summary>
-        internal static string DBHash {
+        internal static string InfoHash {
             get {
-                return ResourceManager.GetString("DBHash", resourceCulture);
+                return ResourceManager.GetString("InfoHash", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 {0}: {1} items 的本地化字符串。
         /// </summary>
-        internal static string DBItems {
+        internal static string InfoItems {
             get {
-                return ResourceManager.GetString("DBItems", resourceCulture);
+                return ResourceManager.GetString("InfoItems", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Last modified time: {0} 的本地化字符串。
         /// </summary>
-        internal static string DBLastModified {
+        internal static string InfoLastModified {
             get {
-                return ResourceManager.GetString("DBLastModified", resourceCulture);
+                return ResourceManager.GetString("InfoLastModified", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Size: {0} bytes 的本地化字符串。
         /// </summary>
-        internal static string DBSize {
+        internal static string InfoSize {
             get {
-                return ResourceManager.GetString("DBSize", resourceCulture);
+                return ResourceManager.GetString("InfoSize", resourceCulture);
             }
         }
         
         /// <summary>
         ///   查找类似 Version: {0} 的本地化字符串。
         /// </summary>
-        internal static string DBVersion {
+        internal static string InfoVersion {
             get {
-                return ResourceManager.GetString("DBVersion", resourceCulture);
+                return ResourceManager.GetString("InfoVersion", resourceCulture);
             }
         }
     }
