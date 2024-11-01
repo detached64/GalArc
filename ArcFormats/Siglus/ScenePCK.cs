@@ -25,7 +25,7 @@ namespace ArcFormats.Siglus
             public bool UseExtraKey { get; set; }
         }
 
-        private class ScenePckEntry
+        protected class ScenePckEntry
         {
             public uint NameOffset { get; set; }
             public int NameLength { get; set; }
@@ -37,8 +37,6 @@ namespace ArcFormats.Siglus
             public uint UnpackedLength { get; set; }
         }
 
-        private static readonly string ScenePckName = "Scene.pck";
-
         internal static Dictionary<string, Dictionary<string, Scheme>> KnownSchemes;
 
         internal static Tuple<string, byte[]> SelectedScheme;
@@ -48,10 +46,6 @@ namespace ArcFormats.Siglus
         public void Unpack(string filePath, string folderPath)
         {
             string name = Path.GetFileName(filePath);
-            if (!name.Equals(ScenePckName, StringComparison.OrdinalIgnoreCase))
-            {
-                throw new Exception("Invalid file name");
-            }
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
             fs.Position = 52;
@@ -95,11 +89,11 @@ namespace ArcFormats.Siglus
             }
             Directory.CreateDirectory(folderPath);
 
-            byte[] key = header.UseExtraKey ? (TryEachKey ? TryKeys(entries[0]) : SelectedScheme.Item2) : null;
+            byte[] key = header.UseExtraKey ? (TryEachKey ? TryKeys(entries[0], 0) : SelectedScheme.Item2) : null;
             foreach (ScenePckEntry entry in entries)
             {
                 SiglusUtils.DecryptWithKey(entry.Data, key);
-                SiglusUtils.Decrypt(entry.Data);
+                SiglusUtils.Decrypt(entry.Data, 0);
 
                 entry.PackedLength = BitConverter.ToUInt32(entry.Data, 0);
                 if (entry.PackedLength != entry.Data.Length)
@@ -109,8 +103,14 @@ namespace ArcFormats.Siglus
                 entry.UnpackedLength = BitConverter.ToUInt32(entry.Data, 4);
                 byte[] input = new byte[entry.PackedLength - 8];
                 Array.Copy(entry.Data, 8, input, 0, input.Length);
-                File.WriteAllBytes(Path.Combine(folderPath, entry.Name), input);
-                entry.Data = SiglusUtils.Decompress(input, entry.UnpackedLength);
+                try
+                {
+                    entry.Data = SiglusUtils.Decompress(input, entry.UnpackedLength);
+                }
+                catch
+                {
+                    Logger.Error(Siglus.logWrongKey);
+                }
             }
 
             foreach (ScenePckEntry entry in entries)
@@ -118,23 +118,20 @@ namespace ArcFormats.Siglus
                 string entryPath = Path.Combine(folderPath, entry.Name);
                 File.WriteAllBytes(entryPath, entry.Data);
                 Logger.UpdateBar();
+                entry.Data = null;
             }
             entries.Clear();
             fs.Dispose();
             br.Dispose();
         }
 
-        private bool IsRightKey(ScenePckEntry entry, byte[] data, byte[] key)
+        protected static bool IsRightKey(ScenePckEntry entry, byte[] data, byte[] key, int type)
         {
-            if (key.Length != 16)
-            {
-                return false;
-            }
             byte[] backup = new byte[data.Length];
             Array.Copy(data, backup, data.Length);
 
             SiglusUtils.DecryptWithKey(backup, key);
-            SiglusUtils.Decrypt(backup);
+            SiglusUtils.Decrypt(backup, type);
             if (BitConverter.ToUInt32(backup, 0) != backup.Length)
             {
                 backup = null;
@@ -153,7 +150,7 @@ namespace ArcFormats.Siglus
             return true;
         }
 
-        private byte[] TryKeys(ScenePckEntry entry)
+        protected static byte[] TryKeys(ScenePckEntry entry, int type)
         {
             byte[] key;
             foreach (var scheme in KnownSchemes[SiglusScheme.JsonNodeName].Values.Cast<SiglusScheme>())
@@ -163,7 +160,7 @@ namespace ArcFormats.Siglus
                 {
                     continue;
                 }
-                if (IsRightKey(entry, entry.Data, key))
+                if (IsRightKey(entry, entry.Data, key, type))
                 {
                     Logger.Info(string.Format(Siglus.logFound, scheme.KnownKey));
                     Logger.Info(string.Format(Siglus.logMatchedGame, FindKeyFromValue(scheme.KnownKey)));
@@ -174,7 +171,7 @@ namespace ArcFormats.Siglus
             return null;
         }
 
-        private string FindKeyFromValue(string key)
+        protected static string FindKeyFromValue(string key)
         {
             foreach (var dic in KnownSchemes[SiglusScheme.JsonNodeName])
             {

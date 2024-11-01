@@ -47,7 +47,11 @@ namespace ArcFormats.Siglus
         // optional process
         public static void DecryptWithKey(byte[] data, byte[] key)
         {
-            if (key == null || key.Length != 16)
+            if (key == null)
+            {
+                return;
+            }
+            if (key.Length != 16)
             {
                 throw new ArgumentException("Invalid key");
             }
@@ -57,7 +61,7 @@ namespace ArcFormats.Siglus
             }
         }
 
-        public static void Decrypt(byte[] data, int type = 0)
+        public static void Decrypt(byte[] data, int type)
         {
             for (int i = 0; i < data.Length; i++)
             {
