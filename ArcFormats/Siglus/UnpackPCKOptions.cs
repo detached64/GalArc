@@ -38,12 +38,16 @@ namespace ArcFormats.Siglus
 
         private void AddSchemesToComboBox()
         {
-            this.combSchemes.Items.Add(Siglus.combItemTryEachScheme);
-            foreach (var scheme in ScenePCK.KnownSchemes[SiglusScheme.JsonNodeName])
+            if (ScenePCK.KnownSchemes != null && ScenePCK.KnownSchemes.TryGetValue(SiglusScheme.JsonNodeName, out var schemes))
             {
-                this.combSchemes.Items.Add(scheme.Key);
+                this.combSchemes.Items.Add(Siglus.combItemTryEachScheme);
+
+                foreach (var scheme in schemes)
+                {
+                    this.combSchemes.Items.Add(scheme.Key);
+                }
+                this.combSchemes.SelectedIndex = 0;
             }
-            this.combSchemes.SelectedIndex = 0;
         }
 
         private void combSchemes_SelectedIndexChanged(object sender, EventArgs e)

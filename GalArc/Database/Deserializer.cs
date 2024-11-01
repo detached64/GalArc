@@ -48,7 +48,12 @@ namespace GalArc.DataBase
             {
                 return null;
             }
-            var jsonToDeserialize = LoadedJsons[name];
+
+            if (!LoadedJsons.TryGetValue(name, out var jsonToDeserialize))
+            {
+                return null;
+            }
+
             var result = new Dictionary<string, Dictionary<string, Scheme>>();
 
             Type scheme = instance.GetType();
