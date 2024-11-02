@@ -30,13 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DataBaseSettings));
             this.chkbxEnableDataBase = new System.Windows.Forms.CheckBox();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel = new System.Windows.Forms.Panel();
             this.lbDBPath = new System.Windows.Forms.Label();
             this.lbDBInfo = new System.Windows.Forms.Label();
             this.txtDBPath = new System.Windows.Forms.TextBox();
             this.txtDBInfo = new System.Windows.Forms.TextBox();
             this.btSelect = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
+            this.panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkbxEnableDataBase
@@ -47,15 +47,15 @@
             this.chkbxEnableDataBase.Name = "chkbxEnableDataBase";
             this.chkbxEnableDataBase.UseVisualStyleBackColor = true;
             // 
-            // panel1
+            // panel
             // 
-            this.panel1.Controls.Add(this.lbDBPath);
-            this.panel1.Controls.Add(this.lbDBInfo);
-            this.panel1.Controls.Add(this.txtDBPath);
-            this.panel1.Controls.Add(this.txtDBInfo);
-            this.panel1.Controls.Add(this.btSelect);
-            resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.Name = "panel1";
+            resources.ApplyResources(this.panel, "panel");
+            this.panel.Controls.Add(this.lbDBPath);
+            this.panel.Controls.Add(this.lbDBInfo);
+            this.panel.Controls.Add(this.txtDBPath);
+            this.panel.Controls.Add(this.txtDBInfo);
+            this.panel.Controls.Add(this.btSelect);
+            this.panel.Name = "panel";
             // 
             // lbDBPath
             // 
@@ -93,12 +93,12 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel);
             this.Controls.Add(this.chkbxEnableDataBase);
             this.Name = "DataBaseSettings";
             this.Load += new System.EventHandler(this.DataBaseSettings_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.panel.ResumeLayout(false);
+            this.panel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -107,7 +107,7 @@
         #endregion
 
         private System.Windows.Forms.CheckBox chkbxEnableDataBase;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel;
         private System.Windows.Forms.Label lbDBPath;
         private System.Windows.Forms.Label lbDBInfo;
         private System.Windows.Forms.TextBox txtDBPath;

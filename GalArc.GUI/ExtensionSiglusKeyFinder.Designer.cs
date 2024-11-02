@@ -66,10 +66,10 @@
             // 
             // panel
             // 
+            resources.ApplyResources(this.panel, "panel");
             this.panel.Controls.Add(this.txtExePath);
             this.panel.Controls.Add(this.lbKeyFinderPath);
             this.panel.Controls.Add(this.btSelect);
-            resources.ApplyResources(this.panel, "panel");
             this.panel.Name = "panel";
             // 
             // ExtensionSiglusKeyFinder
