@@ -8,3 +8,4 @@ Mainly focus on the unpacking and repacking of galgame archives.
 
 [How to contribute](https://github.com/detached64/GalArc/blob/master/docs/contribution.md)
 
+[References](https://github.com/detached64/GalArc/blob/master/docs/references.md)

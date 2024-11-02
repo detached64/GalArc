@@ -25,6 +25,7 @@ Attention:this file may not be updated regularly.
 | PJADV            | `dat` `pak`                | ✔️      | ✔️    | All                     |
 | RPGMaker         | `rgssad` `rgss2a` `rgss3a` | ✔️      | ✔️    | All                     |
 | Seraph           | `dat`                      | ✔️      | ❌    | All                     |
+| Siglus           | `Scene.pck` `Gameexe.dat`  | ✔️      | ❌    | All                     |
 | Softpal          | `pac`                      | ✔️      | ✔️    | All                     |
 | SystemNNN        | `gpk` `vpk`                | ✔️      | ✔️    | All                     |
 | Triangle         | `CG` `SUD` `CGF`           | ✔️      | ✔️    | cgf:v1 only             |
