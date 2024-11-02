@@ -147,4 +147,7 @@
   <data name="empty" xml:space="preserve">
     <value>空</value>
   </data>
+  <data name="logFailedFindKey" xml:space="preserve">
+    <value>寻找密钥失败。</value>
+  </data>
 </root>

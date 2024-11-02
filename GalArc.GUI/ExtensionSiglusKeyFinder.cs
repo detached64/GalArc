@@ -1,8 +1,7 @@
-﻿using GalArc.Extensions.GARbroDB;
+﻿using GalArc.Extensions.SiglusKeyFinder;
+using GalArc.GUI.Properties;
 using System;
 using System.Windows.Forms;
-using GalArc.GUI.Properties;
-using GalArc.Extensions.SiglusKeyFinder;
 
 namespace GalArc.GUI
 {
@@ -29,14 +28,7 @@ namespace GalArc.GUI
 
         private void ExtensionSiglusKeyFinder_Load(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(Settings.Default.SiglusKeyFinderPath))
-            {
-                this.txtExePath.Text = Settings.Default.SiglusKeyFinderPath;
-            }
-            else
-            {
-                this.txtExePath.Text = KeyFinderConfig.DefaultSiglusKeyFinderPath;
-            }
+            this.txtExePath.Text = KeyFinderConfig.SiglusKeyFinderPath;
             this.chkbxEnableGARbroDB.Checked = Settings.Default.EnableSiglusKeyFinder;
             KeyFinderConfig.IsSiglusKeyFinderEnabled = this.chkbxEnableGARbroDB.Checked;
         }
@@ -65,6 +57,13 @@ namespace GalArc.GUI
             Settings.Default.Save();
             KeyFinderConfig.IsSiglusKeyFinderEnabled = this.chkbxEnableGARbroDB.Checked;
             this.panel.Enabled = this.chkbxEnableGARbroDB.Checked;
+        }
+
+        private void txtExePath_TextChanged(object sender, EventArgs e)
+        {
+            KeyFinderConfig.SiglusKeyFinderPath = this.txtExePath.Text;
+            Settings.Default.SiglusKeyFinderPath = this.txtExePath.Text;
+            Settings.Default.Save();
         }
     }
 }

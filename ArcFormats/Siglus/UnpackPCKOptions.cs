@@ -13,7 +13,24 @@ namespace ArcFormats.Siglus
 {
     public partial class UnpackPCKOptions : UserControl
     {
-        internal static string ExtractedKey = null;
+        private static string ExtractedKey
+        {
+            get
+            {
+                return _ExtractedKey;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value) || String.Equals(value, "Failed", StringComparison.OrdinalIgnoreCase))
+                {
+                    _ExtractedKey = null;
+                    return;
+                }
+                _ExtractedKey = value;
+            }
+        }
+
+        private static string _ExtractedKey;
 
         public UnpackPCKOptions()
         {
@@ -113,20 +130,19 @@ namespace ArcFormats.Siglus
                     catch (Exception ex)
                     {
                         Logger.Error(ex.Message, false);
-                        this.lbKey.Text = string.Empty;
                         return;
                     }
                 }
-            }
-            if (ExtractedKey != null)
-            {
-                this.lbKey.Text = string.Format(Siglus.lbKey, ExtractedKey);
-                Logger.InfoRevoke(string.Format(Siglus.logFound, ExtractedKey));
+                if (ExtractedKey != null)
+                {
+                    this.lbKey.Text = string.Format(Siglus.lbKey, ExtractedKey);
+                    Logger.InfoRevoke(string.Format(Siglus.logFound, ExtractedKey));
+                }
+                else
+                {
+                    Logger.InfoRevoke(Siglus.logFailedFindKey);
+                }
                 this.combSchemes.SelectedIndex = 1;
-            }
-            else
-            {
-                this.lbKey.Text = string.Empty;
             }
         }
 

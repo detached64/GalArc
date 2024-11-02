@@ -1,5 +1,4 @@
-﻿using GalArc.Extensions;
-using GalArc.Extensions.GARbroDB;
+﻿using GalArc.Extensions.GARbroDB;
 using GalArc.GUI.Properties;
 using System;
 using System.Drawing;
@@ -31,14 +30,7 @@ namespace GalArc.GUI
 
         private void ExtensionGARbroDB_Load(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(Settings.Default.GARbroDBPath))
-            {
-                this.txtJsonPath.Text = Settings.Default.GARbroDBPath;
-            }
-            else
-            {
-                this.txtJsonPath.Text = GARbroDBConfig.DefaultGARbroDBPath;
-            }
+            this.txtJsonPath.Text = GARbroDBConfig.GARbroDBPath;
             this.chkbxEnableGARbroDB.Checked = Settings.Default.EnableGARbroDB;
             GARbroDBConfig.IsGARbroDBEnabled = this.chkbxEnableGARbroDB.Checked;
         }
@@ -64,6 +56,7 @@ namespace GalArc.GUI
         private void txtJsonPath_TextChanged(object sender, EventArgs e)
         {
             this.txtDBInfo.Text = Deserializer.GetJsonInfo(this.txtJsonPath.Text);
+            GARbroDBConfig.GARbroDBPath = this.txtJsonPath.Text;
             Settings.Default.GARbroDBPath = this.txtJsonPath.Text;
             Settings.Default.Save();
         }
