@@ -226,5 +226,29 @@ namespace GalArc.GUI.Properties {
                 this["DataBasePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableSiglusKeyFinder {
+            get {
+                return ((bool)(this["EnableSiglusKeyFinder"]));
+            }
+            set {
+                this["EnableSiglusKeyFinder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SiglusKeyFinderPath {
+            get {
+                return ((string)(this["SiglusKeyFinderPath"]));
+            }
+            set {
+                this["SiglusKeyFinderPath"] = value;
+            }
+        }
     }
 }

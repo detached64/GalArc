@@ -40,6 +40,7 @@ namespace GalArc.GUI
                 this.txtJsonPath.Text = GARbroDBConfig.DefaultGARbroDBPath;
             }
             this.chkbxEnableGARbroDB.Checked = Settings.Default.EnableGARbroDB;
+            GARbroDBConfig.IsGARbroDBEnabled = this.chkbxEnableGARbroDB.Checked;
         }
 
         private void btSelect_Click(object sender, EventArgs e)

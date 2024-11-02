@@ -117,34 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lbKey" xml:space="preserve">
-    <value>密钥：{0}</value>
+  <data name="chkbxEnableGARbroDB.Text" xml:space="preserve">
+    <value>启用此扩展</value>
   </data>
-  <data name="combItemTryEachScheme" xml:space="preserve">
-    <value>尝试所有加密方案</value>
+  <data name="lbKeyFinderPath.Text" xml:space="preserve">
+    <value>SiglusKeyFinder.exe文件路径</value>
   </data>
-  <data name="logFound" xml:space="preserve">
-    <value>已找到密钥：{0}</value>
-  </data>
-  <data name="logNotFound" xml:space="preserve">
-    <value>未找到密钥。</value>
-  </data>
-  <data name="logMatchedGame" xml:space="preserve">
-    <value>对应游戏：{0}</value>
-  </data>
-  <data name="logWrongKey" xml:space="preserve">
-    <value>密钥错误！</value>
-  </data>
-  <data name="lbKeyParseError" xml:space="preserve">
-    <value>密钥解析失败。</value>
-  </data>
-  <data name="combCustom" xml:space="preserve">
-    <value>自定义方案</value>
-  </data>
-  <data name="logKeyFound" xml:space="preserve">
-    <value>已找到密钥：{0}</value>
-  </data>
-  <data name="empty" xml:space="preserve">
-    <value>空</value>
+  <data name="btSelect.Text" xml:space="preserve">
+    <value>…</value>
   </data>
 </root>

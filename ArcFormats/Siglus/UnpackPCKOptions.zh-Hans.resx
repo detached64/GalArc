@@ -123,4 +123,10 @@
   <data name="lbKey.Text" xml:space="preserve">
     <value>密钥：空</value>
   </data>
+  <data name="lbFromGameExe.Text" xml:space="preserve">
+    <value>或者，点击右侧按钮，从游戏可执行文件中寻找密钥：</value>
+  </data>
+  <data name="btCheckExe.Text" xml:space="preserve">
+    <value>寻找密钥</value>
+  </data>
 </root>

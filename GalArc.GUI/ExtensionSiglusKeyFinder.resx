@@ -118,114 +118,133 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lbChoose.AutoSize" type="System.Boolean, mscorlib">
+  <data name="chkbxEnableGARbroDB.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="chkbxEnableGARbroDB.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lbChoose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>83, 70</value>
+  <data name="chkbxEnableGARbroDB.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 64</value>
   </data>
-  <data name="lbChoose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>241, 24</value>
+  <data name="chkbxEnableGARbroDB.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 28</value>
   </data>
-  <data name="lbChoose.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="chkbxEnableGARbroDB.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
   </data>
-  <data name="lbChoose.Text" xml:space="preserve">
-    <value>Choose encryption scheme</value>
+  <data name="chkbxEnableGARbroDB.Text" xml:space="preserve">
+    <value>Enable</value>
   </data>
-  <data name="&gt;&gt;lbChoose.Name" xml:space="preserve">
-    <value>lbChoose</value>
+  <data name="&gt;&gt;chkbxEnableGARbroDB.Name" xml:space="preserve">
+    <value>chkbxEnableGARbroDB</value>
   </data>
-  <data name="&gt;&gt;lbChoose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;chkbxEnableGARbroDB.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lbChoose.Parent" xml:space="preserve">
+  <data name="&gt;&gt;chkbxEnableGARbroDB.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;lbChoose.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="combSchemes.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 109</value>
-  </data>
-  <data name="combSchemes.Size" type="System.Drawing.Size, System.Drawing">
-    <value>624, 32</value>
-  </data>
-  <data name="combSchemes.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;chkbxEnableGARbroDB.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;combSchemes.Name" xml:space="preserve">
-    <value>combSchemes</value>
+  <data name="lbKeyFinderPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
   </data>
-  <data name="&gt;&gt;combSchemes.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;combSchemes.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;combSchemes.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="lbKey.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lbKeyFinderPath.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="lbKey.Location" type="System.Drawing.Point, System.Drawing">
-    <value>83, 166</value>
+  <data name="lbKeyFinderPath.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="lbKey.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 24</value>
+  <data name="lbKeyFinderPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>81, 29</value>
   </data>
-  <data name="lbKey.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="lbKeyFinderPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>224, 24</value>
   </data>
-  <data name="lbKey.Text" xml:space="preserve">
-    <value>Key: Empty</value>
+  <data name="lbKeyFinderPath.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
   </data>
-  <data name="&gt;&gt;lbKey.Name" xml:space="preserve">
-    <value>lbKey</value>
+  <data name="lbKeyFinderPath.Text" xml:space="preserve">
+    <value>SiglusKeyFinder.exe Path</value>
   </data>
-  <data name="&gt;&gt;lbKey.Type" xml:space="preserve">
+  <data name="&gt;&gt;lbKeyFinderPath.Name" xml:space="preserve">
+    <value>lbKeyFinderPath</value>
+  </data>
+  <data name="&gt;&gt;lbKeyFinderPath.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lbKey.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbKey.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;btCheckExe.Name" xml:space="preserve">
-    <value>btCheckExe</value>
-  </data>
-  <data name="&gt;&gt;btCheckExe.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btCheckExe.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lbKeyFinderPath.Parent" xml:space="preserve">
     <value>panel</value>
   </data>
-  <data name="&gt;&gt;btCheckExe.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lbKeyFinderPath.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="txtExePath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="txtExePath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 67</value>
+  </data>
+  <data name="txtExePath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>569, 31</value>
+  </data>
+  <data name="txtExePath.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;txtExePath.Name" xml:space="preserve">
+    <value>txtExePath</value>
+  </data>
+  <data name="&gt;&gt;txtExePath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtExePath.Parent" xml:space="preserve">
+    <value>panel</value>
+  </data>
+  <data name="&gt;&gt;txtExePath.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;lbFromGameExe.Name" xml:space="preserve">
-    <value>lbFromGameExe</value>
+  <data name="btSelect.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
   </data>
-  <data name="&gt;&gt;lbFromGameExe.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="btSelect.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="&gt;&gt;lbFromGameExe.Parent" xml:space="preserve">
+  <data name="btSelect.Location" type="System.Drawing.Point, System.Drawing">
+    <value>660, 66</value>
+  </data>
+  <data name="btSelect.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 31</value>
+  </data>
+  <data name="btSelect.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="btSelect.Text" xml:space="preserve">
+    <value>…</value>
+  </data>
+  <data name="&gt;&gt;btSelect.Name" xml:space="preserve">
+    <value>btSelect</value>
+  </data>
+  <data name="&gt;&gt;btSelect.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btSelect.Parent" xml:space="preserve">
     <value>panel</value>
   </data>
-  <data name="&gt;&gt;lbFromGameExe.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;btSelect.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="panel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 200</value>
+    <value>0, 98</value>
   </data>
   <data name="panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>823, 50</value>
+    <value>777, 472</value>
   </data>
   <data name="panel.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>13</value>
   </data>
   <data name="&gt;&gt;panel.Name" xml:space="preserve">
     <value>panel</value>
@@ -239,57 +258,6 @@
   <data name="&gt;&gt;panel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="lbFromGameExe.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbFromGameExe.Location" type="System.Drawing.Point, System.Drawing">
-    <value>83, 12</value>
-  </data>
-  <data name="lbFromGameExe.Size" type="System.Drawing.Size, System.Drawing">
-    <value>474, 24</value>
-  </data>
-  <data name="lbFromGameExe.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lbFromGameExe.Text" xml:space="preserve">
-    <value>Alternatively, look for key within game executable file:</value>
-  </data>
-  <data name="&gt;&gt;lbFromGameExe.Name" xml:space="preserve">
-    <value>lbFromGameExe</value>
-  </data>
-  <data name="&gt;&gt;lbFromGameExe.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbFromGameExe.Parent" xml:space="preserve">
-    <value>panel</value>
-  </data>
-  <data name="&gt;&gt;lbFromGameExe.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="btCheckExe.Location" type="System.Drawing.Point, System.Drawing">
-    <value>599, 8</value>
-  </data>
-  <data name="btCheckExe.Size" type="System.Drawing.Size, System.Drawing">
-    <value>112, 32</value>
-  </data>
-  <data name="btCheckExe.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="btCheckExe.Text" xml:space="preserve">
-    <value>Find key</value>
-  </data>
-  <data name="&gt;&gt;btCheckExe.Name" xml:space="preserve">
-    <value>btCheckExe</value>
-  </data>
-  <data name="&gt;&gt;btCheckExe.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btCheckExe.Parent" xml:space="preserve">
-    <value>panel</value>
-  </data>
-  <data name="&gt;&gt;btCheckExe.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -299,15 +267,14 @@
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>微软雅黑, 9pt</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>823, 393</value>
+    <value>777, 570</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>UnpackPCKOptions</value>
+    <value>ExtensionSiglusKeyFinder</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

@@ -1,6 +1,8 @@
 ﻿using ArcFormats.Properties;
 using GalArc.DataBase;
 using GalArc.DataBase.Siglus;
+using GalArc.Extensions;
+using GalArc.Extensions.SiglusKeyFinder;
 using GalArc.Logs;
 using System;
 using System.Reflection;
@@ -11,6 +13,8 @@ namespace ArcFormats.Siglus
 {
     public partial class UnpackPCKOptions : UserControl
     {
+        internal static string ExtractedKey = null;
+
         public UnpackPCKOptions()
         {
             InitializeComponent();
@@ -41,6 +45,7 @@ namespace ArcFormats.Siglus
             if (ScenePCK.KnownSchemes != null)
             {
                 this.combSchemes.Items.Add(Siglus.combItemTryEachScheme);
+                this.combSchemes.Items.Add(Siglus.combCustom);
 
                 foreach (var scheme in ScenePCK.KnownSchemes)
                 {
@@ -59,12 +64,27 @@ namespace ArcFormats.Siglus
                 this.lbKey.Text = string.Empty;
                 return;
             }
+            else if (this.combSchemes.SelectedIndex == 1)
+            {
+                try
+                {
+                    ScenePCK.SelectedScheme = new Tuple<string, byte[]>(this.combSchemes.Text, Utils.HexStringToByteArray(ExtractedKey, '-'));
+                }
+                catch
+                {
+                    ScenePCK.SelectedScheme = null;
+                    this.lbKey.Text = Siglus.lbKeyParseError;
+                }
+                ScenePCK.TryEachKey = false;
+                this.lbKey.Text = string.Format(Siglus.lbKey, ExtractedKey ?? Siglus.empty);
+                return;
+            }
             else
             {
                 SiglusScheme scheme = (SiglusScheme)ScenePCK.KnownSchemes[this.combSchemes.Text];
                 try
                 {
-                    ScenePCK.SelectedScheme = new Tuple<string, byte[]>(scheme.KnownKey, Utils.HexStringToByteArray(scheme.KnownKey, '-'));
+                    ScenePCK.SelectedScheme = new Tuple<string, byte[]>(this.combSchemes.Text, Utils.HexStringToByteArray(scheme.KnownKey, '-'));
                     this.lbKey.Text = string.Format(Siglus.lbKey, scheme.KnownKey);
                 }
                 catch
@@ -73,6 +93,52 @@ namespace ArcFormats.Siglus
                     this.lbKey.Text = Siglus.lbKeyParseError;
                 }
                 ScenePCK.TryEachKey = false;
+            }
+        }
+
+        private void btCheckExe_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Game Executable file (*.exe)|*.exe";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        ExtractedKey = KeyFinder.FindKey(openFileDialog.FileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Error(ex.Message, false);
+                        this.lbKey.Text = string.Empty;
+                        return;
+                    }
+                }
+            }
+            if (ExtractedKey != null)
+            {
+                this.lbKey.Text = string.Format(Siglus.lbKey, ExtractedKey);
+                Logger.InfoRevoke(string.Format(Siglus.logFound, ExtractedKey));
+                this.combSchemes.SelectedIndex = 1;
+            }
+            else
+            {
+                this.lbKey.Text = string.Empty;
+            }
+        }
+
+        private void UnpackPCKOptions_Load(object sender, EventArgs e)
+        {
+            if (ExtensionsConfig.IsEnabled && KeyFinderConfig.IsSiglusKeyFinderEnabled && KeyFinder.IsValidExe())
+            {
+                this.panel.Visible = true;
+            }
+            else
+            {
+                this.panel.Visible = false;
             }
         }
     }
