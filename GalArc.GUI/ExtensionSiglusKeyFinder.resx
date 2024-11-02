@@ -150,9 +150,6 @@
   <data name="&gt;&gt;chkbxEnableGARbroDB.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="lbKeyFinderPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left, Right</value>
-  </data>
   <data name="lbKeyFinderPath.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -184,7 +181,7 @@
     <value>1</value>
   </data>
   <data name="txtExePath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left, Right</value>
+    <value>Top, Left, Right</value>
   </data>
   <data name="txtExePath.Location" type="System.Drawing.Point, System.Drawing">
     <value>85, 67</value>
@@ -208,7 +205,7 @@
     <value>0</value>
   </data>
   <data name="btSelect.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left, Right</value>
+    <value>Top, Right</value>
   </data>
   <data name="btSelect.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -236,6 +233,9 @@
   </data>
   <data name="&gt;&gt;btSelect.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="panel.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 98</value>

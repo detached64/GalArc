@@ -56,6 +56,7 @@ namespace GalArc.GUI
             {
                 this.panel.Controls.Clear();
                 userControl.Dock = DockStyle.Fill;
+                //userControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
                 this.panel.Controls.Add(userControl);
             }
         }

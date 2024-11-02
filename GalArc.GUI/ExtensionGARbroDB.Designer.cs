@@ -73,12 +73,12 @@
             // 
             // panel
             // 
+            resources.ApplyResources(this.panel, "panel");
             this.panel.Controls.Add(this.lbFormatsJson);
             this.panel.Controls.Add(this.lbDBInfo);
             this.panel.Controls.Add(this.txtJsonPath);
             this.panel.Controls.Add(this.txtDBInfo);
             this.panel.Controls.Add(this.btSelect);
-            resources.ApplyResources(this.panel, "panel");
             this.panel.Name = "panel";
             // 
             // chkbxEnableGARbroDB

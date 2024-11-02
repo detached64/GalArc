@@ -31,6 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsWindow));
             this.panel = new System.Windows.Forms.Panel();
             this.treeViewOption = new System.Windows.Forms.TreeView();
+            this.splitContainer = new System.Windows.Forms.SplitContainer();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
+            this.splitContainer.Panel1.SuspendLayout();
+            this.splitContainer.Panel2.SuspendLayout();
+            this.splitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel
@@ -42,8 +47,8 @@
             // 
             // treeViewOption
             // 
-            resources.ApplyResources(this.treeViewOption, "treeViewOption");
             this.treeViewOption.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.treeViewOption, "treeViewOption");
             this.treeViewOption.HideSelection = false;
             this.treeViewOption.HotTracking = true;
             this.treeViewOption.Name = "treeViewOption";
@@ -55,19 +60,33 @@
             this.treeViewOption.ShowPlusMinus = false;
             this.treeViewOption.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewOption_AfterSelect);
             // 
+            // splitContainer
+            // 
+            resources.ApplyResources(this.splitContainer, "splitContainer");
+            this.splitContainer.Name = "splitContainer";
+            // 
+            // splitContainer.Panel1
+            // 
+            this.splitContainer.Panel1.Controls.Add(this.treeViewOption);
+            // 
+            // splitContainer.Panel2
+            // 
+            this.splitContainer.Panel2.Controls.Add(this.panel);
+            // 
             // SettingsWindow
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panel);
-            this.Controls.Add(this.treeViewOption);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
+            this.Controls.Add(this.splitContainer);
             this.MinimizeBox = false;
             this.Name = "SettingsWindow";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Load += new System.EventHandler(this.SettingsWindow_Load);
+            this.splitContainer.Panel1.ResumeLayout(false);
+            this.splitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
+            this.splitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -75,5 +94,6 @@
         #endregion
         private System.Windows.Forms.Panel panel;
         private System.Windows.Forms.TreeView treeViewOption;
+        private System.Windows.Forms.SplitContainer splitContainer;
     }
 }
