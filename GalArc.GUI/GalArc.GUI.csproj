@@ -80,6 +80,12 @@
     <Compile Include="ExtensionGARbroDB.Designer.cs">
       <DependentUpon>ExtensionGARbroDB.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExtensionSiglusKeyFinder.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExtensionSiglusKeyFinder.Designer.cs">
+      <DependentUpon>ExtensionSiglusKeyFinder.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExtensionsSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -145,6 +151,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ExtensionGARbroDB.zh-Hans.resx">
       <DependentUpon>ExtensionGARbroDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtensionSiglusKeyFinder.resx">
+      <DependentUpon>ExtensionSiglusKeyFinder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtensionSiglusKeyFinder.zh-Hans.resx">
+      <DependentUpon>ExtensionSiglusKeyFinder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ExtensionsSettings.resx">
       <DependentUpon>ExtensionsSettings.cs</DependentUpon>

@@ -115,10 +115,16 @@
   <data name="logWrongKey" xml:space="preserve">
     <value>Wrong key!</value>
   </data>
-  <data name="_Empty[1]" xml:space="preserve">
-    <value>123</value>
-  </data>
   <data name="lbKeyParseError" xml:space="preserve">
     <value>Failed to parse key.</value>
+  </data>
+  <data name="combCustom" xml:space="preserve">
+    <value>Custom scheme</value>
+  </data>
+  <data name="logKeyFound" xml:space="preserve">
+    <value>Key: {0}</value>
+  </data>
+  <data name="empty" xml:space="preserve">
+    <value>Empty</value>
   </data>
 </root>

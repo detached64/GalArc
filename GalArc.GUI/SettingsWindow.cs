@@ -39,14 +39,17 @@ namespace GalArc.GUI
                 case "nodePreferences":
                     userControl = PreferenceSettings.Instance;
                     break;
+                case "nodeDataBase":
+                    userControl = DataBaseSettings.Instance;
+                    break;
                 case "nodeExtensions":
                     userControl = ExtensionsSettings.Instance;
                     break;
                 case "nodeGARbroDB":
                     userControl = ExtensionGARbroDB.Instance;
                     break;
-                case "nodeDataBase":
-                    userControl = DataBaseSettings.Instance;
+                case "nodeSiglusKeyFinder":
+                    userControl = ExtensionSiglusKeyFinder.Instance;
                     break;
             }
             if (userControl != null)
