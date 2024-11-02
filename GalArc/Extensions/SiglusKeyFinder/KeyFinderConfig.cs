@@ -7,9 +7,25 @@ namespace GalArc.Extensions.SiglusKeyFinder
     {
         public static bool IsSiglusKeyFinderEnabled { get; set; } = true;
 
-        public static string SiglusKeyFinderPath { get; set; }
+        private static string _SiglusKeyFinderPath;
 
-        public static string DefaultSiglusKeyFinderPath { get; } = Path.Combine(Environment.CurrentDirectory, "Extensions\\SiglusKeyFinder.exe");
+        public static string SiglusKeyFinderPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_SiglusKeyFinderPath))
+                {
+                    return DefaultSiglusKeyFinderPath;
+                }
+                return _SiglusKeyFinderPath;
+            }
+            set
+            {
+                _SiglusKeyFinderPath = value;
+            }
+        }
+
+        private static readonly string DefaultSiglusKeyFinderPath = Path.Combine(Environment.CurrentDirectory, "Extensions\\SiglusKeyFinder.exe");
 
     }
 }

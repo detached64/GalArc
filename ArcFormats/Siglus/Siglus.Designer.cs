@@ -106,6 +106,15 @@ namespace ArcFormats.Siglus {
         }
         
         /// <summary>
+        ///   查找类似 Failed to find key. 的本地化字符串。
+        /// </summary>
+        internal static string logFailedFindKey {
+            get {
+                return ResourceManager.GetString("logFailedFindKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Key found: {0} 的本地化字符串。
         /// </summary>
         internal static string logFound {

@@ -56,6 +56,7 @@
             resources.ApplyResources(this.txtExePath, "txtExePath");
             this.txtExePath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtExePath.Name = "txtExePath";
+            this.txtExePath.TextChanged += new System.EventHandler(this.txtExePath_TextChanged);
             // 
             // btSelect
             // 
