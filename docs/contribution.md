@@ -4,7 +4,7 @@
 
 1. Use ResX Manager extension or something to translate all the strings.
 
-3. Go to GalArc.GUI/Resource/Languages.cs , add your language name and culture like this:
+3. Go to GalArc/Common/Languages.cs , add your language name and culture like this:
 
    ```C#
    internal static Dictionary<string, string> languages = new Dictionary<string, string>
@@ -34,4 +34,4 @@
    }
    ```
 
-4. Add a new EngineInfo in GalArc.GUI/Resource/EngineInfo.cs.
+4. Add a new EngineInfo in GalArc/Common/EngineInfo.cs.
