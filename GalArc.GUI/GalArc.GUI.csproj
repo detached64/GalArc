@@ -254,8 +254,8 @@
   <PropertyGroup>
     <PostBuildEvent>if not exist "$(TargetDir)\Extensions" mkdir "$(TargetDir)\Extensions"
 if not exist "$(TargetDir)\Database" mkdir "$(TargetDir)\Database"
-xcopy /E /I /Y "$(ProjectDir)\Resources\Extensions" "$(TargetDir)\Extensions"
-xcopy /E /I /Y "$(ProjectDir)\Resources\Database" "$(TargetDir)\Database"</PostBuildEvent>
+xcopy /E /I /Y /D "$(ProjectDir)\Resources\Extensions" "$(TargetDir)\Extensions"
+xcopy /E /I /Y /D "$(ProjectDir)\Resources\Database" "$(TargetDir)\Database"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>
