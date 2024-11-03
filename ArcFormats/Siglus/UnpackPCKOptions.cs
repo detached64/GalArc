@@ -132,17 +132,19 @@ namespace ArcFormats.Siglus
                         Logger.Error(ex.Message, false);
                         return;
                     }
+
+                    if (ExtractedKey != null)
+                    {
+                        this.lbKey.Text = string.Format(Siglus.lbKey, ExtractedKey);
+                        Logger.InfoRevoke(string.Format(Siglus.logFound, ExtractedKey));
+                    }
+                    else
+                    {
+                        Logger.InfoRevoke(Siglus.logFailedFindKey);
+                    }
+                    this.combSchemes.SelectedIndex = 1;
+
                 }
-                if (ExtractedKey != null)
-                {
-                    this.lbKey.Text = string.Format(Siglus.lbKey, ExtractedKey);
-                    Logger.InfoRevoke(string.Format(Siglus.logFound, ExtractedKey));
-                }
-                else
-                {
-                    Logger.InfoRevoke(Siglus.logFailedFindKey);
-                }
-                this.combSchemes.SelectedIndex = 1;
             }
         }
 
