@@ -16,7 +16,7 @@ namespace GalArc.GUI
             Extensions.GARbroDB.GARbroDBConfig.Path = Settings.Default.GARbroDBPath;
             Extensions.SiglusKeyFinder.SiglusKeyFinderConfig.IsEnabled = Settings.Default.EnableSiglusKeyFinder;
             Extensions.SiglusKeyFinder.SiglusKeyFinderConfig.Path = Settings.Default.SiglusKeyFinderPath;
-            DataBase.DataBaseConfig.DataBasePath = Settings.Default.DataBasePath;
+            DataBase.DataBaseConfig.Path = Settings.Default.DataBasePath;
             Logs.LogConfig.autoSaveState = Settings.Default.AutoSaveState;
         }
 

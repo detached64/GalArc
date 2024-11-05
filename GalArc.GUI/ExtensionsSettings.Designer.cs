@@ -53,8 +53,9 @@
             // 
             this.dataGridViewInfos.AllowUserToAddRows = false;
             this.dataGridViewInfos.AllowUserToDeleteRows = false;
+            this.dataGridViewInfos.AllowUserToResizeRows = false;
             resources.ApplyResources(this.dataGridViewInfos, "dataGridViewInfos");
-            this.dataGridViewInfos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewInfos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridViewInfos.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridViewInfos.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             this.dataGridViewInfos.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;

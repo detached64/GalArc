@@ -35,7 +35,7 @@ namespace GalArc.GUI
                 if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
                 {
                     this.txtDBPath.Text = folderBrowserDialog.SelectedPath;
-                    DataBaseConfig.DataBasePath = folderBrowserDialog.SelectedPath;
+                    DataBaseConfig.Path = folderBrowserDialog.SelectedPath;
                     Settings.Default.DataBasePath = folderBrowserDialog.SelectedPath;
                     Settings.Default.Save();
                 }
@@ -44,11 +44,11 @@ namespace GalArc.GUI
 
         private void txtDBPath_TextChanged(object sender, EventArgs e)
         {
-            DataBaseConfig.DataBasePath = this.txtDBPath.Text;
+            DataBaseConfig.Path = this.txtDBPath.Text;
             Settings.Default.DataBasePath = this.txtDBPath.Text;
             Settings.Default.Save();
 
-            this.txtDBInfo.Text = Deserializer.GetAllJsonInfo().Trim();
+            this.txtDBInfo.Text = Deserializer.GetInfos().Trim();
         }
 
         private void DataBaseSettings_Load(object sender, EventArgs e)
@@ -59,7 +59,7 @@ namespace GalArc.GUI
             }
             else
             {
-                this.txtDBPath.Text = DataBaseConfig.DataBasePath;
+                this.txtDBPath.Text = DataBaseConfig.Path;
             }
         }
     }

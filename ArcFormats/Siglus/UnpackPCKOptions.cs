@@ -90,7 +90,6 @@ namespace ArcFormats.Siglus
                 catch
                 {
                     ScenePCK.SelectedScheme = null;
-                    this.lbKey.Text = Siglus.lbKeyParseError;
                 }
                 ScenePCK.TryEachKey = false;
                 this.lbKey.Text = string.Format(Siglus.lbKey, ExtractedKey ?? Siglus.empty);
