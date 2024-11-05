@@ -64,7 +64,7 @@
     <Compile Include="Extensions\GARbroDB\GARbroDBConfig.cs" />
     <Compile Include="Extensions\GARbroDB\Deserializer.cs" />
     <Compile Include="Extensions\SiglusKeyFinder\KeyFinder.cs" />
-    <Compile Include="Extensions\SiglusKeyFinder\KeyFinderConfig.cs" />
+    <Compile Include="Extensions\SiglusKeyFinder\SiglusKeyFinderConfig.cs" />
     <Compile Include="Strings\SchemeInfos.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

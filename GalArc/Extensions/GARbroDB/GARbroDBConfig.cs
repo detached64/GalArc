@@ -1,31 +1,38 @@
 ﻿using System;
-using System.IO;
 
 namespace GalArc.Extensions.GARbroDB
 {
-    public class GARbroDBConfig
+    [Extension]
+    public class GARbroDBConfig : IExtension
     {
-        public static bool IsGARbroDBEnabled { get; set; } = true;
+        public static bool IsEnabled { get; set; } = true;
 
-        private static string _GARbroDBPath;
+        private static string _Path;
 
-        public static string GARbroDBPath
+        public static string Path
         {
             get
             {
-                if (string.IsNullOrEmpty(_GARbroDBPath))
+                if (string.IsNullOrEmpty(_Path))
                 {
-                    return DefaultGARbroDBPath;
+                    return DefaultPath;
                 }
-                return _GARbroDBPath;
+                return _Path;
             }
             set
             {
-                _GARbroDBPath = value;
+                _Path = value;
             }
         }
 
-        private static readonly string DefaultGARbroDBPath = Path.Combine(Environment.CurrentDirectory, "Extensions\\Formats.json");
+        public static string DefaultPath { get; } = System.IO.Path.Combine(Environment.CurrentDirectory, "Extensions\\Formats.json");
 
+        public string Description => "Database of GARbro.";
+
+        public string OriginalAuthor => "morkt/Crsky";
+
+        public string OriginalWebsite => "https://github.com/crskycode/GARbro";
+
+        public string ExtensionWebsite => "https://github.com/detached64/GARbroSchemeDumper";
     }
 }

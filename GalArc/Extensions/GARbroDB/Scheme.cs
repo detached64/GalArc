@@ -8,10 +8,8 @@ namespace GalArc.Extensions.GARbroDB
 
     public class SeraphScheme : Scheme
     {
-        public static string EngineName = "Seraph";
         public static string JsonEngineName = "SERAPH/ARCH";
         public static string[] JsonNodeName = new string[] { "KnownSchemes" };
-        public static Scheme Instance = new SeraphScheme();
 
         public long IndexOffset { get; set; }
         public short EventDir { get; set; }

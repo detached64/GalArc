@@ -28,9 +28,9 @@ namespace GalArc.GUI
 
         private void ExtensionSiglusKeyFinder_Load(object sender, EventArgs e)
         {
-            this.txtExePath.Text = KeyFinderConfig.SiglusKeyFinderPath;
+            this.txtExePath.Text = SiglusKeyFinderConfig.Path;
             this.chkbxEnableGARbroDB.Checked = Settings.Default.EnableSiglusKeyFinder;
-            KeyFinderConfig.IsSiglusKeyFinderEnabled = this.chkbxEnableGARbroDB.Checked;
+            SiglusKeyFinderConfig.IsEnabled = this.chkbxEnableGARbroDB.Checked;
         }
 
         private void btSelect_Click(object sender, EventArgs e)
@@ -44,7 +44,7 @@ namespace GalArc.GUI
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     this.txtExePath.Text = openFileDialog.FileName;
-                    KeyFinderConfig.SiglusKeyFinderPath = openFileDialog.FileName;
+                    SiglusKeyFinderConfig.Path = openFileDialog.FileName;
                     Settings.Default.SiglusKeyFinderPath = openFileDialog.FileName;
                     Settings.Default.Save();
                 }
@@ -55,13 +55,13 @@ namespace GalArc.GUI
         {
             Settings.Default.EnableSiglusKeyFinder = this.chkbxEnableGARbroDB.Checked;
             Settings.Default.Save();
-            KeyFinderConfig.IsSiglusKeyFinderEnabled = this.chkbxEnableGARbroDB.Checked;
+            SiglusKeyFinderConfig.IsEnabled = this.chkbxEnableGARbroDB.Checked;
             this.panel.Enabled = this.chkbxEnableGARbroDB.Checked;
         }
 
         private void txtExePath_TextChanged(object sender, EventArgs e)
         {
-            KeyFinderConfig.SiglusKeyFinderPath = this.txtExePath.Text;
+            SiglusKeyFinderConfig.Path = this.txtExePath.Text;
             Settings.Default.SiglusKeyFinderPath = this.txtExePath.Text;
             Settings.Default.Save();
         }

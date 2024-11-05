@@ -4,6 +4,8 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace GalArc.DataBase
@@ -12,13 +14,32 @@ namespace GalArc.DataBase
     {
         public static Dictionary<string, string> LoadedJsons = new Dictionary<string, string>();
 
-        private static void LoadSpecificScheme(string name)
+        private static List<Type> _Schemes;
+
+        internal static List<Type> Schemes
+        {
+            get
+            {
+                if (_Schemes == null)
+                {
+                    _Schemes = new List<Type>();
+                    foreach (Type type in Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetCustomAttributes(typeof(DatabaseSchemeAttribute), false).Any()).ToList())
+                    {
+                        _Schemes.Add(type);
+                    }
+                }
+                return _Schemes;
+            }
+        }
+
+        private static void LoadSpecificScheme(Type type)
         {
             if (!DataBaseConfig.IsDataBaseEnabled)
             {
                 return;
             }
-            string path = string.IsNullOrEmpty(DataBaseConfig.DataBasePath) ? Path.Combine(DataBaseConfig.DefaultDataBasePath, name + ".json") : Path.Combine(DataBaseConfig.DataBasePath, name + ".json");
+            string name = type.Name.Remove(type.Name.Length - 6);    // remove "Scheme"
+            string path = Path.Combine(DataBaseConfig.DataBasePath, name + ".json");
             if (!File.Exists(path))
             {
                 return;
@@ -36,13 +57,13 @@ namespace GalArc.DataBase
             {
                 return;
             }
-            foreach (string engine in DataBaseConfig.EnginesToLoad)
+            foreach (Type type in Schemes)
             {
-                LoadSpecificScheme(engine);
+                LoadSpecificScheme(type);
             }
         }
 
-        public static Dictionary<string, Scheme> Deserialize(string jsonEngineName, string jsonNodeName, object instance)
+        public static Dictionary<string, Scheme> Deserialize(Type type, string jsonEngineName, string jsonNodeName)
         {
             if (!DataBaseConfig.IsDataBaseEnabled)
             {
@@ -59,7 +80,6 @@ namespace GalArc.DataBase
             }
 
             var result = new Dictionary<string, Scheme>();
-            Type scheme = instance.GetType();
 
             try
             {
@@ -69,7 +89,7 @@ namespace GalArc.DataBase
                 foreach (var token in selectedToken.Children<JProperty>())
                 {
                     string schemeName = token.Name;
-                    var schemeData = token.Value.ToObject(scheme);
+                    var schemeData = token.Value.ToObject(type);
                     result[schemeName] = (Scheme)schemeData;
                 }
                 return result;
@@ -81,21 +101,20 @@ namespace GalArc.DataBase
             }
         }
 
-        public static Dictionary<string, Scheme> ReadScheme(string name, string nodeName, object instance)
+        public static Dictionary<string, Scheme> ReadScheme(Type type, string nodeName)
         {
             if (!DataBaseConfig.IsDataBaseEnabled)
             {
                 return null;
             }
-            LoadSpecificScheme(name);
-            return Deserialize(name, nodeName, instance);
+            LoadSpecificScheme(type);
+            return Deserialize(type, type.Name.Remove(type.Name.Length - 6), nodeName);
         }
 
-        private static string GetSpecificJsonInfo(Scheme instance)
+        private static string GetSpecificJsonInfo(Type type)
         {
-            Type scheme = instance.GetType();
-            string name = scheme.GetField("EngineName").GetValue(null).ToString();
-            string[] jsonNodeNames = (string[])scheme.GetField("JsonNodeName").GetValue(null);
+            string name = type.Name.Remove(type.Name.Length - 6);    // remove "Scheme"
+            string[] jsonNodeNames = (string[])type.GetField("JsonNodeName").GetValue(null);
             string path = Path.Combine(DataBaseConfig.DataBasePath, name + ".json");
 
             try
@@ -150,9 +169,9 @@ namespace GalArc.DataBase
             }
             LoadAllSchemes();
             StringBuilder result = new StringBuilder();
-            foreach (Scheme engine in DataBaseConfig.InstanceToLoad)
+            foreach (Type type in Schemes)
             {
-                result.AppendLine(GetSpecificJsonInfo(engine));
+                result.AppendLine(GetSpecificJsonInfo(type));
                 result.AppendLine();
             }
             return result.ToString();

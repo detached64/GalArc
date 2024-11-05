@@ -30,6 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExtensionsSettings));
             this.chkbxEnableExtensions = new System.Windows.Forms.CheckBox();
+            this.lbExtensionsInfo = new System.Windows.Forms.Label();
+            this.dataGridViewInfos = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewInfos)).BeginInit();
             this.SuspendLayout();
             // 
             // chkbxEnableExtensions
@@ -41,13 +44,38 @@
             this.chkbxEnableExtensions.UseVisualStyleBackColor = true;
             this.chkbxEnableExtensions.CheckedChanged += new System.EventHandler(this.chkbxEnableExtensions_CheckedChanged);
             // 
+            // lbExtensionsInfo
+            // 
+            resources.ApplyResources(this.lbExtensionsInfo, "lbExtensionsInfo");
+            this.lbExtensionsInfo.Name = "lbExtensionsInfo";
+            // 
+            // dataGridViewInfos
+            // 
+            this.dataGridViewInfos.AllowUserToAddRows = false;
+            this.dataGridViewInfos.AllowUserToDeleteRows = false;
+            resources.ApplyResources(this.dataGridViewInfos, "dataGridViewInfos");
+            this.dataGridViewInfos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewInfos.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dataGridViewInfos.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
+            this.dataGridViewInfos.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dataGridViewInfos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewInfos.Name = "dataGridViewInfos";
+            this.dataGridViewInfos.ReadOnly = true;
+            this.dataGridViewInfos.RowHeadersVisible = false;
+            this.dataGridViewInfos.RowTemplate.Height = 30;
+            this.dataGridViewInfos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dataGridViewInfos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewInfos_CellContentClick);
+            // 
             // ExtensionsSettings
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.dataGridViewInfos);
+            this.Controls.Add(this.lbExtensionsInfo);
             this.Controls.Add(this.chkbxEnableExtensions);
             this.Name = "ExtensionsSettings";
             this.Load += new System.EventHandler(this.ExtensionsSettings_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewInfos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -56,5 +84,7 @@
         #endregion
 
         private System.Windows.Forms.CheckBox chkbxEnableExtensions;
+        private System.Windows.Forms.Label lbExtensionsInfo;
+        private System.Windows.Forms.DataGridView dataGridViewInfos;
     }
 }

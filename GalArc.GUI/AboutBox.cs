@@ -68,13 +68,13 @@ namespace GalArc.GUI
         private void linkSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             this.linkSite.LinkVisited = true;
-            Process.Start(new ProcessStartInfo(ProgramUrl) { UseShellExecute = true });
+            Process.Start(ProgramUrl);
         }
 
         private void linkIssue_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             this.linkIssue.LinkVisited = true;
-            Process.Start(new ProcessStartInfo(IssueUrl) { UseShellExecute = true });
+            Process.Start(IssueUrl);
         }
 
         private void dataGridViewEngines_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)

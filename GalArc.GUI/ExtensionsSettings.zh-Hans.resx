@@ -120,4 +120,7 @@
   <data name="chkbxEnableExtensions.Text" xml:space="preserve">
     <value>启用扩展功能</value>
   </data>
+  <data name="lbExtensionsInfo.Text" xml:space="preserve">
+    <value>扩展信息</value>
+  </data>
 </root>

@@ -12,10 +12,10 @@ namespace GalArc.GUI
         public static void ExportSettingsToGalArc()
         {
             ExtensionsConfig.IsEnabled = Settings.Default.EnableExtensions;
-            Extensions.GARbroDB.GARbroDBConfig.IsGARbroDBEnabled = Settings.Default.EnableGARbroDB;
-            Extensions.GARbroDB.GARbroDBConfig.GARbroDBPath = Settings.Default.GARbroDBPath;
-            Extensions.SiglusKeyFinder.KeyFinderConfig.IsSiglusKeyFinderEnabled = Settings.Default.EnableSiglusKeyFinder;
-            Extensions.SiglusKeyFinder.KeyFinderConfig.SiglusKeyFinderPath = Settings.Default.SiglusKeyFinderPath;
+            Extensions.GARbroDB.GARbroDBConfig.IsEnabled = Settings.Default.EnableGARbroDB;
+            Extensions.GARbroDB.GARbroDBConfig.Path = Settings.Default.GARbroDBPath;
+            Extensions.SiglusKeyFinder.SiglusKeyFinderConfig.IsEnabled = Settings.Default.EnableSiglusKeyFinder;
+            Extensions.SiglusKeyFinder.SiglusKeyFinderConfig.Path = Settings.Default.SiglusKeyFinderPath;
             DataBase.DataBaseConfig.DataBasePath = Settings.Default.DataBasePath;
             Logs.LogConfig.autoSaveState = Settings.Default.AutoSaveState;
         }

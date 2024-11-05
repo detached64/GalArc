@@ -30,9 +30,9 @@ namespace GalArc.GUI
 
         private void ExtensionGARbroDB_Load(object sender, EventArgs e)
         {
-            this.txtJsonPath.Text = GARbroDBConfig.GARbroDBPath;
+            this.txtJsonPath.Text = GARbroDBConfig.Path;
             this.chkbxEnableGARbroDB.Checked = Settings.Default.EnableGARbroDB;
-            GARbroDBConfig.IsGARbroDBEnabled = this.chkbxEnableGARbroDB.Checked;
+            GARbroDBConfig.IsEnabled = this.chkbxEnableGARbroDB.Checked;
         }
 
         private void btSelect_Click(object sender, EventArgs e)
@@ -46,7 +46,7 @@ namespace GalArc.GUI
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     this.txtJsonPath.Text = openFileDialog.FileName;
-                    GARbroDBConfig.GARbroDBPath = openFileDialog.FileName;
+                    GARbroDBConfig.Path = openFileDialog.FileName;
                     Settings.Default.GARbroDBPath = openFileDialog.FileName;
                     Settings.Default.Save();
                 }
@@ -56,7 +56,7 @@ namespace GalArc.GUI
         private void txtJsonPath_TextChanged(object sender, EventArgs e)
         {
             this.txtDBInfo.Text = Deserializer.GetJsonInfo(this.txtJsonPath.Text);
-            GARbroDBConfig.GARbroDBPath = this.txtJsonPath.Text;
+            GARbroDBConfig.Path = this.txtJsonPath.Text;
             Settings.Default.GARbroDBPath = this.txtJsonPath.Text;
             Settings.Default.Save();
         }
@@ -65,7 +65,7 @@ namespace GalArc.GUI
         {
             Settings.Default.EnableGARbroDB = chkbxEnableGARbroDB.Checked;
             Settings.Default.Save();
-            GARbroDBConfig.IsGARbroDBEnabled = chkbxEnableGARbroDB.Checked;
+            GARbroDBConfig.IsEnabled = chkbxEnableGARbroDB.Checked;
             this.panel.Enabled = chkbxEnableGARbroDB.Checked;
         }
     }

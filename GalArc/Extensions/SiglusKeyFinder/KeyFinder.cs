@@ -8,11 +8,11 @@ namespace GalArc.Extensions.SiglusKeyFinder
     {
         public static bool IsValidExe()
         {
-            if (string.IsNullOrEmpty(KeyFinderConfig.SiglusKeyFinderPath))
+            if (string.IsNullOrEmpty(SiglusKeyFinderConfig.Path))
             {
                 return false;
             }
-            if (!File.Exists(KeyFinderConfig.SiglusKeyFinderPath))
+            if (!File.Exists(SiglusKeyFinderConfig.Path))
             {
                 return false;
             }
@@ -21,7 +21,7 @@ namespace GalArc.Extensions.SiglusKeyFinder
 
         public static string FindKey(string siglusEnginePath)
         {
-            if (!KeyFinderConfig.IsSiglusKeyFinderEnabled)
+            if (!SiglusKeyFinderConfig.IsEnabled)
             {
                 return null;
             }
@@ -32,7 +32,7 @@ namespace GalArc.Extensions.SiglusKeyFinder
 
             ProcessStartInfo startInfo = new ProcessStartInfo
             {
-                FileName = KeyFinderConfig.SiglusKeyFinderPath,
+                FileName = SiglusKeyFinderConfig.Path,
                 Arguments = siglusEnginePath,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,

@@ -62,7 +62,7 @@ namespace ArcFormats.Seraph
 
             if (DAT.KnownSchemes == null)
             {
-                DAT.KnownSchemes = Deserializer.Deserialize(SeraphScheme.JsonEngineName, "KnownSchemes", SeraphScheme.Instance);
+                DAT.KnownSchemes = Deserializer.Deserialize(typeof(SeraphScheme), SeraphScheme.JsonEngineName, "KnownSchemes");
                 if (DAT.KnownSchemes != null)
                 {
                     Logger.Debug(string.Format(Resources.logImportGARbroDBSchemeSuccess, DAT.KnownSchemes.Count));

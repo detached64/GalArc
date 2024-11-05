@@ -1,6 +1,4 @@
-﻿using GalArc.DataBase.Siglus;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 
 namespace GalArc.DataBase
@@ -9,22 +7,32 @@ namespace GalArc.DataBase
     {
         public static bool IsDataBaseEnabled { get; set; } = true;
 
-        public static string DataBasePath { get; set; }
+        private static string _DataBasePath;
 
-        public static string DefaultDataBasePath { get; } = Path.Combine(Environment.CurrentDirectory, "Database\\");
-
-        internal static List<string> EnginesToLoad { get; } = new List<string>()
+        public static string DataBasePath
         {
-            "Siglus",
-        };
+            get
+            {
+                if (string.IsNullOrEmpty(_DataBasePath))
+                {
+                    return DefaultDataBasePath;
+                }
+                return _DataBasePath;
+            }
+            set
+            {
+                _DataBasePath = value;
+            }
+        }
 
-        internal static List<Scheme> InstanceToLoad { get; } = new List<Scheme>()
-        {
-            SiglusScheme.Instance,
-        };
+        private static string DefaultDataBasePath { get; } = Path.Combine(Environment.CurrentDirectory, "Database\\");
     }
 
     public class Scheme
+    {
+    }
+
+    public class DatabaseSchemeAttribute : Attribute
     {
     }
 }

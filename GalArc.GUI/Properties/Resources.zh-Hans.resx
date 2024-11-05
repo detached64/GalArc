@@ -174,4 +174,19 @@
   <data name="logFileNameFailToMatch" xml:space="preserve">
     <value>错误：文件名必须为{0}。</value>
   </data>
+  <data name="columnExtName" xml:space="preserve">
+    <value>扩展名</value>
+  </data>
+  <data name="columnExtDescription" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="columnExtOriginalAuthor" xml:space="preserve">
+    <value>原作者</value>
+  </data>
+  <data name="columnExtLink" xml:space="preserve">
+    <value>扩展网址</value>
+  </data>
+  <data name="columnExtOriginalLink" xml:space="preserve">
+    <value>原网址</value>
+  </data>
 </root>
