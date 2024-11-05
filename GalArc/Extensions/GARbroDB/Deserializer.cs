@@ -10,7 +10,7 @@ namespace GalArc.Extensions.GARbroDB
 {
     public class Deserializer
     {
-        private static string Content { get; set; } = null;
+        private static string LoadedContent { get; set; } = null;
 
         public static void LoadScheme()
         {
@@ -20,10 +20,17 @@ namespace GalArc.Extensions.GARbroDB
                 {
                     return;
                 }
-                Content = File.ReadAllText(GARbroDBConfig.Path);
+                LoadedContent = File.ReadAllText(GARbroDBConfig.Path);
             }
         }
 
+        /// <summary>
+        /// Deserialize the scheme from the loaded content to Dictionary&lt;gameName, Scheme&gt;.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="jsonEngineName"></param>
+        /// <param name="jsonNodeName"></param>
+        /// <returns></returns>
         public static Dictionary<string, Scheme> Deserialize(Type type, string jsonEngineName, string jsonNodeName)
         {
             if (!ExtensionsConfig.IsEnabled || !GARbroDBConfig.IsEnabled)
@@ -32,13 +39,13 @@ namespace GalArc.Extensions.GARbroDB
             }
             var result = new Dictionary<string, Scheme>();
 
-            if (string.IsNullOrEmpty(Content))
+            if (string.IsNullOrEmpty(LoadedContent))
             {
                 return null;
             }
             try
             {
-                JObject jsonObject = JObject.Parse(Content);
+                JObject jsonObject = JObject.Parse(LoadedContent);
                 var selectedToken = jsonObject.SelectToken($"['SchemeMap']['{jsonEngineName}']['{jsonNodeName}']");
 
                 foreach (var token in selectedToken.Children<JProperty>())
@@ -56,6 +63,11 @@ namespace GalArc.Extensions.GARbroDB
             }
         }
 
+        /// <summary>
+        /// Get the GARbroDB information.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static string GetJsonInfo(string path)
         {
             if (!File.Exists(path))
@@ -66,8 +78,8 @@ namespace GalArc.Extensions.GARbroDB
             {
                 StringBuilder result = new StringBuilder();
 
-                Content = File.ReadAllText(path);
-                JObject jsonObject = JObject.Parse(Content);
+                LoadedContent = File.ReadAllText(path);
+                JObject jsonObject = JObject.Parse(LoadedContent);
 
                 // version
                 int version = (int)jsonObject["Version"];
@@ -93,7 +105,7 @@ namespace GalArc.Extensions.GARbroDB
                 result.AppendLine(string.Format(SchemeInfos.InfoLastModified, lastModified));
 
                 // hash
-                result.AppendLine(string.Format(SchemeInfos.InfoHash, Content.GetHashCode()));
+                result.AppendLine(string.Format(SchemeInfos.InfoHash, LoadedContent.GetHashCode()));
 
                 jsonObject = null;
                 return result.ToString();

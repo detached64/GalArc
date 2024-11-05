@@ -1,31 +1,30 @@
 ﻿using System;
-using System.IO;
 
 namespace GalArc.DataBase
 {
     public class DataBaseConfig
     {
-        public static bool IsDataBaseEnabled { get; set; } = true;
+        public static bool IsEnabled { get; set; } = true;
 
-        private static string _DataBasePath;
+        private static string _Path;
 
-        public static string DataBasePath
+        public static string Path
         {
             get
             {
-                if (string.IsNullOrEmpty(_DataBasePath))
+                if (string.IsNullOrEmpty(_Path))
                 {
-                    return DefaultDataBasePath;
+                    return DefaultPath;
                 }
-                return _DataBasePath;
+                return _Path;
             }
             set
             {
-                _DataBasePath = value;
+                _Path = value;
             }
         }
 
-        private static string DefaultDataBasePath { get; } = Path.Combine(Environment.CurrentDirectory, "Database\\");
+        private static string DefaultPath { get; } = System.IO.Path.Combine(Environment.CurrentDirectory, "Database\\");
     }
 
     public class Scheme
