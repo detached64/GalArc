@@ -49,7 +49,7 @@ namespace ArcFormats.Siglus
         {
             if (ScenePCK.KnownSchemes == null)
             {
-                ScenePCK.KnownSchemes = Deserializer.ReadScheme(SiglusScheme.EngineName, "KnownSchemes", SiglusScheme.Instance);
+                ScenePCK.KnownSchemes = Deserializer.ReadScheme(typeof(SiglusScheme), "KnownSchemes");
                 if (ScenePCK.KnownSchemes != null)
                 {
                     Logger.Debug(string.Format(Resources.logImportDataBaseSuccess, ScenePCK.KnownSchemes.Count));
@@ -150,7 +150,7 @@ namespace ArcFormats.Siglus
 
         private void UnpackPCKOptions_Load(object sender, EventArgs e)
         {
-            if (ExtensionsConfig.IsEnabled && KeyFinderConfig.IsSiglusKeyFinderEnabled && KeyFinder.IsValidExe())
+            if (ExtensionsConfig.IsEnabled && SiglusKeyFinderConfig.IsEnabled && KeyFinder.IsValidExe())
             {
                 this.panel.Visible = true;
             }

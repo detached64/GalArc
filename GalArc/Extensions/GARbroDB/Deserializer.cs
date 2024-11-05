@@ -10,43 +10,41 @@ namespace GalArc.Extensions.GARbroDB
 {
     public class Deserializer
     {
-        public static string GARbroDBContent { get; internal set; } = null;
+        private static string Content { get; set; } = null;
 
         public static void LoadScheme()
         {
-            if (GARbroDBConfig.IsGARbroDBEnabled)
+            if (GARbroDBConfig.IsEnabled)
             {
-                if (!File.Exists(GARbroDBConfig.GARbroDBPath))
+                if (!File.Exists(GARbroDBConfig.Path))
                 {
                     return;
                 }
-                GARbroDBContent = File.ReadAllText(GARbroDBConfig.GARbroDBPath);
+                Content = File.ReadAllText(GARbroDBConfig.Path);
             }
         }
 
-        public static Dictionary<string, Scheme> Deserialize(string jsonEngineName, string jsonNodeName, Scheme instance)
+        public static Dictionary<string, Scheme> Deserialize(Type type, string jsonEngineName, string jsonNodeName)
         {
-            if (!ExtensionsConfig.IsEnabled || !GARbroDBConfig.IsGARbroDBEnabled)
+            if (!ExtensionsConfig.IsEnabled || !GARbroDBConfig.IsEnabled)
             {
                 return null;
             }
             var result = new Dictionary<string, Scheme>();
 
-            Type scheme = instance.GetType();
-
-            if (string.IsNullOrEmpty(GARbroDBContent))
+            if (string.IsNullOrEmpty(Content))
             {
                 return null;
             }
             try
             {
-                JObject jsonObject = JObject.Parse(GARbroDBContent);
+                JObject jsonObject = JObject.Parse(Content);
                 var selectedToken = jsonObject.SelectToken($"['SchemeMap']['{jsonEngineName}']['{jsonNodeName}']");
 
                 foreach (var token in selectedToken.Children<JProperty>())
                 {
                     string schemeName = token.Name;
-                    var schemeData = token.Value.ToObject(scheme);
+                    var schemeData = token.Value.ToObject(type);
                     result[schemeName] = (Scheme)schemeData;
                 }
                 return result;
@@ -68,8 +66,8 @@ namespace GalArc.Extensions.GARbroDB
             {
                 StringBuilder result = new StringBuilder();
 
-                GARbroDBContent = File.ReadAllText(path);
-                JObject jsonObject = JObject.Parse(GARbroDBContent);
+                Content = File.ReadAllText(path);
+                JObject jsonObject = JObject.Parse(Content);
 
                 // version
                 int version = (int)jsonObject["Version"];
@@ -95,7 +93,7 @@ namespace GalArc.Extensions.GARbroDB
                 result.AppendLine(string.Format(SchemeInfos.InfoLastModified, lastModified));
 
                 // hash
-                result.AppendLine(string.Format(SchemeInfos.InfoHash, GARbroDBContent.GetHashCode()));
+                result.AppendLine(string.Format(SchemeInfos.InfoHash, Content.GetHashCode()));
 
                 jsonObject = null;
                 return result.ToString();

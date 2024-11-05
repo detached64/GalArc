@@ -70,6 +70,51 @@ namespace GalArc.GUI.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Description 的本地化字符串。
+        /// </summary>
+        internal static string columnExtDescription {
+            get {
+                return ResourceManager.GetString("columnExtDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Extension Website 的本地化字符串。
+        /// </summary>
+        internal static string columnExtLink {
+            get {
+                return ResourceManager.GetString("columnExtLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Extension Name 的本地化字符串。
+        /// </summary>
+        internal static string columnExtName {
+            get {
+                return ResourceManager.GetString("columnExtName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Original Author 的本地化字符串。
+        /// </summary>
+        internal static string columnExtOriginalAuthor {
+            get {
+                return ResourceManager.GetString("columnExtOriginalAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Original Website 的本地化字符串。
+        /// </summary>
+        internal static string columnExtOriginalLink {
+            get {
+                return ResourceManager.GetString("columnExtOriginalLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Pack Format 的本地化字符串。
         /// </summary>
         internal static string columnPackFormat {

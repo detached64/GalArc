@@ -48,7 +48,7 @@ namespace GalArc.GUI
             Settings.Default.DataBasePath = this.txtDBPath.Text;
             Settings.Default.Save();
 
-            this.txtDBInfo.Text = Deserializer.GetAllJsonInfo();
+            this.txtDBInfo.Text = Deserializer.GetAllJsonInfo().Trim();
         }
 
         private void DataBaseSettings_Load(object sender, EventArgs e)
@@ -59,7 +59,7 @@ namespace GalArc.GUI
             }
             else
             {
-                this.txtDBPath.Text = DataBaseConfig.DefaultDataBasePath;
+                this.txtDBPath.Text = DataBaseConfig.DataBasePath;
             }
         }
     }

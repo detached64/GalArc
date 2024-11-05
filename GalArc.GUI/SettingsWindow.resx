@@ -129,7 +129,7 @@
     <value>2, 2, 2, 2</value>
   </data>
   <data name="panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>750, 570</value>
+    <value>867, 715</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="panel.TabIndex" type="System.Int32, mscorlib">
@@ -206,7 +206,7 @@
 </value>
   </data>
   <data name="treeViewOption.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 570</value>
+    <value>230, 715</value>
   </data>
   <data name="treeViewOption.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -254,10 +254,10 @@
     <value>1</value>
   </data>
   <data name="splitContainer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>954, 570</value>
+    <value>1101, 715</value>
   </data>
   <data name="splitContainer.SplitterDistance" type="System.Int32, mscorlib">
-    <value>200</value>
+    <value>230</value>
   </data>
   <data name="splitContainer.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -281,7 +281,7 @@
     <value>11, 24</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>978, 594</value>
+    <value>1125, 739</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>微软雅黑, 9pt</value>

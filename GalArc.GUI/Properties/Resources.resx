@@ -174,4 +174,19 @@
   <data name="logFileNameFailToMatch" xml:space="preserve">
     <value>Error: File name must be {0}.</value>
   </data>
+  <data name="columnExtName" xml:space="preserve">
+    <value>Extension Name</value>
+  </data>
+  <data name="columnExtDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="columnExtOriginalAuthor" xml:space="preserve">
+    <value>Original Author</value>
+  </data>
+  <data name="columnExtOriginalLink" xml:space="preserve">
+    <value>Original Website</value>
+  </data>
+  <data name="columnExtLink" xml:space="preserve">
+    <value>Extension Website</value>
+  </data>
 </root>
