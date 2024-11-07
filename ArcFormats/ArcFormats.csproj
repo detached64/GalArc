@@ -206,6 +206,7 @@
     <Compile Include="Templates\VersionOnly.Designer.cs">
       <DependentUpon>VersionOnly.cs</DependentUpon>
     </Compile>
+    <Compile Include="Valkyria\DAT.cs" />
     <Compile Include="Yuris\UnpackYPFOptions.cs">
       <SubType>UserControl</SubType>
     </Compile>

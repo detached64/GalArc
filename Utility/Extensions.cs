@@ -114,5 +114,31 @@ namespace Utility.Extensions
             return encoding.GetString(byteList.ToArray());
         }
 
+        public static void WritePaddedString(this BinaryWriter bw, string input, int length, char padChar, Encoding encoding)
+        {
+            byte[] bytes = encoding.GetBytes(input);
+            if (length > bytes.Length)
+            {
+                bw.Write(bytes);
+                if (padChar != '\0')
+                {
+                    bw.Write(encoding.GetBytes(new string(padChar, length - bytes.Length)));
+                }
+                else
+                {
+                    bw.Write(new byte[length - bytes.Length]);
+                }
+            }
+            else
+            {
+                bw.Write(bytes, 0, length);
+            }
+        }
+
+        public static void WritePaddedString(this BinaryWriter bw, string input, int length)
+        {
+            WritePaddedString(bw, input, length, '\0', ArcEncoding.Shift_JIS);
+        }
+
     }
 }
