@@ -1,0 +1,121 @@
+using GalArc.Logs;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Utility;
+using Utility.Extensions;
+
+namespace ArcFormats.AnimeGameSystem
+{
+    internal class DAT
+    {
+        private static readonly byte[] Magic = Utils.HexStringToByteArray("7061636B");
+        public class Entry
+        {
+           public string Name { get; set; }
+            public long Offset { get; set; }
+            public uint Size { get; set; }
+        }
+
+        public void Unpack(string filePath, string folderPath)
+        {
+            FileStream fs = File.OpenRead(filePath);
+            BinaryReader br = new BinaryReader(fs);
+            fs.Position = 4;
+            uint fileCount = br.ReadUInt16();
+            if (fileCount != 0 && fileCount < 4000)
+            {
+                uint indexOffset = 6;
+                uint indexSize = (uint)fileCount * 0x18;
+                var entries = new List<Entry>((int)fileCount);
+                for (int i = 0; i < fileCount; i++) {
+                    var entry = new Entry();
+                    entry.Name = br.ReadCString(ArcEncoding.Shift_JIS);
+                    fs.Position = indexOffset + 0x10;
+                    entry.Offset = br.ReadInt32();
+                    fs.Position = indexOffset + 0x14;
+                    entry.Size = br.ReadUInt32();
+                    indexOffset += 0x18;
+                    entries.Add(entry);
+                }
+
+                Logger.InitBar(fileCount);
+                Directory.CreateDirectory(folderPath);
+                foreach (var entry in entries)
+                {
+                    fs.Position = entry.Offset;
+                    byte[] data = br.ReadBytes((int)entry.Size);
+                    string fileName = Path.Combine(folderPath, entry.Name);
+                    File.WriteAllBytes(fileName, data);
+                    Logger.UpdateBar();
+                    data = null;
+                }
+                Logger.UpdateBar();
+                fs.Dispose();
+                br.Dispose();
+            }
+
+        }
+        public void Pack(string folderPath, string filePath)
+        {
+            FileStream fw = File.Create(filePath);
+            BinaryWriter bw = new BinaryWriter(fw);
+
+            FileInfo[] files = new DirectoryInfo(folderPath).GetFiles();
+            Logger.InitBar(files.Length);
+
+            // Write magic and file count
+            bw.Write(Magic);
+            bw.Write((ushort)files.Length);
+
+            // Set initial index offset (right after magic and file count)
+            uint indexOffset = 6;
+            uint dataOffset = indexOffset + (uint)(files.Length * 0x18); // index size is fileCount * 0x18
+
+            // Write index entries with placeholder offsets
+            foreach (FileInfo file in files)
+            {
+                // Set position for each index entry
+                fw.Position = indexOffset;
+
+                // Write file name (padded to 0x10 bytes)
+                byte[] nameBytes = Utils.PaddedBytes(file.Name,0x10);
+                bw.Write(nameBytes);
+
+                // Placeholder for offset (will update after writing data)
+                bw.Write(0);
+
+                // Write file size
+                bw.Write((uint)file.Length);
+
+                indexOffset += 0x18;
+            }
+
+            // Write file data and update offsets in the index
+            indexOffset = 6; // Reset to start of index entries
+            foreach (FileInfo file in files)
+            {
+                // Update file offset in the index
+                fw.Position = indexOffset + 0x10;
+                bw.Write((int)dataOffset);
+
+                // Write file data
+                fw.Position = dataOffset;
+                byte[] fileData = File.ReadAllBytes(file.FullName);
+                bw.Write(fileData);
+
+                // Advance to the next data offset, aligned to 4 bytes
+                dataOffset += (uint)fileData.Length;
+
+                // Debug
+                Logger.UpdateBar();
+
+                indexOffset += 0x18;
+            }
+            Logger.UpdateBar();
+            fw.Dispose();
+            bw.Dispose();
+        }
+
+    }
+}
