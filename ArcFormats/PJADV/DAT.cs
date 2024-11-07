@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Utility;
+using Utility.Extensions;
 
 namespace ArcFormats.PJADV
 {
@@ -115,7 +116,7 @@ namespace ArcFormats.PJADV
             }
             foreach (Entry entry in entries)
             {
-                bw.Write(ArcEncoding.Shift_JIS.GetBytes(entry.Name.PadRight(nameLength, '\0')));
+                bw.WritePaddedString(entry.Name, nameLength);
             }
             foreach (Entry entry in entries)
             {

@@ -63,7 +63,7 @@ namespace ArcFormats.NekoSDK
             uint dataOffset = (uint)(files.Length + 1) * 0x8C;
             foreach (FileInfo file in files)
             {
-                bw.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(128, '\0')));
+                bw.WritePaddedString(file.Name, 0x80);
                 bw.Write((uint)file.Length ^ 0xCACACA);
                 byte[] raw = File.ReadAllBytes(file.FullName);
                 byte[] data = Lzss.Compress(raw);

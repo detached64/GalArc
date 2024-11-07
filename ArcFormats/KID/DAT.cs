@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using Utility;
+using Utility.Extensions;
 
 namespace ArcFormats.KID
 {
@@ -64,7 +65,7 @@ namespace ArcFormats.KID
             {
                 bw.Write(offset);
                 bw.Write((uint)file.Length << 1);
-                bw.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(24, '\0')));
+                bw.WritePaddedString(file.Name, 24);
                 offset += (uint)file.Length;
             }
             foreach (FileInfo file in files)

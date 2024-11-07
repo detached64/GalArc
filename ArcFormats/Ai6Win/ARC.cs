@@ -205,7 +205,7 @@ namespace ArcFormats.Ai6Win
             Logger.InitBar(fileCount);
             foreach (FileInfo file in files)
             {
-                bw.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(32, '\0')));
+                bw.WritePaddedString(file.Name, 32);
                 bw.Write(baseOffset);
                 uint size = (uint)file.Length;
                 bw.Write(size);
@@ -233,7 +233,7 @@ namespace ArcFormats.Ai6Win
             Logger.InitBar(fileCount);
             foreach (FileInfo file in files)
             {
-                byte[] nameBuffer = ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(260, '\0'));
+                byte[] nameBuffer = Utils.PaddedBytes(file.Name, 260);
                 int nameLen = Array.IndexOf<byte>(nameBuffer, 0);
                 if (nameLen == -1)
                 {

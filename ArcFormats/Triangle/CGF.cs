@@ -104,7 +104,7 @@ namespace ArcFormats.Triangle
             Logger.InitBar(fileCount);
             foreach (FileInfo file in files)
             {
-                bw.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(16, '\0')));
+                bw.WritePaddedString(file.Name, 16);
                 bw.Write(baseOffset);
                 baseOffset += (uint)file.Length;
             }

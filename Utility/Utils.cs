@@ -209,5 +209,34 @@ namespace Utility
                 throw;
             }
         }
+
+        public static byte[] PaddedBytes(string input, int length, char padChar, Encoding encoding)
+        {
+            byte[] bytes = encoding.GetBytes(input);
+            if (length > bytes.Length)
+            {
+                byte[] paddedBytes = new byte[length];
+                Array.Copy(bytes, paddedBytes, bytes.Length);
+                if (padChar != '\0')
+                {
+                    byte[] padBytes = encoding.GetBytes(new string(padChar, length - bytes.Length));
+                    Array.Copy(padBytes, 0, paddedBytes, bytes.Length, padBytes.Length);
+                }
+                bytes = null;
+                return paddedBytes;
+            }
+            else
+            {
+                byte[] paddedBytes = new byte[length];
+                Array.Copy(bytes, paddedBytes, length);
+                bytes = null;
+                return paddedBytes;
+            }
+        }
+
+        public static byte[] PaddedBytes(string input, int length)
+        {
+            return PaddedBytes(input, length, '\0', ArcEncoding.Shift_JIS);
+        }
     }
 }

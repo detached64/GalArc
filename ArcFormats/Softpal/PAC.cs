@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Utility;
+using Utility.Extensions;
 
 namespace ArcFormats.Softpal
 {
@@ -200,7 +201,7 @@ namespace ArcFormats.Softpal
             uint offset = 0x3fe + (uint)(40 * fileCount);
             foreach (var str in files)
             {
-                bw.Write(ArcEncoding.Shift_JIS.GetBytes(Path.GetFileName(str).PadRight(32, '\0')));
+                bw.WritePaddedString(Path.GetFileName(str), 32);
                 uint size = (uint)new FileInfo(str).Length;
                 bw.Write(size);
                 bw.Write(offset);
@@ -260,7 +261,7 @@ namespace ArcFormats.Softpal
             uint currentOffset = 2052 + 40 * fileCount;
             foreach (string str in files)
             {
-                bw.Write(ArcEncoding.Shift_JIS.GetBytes(Path.GetFileName(str).PadRight(32, '\0')));
+                bw.WritePaddedString(Path.GetFileName(str), 32);
                 uint size = (uint)new FileInfo(str).Length;
                 bw.Write(size);
                 bw.Write(currentOffset);

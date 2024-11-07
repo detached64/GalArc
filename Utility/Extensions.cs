@@ -116,23 +116,7 @@ namespace Utility.Extensions
 
         public static void WritePaddedString(this BinaryWriter bw, string input, int length, char padChar, Encoding encoding)
         {
-            byte[] bytes = encoding.GetBytes(input);
-            if (length > bytes.Length)
-            {
-                bw.Write(bytes);
-                if (padChar != '\0')
-                {
-                    bw.Write(encoding.GetBytes(new string(padChar, length - bytes.Length)));
-                }
-                else
-                {
-                    bw.Write(new byte[length - bytes.Length]);
-                }
-            }
-            else
-            {
-                bw.Write(bytes, 0, length);
-            }
+            bw.Write(Utils.PaddedBytes(input, length, padChar, encoding));
         }
 
         public static void WritePaddedString(this BinaryWriter bw, string input, int length)
