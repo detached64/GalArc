@@ -24,6 +24,7 @@ namespace GalArc.Common
             new EngineInfo("AdvHD","ARC/PNA","ARC/PNA"),
             new EngineInfo("Ai5Win","ARC/DAT/VSD",string.Empty),
             new EngineInfo("Ai6Win","ARC","ARC"),
+            new EngineInfo("AnimeGameSystem","DAT","DAT"),
             new EngineInfo("Artemis","PFS","PFS"),
             new EngineInfo("BiShop","BSA", "BSA"),
             new EngineInfo("Cmvs","CPZ","CPZ"),
