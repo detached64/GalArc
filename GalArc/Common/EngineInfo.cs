@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace GalArc.Common
@@ -46,6 +46,7 @@ namespace GalArc.Common
             new EngineInfo("Softpal","PAC","PAC"),
             new EngineInfo("SystemNNN","GPK/VPK","GPK/VPK"),
             new EngineInfo("Triangle","CG/CGF/SUD","CG/CGF/SUD"),
+            new EngineInfo("Valkyria","DAT","DAT"),
             new EngineInfo("Yuris","YPF",string.Empty),
         };
     }
