@@ -169,7 +169,7 @@ namespace ArcFormats.BiShop
             BinaryWriter bwIndex = new BinaryWriter(ms);
             foreach (FileInfo file in files)
             {
-                bwIndex.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(32, '\0')));
+                bwIndex.WritePaddedString(file.Name, 32);
                 bwIndex.Write((uint)fw.Position);
                 bwIndex.Write((uint)file.Length);
                 byte[] data = File.ReadAllBytes(file.FullName);

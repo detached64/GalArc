@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Utility;
+using Utility.Extensions;
 
 namespace ArcFormats.Triangle
 {
@@ -62,7 +63,7 @@ namespace ArcFormats.Triangle
 
             foreach (FileInfo file in files)
             {
-                bw.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name.PadRight(16, '\0')));
+                bw.WritePaddedString(file.Name, 16);
                 bw.Write(dataOffset);
                 dataOffset += (uint)file.Length;
             }
