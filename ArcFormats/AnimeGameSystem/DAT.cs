@@ -9,53 +9,61 @@ namespace ArcFormats.AnimeGameSystem
 {
     internal class DAT
     {
-        private static readonly byte[] Magic = Utils.HexStringToByteArray("7061636B");
-        public class Entry
+        private static readonly byte[] Magic = Utils.HexStringToByteArray("7061636B");  // 'pack'
+
+        private class Entry
         {
-           public string Name { get; set; }
+            public string Name { get; set; }
             public long Offset { get; set; }
             public uint Size { get; set; }
         }
 
         public void Unpack(string filePath, string folderPath)
         {
-            FileStream fs = File.OpenRead(filePath);
-            BinaryReader br = new BinaryReader(fs);
-            fs.Position = 4;
-            uint fileCount = br.ReadUInt16();
-            if (fileCount != 0 && fileCount < 4000)
+            using (FileStream fs = File.OpenRead(filePath))
             {
-                uint indexOffset = 6;
-                uint indexSize = (uint)fileCount * 0x18;
-                var entries = new List<Entry>((int)fileCount);
-                for (int i = 0; i < fileCount; i++) {
-                    var entry = new Entry();
-                    entry.Name = br.ReadCString(ArcEncoding.Shift_JIS);
-                    fs.Position = indexOffset + 0x10;
-                    entry.Offset = br.ReadInt32();
-                    fs.Position = indexOffset + 0x14;
-                    entry.Size = br.ReadUInt32();
-                    indexOffset += 0x18;
-                    entries.Add(entry);
-                }
-
-                Logger.InitBar(fileCount);
-                Directory.CreateDirectory(folderPath);
-                foreach (var entry in entries)
+                using (BinaryReader br = new BinaryReader(fs))
                 {
-                    fs.Position = entry.Offset;
-                    byte[] data = br.ReadBytes((int)entry.Size);
-                    string fileName = Path.Combine(folderPath, entry.Name);
-                    File.WriteAllBytes(fileName, data);
-                    Logger.UpdateBar();
-                    data = null;
-                }
-                Logger.UpdateBar();
-                fs.Dispose();
-                br.Dispose();
-            }
+                    fs.Position = 4;
+                    uint fileCount = br.ReadUInt16();
+                    if (fileCount != 0 && fileCount < 4000)
+                    {
+                        uint indexOffset = 6;
+                        uint indexSize = fileCount * 0x18;
+                        var entries = new List<Entry>((int)fileCount);
+                        for (int i = 0; i < fileCount; i++)
+                        {
+                            var entry = new Entry();
+                            entry.Name = br.ReadCString(ArcEncoding.Shift_JIS);
+                            fs.Position = indexOffset + 0x10;
+                            entry.Offset = br.ReadInt32();
+                            fs.Position = indexOffset + 0x14;
+                            entry.Size = br.ReadUInt32();
+                            indexOffset += 0x18;
+                            entries.Add(entry);
+                        }
 
+                        Logger.InitBar(fileCount);
+                        Directory.CreateDirectory(folderPath);
+                        foreach (var entry in entries)
+                        {
+                            fs.Position = entry.Offset;
+                            byte[] data = br.ReadBytes((int)entry.Size);
+                            string fileName = Path.Combine(folderPath, entry.Name);
+                            File.WriteAllBytes(fileName, data);
+                            Logger.UpdateBar();
+                            data = null;
+                        }
+                        Logger.UpdateBar();
+                    }
+                    else
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                }
+            }
         }
+
         public void Pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
@@ -79,7 +87,7 @@ namespace ArcFormats.AnimeGameSystem
                 fw.Position = indexOffset;
 
                 // Write file name (padded to 0x10 bytes)
-                byte[] nameBytes = Utils.PaddedBytes(file.Name,0x10);
+                byte[] nameBytes = Utils.PaddedBytes(file.Name, 0x10);
                 bw.Write(nameBytes);
 
                 // Placeholder for offset (will update after writing data)
@@ -97,7 +105,7 @@ namespace ArcFormats.AnimeGameSystem
             {
                 // Update file offset in the index
                 fw.Position = indexOffset + 0x10;
-                bw.Write((int)dataOffset);
+                bw.Write(dataOffset);
 
                 // Write file data
                 fw.Position = dataOffset;
@@ -106,13 +114,10 @@ namespace ArcFormats.AnimeGameSystem
 
                 // Advance to the next data offset, aligned to 4 bytes
                 dataOffset += (uint)fileData.Length;
-
-                // Debug
-                Logger.UpdateBar();
-
                 indexOffset += 0x18;
+                Logger.UpdateBar();
+                fileData = null;
             }
-            Logger.UpdateBar();
             fw.Dispose();
             bw.Dispose();
         }
