@@ -2,7 +2,7 @@
 
 namespace ArcFormats.Cmvs
 {
-    internal class CMVSUtils
+    internal class CmvsUtils
     {
         public static void Swap<T>(ref T a1, ref T a2)
         {
