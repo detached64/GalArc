@@ -142,7 +142,7 @@ namespace ArcFormats.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Get {0} schemes from Database. 的本地化字符串。
+        ///   查找类似 Import {0} schemes from Database. 的本地化字符串。
         /// </summary>
         internal static string logImportDataBaseSuccess {
             get {
@@ -151,7 +151,7 @@ namespace ArcFormats.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Get {0} schemes from GARbroDB. 的本地化字符串。
+        ///   查找类似 Import {0} schemes from GARbroDB. 的本地化字符串。
         /// </summary>
         internal static string logImportGARbroDBSchemeSuccess {
             get {
