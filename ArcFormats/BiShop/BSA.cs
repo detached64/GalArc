@@ -112,7 +112,7 @@ namespace ArcFormats.BiShop
 
                 long pos = fs.Position;
                 fs.Position = entry.NameOffset;
-                string name = br.ReadCString(ArcEncoding.Shift_JIS);
+                string name = br.ReadCString();
                 if (name[0] == '>')
                 {
                     m_path.Add(name.Substring(1));

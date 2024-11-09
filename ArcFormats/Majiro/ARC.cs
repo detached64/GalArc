@@ -82,7 +82,7 @@ namespace ArcFormats.Majiro
                 Entry entry = new Entry();
                 brIndex.ReadBytes(4);            //skip crc32
                 entry.Offset = brIndex.ReadUInt32();
-                entry.Name = br.ReadCString(ArcEncoding.Shift_JIS);
+                entry.Name = br.ReadCString();
                 entries.Add(entry);
             }
             Entry lastEntry = new Entry();
@@ -126,7 +126,7 @@ namespace ArcFormats.Majiro
                 brIndex.ReadBytes(4 * (UnpackVersion - 1));            //skip checksum
                 entry.Offset = brIndex.ReadUInt32();
                 entry.Size = brIndex.ReadUInt32();
-                entry.Name = br.ReadCString(ArcEncoding.Shift_JIS);
+                entry.Name = br.ReadCString();
                 long pos = fs.Position;
                 fs.Position = entry.Offset;
                 byte[] data = br.ReadBytes((int)entry.Size);

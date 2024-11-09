@@ -18,7 +18,7 @@ namespace ArcFormats.NScripter
             Directory.CreateDirectory(folderPath);
             for (int i = 0; i < fileCount; i++)
             {
-                string relativePath = br.ReadCString(ArcEncoding.Shift_JIS);
+                string relativePath = br.ReadCString();
                 bool isCompressed = br.ReadByte() != 0;
                 if (isCompressed)
                 {
