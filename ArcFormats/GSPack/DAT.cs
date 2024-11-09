@@ -152,11 +152,6 @@ namespace ArcFormats.GSPack
             return ArcEncoding.Shift_JIS.GetString(data, offset, length);
         }
 
-        public void Pack(string folderPath, string outputPath)
-        {
-            FileInfo[] files = new DirectoryInfo(folderPath).GetFiles();
-            Logger.InitBar(files.Length);
-        }
     }
 
 }
