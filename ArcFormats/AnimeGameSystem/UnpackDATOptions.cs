@@ -2,6 +2,7 @@
 using GalArc.Extensions.GARbroDB;
 using GalArc.Logs;
 using System;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace ArcFormats.AnimeGameSystem
@@ -11,6 +12,12 @@ namespace ArcFormats.AnimeGameSystem
         public UnpackDATOptions()
         {
             InitializeComponent();
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint, true);
+            this.UpdateStyles();
+            Type type = this.combSchemes.GetType();
+            PropertyInfo pi = type.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+            pi.SetValue(this.combSchemes, true, null);
+
             ImportSchemesFromGARbroDB();
         }
 

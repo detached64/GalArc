@@ -13,19 +13,16 @@ namespace GalArc.GUI
 {
     public partial class AboutBox : Form
     {
-        private List<EngineInfo> engines = EngineInfos.engineInfos;
+        private List<EngineInfo> Engines = EngineInfos.engineInfos;
 
-        private List<EngineInfo> searchedEngines = new List<EngineInfo>();
+        private List<EngineInfo> SearchedEngines = new List<EngineInfo>();
 
-        public static AboutBox Instance;
+        private string ProgramUrl => "https://github.com/detached64/GalArc";
 
-        private static readonly string ProgramUrl = "https://github.com/detached64/GalArc";
-
-        private static readonly string IssueUrl = "https://github.com/detached64/GalArc/issues";
+        private string IssueUrl => "https://github.com/detached64/GalArc/issues";
 
         public AboutBox()
         {
-            Instance = this;
             InitializeComponent();
 
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint, true);
@@ -42,7 +39,7 @@ namespace GalArc.GUI
                 this.TopMost = true;
             }
             this.lbCurrentVer.Text = string.Format(Resources.lbVersion, Common.Version.CurrentVer);
-            UpdateDataGridView(engines);
+            UpdateDataGridView(Engines);
             UpdateLicense();
             this.dataGridViewEngines.ClearSelection();
         }
@@ -51,12 +48,12 @@ namespace GalArc.GUI
         {
             if (!string.IsNullOrEmpty(this.txtSearchText.Text))
             {
-                searchedEngines = engines.Where(engine => engine.EngineName.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.UnpackFormat.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.PackFormat.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-                UpdateDataGridView(searchedEngines);
+                SearchedEngines = Engines.Where(engine => engine.EngineName.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.UnpackFormat.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.PackFormat.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                UpdateDataGridView(SearchedEngines);
             }
             else
             {
-                UpdateDataGridView(engines);
+                UpdateDataGridView(Engines);
             }
         }
 
