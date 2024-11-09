@@ -1,8 +1,8 @@
 ﻿using GalArc.Logs;
 using GalArc.Strings;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -14,46 +14,43 @@ namespace GalArc.Extensions.GARbroDB
 
         public static void LoadScheme()
         {
-            if (GARbroDBConfig.IsEnabled)
+            if (!File.Exists(GARbroDBConfig.Path))
             {
-                if (!File.Exists(GARbroDBConfig.Path))
-                {
-                    return;
-                }
-                LoadedContent = File.ReadAllText(GARbroDBConfig.Path);
+                return;
             }
+            LoadedContent = File.ReadAllText(GARbroDBConfig.Path);
         }
 
         /// <summary>
-        /// Deserialize the scheme from the loaded content to Dictionary&lt;gameName, Scheme&gt;.
+        /// Deserialize the specified scheme.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="jsonEngineName"></param>
         /// <param name="jsonNodeName"></param>
         /// <returns></returns>
-        public static Dictionary<string, Scheme> Deserialize(Type type, string jsonEngineName, string jsonNodeName)
+        public static Scheme Deserialize(Type type, string jsonEngineName)
         {
             if (!ExtensionsConfig.IsEnabled || !GARbroDBConfig.IsEnabled)
             {
                 return null;
             }
-            var result = new Dictionary<string, Scheme>();
-
             if (string.IsNullOrEmpty(LoadedContent))
             {
-                return null;
+                LoadScheme();
+                if (string.IsNullOrEmpty(LoadedContent))
+                {
+                    return null;
+                }
             }
+
+            var result = new Scheme();
+
             try
             {
                 JObject jsonObject = JObject.Parse(LoadedContent);
-                var selectedToken = jsonObject.SelectToken($"['SchemeMap']['{jsonEngineName}']['{jsonNodeName}']");
-
-                foreach (var token in selectedToken.Children<JProperty>())
-                {
-                    string schemeName = token.Name;
-                    var schemeData = token.Value.ToObject(type);
-                    result[schemeName] = (Scheme)schemeData;
-                }
+                JToken selectedToken = jsonObject.SelectToken($"['SchemeMap']['{jsonEngineName}']");
+                string selectedJson = selectedToken.ToString();
+                result = JsonConvert.DeserializeObject(selectedJson, type) as Scheme;
                 return result;
             }
             catch (Exception ex)
