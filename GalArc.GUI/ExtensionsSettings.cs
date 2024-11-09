@@ -63,14 +63,15 @@ namespace GalArc.GUI
 
         private void LoadExtensionsInfo()
         {
-            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name == "GalArc").FirstOrDefault();
+            if (assembly != null)
             {
                 List<Type> types = assembly.GetTypes()
                     .Where(t => t.GetCustomAttributes(typeof(ExtensionAttribute), false).Any())
                     .ToList();
                 if (types.Count == 0)
                 {
-                    continue;
+                    return;
                 }
                 int count = 0;
                 foreach (Type type in types)

@@ -52,7 +52,6 @@
             // 
             this.dataGridViewEngines.AllowUserToAddRows = false;
             this.dataGridViewEngines.AllowUserToDeleteRows = false;
-            this.dataGridViewEngines.AllowUserToResizeColumns = false;
             this.dataGridViewEngines.AllowUserToResizeRows = false;
             this.dataGridViewEngines.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewEngines.BackgroundColor = System.Drawing.SystemColors.Control;
