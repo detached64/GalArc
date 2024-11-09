@@ -1,7 +1,10 @@
+using GalArc.Extensions.GARbroDB;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 using Utility;
 using Utility.Extensions;
 
@@ -9,7 +12,13 @@ namespace ArcFormats.AnimeGameSystem
 {
     internal class DAT
     {
+        public static UserControl UnpackExtraOptions = new UnpackDATOptions();
+
         private static readonly byte[] Magic = Utils.HexStringToByteArray("7061636B");  // 'pack'
+
+        internal static AGSScheme ImportedSchemes;
+
+        internal static AGSScheme.AGSFileMap SelectedScheme;
 
         private class Entry
         {
@@ -20,6 +29,8 @@ namespace ArcFormats.AnimeGameSystem
 
         public void Unpack(string filePath, string folderPath)
         {
+            AGSScheme.Key key = null;
+            bool isXored = ImportedSchemes != null && SelectedScheme != null && ImportedSchemes.EncryptedArchives.Any(s => StringComparer.OrdinalIgnoreCase.Equals(s, Path.GetFileName(filePath))) && SelectedScheme.FileMap.TryGetValue(Path.GetFileName(filePath), out key);
             using (FileStream fs = File.OpenRead(filePath))
             {
                 using (BinaryReader br = new BinaryReader(fs))
@@ -34,7 +45,7 @@ namespace ArcFormats.AnimeGameSystem
                         for (int i = 0; i < fileCount; i++)
                         {
                             var entry = new Entry();
-                            entry.Name = br.ReadCString(ArcEncoding.Shift_JIS);
+                            entry.Name = br.ReadCString();
                             fs.Position = indexOffset + 0x10;
                             entry.Offset = br.ReadInt32();
                             fs.Position = indexOffset + 0x14;
@@ -50,6 +61,10 @@ namespace ArcFormats.AnimeGameSystem
                             fs.Position = entry.Offset;
                             byte[] data = br.ReadBytes((int)entry.Size);
                             string fileName = Path.Combine(folderPath, entry.Name);
+                            if (isXored)
+                            {
+                                Decrypt(data, (byte)key.Initial, (byte)key.Increment);
+                            }
                             File.WriteAllBytes(fileName, data);
                             Logger.UpdateBar();
                             data = null;
@@ -61,6 +76,15 @@ namespace ArcFormats.AnimeGameSystem
                         throw new ArgumentOutOfRangeException();
                     }
                 }
+            }
+        }
+
+        private void Decrypt(byte[] data, byte initial, byte increment)
+        {
+            for (int i = 0; i < data.Length; i++)
+            {
+                data[i] = (byte)(data[i] ^ initial);
+                initial += increment;
             }
         }
 

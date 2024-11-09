@@ -73,6 +73,12 @@
       <DependentUpon>PackARCOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="AnimeGameSystem\DAT.cs" />
+    <Compile Include="AnimeGameSystem\UnpackDATOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AnimeGameSystem\UnpackDATOptions.Designer.cs">
+      <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Artemis\PFS.cs" />
     <Compile Include="BiShop\BSA.cs" />
     <Compile Include="Cmvs\CmvsMD5.cs" />
@@ -249,6 +255,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Ai6Win\PackARCOptions.zh-Hans.resx">
       <DependentUpon>PackARCOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AnimeGameSystem\UnpackDATOptions.resx">
+      <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AnimeGameSystem\UnpackDATOptions.zh-Hans.resx">
+      <DependentUpon>UnpackDATOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InnocentGrey\PackIGAOptions.resx">
       <DependentUpon>PackIGAOptions.cs</DependentUpon>
