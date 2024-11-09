@@ -78,7 +78,7 @@ namespace Utility.Extensions
 
     public static class BinaryReaderExtensions
     {
-        public static string ReadCString(this BinaryReader br, Encoding encoding, byte toThis = 0x00)
+        public static string ReadCString(this BinaryReader br, Encoding encoding, byte terminator = 0x00)
         {
             List<byte> byteList = new List<byte>();
             bool isUnicode = encoding == Encoding.Unicode;
@@ -95,7 +95,6 @@ namespace Utility.Extensions
                     }
                     byteList.Add(b1);
                     byteList.Add(b2);
-
                 }
             }
             else
@@ -103,7 +102,7 @@ namespace Utility.Extensions
                 while (true)
                 {
                     byte b = br.ReadByte();
-                    if (b == toThis)
+                    if (b == terminator)
                     {
                         break;
                     }
@@ -112,6 +111,16 @@ namespace Utility.Extensions
             }
 
             return encoding.GetString(byteList.ToArray());
+        }
+
+        public static string ReadCString(this BinaryReader br)
+        {
+            return ReadCString(br, ArcEncoding.Shift_JIS, 0x00);
+        }
+
+        public static string ReadCString(this BinaryReader br, byte terminator)
+        {
+            return ReadCString(br, ArcEncoding.Shift_JIS, terminator);
         }
 
         public static void WritePaddedString(this BinaryWriter bw, string input, int length, char padChar, Encoding encoding)

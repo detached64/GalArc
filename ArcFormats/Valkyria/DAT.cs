@@ -46,7 +46,7 @@ namespace ArcFormats.Valkyria
                     var entry = new Entry();
 
                     // Read filename (0x104 bytes)
-                    entry.Name = br.ReadCString(ArcEncoding.Shift_JIS);
+                    entry.Name = br.ReadCString();
                     fs.Position = indexOffset + 0x104;
 
                     // Read offset and size

@@ -30,7 +30,7 @@ namespace ArcFormats.NekoSDK
             for (int i = 0; i < fileCount; i++)
             {
                 Entry entry = new Entry();
-                entry.Name = br.ReadCString(ArcEncoding.Shift_JIS);     // sometimes the 0x80 namebuf contains invalid characters
+                entry.Name = br.ReadCString();                          // sometimes the 0x80 namebuf contains invalid characters
                 fs.Position = pos;                                      // example: 優遇接待#～孤島と6人のスク水っ娘たち～ アニメーション追加版 パケ版 - bgm.dat
                 entry.UnpackedSize = br.ReadUInt32() ^ 0xCACACA;
                 entry.PackedSize = br.ReadUInt32() ^ 0xCACACA;

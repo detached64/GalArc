@@ -71,7 +71,7 @@ namespace ArcFormats.Triangle
             {
                 Entry entry = new Entry();
                 long pos = fs.Position;
-                entry.Name = br.ReadCString(ArcEncoding.Shift_JIS);
+                entry.Name = br.ReadCString();
                 fs.Position = pos + 16;
                 entry.Offset = br.ReadUInt32();
                 entries.Add(entry);

@@ -32,7 +32,7 @@ namespace ArcFormats.NScripter
             {
                 Entry entry = new Entry();
                 br.ReadByte();//skip "
-                entry.FullPath = Path.Combine(folderPath, br.ReadCString(ArcEncoding.Shift_JIS, 0x22));
+                entry.FullPath = Path.Combine(folderPath, br.ReadCString(0x22));
                 entry.Size = br.ReadUInt32();
                 entries.Add(entry);
             }
