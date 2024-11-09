@@ -46,7 +46,7 @@ namespace ArcFormats.Cmvs
                 int size = reader.ReadInt32();
                 long offset = reader.ReadInt64() + baseOffset;
                 ms.Position += 8;
-                string fileName = reader.ReadCString(ArcEncoding.Shift_JIS);
+                string fileName = reader.ReadCString();
                 fs.Position = offset;
                 byte[] data = br.ReadBytes(size);
                 for (int j = 0; j < data.Length; j++)
@@ -71,7 +71,7 @@ namespace ArcFormats.Cmvs
             int fileCount = files.Length;
             bw.Write(fileCount);
             Logger.InitBar(fileCount);
-            long indexSize = 26 * fileCount + Utility.Utils.GetNameLengthSum(files, ArcEncoding.Shift_JIS);
+            long indexSize = 26 * fileCount + Utils.GetNameLengthSum(files, ArcEncoding.Shift_JIS);
             bw.Write(indexSize * 2);
 
             long offset = 0;
@@ -129,9 +129,9 @@ namespace ArcFormats.Cmvs
         private static void ReadHeaderV6(BinaryReader br, HeaderV6 header)
         {
             header.Magic = br.ReadUInt32();
-            header.DirCount = br.ReadUInt32() ^ 0xfe3a53da;
-            header.DirIndexLength = br.ReadUInt32() ^ 0x37f298e8;
-            header.FileIndexLength = br.ReadUInt32() ^ 0x7a6f3a2d;
+            header.DirCount = br.ReadUInt32() ^ 0xfe3a53dau;
+            header.DirIndexLength = br.ReadUInt32() ^ 0x37f298e8u;
+            header.FileIndexLength = br.ReadUInt32() ^ 0x7a6f3a2du;
             header.IndexVerify = new uint[4];
             header.IndexVerify[0] = br.ReadUInt32();
             header.IndexVerify[1] = br.ReadUInt32();
@@ -142,27 +142,27 @@ namespace ArcFormats.Cmvs
             header.Md5Data[1] = br.ReadUInt32();
             header.Md5Data[2] = br.ReadUInt32();
             header.Md5Data[3] = br.ReadUInt32();
-            header.Md5Data[0] ^= 0x43de7c1a;
-            header.Md5Data[1] ^= 0xcc65f416;
-            header.Md5Data[2] ^= 0xd016a93d;
-            header.Md5Data[3] ^= 0x97a3ba9b;
-            header.IndexKey = br.ReadUInt32() ^ 0xae7d39b7;
-            header.IsEncrypt = br.ReadUInt32() ^ 0xfb73a956;
-            header.IndexSeed = br.ReadUInt32() ^ 0x37acf832;
+            header.Md5Data[0] ^= 0x43de7c1au;
+            header.Md5Data[1] ^= 0xcc65f416u;
+            header.Md5Data[2] ^= 0xd016a93du;
+            header.Md5Data[3] ^= 0x97a3ba9bu;
+            header.IndexKey = br.ReadUInt32() ^ 0xae7d39b7u;
+            header.IsEncrypt = br.ReadUInt32() ^ 0xfb73a956u;
+            header.IndexSeed = br.ReadUInt32() ^ 0x37acf832u;
             header.HeaderCRC = br.ReadUInt32();
 
             CmvsMD5.ComputeHash(header.Md5Data);
-            CMVSUtils.Swap(ref header.Md5Data[0], ref header.Md5Data[2]);
-            CMVSUtils.Swap(ref header.Md5Data[2], ref header.Md5Data[3]);
+            CmvsUtils.Swap(ref header.Md5Data[0], ref header.Md5Data[2]);
+            CmvsUtils.Swap(ref header.Md5Data[2], ref header.Md5Data[3]);
 
-            header.Md5Data[0] ^= 0x45a76c2f;
-            header.Md5Data[1] -= 0x5ba17fcb;
-            header.Md5Data[2] ^= 0x79abe8ad;
-            header.Md5Data[3] -= 0x1c08561b;
+            header.Md5Data[0] ^= 0x45a76c2fu;
+            header.Md5Data[1] -= 0x5ba17fcbu;
+            header.Md5Data[2] ^= 0x79abe8adu;
+            header.Md5Data[3] -= 0x1c08561bu;
 
             header.IndexSeed = Binary.RotR(header.IndexSeed, 5);
-            header.IndexSeed *= 0x7da8f173;
-            header.IndexSeed += 0x13712765;
+            header.IndexSeed *= 0x7da8f173u;
+            header.IndexSeed += 0x13712765u;
         }
         private static void cpzV6_unpack(string filePath, string folderPath)
         {
