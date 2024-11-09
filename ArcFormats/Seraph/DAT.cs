@@ -3,7 +3,6 @@ using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Utility.Compression;
@@ -38,7 +37,7 @@ namespace ArcFormats.Seraph
 
         private HashSet<long> Indices { get; set; } = new HashSet<long>();
 
-        internal static Dictionary<string, Scheme> KnownSchemes;
+        internal static SeraphScheme ImportedSchemes;
 
         public void Unpack(string filePath, string folderPath)
         {
@@ -392,13 +391,13 @@ namespace ArcFormats.Seraph
 
         private void AddIndex()
         {
-            if (KnownSchemes == null)
+            if (ImportedSchemes == null)
             {
                 return;
             }
-            foreach (SeraphScheme scheme in KnownSchemes.Values.Cast<SeraphScheme>())
+            foreach (var item in ImportedSchemes.KnownSchemes.Values)
             {
-                Indices.Add(scheme.IndexOffset);
+                Indices.Add(item.IndexOffset);
             }
         }
     }
