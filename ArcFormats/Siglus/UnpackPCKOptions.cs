@@ -47,24 +47,24 @@ namespace ArcFormats.Siglus
 
         private void ImportSchemes()
         {
-            if (ScenePCK.KnownSchemes == null)
+            if (ScenePCK.ImportedSchemes == null)
             {
-                ScenePCK.KnownSchemes = Deserializer.ReadScheme(typeof(SiglusScheme), "KnownSchemes");
-                if (ScenePCK.KnownSchemes != null)
+                ScenePCK.ImportedSchemes = Deserializer.ReadScheme(typeof(SiglusScheme)) as SiglusScheme;
+                if (ScenePCK.ImportedSchemes != null)
                 {
-                    Logger.Debug(string.Format(Resources.logImportDataBaseSuccess, ScenePCK.KnownSchemes.Count));
+                    Logger.Debug(string.Format(Resources.logImportDataBaseSuccess, ScenePCK.ImportedSchemes.KnownSchemes.Count));
                 }
             }
         }
 
         private void AddSchemesToComboBox()
         {
-            if (ScenePCK.KnownSchemes != null)
+            if (ScenePCK.ImportedSchemes != null)
             {
                 this.combSchemes.Items.Add(Siglus.combItemTryEachScheme);
                 this.combSchemes.Items.Add(Siglus.combCustom);
 
-                foreach (var scheme in ScenePCK.KnownSchemes)
+                foreach (var scheme in ScenePCK.ImportedSchemes.KnownSchemes)
                 {
                     this.combSchemes.Items.Add(scheme.Key);
                 }
@@ -97,11 +97,11 @@ namespace ArcFormats.Siglus
             }
             else
             {
-                SiglusScheme scheme = (SiglusScheme)ScenePCK.KnownSchemes[this.combSchemes.Text];
+                string key = ScenePCK.ImportedSchemes.KnownSchemes[this.combSchemes.Text].KnownKey;
                 try
                 {
-                    ScenePCK.SelectedScheme = new Tuple<string, byte[]>(this.combSchemes.Text, Utils.HexStringToByteArray(scheme.KnownKey, '-'));
-                    this.lbKey.Text = string.Format(Siglus.lbKey, scheme.KnownKey);
+                    ScenePCK.SelectedScheme = new Tuple<string, byte[]>(this.combSchemes.Text, Utils.HexStringToByteArray(key, '-'));
+                    this.lbKey.Text = string.Format(Siglus.lbKey, key);
                 }
                 catch
                 {
