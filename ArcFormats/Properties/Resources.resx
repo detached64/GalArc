@@ -137,9 +137,9 @@
     <value>Failed to read index.</value>
   </data>
   <data name="logImportGARbroDBSchemeSuccess" xml:space="preserve">
-    <value>Get {0} schemes from GARbroDB.</value>
+    <value>Import {0} schemes from GARbroDB.</value>
   </data>
   <data name="logImportDataBaseSuccess" xml:space="preserve">
-    <value>Get {0} schemes from Database.</value>
+    <value>Import {0} schemes from Database.</value>
   </data>
 </root>
