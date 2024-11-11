@@ -1,17 +1,38 @@
-using System;
+﻿using System;
+using Utility;
 
 namespace ArcFormats.EmonEngine
 {
-    internal class DECRYPT
+    internal class EmonUtils
     {
+        internal static string GetNullTerminatedString(byte[] data, int offset, int maxLength)
+        {
+            int end = Array.IndexOf(data, (byte)0, offset, maxLength);
+            if (end == -1)
+            {
+                end = offset + maxLength;
+            }
+
+            return ArcEncoding.Shift_JIS.GetString(data, offset, end - offset); //Using sjis just to be safe. Otherwise ascii can do fine as well.
+        }
+
         internal static unsafe void Decrypt(byte[] buffer, int offset, int length, byte[] routine)
         {
             if (null == buffer)
+            {
                 throw new ArgumentNullException("buffer", "Buffer cannot be null.");
+            }
+
             if (offset < 0)
+            {
                 throw new ArgumentOutOfRangeException("offset", "Buffer offset should be non-negative.");
+            }
+
             if (buffer.Length - offset < length)
+            {
                 throw new ArgumentException("Buffer offset and length are out of bounds.");
+            }
+
             fixed (byte* data8 = &buffer[offset])
             {
                 uint* data32 = (uint*)data8;
@@ -25,7 +46,10 @@ namespace ArcFormats.EmonEngine
                     {
                         case 1:
                             for (int j = 0; j < length32; ++j)
+                            {
                                 data32[j] ^= key;
+                            }
+
                             break;
                         case 2:
                             for (int j = 0; j < length32; ++j)
@@ -37,7 +61,10 @@ namespace ArcFormats.EmonEngine
                             break;
                         case 4:
                             for (int j = 0; j < length32; ++j)
+                            {
                                 data32[j] = ShiftValue(data32[j], key);
+                            }
+
                             break;
                         case 8:
                             InitTable(buffer, offset, length, key);
@@ -47,7 +74,7 @@ namespace ArcFormats.EmonEngine
             }
         }
 
-        static uint ShiftValue(uint val, uint key)
+        private static uint ShiftValue(uint val, uint key)
         {
             int shift = 0;
             uint result = 0;
@@ -59,7 +86,7 @@ namespace ArcFormats.EmonEngine
             return result;
         }
 
-        static void InitTable(byte[] buffer, int offset, int length, uint key)
+        private static void InitTable(byte[] buffer, int offset, int length, uint key)
         {
             var table = new byte[length];
             int x = 0;
@@ -67,11 +94,15 @@ namespace ArcFormats.EmonEngine
             {
                 x += (int)key;
                 while (x >= length)
+                {
                     x -= length;
+                }
+
                 table[x] = buffer[offset + i];
             }
             Buffer.BlockCopy(table, 0, buffer, offset, length);
         }
+
+
     }
 }
-

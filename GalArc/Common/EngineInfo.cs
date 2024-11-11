@@ -28,6 +28,7 @@ namespace GalArc.Common
             new EngineInfo("Artemis","PFS","PFS"),
             new EngineInfo("BiShop","BSA", "BSA"),
             new EngineInfo("Cmvs","CPZ","CPZ"),
+            new EngineInfo("EmonEngine","EME","EME"),
             new EngineInfo("EntisGLS","NOA","NOA"),
             new EngineInfo("Eushully","ALF",string.Empty),
             new EngineInfo("GSPack","DAT",string.Empty),

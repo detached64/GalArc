@@ -181,17 +181,25 @@ namespace GalArc.Logs
 
         public static void InitBar(int max)
         {
-            LogWindow.Instance.bar.Invoke(new Action(() =>
-            {
-                LogWindow.Instance.bar.Maximum = max;
-            }));
-            Debug(string.Format(Resources.logFileCountInside, max));
+            InitBar(max, 1);
         }
         public static void InitBar(uint max)
         {
+            InitBar(max, 1);
+        }
+        public static void InitBar(int max, int m)
+        {
             LogWindow.Instance.bar.Invoke(new Action(() =>
             {
-                LogWindow.Instance.bar.Maximum = (int)max;
+                LogWindow.Instance.bar.Maximum = m * max;
+            }));
+            Debug(string.Format(Resources.logFileCountInside, max));
+        }
+        public static void InitBar(uint max, int m)
+        {
+            LogWindow.Instance.bar.Invoke(new Action(() =>
+            {
+                LogWindow.Instance.bar.Maximum = m * (int)max;
             }));
             Debug(string.Format(Resources.logFileCountInside, max));
         }
