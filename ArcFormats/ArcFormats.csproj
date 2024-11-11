@@ -84,6 +84,8 @@
     <Compile Include="Cmvs\CmvsMD5.cs" />
     <Compile Include="Cmvs\CPZ.cs" />
     <Compile Include="Cmvs\CmvsUtils.cs" />
+    <Compile Include="EmonEngine\EME.cs" />
+    <Compile Include="EmonEngine\EmonUtils.cs" />
     <Compile Include="EntisGLS\NOA.cs" />
     <Compile Include="Eushully\ALF.cs" />
     <Compile Include="Global\Config.cs" />
