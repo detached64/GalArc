@@ -31,7 +31,7 @@ namespace GalArc.Common
             new EngineInfo("EmonEngine","EME","EME"),
             new EngineInfo("EntisGLS","NOA","NOA"),
             new EngineInfo("Eushully","ALF",string.Empty),
-            new EngineInfo("GSPack","DAT",string.Empty),
+            new EngineInfo("GSPack","PAK",string.Empty),
             new EngineInfo("InnocentGrey","IGA/DAT","IGA/DAT"),
             new EngineInfo("KID","DAT","DAT"),
             new EngineInfo("Kirikiri","XP3","XP3"),

@@ -134,4 +134,42 @@ namespace Utility.Extensions
         }
 
     }
+
+    public static class ByteArrayExtensions
+    {
+        public static string ToHexString(this byte[] bytes)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (byte b in bytes)
+            {
+                sb.Append(b.ToString("X2"));
+            }
+            return sb.ToString();
+        }
+
+        public static string GetCString(this byte[] bytes, int offset, int maxLength, Encoding encoding, byte separator)
+        {
+            int nameLength = 0;
+            while (nameLength < maxLength && bytes[offset + nameLength] != 0)
+            {
+                nameLength++;
+            }
+            return encoding.GetString(bytes, offset, nameLength);
+        }
+
+        public static string GetCString(this byte[] bytes, int offset, int maxLength)
+        {
+            return GetCString(bytes, offset, maxLength, ArcEncoding.Shift_JIS, 0x00);
+        }
+
+        public static string GetCString(this byte[] bytes, int offset)
+        {
+            return GetCString(bytes, offset, bytes.Length - offset);
+        }
+
+        public static string GetCString(this byte[] bytes)
+        {
+            return GetCString(bytes, 0);
+        }
+    }
 }
