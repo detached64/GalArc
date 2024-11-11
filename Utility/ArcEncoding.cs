@@ -25,8 +25,8 @@ namespace Utility
 {
     public class ArcEncoding
     {
-        public static Encoding GBK = Encoding.GetEncoding(936);
+        public static readonly Encoding GBK = Encoding.GetEncoding(936);
 
-        public static Encoding Shift_JIS = Encoding.GetEncoding(932);
+        public static readonly Encoding Shift_JIS = Encoding.GetEncoding(932);
     }
 }

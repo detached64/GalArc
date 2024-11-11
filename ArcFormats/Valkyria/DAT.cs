@@ -9,7 +9,7 @@ namespace ArcFormats.Valkyria
 {
     internal class DAT
     {
-        public class Entry
+        private class Entry
         {
             public string Name { get; set; }
             public long Offset { get; set; }
@@ -57,8 +57,7 @@ namespace ArcFormats.Valkyria
                     // Validate entry
                     if (entry.Offset + entry.Size > fs.Length)
                     {
-                        throw new InvalidDataException(
-                            $"Invalid file placement: {entry.Name} at offset {entry.Offset} with size {entry.Size}");
+                        throw new InvalidDataException($"Invalid file placement: {entry.Name} at offset {entry.Offset} with size {entry.Size}");
                     }
 
                     entries.Add(entry);
@@ -84,13 +83,7 @@ namespace ArcFormats.Valkyria
 
                         if (bytesRead == entry.Size)
                         {
-                            // Ensure directory exists for file
-                            string directoryPath = Path.GetDirectoryName(outputPath);
-                            if (!string.IsNullOrEmpty(directoryPath))
-                            {
-                                Directory.CreateDirectory(directoryPath);
-                            }
-
+                            Utils.CreateParentDirectoryIfNotExists(outputPath);
                             File.WriteAllBytes(outputPath, data);
                             Logger.UpdateBar();
                             data = null;

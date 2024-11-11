@@ -59,7 +59,7 @@ namespace ArcFormats.EmonEngine
                 {
                     throw new InvalidDataException("Index entry exceeds buffer PackedSize.");
                 }
-                entry.Name = EmonUtils.GetNullTerminatedString(index, currentOffset, 0x40);
+                entry.Name = index.GetCString(currentOffset, 0x40);
                 entry.Path = Path.Combine(folderPath, entry.Name);
                 entry.LzssFrameSize = BitConverter.ToUInt16(index, currentOffset + 0x40);
                 entry.LzssInitPos = BitConverter.ToUInt16(index, currentOffset + 0x42);
@@ -69,7 +69,7 @@ namespace ArcFormats.EmonEngine
                     entry.LzssInitPos = (entry.LzssFrameSize - entry.LzssInitPos) % entry.LzssFrameSize;
                 }
 
-                entry.SubType = BitConverter.ToUInt16(index, currentOffset + 0x48);  // Adjusted offset for `SubType`
+                entry.SubType = BitConverter.ToUInt16(index, currentOffset + 0x48);
                 entry.PackedSize = BitConverter.ToUInt32(index, currentOffset + 0x4C);
                 entry.UnpackedSize = BitConverter.ToUInt32(index, currentOffset + 0x50);
                 entry.Offset = BitConverter.ToUInt32(index, currentOffset + 0x54);
@@ -79,7 +79,6 @@ namespace ArcFormats.EmonEngine
 
             Logger.InitBar(fileCount);
             Directory.CreateDirectory(folderPath);
-            File.WriteAllBytes(Path.Combine(folderPath, "key"), index);
 
             foreach (var entry in entries)
             {

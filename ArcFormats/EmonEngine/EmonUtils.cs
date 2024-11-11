@@ -1,21 +1,9 @@
 ﻿using System;
-using Utility;
 
 namespace ArcFormats.EmonEngine
 {
     internal class EmonUtils
     {
-        internal static string GetNullTerminatedString(byte[] data, int offset, int maxLength)
-        {
-            int end = Array.IndexOf(data, (byte)0, offset, maxLength);
-            if (end == -1)
-            {
-                end = offset + maxLength;
-            }
-
-            return ArcEncoding.Shift_JIS.GetString(data, offset, end - offset); //Using sjis just to be safe. Otherwise ascii can do fine as well.
-        }
-
         internal static unsafe void Decrypt(byte[] buffer, int offset, int length, byte[] routine)
         {
             if (null == buffer)
