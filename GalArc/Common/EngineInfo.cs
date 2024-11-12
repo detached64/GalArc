@@ -47,6 +47,7 @@ namespace GalArc.Common
             new EngineInfo("Seraph","DAT",string.Empty),
             new EngineInfo("Siglus","Scene.PCK/Gameexe.DAT",string.Empty),
             new EngineInfo("Softpal","PAC","PAC"),
+            new EngineInfo("Sogna","DAT","DAT"),
             new EngineInfo("SystemNNN","GPK/VPK","GPK/VPK"),
             new EngineInfo("Triangle","CG/CGF/SUD","CG/CGF/SUD"),
             new EngineInfo("Valkyria","DAT","DAT"),
