@@ -21,19 +21,20 @@ namespace ArcFormats.GSPack
         {
             { "bgm" , ".ogg" },
             { "voice" , ".ogg" },
-            { "graphic",".png" },
             { "se" , ".ogg" },
+            { "graphic",".png" },
+            { "image" , ".png" },
+            { "system" , ".scw" },
             { "scr" , ".scw" }
         };
 
-        private string[] ValidMagics => new string[] { "DataPack5", "GsPack5", "GsPack4" };
+        internal static string[] ValidMagics => new string[] { "DataPack5", "GsPack5", "GsPack4" };
 
         public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            byte[] magicBytes = br.ReadBytes(9);
-            string magic = Encoding.ASCII.GetString(magicBytes).TrimEnd('\0');
+            string magic = Encoding.ASCII.GetString(br.ReadBytes(9)).TrimEnd('\0');
 
             bool isValidMagic = false;
             foreach (string validMagic in ValidMagics)
