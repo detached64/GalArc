@@ -63,8 +63,6 @@ namespace ArcFormats.Sogna
                 {
                     Directory.CreateDirectory(directoryPath);
                 }
-                Logger.Debug($"Extracted {entries.Count} files.");
-
                 if (entry.IsPacked)
                 {
                     br.BaseStream.Position = entry.Offset;
@@ -80,6 +78,7 @@ namespace ArcFormats.Sogna
                 }
 
             }
+            Logger.Debug($"Extracted {entries.Count} files.");
 
             
             fs.Dispose();
