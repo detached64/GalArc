@@ -202,6 +202,11 @@ namespace GalArc
             {
                 if (this.chkbxUnpack.Checked)
                 {
+                    if (e.Node.Text == selectedNodeUnpack?.Text && e.Node.Parent.Text == selectedNodeUnpack.Parent.Text)
+                    {
+                        return;
+                    }
+
                     if (Settings.Default.AutoSaveState)
                     {
                         Settings.Default.UnpackSelectedNode0 = e.Node.Parent.Index;
@@ -216,6 +221,11 @@ namespace GalArc
                 }
                 else if (this.chkbxPack.Checked)
                 {
+                    if (e.Node.Text == selectedNodePack?.Text && e.Node.Parent.Text == selectedNodePack.Parent.Text)
+                    {
+                        return;
+                    }
+
                     if (Settings.Default.AutoSaveState)
                     {
                         Settings.Default.PackSelectedNode0 = e.Node.Parent.Index;
