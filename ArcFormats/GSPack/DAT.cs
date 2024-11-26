@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using Utility.Compression;
 
-namespace ArcFormats.GSPack
+namespace ArcFormats.GsPack
 {
     internal class DAT
     {

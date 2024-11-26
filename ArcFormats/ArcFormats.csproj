@@ -90,8 +90,14 @@
     <Compile Include="Eushully\ALF.cs" />
     <Compile Include="Global\Config.cs" />
     <Compile Include="Global\Worker.cs" />
-    <Compile Include="GSPack\DAT.cs" />
-    <Compile Include="GSPack\PAK.cs" />
+    <Compile Include="GsPack\DAT.cs" />
+    <Compile Include="GsPack\PAK.cs" />
+    <Compile Include="GsPack\UnpackPAKOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GsPack\UnpackPAKOptions.Designer.cs">
+      <DependentUpon>UnpackPAKOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="InnocentGrey\DAT.cs" />
     <Compile Include="InnocentGrey\IGA.cs" />
     <Compile Include="InnocentGrey\PackIGAOptions.cs">
@@ -265,6 +271,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AnimeGameSystem\UnpackDATOptions.zh-Hans.resx">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GsPack\UnpackPAKOptions.resx">
+      <DependentUpon>UnpackPAKOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GsPack\UnpackPAKOptions.zh-Hans.resx">
+      <DependentUpon>UnpackPAKOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InnocentGrey\PackIGAOptions.resx">
       <DependentUpon>PackIGAOptions.cs</DependentUpon>

@@ -1,15 +1,19 @@
+using ArcFormats.Properties;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 using Utility.Compression;
 using Utility.Extensions;
 
-namespace ArcFormats.GSPack
+namespace ArcFormats.GsPack
 {
     internal class PAK
     {
+        public static UserControl UnpackExtraOptions = new UnpackPAKOptions();
+
         private class Entry
         {
             public string Name { get; set; }
@@ -122,9 +126,17 @@ namespace ArcFormats.GSPack
                 {
                     Decrypt(data, entry.Name);
                 }
-                if (ext == ".scw" && BitConverter.ToUInt32(data, 0) == 0x35776353)  // 'scw5'
+                if (UnpackPAKOptions.toDecryptScripts && ext == ".scw")
                 {
-                    data = DecryptScript(data);
+                    try
+                    {
+                        Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name + ".scw"));
+                        data = DecryptScript(data);
+                    }
+                    catch
+                    {
+                        Logger.Error(Resources.logErrorDecScrFailed, false);
+                    }
                 }
                 File.WriteAllBytes(Path.Combine(folderPath, entry.Name + ext), data);
                 data = null;
@@ -157,32 +169,39 @@ namespace ArcFormats.GSPack
 
         private byte[] DecryptScript(byte[] data)
         {
+            uint dataOffset = 0;
+            switch (BitConverter.ToUInt32(data, 0))
+            {
+                case 0x35776353:    // 'scw5'
+                    dataOffset = 0x1C8;
+                    break;
+                case 0x34776353:    // 'scw6'
+                    dataOffset = 0x1C4;
+                    break;
+            }
             bool isCompressed = BitConverter.ToInt32(data, 20) == -1;
             uint unpackedSize = BitConverter.ToUInt32(data, 24);
             uint packedSize = BitConverter.ToUInt32(data, 28);
 
+            byte[] bytes = new byte[packedSize];
+            Array.Copy(data, dataOffset, bytes, 0, packedSize);
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                bytes[i] ^= (byte)(i & 0xFF);
+            }
+
             if (isCompressed)
             {
-                byte[] bytes = new byte[packedSize];
-                Array.Copy(data, 0x1C8, bytes, 0, packedSize);
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    bytes[i] ^= (byte)(i & 0xFF);
-                }
                 byte[] decompressed = Lzss.Decompress(bytes);
-                byte[] result = new byte[decompressed.Length + 0x1C8];
-                Array.Copy(data, 0, result, 0, 0x1C8);
-                Array.Copy(decompressed, 0, result, 0x1C8, decompressed.Length);
+                byte[] result = new byte[decompressed.Length + dataOffset];
+                Array.Copy(data, 0, result, 0, dataOffset);
+                Array.Copy(decompressed, 0, result, dataOffset, decompressed.Length);
                 bytes = null;
                 decompressed = null;
                 return result;
             }
             else
             {
-                for (int i = 0; i < unpackedSize; i++)
-                {
-                    data[0x1C8 + i] ^= (byte)(i & 0xFF);
-                }
                 return data;
             }
         }
