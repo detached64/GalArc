@@ -59,11 +59,10 @@ namespace ArcFormats.NeXAS
                 method = Method.Zlib;
             }
 
-            Directory.CreateDirectory(folderPath);
-            Logger.InitBar(fileCount);
-
             TryReadIndex(br, fileCount);
 
+            Directory.CreateDirectory(folderPath);
+            Logger.InitBar(fileCount);
             foreach (Entry entry in entries)
             {
                 fs.Seek(entry.Offset, SeekOrigin.Begin);
@@ -77,7 +76,7 @@ namespace ArcFormats.NeXAS
                         switch (method)
                         {
                             case Method.Huffman:
-                                File.WriteAllBytes(entry.FilePath, Huffman.Decompress(fileData, entry.UnpackedSize));
+                                File.WriteAllBytes(entry.FilePath, HuffmanDecoder.Decompress(fileData, entry.UnpackedSize));
                                 break;
 
                             case Method.Lzss:
@@ -159,19 +158,23 @@ namespace ArcFormats.NeXAS
             {
                 packedIndex[i] ^= 0xff;
             }
-            byte[] index = Huffman.Decompress(packedIndex, unpackedLen);
+            byte[] index = HuffmanDecoder.Decompress(packedIndex, unpackedLen);
             packedIndex = null;
-            MemoryStream msIndex = new MemoryStream(index);
-            BinaryReader readerIndex = new BinaryReader(msIndex);
-            for (int i = 0; i < fileCount; i++)
+            using (MemoryStream msIndex = new MemoryStream(index))
             {
-                Entry entry = new Entry();
-                entry.FileName = DefaultEncoding.GetString(readerIndex.ReadBytes(64)).TrimEnd('\0');
-                entry.FilePath = Path.Combine(FolderPath, entry.FileName);
-                entry.Offset = readerIndex.ReadUInt32();
-                entry.UnpackedSize = readerIndex.ReadInt32();
-                entry.PackedSize = readerIndex.ReadInt32();
-                entries.Add(entry);
+                using (BinaryReader readerIndex = new BinaryReader(msIndex))
+                {
+                    for (int i = 0; i < fileCount; i++)
+                    {
+                        Entry entry = new Entry();
+                        entry.FileName = DefaultEncoding.GetString(readerIndex.ReadBytes(64)).TrimEnd('\0');
+                        entry.FilePath = Path.Combine(FolderPath, entry.FileName);
+                        entry.Offset = readerIndex.ReadUInt32();
+                        entry.UnpackedSize = readerIndex.ReadInt32();
+                        entry.PackedSize = readerIndex.ReadInt32();
+                        entries.Add(entry);
+                    }
+                }
             }
         }
     }

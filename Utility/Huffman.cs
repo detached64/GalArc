@@ -21,35 +21,36 @@
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Utility.Compression
 {
-    public class Huffman
+    public class Huffman : IDisposable
     {
-        private static ushort token = 256;
+        private ushort token = 256;
         private const ushort max = 512;
-        private static int offset = 0;
 
-        private static ushort[] lct = new ushort[max];  // left child tree
-        private static ushort[] rct = new ushort[max];  // right child tree
+        private ushort[] lct = new ushort[max];  // left child tree
+        private ushort[] rct = new ushort[max];  // right child tree
 
-        private static byte[] data;
+        private Stream m_input;
+        private BitStream m_bit_stream;
+        private int decompressedLength;
 
-        private static void Reset()
+        public Huffman(byte[] input, int length)
         {
-            token = 256;
-            offset = 0;
-            lct = new ushort[max];
-            rct = new ushort[max];
+            m_input = new MemoryStream(input);
+            m_bit_stream = new BitStream(m_input);
+            decompressedLength = length;
         }
 
-        private static ushort CreateTree()
+        private ushort CreateTree()
         {
-            int bit = Bits.ReadBits(data, ref offset, 1);
+            int bit = m_bit_stream.ReadBit();
             switch (bit)
             {
                 case 0:
-                    return (ushort)Bits.ReadBits(data, ref offset, 8);
+                    return (ushort)m_bit_stream.ReadBits(8);
                 case 1:
                     ushort v = token++;
                     if (v >= max)
@@ -64,12 +65,9 @@ namespace Utility.Compression
             }
         }
 
-        public static byte[] Decompress(byte[] Data, int decompressedLen)
+        public byte[] Decompress()
         {
-            Reset();
-            data = Data;
             ushort root = CreateTree();
-
             List<byte> decompressed = new List<byte>();
 
             while (true)
@@ -77,7 +75,7 @@ namespace Utility.Compression
                 ushort value = root;
                 while (value >= 256)
                 {
-                    int bit = Bits.ReadBits(data, ref offset, 1);
+                    int bit = m_bit_stream.ReadBit();
                     switch (bit)
                     {
                         case 0:
@@ -92,10 +90,27 @@ namespace Utility.Compression
                 }
                 decompressed.Add((byte)value);
 
-                if (decompressed.Count == decompressedLen)
+                if (decompressed.Count == decompressedLength)
                 {
                     return decompressed.ToArray();
                 }
+            }
+        }
+
+        public void Dispose()
+        {
+            m_input.Dispose();
+            m_bit_stream.Dispose();
+        }
+    }
+
+    public class HuffmanDecoder
+    {
+        public static byte[] Decompress(byte[] input, int length)
+        {
+            using (Huffman huffman = new Huffman(input, length))
+            {
+                return huffman.Decompress();
             }
         }
     }

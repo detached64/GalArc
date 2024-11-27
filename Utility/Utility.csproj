@@ -54,7 +54,7 @@
     <Compile Include="ArcEncoding.cs" />
     <Compile Include="BigEndian.cs" />
     <Compile Include="Binary.cs" />
-    <Compile Include="Bits.cs" />
+    <Compile Include="BitStream.cs" />
     <Compile Include="Crc32.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Huffman.cs" />
