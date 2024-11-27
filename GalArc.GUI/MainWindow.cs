@@ -204,6 +204,7 @@ namespace GalArc
                 {
                     if (e.Node.Text == selectedNodeUnpack?.Text && e.Node.Parent.Text == selectedNodeUnpack.Parent.Text)
                     {
+                        selectedNodeUnpack = e.Node;
                         return;
                     }
 
@@ -223,6 +224,7 @@ namespace GalArc
                 {
                     if (e.Node.Text == selectedNodePack?.Text && e.Node.Parent.Text == selectedNodePack.Parent.Text)
                     {
+                        selectedNodePack = e.Node;
                         return;
                     }
 
