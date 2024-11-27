@@ -95,7 +95,7 @@ namespace ArcFormats.Seraph
 
         private void GuessIndexArchPac(BinaryReader br)
         {
-            int byteRead;
+            int thisByte, lastByte = 0;
             long maxOffset = br.BaseStream.Length;
             for (uint i = 0; i < maxOffset; i++)
             {
@@ -104,11 +104,12 @@ namespace ArcFormats.Seraph
                     break;
                 }
 
-                byteRead = br.ReadByte();
-                if (byteRead == 0)
+                thisByte = br.ReadByte();
+                if (thisByte == 0 && lastByte != 0)
                 {
                     AddIndex(br.BaseStream.Position - 1, maxOffset);
                 }
+                lastByte = thisByte;
             }
         }
 
