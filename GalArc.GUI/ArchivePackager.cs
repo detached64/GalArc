@@ -1,8 +1,8 @@
 ﻿using ArcFormats;
+using GalArc.GUI.Properties;
 using GalArc.Logs;
 using System;
 using System.IO;
-using GalArc.GUI.Properties;
 
 namespace GalArc.GUI
 {

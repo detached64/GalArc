@@ -70,6 +70,7 @@ namespace ArcFormats.Sogna
                 {
                     File.WriteAllBytes(fileName, data);
                 }
+                Logger.UpdateBar();
             }
             fs.Dispose();
             br.Dispose();
@@ -110,6 +111,7 @@ namespace ArcFormats.Sogna
                 byte[] fileData = File.ReadAllBytes(file.FullName);
                 bw.Write(fileData);
                 dataOffset += file.Length;
+                Logger.UpdateBar();
             }
             fw.Dispose();
             bw.Dispose();
