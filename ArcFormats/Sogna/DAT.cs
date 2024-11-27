@@ -2,9 +2,7 @@ using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Utility;
 using Utility.Extensions;
 
@@ -13,6 +11,7 @@ namespace ArcFormats.Sogna
     internal class DAT
     {
         private string Magic => "SGS.DAT 1.00";
+
         public class Entry
         {
             public string Name { get; set; }
@@ -21,6 +20,7 @@ namespace ArcFormats.Sogna
             public uint UnpackedSize { get; set; }
             public bool IsPacked { get; set; }
         }
+
         public void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
@@ -31,7 +31,6 @@ namespace ArcFormats.Sogna
                 Logger.ErrorInvalidArchive();
             }
 
-            br.BaseStream.Position = 12;
             uint fileCount = br.ReadUInt32();
             uint indexOffset = 0x10;
             var entries = new List<Entry>((int)fileCount);
@@ -39,7 +38,7 @@ namespace ArcFormats.Sogna
             {
                 var entry = new Entry();
                 br.BaseStream.Position = indexOffset;
-                entry.Name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(0x10)).Trim('\0');
+                entry.Name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(0x10)).TrimEnd('\0');
                 br.BaseStream.Position = indexOffset + 0x13;
                 entry.IsPacked = br.ReadByte() != 0;
                 br.BaseStream.Position = indexOffset + 0x14;
@@ -58,32 +57,24 @@ namespace ArcFormats.Sogna
             {
                 br.BaseStream.Position = entry.Offset;
                 string fileName = Path.Combine(folderPath, entry.Name);
-                string directoryPath = Path.GetDirectoryName(fileName);
-                if (!Directory.Exists(directoryPath))
-                {
-                    Directory.CreateDirectory(directoryPath);
-                }
+                Utils.CreateParentDirectoryIfNotExists(fileName);
+                byte[] data = br.ReadBytes((int)entry.PackedSize);
                 if (entry.IsPacked)
                 {
                     br.BaseStream.Position = entry.Offset;
-                    byte[] compressedData = br.ReadBytes((int)entry.PackedSize);
-                    byte[] uncompressedData = new byte[entry.UnpackedSize];
-                    compressedData = LzUnpack(compressedData, uncompressedData);
-                    File.WriteAllBytes(fileName, compressedData);
+                    byte[] unpacked = new byte[entry.UnpackedSize];
+                    LzUnpack(data, unpacked);
+                    File.WriteAllBytes(fileName, unpacked);
                 }
                 else
                 {
-                    byte[] data = br.ReadBytes((int)entry.UnpackedSize);
                     File.WriteAllBytes(fileName, data);
                 }
-
             }
-            Logger.Debug($"Extracted {entries.Count} files.");
-
-            
             fs.Dispose();
             br.Dispose();
         }
+
         public void Pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
@@ -103,7 +94,6 @@ namespace ArcFormats.Sogna
             {
                 string relativePath = file.FullName.Substring(folderPath.Length + 1);
 
-                // Write index entry
                 bw.BaseStream.Position = indexOffset;
                 bw.WritePaddedString(relativePath, 0x10);
                 bw.BaseStream.Position = indexOffset + 0x13;
@@ -116,49 +106,50 @@ namespace ArcFormats.Sogna
                 bw.Write((uint)dataOffset);
                 indexOffset += 0x20;
 
-                // Write file data
                 bw.BaseStream.Position = dataOffset;
                 byte[] fileData = File.ReadAllBytes(file.FullName);
                 bw.Write(fileData);
                 dataOffset += file.Length;
             }
-
             fw.Dispose();
             bw.Dispose();
         }
 
-        byte[] LzUnpack(byte[] input, byte[] output)
+        private void LzUnpack(byte[] input, byte[] output)
         {
-            using (var reader = new BinaryReader(new MemoryStream(input)))
+            using (var ms = new MemoryStream(input))
             {
-                int dst = 0;
-                int bits = 0;
-                byte mask = 0;
-                while (dst < output.Length)
+                using (var reader = new BinaryReader(ms))
                 {
-                    mask >>= 1;
-                    if (0 == mask)
+                    int dst = 0;
+                    int bits = 0;
+                    byte mask = 0;
+                    while (dst < output.Length)
                     {
-                        bits = reader.ReadByte();
-                        if (-1 == bits)
-                            break;
-                        mask = 0x80;
+                        mask >>= 1;
+                        if (0 == mask)
+                        {
+                            bits = reader.ReadByte();
+                            if (-1 == bits)
+                            {
+                                break;
+                            }
+                            mask = 0x80;
+                        }
+                        if ((mask & bits) != 0)
+                        {
+                            int offset = reader.ReadUInt16();
+                            int count = (offset >> 12) + 1;
+                            offset &= 0xFFF;
+                            Binary.CopyOverlapped(output, dst - offset, dst, count);
+                            dst += count;
+                        }
+                        else
+                        {
+                            output[dst++] = reader.ReadByte();
+                        }
                     }
-                    if ((mask & bits) != 0)
-                    {
-                        int offset = reader.ReadUInt16();
-                        int count = (offset >> 12) + 1;
-                        offset &= 0xFFF;
-                        Binary.CopyOverlapped(output, dst - offset, dst, count);
-                        dst += count;
-                    }
-                    else
-                    {
-                        output[dst++] = reader.ReadByte();
-                    }
-
                 }
-                return output;
             }
         }
     }

@@ -206,6 +206,7 @@
     <Compile Include="Softpal\UnpackPACOptions.Designer.cs">
       <DependentUpon>UnpackPACOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sogna\DAT.cs" />
     <Compile Include="SystemNNN\GPK.cs" />
     <Compile Include="SystemNNN\VPK.cs" />
     <Compile Include="Triangle\CG.cs" />
