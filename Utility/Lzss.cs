@@ -16,7 +16,8 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
-//
+// 
+// based on the original code by Haruhiko Okumura, 1989, licensed under MIT License.
 
 using System;
 using System.IO;

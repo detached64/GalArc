@@ -1,6 +1,6 @@
-﻿// File: Utility/Bits.cs
-// Date: 2024/08/31
-// Description: 按位读取字节数组中的数据
+﻿// File: Utility/BitStream.cs
+// Date: 2024/11/27
+// Description: Bit stream.
 //
 // Copyright (C) 2024 detached64
 //

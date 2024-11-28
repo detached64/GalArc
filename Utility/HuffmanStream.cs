@@ -1,6 +1,6 @@
-﻿// File: Utility/Huffman.cs
-// Date: 2024/08/31
-// Description: 对Huffman的解压缩进行封装
+﻿// File: Utility/HuffmanStream.cs
+// Date: 2024/11/28
+// Description: Standard Huffman decompression algorithm.
 //
 // Copyright (C) 2024 detached64
 //
@@ -25,7 +25,7 @@ using System.IO;
 
 namespace Utility.Compression
 {
-    public class Huffman : IDisposable
+    public class HuffmanStream : IDisposable
     {
         private ushort token = 256;
         private const ushort max = 512;
@@ -33,14 +33,12 @@ namespace Utility.Compression
         private ushort[] lct = new ushort[max];  // left child tree
         private ushort[] rct = new ushort[max];  // right child tree
 
-        private Stream m_input;
         private BitStream m_bit_stream;
         private int decompressedLength;
 
-        public Huffman(byte[] input, int length)
+        public HuffmanStream(Stream input, int length)
         {
-            m_input = new MemoryStream(input);
-            m_bit_stream = new BitStream(m_input);
+            m_bit_stream = new BitStream(input);
             decompressedLength = length;
         }
 
@@ -99,7 +97,6 @@ namespace Utility.Compression
 
         public void Dispose()
         {
-            m_input.Dispose();
             m_bit_stream.Dispose();
         }
     }
@@ -108,9 +105,12 @@ namespace Utility.Compression
     {
         public static byte[] Decompress(byte[] input, int length)
         {
-            using (Huffman huffman = new Huffman(input, length))
+            using (MemoryStream stream = new MemoryStream(input))
             {
-                return huffman.Decompress();
+                using (HuffmanStream huffman = new HuffmanStream(stream, length))
+                {
+                    return huffman.Decompress();
+                }
             }
         }
     }
