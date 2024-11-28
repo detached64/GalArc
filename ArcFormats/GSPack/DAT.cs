@@ -6,23 +6,22 @@ using Utility.Compression;
 
 namespace ArcFormats.GsPack
 {
-    internal class DAT
+    internal class DAT : PAK
     {
         private string Magic => "GsSYMBOL5BINDATA";
 
-        public void Unpack(string filePath, string folderPath)
+        public new void Unpack(string filePath, string folderPath)
         {
             using (FileStream fs = File.OpenRead(filePath))
             {
                 using (BinaryReader br = new BinaryReader(fs))
                 {
                     string magic = Encoding.ASCII.GetString(br.ReadBytes(9)).TrimEnd('\0');
-                    foreach (string validMagic in PAK.ValidMagics)
+                    foreach (string validMagic in ValidMagics)
                     {
                         if (magic.StartsWith(validMagic, StringComparison.OrdinalIgnoreCase))
                         {
-                            PAK pak = new PAK();
-                            pak.Unpack(filePath, folderPath);
+                            base.Unpack(filePath, folderPath);
                             return;
                         }
                     }

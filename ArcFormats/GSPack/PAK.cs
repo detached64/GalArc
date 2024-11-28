@@ -32,7 +32,7 @@ namespace ArcFormats.GsPack
             { "scr" , ".scw" }
         };
 
-        internal static string[] ValidMagics => new string[] { "DataPack5", "GsPack5", "GsPack4" };
+        protected string[] ValidMagics => new string[] { "DataPack5", "GsPack5", "GsPack4" };
 
         public void Unpack(string filePath, string folderPath)
         {
@@ -175,7 +175,7 @@ namespace ArcFormats.GsPack
                 case 0x35776353:    // 'scw5'
                     dataOffset = 0x1C8;
                     break;
-                case 0x34776353:    // 'scw6'
+                case 0x34776353:    // 'scw4'
                     dataOffset = 0x1C4;
                     break;
             }
