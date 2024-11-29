@@ -25,7 +25,7 @@ using System.IO;
 
 namespace Utility.Compression
 {
-    public class HuffmanStream : IDisposable
+    public class HuffmanCompression : IDisposable
     {
         private ushort token = 256;
         private const ushort max = 512;
@@ -36,7 +36,7 @@ namespace Utility.Compression
         private BitStream m_bit_stream;
         private int decompressedLength;
 
-        public HuffmanStream(Stream input, int length)
+        public HuffmanCompression(Stream input, int length)
         {
             m_bit_stream = new BitStream(input);
             decompressedLength = length;
@@ -107,7 +107,7 @@ namespace Utility.Compression
         {
             using (MemoryStream stream = new MemoryStream(input))
             {
-                using (HuffmanStream huffman = new HuffmanStream(stream, length))
+                using (HuffmanCompression huffman = new HuffmanCompression(stream, length))
                 {
                     return huffman.Decompress();
                 }
