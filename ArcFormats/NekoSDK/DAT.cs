@@ -44,7 +44,7 @@ namespace ArcFormats.NekoSDK
             {
                 fs.Position = entry.Offset;
                 byte[] data = br.ReadBytes((int)entry.PackedSize);
-                data = Lzss.Decompress(data);
+                data = LzssHelper.Decompress(data);
                 string fileName = Path.Combine(folderPath, entry.Name);
                 File.WriteAllBytes(fileName, data);
                 Logger.UpdateBar();
@@ -66,7 +66,7 @@ namespace ArcFormats.NekoSDK
                 bw.WritePaddedString(file.Name, 0x80);
                 bw.Write((uint)file.Length ^ 0xCACACA);
                 byte[] raw = File.ReadAllBytes(file.FullName);
-                byte[] data = Lzss.Compress(raw);
+                byte[] data = LzssHelper.Compress(raw);
                 bw.Write((uint)data.Length ^ 0xCACACA);
                 bw.Write(dataOffset ^ 0xCACACA);
                 long pos = fw.Position;

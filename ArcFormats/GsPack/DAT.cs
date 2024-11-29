@@ -50,7 +50,7 @@ namespace ArcFormats.GsPack
                     {
                         packedIndex[i] ^= (byte)(i & key);
                     }
-                    byte[] index = Lzss.Decompress(packedIndex);
+                    byte[] index = LzssHelper.Decompress(packedIndex);
                     Logger.InitBar(fileCount);
                     Directory.CreateDirectory(folderPath);
                     using (MemoryStream ms = new MemoryStream(index))
@@ -65,7 +65,7 @@ namespace ArcFormats.GsPack
                                 ms.Position += 16;
                                 fs.Position = offset;
                                 byte[] data = br.ReadBytes((int)size);
-                                File.WriteAllBytes(Path.Combine(folderPath, name), Lzss.Decompress(data));
+                                File.WriteAllBytes(Path.Combine(folderPath, name), LzssHelper.Decompress(data));
                                 Logger.UpdateBar();
                                 data = null;
                             }

@@ -128,12 +128,12 @@ namespace ArcFormats.EmonEngine
 
                 br.BaseStream.Seek(entry.Offset + 12, SeekOrigin.Begin);
                 byte[] part2data = br.ReadBytes((int)packedSize);
-                part2data = Lzss.Decompress(part2data);
+                part2data = LzssHelper.Decompress(part2data);
 
                 br.BaseStream.Seek(entry.Offset + 12 + packedSize, SeekOrigin.Begin);
                 int part1UnpackedSize = (int)entry.PackedSize;
                 byte[] part1data = br.ReadBytes(part1UnpackedSize);
-                part1data = Lzss.Decompress(part1data);
+                part1data = LzssHelper.Decompress(part1data);
 
                 //Combine part1data and part2data
                 byte[] combinedData = new byte[entry.UnpackedSize];
@@ -149,7 +149,7 @@ namespace ArcFormats.EmonEngine
             {
                 br.BaseStream.Position = entry.Offset + 12;
                 byte[] data = br.ReadBytes((int)entry.PackedSize);
-                data = Lzss.Decompress(data);
+                data = LzssHelper.Decompress(data);
                 File.WriteAllBytes(entry.Path, data);
                 data = null;
             }
@@ -211,7 +211,7 @@ namespace ArcFormats.EmonEngine
                                 bw.Write(0);
                                 bw.Write(0);
                                 bw.Write(0);
-                                byte[] packedTXT = Lzss.Compress(File.ReadAllBytes(file.FullName));
+                                byte[] packedTXT = LzssHelper.Compress(File.ReadAllBytes(file.FullName));
                                 entry.PackedSize = (uint)packedTXT.Length;
                                 bw.Write(packedTXT);
                                 packedTXT = null;

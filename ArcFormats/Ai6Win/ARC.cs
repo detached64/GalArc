@@ -186,7 +186,7 @@ namespace ArcFormats.Ai6Win
                 byte[] data = br.ReadBytes((int)l[i].PackedSize);
                 if (l[i].IsPacked)
                 {
-                    data = Lzss.Decompress(data);
+                    data = LzssHelper.Decompress(data);
                 }
                 File.WriteAllBytes(Path.Combine(l[i].FullPath), data);
                 data = null;
@@ -250,7 +250,7 @@ namespace ArcFormats.Ai6Win
                 byte[] data = File.ReadAllBytes(file.FullName);
                 if (PackARCOptions.toCompressContents)
                 {
-                    data = Lzss.Compress(data);
+                    data = LzssHelper.Compress(data);
                 }
                 uint packedSize = (uint)data.Length;
                 bw.Write(BigEndian.Convert(packedSize));
@@ -292,7 +292,7 @@ namespace ArcFormats.Ai6Win
                 byte[] data = File.ReadAllBytes(file.FullName);
                 if (PackARCOptions.toCompressContents)
                 {
-                    data = Lzss.Compress(data);
+                    data = LzssHelper.Compress(data);
                 }
                 uint packedSize = (uint)data.Length;
                 bw.Write(BigEndian.Convert(packedSize));

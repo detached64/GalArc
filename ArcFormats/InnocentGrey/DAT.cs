@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using static ArcFormats.Yuris.YPF;
+using Utility;
 
 namespace ArcFormats.InnocentGrey
 {
@@ -45,17 +45,16 @@ namespace ArcFormats.InnocentGrey
             for (int i = 0; i < fileCount; i++)
             {
                 Entry entry = new Entry();
-                entry.FileName = Encoding.ASCII.GetString(br.ReadBytes(32)).TrimEnd('\0');
+                entry.FileName = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(32)).TrimEnd('\0');
                 entry.Offset = br.ReadUInt32();
                 entry.FileType = br.ReadUInt32();
                 entry.UnpackedSize = br.ReadUInt32();
                 entry.PackedSize = br.ReadUInt32();
                 entry.IsCompressed = entry.PackedSize != entry.UnpackedSize;
-
-                if (entry.IsCompressed)     //skip compressed data for now
-                {
-                    throw new NotImplementedException("Compressed data detected.Temporarily not supported.");
-                }
+                //if (entry.IsCompressed)     //skip compressed data for now
+                //{
+                //    throw new NotImplementedException("Compressed data detected. Temporarily not supported.");
+                //}
                 entries.Add(entry);
             }
 

@@ -58,7 +58,7 @@ namespace ArcFormats.Eushully
                     }
                     fs.Position = 312;
                     byte[] raw = br.ReadBytes((int)fs.Length - 312);
-                    index = Lzss.Decompress(raw);
+                    index = LzssHelper.Decompress(raw);
                     raw = null;
                 }
             }
@@ -142,7 +142,7 @@ namespace ArcFormats.Eushully
                     }
                     fs.Position = 552;
                     byte[] raw = br.ReadBytes((int)fs.Length - 552);
-                    index = Lzss.Decompress(raw);
+                    index = LzssHelper.Decompress(raw);
                     raw = null;
                 }
             }

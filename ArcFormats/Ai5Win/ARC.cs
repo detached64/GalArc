@@ -41,7 +41,7 @@ namespace ArcFormats.Ai5Win
                 byte[] data = br.ReadBytes((int)entry.Size);
                 if (entry.Path.HasAnyOfExtensions("mes", "lib", "a", "a6", "msk", "x"))
                 {
-                    File.WriteAllBytes(entry.Path, Lzss.Decompress(data));
+                    File.WriteAllBytes(entry.Path, LzssHelper.Decompress(data));
                 }
                 else
                 {

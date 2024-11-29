@@ -80,7 +80,7 @@ namespace ArcFormats.GsPack
                     }
                 }
 
-                index = Lzss.Decompress(packedIndex);
+                index = LzssHelper.Decompress(packedIndex);
             }
             else
             {
@@ -192,7 +192,7 @@ namespace ArcFormats.GsPack
 
             if (isCompressed)
             {
-                byte[] decompressed = Lzss.Decompress(bytes);
+                byte[] decompressed = LzssHelper.Decompress(bytes);
                 byte[] result = new byte[decompressed.Length + dataOffset];
                 Array.Copy(data, 0, result, 0, dataOffset);
                 Array.Copy(decompressed, 0, result, dataOffset, decompressed.Length);

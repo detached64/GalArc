@@ -80,7 +80,7 @@ namespace ArcFormats.NeXAS
                                 break;
 
                             case Method.Lzss:
-                                File.WriteAllBytes(entry.FilePath, Lzss.Decompress(fileData));
+                                File.WriteAllBytes(entry.FilePath, LzssHelper.Decompress(fileData));
                                 break;
 
                             case Method.Zlib:
