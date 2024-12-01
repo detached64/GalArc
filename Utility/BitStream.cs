@@ -23,51 +23,83 @@ using System.IO;
 
 namespace Utility
 {
+    public enum BitStreamMode
+    {
+        Read,
+        Write
+    }
+
+    public enum BitStreamEndianness
+    {
+        Msb,
+        Lsb
+    }
+
     public class BitStream : IDisposable
     {
-        private readonly Stream _stream;
-        private byte _currentByte;
-        private int _bitPosition;
-        private readonly bool _isMsb;
+        private readonly Stream stream;
+        private readonly BitStreamEndianness endianness;
+        private readonly BitStreamMode mode;
 
-        public BitStream(Stream stream, bool isMsb = true)
+        private byte currentByte;
+        /// <summary>
+        /// Bit position in the current byte.
+        /// </summary>
+        /// If bitPosition is 8, we need to read a new byte.
+        private int bitPosition;
+
+        public BitStream(Stream stream, BitStreamMode mode, BitStreamEndianness endianness)
         {
-            _stream = stream ?? throw new ArgumentNullException(nameof(stream));
-            _isMsb = isMsb;
-            _bitPosition = 8;
+            this.stream = stream ?? throw new ArgumentNullException(nameof(stream));
+            this.mode = mode;
+            this.endianness = endianness;
+            currentByte = 0;
+            bitPosition = mode == BitStreamMode.Write ? 0 : 8;
+        }
+
+        public BitStream(Stream stream, BitStreamMode mode) : this(stream, mode, BitStreamEndianness.Msb)
+        {
         }
 
         public int ReadBits(int bitCount)
         {
+            if (mode != BitStreamMode.Read)
+            {
+                throw new InvalidOperationException();
+            }
             if (bitCount < 1 || bitCount > 32)
+            {
                 throw new ArgumentOutOfRangeException(nameof(bitCount), "Bit count must be between 1 and 32.");
+            }
 
             int result = 0;
 
             for (int i = 0; i < bitCount; i++)
             {
-                if (_bitPosition == 8)
+                if (bitPosition == 8)
                 {
-                    int readByte = _stream.ReadByte();
+                    int readByte = stream.ReadByte();
                     if (readByte == -1)
+                    {
                         throw new EndOfStreamException("End of stream.");
+                    }
 
-                    _currentByte = (byte)readByte;
-                    _bitPosition = 0;
+                    currentByte = (byte)readByte;
+                    bitPosition = 0;
                 }
 
                 int bit;
-                if (_isMsb)
+                if (endianness == BitStreamEndianness.Msb)
                 {
-                    bit = (_currentByte >> (7 - _bitPosition)) & 1;
+                    bit = (currentByte >> (7 - bitPosition)) & 1;
                 }
                 else
                 {
-                    bit = (_currentByte >> _bitPosition) & 1;
+                    bit = (currentByte >> bitPosition) & 1;
                 }
 
                 result = (result << 1) | bit;
-                _bitPosition++;
+                bitPosition++;
             }
 
             return result;
@@ -78,12 +110,73 @@ namespace Utility
             return ReadBits(1);
         }
 
+        public void WriteBit(int bit)
+        {
+            if (mode != BitStreamMode.Write)
+            {
+                throw new InvalidOperationException();
+            }
+            if (bit != 0 && bit != 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bit), "Bit must be 0 or 1.");
+            }
+
+            if (endianness == BitStreamEndianness.Msb)
+            {
+                currentByte = (byte)((currentByte & ~(1 << (7 - bitPosition))) | (bit << (7 - bitPosition)));
+            }
+            else
+            {
+                currentByte = (byte)((currentByte & ~(1 << bitPosition)) | (bit << bitPosition));
+            }
+            bitPosition++;
+
+            if (bitPosition == 8)
+            {
+                stream.WriteByte(currentByte);
+                currentByte = 0;
+                bitPosition = 0;
+            }
+        }
+
+        public void WriteBits(byte[] src, int bitCount)
+        {
+            if (mode != BitStreamMode.Write)
+            {
+                throw new InvalidOperationException();
+            }
+            if (endianness != BitStreamEndianness.Msb)
+            {
+                throw new NotImplementedException();
+            }
+            if (bitCount < 1 || bitCount > 32)
+            {
+                throw new ArgumentOutOfRangeException(nameof(bitCount), "Bit count must be between 1 and 32.");
+            }
+
+            int byteCount = bitCount / 8;
+            int thisBitCount = bitCount % 8;
+            for (int i = 0; i < thisBitCount; i++)
+            {
+                WriteBit((src[byteCount] >> (7 - (i % 8))) & 1);
+            }
+            byteCount--;
+            thisBitCount = bitCount & ~7;
+            for (int i = 0; i < thisBitCount; i++)
+            {
+                WriteBit((src[byteCount - i / 8] >> (7 - (i % 8))) & 1);
+            }
+        }
+
         public void Dispose()
         {
-            _currentByte = 0;
-            _bitPosition = 0;
-            _stream?.Dispose();
+            if (mode == BitStreamMode.Write && bitPosition != 0)
+            {
+                stream.WriteByte(currentByte);
+            }
+            currentByte = 0;
+            bitPosition = 0;
+            stream?.Dispose();
         }
     }
-
 }
