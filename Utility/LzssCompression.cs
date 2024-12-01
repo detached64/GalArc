@@ -106,7 +106,7 @@ namespace Utility.Compression
         {
             if (mode != LzssMode.Decompress)
             {
-                throw new InvalidOperationException("LzssStream is not in decompression mode");
+                throw new InvalidOperationException("Not in decompression mode");
             }
 
             uint flag = 0;
@@ -302,7 +302,7 @@ namespace Utility.Compression
         {
             if (mode != LzssMode.Compress)
             {
-                throw new InvalidOperationException("LzssStream is not in compression mode");
+                throw new InvalidOperationException("Not in compression mode");
             }
 
             int r = settings.FrameInitPos;
