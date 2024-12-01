@@ -18,46 +18,65 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-using GalArc.Logs;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Utility.Compression
 {
+    public enum HuffmanMode
+    {
+        Decompress,
+        Compress
+    }
+
     public class HuffmanCompression : IDisposable
     {
-        private ushort token = 256;
-        private const ushort max = 512;
+        private const ushort MAX = 512;
+        private ushort index = 256;
 
-        private ushort[] lct = new ushort[max];  // left child tree
-        private ushort[] rct = new ushort[max];  // right child tree
+        private ushort[,] children = new ushort[MAX, 2];
 
-        private BitStream m_bit_stream;
+        private BitStream input;
+        private HuffmanMode mode;
         private int decompressedLength;
+        private MemoryStream output;
 
-        public HuffmanCompression(Stream input, int length)
+        public HuffmanCompression(Stream input, HuffmanMode mode, int length)
         {
-            m_bit_stream = new BitStream(input);
-            decompressedLength = length;
+            if (mode == HuffmanMode.Decompress)
+            {
+                this.input = new BitStream(input, BitStreamMode.Read);
+                decompressedLength = length;
+            }
+            else
+            {
+                this.input = new BitStream(input, BitStreamMode.Write);
+            }
+            this.mode = mode;
         }
+
+        public HuffmanCompression(Stream input, int length) : this(input, HuffmanMode.Decompress, length)
+        { }
+
+        public HuffmanCompression(Stream input) : this(input, HuffmanMode.Compress, 0)
+        { }
 
         private ushort CreateTree()
         {
-            int bit = m_bit_stream.ReadBit();
+            int bit = input.ReadBit();
             switch (bit)
             {
                 case 0:
-                    return (ushort)m_bit_stream.ReadBits(8);
+                    return (ushort)input.ReadBits(8);
                 case 1:
-                    ushort v = token++;
-                    if (v >= max)
+                    ushort parent = index++;
+                    if (parent >= MAX)
                     {
-                        Logger.Error("Exceeded huffman tree.");
+                        throw new Exception("Exceeded huffman tree.");
                     }
-                    lct[v] = CreateTree();
-                    rct[v] = CreateTree();
-                    return v;
+                    children[parent, 0] = CreateTree();
+                    children[parent, 1] = CreateTree();
+                    return parent;
                 default:
                     throw new Exception("Invalid bit.");
             }
@@ -65,39 +84,39 @@ namespace Utility.Compression
 
         public byte[] Decompress()
         {
+            if (mode != HuffmanMode.Decompress)
+            {
+                throw new InvalidOperationException("Not in decompression mode.");
+            }
+
             ushort root = CreateTree();
-            List<byte> decompressed = new List<byte>();
+            output = new MemoryStream();
 
             while (true)
             {
                 ushort value = root;
                 while (value >= 256)
                 {
-                    int bit = m_bit_stream.ReadBit();
-                    switch (bit)
+                    int bit = input.ReadBit();
+                    if (bit != -1)
                     {
-                        case 0:
-                            value = lct[value];
-                            break;
-                        case 1:
-                            value = rct[value];
-                            break;
-                        case -1:
-                            break;
+                        value = children[value, bit];
                     }
                 }
-                decompressed.Add((byte)value);
+                output.WriteByte((byte)value);
 
-                if (decompressed.Count == decompressedLength)
+                if (output.Length == decompressedLength)
                 {
-                    return decompressed.ToArray();
+                    return output.ToArray();
                 }
             }
         }
 
         public void Dispose()
         {
-            m_bit_stream.Dispose();
+            children = null;
+            input.Dispose();
+            output.Dispose();
         }
     }
 
