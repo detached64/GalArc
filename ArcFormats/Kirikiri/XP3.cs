@@ -67,7 +67,7 @@ namespace ArcFormats.Kirikiri
                     {
                         Logger.Error("Error: additional bytes beyond index.");
                     }
-                    Index = Zlib.DecompressBytes(packedIndex);
+                    Index = ZlibHelper.Decompress(packedIndex);
                     if (Index.Length != unpackedIndexSize)
                     {
                         Logger.Info("Index size fails to match.Try reading……");
@@ -143,7 +143,7 @@ NextEntry:
                 byte[] data = br.ReadBytes((int)entry.PackedSize);
                 if (entry.UnpackedSize != entry.PackedSize)
                 {
-                    data = Zlib.DecompressBytes(data);
+                    data = ZlibHelper.Decompress(data);
                 }
                 File.WriteAllBytes(entry.FullPath, data);
                 data = null;
@@ -184,7 +184,7 @@ NextEntry:
                 uint adler32 = Adler32.Compute(fileData);
                 if (PackXP3Options.CompressContents)
                 {
-                    fileData = Zlib.CompressBytes(fileData);
+                    fileData = ZlibHelper.Compress(fileData);
                     bw.Write(fileData);
                     compressedSize = fileData.Length;
                 }
@@ -225,7 +225,7 @@ NextEntry:
             if (PackXP3Options.CompressIndex)
             {
                 bw.Write((byte)1);
-                byte[] compressedIndex = Zlib.CompressBytes(ms.ToArray());
+                byte[] compressedIndex = ZlibHelper.Compress(ms.ToArray());
                 long comLen = compressedIndex.Length;
                 bw.Write(comLen);           //8
                 bw.Write(uncomLen);         //8

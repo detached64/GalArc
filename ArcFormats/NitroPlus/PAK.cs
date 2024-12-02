@@ -33,7 +33,7 @@ namespace ArcFormats.NitroPlus
             int comSize = br.ReadInt32();
             fs.Position = 0x114;
 
-            using (MemoryStream ms = new MemoryStream(Zlib.DecompressBytes(br.ReadBytes(comSize))))
+            using (MemoryStream ms = new MemoryStream(ZlibHelper.Decompress(br.ReadBytes(comSize))))
             {
                 using (BinaryReader brEntry = new BinaryReader(ms))
                 {
@@ -64,7 +64,7 @@ namespace ArcFormats.NitroPlus
                         Array.Copy(data, backup, data.Length);
                         try
                         {
-                            byte[] result = Zlib.DecompressBytes(data);
+                            byte[] result = ZlibHelper.Decompress(data);
                             File.WriteAllBytes(entry.FullPath, result);
                             result = null;
                         }
@@ -116,7 +116,7 @@ namespace ArcFormats.NitroPlus
                     byte[] uncomIndex = memoryStream.ToArray();
 
                     bw.Write(uncomIndex.Length);
-                    byte[] comIndex = Zlib.CompressBytes(uncomIndex);
+                    byte[] comIndex = ZlibHelper.Compress(uncomIndex);
                     bw.Write(comIndex.Length);
 
                     if (!string.IsNullOrEmpty(PackPAKOptions.OriginalFilePath) && File.Exists(PackPAKOptions.OriginalFilePath))

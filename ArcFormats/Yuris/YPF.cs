@@ -79,7 +79,7 @@ namespace ArcFormats.Yuris
                 entry.Data = br.ReadBytes((int)entry.PackedSize);
                 if (entry.IsPacked)
                 {
-                    entry.Data = Zlib.DecompressBytes(entry.Data);
+                    entry.Data = ZlibHelper.Decompress(entry.Data);
                 }
                 Utils.CreateParentDirectoryIfNotExists(entry.Path);
                 if (UnpackYPFOptions.toDecryptScripts && Path.GetExtension(entry.Path) == ".ybn" && BitConverter.ToUInt32(entry.Data, 0) == 0x42545359)

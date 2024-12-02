@@ -75,7 +75,7 @@ namespace ArcFormats.NekoSDK
                     header[i] ^= (byte)key;
                     key <<= 3;
                 }
-                byte[] fileData = Zlib.DecompressBytes(header.Concat(data).ToArray());
+                byte[] fileData = ZlibHelper.Decompress(header.Concat(data).ToArray());
                 File.WriteAllBytes(Path.Combine(folderPath, entry.Name), fileData);
                 fileData = null;
                 data = null;
@@ -121,7 +121,7 @@ namespace ArcFormats.NekoSDK
                 }
                 writer.Write(baseOffset ^ (uint)key);
 
-                byte[] data = Zlib.CompressFile(file.FullName);
+                byte[] data = ZlibHelper.Compress(file.FullName);
                 uint size = (uint)data.Length + 4;
                 uint dataKey = size / 8 + 0x22;
                 for (int i = 0; i < 4; i++)

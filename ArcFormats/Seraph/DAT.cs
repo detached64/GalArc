@@ -222,7 +222,7 @@ namespace ArcFormats.Seraph
                     {
                         byte[] raw = new byte[buffer.Length - 6];
                         Array.Copy(buffer, 6, raw, 0, raw.Length);
-                        raw = Zlib.DecompressBytes(raw);
+                        raw = ZlibHelper.Decompress(raw);
                         File.WriteAllBytes(Path.Combine(folderPath, entry.Name), raw);
                         raw = null;
                     }
@@ -230,7 +230,7 @@ namespace ArcFormats.Seraph
                     {
                         byte[] raw = new byte[buffer.Length - 2];
                         Array.Copy(buffer, 2, raw, 0, raw.Length);
-                        raw = Zlib.DecompressBytes(raw);
+                        raw = ZlibHelper.Decompress(raw);
                         File.WriteAllBytes(Path.Combine(folderPath, entry.Name), raw);
                         raw = null;
                     }
@@ -281,7 +281,7 @@ namespace ArcFormats.Seraph
                 {
                     byte[] raw = new byte[buffer.Length - 6];
                     Array.Copy(buffer, 6, raw, 0, raw.Length);
-                    raw = Zlib.DecompressBytes(raw);
+                    raw = ZlibHelper.Decompress(raw);
                     try
                     {
                         byte[] lz = SeraphUtils.Decompress(raw);
@@ -300,7 +300,7 @@ namespace ArcFormats.Seraph
                 {
                     byte[] raw = new byte[buffer.Length - 2];
                     Array.Copy(buffer, 2, raw, 0, raw.Length);
-                    raw = Zlib.DecompressBytes(raw);
+                    raw = ZlibHelper.Decompress(raw);
                     try
                     {
                         byte[] lz = SeraphUtils.Decompress(raw);
