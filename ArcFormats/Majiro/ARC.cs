@@ -9,30 +9,23 @@ using Utility.Extensions;
 
 namespace ArcFormats.Majiro
 {
-    public class ARC
+    public class ARC : ArchiveFormat
     {
         public static UserControl PackExtraOptions = new VersionOnly("1/2/3");
 
-        private static readonly string Magic = "MajiroArcV";
+        private readonly string Magic = "MajiroArcV";
 
-        private static readonly string MagicV1 = "MajiroArcV1.000\x00";
+        private readonly string MagicV1 = "MajiroArcV1.000\x00";
 
-        private static readonly string MagicV2 = "MajiroArcV2.000\x00";
+        private readonly string MagicV2 = "MajiroArcV2.000\x00";
 
-        private static readonly string MagicV3 = "MajiroArcV3.000\x00";
+        private readonly string MagicV3 = "MajiroArcV3.000\x00";
 
-        private static int UnpackVersion;
+        private int UnpackVersion;
 
-        private static int PackVersion;
+        private int PackVersion;
 
-        private class Entry
-        {
-            internal string Name { get; set; }
-            internal uint Offset { get; set; }
-            internal uint Size { get; set; }
-        }
-
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -60,7 +53,7 @@ namespace ArcFormats.Majiro
             }
         }
 
-        private static void arcV1_unpack(string filePath, string folderPath)
+        private void arcV1_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -104,7 +97,7 @@ namespace ArcFormats.Majiro
             ms.Dispose();
         }
 
-        private static void arcV2_unpack(string filePath, string folderPath)
+        private void arcV2_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -141,9 +134,9 @@ namespace ArcFormats.Majiro
             ms.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
-            PackVersion = int.Parse(Config.Version);
+            PackVersion = int.Parse(ArcSettings.Version);
             switch (PackVersion)
             {
                 case 1:
@@ -156,7 +149,7 @@ namespace ArcFormats.Majiro
             }
         }
 
-        private static void arcV1_pack(string folderPath, string filePath)
+        private void arcV1_pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -203,7 +196,7 @@ namespace ArcFormats.Majiro
             fw.Dispose();
         }
 
-        private static void arcV2_pack(string folderPath, string filePath)
+        private void arcV2_pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);

@@ -7,16 +7,14 @@ using Utility.Extensions;
 
 namespace ArcFormats.NScripter
 {
-    public class NS2
+    public class NS2 : ArchiveFormat
     {
-        private class Entry
+        private class Ns2Entry : PackedEntry
         {
-            public string FullPath { get; set; }
-            public uint Size { get; set; }
             public string RelativePath { get; set; }
         }
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -26,13 +24,13 @@ namespace ArcFormats.NScripter
                 throw new Exception("Error:Encrypted data detected.");
             }
             Directory.CreateDirectory(folderPath);
-            List<Entry> entries = new List<Entry>();
+            List<Ns2Entry> entries = new List<Ns2Entry>();
 
             while (fs.Position < dataOffset - 1)//dataOffset - 1 is the end of file path
             {
-                Entry entry = new Entry();
+                Ns2Entry entry = new Ns2Entry();
                 br.ReadByte();//skip "
-                entry.FullPath = Path.Combine(folderPath, br.ReadCString(0x22));
+                entry.Path = Path.Combine(folderPath, br.ReadCString(0x22));
                 entry.Size = br.ReadUInt32();
                 entries.Add(entry);
             }
@@ -40,11 +38,11 @@ namespace ArcFormats.NScripter
 
             Logger.InitBar(entries.Count);
 
-            foreach (Entry entry in entries)
+            foreach (Ns2Entry entry in entries)
             {
                 byte[] data = br.ReadBytes((int)entry.Size);
-                Utils.CreateParentDirectoryIfNotExists(entry.FullPath);
-                File.WriteAllBytes(entry.FullPath, data);
+                Utils.CreateParentDirectoryIfNotExists(entry.Path);
+                File.WriteAllBytes(entry.Path, data);
                 data = null;
                 Logger.UpdateBar();
             }
@@ -52,7 +50,7 @@ namespace ArcFormats.NScripter
             br.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -66,21 +64,21 @@ namespace ArcFormats.NScripter
 
             Utils.Sort(fullPaths);
 
-            List<Entry> entries = new List<Entry>();
+            List<Ns2Entry> entries = new List<Ns2Entry>();
 
             for (int i = 0; i < fileCount; i++)
             {
-                Entry entry = new Entry();
+                Ns2Entry entry = new Ns2Entry();
                 entry.RelativePath = relativePaths[i];
-                entry.FullPath = Path.Combine(folderPath, relativePaths[i]);
-                entry.Size = (uint)new FileInfo(entry.FullPath).Length;
+                entry.Path = Path.Combine(folderPath, relativePaths[i]);
+                entry.Size = (uint)new FileInfo(entry.Path).Length;
                 dataOffset += (uint)(ArcEncoding.Shift_JIS.GetBytes(entry.RelativePath).Length + 2);
                 dataOffset += 4;
                 entries.Add(entry);
             }
             dataOffset += 1;//'e'
             bw.Write(dataOffset);
-            foreach (Entry entry in entries)
+            foreach (Ns2Entry entry in entries)
             {
                 bw.Write('\"');
                 bw.Write(ArcEncoding.Shift_JIS.GetBytes(entry.RelativePath));
@@ -89,9 +87,9 @@ namespace ArcFormats.NScripter
             }
             bw.Write('e');
 
-            foreach (Entry entry in entries)
+            foreach (Ns2Entry entry in entries)
             {
-                byte[] buffer = File.ReadAllBytes(entry.FullPath);
+                byte[] buffer = File.ReadAllBytes(entry.Path);
                 bw.Write(buffer);
                 buffer = null;
                 Logger.UpdateBar();

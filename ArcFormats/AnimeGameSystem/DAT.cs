@@ -10,24 +10,17 @@ using Utility.Extensions;
 
 namespace ArcFormats.AnimeGameSystem
 {
-    internal class DAT
+    public class DAT : ArchiveFormat
     {
         public static UserControl UnpackExtraOptions = new UnpackDATOptions();
-
-        private static readonly byte[] Magic = Utils.HexStringToByteArray("7061636B");  // 'pack'
 
         internal static AGSScheme ImportedSchemes;
 
         internal static AGSScheme.AGSFileMap SelectedScheme;
 
-        private class Entry
-        {
-            public string Name { get; set; }
-            public long Offset { get; set; }
-            public uint Size { get; set; }
-        }
+        private readonly byte[] Magic = Utils.HexStringToByteArray("7061636B");  // 'pack'
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             AGSScheme.Key key = null;
             bool isXored = ImportedSchemes != null && SelectedScheme != null && ImportedSchemes.EncryptedArchives.Any(s => StringComparer.OrdinalIgnoreCase.Equals(s, Path.GetFileName(filePath))) && SelectedScheme.FileMap.TryGetValue(Path.GetFileName(filePath), out key);
@@ -47,7 +40,7 @@ namespace ArcFormats.AnimeGameSystem
                             var entry = new Entry();
                             entry.Name = br.ReadCString();
                             fs.Position = indexOffset + 0x10;
-                            entry.Offset = br.ReadInt32();
+                            entry.Offset = br.ReadUInt32();
                             fs.Position = indexOffset + 0x14;
                             entry.Size = br.ReadUInt32();
                             indexOffset += 0x18;
@@ -88,7 +81,7 @@ namespace ArcFormats.AnimeGameSystem
             }
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -96,47 +89,30 @@ namespace ArcFormats.AnimeGameSystem
             FileInfo[] files = new DirectoryInfo(folderPath).GetFiles();
             Logger.InitBar(files.Length);
 
-            // Write magic and file count
             bw.Write(Magic);
             bw.Write((ushort)files.Length);
 
-            // Set initial index offset (right after magic and file count)
             uint indexOffset = 6;
             uint dataOffset = indexOffset + (uint)(files.Length * 0x18); // index size is fileCount * 0x18
 
-            // Write index entries with placeholder offsets
             foreach (FileInfo file in files)
             {
-                // Set position for each index entry
                 fw.Position = indexOffset;
-
-                // Write file name (padded to 0x10 bytes)
                 byte[] nameBytes = Utils.PaddedBytes(file.Name, 0x10);
                 bw.Write(nameBytes);
-
-                // Placeholder for offset (will update after writing data)
                 bw.Write(0);
-
-                // Write file size
                 bw.Write((uint)file.Length);
-
                 indexOffset += 0x18;
             }
 
-            // Write file data and update offsets in the index
-            indexOffset = 6; // Reset to start of index entries
+            indexOffset = 6;
             foreach (FileInfo file in files)
             {
-                // Update file offset in the index
                 fw.Position = indexOffset + 0x10;
                 bw.Write(dataOffset);
-
-                // Write file data
                 fw.Position = dataOffset;
                 byte[] fileData = File.ReadAllBytes(file.FullName);
                 bw.Write(fileData);
-
-                // Advance to the next data offset, aligned to 4 bytes
                 dataOffset += (uint)fileData.Length;
                 indexOffset += 0x18;
                 Logger.UpdateBar();

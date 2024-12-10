@@ -9,13 +9,13 @@ using Utility.Compression;
 
 namespace ArcFormats.Kirikiri
 {
-    public class XP3
+    public class XP3 : ArchiveFormat
     {
         public static UserControl PackExtraOptions = new PackXP3Options("1/2");
 
         private static readonly byte[] Magic = Utils.HexStringToByteArray("5850330d0a200a1a8b6701");
 
-        private class Entry
+        private class Xp3Entry
         {
             internal ulong UnpackedSize { get; set; }
             internal ulong PackedSize { get; set; }
@@ -25,7 +25,7 @@ namespace ArcFormats.Kirikiri
             internal string FullPath { get; set; }
         }
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -78,7 +78,7 @@ namespace ArcFormats.Kirikiri
                     Logger.ErrorInvalidArchive();
                     return;
             }
-            List<Entry> entries = new List<Entry>();
+            List<Xp3Entry> entries = new List<Xp3Entry>();
             using (MemoryStream ms = new MemoryStream(Index))
             using (BinaryReader brIndex = new BinaryReader(ms))
             {
@@ -89,7 +89,7 @@ namespace ArcFormats.Kirikiri
                     {
                         Logger.ErrorInvalidArchive();
                     }
-                    Entry entry = new Entry();
+                    Xp3Entry entry = new Xp3Entry();
                     long thisRemaining = brIndex.ReadInt64();
                     long thisPos = brIndex.BaseStream.Position;
                     long nextPos = thisPos + thisRemaining;
@@ -134,7 +134,7 @@ NextEntry:
                 }
             }
             Logger.InitBar(entries.Count);
-            foreach (Entry entry in entries)
+            foreach (Xp3Entry entry in entries)
             {
                 fs.Position = entry.DataOffset;
 
@@ -154,7 +154,7 @@ NextEntry:
             br.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             FileStream xp3Stream = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(xp3Stream);

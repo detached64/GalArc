@@ -61,15 +61,6 @@ namespace ArcFormats.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Error: Specified class not found. 的本地化字符串。
-        /// </summary>
-        internal static string logErrorClassNotFound {
-            get {
-                return ResourceManager.GetString("logErrorClassNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Path contains invalid characters. Switching the encoding in the settings might work. 的本地化字符串。
         /// </summary>
         internal static string logErrorContainsInvalid {
@@ -115,29 +106,11 @@ namespace ArcFormats.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Error: Specified pack method not found. 的本地化字符串。
-        /// </summary>
-        internal static string logErrorPackMethodNotFound {
-            get {
-                return ResourceManager.GetString("logErrorPackMethodNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Failed to read index. 的本地化字符串。
         /// </summary>
         internal static string logErrorReadIndexFailed {
             get {
                 return ResourceManager.GetString("logErrorReadIndexFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Error: Specified unpack method not found. 的本地化字符串。
-        /// </summary>
-        internal static string logErrorUnpackMethodNotFound {
-            get {
-                return ResourceManager.GetString("logErrorUnpackMethodNotFound", resourceCulture);
             }
         }
         

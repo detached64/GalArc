@@ -4,9 +4,9 @@ using System.Text;
 
 namespace ArcFormats.Ai5Win
 {
-    public class VSD
+    public class VSD : ArchiveFormat
     {
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);

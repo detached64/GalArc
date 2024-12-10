@@ -22,7 +22,7 @@ namespace ArcFormats.RPGMaker
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Config.Version = this.combVersion.Text;
+            ArcSettings.Version = this.combVersion.Text;
             if (this.combVersion.Text == "1")
             {
                 this.txtSeed.Visible = false;

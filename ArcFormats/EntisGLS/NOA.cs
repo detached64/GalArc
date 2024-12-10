@@ -7,7 +7,7 @@ using Utility;
 
 namespace ArcFormats.EntisGLS
 {
-    public class NOA
+    public class NOA : ArchiveFormat
     {
         private static readonly byte[] Magic1 = Utils.HexStringToByteArray("456e7469731a00000004000200000000");
 
@@ -64,7 +64,7 @@ namespace ArcFormats.EntisGLS
             public ushort Year { get; set; }
         }
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -121,7 +121,7 @@ namespace ArcFormats.EntisGLS
                 entry.ExtraInfoLen = br.ReadUInt32();
                 entry.ExtraInfo = Encoding.ASCII.GetString(br.ReadBytes((int)entry.ExtraInfoLen));
                 entry.NameLen = br.ReadUInt32();
-                entry.Name = Config.Encoding.GetString(br.ReadBytes((int)(entry.NameLen - 1)));
+                entry.Name = ArcSettings.Encoding.GetString(br.ReadBytes((int)(entry.NameLen - 1)));
                 br.ReadByte();
                 pos = fs.Position;
                 fs.Seek(entry.Offset, SeekOrigin.Begin);
@@ -138,7 +138,7 @@ namespace ArcFormats.EntisGLS
             br.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             //string jsonPath = folderPath + "\\" + "TimestampInfo.json";
             FileStream fw = File.Create(filePath);
@@ -187,7 +187,7 @@ namespace ArcFormats.EntisGLS
                                    //entry header
             bw.Write(Encoding.ASCII.GetBytes("DirEntry"));
             //compute index size
-            long indexSize = 4 + Utils.GetNameLengthSum(files, Config.Encoding) + fileCount + (40 * fileCount);
+            long indexSize = 4 + Utils.GetNameLengthSum(files, ArcSettings.Encoding) + fileCount + (40 * fileCount);
             bw.Write(indexSize);
             bw.Write(fileCount);
 
@@ -210,8 +210,8 @@ namespace ArcFormats.EntisGLS
                 //bw.Write(time[i].year);
                 bw.Write((long)0);//timestamp disabled
                 bw.Write(0);
-                bw.Write(Config.Encoding.GetBytes(Path.GetFileName(file)).Length + 1);
-                bw.Write(Config.Encoding.GetBytes(Path.GetFileName(file)));
+                bw.Write(ArcSettings.Encoding.GetBytes(Path.GetFileName(file)).Length + 1);
+                bw.Write(ArcSettings.Encoding.GetBytes(Path.GetFileName(file)));
                 bw.Write('\0');
                 i++;
             }

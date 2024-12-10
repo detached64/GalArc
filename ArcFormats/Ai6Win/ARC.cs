@@ -9,21 +9,16 @@ using Utility.Extensions;
 
 namespace ArcFormats.Ai6Win
 {
-    public class ARC
+    public class ARC : ArchiveFormat
     {
         public static UserControl PackExtraOptions = new PackARCOptions("1/2/3");
 
-        private class Entry
+        private class ArcEntry : PackedEntry
         {
-            public string Name { get; set; }
             public string FullPath { get; set; }
-            public uint PackedSize { get; set; }
-            public uint UnpackedSize { get; set; }
-            public uint Offset { get; set; }
-            public bool IsPacked { get; set; }
         }
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             List<Action> actions = new List<Action>
             {
@@ -44,9 +39,9 @@ namespace ArcFormats.Ai6Win
             Logger.ErrorInvalidArchive();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
-            switch (Config.Version)
+            switch (ArcSettings.Version)
             {
                 case "1":
                     PackV1(folderPath, filePath);
@@ -66,10 +61,10 @@ namespace ArcFormats.Ai6Win
             BinaryReader br = new BinaryReader(fs);
             int fileCount = br.ReadInt32();
 
-            List<Entry> l = new List<Entry>();
+            List<ArcEntry> l = new List<ArcEntry>();
             for (int i = 0; i < fileCount; i++)
             {
-                Entry entry = new Entry();
+                ArcEntry entry = new ArcEntry();
                 entry.Name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(32)).TrimEnd('\0');
                 if (entry.Name.ContainsInvalidChars())
                 {
@@ -77,7 +72,7 @@ namespace ArcFormats.Ai6Win
                 }
                 entry.FullPath = Path.Combine(folderPath, entry.Name);
                 entry.Offset = br.ReadUInt32();
-                entry.PackedSize = br.ReadUInt32();
+                entry.Size = br.ReadUInt32();
                 entry.IsPacked = false;
                 l.Add(entry);
             }
@@ -99,10 +94,10 @@ namespace ArcFormats.Ai6Win
             BinaryReader br = new BinaryReader(fs);
             int fileCount = br.ReadInt32();
 
-            List<Entry> l = new List<Entry>();
+            List<ArcEntry> l = new List<ArcEntry>();
             for (int i = 0; i < fileCount; i++)
             {
-                Entry entry = new Entry();
+                ArcEntry entry = new ArcEntry();
                 byte[] nameBuf = br.ReadBytes(260);
                 int nameLen = Array.IndexOf<byte>(nameBuf, 0);
                 if (nameLen == -1)
@@ -122,10 +117,10 @@ namespace ArcFormats.Ai6Win
                     throw new Exception();
                 }
                 entry.FullPath = Path.Combine(folderPath, entry.Name);
-                entry.PackedSize = BigEndian.Convert(br.ReadUInt32());
+                entry.Size = BigEndian.Convert(br.ReadUInt32());
                 entry.UnpackedSize = BigEndian.Convert(br.ReadUInt32());
                 entry.Offset = BigEndian.Convert(br.ReadUInt32());
-                entry.IsPacked = entry.PackedSize != entry.UnpackedSize;
+                entry.IsPacked = entry.Size != entry.UnpackedSize;
                 l.Add(entry);
             }
 
@@ -144,12 +139,12 @@ namespace ArcFormats.Ai6Win
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
             int indexSize = br.ReadInt32();
-            List<Entry> l = new List<Entry>();
+            List<ArcEntry> l = new List<ArcEntry>();
 
             while (fs.Position < 4 + indexSize)
             {
                 int nameLen = br.ReadByte();
-                Entry entry = new Entry();
+                ArcEntry entry = new ArcEntry();
                 byte[] nameBuf = br.ReadBytes(nameLen);
                 byte key = (byte)nameLen;
                 for (int i = 0; i < nameBuf.Length; i++)
@@ -162,10 +157,10 @@ namespace ArcFormats.Ai6Win
                     throw new Exception();
                 }
                 entry.FullPath = Path.Combine(folderPath, entry.Name);
-                entry.PackedSize = BigEndian.Convert(br.ReadUInt32());
+                entry.Size = BigEndian.Convert(br.ReadUInt32());
                 entry.UnpackedSize = BigEndian.Convert(br.ReadUInt32());
                 entry.Offset = BigEndian.Convert(br.ReadUInt32());
-                entry.IsPacked = entry.PackedSize != entry.UnpackedSize;
+                entry.IsPacked = entry.Size != entry.UnpackedSize;
                 l.Add(entry);
             }
 
@@ -179,11 +174,11 @@ namespace ArcFormats.Ai6Win
             br.Dispose();
         }
 
-        private static void ExtractData(List<Entry> l, BinaryReader br)
+        private static void ExtractData(List<ArcEntry> l, BinaryReader br)
         {
             for (int i = 0; i < l.Count; i++)
             {
-                byte[] data = br.ReadBytes((int)l[i].PackedSize);
+                byte[] data = br.ReadBytes((int)l[i].Size);
                 if (l[i].IsPacked)
                 {
                     data = LzssHelper.Decompress(data);

@@ -79,6 +79,7 @@
     <Compile Include="AnimeGameSystem\UnpackDATOptions.Designer.cs">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="ArchiveResource.cs" />
     <Compile Include="Artemis\PFS.cs" />
     <Compile Include="BiShop\BSA.cs" />
     <Compile Include="Cmvs\CmvsMD5.cs" />
@@ -88,8 +89,6 @@
     <Compile Include="EmonEngine\EmonUtils.cs" />
     <Compile Include="EntisGLS\NOA.cs" />
     <Compile Include="Eushully\ALF.cs" />
-    <Compile Include="Global\Config.cs" />
-    <Compile Include="Global\Worker.cs" />
     <Compile Include="GsPack\DAT.cs" />
     <Compile Include="GsPack\PAK.cs" />
     <Compile Include="GsPack\UnpackPAKOptions.cs">

@@ -90,7 +90,5 @@ namespace ArcFormats.EmonEngine
             }
             Buffer.BlockCopy(table, 0, buffer, offset, length);
         }
-
-
     }
 }

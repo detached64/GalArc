@@ -10,15 +10,15 @@ using Utility.Extensions;
 
 namespace ArcFormats.AdvHD
 {
-    public class ARC
+    public class ARC : ArchiveFormat
     {
         public static UserControl UnpackExtraOptions = new UnpackARCOptions();
 
         public static UserControl PackExtraOptions = new PackARCOptions();
 
-        private static readonly string[] EncryptedFileExtV1 = { "wsc", "scr" };
+        private readonly string[] EncryptedFileExtV1 = { "wsc", "scr" };
 
-        private static readonly string[] EncryptedFileExtV2 = { "ws2", "json" };
+        private readonly string[] EncryptedFileExtV2 = { "ws2", "json" };
 
         private class HeaderV1
         {
@@ -33,15 +33,7 @@ namespace ArcFormats.AdvHD
             public uint IndexOffset { get; set; }
         }
 
-        private class EntryV1
-        {
-            public string FileName { get; set; }
-            public uint FileSize { get; set; }
-            public uint Offset { get; set; }
-            public string FilePath { get; set; }
-        }
-
-        private static void arcV1_unpack(string filePath, string folderPath)
+        private void arcV1_unpack(string filePath, string folderPath)
         {
             HeaderV1 header = new HeaderV1();
             FileStream fs = File.OpenRead(filePath);
@@ -67,20 +59,20 @@ namespace ArcFormats.AdvHD
             {
                 for (int j = 0; j < typeHeaders[i].FileCount; j++)
                 {
-                    EntryV1 index = new EntryV1();
-                    index.FileName = Encoding.ASCII.GetString(br.ReadBytes(13)).Replace("\0", string.Empty) + "." + typeHeaders[i].Extension;
-                    index.FileSize = br.ReadUInt32();
+                    Entry index = new Entry();
+                    index.Name = Encoding.ASCII.GetString(br.ReadBytes(13)).Replace("\0", string.Empty) + "." + typeHeaders[i].Extension;
+                    index.Size = br.ReadUInt32();
                     index.Offset = br.ReadUInt32();
                     long pos = fs.Position;
-                    index.FilePath = Path.Combine(folderPath, index.FileName);
+                    index.Path = Path.Combine(folderPath, index.Name);
                     fs.Seek(index.Offset, SeekOrigin.Begin);
-                    byte[] buffer = br.ReadBytes((int)index.FileSize);
-                    if (UnpackARCOptions.toDecryptScripts && IsScriptFile(Path.GetExtension(index.FilePath), "1"))
+                    byte[] buffer = br.ReadBytes((int)index.Size);
+                    if (UnpackARCOptions.toDecryptScripts && IsScriptFile(Path.GetExtension(index.Path), "1"))
                     {
-                        Logger.Debug(string.Format(Resources.logTryDecScr, index.FileName));
+                        Logger.Debug(string.Format(Resources.logTryDecScr, index.Name));
                         DecryptScript(buffer);
                     }
-                    File.WriteAllBytes(index.FilePath, buffer);
+                    File.WriteAllBytes(index.Path, buffer);
                     buffer = null;
                     fs.Seek(pos, SeekOrigin.Begin);
                     Logger.UpdateBar();
@@ -90,7 +82,7 @@ namespace ArcFormats.AdvHD
             br.Dispose();
         }
 
-        private static void arcV1_pack(string folderPath, string filePath)
+        private void arcV1_pack(string folderPath, string filePath)
         {
             HashSet<string> uniqueExtension = new HashSet<string>();
 
@@ -166,21 +158,13 @@ namespace ArcFormats.AdvHD
             public uint EntrySize { get; set; }
         }
 
-        private class EntryV2
-        {
-            public uint FileSize { get; set; }
-            public uint Offset { get; set; }
-            public string FileName { get; set; }
-            public string FilePath { get; set; }
-        }
-
-        private static void arcV2_unpack(string filePath, string folderPath)
+        private void arcV2_unpack(string filePath, string folderPath)
         {
             //init
             HeaderV2 header = new HeaderV2();
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br1 = new BinaryReader(fs);
-            List<EntryV2> l = new List<EntryV2>();
+            List<Entry> l = new List<Entry>();
 
             Directory.CreateDirectory(folderPath);
 
@@ -190,24 +174,24 @@ namespace ArcFormats.AdvHD
 
             for (int i = 0; i < header.FileCount; i++)
             {
-                EntryV2 entry = new EntryV2();
-                entry.FileSize = br1.ReadUInt32();
+                Entry entry = new Entry();
+                entry.Size = br1.ReadUInt32();
                 entry.Offset = br1.ReadUInt32() + 8 + header.EntrySize;
-                entry.FileName = br1.ReadCString(Encoding.Unicode);
-                entry.FilePath = Path.Combine(folderPath, entry.FileName);
+                entry.Name = br1.ReadCString(Encoding.Unicode);
+                entry.Path = Path.Combine(folderPath, entry.Name);
 
                 l.Add(entry);
             }
 
             foreach (var entry in l)
             {
-                byte[] buffer = br1.ReadBytes((int)entry.FileSize);
-                if (UnpackARCOptions.toDecryptScripts && IsScriptFile(Path.GetExtension(entry.FilePath), "2"))
+                byte[] buffer = br1.ReadBytes((int)entry.Size);
+                if (UnpackARCOptions.toDecryptScripts && IsScriptFile(Path.GetExtension(entry.Path), "2"))
                 {
-                    Logger.Debug(string.Format(Resources.logTryDecScr, entry.FileName));
+                    Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
                     DecryptScript(buffer);
                 }
-                File.WriteAllBytes(entry.FilePath, buffer);
+                File.WriteAllBytes(entry.Path, buffer);
                 buffer = null;
                 Logger.UpdateBar();
             }
@@ -215,10 +199,10 @@ namespace ArcFormats.AdvHD
             br1.Dispose();
         }
 
-        private static void arcV2_pack(string folderPath, string filePath)
+        private void arcV2_pack(string folderPath, string filePath)
         {
             HeaderV2 header = new HeaderV2();
-            List<EntryV2> l = new List<EntryV2>();
+            List<Entry> l = new List<Entry>();
             uint sizeToNow = 0;
 
             //make header
@@ -230,14 +214,14 @@ namespace ArcFormats.AdvHD
 
             foreach (FileInfo file in files)
             {
-                EntryV2 entry = new EntryV2();
-                entry.FileName = file.Name;
-                entry.FileSize = (uint)file.Length;
+                Entry entry = new Entry();
+                entry.Name = file.Name;
+                entry.Size = (uint)file.Length;
                 entry.Offset = sizeToNow;
-                sizeToNow += entry.FileSize;
+                sizeToNow += entry.Size;
                 l.Add(entry);
 
-                int nameLength = entry.FileName.Length;
+                int nameLength = entry.Name.Length;
                 header.EntrySize = header.EntrySize + (uint)nameLength * 2 + 2 + 8;
             }
 
@@ -252,9 +236,9 @@ namespace ArcFormats.AdvHD
                     //write entry
                     foreach (var file in l)
                     {
-                        bw.Write(file.FileSize);
+                        bw.Write(file.Size);
                         bw.Write(file.Offset);
-                        bw.Write(Encoding.Unicode.GetBytes(file.FileName));
+                        bw.Write(Encoding.Unicode.GetBytes(file.Name));
                         bw.Write('\0');
                         bw.Write('\0');
                     }
@@ -276,15 +260,18 @@ namespace ArcFormats.AdvHD
             }
         }
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             char a;
+            int fileCount = 0;
             using (FileStream fs = File.OpenRead(filePath))
             {
                 using (BinaryReader br = new BinaryReader(fs))
                 {
                     fs.Position = 6;
                     a = br.ReadChar();
+                    fs.Position = 0;
+                    fileCount = br.ReadInt32();
                 }
             }
 
@@ -293,16 +280,20 @@ namespace ArcFormats.AdvHD
                 Logger.ShowVersion("arc", 1);
                 arcV1_unpack(filePath, folderPath);
             }
-            else
+            else if (fileCount < 100000 && fileCount > 0)
             {
                 Logger.ShowVersion("arc", 2);
                 arcV2_unpack(filePath, folderPath);
             }
+            else
+            {
+                Logger.ErrorInvalidArchive();
+            }
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
-            if (Config.Version == "1")
+            if (ArcSettings.Version == "1")
             {
                 arcV1_pack(folderPath, filePath);
             }
@@ -312,7 +303,7 @@ namespace ArcFormats.AdvHD
             }
         }
 
-        private static bool IsScriptFile(string extension, string version)
+        private bool IsScriptFile(string extension, string version)
         {
             string trimed = extension.TrimStart('.');
             switch (version)
@@ -326,7 +317,7 @@ namespace ArcFormats.AdvHD
             }
         }
 
-        private static void DecryptScript(byte[] data)
+        private void DecryptScript(byte[] data)
         {
             for (int i = 0; i < data.Length; ++i)
             {
@@ -334,7 +325,7 @@ namespace ArcFormats.AdvHD
             }
         }
 
-        private static void EncryptScript(byte[] data)
+        private void EncryptScript(byte[] data)
         {
             for (int i = 0; i < data.Length; ++i)
             {

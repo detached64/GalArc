@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ArcFormats.AdvHD
 {
-    public class PNA
+    public class PNA : ArchiveFormat
     {
         private class Header
         {
@@ -31,7 +31,7 @@ namespace ArcFormats.AdvHD
             internal uint FileSize { get; set; }
         }
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             Header header = new Header();
             FileStream fs = File.OpenRead(filePath);
@@ -81,7 +81,7 @@ namespace ArcFormats.AdvHD
             br.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             string spath = folderPath + ".pna";
             string tpath = filePath;

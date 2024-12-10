@@ -189,4 +189,13 @@
   <data name="columnExtLink" xml:space="preserve">
     <value>Extension Website</value>
   </data>
+  <data name="logErrorUnpackMethodNotFound" xml:space="preserve">
+    <value>Error: Specified unpack method not found.</value>
+  </data>
+  <data name="logErrorPackMethodNotFound" xml:space="preserve">
+    <value>Error: Specified pack method not found.</value>
+  </data>
+  <data name="logErrorClassNotFound" xml:space="preserve">
+    <value>Error: Specified class not found.</value>
+  </data>
 </root>

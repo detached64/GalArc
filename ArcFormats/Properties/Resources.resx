@@ -97,15 +97,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="logErrorUnpackMethodNotFound" xml:space="preserve">
-    <value>Error: Specified unpack method not found.</value>
-  </data>
-  <data name="logErrorPackMethodNotFound" xml:space="preserve">
-    <value>Error: Specified pack method not found.</value>
-  </data>
-  <data name="logErrorClassNotFound" xml:space="preserve">
-    <value>Error: Specified class not found.</value>
-  </data>
   <data name="logTryDecScr" xml:space="preserve">
     <value>Try to decrypt: {0}……</value>
   </data>

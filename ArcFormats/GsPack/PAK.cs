@@ -10,16 +10,9 @@ using Utility.Extensions;
 
 namespace ArcFormats.GsPack
 {
-    internal class PAK
+    public class PAK : ArchiveFormat
     {
         public static UserControl UnpackExtraOptions = new UnpackPAKOptions();
-
-        private class Entry
-        {
-            public string Name { get; set; }
-            public uint Size { get; set; }
-            public long Offset { get; set; }
-        }
 
         private Dictionary<string, string> NameExtensionPairs => new Dictionary<string, string>
         {
@@ -32,9 +25,9 @@ namespace ArcFormats.GsPack
             { "scr" , ".scw" }
         };
 
-        protected string[] ValidMagics => new string[] { "DataPack5", "GsPack5", "GsPack4" };
+        protected readonly string[] ValidMagics = new string[] { "DataPack5", "GsPack5", "GsPack4" };
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -98,7 +91,7 @@ namespace ArcFormats.GsPack
                     var entry = new Entry
                     {
                         Name = name,
-                        Offset = dataOffset + BitConverter.ToUInt32(index, currentOffset + 0x40),
+                        Offset = (uint)(dataOffset + BitConverter.ToUInt32(index, currentOffset + 0x40)),
                         Size = BitConverter.ToUInt32(index, currentOffset + 0x44)
                     };
                     entries.Add(entry);

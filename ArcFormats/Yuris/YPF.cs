@@ -10,37 +10,39 @@ using Utility.Extensions;
 
 namespace ArcFormats.Yuris
 {
-    public class YPF
+    public class YPF : ArchiveFormat
     {
         public static UserControl UnpackExtraOptions = new UnpackYPFOptions();
 
-        internal class Entry
+        class YpfEntry : PackedEntry
         {
             public int NameLen { get; set; }
-            public string Name { get; set; }
-            public string Path { get; set; }
             public byte[] Data { get; set; }
-            public uint UnpackedSize { get; set; }
-            public uint PackedSize { get; set; }
-            public uint Offset { get; set; }
-            public bool IsPacked { get; set; }
         }
 
-        internal class Scheme
+        class Scheme
         {
             public byte Key { get; set; }
             public byte[] Table { get; set; }
             public int ExtraLen { get; set; }
             public byte[] ScriptKeyBytes { get; set; }
             public uint ScriptKey { get; set; }
+
+            public Scheme()
+            {
+                Key = 0;
+                ScriptKeyBytes = new byte[] { };
+                Table = tables[0];
+                ExtraLen = extraLens[0];
+            }
         }
 
-        private static List<Entry> entries = new List<Entry>();
-        private static Scheme scheme = new Scheme();
+        private List<YpfEntry> entries = new List<YpfEntry>();
+        private Scheme scheme = new Scheme();
 
-        private static bool isFirstGuessYpf = true;
-        private static bool isFirstGuessYst = true;
-        private static string FolderPath { get; set; }
+        private bool isFirstGuessYpf = true;
+        private bool isFirstGuessYst = true;
+        private string folderPath;
 
         // most freqently used combination (as far as I guess) : table3 , extraLen = 8
         private static readonly byte[] Table1 = { 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
@@ -51,7 +53,7 @@ namespace ArcFormats.Yuris
         private static readonly string[] tableNames = { "Table3", "Table2", "Table1" };
         private static readonly List<int> extraLens = new List<int> { 8, 4, 0 };
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -60,8 +62,7 @@ namespace ArcFormats.Yuris
                 Logger.ErrorInvalidArchive();
             }
 
-            FolderPath = folderPath;
-            ResetAll();
+            this.folderPath = folderPath;
 
             uint version = br.ReadUInt32();
             int fileCount = br.ReadInt32();
@@ -73,10 +74,10 @@ namespace ArcFormats.Yuris
 
             Directory.CreateDirectory(folderPath);
 
-            foreach (Entry entry in entries)
+            foreach (YpfEntry entry in entries)
             {
                 fs.Position = entry.Offset;
-                entry.Data = br.ReadBytes((int)entry.PackedSize);
+                entry.Data = br.ReadBytes((int)entry.Size);
                 if (entry.IsPacked)
                 {
                     entry.Data = ZlibHelper.Decompress(entry.Data);
@@ -96,7 +97,7 @@ namespace ArcFormats.Yuris
             br.Dispose();
         }
 
-        private static void TryReadIndex(BinaryReader br, uint version, int fileCount)
+        private void TryReadIndex(BinaryReader br, uint version, int fileCount)
         {
             foreach (var table in tables)
             {
@@ -139,14 +140,14 @@ namespace ArcFormats.Yuris
             Logger.Error("Failed to read index.");
         }
 
-        private static void ReadIndex(BinaryReader br, int fileCount)
+        private void ReadIndex(BinaryReader br, int fileCount)
         {
             br.BaseStream.Position = 32;
 
             for (int i = 0; i < fileCount; i++)
             {
                 br.BaseStream.Position += 4;
-                Entry entry = new Entry();
+                YpfEntry entry = new YpfEntry();
                 entry.NameLen = DecryptNameLength((byte)(br.ReadByte() ^ 0xff));
                 byte[] name = br.ReadBytes(entry.NameLen);
                 DecryptName(name);
@@ -155,18 +156,18 @@ namespace ArcFormats.Yuris
                 {
                     throw new Exception();
                 }
-                entry.Path = Path.Combine(FolderPath, entry.Name);
+                entry.Path = Path.Combine(folderPath, entry.Name);
                 br.BaseStream.Position++;
                 entry.IsPacked = br.ReadByte() != 0;
                 entry.UnpackedSize = br.ReadUInt32();
-                entry.PackedSize = br.ReadUInt32();
+                entry.Size = br.ReadUInt32();
                 entry.Offset = br.ReadUInt32();
                 br.BaseStream.Position += scheme.ExtraLen;
                 entries.Add(entry);
             }
         }
 
-        private static int DecryptNameLength(byte len)
+        private int DecryptNameLength(byte len)
         {
             int pos = Array.IndexOf(scheme.Table, len);
             if (pos == -1)
@@ -183,7 +184,7 @@ namespace ArcFormats.Yuris
             }
         }
 
-        private static void DecryptName(byte[] name)
+        private void DecryptName(byte[] name)
         {
             if (isFirstGuessYpf)
             {
@@ -196,7 +197,7 @@ namespace ArcFormats.Yuris
             }
         }
 
-        private static byte[] TryDecryptScript(byte[] script)
+        private byte[] TryDecryptScript(byte[] script)
         {
             byte[] result = new byte[] { };
             try
@@ -222,7 +223,7 @@ namespace ArcFormats.Yuris
             return result;
         }
 
-        private static void FindXorKey(byte[] script, string flag)
+        private void FindXorKey(byte[] script, string flag)
         {
             if (flag == "old")
             {
@@ -249,7 +250,7 @@ namespace ArcFormats.Yuris
             }
         }
 
-        private static byte[] DecryptNewScript(byte[] script, uint len1, uint len2, uint len3, uint len4)
+        private byte[] DecryptNewScript(byte[] script, uint len1, uint len2, uint len3, uint len4)
         {
             byte[] result = new byte[script.Length];
             Array.Copy(script, result, script.Length);
@@ -276,7 +277,7 @@ namespace ArcFormats.Yuris
             return result;
         }
 
-        private static byte[] DecryptOldScript(byte[] script, uint len1, uint len2)
+        private byte[] DecryptOldScript(byte[] script, uint len1, uint len2)
         {
             byte[] result = new byte[script.Length];
             Array.Copy(script, result, script.Length);
@@ -293,18 +294,7 @@ namespace ArcFormats.Yuris
             return result;
         }
 
-        private static void ResetAll()
-        {
-            scheme.Key = 0;
-            scheme.ScriptKeyBytes = new byte[] { };
-            scheme.Table = tables[0];
-            scheme.ExtraLen = extraLens[0];
-            entries.Clear();
-            isFirstGuessYpf = true;
-            isFirstGuessYst = true;
-        }
-
-        private static void Reset()
+        private void Reset()
         {
             entries.Clear();
             isFirstGuessYpf = true;

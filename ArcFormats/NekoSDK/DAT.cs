@@ -2,38 +2,29 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Utility;
 using Utility.Compression;
 using Utility.Extensions;
 
 namespace ArcFormats.NekoSDK
 {
-    public class DAT
+    public class DAT : ArchiveFormat
     {
-        private class Entry
-        {
-            public string Name { get; set; }
-            public uint Offset { get; set; }
-            public uint PackedSize { get; set; }
-            public uint UnpackedSize { get; set; }
-        }
-
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
             fs.Position = 0x88;
             int fileCount = br.ReadInt32() ^ 0xCACACA / 0x8c - 1;       // 0x8c bytes of 0x00 attached
             fs.Position = 0;
-            var entries = new List<Entry>(fileCount);
+            var entries = new List<PackedEntry>(fileCount);
             long pos = 0x80;
             for (int i = 0; i < fileCount; i++)
             {
-                Entry entry = new Entry();
+                PackedEntry entry = new PackedEntry();
                 entry.Name = br.ReadCString();                          // sometimes the 0x80 namebuf contains invalid characters
                 fs.Position = pos;                                      // example: 優遇接待#～孤島と6人のスク水っ娘たち～ アニメーション追加版 パケ版 - bgm.dat
                 entry.UnpackedSize = br.ReadUInt32() ^ 0xCACACA;
-                entry.PackedSize = br.ReadUInt32() ^ 0xCACACA;
+                entry.Size = br.ReadUInt32() ^ 0xCACACA;
                 entry.Offset = br.ReadUInt32() ^ 0xCACACA;
                 entries.Add(entry);
                 pos += 0x8C;
@@ -43,7 +34,7 @@ namespace ArcFormats.NekoSDK
             foreach (var entry in entries)
             {
                 fs.Position = entry.Offset;
-                byte[] data = br.ReadBytes((int)entry.PackedSize);
+                byte[] data = br.ReadBytes((int)entry.Size);
                 data = LzssHelper.Decompress(data);
                 string fileName = Path.Combine(folderPath, entry.Name);
                 File.WriteAllBytes(fileName, data);
@@ -54,7 +45,7 @@ namespace ArcFormats.NekoSDK
             br.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);

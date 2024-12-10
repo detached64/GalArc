@@ -6,18 +6,11 @@ using Utility.Extensions;
 
 namespace ArcFormats.KID
 {
-    public class DAT
+    public class DAT : ArchiveFormat
     {
-        private static readonly string Magic = "LNK\0";
+        private readonly string Magic = "LNK\0";
 
-        private class Entry
-        {
-            public uint Offset { get; set; }
-            public uint Size { get; set; }
-            public string Name { get; set; }
-        }
-
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -48,7 +41,7 @@ namespace ArcFormats.KID
             br.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);

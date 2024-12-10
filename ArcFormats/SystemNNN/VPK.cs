@@ -5,15 +5,9 @@ using System.Text;
 
 namespace ArcFormats.SystemNNN
 {
-    public class VPK
+    public class VPK : ArchiveFormat
     {
-        private class Entry
-        {
-            public uint Size { get; set; }
-            public string Path { get; set; }
-        }
-
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             //init
             string vpkPath;
@@ -70,7 +64,7 @@ namespace ArcFormats.SystemNNN
             br2.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             //init
             int sizeToNow = 0;

@@ -9,16 +9,9 @@ using Utility.Compression;
 
 namespace ArcFormats.Seraph
 {
-    public class DAT
+    public class DAT : ArchiveFormat
     {
         public static UserControl UnpackExtraOptions = new UnpackDATOptions();
-
-        private class Entry
-        {
-            public uint Offset { get; set; }
-            public uint Size { get; set; }
-            public string Name { get; set; }
-        }
 
         private class Group
         {
@@ -27,11 +20,11 @@ namespace ArcFormats.Seraph
             public List<Entry> Entries { get; set; }
         }
 
-        private static readonly string ArchPacName = "ArchPac.dat";
+        private readonly string ArchPacName = "ArchPac.dat";
 
-        private static readonly string ScnPacName = "ScnPac.dat";
+        private readonly string ScnPacName = "ScnPac.dat";
 
-        private static readonly string VoicePacName = @"^Voice(?:\d|pac)\.dat$";
+        private readonly string VoicePacName = @"^Voice(?:\d|pac)\.dat$";
 
         private List<Group> Groups { get; set; } = new List<Group>(0x40);
 
@@ -39,7 +32,7 @@ namespace ArcFormats.Seraph
 
         internal static SeraphScheme ImportedSchemes;
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             string name = Path.GetFileName(filePath);
             if (name.Equals(ArchPacName, StringComparison.OrdinalIgnoreCase))

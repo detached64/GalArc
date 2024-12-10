@@ -21,7 +21,7 @@ namespace ArcFormats.PJADV
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Config.Version = this.combVersion.Text;
+            ArcSettings.Version = this.combVersion.Text;
         }
 
         private void chkbxEncScr_CheckedChanged(object sender, EventArgs e)

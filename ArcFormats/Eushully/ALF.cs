@@ -8,25 +8,22 @@ using Utility.Extensions;
 
 namespace ArcFormats.Eushully
 {
-    public class ALF
+    public class ALF : ArchiveFormat
     {
-        private static readonly string IndexFileNameV5 = "SYS5INI.BIN";
+        private readonly string IndexFileNameV5 = "SYS5INI.BIN";
 
-        private static readonly string IndexFileMagicV5 = "S5IC502 ";
+        private readonly string IndexFileMagicV5 = "S5IC502 ";
 
-        private static readonly string IndexFileNameV4 = "sys4ini.bin";
+        private readonly string IndexFileNameV4 = "sys4ini.bin";
 
-        private static readonly string IndexFileMagicV4 = "S4IC415 ";
+        private readonly string IndexFileMagicV4 = "S4IC415 ";
 
-        private class Entry
+        private class AlfEntry : Entry
         {
-            public uint Offset { get; set; }
-            public uint Size { get; set; }
-            public string Name { get; set; }
             public int ArchiveIndex { get; set; }
         }
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             string indexPathV4 = Path.Combine(Path.GetDirectoryName(filePath), IndexFileNameV4);
             string indexPathV5 = Path.Combine(Path.GetDirectoryName(filePath), IndexFileNameV5);
@@ -44,7 +41,7 @@ namespace ArcFormats.Eushully
             }
         }
 
-        private static void UnpackV4(string filePath, string folderPath, string indexPath)
+        private void UnpackV4(string filePath, string folderPath, string indexPath)
         {
             byte[] index;
 
@@ -64,7 +61,7 @@ namespace ArcFormats.Eushully
             }
             List<string> archives = new List<string>();
             int archiveIndex;
-            List<Entry> entries = new List<Entry>();
+            List<AlfEntry> entries = new List<AlfEntry>();
 
             using (MemoryStream ms = new MemoryStream(index))
             {
@@ -92,7 +89,7 @@ namespace ArcFormats.Eushully
                         int fileCount = br.ReadInt32();
                         for (int i = 0; i < fileCount; i++)
                         {
-                            Entry entry = new Entry();
+                            AlfEntry entry = new AlfEntry();
                             entry.Name = Encoding.ASCII.GetString(br.ReadBytes(64)).TrimEnd('\0');
                             entry.ArchiveIndex = br.ReadInt32();
                             if (entry.ArchiveIndex != archiveIndex)
@@ -115,7 +112,7 @@ namespace ArcFormats.Eushully
             {
                 using (BinaryReader br = new BinaryReader(fs))
                 {
-                    foreach (Entry entry in entries)
+                    foreach (AlfEntry entry in entries)
                     {
                         fs.Position = entry.Offset;
                         byte[] buffer = br.ReadBytes((int)entry.Size);
@@ -128,7 +125,7 @@ namespace ArcFormats.Eushully
             index = null;
         }
 
-        private static void UnpackV5(string filePath, string folderPath, string indexPath)
+        private void UnpackV5(string filePath, string folderPath, string indexPath)
         {
             byte[] index;
 
@@ -148,7 +145,7 @@ namespace ArcFormats.Eushully
             }
             List<string> archives = new List<string>();
             int archiveIndex;
-            List<Entry> entries = new List<Entry>();
+            List<AlfEntry> entries = new List<AlfEntry>();
 
             using (MemoryStream ms = new MemoryStream(index))
             {
@@ -176,7 +173,7 @@ namespace ArcFormats.Eushully
                         int fileCount = br.ReadInt32();
                         for (int i = 0; i < fileCount; i++)
                         {
-                            Entry entry = new Entry();
+                            AlfEntry entry = new AlfEntry();
                             entry.Name = Encoding.Unicode.GetString(br.ReadBytes(128)).TrimEnd('\0');
                             entry.ArchiveIndex = br.ReadInt32();
                             if (entry.ArchiveIndex != archiveIndex)
@@ -198,7 +195,7 @@ namespace ArcFormats.Eushully
             {
                 using (BinaryReader br = new BinaryReader(fs))
                 {
-                    foreach (Entry entry in entries)
+                    foreach (AlfEntry entry in entries)
                     {
                         fs.Position = entry.Offset;
                         byte[] buffer = br.ReadBytes((int)entry.Size);

@@ -9,18 +9,11 @@ using Utility.Compression;
 
 namespace ArcFormats.NekoSDK
 {
-    public class PAK
+    public class PAK : ArchiveFormat
     {
-        private static readonly string Magic = "NEKOPACK";
+        private readonly string Magic = "NEKOPACK";
 
-        private class Entry
-        {
-            public string Name { get; set; }
-            public uint Offset { get; set; }
-            public uint Size { get; set; }
-        }
-
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -85,7 +78,7 @@ namespace ArcFormats.NekoSDK
             br.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);

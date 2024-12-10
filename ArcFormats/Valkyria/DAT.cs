@@ -7,16 +7,9 @@ using Utility.Extensions;
 
 namespace ArcFormats.Valkyria
 {
-    internal class DAT
+    public class DAT : ArchiveFormat
     {
-        private class Entry
-        {
-            public string Name { get; set; }
-            public long Offset { get; set; }
-            public uint Size { get; set; }
-        }
-
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -51,7 +44,7 @@ namespace ArcFormats.Valkyria
 
                     // Read offset and size
                     uint offset = br.ReadUInt32();
-                    entry.Offset = baseOffset + offset;
+                    entry.Offset = (uint)(baseOffset + offset);
                     entry.Size = br.ReadUInt32();
 
                     // Validate entry
@@ -108,7 +101,7 @@ namespace ArcFormats.Valkyria
         }
 
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);

@@ -7,11 +7,11 @@ using Utility;
 
 namespace ArcFormats.RPGMaker
 {
-    public class RGSSAD
+    public class RGSSAD : ArchiveFormat
     {
         public static UserControl PackExtraOptions = new PackRGSSOptions("1/3");
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             int version;
             using (FileStream fs = File.OpenRead(filePath))
@@ -43,9 +43,9 @@ namespace ArcFormats.RPGMaker
             }
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
-            switch (Config.Version)
+            switch (ArcSettings.Version)
             {
                 case "1":
                     rgssV1_pack(folderPath, filePath);
@@ -56,7 +56,7 @@ namespace ArcFormats.RPGMaker
             }
         }
 
-        private static void rgssV1_unpack(string filePath, string folderPath)
+        private void rgssV1_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -82,7 +82,7 @@ namespace ArcFormats.RPGMaker
             br.Dispose();
         }
 
-        private static void rgssV3_unpack(string filePath, string folderPath)
+        private void rgssV3_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -120,7 +120,7 @@ namespace ArcFormats.RPGMaker
             br.Dispose();
         }
 
-        private static void rgssV1_pack(string folderPath, string filePath)
+        private void rgssV1_pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -147,7 +147,7 @@ namespace ArcFormats.RPGMaker
             fw.Dispose();
         }
 
-        private static void rgssV3_pack(string folderPath, string filePath)
+        private void rgssV3_pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -193,7 +193,7 @@ namespace ArcFormats.RPGMaker
 
         }
 
-        private static byte[] DecryptName(byte[] data, KeyGen keygen)
+        private byte[] DecryptName(byte[] data, KeyGen keygen)
         {
             for (int i = 0; i < data.Length; i++)
             {
@@ -202,7 +202,7 @@ namespace ArcFormats.RPGMaker
             return data;
         }
 
-        private static byte[] DecryptName(byte[] data, uint key)
+        private byte[] DecryptName(byte[] data, uint key)
         {
             for (int i = 0; i < data.Length; i++)
             {
@@ -211,7 +211,7 @@ namespace ArcFormats.RPGMaker
             return data;
         }
 
-        private static void DecryptData(byte[] data, KeyGen keygen)
+        private void DecryptData(byte[] data, KeyGen keygen)
         {
             uint key = keygen.Compute();
             for (int i = 0; i < data.Length;)

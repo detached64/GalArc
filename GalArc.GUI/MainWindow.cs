@@ -205,6 +205,7 @@ namespace GalArc
                     if (e.Node.Text == selectedNodeUnpack?.Text && e.Node.Parent.Text == selectedNodeUnpack.Parent.Text)
                     {
                         selectedNodeUnpack = e.Node;
+                        GetExtraOptions(selectedNodeUnpack, "UnpackExtraOptions");
                         return;
                     }
 
@@ -225,6 +226,7 @@ namespace GalArc
                     if (e.Node.Text == selectedNodePack?.Text && e.Node.Parent.Text == selectedNodePack.Parent.Text)
                     {
                         selectedNodePack = e.Node;
+                        GetExtraOptions(selectedNodePack, "PackExtraOptions");
                         return;
                     }
 
@@ -498,7 +500,10 @@ namespace GalArc
 
                 try
                 {
-                    await Task.Run(() => ArchivePackager.InitUnpack(this.txtInputPath.Text, this.txtOutputPath.Text));
+                    using (ArchivePackager packager = new ArchivePackager(this.txtInputPath.Text, this.txtOutputPath.Text))
+                    {
+                        await Task.Run(() => packager.UnpackOne());
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -535,7 +540,10 @@ namespace GalArc
 
                 try
                 {
-                    await Task.Run(() => ArchivePackager.InitPack(this.txtInputPath.Text, this.txtOutputPath.Text));
+                    using (ArchivePackager packager = new ArchivePackager(this.txtInputPath.Text, this.txtOutputPath.Text))
+                    {
+                        await Task.Run(() => packager.Pack());
+                    }
                 }
                 catch (Exception ex)
                 {

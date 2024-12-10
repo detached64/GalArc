@@ -5,11 +5,11 @@ using Utility;
 
 namespace ArcFormats.Palette
 {
-    public class PAK
+    public class PAK : ArchiveFormat
     {
-        private static readonly byte[] Magic = Utils.HexStringToByteArray("055041434b32");
+        private readonly byte[] Magic = Utils.HexStringToByteArray("055041434b32");
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -44,7 +44,7 @@ namespace ArcFormats.Palette
             br.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             FileStream fs = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fs);

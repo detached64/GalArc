@@ -9,17 +9,11 @@ using Utility.Extensions;
 
 namespace ArcFormats.Triangle
 {
-    public class CGF
+    public class CGF : ArchiveFormat
     {
         public static UserControl PackExtraOptions = new VersionOnly("1");
 
-        private class Entry
-        {
-            internal string Name { get; set; }
-            internal uint Offset { get; set; }
-        }
-
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -46,19 +40,19 @@ namespace ArcFormats.Triangle
             }
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
-            if (Config.Version == "1")
+            if (ArcSettings.Version == "1")
             {
                 cgfV1_pack(folderPath, filePath);
             }
-            else if (Config.Version == "2")
+            else if (ArcSettings.Version == "2")
             {
-
+                throw new NotImplementedException();
             }
         }
 
-        private static void cgfV1_unpack(string filePath, string folderPath)
+        private void cgfV1_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -92,7 +86,7 @@ namespace ArcFormats.Triangle
             br.Dispose();
         }
 
-        private static void cgfV1_pack(string folderPath, string filePath)
+        private void cgfV1_pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);

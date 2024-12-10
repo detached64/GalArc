@@ -9,7 +9,7 @@ using Utility;
 
 namespace ArcFormats.Siglus
 {
-    public class ScenePCK
+    public class ScenePCK : ArchiveFormat
     {
         public static UserControl UnpackExtraOptions = new UnpackPCKOptions();
 
@@ -41,7 +41,7 @@ namespace ArcFormats.Siglus
 
         internal static bool TryEachKey;
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             string name = Path.GetFileName(filePath);
             FileStream fs = File.OpenRead(filePath);

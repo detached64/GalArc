@@ -10,7 +10,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.Cmvs
 {
-    public class CPZ
+    public class CPZ : ArchiveFormat
     {
         public static UserControl PackExtraOptions = new VersionOnly("1");
 
@@ -172,7 +172,7 @@ namespace ArcFormats.Cmvs
             ReadHeaderV6(br, header);
         }
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -199,9 +199,9 @@ namespace ArcFormats.Cmvs
             }
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
-            switch (Config.Version)
+            switch (ArcSettings.Version)
             {
                 case "1":
                     cpzV1_pack(folderPath, filePath);

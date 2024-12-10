@@ -8,21 +8,13 @@ using Utility.Extensions;
 
 namespace ArcFormats.Ai5Win
 {
-    public class ARC
+    public class ARC : ArchiveFormat
     {
-        private class Entry
-        {
-            internal string Name { get; set; }
-            internal string Path { get; set; }
-            internal uint Size { get; set; }
-            internal uint Offset { get; set; }
-        }
+        private readonly int[] NameLengths = { 0x14, 0x18, 0x1E, 0x20, 0x100 };
 
-        private readonly static int[] NameLengths = { 0x14, 0x18, 0x1E, 0x20, 0x100 };
+        private string FolderPath;
 
-        private static string FolderPath;
-
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -54,7 +46,7 @@ namespace ArcFormats.Ai5Win
             br.Dispose();
         }
 
-        private static void TryReadIndex(BinaryReader br, int fileCount, out List<Entry> entries)
+        private void TryReadIndex(BinaryReader br, int fileCount, out List<Entry> entries)
         {
             entries = new List<Entry>();
             foreach (int nameLength in NameLengths)

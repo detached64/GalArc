@@ -24,8 +24,8 @@ namespace ArcFormats.Ai6Win
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Config.Version = this.combVersion.Text;
-            if (Config.Version == "1")
+            ArcSettings.Version = this.combVersion.Text;
+            if (ArcSettings.Version == "1")
             {
                 this.chkbxCompress.Visible = false;
             }

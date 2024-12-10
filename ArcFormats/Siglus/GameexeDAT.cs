@@ -9,9 +9,9 @@ namespace ArcFormats.Siglus
     {
         public new static UserControl UnpackExtraOptions = ScenePCK.UnpackExtraOptions;
 
-        private static readonly string UnpackedFileName = "Gameexe.ini";
+        private readonly string UnpackedFileName = "Gameexe.ini";
 
-        public new void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);

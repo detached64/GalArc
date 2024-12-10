@@ -23,17 +23,5 @@ namespace GalArc.GUI
             DataBaseConfig.Path = Settings.Default.DataBasePath;
             LogConfig.autoSaveState = Settings.Default.AutoSaveState;
         }
-
-        public static void ExportSettingsToArcFormats()
-        {
-            if (!string.IsNullOrEmpty(Settings.Default.DefaultEncoding))
-            {
-                Config.Encoding = Encoding.GetEncoding(Encodings.CodePages[Settings.Default.DefaultEncoding]);
-            }
-            else
-            {
-                Config.Encoding = Encoding.UTF8;
-            }
-        }
     }
 }

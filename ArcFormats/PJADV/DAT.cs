@@ -11,23 +11,15 @@ using Utility.Extensions;
 
 namespace ArcFormats.PJADV
 {
-    public class DAT
+    public class DAT : ArchiveFormat
     {
         public static UserControl UnpackExtraOptions = new UnpackDATOptions();
 
         public static UserControl PackExtraOptions = new PackDATOptions();
 
-        private static readonly string Magic = "GAMEDAT PAC";
+        private readonly string Magic = "GAMEDAT PAC";
 
-        private class Entry
-        {
-            public string Name { get; set; }
-            public string Path { get; set; }
-            public uint Offset { get; set; }
-            public uint Size { get; set; }
-        }
-
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -69,7 +61,7 @@ namespace ArcFormats.PJADV
             }
             for (int i = 0; i < count; i++)
             {
-                entries[i].Offset = br.ReadUInt32() + (uint)baseOffset;
+                entries[i].Offset = br.ReadUInt32() + baseOffset;
                 entries[i].Size = br.ReadUInt32();
             }
             foreach (Entry entry in entries)
@@ -89,13 +81,13 @@ namespace ArcFormats.PJADV
             br.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             FileStream fs = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fs);
             bw.Write(Encoding.ASCII.GetBytes(Magic));
-            int nameLength = Config.Version == "1" ? 16 : 32;
-            bw.Write(Config.Version == "1" ? (byte)'K' : (byte)'2');
+            int nameLength = ArcSettings.Version == "1" ? 16 : 32;
+            bw.Write(ArcSettings.Version == "1" ? (byte)'K' : (byte)'2');
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles();
 

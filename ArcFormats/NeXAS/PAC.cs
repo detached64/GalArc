@@ -9,7 +9,7 @@ using Utility.Compression;
 
 namespace ArcFormats.NeXAS
 {
-    public class PAC
+    public class PAC : ArchiveFormat
     {
         private enum Method
         {
@@ -22,29 +22,20 @@ namespace ArcFormats.NeXAS
             Zstd = 7
         }
 
-        private class Entry
-        {
-            public string FileName { get; set; }
-            public string FilePath { get; set; }
-            public uint Offset { get; set; }
-            public int UnpackedSize { get; set; }
-            public int PackedSize { get; set; }
-        }
+        private string FolderPath;
 
-        private static string FolderPath = string.Empty;
+        private Encoding DefaultEncoding = Encoding.UTF8;
 
-        private static Encoding DefaultEncoding = Encoding.UTF8;
+        private List<PackedEntry> entries = new List<PackedEntry>();
 
-        private static readonly List<Entry> entries = new List<Entry>();
+        private readonly byte[] Magic = { 0x50, 0x41, 0x43 };       // "PAC"
 
-        private static readonly byte[] Magic = { 0x50, 0x41, 0x43 };       // "PAC"
-
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
             FolderPath = folderPath;
-            DefaultEncoding = Config.Encoding;
+            DefaultEncoding = ArcSettings.Encoding;
             if (!br.ReadBytes(3).SequenceEqual(Magic))
             {
                 Logger.ErrorInvalidArchive();
@@ -63,32 +54,32 @@ namespace ArcFormats.NeXAS
 
             Directory.CreateDirectory(folderPath);
             Logger.InitBar(fileCount);
-            foreach (Entry entry in entries)
+            foreach (PackedEntry entry in entries)
             {
                 fs.Seek(entry.Offset, SeekOrigin.Begin);
-                byte[] fileData = br.ReadBytes(entry.PackedSize);
+                byte[] fileData = br.ReadBytes((int)entry.Size);
 
-                if (entry.UnpackedSize != entry.PackedSize && method != Method.None && Enum.IsDefined(typeof(Method), method)) // compressed
+                if (entry.UnpackedSize != entry.Size && method != Method.None && Enum.IsDefined(typeof(Method), method)) // compressed
                 {
-                    Logger.Debug(string.Format(Resources.logTryDecompressWithMethod, entry.FileName, method.ToString()));
+                    Logger.Debug(string.Format(Resources.logTryDecompressWithMethod, entry.Name, method.ToString()));
                     try
                     {
                         switch (method)
                         {
                             case Method.Huffman:
-                                File.WriteAllBytes(entry.FilePath, HuffmanDecoder.Decompress(fileData, entry.UnpackedSize));
+                                File.WriteAllBytes(entry.Path, HuffmanDecoder.Decompress(fileData, (int)entry.UnpackedSize));
                                 break;
 
                             case Method.Lzss:
-                                File.WriteAllBytes(entry.FilePath, LzssHelper.Decompress(fileData));
+                                File.WriteAllBytes(entry.Path, LzssHelper.Decompress(fileData));
                                 break;
 
                             case Method.Zlib:
-                                File.WriteAllBytes(entry.FilePath, ZlibHelper.Decompress(fileData));
+                                File.WriteAllBytes(entry.Path, ZlibHelper.Decompress(fileData));
                                 break;
 
                             case Method.Zstd:
-                                File.WriteAllBytes(entry.FilePath, Zstd.Decompress(fileData));
+                                File.WriteAllBytes(entry.Path, Zstd.Decompress(fileData));
                                 break;
                         }
                     }
@@ -100,7 +91,7 @@ namespace ArcFormats.NeXAS
                 }
                 else    // No compression or unknown method
                 {
-                    File.WriteAllBytes(entry.FilePath, fileData);
+                    File.WriteAllBytes(entry.Path, fileData);
                 }
                 fileData = null;
                 Logger.UpdateBar();
@@ -109,7 +100,7 @@ namespace ArcFormats.NeXAS
             br.Dispose();
         }
 
-        private static void TryReadIndex(BinaryReader reader, int fileCount)
+        private void TryReadIndex(BinaryReader reader, int fileCount)
         {
             List<Action> actions = new List<Action>()
             {
@@ -132,22 +123,22 @@ namespace ArcFormats.NeXAS
             Logger.Error(Resources.logErrorContainsInvalid);
         }
 
-        private static void ReadOldIndex(BinaryReader reader, int fileCount)
+        private void ReadOldIndex(BinaryReader reader, int fileCount)
         {
             reader.BaseStream.Position = 12;
             for (int i = 0; i < fileCount; i++)
             {
-                Entry entry = new Entry();
-                entry.FileName = DefaultEncoding.GetString(reader.ReadBytes(64)).TrimEnd('\0');
-                entry.FilePath = Path.Combine(FolderPath, entry.FileName);
+                PackedEntry entry = new PackedEntry();
+                entry.Name = this.DefaultEncoding.GetString(reader.ReadBytes(64)).TrimEnd('\0');
+                entry.Path = Path.Combine(FolderPath, entry.Name);
                 entry.Offset = reader.ReadUInt32();
-                entry.UnpackedSize = reader.ReadInt32();
-                entry.PackedSize = reader.ReadInt32();
+                entry.UnpackedSize = reader.ReadUInt32();
+                entry.Size = reader.ReadUInt32();
                 entries.Add(entry);
             }
         }
 
-        private static void ReadNewIndex(BinaryReader reader, int fileCount)
+        private void ReadNewIndex(BinaryReader reader, int fileCount)
         {
             reader.BaseStream.Seek(-4, SeekOrigin.End);
             int packedLen = reader.ReadInt32();
@@ -166,12 +157,12 @@ namespace ArcFormats.NeXAS
                 {
                     for (int i = 0; i < fileCount; i++)
                     {
-                        Entry entry = new Entry();
-                        entry.FileName = DefaultEncoding.GetString(readerIndex.ReadBytes(64)).TrimEnd('\0');
-                        entry.FilePath = Path.Combine(FolderPath, entry.FileName);
+                        PackedEntry entry = new PackedEntry();
+                        entry.Name = DefaultEncoding.GetString(readerIndex.ReadBytes(64)).TrimEnd('\0');
+                        entry.Path = Path.Combine(FolderPath, entry.Name);
                         entry.Offset = readerIndex.ReadUInt32();
-                        entry.UnpackedSize = readerIndex.ReadInt32();
-                        entry.PackedSize = readerIndex.ReadInt32();
+                        entry.UnpackedSize = readerIndex.ReadUInt32();
+                        entry.Size = readerIndex.ReadUInt32();
                         entries.Add(entry);
                     }
                 }

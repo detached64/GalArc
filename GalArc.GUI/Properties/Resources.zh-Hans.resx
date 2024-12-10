@@ -189,4 +189,13 @@
   <data name="columnExtOriginalLink" xml:space="preserve">
     <value>原网址</value>
   </data>
+  <data name="logErrorUnpackMethodNotFound" xml:space="preserve">
+    <value>错误：对应的解包方法未找到。</value>
+  </data>
+  <data name="logErrorPackMethodNotFound" xml:space="preserve">
+    <value>错误：对应的封包方法未找到。</value>
+  </data>
+  <data name="logErrorClassNotFound" xml:space="preserve">
+    <value>错误：对应的类未找到。</value>
+  </data>
 </root>

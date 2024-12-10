@@ -3,9 +3,9 @@ using System.IO;
 
 namespace ArcFormats.Triangle
 {
-    public class SUD
+    public class SUD : ArchiveFormat
     {
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -23,7 +23,7 @@ namespace ArcFormats.Triangle
             br.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);

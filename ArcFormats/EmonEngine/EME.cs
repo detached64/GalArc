@@ -8,24 +8,19 @@ using Utility.Extensions;
 
 namespace ArcFormats.EmonEngine
 {
-    internal class EME
+    public class EME : ArchiveFormat
     {
-        private string Magic => "RREDATA ";
+        private readonly string Magic = "RREDATA ";
 
-        private class Entry
+        private class EmeEntry : PackedEntry
         {
-            public string Name { get; set; }
-            public string Path { get; set; }
-            public uint Offset { get; set; }
-            public uint PackedSize { get; set; }
-            public uint UnpackedSize { get; set; }
             public int LzssFrameSize { get; set; }
             public int LzssInitPos { get; set; }
             public int SubType { get; set; }
             public uint Magic { get; set; }
         }
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -47,11 +42,11 @@ namespace ArcFormats.EmonEngine
             var index = br.ReadBytes((int)indexSize);
 
             int currentOffset = 0;
-            var entries = new List<Entry>(fileCount);
+            var entries = new List<EmeEntry>(fileCount);
 
             for (int i = 0; i < fileCount; i++)
             {
-                Entry entry = new Entry();
+                EmeEntry entry = new EmeEntry();
                 EmonUtils.Decrypt(index, currentOffset, 0x60, key);
 
                 // Bounds check before reading the name to prevent reading beyond buffer PackedSize
@@ -70,7 +65,7 @@ namespace ArcFormats.EmonEngine
                 }
 
                 entry.SubType = BitConverter.ToUInt16(index, currentOffset + 0x48);
-                entry.PackedSize = BitConverter.ToUInt32(index, currentOffset + 0x4C);
+                entry.Size = BitConverter.ToUInt32(index, currentOffset + 0x4C);
                 entry.UnpackedSize = BitConverter.ToUInt32(index, currentOffset + 0x50);
                 entry.Offset = BitConverter.ToUInt32(index, currentOffset + 0x54);
                 entries.Add(entry);
@@ -90,14 +85,14 @@ namespace ArcFormats.EmonEngine
                 {
                     ExtractBMP(br, entry, key);
                 }
-                else if (entry.SubType == 5 && entry.PackedSize > 4)
+                else if (entry.SubType == 5 && entry.Size > 4)
                 {
                     ExtractType5(br, entry, key);
                 }
                 else
                 {
                     br.BaseStream.Position = entry.Offset;
-                    byte[] data = br.ReadBytes((int)entry.PackedSize);
+                    byte[] data = br.ReadBytes((int)entry.Size);
                     File.WriteAllBytes(entry.Path, data);
                     data = null;
                 }
@@ -107,16 +102,16 @@ namespace ArcFormats.EmonEngine
             br.Dispose();
         }
 
-        private void ExtractScript(BinaryReader br, Entry entry, byte[] key)
+        private void ExtractScript(BinaryReader br, EmeEntry entry, byte[] key)
         {
             br.BaseStream.Position = entry.Offset;
             byte[] header = br.ReadBytes(12);
             EmonUtils.Decrypt(header, 0, 12, key);
             if (entry.LzssFrameSize == 0)
             {
-                byte[] data = new byte[entry.PackedSize + 12];
+                byte[] data = new byte[entry.Size + 12];
                 Array.Copy(header, 0, data, 0, 12);
-                br.Read(data, 12, (int)entry.PackedSize);
+                br.Read(data, 12, (int)entry.Size);
                 File.WriteAllBytes(entry.Path, data);
                 return;
             }
@@ -131,7 +126,7 @@ namespace ArcFormats.EmonEngine
                 part2data = LzssHelper.Decompress(part2data);
 
                 br.BaseStream.Seek(entry.Offset + 12 + packedSize, SeekOrigin.Begin);
-                int part1UnpackedSize = (int)entry.PackedSize;
+                int part1UnpackedSize = (int)entry.Size;
                 byte[] part1data = br.ReadBytes(part1UnpackedSize);
                 part1data = LzssHelper.Decompress(part1data);
 
@@ -148,19 +143,19 @@ namespace ArcFormats.EmonEngine
             else
             {
                 br.BaseStream.Position = entry.Offset + 12;
-                byte[] data = br.ReadBytes((int)entry.PackedSize);
+                byte[] data = br.ReadBytes((int)entry.Size);
                 data = LzssHelper.Decompress(data);
                 File.WriteAllBytes(entry.Path, data);
                 data = null;
             }
         }
 
-        private void ExtractBMP(BinaryReader br, Entry entry, byte[] key)
+        private void ExtractBMP(BinaryReader br, EmeEntry entry, byte[] key)
         {
             br.BaseStream.Position = entry.Offset;
             byte[] header = br.ReadBytes(32);
             EmonUtils.Decrypt(header, 0, 32, key);
-            uint entrySize = entry.PackedSize + 32;
+            uint entrySize = entry.Size + 32;
             int colors = BitConverter.ToUInt16(header, 6);
             if (0 != colors && header[0] != 7)
             {
@@ -173,21 +168,20 @@ namespace ArcFormats.EmonEngine
             data = null;
         }
 
-        private void ExtractType5(BinaryReader br, Entry entry, byte[] key)
+        private void ExtractType5(BinaryReader br, EmeEntry entry, byte[] key)
         {
             br.BaseStream.Position = entry.Offset;
-            byte[] data = br.ReadBytes((int)entry.PackedSize);
+            byte[] data = br.ReadBytes((int)entry.Size);
             EmonUtils.Decrypt(data, 0, 4, key);
             File.WriteAllBytes(entry.Path, data);
             data = null;
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
-            // Get all files and prepare total size estimate
             FileInfo[] files = new DirectoryInfo(folderPath).GetFiles();
             Logger.InitBar(files.Length, 2);
-            List<Entry> entries = new List<Entry>();
+            List<EmeEntry> entries = new List<EmeEntry>();
             using (FileStream fw = File.OpenWrite(filePath))
             {
                 using (BinaryWriter bw = new BinaryWriter(fw))
@@ -197,7 +191,7 @@ namespace ArcFormats.EmonEngine
 
                     foreach (FileInfo file in files)
                     {
-                        Entry entry = new Entry();
+                        EmeEntry entry = new EmeEntry();
                         entry.Name = file.Name;
                         entry.Offset = currentOffset;
                         switch (file.Extension.ToLower())
@@ -212,26 +206,26 @@ namespace ArcFormats.EmonEngine
                                 bw.Write(0);
                                 bw.Write(0);
                                 byte[] packedTXT = LzssHelper.Compress(File.ReadAllBytes(file.FullName));
-                                entry.PackedSize = (uint)packedTXT.Length;
+                                entry.Size = (uint)packedTXT.Length;
                                 bw.Write(packedTXT);
                                 packedTXT = null;
                                 break;
                             case ".ogg":
-                                entry.PackedSize = (uint)file.Length;
-                                entry.UnpackedSize = entry.PackedSize;
+                                entry.Size = (uint)file.Length;
+                                entry.UnpackedSize = entry.Size;
                                 entry.SubType = 0;
                                 entry.Magic = 0x20400000u;
                                 bw.Write(File.ReadAllBytes(file.FullName));
                                 break;
                             case ".bmp":
                                 byte[] data = File.ReadAllBytes(file.FullName);
-                                entry.PackedSize = (uint)data.Length - 32;
+                                entry.Size = (uint)data.Length - 32;
                                 int colors = BitConverter.ToUInt16(data, 6);
                                 if (data[0] != 7 && colors != 0)
                                 {
-                                    entry.PackedSize -= (uint)Math.Max(colors, 3) * 4;
+                                    entry.Size -= (uint)Math.Max(colors, 3) * 4;
                                 }
-                                entry.UnpackedSize = entry.PackedSize;
+                                entry.UnpackedSize = entry.Size;
                                 entry.SubType = 4;
                                 entry.Magic = 0x10;
                                 entry.LzssFrameSize = 0x1000;
@@ -246,7 +240,7 @@ namespace ArcFormats.EmonEngine
                         Logger.UpdateBar();
                     }
 
-                    // Write encryption key: set to 0x00
+                    // set encryption key to 0x00
                     bw.Write(new byte[40]);
 
                     foreach (var entry in entries)
@@ -256,7 +250,7 @@ namespace ArcFormats.EmonEngine
                         bw.Write((ushort)entry.LzssInitPos);
                         bw.Write(entry.Magic);
                         bw.Write(entry.SubType);
-                        bw.Write(entry.PackedSize);
+                        bw.Write(entry.Size);
                         bw.Write(entry.UnpackedSize);
                         bw.Write(entry.Offset);
                         bw.Write(0);
@@ -270,7 +264,6 @@ namespace ArcFormats.EmonEngine
                 }
             }
         }
-
     }
 }
 

@@ -7,22 +7,17 @@ using Utility.Compression;
 
 namespace ArcFormats.NitroPlus
 {
-    public class PAK
+    public class PAK : ArchiveFormat
     {
         public static UserControl PackExtraOptions = new PackPAKOptions();
 
-        private class Entry
+        private class NitroPakEntry : PackedEntry
         {
             public uint PathLen { get; set; }
-            public string Path { get; set; }
-            public uint Offset { get; set; }
-            public uint UnpackedSize { get; set; }
-            public uint Size { get; set; }
-            public string FullPath { get; set; }
-            public bool IsPacked { get; set; }
+            public string RelativePath { get; set; }
         }
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -42,10 +37,10 @@ namespace ArcFormats.NitroPlus
 
                     while (ms.Position != ms.Length)
                     {
-                        Entry entry = new Entry();
+                        NitroPakEntry entry = new NitroPakEntry();
                         entry.PathLen = brEntry.ReadUInt32();
-                        entry.Path = ArcEncoding.Shift_JIS.GetString(brEntry.ReadBytes((int)entry.PathLen));
-                        entry.FullPath = Path.Combine(folderPath, entry.Path);
+                        entry.RelativePath = ArcEncoding.Shift_JIS.GetString(brEntry.ReadBytes((int)entry.PathLen));
+                        entry.Path = Path.Combine(folderPath, entry.RelativePath);
 
                         entry.Offset = brEntry.ReadUInt32() + (uint)dataOffset;
                         entry.UnpackedSize = brEntry.ReadUInt32();
@@ -57,7 +52,7 @@ namespace ArcFormats.NitroPlus
                             entry.Size = size;
                         }
 
-                        Utils.CreateParentDirectoryIfNotExists(entry.FullPath);
+                        Utils.CreateParentDirectoryIfNotExists(entry.Path);
 
                         byte[] data = br.ReadBytes((int)entry.Size);
                         byte[] backup = new byte[data.Length];
@@ -65,12 +60,12 @@ namespace ArcFormats.NitroPlus
                         try
                         {
                             byte[] result = ZlibHelper.Decompress(data);
-                            File.WriteAllBytes(entry.FullPath, result);
+                            File.WriteAllBytes(entry.Path, result);
                             result = null;
                         }
                         catch
                         {
-                            File.WriteAllBytes(entry.FullPath, backup);
+                            File.WriteAllBytes(entry.Path, backup);
                         }
                         backup = null;
                         data = null;
@@ -78,12 +73,11 @@ namespace ArcFormats.NitroPlus
                     }
                 }
             }
-
             fs.Dispose();
             br.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);

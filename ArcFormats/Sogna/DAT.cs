@@ -8,20 +8,11 @@ using Utility.Extensions;
 
 namespace ArcFormats.Sogna
 {
-    internal class DAT
+    public class DAT : ArchiveFormat
     {
-        private string Magic => "SGS.DAT 1.00";
+        private readonly string Magic = "SGS.DAT 1.00";
 
-        public class Entry
-        {
-            public string Name { get; set; }
-            public uint PackedSize { get; set; }
-            public long Offset { get; set; }
-            public uint UnpackedSize { get; set; }
-            public bool IsPacked { get; set; }
-        }
-
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -33,16 +24,16 @@ namespace ArcFormats.Sogna
 
             uint fileCount = br.ReadUInt32();
             uint indexOffset = 0x10;
-            var entries = new List<Entry>((int)fileCount);
+            var entries = new List<PackedEntry>((int)fileCount);
             for (int i = 0; i < fileCount; ++i)
             {
-                var entry = new Entry();
+                var entry = new PackedEntry();
                 br.BaseStream.Position = indexOffset;
                 entry.Name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(0x10)).TrimEnd('\0');
                 br.BaseStream.Position = indexOffset + 0x13;
                 entry.IsPacked = br.ReadByte() != 0;
                 br.BaseStream.Position = indexOffset + 0x14;
-                entry.PackedSize = br.ReadUInt32();
+                entry.Size = br.ReadUInt32();
                 br.BaseStream.Position = indexOffset + 0x18;
                 entry.UnpackedSize = br.ReadUInt32();
                 br.BaseStream.Position = indexOffset + 0x1C;
@@ -53,12 +44,12 @@ namespace ArcFormats.Sogna
 
             Logger.InitBar(fileCount);
             Directory.CreateDirectory(folderPath);
-            foreach (Entry entry in entries)
+            foreach (PackedEntry entry in entries)
             {
                 br.BaseStream.Position = entry.Offset;
                 string fileName = Path.Combine(folderPath, entry.Name);
                 Utils.CreateParentDirectoryIfNotExists(fileName);
-                byte[] data = br.ReadBytes((int)entry.PackedSize);
+                byte[] data = br.ReadBytes((int)entry.Size);
                 if (entry.IsPacked)
                 {
                     br.BaseStream.Position = entry.Offset;
@@ -76,7 +67,7 @@ namespace ArcFormats.Sogna
             br.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);

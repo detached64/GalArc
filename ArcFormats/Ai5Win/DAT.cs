@@ -5,11 +5,11 @@ using Utility;
 
 namespace ArcFormats.Ai5Win
 {
-    public class DAT
+    public class DAT : ArchiveFormat
     {
-        private static readonly int NameLength = 0x14;
+        private readonly int NameLength = 0x14;
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);

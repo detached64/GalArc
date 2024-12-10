@@ -8,18 +8,11 @@ using Utility.Extensions;
 
 namespace ArcFormats.SystemNNN
 {
-    public class GPK
+    public class GPK : ArchiveFormat
     {
         public static UserControl PackExtraOptions = new VersionOnly("1/2");
 
-        private class Entry
-        {
-            public uint Size { get; set; }
-            public uint Offset { get; set; }
-            public string Path { get; set; }
-        }
-
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             //init
             string gpkPath;
@@ -111,7 +104,7 @@ namespace ArcFormats.SystemNNN
             br2.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles("*.dwq");
@@ -156,7 +149,7 @@ namespace ArcFormats.SystemNNN
                 Logger.UpdateBar();
             }
 
-            if (Config.Version == "1")
+            if (ArcSettings.Version == "1")
             {
                 //skip this
             }

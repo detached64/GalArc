@@ -6,9 +6,9 @@ using Utility.Compression;
 
 namespace ArcFormats.GsPack
 {
-    internal class DAT : PAK
+    public class DAT : PAK
     {
-        private string Magic => "GsSYMBOL5BINDATA";
+        private readonly string Magic = "GsSYMBOL5BINDATA";
 
         public new void Unpack(string filePath, string folderPath)
         {

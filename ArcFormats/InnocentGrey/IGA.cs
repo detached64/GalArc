@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace ArcFormats.InnocentGrey
 {
-    public class IGA
+    public class IGA : ArchiveFormat
     {
         public static UserControl UnpackExtraOptions = new UnpackIGAOptions();
 
@@ -15,21 +15,21 @@ namespace ArcFormats.InnocentGrey
 
         private static readonly string Magic = "IGA0";
 
-        private class Entry
+        private class InnoIgaEntry
         {
             public uint NameOffset { get; set; }
             public uint DataOffset { get; set; }
             public uint Size { get; set; }
-            public string FileName { get; set; }
+            public string Name { get; set; }
             public uint NameLen { get; set; }
         }
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            List<Entry> entries = new List<Entry>();
-            List<Entry> entriesUpdate = new List<Entry>();
+            List<InnoIgaEntry> entries = new List<InnoIgaEntry>();
+            List<InnoIgaEntry> entriesUpdate = new List<InnoIgaEntry>();
             if (Encoding.ASCII.GetString(br.ReadBytes(4)) != Magic)
             {
                 Logger.ErrorInvalidArchive();
@@ -41,7 +41,7 @@ namespace ArcFormats.InnocentGrey
             long endPos = fs.Position + indexSize;
             while (fs.Position < endPos)
             {
-                var entry = new Entry();
+                var entry = new InnoIgaEntry();
                 entry.NameOffset = VarInt.UnpackUint(br);
                 entry.DataOffset = VarInt.UnpackUint(br);
                 entry.Size = VarInt.UnpackUint(br);
@@ -67,7 +67,7 @@ namespace ArcFormats.InnocentGrey
                     thisNameLen = nameIndexSize - entries[i].NameOffset;
                 }
 
-                entry.FileName = VarInt.UnpackString(br, thisNameLen);
+                entry.Name = VarInt.UnpackString(br, thisNameLen);
                 entry.DataOffset += (uint)endName;
                 entriesUpdate.Add(entry);
             }
@@ -77,16 +77,16 @@ namespace ArcFormats.InnocentGrey
                 fs.Position = entry.DataOffset;
                 byte[] buffer = new byte[entry.Size];
                 br.Read(buffer, 0, (int)entry.Size);
-                int key = UnpackIGAOptions.toDecryptScripts && Path.GetExtension(entry.FileName) == ".s" ? 0xFF : 0;
+                int key = UnpackIGAOptions.toDecryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
                 if (key != 0)
                 {
-                    Logger.Debug(string.Format(Resources.logTryDecScr, entry.FileName));
+                    Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
                 }
                 for (uint j = 0; j < entry.Size; j++)
                 {
                     buffer[j] ^= (byte)((j + 2) ^ key);
                 }
-                File.WriteAllBytes(Path.Combine(folderPath, entry.FileName), buffer);
+                File.WriteAllBytes(Path.Combine(folderPath, entry.Name), buffer);
                 buffer = null;
                 Logger.UpdateBar();
             }
@@ -94,7 +94,7 @@ namespace ArcFormats.InnocentGrey
             br.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -102,7 +102,7 @@ namespace ArcFormats.InnocentGrey
             bw.Write(0);    // don't know accurate value , set to 0
             bw.Write(2);
             bw.Write(2);
-            List<Entry> l = new List<Entry>();
+            List<InnoIgaEntry> l = new List<InnoIgaEntry>();
 
             DirectoryInfo dir = new DirectoryInfo(folderPath);
             FileInfo[] files = dir.GetFiles();
@@ -110,9 +110,9 @@ namespace ArcFormats.InnocentGrey
             uint dataOffset = 0;
             foreach (FileInfo file in files)
             {
-                Entry entry = new Entry();
-                entry.FileName = file.Name;
-                entry.NameLen = (uint)entry.FileName.Length;
+                InnoIgaEntry entry = new InnoIgaEntry();
+                entry.Name = file.Name;
+                entry.NameLen = (uint)entry.Name.Length;
                 entry.NameOffset = nameOffset;
                 entry.DataOffset = dataOffset;
                 entry.Size = (uint)file.Length;
@@ -136,7 +136,7 @@ namespace ArcFormats.InnocentGrey
                                 bwEntry.Write(VarInt.PackUint(i.NameOffset));
                                 bwEntry.Write(VarInt.PackUint(i.DataOffset));
                                 bwEntry.Write(VarInt.PackUint(i.Size));
-                                bwFileName.Write(VarInt.PackString(i.FileName));
+                                bwFileName.Write(VarInt.PackString(i.Name));
                             }
                             bw.Write(VarInt.PackUint((uint)msEntry.Length));
                             msEntry.WriteTo(fw);
@@ -150,11 +150,11 @@ namespace ArcFormats.InnocentGrey
 
             foreach (var entry in l)
             {
-                byte[] buffer = File.ReadAllBytes(Path.Combine(folderPath, entry.FileName));
-                int key = PackIGAOptions.toEncryptScripts && Path.GetExtension(entry.FileName) == ".s" ? 0xFF : 0;
+                byte[] buffer = File.ReadAllBytes(Path.Combine(folderPath, entry.Name));
+                int key = PackIGAOptions.toEncryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
                 if (key != 0)
                 {
-                    Logger.Debug(string.Format(Resources.logTryEncScr, entry.FileName));
+                    Logger.Debug(string.Format(Resources.logTryEncScr, entry.Name));
                 }
                 for (uint j = 0; j < entry.Size; j++)
                 {
@@ -169,7 +169,7 @@ namespace ArcFormats.InnocentGrey
         }
     }
 
-    internal class VarInt
+    class VarInt
     {
         public static uint UnpackUint(BinaryReader br)
         {

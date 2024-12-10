@@ -6,19 +6,16 @@ using Utility;
 
 namespace ArcFormats.NextonLikeC
 {
-    public class LST
+    public class LST : ArchiveFormat
     {
-        private class Entry
+        private class NextonEntry : Entry
         {
-            public uint Offset { get; set; }
-            public uint Size { get; set; }
-            public string Name { get; set; }
             public int Type { get; set; }
             //1:script 2,3:image 4,5:audio
             //1:SNX 3:PNG 4,5:OGG
         }
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             string arcPath;
             string lstPath;
@@ -47,12 +44,12 @@ namespace ArcFormats.NextonLikeC
             BinaryReader brLst = new BinaryReader(ms);
 
             uint fileCount = brLst.ReadUInt32();
-            List<Entry> l = new List<Entry>();
+            List<NextonEntry> l = new List<NextonEntry>();
             Logger.InitBar(fileCount);
 
             for (int i = 0; i < (int)fileCount; i++)
             {
-                Entry entry = new Entry();
+                NextonEntry entry = new NextonEntry();
                 entry.Offset = brLst.ReadUInt32();
                 entry.Size = brLst.ReadUInt32();
                 entry.Name = ArcEncoding.Shift_JIS.GetString(brLst.ReadBytes(64)).TrimEnd('\x02');

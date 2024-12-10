@@ -142,6 +142,15 @@ namespace GalArc.GUI.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Error: Specified class not found. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorClassNotFound {
+            get {
+                return ResourceManager.GetString("logErrorClassNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Folder specified does not exist. 的本地化字符串。
         /// </summary>
         internal static string logErrorDirNotFound {
@@ -183,6 +192,24 @@ namespace GalArc.GUI.Properties {
         internal static string logErrorNeedSpecifyOutput {
             get {
                 return ResourceManager.GetString("logErrorNeedSpecifyOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Error: Specified pack method not found. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorPackMethodNotFound {
+            get {
+                return ResourceManager.GetString("logErrorPackMethodNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Error: Specified unpack method not found. 的本地化字符串。
+        /// </summary>
+        internal static string logErrorUnpackMethodNotFound {
+            get {
+                return ResourceManager.GetString("logErrorUnpackMethodNotFound", resourceCulture);
             }
         }
         

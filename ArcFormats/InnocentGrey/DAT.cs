@@ -9,25 +9,20 @@ using Utility;
 
 namespace ArcFormats.InnocentGrey
 {
-    public class DAT
+    public class DAT : ArchiveFormat
     {
         public static UserControl UnpackExtraOptions = IGA.UnpackExtraOptions;
 
         public static UserControl PackExtraOptions = IGA.PackExtraOptions;
 
-        private static readonly string Magic = "PACKDAT.";
+        private readonly string Magic = "PACKDAT.";
 
-        private class Entry
+        private class InnoDatEntry : PackedEntry
         {
-            public string FileName { get; set; }
-            public uint Offset { get; set; }
             public uint FileType { get; set; }
-            public uint UnpackedSize { get; set; }
-            public uint PackedSize { get; set; }
-            public bool IsCompressed { get; set; }
         }
 
-        public void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -39,18 +34,18 @@ namespace ArcFormats.InnocentGrey
             br.BaseStream.Position += 4;
 
             Logger.InitBar(fileCount);
-            List<Entry> entries = new List<Entry>();
+            List<InnoDatEntry> entries = new List<InnoDatEntry>();
             Directory.CreateDirectory(folderPath);
 
             for (int i = 0; i < fileCount; i++)
             {
-                Entry entry = new Entry();
-                entry.FileName = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(32)).TrimEnd('\0');
+                InnoDatEntry entry = new InnoDatEntry();
+                entry.Name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(32)).TrimEnd('\0');
                 entry.Offset = br.ReadUInt32();
                 entry.FileType = br.ReadUInt32();
                 entry.UnpackedSize = br.ReadUInt32();
-                entry.PackedSize = br.ReadUInt32();
-                entry.IsCompressed = entry.PackedSize != entry.UnpackedSize;
+                entry.Size = br.ReadUInt32();
+                entry.IsPacked = entry.Size != entry.UnpackedSize;
                 //if (entry.IsCompressed)     //skip compressed data for now
                 //{
                 //    throw new NotImplementedException("Compressed data detected. Temporarily not supported.");
@@ -58,19 +53,19 @@ namespace ArcFormats.InnocentGrey
                 entries.Add(entry);
             }
 
-            foreach (Entry entry in entries)
+            foreach (InnoDatEntry entry in entries)
             {
                 fs.Position = entry.Offset;
                 byte[] data = br.ReadBytes((int)entry.UnpackedSize);
-                if (UnpackIGAOptions.toDecryptScripts && Path.GetExtension(entry.FileName) == ".s")
+                if (UnpackIGAOptions.toDecryptScripts && Path.GetExtension(entry.Name) == ".s")
                 {
-                    Logger.Debug(string.Format(Resources.logTryDecScr, entry.FileName));
+                    Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
                     for (int i = 0; i < data.Length; i++)
                     {
                         data[i] ^= 0xFF;
                     }
                 }
-                File.WriteAllBytes(Path.Combine(folderPath, entry.FileName), data);
+                File.WriteAllBytes(Path.Combine(folderPath, entry.Name), data);
                 data = null;
                 Logger.UpdateBar();
             }
@@ -78,7 +73,7 @@ namespace ArcFormats.InnocentGrey
             fs.Dispose();
         }
 
-        public void Pack(string folderPath, string filePath)
+        public override void Pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
