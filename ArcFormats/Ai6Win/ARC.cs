@@ -55,7 +55,7 @@ namespace ArcFormats.Ai6Win
             }
         }
 
-        private static void UnpackV1(string filePath, string folderPath)
+        private void UnpackV1(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -87,7 +87,7 @@ namespace ArcFormats.Ai6Win
             br.Dispose();
         }
 
-        private static void UnpackV2(string filePath, string folderPath)
+        private void UnpackV2(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -133,7 +133,7 @@ namespace ArcFormats.Ai6Win
             br.Dispose();
         }
 
-        private static void UnpackV3(string filePath, string folderPath)
+        private void UnpackV3(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -173,7 +173,7 @@ namespace ArcFormats.Ai6Win
             br.Dispose();
         }
 
-        private static void ExtractData(List<ArcEntry> l, BinaryReader br)
+        private void ExtractData(List<ArcEntry> l, BinaryReader br)
         {
             for (int i = 0; i < l.Count; i++)
             {
@@ -188,7 +188,7 @@ namespace ArcFormats.Ai6Win
             }
         }
 
-        private static void PackV1(string folderPath, string filePath)
+        private void PackV1(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -216,7 +216,7 @@ namespace ArcFormats.Ai6Win
             bw.Dispose();
         }
 
-        private static void PackV2(string folderPath, string filePath)
+        private void PackV2(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -262,7 +262,7 @@ namespace ArcFormats.Ai6Win
             bw.Dispose();
         }
 
-        private static void PackV3(string folderPath, string filePath)
+        private void PackV3(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);

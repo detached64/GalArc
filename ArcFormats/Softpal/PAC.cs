@@ -122,7 +122,7 @@ namespace ArcFormats.Softpal
             br.Dispose();
         }
 
-        private static void DecryptScript(byte[] data)
+        private void DecryptScript(byte[] data)
         {
             int count = (data.Length - 16) / 4;
             int shift = 4;
@@ -140,7 +140,7 @@ namespace ArcFormats.Softpal
             }
         }
 
-        private static void EncryptScript(byte[] data)
+        private void EncryptScript(byte[] data)
         {
             int count = (data.Length - 16) / 4;
             int shift = 4;

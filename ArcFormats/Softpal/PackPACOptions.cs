@@ -9,7 +9,7 @@ namespace ArcFormats.Softpal
 
         internal static bool toEncryptScripts = true;
 
-        private static string versions = "1/2";
+        private string versions = "1/2";
 
         public PackPACOptions()
         {

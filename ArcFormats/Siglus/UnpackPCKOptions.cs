@@ -1,7 +1,6 @@
 ﻿using ArcFormats.Properties;
 using GalArc.Database;
 using GalArc.Database.Siglus;
-using GalArc.Extensions;
 using GalArc.Extensions.SiglusKeyFinder;
 using GalArc.Logs;
 using GalArc.Properties;
@@ -14,7 +13,7 @@ namespace ArcFormats.Siglus
 {
     public partial class UnpackPCKOptions : UserControl
     {
-        private static string ExtractedKey
+        private string ExtractedKey
         {
             get
             {
@@ -31,7 +30,7 @@ namespace ArcFormats.Siglus
             }
         }
 
-        private static string _ExtractedKey;
+        private string _ExtractedKey;
 
         public UnpackPCKOptions()
         {

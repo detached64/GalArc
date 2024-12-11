@@ -9,9 +9,9 @@ namespace ArcFormats.EntisGLS
 {
     public class NOA : ArchiveFormat
     {
-        private static readonly byte[] Magic1 = Utils.HexStringToByteArray("456e7469731a00000004000200000000");
+        private readonly byte[] Magic1 = Utils.HexStringToByteArray("456e7469731a00000004000200000000");
 
-        private static readonly byte[] Magic2 = Utils.HexStringToByteArray("45524953412d417263686976652066696c65");
+        private readonly byte[] Magic2 = Utils.HexStringToByteArray("45524953412d417263686976652066696c65");
 
         private class Header
         {

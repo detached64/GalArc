@@ -131,7 +131,7 @@ namespace ArcFormats.PJADV
             bw.Dispose();
         }
 
-        private static void DecryptScript(byte[] data)
+        private void DecryptScript(byte[] data)
         {
             byte key = 0xC5;
             for (int i = 0; i < data.Length; ++i)

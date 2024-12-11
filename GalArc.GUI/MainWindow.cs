@@ -21,18 +21,14 @@ namespace GalArc
     {
         public static MainWindow Instance;
 
-        internal static string LocalCulture;
-
-        internal static EngineInfo selectedEngineInfo_Unpack;
-        internal static EngineInfo selectedEngineInfo_Pack;
-
-        internal static List<TreeNode> treeNodesUnpack = new List<TreeNode>();
-        internal static List<TreeNode> treeNodesPack = new List<TreeNode>();
+        private List<TreeNode> treeNodesUnpack = new List<TreeNode>();
+        private List<TreeNode> treeNodesPack = new List<TreeNode>();
 
         internal static TreeNode selectedNodeUnpack;
         internal static TreeNode selectedNodePack;
 
-        internal static bool isFirstChangeLang = true;
+        private string localCulture;
+        private bool isFirstChangeLang = true;
 
         private readonly int deltaStatus = 15;
         private readonly int delta = 6;
@@ -41,8 +37,8 @@ namespace GalArc
         {
             Instance = this;
 
-            LocalCulture = GetLocalCulture();
-            SetLocalCulture(LocalCulture);
+            localCulture = GetLocalCulture();
+            SetLocalCulture(localCulture);
 
             Logger.NewInstance();
 
@@ -66,7 +62,7 @@ namespace GalArc
             this.combLang.Items.AddRange(Languages.languages.Keys.ToArray());
             this.TopMost = Settings.Default.IsTopMost;
             LogWindow.Instance.TopMost = this.TopMost;
-            this.combLang.Text = Languages.languages.FirstOrDefault(x => x.Value == LocalCulture).Key;
+            this.combLang.Text = Languages.languages.FirstOrDefault(x => x.Value == localCulture).Key;
             if (Properties.BaseSettings.Default.ToAutoSaveState)
             {
                 this.chkbxUnpack.Checked = Settings.Default.IsUnpackMode;
@@ -139,9 +135,9 @@ namespace GalArc
 
         private void combLang_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string previousCulture = LocalCulture;
-            LocalCulture = Languages.languages[this.combLang.Text];
-            Settings.Default.LastLanguage = LocalCulture;
+            string previousCulture = localCulture;
+            localCulture = Languages.languages[this.combLang.Text];
+            Settings.Default.LastLanguage = localCulture;
             Settings.Default.Save();
             if (isFirstChangeLang)
             {
@@ -149,7 +145,7 @@ namespace GalArc
             }
             else
             {
-                if (previousCulture != LocalCulture)
+                if (previousCulture != localCulture)
                 {
                     Application.ExitThread();
                     Process.Start(Assembly.GetExecutingAssembly().Location);
@@ -209,8 +205,7 @@ namespace GalArc
                         Settings.Default.Save();
                     }
                     selectedNodeUnpack = e.Node;
-                    selectedEngineInfo_Unpack = EngineInfos.engineInfos.FirstOrDefault(x => x.EngineName == e.Node.Parent.Text);
-                    chkbxMatch_CheckedChanged(null, null);
+                    SyncPath();
                     Logger.InfoRevoke(string.Format(Resources.logSelectUnpackNode, e.Node.Parent.Text, e.Node.Text));
                     GetExtraOptions(selectedNodeUnpack, "UnpackExtraOptions");
                 }
@@ -230,8 +225,7 @@ namespace GalArc
                         Settings.Default.Save();
                     }
                     selectedNodePack = e.Node;
-                    selectedEngineInfo_Pack = EngineInfos.engineInfos.FirstOrDefault(x => x.EngineName == e.Node.Parent.Text);
-                    chkbxMatch_CheckedChanged(null, null);
+                    SyncPath();
                     Logger.InfoRevoke(string.Format(Resources.logSelectPackNode, e.Node.Parent.Text, e.Node.Text));
                     GetExtraOptions(selectedNodePack, "PackExtraOptions");
                 }
@@ -242,7 +236,7 @@ namespace GalArc
         {
             string[] infos = node.FullPath.Split('/');
             Assembly assembly = Assembly.Load("ArcFormats");
-            Type type = assembly.GetType($"ArcFormats.{infos[0]}.{infos[1].Replace(".", string.Empty)}");
+            Type type = assembly.GetType($"ArcFormats.{infos[0]}.{infos[1]}");
             this.SuspendLayout();
             this.gbOptions.Controls.Clear();
             if (type != null)

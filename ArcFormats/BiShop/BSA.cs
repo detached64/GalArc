@@ -14,15 +14,15 @@ namespace ArcFormats.BiShop
     {
         public static UserControl PackExtraOptions = new VersionOnly("1/2");
 
-        private static byte[] Magic = Utils.HexStringToByteArray("4253417263000000");
+        private byte[] Magic = Utils.HexStringToByteArray("4253417263000000");
 
-        private static List<string> path = new List<string>();
+        private List<string> path = new List<string>();
 
-        private static int realCount = 0;
+        private int realCount = 0;
 
-        private static string rootDir = string.Empty;
+        private string rootDir = string.Empty;
 
-        private static int fileCount = 0;
+        private int fileCount = 0;
 
         private class BsaEntry : Entry
         {
@@ -59,7 +59,7 @@ namespace ArcFormats.BiShop
             }
         }
 
-        private static void bsaV1_unpack(string filePath, string folderPath)
+        private void bsaV1_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -85,7 +85,7 @@ namespace ArcFormats.BiShop
             br.Dispose();
         }
 
-        private static void bsaV2_unpack(string filePath, string folderPath)
+        private void bsaV2_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -123,7 +123,7 @@ namespace ArcFormats.BiShop
                 else
                 {
                     fs.Position = entry.DataOffset;
-                    string path = Path.Combine(Path.Combine(BSA.path.ToArray()), name);
+                    string path = Path.Combine(Path.Combine(this.path.ToArray()), name);
                     Utils.CreateParentDirectoryIfNotExists(path);
                     File.WriteAllBytes(path, br.ReadBytes((int)entry.Size));
                     realCount++;
@@ -149,7 +149,7 @@ namespace ArcFormats.BiShop
             }
         }
 
-        private static void bsaV1_pack(string folderPath, string filePath)
+        private void bsaV1_pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -189,7 +189,7 @@ namespace ArcFormats.BiShop
             bwIndex.Dispose();
         }
 
-        private static void bsaV2_pack(string folderPath, string filePath)
+        private void bsaV2_pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -199,7 +199,7 @@ namespace ArcFormats.BiShop
             BinaryWriter bwIndex = new BinaryWriter(index);
             BinaryWriter bwNames = new BinaryWriter(names);
             rootDir = folderPath;
-            BSA.fileCount = 0;
+            this.fileCount = 0;
             // header
             bw.Write(Magic);
             bw.Write((ushort)3);
@@ -211,7 +211,7 @@ namespace ArcFormats.BiShop
             Write(bw, folderPath, bwIndex, bwNames);
             uint indexOffset = (uint)fw.Position;
             fw.Position = 10;
-            bw.Write((ushort)BSA.fileCount);
+            bw.Write((ushort)this.fileCount);
             bw.Write(indexOffset);
             fw.Position = fw.Length;
             index.WriteTo(fw);
@@ -222,7 +222,7 @@ namespace ArcFormats.BiShop
             bwNames.Dispose();
         }
 
-        private static void Write(BinaryWriter bw, string path, BinaryWriter bwIndex, BinaryWriter bwNames)
+        private void Write(BinaryWriter bw, string path, BinaryWriter bwIndex, BinaryWriter bwNames)
         {
             // enter folder
             if (path != rootDir)

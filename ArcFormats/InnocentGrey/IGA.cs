@@ -13,7 +13,7 @@ namespace ArcFormats.InnocentGrey
 
         public static UserControl PackExtraOptions = new PackIGAOptions();
 
-        private const string Magic = "IGA0";
+        private readonly string Magic = "IGA0";
 
         private class InnoIgaEntry
         {

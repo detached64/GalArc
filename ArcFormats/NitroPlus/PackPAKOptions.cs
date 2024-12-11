@@ -25,7 +25,7 @@ namespace ArcFormats.NitroPlus
             OriginalFilePath = this.txtOriginalFilePath.Text;
         }
 
-        private static string ChooseFile()
+        private string ChooseFile()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {

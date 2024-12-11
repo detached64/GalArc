@@ -2,12 +2,15 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 using Utility.Compression;
 
 namespace ArcFormats.GsPack
 {
     public class DAT : PAK
     {
+        public static new UserControl UnpackExtraOptions = new UnpackPAKOptions();
+
         private readonly string Magic = "GsSYMBOL5BINDATA";
 
         public override void Unpack(string filePath, string folderPath)

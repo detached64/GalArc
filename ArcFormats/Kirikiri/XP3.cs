@@ -13,7 +13,7 @@ namespace ArcFormats.Kirikiri
     {
         public static UserControl PackExtraOptions = new PackXP3Options("1/2");
 
-        private static readonly byte[] Magic = Utils.HexStringToByteArray("5850330d0a200a1a8b6701");
+        private readonly byte[] Magic = Utils.HexStringToByteArray("5850330d0a200a1a8b6701");
 
         private class Xp3Entry
         {

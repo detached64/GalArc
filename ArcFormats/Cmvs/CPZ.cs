@@ -14,14 +14,15 @@ namespace ArcFormats.Cmvs
     {
         public static UserControl PackExtraOptions = new VersionOnly("1");
 
-        private static byte[] KeyV1 =
+        private byte[] KeyV1 =
         {
             0x92, 0xCD, 0x97, 0x90, 0x8C, 0xD7, 0x8C, 0xD5, 0x8B, 0x4B, 0x93, 0xFA, 0x9A, 0xD7, 0x8C, 0xBF,
             0x8C, 0xC9, 0x8C, 0xEB, 0x8D, 0x69, 0x8D, 0x8B, 0x8C, 0xD2, 0x8C, 0xD6, 0x8B, 0x6D, 0x8C, 0xE3,
             0x8C, 0xFB, 0x8C, 0xD0, 0x8C, 0xC8, 0x8C, 0xF0, 0x8B, 0xFE, 0x8C, 0xAA, 0x8C, 0xF4, 0x8B, 0x4B,
             0x9C, 0x58, 0x8C, 0xD3, 0x96, 0xC8, 0x8C, 0xCB, 0x8C, 0xCE, 0x8C, 0xF3, 0x8C, 0xD6, 0x8B, 0x52,
         };
-        private static void cpzV1_unpack(string filePath, string folderPath)
+
+        private void cpzV1_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -62,7 +63,8 @@ namespace ArcFormats.Cmvs
             fs.Dispose();
             br.Dispose();
         }
-        private static void cpzV1_pack(string folderPath, string filePath)
+
+        private void cpzV1_pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -126,7 +128,7 @@ namespace ArcFormats.Cmvs
             public uint HeaderCRC;
         }
 
-        private static void ReadHeaderV6(BinaryReader br, HeaderV6 header)
+        private void ReadHeaderV6(BinaryReader br, HeaderV6 header)
         {
             header.Magic = br.ReadUInt32();
             header.DirCount = br.ReadUInt32() ^ 0xfe3a53dau;
@@ -164,7 +166,8 @@ namespace ArcFormats.Cmvs
             header.IndexSeed *= 0x7da8f173u;
             header.IndexSeed += 0x13712765u;
         }
-        private static void cpzV6_unpack(string filePath, string folderPath)
+
+        private void cpzV6_unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
