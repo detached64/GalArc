@@ -52,8 +52,6 @@ namespace GalArc
             LogWindow logWindow = new LogWindow(this.Width, this.Height);
             LogWindow.Instance.Owner = this;
 
-            SettingsExporter.ExportSettingsToGalArc();
-
             Logger.Process += ChangeStatus;
             Logger.ErrorOccured += ChangeStatus;
 
@@ -66,15 +64,15 @@ namespace GalArc
         private void MainWindow_Load(object sender, EventArgs e)
         {
             this.combLang.Items.AddRange(Languages.languages.Keys.ToArray());
-            this.TopMost = Settings.Default.TopMost;
+            this.TopMost = Settings.Default.IsTopMost;
             LogWindow.Instance.TopMost = this.TopMost;
             this.combLang.Text = Languages.languages.FirstOrDefault(x => x.Value == LocalCulture).Key;
-            if (Settings.Default.AutoSaveState)
+            if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
             {
-                this.chkbxUnpack.Checked = Settings.Default.chkbxUnpack_checked;
-                this.chkbxPack.Checked = Settings.Default.chkbxPack_checked;
-                this.chkbxMatch.Checked = Settings.Default.chkbxMatch_checked;
-                this.chkbxShowLog.Checked = Settings.Default.chkbxShowLog_checked;
+                this.chkbxUnpack.Checked = Settings.Default.IsUnpackMode;
+                this.chkbxPack.Checked = Settings.Default.IsPackMode;
+                this.chkbxMatch.Checked = Settings.Default.ToMatchPath;
+                this.chkbxShowLog.Checked = Settings.Default.ToShowLog;
             }
         }
 
@@ -143,7 +141,7 @@ namespace GalArc
         {
             string previousCulture = LocalCulture;
             LocalCulture = Languages.languages[this.combLang.Text];
-            Settings.Default.lastLang = LocalCulture;
+            Settings.Default.LastLanguage = LocalCulture;
             Settings.Default.Save();
             if (isFirstChangeLang)
             {
@@ -167,9 +165,9 @@ namespace GalArc
                 UpdateTreeUnpack();
                 this.btExecute.Text = this.chkbxUnpack.Text;
             }
-            if (Settings.Default.AutoSaveState)
+            if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
             {
-                Settings.Default.chkbxUnpack_checked = this.chkbxUnpack.Checked;
+                Settings.Default.IsUnpackMode = this.chkbxUnpack.Checked;
                 Settings.Default.Save();
             }
         }
@@ -182,9 +180,9 @@ namespace GalArc
                 UpdateTreePack();
                 this.btExecute.Text = this.chkbxPack.Text;
             }
-            if (Settings.Default.AutoSaveState)
+            if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
             {
-                Settings.Default.chkbxPack_checked = this.chkbxPack.Checked;
+                Settings.Default.IsPackMode = this.chkbxPack.Checked;
                 Settings.Default.Save();
             }
         }
@@ -202,7 +200,7 @@ namespace GalArc
                         return;
                     }
 
-                    if (Settings.Default.AutoSaveState)
+                    if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
                     {
                         Settings.Default.UnpackSelectedNode0 = e.Node.Parent.Index;
                         Settings.Default.UnpackSelectedNode1 = e.Node.Index;
@@ -223,7 +221,7 @@ namespace GalArc
                         return;
                     }
 
-                    if (Settings.Default.AutoSaveState)
+                    if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
                     {
                         Settings.Default.PackSelectedNode0 = e.Node.Parent.Index;
                         Settings.Default.PackSelectedNode1 = e.Node.Index;
@@ -354,9 +352,9 @@ namespace GalArc
                     }
                 }
             }
-            if (Settings.Default.AutoSaveState)
+            if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
             {
-                Settings.Default.chkbxMatch_checked = this.chkbxMatch.Checked;
+                Settings.Default.ToMatchPath = this.chkbxMatch.Checked;
                 Settings.Default.Save();
             }
         }
@@ -406,7 +404,7 @@ namespace GalArc
                     this.treeViewEngines.Nodes.Add(rootNode);
                 }
             }
-            if (Settings.Default.AutoSaveState)
+            if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
             {
                 TreeNode node0 = treeViewEngines.Nodes[Settings.Default.UnpackSelectedNode0];
                 TreeNode node1 = node0.Nodes[Settings.Default.UnpackSelectedNode1];
@@ -442,7 +440,7 @@ namespace GalArc
                     }
                 }
             }
-            if (Settings.Default.AutoSaveState)
+            if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
             {
                 TreeNode node0 = treeViewEngines.Nodes[Settings.Default.PackSelectedNode0];
                 TreeNode node1 = node0.Nodes[Settings.Default.PackSelectedNode1];
@@ -481,7 +479,7 @@ namespace GalArc
                     Logger.Error(Resources.logErrorFileNotFound, false);
                     return;
                 }
-                if (Settings.Default.FreezeControls)
+                if (Settings.Default.ToFreezeControls)
                 {
                     Freeze();
                 }
@@ -521,7 +519,7 @@ namespace GalArc
                     Logger.Error(Resources.logErrorDirNotFound, false);
                     return;
                 }
-                if (Settings.Default.FreezeControls)
+                if (Settings.Default.ToFreezeControls)
                 {
                     Freeze();
                 }
@@ -559,7 +557,7 @@ namespace GalArc
                 Logger.Error(Resources.logErrorNeedSelectOperation, false);
             }
 
-            if (Settings.Default.FreezeControls)
+            if (Settings.Default.ToFreezeControls)
             {
                 Thaw();
             }
@@ -605,9 +603,9 @@ namespace GalArc
         {
             LogWindow.Instance.ChangePosition(this.Location.X, this.Location.Y);
             LogWindow.Instance.Visible = this.chkbxShowLog.Checked;
-            if (Settings.Default.AutoSaveState)
+            if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
             {
-                Settings.Default.chkbxShowLog_checked = this.chkbxShowLog.Checked;
+                Settings.Default.ToShowLog = this.chkbxShowLog.Checked;
                 Settings.Default.Save();
             }
         }
@@ -640,7 +638,7 @@ namespace GalArc
 
         internal string GetLocalCulture()
         {
-            string LocalCulture = string.IsNullOrEmpty(Settings.Default.lastLang) ? CultureInfo.CurrentCulture.Name : Settings.Default.lastLang;
+            string LocalCulture = string.IsNullOrEmpty(Settings.Default.LastLanguage) ? CultureInfo.CurrentCulture.Name : Settings.Default.LastLanguage;
             if (!Languages.languages.Values.ToArray().Contains(LocalCulture))
             {
                 LocalCulture = "en-US";

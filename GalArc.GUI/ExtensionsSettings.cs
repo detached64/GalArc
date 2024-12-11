@@ -37,15 +37,13 @@ namespace GalArc.GUI
 
         private void ExtensionsSettings_Load(object sender, EventArgs e)
         {
-            this.chkbxEnableExtensions.Checked = Settings.Default.EnableExtensions;
-            ExtensionsConfig.IsEnabled = Settings.Default.EnableExtensions;
+            this.chkbxEnableExtensions.Checked = GalArc.Properties.BaseSettings.Default.IsExtensionsEnabled;
         }
 
         private void chkbxEnableExtensions_CheckedChanged(object sender, EventArgs e)
         {
-            Settings.Default.EnableExtensions = this.chkbxEnableExtensions.Checked;
-            Settings.Default.Save();
-            ExtensionsConfig.IsEnabled = this.chkbxEnableExtensions.Checked;
+            GalArc.Properties.BaseSettings.Default.IsExtensionsEnabled = this.chkbxEnableExtensions.Checked;
+            GalArc.Properties.BaseSettings.Default.Save();
         }
 
         private void InitDataGridView()

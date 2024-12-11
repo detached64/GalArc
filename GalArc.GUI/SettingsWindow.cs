@@ -40,7 +40,7 @@ namespace GalArc.GUI
                     userControl = PreferenceSettings.Instance;
                     break;
                 case "nodeDataBase":
-                    userControl = DataBaseSettings.Instance;
+                    userControl = DatabaseSettings.Instance;
                     break;
                 case "nodeExtensions":
                     userControl = ExtensionsSettings.Instance;

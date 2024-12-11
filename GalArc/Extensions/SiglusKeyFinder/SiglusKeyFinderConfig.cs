@@ -1,31 +1,31 @@
-﻿using System;
+﻿using GalArc.Properties;
+using System;
 
 namespace GalArc.Extensions.SiglusKeyFinder
 {
     [Extension]
     public class SiglusKeyFinderConfig : IExtension
     {
-        public static bool IsEnabled { get; set; } = true;
-
-        private static string _Path;
-
         public static string Path
         {
             get
             {
-                if (string.IsNullOrEmpty(_Path))
+                if (string.IsNullOrEmpty(BaseSettings.Default.SiglusKeyFinderPath))
                 {
+                    BaseSettings.Default.SiglusKeyFinderPath = DefaultPath;
+                    BaseSettings.Default.Save();
                     return DefaultPath;
                 }
-                return _Path;
+                return BaseSettings.Default.SiglusKeyFinderPath;
             }
             set
             {
-                _Path = value;
+                BaseSettings.Default.SiglusKeyFinderPath = value;
+                BaseSettings.Default.Save();
             }
         }
 
-        public static string DefaultPath { get; } = System.IO.Path.Combine(Environment.CurrentDirectory, "Extensions\\SiglusKeyFinder.exe");
+        private static string DefaultPath => System.IO.Path.Combine(Environment.CurrentDirectory, "Extensions\\SiglusKeyFinder.exe");
 
         public string Description => "Extract xor key from SiglusEngine games.";
         public string OriginalAuthor => "yanhua0518";

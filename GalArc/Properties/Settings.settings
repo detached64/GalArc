@@ -1,1 +1,36 @@
-﻿<?xml version='1.0' encoding='utf-8'?> <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GalArc.Properties" GeneratedClassName="Settings"> <Profiles /> <Settings> <Setting Name="chkbxDebug" Type="System.Boolean" Scope="User"> <Value Profile="(Default)">False</Value> </Setting> <Setting Name="chkbxSave" Type="System.Boolean" Scope="User"> <Value Profile="(Default)">True</Value> </Setting> <Setting Name="AutoSaveState" Type="System.Boolean" Scope="User"> <Value Profile="(Default)">False</Value> </Setting> </Settings> </SettingsFile>
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GalArc.Properties" GeneratedClassName="BaseSettings">
+	<Profiles />
+	<Settings>
+		<Setting Name="IsDebugMode" Type="System.Boolean" Scope="User">
+			<Value Profile="(Default)">False</Value>
+		</Setting>
+		<Setting Name="ToSaveLog" Type="System.Boolean" Scope="User">
+			<Value Profile="(Default)">True</Value>
+		</Setting>
+		<Setting Name="ToAutoSaveState" Type="System.Boolean" Scope="User">
+			<Value Profile="(Default)">True</Value>
+		</Setting>
+		<Setting Name="IsExtensionsEnabled" Type="System.Boolean" Scope="User">
+			<Value Profile="(Default)">True</Value>
+		</Setting>
+		<Setting Name="IsGARbroDBEnabled" Type="System.Boolean" Scope="User">
+			<Value Profile="(Default)">True</Value>
+		</Setting>
+		<Setting Name="GARbroDBPath" Type="System.String" Scope="User">
+			<Value Profile="(Default)" />
+		</Setting>
+		<Setting Name="IsSiglusKeyFinderEnabled" Type="System.Boolean" Scope="User">
+			<Value Profile="(Default)">True</Value>
+		</Setting>
+		<Setting Name="SiglusKeyFinderPath" Type="System.String" Scope="User">
+			<Value Profile="(Default)" />
+		</Setting>
+		<Setting Name="IsDatabaseEnabled" Type="System.Boolean" Scope="User">
+			<Value Profile="(Default)">True</Value>
+		</Setting>
+		<Setting Name="DatabasePath" Type="System.String" Scope="User">
+			<Value Profile="(Default)" />
+		</Setting>
+	</Settings>
+</SettingsFile>

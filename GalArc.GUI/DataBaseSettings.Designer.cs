@@ -1,6 +1,6 @@
 ﻿namespace GalArc.GUI
 {
-    partial class DataBaseSettings
+    partial class DatabaseSettings
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DataBaseSettings));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DatabaseSettings));
             this.chkbxEnableDataBase = new System.Windows.Forms.CheckBox();
             this.panel = new System.Windows.Forms.Panel();
             this.lbDBPath = new System.Windows.Forms.Label();
@@ -96,7 +96,7 @@
             this.Controls.Add(this.panel);
             this.Controls.Add(this.chkbxEnableDataBase);
             this.Name = "DataBaseSettings";
-            this.Load += new System.EventHandler(this.DataBaseSettings_Load);
+            this.Load += new System.EventHandler(this.DatabaseSettings_Load);
             this.panel.ResumeLayout(false);
             this.panel.PerformLayout();
             this.ResumeLayout(false);

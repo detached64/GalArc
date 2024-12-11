@@ -12,7 +12,7 @@ namespace GalArc.GUI.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.11.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.12.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -26,84 +26,72 @@ namespace GalArc.GUI.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool chkbxMatch_checked {
+        public bool ToMatchPath {
             get {
-                return ((bool)(this["chkbxMatch_checked"]));
+                return ((bool)(this["ToMatchPath"]));
             }
             set {
-                this["chkbxMatch_checked"] = value;
+                this["ToMatchPath"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string lastLang {
+        public string LastLanguage {
             get {
-                return ((string)(this["lastLang"]));
+                return ((string)(this["LastLanguage"]));
             }
             set {
-                this["lastLang"] = value;
+                this["LastLanguage"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool chkbxShowLog_checked {
+        public bool ToShowLog {
             get {
-                return ((bool)(this["chkbxShowLog_checked"]));
+                return ((bool)(this["ToShowLog"]));
             }
             set {
-                this["chkbxShowLog_checked"] = value;
+                this["ToShowLog"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool TopMost {
+        public bool IsTopMost {
             get {
-                return ((bool)(this["TopMost"]));
+                return ((bool)(this["IsTopMost"]));
             }
             set {
-                this["TopMost"] = value;
+                this["IsTopMost"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool chkbxUnpack_checked {
+        public bool IsUnpackMode {
             get {
-                return ((bool)(this["chkbxUnpack_checked"]));
+                return ((bool)(this["IsUnpackMode"]));
             }
             set {
-                this["chkbxUnpack_checked"] = value;
+                this["IsUnpackMode"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool chkbxPack_checked {
+        public bool IsPackMode {
             get {
-                return ((bool)(this["chkbxPack_checked"]));
+                return ((bool)(this["IsPackMode"]));
             }
             set {
-                this["chkbxPack_checked"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool AutoSaveState {
-            get {
-                return ((bool)(this["AutoSaveState"]));
-            }
-            set {
-                this["AutoSaveState"] = value;
+                this["IsPackMode"] = value;
             }
         }
         
@@ -170,84 +158,12 @@ namespace GalArc.GUI.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool FreezeControls {
+        public bool ToFreezeControls {
             get {
-                return ((bool)(this["FreezeControls"]));
+                return ((bool)(this["ToFreezeControls"]));
             }
             set {
-                this["FreezeControls"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool EnableExtensions {
-            get {
-                return ((bool)(this["EnableExtensions"]));
-            }
-            set {
-                this["EnableExtensions"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool EnableGARbroDB {
-            get {
-                return ((bool)(this["EnableGARbroDB"]));
-            }
-            set {
-                this["EnableGARbroDB"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string GARbroDBPath {
-            get {
-                return ((string)(this["GARbroDBPath"]));
-            }
-            set {
-                this["GARbroDBPath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string DataBasePath {
-            get {
-                return ((string)(this["DataBasePath"]));
-            }
-            set {
-                this["DataBasePath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool EnableSiglusKeyFinder {
-            get {
-                return ((bool)(this["EnableSiglusKeyFinder"]));
-            }
-            set {
-                this["EnableSiglusKeyFinder"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SiglusKeyFinderPath {
-            get {
-                return ((string)(this["SiglusKeyFinderPath"]));
-            }
-            set {
-                this["SiglusKeyFinderPath"] = value;
+                this["ToFreezeControls"] = value;
             }
         }
     }

@@ -14,6 +14,11 @@ namespace ArcFormats
         {
             throw new NotImplementedException();
         }
+
+        public static bool IsSaneCount(int count)
+        {
+            return count > 0 && count < 0x10000;
+        }
     }
 
     public class Entry

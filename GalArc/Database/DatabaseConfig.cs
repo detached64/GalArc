@@ -1,30 +1,32 @@
-﻿using System;
+﻿using GalArc.Properties;
+using System;
 
-namespace GalArc.DataBase
+namespace GalArc.Database
 {
-    public static class DataBaseConfig
+    public static class DatabaseConfig
     {
         public static bool IsEnabled { get; set; } = true;
-
-        private static string _Path;
 
         public static string Path
         {
             get
             {
-                if (string.IsNullOrEmpty(_Path))
+                if (string.IsNullOrEmpty(BaseSettings.Default.DatabasePath))
                 {
+                    BaseSettings.Default.DatabasePath = DefaultPath;
+                    BaseSettings.Default.Save();
                     return DefaultPath;
                 }
-                return _Path;
+                return BaseSettings.Default.DatabasePath;
             }
             set
             {
-                _Path = value;
+                BaseSettings.Default.SiglusKeyFinderPath = value;
+                BaseSettings.Default.Save();
             }
         }
 
-        private static string DefaultPath { get; } = System.IO.Path.Combine(Environment.CurrentDirectory, "Database\\");
+        private static string DefaultPath => System.IO.Path.Combine(Environment.CurrentDirectory, "Database\\");
     }
 
     public class Scheme

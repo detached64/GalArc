@@ -65,13 +65,13 @@
     <Compile Include="Extensions\GARbroDB\Deserializer.cs" />
     <Compile Include="Extensions\SiglusKeyFinder\KeyFinder.cs" />
     <Compile Include="Extensions\SiglusKeyFinder\SiglusKeyFinderConfig.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Strings\SchemeInfos.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SchemeInfos.resx</DependentUpon>
     </Compile>
     <Compile Include="Extensions\GARbroDB\Scheme.cs" />
-    <Compile Include="Logs\LogConfig.cs" />
     <Compile Include="Logs\LogWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,7 +105,7 @@
     <EmbeddedResource Include="Properties\Resources.zh-Hans.resx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">

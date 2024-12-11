@@ -12,12 +12,12 @@ namespace GalArc.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.11.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.12.0.0")]
+    public sealed partial class BaseSettings : global::System.Configuration.ApplicationSettingsBase {
         
-        private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+        private static BaseSettings defaultInstance = ((BaseSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new BaseSettings())));
         
-        public static Settings Default {
+        public static BaseSettings Default {
             get {
                 return defaultInstance;
             }
@@ -26,36 +26,120 @@ namespace GalArc.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool chkbxDebug {
+        public bool IsDebugMode {
             get {
-                return ((bool)(this["chkbxDebug"]));
+                return ((bool)(this["IsDebugMode"]));
             }
             set {
-                this["chkbxDebug"] = value;
+                this["IsDebugMode"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool chkbxSave {
+        public bool ToSaveLog {
             get {
-                return ((bool)(this["chkbxSave"]));
+                return ((bool)(this["ToSaveLog"]));
             }
             set {
-                this["chkbxSave"] = value;
+                this["ToSaveLog"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AutoSaveState {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ToAutoSaveState {
             get {
-                return ((bool)(this["AutoSaveState"]));
+                return ((bool)(this["ToAutoSaveState"]));
             }
             set {
-                this["AutoSaveState"] = value;
+                this["ToAutoSaveState"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsExtensionsEnabled {
+            get {
+                return ((bool)(this["IsExtensionsEnabled"]));
+            }
+            set {
+                this["IsExtensionsEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsGARbroDBEnabled {
+            get {
+                return ((bool)(this["IsGARbroDBEnabled"]));
+            }
+            set {
+                this["IsGARbroDBEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string GARbroDBPath {
+            get {
+                return ((string)(this["GARbroDBPath"]));
+            }
+            set {
+                this["GARbroDBPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsSiglusKeyFinderEnabled {
+            get {
+                return ((bool)(this["IsSiglusKeyFinderEnabled"]));
+            }
+            set {
+                this["IsSiglusKeyFinderEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SiglusKeyFinderPath {
+            get {
+                return ((string)(this["SiglusKeyFinderPath"]));
+            }
+            set {
+                this["SiglusKeyFinderPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsDatabaseEnabled {
+            get {
+                return ((bool)(this["IsDatabaseEnabled"]));
+            }
+            set {
+                this["IsDatabaseEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DatabasePath {
+            get {
+                return ((string)(this["DatabasePath"]));
+            }
+            set {
+                this["DatabasePath"] = value;
             }
         }
     }

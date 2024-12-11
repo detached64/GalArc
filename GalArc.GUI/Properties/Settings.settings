@@ -2,26 +2,23 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GalArc.GUI.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="chkbxMatch_checked" Type="System.Boolean" Scope="User">
+    <Setting Name="ToMatchPath" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="lastLang" Type="System.String" Scope="User">
+    <Setting Name="LastLanguage" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="chkbxShowLog_checked" Type="System.Boolean" Scope="User">
+    <Setting Name="ToShowLog" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="TopMost" Type="System.Boolean" Scope="User">
+    <Setting Name="IsTopMost" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="chkbxUnpack_checked" Type="System.Boolean" Scope="User">
+    <Setting Name="IsUnpackMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="chkbxPack_checked" Type="System.Boolean" Scope="User">
+    <Setting Name="IsPackMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="AutoSaveState" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="DefaultEncoding" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -38,26 +35,8 @@
     <Setting Name="PackSelectedNode1" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="FreezeControls" Type="System.Boolean" Scope="User">
+    <Setting Name="ToFreezeControls" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="EnableExtensions" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="EnableGARbroDB" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="GARbroDBPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="DataBasePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="EnableSiglusKeyFinder" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="SiglusKeyFinderPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

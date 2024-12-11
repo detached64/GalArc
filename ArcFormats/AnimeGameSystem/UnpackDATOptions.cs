@@ -19,6 +19,7 @@ namespace ArcFormats.AnimeGameSystem
             pi.SetValue(this.combSchemes, true, null);
 
             ImportSchemesFromGARbroDB();
+            this.combSchemes.SelectedIndex = 0;
         }
 
         private void ImportSchemesFromGARbroDB()
@@ -32,7 +33,6 @@ namespace ArcFormats.AnimeGameSystem
                     {
                         this.combSchemes.Items.Add(scheme.Key);
                     }
-                    this.combSchemes.SelectedIndex = 0;
                     Logger.Debug(string.Format(Resources.logImportGARbroDBSchemeSuccess, DAT.ImportedSchemes.KnownSchemes.Count));
                 }
             }

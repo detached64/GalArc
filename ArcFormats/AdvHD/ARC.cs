@@ -269,19 +269,18 @@ namespace ArcFormats.AdvHD
             {
                 using (BinaryReader br = new BinaryReader(fs))
                 {
-                    fs.Position = 6;
-                    a = br.ReadChar();
                     fs.Position = 0;
                     fileCount = br.ReadInt32();
+                    a = br.ReadChar();
                 }
             }
 
-            if (a >= 'A')   //extension
+            if (a >= 'A' && a <= 'z')
             {
                 Logger.ShowVersion("arc", 1);
                 arcV1_unpack(filePath, folderPath);
             }
-            else if (fileCount < 100000 && fileCount > 0)
+            else if (IsSaneCount(fileCount))
             {
                 Logger.ShowVersion("arc", 2);
                 arcV2_unpack(filePath, folderPath);

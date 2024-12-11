@@ -1,23 +1,23 @@
-﻿using GalArc.DataBase;
+﻿using GalArc.Database;
+using GalArc.Properties;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using GalArc.GUI.Properties;
 
 namespace GalArc.GUI
 {
-    public partial class DataBaseSettings : UserControl
+    public partial class DatabaseSettings : UserControl
     {
-        private static DataBaseSettings instance;
-        public static DataBaseSettings Instance
+        private static DatabaseSettings instance;
+        public static DatabaseSettings Instance
         {
             get
             {
-                return instance ?? (instance = new DataBaseSettings());
+                return instance ?? (instance = new DatabaseSettings());
             }
         }
 
-        public DataBaseSettings()
+        public DatabaseSettings()
         {
             InitializeComponent();
             this.txtDBInfo.BackColor = Color.FromArgb(249, 249, 249);
@@ -31,32 +31,22 @@ namespace GalArc.GUI
                 if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
                 {
                     this.txtDBPath.Text = folderBrowserDialog.SelectedPath;
-                    DataBaseConfig.Path = folderBrowserDialog.SelectedPath;
-                    Settings.Default.DataBasePath = folderBrowserDialog.SelectedPath;
-                    Settings.Default.Save();
+                    DatabaseConfig.Path = folderBrowserDialog.SelectedPath;
+                    BaseSettings.Default.DatabasePath = folderBrowserDialog.SelectedPath;
+                    BaseSettings.Default.Save();
                 }
             }
         }
 
         private void txtDBPath_TextChanged(object sender, EventArgs e)
         {
-            DataBaseConfig.Path = this.txtDBPath.Text;
-            Settings.Default.DataBasePath = this.txtDBPath.Text;
-            Settings.Default.Save();
-
+            DatabaseConfig.Path = this.txtDBPath.Text;
             this.txtDBInfo.Text = Deserializer.GetInfos().Trim();
         }
 
-        private void DataBaseSettings_Load(object sender, EventArgs e)
+        private void DatabaseSettings_Load(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(Settings.Default.DataBasePath))
-            {
-                this.txtDBPath.Text = Settings.Default.DataBasePath;
-            }
-            else
-            {
-                this.txtDBPath.Text = DataBaseConfig.Path;
-            }
+            this.txtDBPath.Text = DatabaseConfig.Path;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using GalArc.Logs;
 using GalArc.Strings;
+using GalArc.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace GalArc.DataBase
+namespace GalArc.Database
 {
     public static class Deserializer
     {
@@ -42,12 +43,12 @@ namespace GalArc.DataBase
         /// <param name="type"></param>
         private static void LoadScheme(Type type)
         {
-            if (!DataBaseConfig.IsEnabled)
+            if (!BaseSettings.Default.IsDatabaseEnabled)
             {
                 return;
             }
             string name = type.Name.Remove(type.Name.Length - 6);    // remove "Scheme"
-            string path = Path.Combine(DataBaseConfig.Path, name + ".json");
+            string path = Path.Combine(DatabaseConfig.Path, name + ".json");
             if (!File.Exists(path))
             {
                 return;
@@ -64,7 +65,7 @@ namespace GalArc.DataBase
         /// </summary>
         private static void LoadSchemes()
         {
-            if (!DataBaseConfig.IsEnabled)
+            if (!BaseSettings.Default.IsDatabaseEnabled)
             {
                 return;
             }
@@ -82,7 +83,7 @@ namespace GalArc.DataBase
         public static Scheme Deserialize(Type type)
         {
             string name = type.Name.Remove(type.Name.Length - 6);
-            if (!DataBaseConfig.IsEnabled)
+            if (!BaseSettings.Default.IsDatabaseEnabled)
             {
                 return null;
             }
@@ -109,7 +110,7 @@ namespace GalArc.DataBase
         /// <returns></returns>
         public static Scheme ReadScheme(Type type)
         {
-            if (!DataBaseConfig.IsEnabled)
+            if (!BaseSettings.Default.IsDatabaseEnabled)
             {
                 return null;
             }
@@ -125,7 +126,7 @@ namespace GalArc.DataBase
         private static string GetInfo(Type type)
         {
             string name = type.Name.Remove(type.Name.Length - 6);    // remove "Scheme"
-            string path = Path.Combine(DataBaseConfig.Path, name + ".json");
+            string path = Path.Combine(DatabaseConfig.Path, name + ".json");
 
             try
             {
@@ -180,7 +181,7 @@ namespace GalArc.DataBase
         /// <returns></returns>
         public static string GetInfos()
         {
-            if (!DataBaseConfig.IsEnabled)
+            if (!BaseSettings.Default.IsDatabaseEnabled)
             {
                 return SchemeInfos.InfoDisabled;
             }

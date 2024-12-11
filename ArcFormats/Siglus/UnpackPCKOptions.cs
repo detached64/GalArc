@@ -1,9 +1,10 @@
 ﻿using ArcFormats.Properties;
-using GalArc.DataBase;
-using GalArc.DataBase.Siglus;
+using GalArc.Database;
+using GalArc.Database.Siglus;
 using GalArc.Extensions;
 using GalArc.Extensions.SiglusKeyFinder;
 using GalArc.Logs;
+using GalArc.Properties;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
@@ -146,7 +147,7 @@ namespace ArcFormats.Siglus
 
         private void UnpackPCKOptions_Load(object sender, EventArgs e)
         {
-            this.panel.Visible = ExtensionsConfig.IsEnabled && SiglusKeyFinderConfig.IsEnabled && KeyFinder.IsValidExe();
+            this.panel.Visible = BaseSettings.Default.IsDatabaseEnabled && BaseSettings.Default.IsSiglusKeyFinderEnabled && KeyFinder.IsValidExe();
         }
     }
 }

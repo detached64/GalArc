@@ -1,4 +1,5 @@
 ﻿using GalArc.Logs;
+using GalArc.Properties;
 using GalArc.Strings;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -29,7 +30,7 @@ namespace GalArc.Extensions.GARbroDB
         /// <returns></returns>
         public static Scheme Deserialize(Type type, string jsonEngineName)
         {
-            if (!ExtensionsConfig.IsEnabled || !GARbroDBConfig.IsEnabled)
+            if (!BaseSettings.Default.IsExtensionsEnabled || !BaseSettings.Default.IsGARbroDBEnabled)
             {
                 return null;
             }

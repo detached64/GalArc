@@ -2,11 +2,6 @@
 
 namespace GalArc.Extensions
 {
-    public static class ExtensionsConfig
-    {
-        public static bool IsEnabled { get; set; } = true;
-    }
-
     public interface IExtension
     {
         string Description { get; }

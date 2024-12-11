@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalArc.Properties;
+using System;
 using System.Diagnostics;
 using System.IO;
 
@@ -21,7 +22,7 @@ namespace GalArc.Extensions.SiglusKeyFinder
 
         public static string FindKey(string siglusEnginePath)
         {
-            if (!SiglusKeyFinderConfig.IsEnabled)
+            if (!BaseSettings.Default.IsSiglusKeyFinderEnabled)
             {
                 return null;
             }

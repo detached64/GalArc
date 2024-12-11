@@ -1,4 +1,4 @@
-﻿using GalArc.DataBase.Siglus;
+﻿using GalArc.Database.Siglus;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;

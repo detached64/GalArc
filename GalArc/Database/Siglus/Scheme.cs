@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace GalArc.DataBase.Siglus
+namespace GalArc.Database.Siglus
 {
     [DatabaseScheme]
     public class SiglusScheme : Scheme

@@ -42,7 +42,7 @@ namespace GalArc.GUI
                 }
             }
             Logger.ShowCheckSuccess(isNewVerExist);
-            Logger.ShowVersions(currentVersion, latestVersion);
+            Logger.ShowProgramVersion(currentVersion, latestVersion);
             if (isNewVerExist)
             {
                 UpdateBox box = new UpdateBox();

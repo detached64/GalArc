@@ -1,6 +1,6 @@
-﻿// File: Log/Log.cs
+﻿// File: Logs/LogWindow.cs
 // Date: 2024/08/27
-// Description: Log窗体
+// Description: Log Window
 //
 // Copyright (C) 2024 detached64
 //
@@ -54,14 +54,10 @@ namespace GalArc.Logs
 
         private void LogWindow_Load(object sender, EventArgs e)
         {
-            if (Settings.Default.AutoSaveState)
+            if (BaseSettings.Default.ToAutoSaveState)
             {
-                this.log_chkbxDebug.Checked = Settings.Default.chkbxDebug;
-            }
-
-            if (Settings.Default.AutoSaveState)
-            {
-                this.log_chkbxSave.Checked = Settings.Default.chkbxSave;
+                this.log_chkbxDebug.Checked = BaseSettings.Default.IsDebugMode;
+                this.log_chkbxSave.Checked = BaseSettings.Default.ToSaveLog;
             }
         }
 
@@ -85,26 +81,20 @@ namespace GalArc.Logs
 
         private void log_chkbxDebug_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.AutoSaveState)
+            if (BaseSettings.Default.ToAutoSaveState)
             {
-                Settings.Default.chkbxDebug = this.log_chkbxDebug.Checked;
-                Settings.Default.Save();
+                BaseSettings.Default.IsDebugMode = this.log_chkbxDebug.Checked;
+                BaseSettings.Default.Save();
             }
         }
 
         private void log_chkbxSave_CheckedChanged(object sender, EventArgs e)
         {
-            if (Settings.Default.AutoSaveState)
+            if (BaseSettings.Default.ToAutoSaveState)
             {
-                Settings.Default.chkbxSave = this.log_chkbxSave.Checked;
-                Settings.Default.Save();
+                BaseSettings.Default.ToSaveLog = this.log_chkbxSave.Checked;
+                BaseSettings.Default.Save();
             }
-        }
-
-        public static void ChangeLocalSettings(bool autoSaveState)
-        {
-            Settings.Default.AutoSaveState = autoSaveState;
-            Settings.Default.Save();
         }
     }
 }

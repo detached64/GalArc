@@ -15,7 +15,6 @@ namespace ArcFormats.Valkyria
             BinaryReader br = new BinaryReader(fs);
             try
             {
-                // Read index size and validate
                 uint indexSize = br.ReadUInt32();
                 if (indexSize == 0 || indexSize >= fs.Length)
                 {
@@ -28,36 +27,26 @@ namespace ArcFormats.Valkyria
                     throw new InvalidDataException("Invalid file count or index size");
                 }
 
-                // Initialize offset calculation
-                uint indexOffset = 4; // Starting after the index size
+                uint indexOffset = 4;
                 long baseOffset = indexOffset + indexSize;
                 var entries = new List<Entry>();
 
-                // Read file entries
                 for (int i = 0; i < fileCount; i++)
                 {
                     var entry = new Entry();
-
-                    // Read filename (0x104 bytes)
                     entry.Name = br.ReadCString();
                     fs.Position = indexOffset + 0x104;
-
-                    // Read offset and size
                     uint offset = br.ReadUInt32();
                     entry.Offset = (uint)(baseOffset + offset);
                     entry.Size = br.ReadUInt32();
-
-                    // Validate entry
                     if (entry.Offset + entry.Size > fs.Length)
                     {
                         throw new InvalidDataException($"Invalid file placement: {entry.Name} at offset {entry.Offset} with size {entry.Size}");
                     }
 
                     entries.Add(entry);
-                    indexOffset += 0x10C; // Move to next entry
+                    indexOffset += 0x10C;
                 }
-
-                // Extract files
                 Logger.InitBar(fileCount);
                 Directory.CreateDirectory(folderPath);
 
@@ -65,11 +54,9 @@ namespace ArcFormats.Valkyria
                 {
                     try
                     {
-                        // Sanitize filename and create full path
                         string safeName = Path.GetFileName(entry.Name);
                         string outputPath = Path.Combine(folderPath, safeName);
 
-                        // Read and write file data
                         fs.Position = entry.Offset;
                         byte[] data = new byte[entry.Size];
                         int bytesRead = fs.Read(data, 0, (int)entry.Size);

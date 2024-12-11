@@ -1,5 +1,4 @@
 ﻿using GalArc.GUI.Properties;
-using GalArc.Logs;
 using System;
 using System.Windows.Forms;
 
@@ -24,29 +23,28 @@ namespace GalArc.GUI
 
         private void GeneralSettings_Load(object sender, EventArgs e)
         {
-            this.chkbxAutoSave.Checked = Settings.Default.AutoSaveState;
-            this.chkbxTopMost.Checked = Settings.Default.TopMost;
-            this.chkbxFreeze.Checked = Settings.Default.FreezeControls;
+            this.chkbxAutoSave.Checked = GalArc.Properties.BaseSettings.Default.ToAutoSaveState;
+            this.chkbxTopMost.Checked = Settings.Default.IsTopMost;
+            this.chkbxFreeze.Checked = Settings.Default.ToFreezeControls;
             MainWindow.Instance.TopMost = this.chkbxTopMost.Checked;
         }
 
         private void chkbxAutoSave_CheckedChanged(object sender, EventArgs e)
         {
-            Settings.Default.AutoSaveState = this.chkbxAutoSave.Checked;
-            Settings.Default.Save();
-            LogConfig.autoSaveState = this.chkbxAutoSave.Checked;
+            GalArc.Properties.BaseSettings.Default.ToAutoSaveState = this.chkbxAutoSave.Checked;
+            GalArc.Properties.BaseSettings.Default.Save();
         }
 
         private void chkbxTopMost_CheckedChanged(object sender, EventArgs e)
         {
             MainWindow.Instance.TopMost = this.chkbxTopMost.Checked;
-            Settings.Default.TopMost = this.chkbxTopMost.Checked;
+            Settings.Default.IsTopMost = this.chkbxTopMost.Checked;
             Settings.Default.Save();
         }
 
         private void chkbxFreeze_CheckedChanged(object sender, EventArgs e)
         {
-            Settings.Default.FreezeControls = this.chkbxFreeze.Checked;
+            Settings.Default.ToFreezeControls = this.chkbxFreeze.Checked;
             Settings.Default.Save();
         }
     }

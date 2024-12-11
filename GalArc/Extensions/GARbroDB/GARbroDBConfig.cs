@@ -1,31 +1,31 @@
-﻿using System;
+﻿using GalArc.Properties;
+using System;
 
 namespace GalArc.Extensions.GARbroDB
 {
     [Extension]
     public class GARbroDBConfig : IExtension
     {
-        public static bool IsEnabled { get; set; } = true;
-
-        private static string _Path;
-
         public static string Path
         {
             get
             {
-                if (string.IsNullOrEmpty(_Path))
+                if (string.IsNullOrEmpty(BaseSettings.Default.GARbroDBPath))
                 {
+                    BaseSettings.Default.GARbroDBPath = DefaultPath;
+                    BaseSettings.Default.Save();
                     return DefaultPath;
                 }
-                return _Path;
+                return BaseSettings.Default.GARbroDBPath;
             }
             set
             {
-                _Path = value;
+                BaseSettings.Default.GARbroDBPath = value;
+                BaseSettings.Default.Save();
             }
         }
 
-        public static string DefaultPath { get; } = System.IO.Path.Combine(Environment.CurrentDirectory, "Extensions\\Formats.json");
+        public static string DefaultPath => System.IO.Path.Combine(Environment.CurrentDirectory, "Extensions\\Formats.json");
 
         public string Description => "Database of GARbro.";
 

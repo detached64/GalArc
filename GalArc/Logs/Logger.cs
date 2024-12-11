@@ -1,6 +1,6 @@
-﻿// File: Log/LogUtility.cs
+﻿// File: Logs/Logger.cs
 // Date: 2024/08/28
-// Description: 显示日志的工具类，提供一系列显示日志的静态方法
+// Description: Loggers
 //
 // Copyright (C) 2024 detached64
 //
@@ -43,10 +43,11 @@ namespace GalArc.Logs
         {
             File.AppendAllText("log.txt", "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "]" + log);
         }
+
         private static void WriteAndSaveLog(string log, int logLevel = 1)
         {
             LogLevel level = (LogLevel)logLevel;
-            if ((level == LogLevel.Debug && Settings.Default.chkbxDebug) || level == LogLevel.Info || level == LogLevel.Error)
+            if ((level == LogLevel.Debug && BaseSettings.Default.IsDebugMode) || level == LogLevel.Info || level == LogLevel.Error)
             {
                 if (LogWindow.Instance.log_txtLog.InvokeRequired)
                 {
@@ -57,15 +58,17 @@ namespace GalArc.Logs
                     LogWindow.Instance.log_txtLog.AppendText(log + Environment.NewLine);
                 }
             }
-            if (Settings.Default.chkbxSave)
+            if (BaseSettings.Default.ToSaveLog)
             {
                 SaveLog("[" + level.ToString() + "]" + log + Environment.NewLine);
             }
         }
+
         public static void NewInstance()
         {
             File.AppendAllText("log.txt", Environment.NewLine + "[" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "][" + Resources.logNewInstance + "]" + Environment.NewLine);
         }
+
         /// <summary>
         /// Show error log and throw exception if <paramref name="toThrow"/> is true.
         /// </summary>
@@ -229,7 +232,7 @@ namespace GalArc.Logs
         {
             Error(Resources.logUpdateError, false);
         }
-        public static void ShowVersions(string cv, string lv)
+        public static void ShowProgramVersion(string cv, string lv)
         {
             Debug(string.Format(Resources.logVersions, cv, lv));
         }
