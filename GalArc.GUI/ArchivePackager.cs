@@ -89,7 +89,9 @@ namespace GalArc.GUI
                 method = type.GetMethod("Unpack", BindingFlags.Instance | BindingFlags.Public);
                 if (method != null)
                 {
-                    Dispatch();
+                    Logger.InitUnpack(input, output);
+                    method.Invoke(instance, param);
+                    Logger.FinishUnpack();
                 }
                 else
                 {
@@ -112,7 +114,9 @@ namespace GalArc.GUI
                 method = type.GetMethod("Pack", BindingFlags.Instance | BindingFlags.Public);
                 if (method != null)
                 {
-                    Dispatch();
+                    Logger.InitPack(input, output);
+                    method.Invoke(instance, param);
+                    Logger.FinishPack();
                 }
                 else
                 {
@@ -149,13 +153,6 @@ namespace GalArc.GUI
                 }
             }
             return instances.Count > 0;
-        }
-
-        private void Dispatch()
-        {
-            Logger.InitUnpack(input, output);
-            method.Invoke(instance, param);
-            Logger.FinishUnpack();
         }
 
         public void Dispose()

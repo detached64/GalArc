@@ -247,6 +247,7 @@
             this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
             this.Name = "MainWindow";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.LocationChanged += new System.EventHandler(this.MainWindow_LocationChanged);
             this.menuStrip.ResumeLayout(false);

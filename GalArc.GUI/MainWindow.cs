@@ -67,7 +67,7 @@ namespace GalArc
             this.TopMost = Settings.Default.IsTopMost;
             LogWindow.Instance.TopMost = this.TopMost;
             this.combLang.Text = Languages.languages.FirstOrDefault(x => x.Value == LocalCulture).Key;
-            if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
+            if (Properties.BaseSettings.Default.ToAutoSaveState)
             {
                 this.chkbxUnpack.Checked = Settings.Default.IsUnpackMode;
                 this.chkbxPack.Checked = Settings.Default.IsPackMode;
@@ -165,7 +165,8 @@ namespace GalArc
                 UpdateTreeUnpack();
                 this.btExecute.Text = this.chkbxUnpack.Text;
             }
-            if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
+            SyncPath();
+            if (Properties.BaseSettings.Default.ToAutoSaveState)
             {
                 Settings.Default.IsUnpackMode = this.chkbxUnpack.Checked;
                 Settings.Default.Save();
@@ -180,7 +181,8 @@ namespace GalArc
                 UpdateTreePack();
                 this.btExecute.Text = this.chkbxPack.Text;
             }
-            if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
+            SyncPath();
+            if (Properties.BaseSettings.Default.ToAutoSaveState)
             {
                 Settings.Default.IsPackMode = this.chkbxPack.Checked;
                 Settings.Default.Save();
@@ -200,7 +202,7 @@ namespace GalArc
                         return;
                     }
 
-                    if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
+                    if (Properties.BaseSettings.Default.ToAutoSaveState)
                     {
                         Settings.Default.UnpackSelectedNode0 = e.Node.Parent.Index;
                         Settings.Default.UnpackSelectedNode1 = e.Node.Index;
@@ -221,7 +223,7 @@ namespace GalArc
                         return;
                     }
 
-                    if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
+                    if (Properties.BaseSettings.Default.ToAutoSaveState)
                     {
                         Settings.Default.PackSelectedNode0 = e.Node.Parent.Index;
                         Settings.Default.PackSelectedNode1 = e.Node.Index;
@@ -335,24 +337,8 @@ namespace GalArc
 
         private void chkbxMatch_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.chkbxMatch.Checked)
-            {
-                if (this.chkbxPack.Checked)
-                {
-                    if (!string.IsNullOrEmpty(this.txtInputPath.Text) && Directory.Exists(this.txtInputPath.Text))
-                    {
-                        this.txtOutputPath.Text = PackPathSync(this.txtInputPath.Text, selectedNodePack.Text);
-                    }
-                }
-                else if (this.chkbxUnpack.Checked)
-                {
-                    if (!string.IsNullOrEmpty(this.txtInputPath.Text) && File.Exists(this.txtInputPath.Text))
-                    {
-                        this.txtOutputPath.Text = UnpackPathSync(this.txtInputPath.Text);
-                    }
-                }
-            }
-            if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
+            SyncPath();
+            if (Properties.BaseSettings.Default.ToAutoSaveState)
             {
                 Settings.Default.ToMatchPath = this.chkbxMatch.Checked;
                 Settings.Default.Save();
@@ -361,23 +347,7 @@ namespace GalArc
 
         private void txtInputPath_TextChanged(object sender, EventArgs e)
         {
-            if (this.chkbxMatch.Checked)
-            {
-                if (this.chkbxPack.Checked)
-                {
-                    if (!string.IsNullOrEmpty(this.txtInputPath.Text) && Directory.Exists(this.txtInputPath.Text))
-                    {
-                        this.txtOutputPath.Text = PackPathSync(this.txtInputPath.Text, selectedNodePack.Text);
-                    }
-                }
-                else if (this.chkbxUnpack.Checked)
-                {
-                    if (!string.IsNullOrEmpty(this.txtInputPath.Text) && File.Exists(this.txtInputPath.Text))
-                    {
-                        this.txtOutputPath.Text = UnpackPathSync(this.txtInputPath.Text);
-                    }
-                }
-            }
+            SyncPath();
         }
 
         private void UpdateTreeUnpack()
@@ -395,8 +365,7 @@ namespace GalArc
                 foreach (var engine in EngineInfos.engineInfos)
                 {
                     TreeNode rootNode = new TreeNode(engine.EngineName);
-                    string[] extensions = engine.UnpackFormat.Split('/');
-                    foreach (var extension in extensions)
+                    foreach (var extension in engine.UnpackFormat.Split('/'))
                     {
                         TreeNode node = new TreeNode(extension);
                         rootNode.Nodes.Add(node);
@@ -404,7 +373,7 @@ namespace GalArc
                     this.treeViewEngines.Nodes.Add(rootNode);
                 }
             }
-            if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
+            if (Properties.BaseSettings.Default.ToAutoSaveState)
             {
                 TreeNode node0 = treeViewEngines.Nodes[Settings.Default.UnpackSelectedNode0];
                 TreeNode node1 = node0.Nodes[Settings.Default.UnpackSelectedNode1];
@@ -440,7 +409,7 @@ namespace GalArc
                     }
                 }
             }
-            if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
+            if (Properties.BaseSettings.Default.ToAutoSaveState)
             {
                 TreeNode node0 = treeViewEngines.Nodes[Settings.Default.PackSelectedNode0];
                 TreeNode node1 = node0.Nodes[Settings.Default.PackSelectedNode1];
@@ -603,40 +572,37 @@ namespace GalArc
         {
             LogWindow.Instance.ChangePosition(this.Location.X, this.Location.Y);
             LogWindow.Instance.Visible = this.chkbxShowLog.Checked;
-            if (GalArc.Properties.BaseSettings.Default.ToAutoSaveState)
+            if (Properties.BaseSettings.Default.ToAutoSaveState)
             {
                 Settings.Default.ToShowLog = this.chkbxShowLog.Checked;
                 Settings.Default.Save();
             }
         }
 
-        public string UnpackPathSync(string input)
+        private void SyncPath()
         {
-            string folderPath = Path.Combine(Path.GetDirectoryName(input), Path.GetFileNameWithoutExtension(input));
-            if (File.Exists(folderPath))
+            if (this.chkbxMatch.Checked)
             {
-                return input.Replace('.', '_') + "_unpacked";
-            }
-            else
-            {
-                return folderPath;
+                if (this.chkbxUnpack.Checked)
+                {
+                    if (!string.IsNullOrEmpty(this.txtInputPath.Text) && File.Exists(this.txtInputPath.Text))
+                    {
+                        string folderPath = Path.Combine(Path.GetDirectoryName(this.txtInputPath.Text), Path.GetFileNameWithoutExtension(this.txtInputPath.Text));
+                        this.txtOutputPath.Text = File.Exists(folderPath) ? folderPath.Replace('.', '_') + "_unpacked" : folderPath;
+                    }
+                }
+                else if (this.chkbxPack.Checked)
+                {
+                    if (!string.IsNullOrEmpty(this.txtInputPath.Text) && Directory.Exists(this.txtInputPath.Text))
+                    {
+                        string filePath = this.txtInputPath.Text + "." + selectedNodePack.Text.ToLower();
+                        this.txtOutputPath.Text = File.Exists(filePath) ? filePath + ".new" : filePath;
+                    }
+                }
             }
         }
 
-        public string PackPathSync(string input, string ext)
-        {
-            string filePath = input + "." + ext.ToLower();
-            if (File.Exists(filePath))
-            {
-                return filePath + ".new";
-            }
-            else
-            {
-                return filePath;
-            }
-        }
-
-        internal string GetLocalCulture()
+        private string GetLocalCulture()
         {
             string LocalCulture = string.IsNullOrEmpty(Settings.Default.LastLanguage) ? CultureInfo.CurrentCulture.Name : Settings.Default.LastLanguage;
             if (!Languages.languages.Values.ToArray().Contains(LocalCulture))
@@ -646,10 +612,15 @@ namespace GalArc
             return LocalCulture;
         }
 
-        internal void SetLocalCulture(string LocalCulture)
+        private void SetLocalCulture(string LocalCulture)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo(LocalCulture);
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(LocalCulture);
+        }
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Logger.Flush(true);
         }
     }
 }
