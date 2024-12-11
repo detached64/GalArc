@@ -123,7 +123,7 @@ namespace ArcFormats.Siglus
             br.Dispose();
         }
 
-        protected bool IsRightKey(ScenePckEntry entry, byte[] data, byte[] key, int type)
+        protected bool IsRightKey(byte[] data, byte[] key, int type)
         {
             byte[] backup = new byte[data.Length];
             Array.Copy(data, backup, data.Length);
@@ -158,7 +158,7 @@ namespace ArcFormats.Siglus
                 {
                     continue;
                 }
-                if (IsRightKey(entry, entry.Data, key, type))
+                if (IsRightKey(entry.Data, key, type))
                 {
                     Logger.Info(string.Format(Siglus.logFound, scheme.KnownKey));
                     Logger.Info(string.Format(Siglus.logMatchedGame, FindKeyFromValue(scheme.KnownKey)));

@@ -17,18 +17,6 @@ namespace GalArc.GUI
         private string engineName;
         private string extension;
 
-        private string[] selectedInfo
-        {
-            get { return _selectedInfo; }
-            set
-            {
-                _selectedInfo = value;
-                engineName = _selectedInfo[0];
-                extension = _selectedInfo[1];
-            }
-        }
-        private string[] _selectedInfo;
-
         private string typeName
         {
             get { return $"ArcFormats.{engineName}.{extension}"; }
@@ -72,11 +60,13 @@ namespace GalArc.GUI
 
         public void UnpackOne()
         {
-            selectedInfo = MainWindow.selectedNodeUnpack.FullPath.Split('/');
+            string[] selectedInfo = MainWindow.selectedNodeUnpack.FullPath.Split('/');
+            engineName = selectedInfo[0];
+            extension = selectedInfo[1];
 
             if (extension.Contains("."))
             {
-                if (!String.Equals(extension, Path.GetFileName(input), StringComparison.OrdinalIgnoreCase))
+                if (!string.Equals(extension, Path.GetFileName(input), StringComparison.OrdinalIgnoreCase))
                 {
                     Logger.Error(string.Format(Resources.logFileNameFailToMatch, extension));
                 }
@@ -106,7 +96,9 @@ namespace GalArc.GUI
 
         public void Pack()
         {
-            selectedInfo = MainWindow.selectedNodePack.FullPath.Split('/');
+            string[] selectedInfo = MainWindow.selectedNodePack.FullPath.Split('/');
+            engineName = selectedInfo[0];
+            extension = selectedInfo[1];
 
             if (LoadType())
             {
@@ -141,7 +133,7 @@ namespace GalArc.GUI
         {
             Type[] types = assembly.GetTypes();
             instances = new List<object>();
-            if (assembly == null || types.Length <= 0)
+            if (assembly == null || types.Length == 0)
             {
                 return false;
             }

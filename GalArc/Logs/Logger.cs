@@ -40,10 +40,10 @@ namespace GalArc.Logs
         public static event EventHandler<string> Process;
         public static event EventHandler<string> ErrorOccured;
 
-        private static readonly int CacheSize = 12;
-        private static readonly string LogPath = "log.txt";
+        private const int CacheSize = 12;
+        private const string LogPath = "log.txt";
 
-        private static List<string> _logCache = new List<string>();
+        private static readonly List<string> _logCache = new List<string>();
         private static readonly object _lock = new object();
         private static CancellationTokenSource _cancellationToken = new CancellationTokenSource();
 
@@ -77,7 +77,7 @@ namespace GalArc.Logs
         {
             lock (_lock)
             {
-                if (_logCache.Count <= 0)
+                if (_logCache.Count == 0)
                 {
                     throw new Exception("Log cache is empty.");
                 }
@@ -260,7 +260,6 @@ namespace GalArc.Logs
         {
             LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.PerformStep()));
         }
-
 
         public static void SetBarValue(int value)
         {

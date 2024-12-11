@@ -7,9 +7,9 @@ namespace GalArc.GUI
 {
     public partial class UpdateBox : Form
     {
-        private static readonly int Delta = 6;
+        private const int Delta = 6;
 
-        private static readonly string DownloadUrl = "https://github.com/detached64/GalArc/releases/latest";
+        private const string DownloadUrl = "https://github.com/detached64/GalArc/releases/latest";
 
         private static int maxLocation = 0;
 

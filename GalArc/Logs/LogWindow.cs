@@ -37,7 +37,7 @@ namespace GalArc.Logs
         private static int m_main_Width;
         private static int m_main_Height;
 
-        private static readonly int HeightDelta = 12;
+        private const int HeightDelta = 12;
 
         public LogWindow(int w, int h)
         {

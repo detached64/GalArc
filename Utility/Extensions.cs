@@ -149,7 +149,7 @@ namespace Utility.Extensions
         public static string GetCString(this byte[] bytes, int offset, int maxLength, Encoding encoding, byte separator)
         {
             int nameLength = 0;
-            while (nameLength < maxLength && bytes[offset + nameLength] != 0)
+            while (nameLength < maxLength && bytes[offset + nameLength] != separator)
             {
                 nameLength++;
             }

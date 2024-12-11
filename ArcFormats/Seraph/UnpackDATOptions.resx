@@ -176,6 +176,9 @@
   <data name="txtIndexOffset.Location" type="System.Drawing.Point, System.Drawing">
     <value>228, 70</value>
   </data>
+  <data name="txtIndexOffset.MaxLength" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
   <data name="txtIndexOffset.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 31</value>
   </data>

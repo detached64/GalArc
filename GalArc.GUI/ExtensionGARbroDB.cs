@@ -1,5 +1,5 @@
 ﻿using GalArc.Extensions.GARbroDB;
-using GalArc.GUI.Properties;
+using GalArc.Properties;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -27,7 +27,7 @@ namespace GalArc.GUI
         private void ExtensionGARbroDB_Load(object sender, EventArgs e)
         {
             this.txtJsonPath.Text = GARbroDBConfig.Path;
-            this.chkbxEnableGARbroDB.Checked = GalArc.Properties.BaseSettings.Default.IsGARbroDBEnabled;
+            this.chkbxEnableGARbroDB.Checked = BaseSettings.Default.IsGARbroDBEnabled;
         }
 
         private void btSelect_Click(object sender, EventArgs e)
@@ -48,14 +48,14 @@ namespace GalArc.GUI
 
         private void txtJsonPath_TextChanged(object sender, EventArgs e)
         {
-            this.txtDBInfo.Text = Deserializer.GetJsonInfo(this.txtJsonPath.Text);
+            this.txtDBInfo.Text = Deserializer.GetJsonInfo(this.txtJsonPath.Text).Trim();
             GARbroDBConfig.Path = this.txtJsonPath.Text;
         }
 
         private void chkbxEnableGARbroDB_CheckedChanged(object sender, EventArgs e)
         {
-            GalArc.Properties.BaseSettings.Default.IsGARbroDBEnabled = chkbxEnableGARbroDB.Checked;
-            GalArc.Properties.BaseSettings.Default.Save();
+            BaseSettings.Default.IsGARbroDBEnabled = chkbxEnableGARbroDB.Checked;
+            BaseSettings.Default.Save();
             this.panel.Enabled = chkbxEnableGARbroDB.Checked;
         }
     }

@@ -11,7 +11,7 @@ namespace GalArc.GUI
     {
         private static readonly HttpClient httpClient = new HttpClient();
 
-        private static readonly string LatestVersionURL = "https://pastebin.com/raw/4pvccgbk";
+        private const string LatestVersionURL = "https://pastebin.com/raw/4pvccgbk";
 
         internal static readonly string currentVersion = Common.Version.CurrentVer;
 
