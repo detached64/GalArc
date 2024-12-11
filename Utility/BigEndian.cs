@@ -54,6 +54,5 @@ namespace Utility
         {
             return (long)Convert((ulong)i);
         }
-
     }
 }

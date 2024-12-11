@@ -128,14 +128,7 @@ namespace GalArc.GUI
         private bool LoadType()
         {
             type = assembly.GetType(typeName);
-            if (assembly != null && type != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return assembly != null && type != null;
         }
 
         private List<object> instances;
@@ -155,11 +148,7 @@ namespace GalArc.GUI
                     instances.Add(Activator.CreateInstance(type));
                 }
             }
-            if (instances.Count <= 0)
-            {
-                return false;
-            }
-            return true;
+            return instances.Count > 0;
         }
 
         private void Dispatch()

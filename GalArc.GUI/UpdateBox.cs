@@ -45,6 +45,5 @@ namespace GalArc.GUI
             this.lbCurrentVer.Location = new Point(maxLocation + Delta, this.lbCurrentVer.Location.Y);
             this.lbLatestVer.Location = new Point(maxLocation + Delta, this.lbLatestVer.Location.Y);
         }
-
     }
 }

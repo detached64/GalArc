@@ -31,6 +31,12 @@ namespace Utility
         //     SineTable[i] = (uint) (Math.Abs(Math.Sin(i + 1)) * 0x100000000);
         // }
 
-
+        private void Initialize()
+        {
+            state[0] = 0x67452301;
+            state[1] = 0xefcdab89;
+            state[2] = 0x98badcfe;
+            state[3] = 0x10325476;
+        }
     }
 }

@@ -4,7 +4,7 @@ using Utility;
 
 namespace ArcFormats.Seraph
 {
-    internal class SeraphUtils
+    internal static class SeraphUtils
     {
         public static byte[] Decompress(byte[] data)
         {
@@ -21,7 +21,7 @@ namespace ArcFormats.Seraph
                         throw new EndOfStreamException();
                     }
 
-                    if (0 != (ctl & 0x80))
+                    if ((ctl & 0x80) != 0)
                     {
                         byte lo = (byte)input.ReadByte();
                         int offset = ((ctl << 3 | lo >> 5) & 0x3FF) + 1;
@@ -54,6 +54,5 @@ namespace ArcFormats.Seraph
 
             return BitConverter.ToInt32(buffer, 0);
         }
-
     }
 }

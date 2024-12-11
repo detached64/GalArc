@@ -45,7 +45,7 @@ namespace ArcFormats.RPGMaker
 
         private bool IsValidHex(string hex)
         {
-            return hex.Length == 8 && Regex.IsMatch(hex, @"^[0-9A-Fa-f]+$");
+            return hex.Length == 8 && Regex.IsMatch(hex, "^[0-9A-Fa-f]+$");
         }
 
         private void lbSeed_SizeChanged(object sender, EventArgs e)

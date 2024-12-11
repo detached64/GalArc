@@ -11,7 +11,7 @@ using System.Text;
 
 namespace GalArc.DataBase
 {
-    public class Deserializer
+    public static class Deserializer
     {
         /// <summary>
         /// Loaded json strings. Dictionary&lt;engineName, jsonString&gt;.
@@ -30,10 +30,7 @@ namespace GalArc.DataBase
                 if (_Schemes == null)
                 {
                     _Schemes = new List<Type>();
-                    foreach (Type type in Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetCustomAttributes(typeof(DatabaseSchemeAttribute), false).Any()).ToList())
-                    {
-                        _Schemes.Add(type);
-                    }
+                    _Schemes.AddRange(Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetCustomAttributes(typeof(DatabaseSchemeAttribute), false).Any()).ToList());
                 }
                 return _Schemes;
             }
@@ -81,8 +78,6 @@ namespace GalArc.DataBase
         /// Deserialize json string to a dictionary.
         /// </summary>
         /// <param name="type"></param>
-        /// <param name="jsonEngineName"></param>
-        /// <param name="jsonNodeName"></param>
         /// <returns></returns>
         public static Scheme Deserialize(Type type)
         {
@@ -96,12 +91,9 @@ namespace GalArc.DataBase
                 return null;
             }
 
-            var result = new Scheme();
-
             try
             {
-                result = JsonConvert.DeserializeObject(json, type) as Scheme;
-                return result;
+                return JsonConvert.DeserializeObject(json, type) as Scheme;
             }
             catch (Exception ex)
             {
@@ -114,7 +106,6 @@ namespace GalArc.DataBase
         /// Read json string and deserialize it to Dictionary&lt;gameName, Scheme&gt;.
         /// </summary>
         /// <param name="type"></param>
-        /// <param name="nodeName"></param>
         /// <returns></returns>
         public static Scheme ReadScheme(Type type)
         {
@@ -143,11 +134,11 @@ namespace GalArc.DataBase
                 var json = LoadedJsons[name];
                 JObject jsonObject = JObject.Parse(json);
                 // engine name
-                result.AppendLine(string.Format(SchemeInfos.InfoEngineName, name));
+                result.AppendFormat(SchemeInfos.InfoEngineName, name).AppendLine();
 
                 // version
                 int version = (int)jsonObject["Version"];
-                result.AppendLine(string.Format(SchemeInfos.InfoVersion, version));
+                result.AppendFormat(SchemeInfos.InfoVersion, version).AppendLine();
 
                 // contents
                 result.AppendLine(SchemeInfos.InfoContents);
@@ -160,19 +151,19 @@ namespace GalArc.DataBase
                         continue;
                     }
                     int count = ((JObject)jobject.Value).Count;
-                    result.AppendLine(string.Format(SchemeInfos.InfoItems, jobject.Key, count));
+                    result.AppendFormat(SchemeInfos.InfoItems, jobject.Key, count).AppendLine();
                 }
 
                 // file size
                 FileInfo fileInfo = new FileInfo(path);
-                result.AppendLine(string.Format(SchemeInfos.InfoSize, fileInfo.Length));
+                result.AppendFormat(SchemeInfos.InfoSize, fileInfo.Length).AppendLine();
 
                 // last modified time
                 DateTime lastModified = File.GetLastWriteTime(path);
-                result.AppendLine(string.Format(SchemeInfos.InfoLastModified, lastModified));
+                result.AppendFormat(SchemeInfos.InfoLastModified, lastModified).AppendLine();
 
                 // hash
-                result.AppendLine(string.Format(SchemeInfos.InfoHash, json.GetHashCode()));
+                result.AppendFormat(SchemeInfos.InfoHash, json.GetHashCode()).AppendLine();
 
                 jsonObject = null;
                 return result.ToString();

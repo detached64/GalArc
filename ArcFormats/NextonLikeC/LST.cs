@@ -18,10 +18,7 @@ namespace ArcFormats.NextonLikeC
         public override void Unpack(string filePath, string folderPath)
         {
             string arcPath;
-            string lstPath;
-
-            //judge
-            lstPath = filePath;
+            string lstPath = filePath;
             arcPath = Path.ChangeExtension(filePath, string.Empty);
             if (!File.Exists(arcPath))
             {

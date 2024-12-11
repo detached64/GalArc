@@ -14,11 +14,7 @@ namespace GalArc.GUI
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = new PreferenceSettings();
-                }
-                return instance;
+                return instance ?? (instance = new PreferenceSettings());
             }
         }
 

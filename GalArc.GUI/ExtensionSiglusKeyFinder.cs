@@ -13,11 +13,7 @@ namespace GalArc.GUI
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = new ExtensionSiglusKeyFinder();
-                }
-                return instance;
+                return instance ?? (instance = new ExtensionSiglusKeyFinder());
             }
         }
 

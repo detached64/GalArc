@@ -44,7 +44,7 @@ namespace ArcFormats.Seraph
 
         private bool IsValidHex(string hex)
         {
-            return hex.Length == 8 && Regex.IsMatch(hex, @"^[0-9A-Fa-f]+$");
+            return hex.Length == 8 && Regex.IsMatch(hex, "^[0-9A-Fa-f]+$");
         }
 
         private void chkbxBrutalForce_CheckedChanged(object sender, EventArgs e)
@@ -63,6 +63,5 @@ namespace ArcFormats.Seraph
                 }
             }
         }
-
     }
 }

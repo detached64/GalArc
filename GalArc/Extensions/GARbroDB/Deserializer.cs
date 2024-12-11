@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GalArc.Extensions.GARbroDB
 {
-    public class Deserializer
+    public static class Deserializer
     {
         private static string LoadedContent { get; set; } = null;
 
@@ -26,7 +26,6 @@ namespace GalArc.Extensions.GARbroDB
         /// </summary>
         /// <param name="type"></param>
         /// <param name="jsonEngineName"></param>
-        /// <param name="jsonNodeName"></param>
         /// <returns></returns>
         public static Scheme Deserialize(Type type, string jsonEngineName)
         {
@@ -43,15 +42,12 @@ namespace GalArc.Extensions.GARbroDB
                 }
             }
 
-            var result = new Scheme();
-
             try
             {
                 JObject jsonObject = JObject.Parse(LoadedContent);
                 JToken selectedToken = jsonObject.SelectToken($"['SchemeMap']['{jsonEngineName}']");
                 string selectedJson = selectedToken.ToString();
-                result = JsonConvert.DeserializeObject(selectedJson, type) as Scheme;
-                return result;
+                return JsonConvert.DeserializeObject(selectedJson, type) as Scheme;
             }
             catch (Exception ex)
             {
@@ -80,7 +76,7 @@ namespace GalArc.Extensions.GARbroDB
 
                 // version
                 int version = (int)jsonObject["Version"];
-                result.AppendLine(string.Format(SchemeInfos.InfoVersion, version));
+                result.AppendFormat(SchemeInfos.InfoVersion, version).AppendLine();
 
                 // contents
                 result.AppendLine(SchemeInfos.InfoContents);
@@ -88,21 +84,21 @@ namespace GalArc.Extensions.GARbroDB
                 // scheme count
                 JObject schemeMap = (JObject)jsonObject["SchemeMap"];
                 int SchemeMapCount = schemeMap.Count;
-                result.AppendLine(string.Format(SchemeInfos.InfoItems, "SchemeMap", SchemeMapCount));
+                result.AppendFormat(SchemeInfos.InfoItems, "SchemeMap", SchemeMapCount).AppendLine();
                 JObject gameMap = (JObject)jsonObject["GameMap"];
                 int GameMapCount = gameMap.Count;
-                result.AppendLine(string.Format(SchemeInfos.InfoItems, "GameMap", GameMapCount));
+                result.AppendFormat(SchemeInfos.InfoItems, "GameMap", GameMapCount).AppendLine();
 
                 // file size
                 FileInfo fileInfo = new FileInfo(path);
-                result.AppendLine(string.Format(SchemeInfos.InfoSize, fileInfo.Length));
+                result.AppendFormat(SchemeInfos.InfoSize, fileInfo.Length).AppendLine();
 
                 // last modified time
                 DateTime lastModified = File.GetLastWriteTime(path);
-                result.AppendLine(string.Format(SchemeInfos.InfoLastModified, lastModified));
+                result.AppendFormat(SchemeInfos.InfoLastModified, lastModified).AppendLine();
 
                 // hash
-                result.AppendLine(string.Format(SchemeInfos.InfoHash, LoadedContent.GetHashCode()));
+                result.AppendFormat(SchemeInfos.InfoHash, LoadedContent.GetHashCode()).AppendLine();
 
                 jsonObject = null;
                 return result.ToString();

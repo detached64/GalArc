@@ -26,9 +26,9 @@ namespace ArcFormats.Seraph
 
         private readonly string VoicePacName = @"^Voice(?:\d|pac)\.dat$";
 
-        private List<Group> Groups { get; set; } = new List<Group>(0x40);
+        private List<Group> Groups { get; } = new List<Group>(0x40);
 
-        private HashSet<long> Indices { get; set; } = new HashSet<long>();
+        private HashSet<long> Indices { get; } = new HashSet<long>();
 
         internal static SeraphScheme ImportedSchemes;
 

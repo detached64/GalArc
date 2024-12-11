@@ -2,7 +2,7 @@
 
 namespace GalArc.Extensions
 {
-    public class ExtensionsConfig
+    public static class ExtensionsConfig
     {
         public static bool IsEnabled { get; set; } = true;
     }
@@ -15,6 +15,7 @@ namespace GalArc.Extensions
         string ExtensionWebsite { get; }
     }
 
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
     public class ExtensionAttribute : Attribute
     {
     }

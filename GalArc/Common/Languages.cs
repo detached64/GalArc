@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GalArc.Common
 {
-    public class Languages
+    public static class Languages
     {
         public static readonly Dictionary<string, string> languages = new Dictionary<string, string>
         {

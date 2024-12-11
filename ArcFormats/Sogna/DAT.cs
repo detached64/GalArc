@@ -120,7 +120,7 @@ namespace ArcFormats.Sogna
                     while (dst < output.Length)
                     {
                         mask >>= 1;
-                        if (0 == mask)
+                        if (mask == 0)
                         {
                             bits = reader.ReadByte();
                             if (-1 == bits)

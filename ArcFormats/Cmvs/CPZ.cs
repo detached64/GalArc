@@ -208,7 +208,5 @@ namespace ArcFormats.Cmvs
                     break;
             }
         }
-
-
     }
 }

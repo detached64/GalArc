@@ -87,7 +87,7 @@ namespace ArcFormats.Siglus
             }
             Directory.CreateDirectory(folderPath);
 
-            byte[] key = header.UseExtraKey ? (TryEachKey ? TryAllSchemes(entries[0], 0) : (SelectedScheme != null ? SelectedScheme.Item2 : null)) : null;
+            byte[] key = header.UseExtraKey ? (TryEachKey ? TryAllSchemes(entries[0], 0) : (SelectedScheme?.Item2)) : null;
             foreach (ScenePckEntry entry in entries)
             {
                 SiglusUtils.DecryptWithKey(entry.Data, key);
@@ -123,7 +123,7 @@ namespace ArcFormats.Siglus
             br.Dispose();
         }
 
-        protected static bool IsRightKey(ScenePckEntry entry, byte[] data, byte[] key, int type)
+        protected bool IsRightKey(ScenePckEntry entry, byte[] data, byte[] key, int type)
         {
             byte[] backup = new byte[data.Length];
             Array.Copy(data, backup, data.Length);
@@ -148,7 +148,7 @@ namespace ArcFormats.Siglus
             return true;
         }
 
-        protected static byte[] TryAllSchemes(ScenePckEntry entry, int type)
+        protected byte[] TryAllSchemes(ScenePckEntry entry, int type)
         {
             byte[] key;
             foreach (var scheme in ImportedSchemes.KnownSchemes.Values)
@@ -169,7 +169,7 @@ namespace ArcFormats.Siglus
             return null;
         }
 
-        protected static string FindKeyFromValue(string key)
+        protected string FindKeyFromValue(string key)
         {
             foreach (var dic in ImportedSchemes.KnownSchemes)
             {

@@ -17,11 +17,7 @@ namespace GalArc.GUI
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = new ExtensionsSettings();
-                }
-                return instance;
+                return instance ?? (instance = new ExtensionsSettings());
             }
         }
 
@@ -63,7 +59,7 @@ namespace GalArc.GUI
 
         private void LoadExtensionsInfo()
         {
-            Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name == "GalArc").FirstOrDefault();
+            Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetName().Name == "GalArc");
             if (assembly != null)
             {
                 List<Type> types = assembly.GetTypes()

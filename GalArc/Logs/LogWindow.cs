@@ -106,6 +106,5 @@ namespace GalArc.Logs
             Settings.Default.AutoSaveState = autoSaveState;
             Settings.Default.Save();
         }
-
     }
 }

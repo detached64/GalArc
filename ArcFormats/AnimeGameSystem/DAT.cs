@@ -121,6 +121,5 @@ namespace ArcFormats.AnimeGameSystem
             fw.Dispose();
             bw.Dispose();
         }
-
     }
 }

@@ -162,29 +162,15 @@ namespace Utility
 
         public static void CreateDirectoryIfNotExists(string path)
         {
-            try
+            if (!Directory.Exists(path))
             {
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-            }
-            catch
-            {
-                throw;
+                Directory.CreateDirectory(path);
             }
         }
 
         public static void CreateParentDirectoryIfNotExists(string path)
         {
-            try
-            {
-                CreateDirectoryIfNotExists(Path.GetDirectoryName(path));
-            }
-            catch
-            {
-                throw;
-            }
+            CreateDirectoryIfNotExists(Path.GetDirectoryName(path));
         }
 
         public static byte[] PaddedBytes(string input, int length, char padChar, Encoding encoding)

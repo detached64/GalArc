@@ -19,7 +19,6 @@ namespace GalArc.GUI
 
         internal static bool isNewVerExist = false;
 
-
         public async Task DownloadFileAsync()
         {
             Logger.ShowCheckingUpdate();

@@ -31,15 +31,15 @@ namespace Utility
 
         public int Compare(object name1, object name2)
         {
-            if (null == name1 && null == name2)
+            if (name1 == null && name2 == null)
             {
                 return 0;
             }
-            if (null == name1)
+            if (name1 == null)
             {
                 return -1;
             }
-            if (null == name2)
+            if (name2 == null)
             {
                 return 1;
             }

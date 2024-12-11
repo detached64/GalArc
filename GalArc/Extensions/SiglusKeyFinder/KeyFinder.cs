@@ -4,7 +4,7 @@ using System.IO;
 
 namespace GalArc.Extensions.SiglusKeyFinder
 {
-    public class KeyFinder
+    public static class KeyFinder
     {
         public static bool IsValidExe()
         {

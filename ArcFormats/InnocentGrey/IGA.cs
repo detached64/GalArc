@@ -169,7 +169,7 @@ namespace ArcFormats.InnocentGrey
         }
     }
 
-    class VarInt
+    static class VarInt
     {
         public static uint UnpackUint(BinaryReader br)
         {
@@ -225,6 +225,5 @@ namespace ArcFormats.InnocentGrey
             }
             return rst.ToArray();
         }
-
     }
 }

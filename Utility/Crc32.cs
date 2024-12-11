@@ -34,7 +34,7 @@ namespace Utility
                 uint entry = i;
                 for (int j = 0; j < 8; j++)
                 {
-                    if (0 != (entry & 1))
+                    if ((entry & 1) != 0)
                     {
                         entry = (entry >> 1) ^ Polynomial;
                     }

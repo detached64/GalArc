@@ -2,18 +2,18 @@
 
 namespace ArcFormats.EmonEngine
 {
-    internal class EmonUtils
+    internal static class EmonUtils
     {
         internal static unsafe void Decrypt(byte[] buffer, int offset, int length, byte[] routine)
         {
-            if (null == buffer)
+            if (buffer == null)
             {
-                throw new ArgumentNullException("buffer", "Buffer cannot be null.");
+                throw new ArgumentNullException(nameof(buffer), "Buffer cannot be null.");
             }
 
             if (offset < 0)
             {
-                throw new ArgumentOutOfRangeException("offset", "Buffer offset should be non-negative.");
+                throw new ArgumentOutOfRangeException(nameof(offset), "Buffer offset should be non-negative.");
             }
 
             if (buffer.Length - offset < length)

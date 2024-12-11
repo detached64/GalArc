@@ -100,7 +100,6 @@ namespace ArcFormats.Valkyria
             br.Dispose();
         }
 
-
         public override void Pack(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);

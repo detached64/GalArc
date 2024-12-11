@@ -33,7 +33,7 @@ namespace GalArc.Logs
         Debug
     }
 
-    public class Logger
+    public static class Logger
     {
         public static event EventHandler<string> Process;
         public static event EventHandler<string> ErrorOccured;
@@ -46,14 +46,11 @@ namespace GalArc.Logs
         private static void WriteAndSaveLog(string log, int logLevel = 1)
         {
             LogLevel level = (LogLevel)logLevel;
-            if (level == LogLevel.Debug && Settings.Default.chkbxDebug || level == LogLevel.Info || level == LogLevel.Error)
+            if ((level == LogLevel.Debug && Settings.Default.chkbxDebug) || level == LogLevel.Info || level == LogLevel.Error)
             {
                 if (LogWindow.Instance.log_txtLog.InvokeRequired)
                 {
-                    LogWindow.Instance.log_txtLog.Invoke(new Action(() =>
-                    {
-                        LogWindow.Instance.log_txtLog.AppendText(log + Environment.NewLine);
-                    }));
+                    LogWindow.Instance.log_txtLog.Invoke(new Action(() => LogWindow.Instance.log_txtLog.AppendText(log + Environment.NewLine)));
                 }
                 else
                 {
@@ -123,11 +120,11 @@ namespace GalArc.Logs
             Debug(Resources.logInputFolder + "\t" + inputFolderPath);
             Debug(Resources.logOutputFile + "\t" + outputFilePath);
             Info(Resources.logPacking);
-            LogWindow.Instance.bar.Invoke(new Action(() => { LogWindow.Instance.bar.Value = 0; }));
+            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Value = 0));
         }
         public static void FinishPack()
         {
-            LogWindow.Instance.bar.Invoke(new Action(() => { LogWindow.Instance.bar.Value = LogWindow.Instance.bar.Maximum; }));
+            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Value = LogWindow.Instance.bar.Maximum));
             InfoRevoke(Resources.logPackFinished);
         }
         public static void InitUnpack(string inputFilePath, string outputFolderPath)
@@ -135,17 +132,11 @@ namespace GalArc.Logs
             Debug(Resources.logInputFile + "\t" + inputFilePath);
             Debug(Resources.logOutputFolder + "\t" + outputFolderPath);
             Info(Resources.logUnpacking);
-            LogWindow.Instance.bar.Invoke(new Action(() =>
-            {
-                LogWindow.Instance.bar.Value = 0;
-            }));
+            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Value = 0));
         }
         public static void FinishUnpack()
         {
-            LogWindow.Instance.bar.Invoke(new Action(() =>
-            {
-                LogWindow.Instance.bar.Value = LogWindow.Instance.bar.Maximum;
-            }));
+            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Value = LogWindow.Instance.bar.Maximum));
             InfoRevoke(Resources.logUnpackFinished);
         }
 
@@ -189,50 +180,32 @@ namespace GalArc.Logs
         }
         public static void InitBar(int max, int m)
         {
-            LogWindow.Instance.bar.Invoke(new Action(() =>
-            {
-                LogWindow.Instance.bar.Maximum = m * max;
-            }));
+            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Maximum = m * max));
             Debug(string.Format(Resources.logFileCountInside, max));
         }
         public static void InitBar(uint max, int m)
         {
-            LogWindow.Instance.bar.Invoke(new Action(() =>
-            {
-                LogWindow.Instance.bar.Maximum = m * (int)max;
-            }));
+            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Maximum = m * (int)max));
             Debug(string.Format(Resources.logFileCountInside, max));
         }
         public static void UpdateBar()
         {
-            LogWindow.Instance.bar.Invoke(new Action(() =>
-            {
-                LogWindow.Instance.bar.PerformStep();
-            }));
+            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.PerformStep()));
         }
 
         public static void SetBarValue(int value)
         {
-            LogWindow.Instance.bar.Invoke(new Action(() =>
-            {
-                LogWindow.Instance.bar.Value = value;
-            }));
+            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Value = value));
         }
 
         public static void SetBarMax(int max)
         {
-            LogWindow.Instance.bar.Invoke(new Action(() =>
-            {
-                LogWindow.Instance.bar.Maximum = max;
-            }));
+            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Maximum = max));
         }
 
         public static void ResetBar()
         {
-            LogWindow.Instance.bar.Invoke(new Action(() =>
-            {
-                LogWindow.Instance.bar.Value = 0;
-            }));
+            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Value = 0));
         }
 
         public static void ShowCheckingUpdate()

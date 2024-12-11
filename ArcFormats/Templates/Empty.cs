@@ -10,11 +10,7 @@ namespace ArcFormats.Templates
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = new Empty();
-                }
-                return instance;
+                return instance ?? (instance = new Empty());
             }
         }
 

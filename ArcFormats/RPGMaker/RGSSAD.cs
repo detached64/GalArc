@@ -190,7 +190,6 @@ namespace ArcFormats.RPGMaker
             bw.Write((long)0);
             bw.Dispose();
             fw.Dispose();
-
         }
 
         private byte[] DecryptName(byte[] data, KeyGen keygen)

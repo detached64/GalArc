@@ -2,7 +2,7 @@
 
 namespace ArcFormats.Cmvs
 {
-    internal class CmvsMD5
+    internal static class CmvsMD5
     {
         //private static readonly uint[] T = new uint[64];
 

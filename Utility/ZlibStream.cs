@@ -69,11 +69,6 @@ namespace Utility.Compression
             : this(stream, level)
         { }
 
-        public override int Read(byte[] array, int offset, int count)
-        {
-            return base.Read(array, offset, count);
-        }
-
         public override void Write(byte[] array, int offset, int count)
         {
             base.Write(array, offset, count);

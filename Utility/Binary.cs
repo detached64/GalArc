@@ -72,6 +72,5 @@ namespace Utility
                 Buffer.BlockCopy(data, src, data, dst, count);
             }
         }
-
     }
 }

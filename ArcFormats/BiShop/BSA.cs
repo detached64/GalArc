@@ -16,7 +16,7 @@ namespace ArcFormats.BiShop
 
         private static byte[] Magic = Utils.HexStringToByteArray("4253417263000000");
 
-        private static List<string> path = new List<string> { };
+        private static List<string> path = new List<string>();
 
         private static int realCount = 0;
 

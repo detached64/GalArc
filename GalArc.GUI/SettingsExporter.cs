@@ -11,7 +11,7 @@ using System.Text;
 
 namespace GalArc.GUI
 {
-    internal class SettingsExporter
+    internal static class SettingsExporter
     {
         public static void ExportSettingsToGalArc()
         {

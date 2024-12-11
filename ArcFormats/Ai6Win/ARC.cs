@@ -85,7 +85,6 @@ namespace ArcFormats.Ai6Win
 
             fs.Dispose();
             br.Dispose();
-
         }
 
         private static void UnpackV2(string filePath, string folderPath)

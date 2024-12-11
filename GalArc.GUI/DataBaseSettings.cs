@@ -13,11 +13,7 @@ namespace GalArc.GUI
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = new DataBaseSettings();
-                }
-                return instance;
+                return instance ?? (instance = new DataBaseSettings());
             }
         }
 

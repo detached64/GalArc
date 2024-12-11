@@ -89,7 +89,6 @@ namespace ArcFormats.NitroPlus
             bw.Write(fileCount);
             Logger.InitBar(fileCount);
 
-
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 using (BinaryWriter bwIndex = new BinaryWriter(memoryStream))

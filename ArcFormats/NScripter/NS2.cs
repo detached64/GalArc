@@ -76,7 +76,7 @@ namespace ArcFormats.NScripter
                 dataOffset += 4;
                 entries.Add(entry);
             }
-            dataOffset += 1;//'e'
+            dataOffset++;//'e'
             bw.Write(dataOffset);
             foreach (Ns2Entry entry in entries)
             {

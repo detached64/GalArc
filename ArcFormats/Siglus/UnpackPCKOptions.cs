@@ -21,7 +21,7 @@ namespace ArcFormats.Siglus
             }
             set
             {
-                if (string.IsNullOrEmpty(value) || String.Equals(value, "Failed", StringComparison.OrdinalIgnoreCase))
+                if (string.IsNullOrEmpty(value) || string.Equals(value, "Failed", StringComparison.OrdinalIgnoreCase))
                 {
                     _ExtractedKey = null;
                     return;
@@ -74,41 +74,39 @@ namespace ArcFormats.Siglus
 
         private void combSchemes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.combSchemes.SelectedIndex == 0)
+            switch (this.combSchemes.SelectedIndex)
             {
-                ScenePCK.SelectedScheme = null;
-                ScenePCK.TryEachKey = true;
-                this.lbKey.Text = string.Empty;
-                return;
-            }
-            else if (this.combSchemes.SelectedIndex == 1)
-            {
-                try
-                {
-                    ScenePCK.SelectedScheme = new Tuple<string, byte[]>(this.combSchemes.Text, Utils.HexStringToByteArray(ExtractedKey, '-'));
-                }
-                catch
-                {
+                case 0:
                     ScenePCK.SelectedScheme = null;
-                }
-                ScenePCK.TryEachKey = false;
-                this.lbKey.Text = string.Format(Siglus.lbKey, ExtractedKey ?? Siglus.empty);
-                return;
-            }
-            else
-            {
-                string key = ScenePCK.ImportedSchemes.KnownSchemes[this.combSchemes.Text].KnownKey;
-                try
-                {
-                    ScenePCK.SelectedScheme = new Tuple<string, byte[]>(this.combSchemes.Text, Utils.HexStringToByteArray(key, '-'));
-                    this.lbKey.Text = string.Format(Siglus.lbKey, key);
-                }
-                catch
-                {
-                    ScenePCK.SelectedScheme = null;
-                    this.lbKey.Text = Siglus.lbKeyParseError;
-                }
-                ScenePCK.TryEachKey = false;
+                    ScenePCK.TryEachKey = true;
+                    this.lbKey.Text = string.Empty;
+                    break;
+                case 1:
+                    try
+                    {
+                        ScenePCK.SelectedScheme = new Tuple<string, byte[]>(this.combSchemes.Text, Utils.HexStringToByteArray(ExtractedKey, '-'));
+                    }
+                    catch
+                    {
+                        ScenePCK.SelectedScheme = null;
+                    }
+                    ScenePCK.TryEachKey = false;
+                    this.lbKey.Text = string.Format(Siglus.lbKey, ExtractedKey ?? Siglus.empty);
+                    break;
+                default:
+                    string key = ScenePCK.ImportedSchemes.KnownSchemes[this.combSchemes.Text].KnownKey;
+                    try
+                    {
+                        ScenePCK.SelectedScheme = new Tuple<string, byte[]>(this.combSchemes.Text, Utils.HexStringToByteArray(key, '-'));
+                        this.lbKey.Text = string.Format(Siglus.lbKey, key);
+                    }
+                    catch
+                    {
+                        ScenePCK.SelectedScheme = null;
+                        this.lbKey.Text = Siglus.lbKeyParseError;
+                    }
+                    ScenePCK.TryEachKey = false;
+                    break;
             }
         }
 
@@ -142,21 +140,13 @@ namespace ArcFormats.Siglus
                         Logger.InfoRevoke(Siglus.logFailedFindKey);
                     }
                     this.combSchemes.SelectedIndex = 1;
-
                 }
             }
         }
 
         private void UnpackPCKOptions_Load(object sender, EventArgs e)
         {
-            if (ExtensionsConfig.IsEnabled && SiglusKeyFinderConfig.IsEnabled && KeyFinder.IsValidExe())
-            {
-                this.panel.Visible = true;
-            }
-            else
-            {
-                this.panel.Visible = false;
-            }
+            this.panel.Visible = ExtensionsConfig.IsEnabled && SiglusKeyFinderConfig.IsEnabled && KeyFinder.IsValidExe();
         }
     }
 }

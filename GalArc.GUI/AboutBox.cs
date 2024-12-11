@@ -136,6 +136,5 @@ namespace GalArc.GUI
                 }
             }
         }
-
     }
 }

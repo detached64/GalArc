@@ -23,7 +23,6 @@ namespace GalArc.Extensions.GARbroDB
         public Dictionary<string, ArchPacScheme> KnownSchemes { get; set; }
     }
 
-
     public class AGSScheme : Scheme
     {
         public static string JsonEngineName = "DAT/AGS";
@@ -40,12 +39,10 @@ namespace GalArc.Extensions.GARbroDB
             public Dictionary<string, Key> FileMap { get; set; }
         }
 
-
         [JsonProperty("KnownSchemes")]
         public Dictionary<string, AGSFileMap> KnownSchemes { get; set; }
 
         [JsonProperty("EncryptedArchives")]
         public List<string> EncryptedArchives { get; set; }
     }
-
 }

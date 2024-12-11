@@ -117,7 +117,7 @@ namespace ArcFormats.EmonEngine
             }
 
             int part2unpackedSize = BitConverter.ToInt32(header, 4);
-            if (0 != part2unpackedSize && part2unpackedSize < entry.UnpackedSize)
+            if (part2unpackedSize != 0 && part2unpackedSize < entry.UnpackedSize)
             {
                 uint packedSize = BitConverter.ToUInt32(header, 0);
 
@@ -157,7 +157,7 @@ namespace ArcFormats.EmonEngine
             EmonUtils.Decrypt(header, 0, 32, key);
             uint entrySize = entry.Size + 32;
             int colors = BitConverter.ToUInt16(header, 6);
-            if (0 != colors && header[0] != 7)
+            if (colors != 0 && header[0] != 7)
             {
                 entrySize += (uint)Math.Max(colors, 3) * 4;
             }
@@ -266,4 +266,3 @@ namespace ArcFormats.EmonEngine
         }
     }
 }
-

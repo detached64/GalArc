@@ -29,14 +29,7 @@ namespace ArcFormats.Softpal
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
             ArcSettings.Version = this.combVersion.Text;
-            if (this.combVersion.Text == "1")
-            {
-                this.chkbxCompute.Visible = false;
-            }
-            else
-            {
-                this.chkbxCompute.Visible = true;
-            }
+            this.chkbxCompute.Visible = this.combVersion.Text != "1";
         }
 
         private void chkbxEncScr_CheckedChanged(object sender, EventArgs e)

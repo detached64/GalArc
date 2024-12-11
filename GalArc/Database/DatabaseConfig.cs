@@ -2,7 +2,7 @@
 
 namespace GalArc.DataBase
 {
-    public class DataBaseConfig
+    public static class DataBaseConfig
     {
         public static bool IsEnabled { get; set; } = true;
 
@@ -31,6 +31,7 @@ namespace GalArc.DataBase
     {
     }
 
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
     public class DatabaseSchemeAttribute : Attribute
     {
     }

@@ -34,9 +34,8 @@ namespace GalArc
 
         internal static bool isFirstChangeLang = true;
 
-        private static int deltaStatus = 15;
-
-        private static int delta = 6;
+        private readonly int deltaStatus = 15;
+        private readonly int delta = 6;
 
         public MainWindow()
         {
@@ -58,10 +57,10 @@ namespace GalArc
             Logger.Process += ChangeStatus;
             Logger.ErrorOccured += ChangeStatus;
 
-            this.txtInputPath.DragEnter += new DragEventHandler(txtInputPath_DragEnter);
-            this.txtInputPath.DragDrop += new DragEventHandler(txtInputPath_DragDrop);
-            this.txtOutputPath.DragEnter += new DragEventHandler(txtOutputPath_DragEnter);
-            this.txtOutputPath.DragDrop += new DragEventHandler(txtOutputPath_DragDrop);
+            this.txtInputPath.DragEnter += txtInputPath_DragEnter;
+            this.txtInputPath.DragDrop += txtInputPath_DragDrop;
+            this.txtOutputPath.DragEnter += txtOutputPath_DragEnter;
+            this.txtOutputPath.DragDrop += txtOutputPath_DragDrop;
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
@@ -81,7 +80,7 @@ namespace GalArc
 
         private void txtInputPath_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data != null && e.Data.GetDataPresent(DataFormats.FileDrop))
+            if (e.Data?.GetDataPresent(DataFormats.FileDrop) == true)
             {
                 e.Effect = DragDropEffects.Copy;
             }
@@ -102,7 +101,7 @@ namespace GalArc
 
         private void txtOutputPath_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data != null && e.Data.GetDataPresent(DataFormats.FileDrop))
+            if (e.Data?.GetDataPresent(DataFormats.FileDrop) == true)
             {
                 e.Effect = DragDropEffects.Copy;
             }
@@ -126,13 +125,7 @@ namespace GalArc
             LogWindow.Instance.ChangePosition(this.Location.X, this.Location.Y);
         }
 
-        private void ChangeStatus(object sender, string message)
-        {
-            this.lbStatus.Invoke(new Action(() =>
-            {
-                this.lbStatus.Text = message;
-            }));
-        }
+        private void ChangeStatus(object sender, string message) => this.lbStatus.Invoke(new Action(() => this.lbStatus.Text = message));
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -216,7 +209,7 @@ namespace GalArc
                         Settings.Default.Save();
                     }
                     selectedNodeUnpack = e.Node;
-                    selectedEngineInfo_Unpack = EngineInfos.engineInfos.Where(x => x.EngineName == e.Node.Parent.Text).FirstOrDefault();
+                    selectedEngineInfo_Unpack = EngineInfos.engineInfos.FirstOrDefault(x => x.EngineName == e.Node.Parent.Text);
                     chkbxMatch_CheckedChanged(null, null);
                     Logger.InfoRevoke(string.Format(Resources.logSelectUnpackNode, e.Node.Parent.Text, e.Node.Text));
                     GetExtraOptions(selectedNodeUnpack, "UnpackExtraOptions");
@@ -237,7 +230,7 @@ namespace GalArc
                         Settings.Default.Save();
                     }
                     selectedNodePack = e.Node;
-                    selectedEngineInfo_Pack = EngineInfos.engineInfos.Where(x => x.EngineName == e.Node.Parent.Text).FirstOrDefault();
+                    selectedEngineInfo_Pack = EngineInfos.engineInfos.FirstOrDefault(x => x.EngineName == e.Node.Parent.Text);
                     chkbxMatch_CheckedChanged(null, null);
                     Logger.InfoRevoke(string.Format(Resources.logSelectPackNode, e.Node.Parent.Text, e.Node.Text));
                     GetExtraOptions(selectedNodePack, "PackExtraOptions");
@@ -645,7 +638,7 @@ namespace GalArc
             }
         }
 
-        internal static string GetLocalCulture()
+        internal string GetLocalCulture()
         {
             string LocalCulture = string.IsNullOrEmpty(Settings.Default.lastLang) ? CultureInfo.CurrentCulture.Name : Settings.Default.lastLang;
             if (!Languages.languages.Values.ToArray().Contains(LocalCulture))
@@ -655,11 +648,10 @@ namespace GalArc
             return LocalCulture;
         }
 
-        internal static void SetLocalCulture(string LocalCulture)
+        internal void SetLocalCulture(string LocalCulture)
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo(LocalCulture);
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(LocalCulture);
         }
-
     }
 }

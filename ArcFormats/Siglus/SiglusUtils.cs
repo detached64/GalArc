@@ -2,7 +2,7 @@
 
 namespace ArcFormats.Siglus
 {
-    internal class SiglusUtils
+    internal static class SiglusUtils
     {
         private static readonly byte[,] DecryptKeys =
         {

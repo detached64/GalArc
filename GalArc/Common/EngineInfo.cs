@@ -17,7 +17,7 @@ namespace GalArc.Common
         }
     }
 
-    public class EngineInfos
+    public static class EngineInfos
     {
         public static readonly List<EngineInfo> engineInfos = new List<EngineInfo>
         {

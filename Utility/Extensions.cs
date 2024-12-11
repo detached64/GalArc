@@ -132,7 +132,6 @@ namespace Utility.Extensions
         {
             WritePaddedString(bw, input, length, '\0', ArcEncoding.Shift_JIS);
         }
-
     }
 
     public static class ByteArrayExtensions
