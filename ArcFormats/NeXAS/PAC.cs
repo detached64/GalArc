@@ -79,7 +79,7 @@ namespace ArcFormats.NeXAS
                                 break;
 
                             case Method.Zstd:
-                                File.WriteAllBytes(entry.Path, Zstd.Decompress(fileData));
+                                File.WriteAllBytes(entry.Path, ZstdHelper.Decompress(fileData));
                                 break;
                         }
                     }

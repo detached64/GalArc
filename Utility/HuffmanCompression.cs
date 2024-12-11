@@ -20,15 +20,10 @@
 
 using System;
 using System.IO;
+using System.IO.Compression;
 
 namespace Utility.Compression
 {
-    public enum HuffmanMode
-    {
-        Decompress,
-        Compress
-    }
-
     public class HuffmanCompression : IDisposable
     {
         private const ushort MAX = 512;
@@ -37,13 +32,13 @@ namespace Utility.Compression
         private ushort[,] children = new ushort[MAX, 2];
 
         private BitStream input;
-        private HuffmanMode mode;
+        private CompressionMode mode;
         private int decompressedLength;
         private MemoryStream output;
 
-        public HuffmanCompression(Stream input, HuffmanMode mode, int length)
+        public HuffmanCompression(Stream input, CompressionMode mode, int length)
         {
-            if (mode == HuffmanMode.Decompress)
+            if (mode == CompressionMode.Decompress)
             {
                 this.input = new BitStream(input, BitStreamMode.Read);
                 decompressedLength = length;
@@ -55,10 +50,10 @@ namespace Utility.Compression
             this.mode = mode;
         }
 
-        public HuffmanCompression(Stream input, int length) : this(input, HuffmanMode.Decompress, length)
+        public HuffmanCompression(Stream input, int length) : this(input, CompressionMode.Decompress, length)
         { }
 
-        public HuffmanCompression(Stream input) : this(input, HuffmanMode.Compress, 0)
+        public HuffmanCompression(Stream input) : this(input, CompressionMode.Compress, 0)
         { }
 
         private ushort CreateTree()
@@ -84,7 +79,7 @@ namespace Utility.Compression
 
         public byte[] Decompress()
         {
-            if (mode != HuffmanMode.Decompress)
+            if (mode != CompressionMode.Decompress)
             {
                 throw new InvalidOperationException("Not in decompression mode.");
             }
@@ -120,7 +115,7 @@ namespace Utility.Compression
         }
     }
 
-    public class HuffmanDecoder
+    public static class HuffmanDecoder
     {
         public static byte[] Decompress(byte[] input, int length)
         {

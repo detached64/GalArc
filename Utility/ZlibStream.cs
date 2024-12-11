@@ -96,7 +96,7 @@ namespace Utility.Compression
         }
     }
 
-    public class ZlibHelper
+    public static class ZlibHelper
     {
         public static byte[] Compress(byte[] input, CompressionLevel level = CompressionLevel.Optimal)
         {

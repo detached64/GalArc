@@ -1,6 +1,6 @@
 ﻿// File: Utility/Adler32.cs
 // Date: 2024/08/27
-// Description: 基于arcusmaximus的代码，封装Adler32校验和
+// Description: Adler32 checksum algorithm.
 //
 // Copyright (c) 2018 arcusmaximus
 //

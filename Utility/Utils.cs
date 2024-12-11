@@ -1,6 +1,6 @@
 ﻿// File: Utility/Utils.cs
 // Date: 2024/08/26
-// Description: 一些常用的工具函数
+// Description: Utility functions.
 //
 // Copyright (C) 2024 detached64
 //
@@ -25,31 +25,8 @@ using System.Text;
 
 namespace Utility
 {
-    public class Utils
+    public static class Utils
     {
-        /// <summary>
-        /// Sort the file paths. Use string.CompareOrdinal() to avoid culture influence.
-        /// </summary>
-        /// <param name="pathString"></param>
-        public static void Sort(string[] pathString)
-        {
-            for (int i = 1; i < pathString.Length; i++)
-            {
-                string insrtVal = pathString[i];
-                int insertIndex = i - 1;
-
-                while (insertIndex >= 0 && string.CompareOrdinal(insrtVal, pathString[insertIndex]) < 0)
-                {
-                    string temp;
-                    temp = pathString[insertIndex + 1];
-                    pathString[insertIndex + 1] = pathString[insertIndex];
-                    pathString[insertIndex] = temp;
-                    insertIndex--;
-                }
-                pathString[insertIndex + 1] = insrtVal;
-            }
-        }
-
         /// <summary>
         /// Get file count in specified folder and all subfolders.
         /// </summary>

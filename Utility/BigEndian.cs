@@ -1,6 +1,6 @@
 ﻿// File: Utility/BigEndian.cs
 // Date: 2024/08/28
-// Description: 提供对uint、int、ushort、short、ulong、long的le/be转换
+// Description: BigEndian conversion functions. Supports 16, 32 and 64 bit integers.
 //
 // Copyright (C) 2014 by morkt
 //
@@ -27,7 +27,7 @@ using System;
 
 namespace Utility
 {
-    public class BigEndian
+    public static class BigEndian
     {
         public static uint Convert(uint u)
         {

@@ -59,11 +59,12 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="HuffmanCompression.cs" />
     <Compile Include="LzssCompression.cs" />
+    <Compile Include="MD5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils.cs" />
-    <Compile Include="WindowSorter.cs" />
+    <Compile Include="WindowsSorter.cs" />
     <Compile Include="ZlibStream.cs" />
-    <Compile Include="Zstd.cs" />
+    <Compile Include="ZstdHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

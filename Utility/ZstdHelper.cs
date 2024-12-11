@@ -1,6 +1,6 @@
 ﻿// File: Utility/Zstd.cs
 // Date: 2024/08/31
-// Description: 对Zstd的压缩和解压缩进行了封装，依赖Zstandard.Net
+// Description: Zstd compression method based on Zstandard.Net.
 //
 // Copyright (C) 2024 detached64
 //
@@ -25,7 +25,7 @@ using Zstandard.Net;
 
 namespace Utility.Compression
 {
-    public class Zstd
+    public static class ZstdHelper
     {
         public static byte[] Decompress(byte[] data)
         {

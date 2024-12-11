@@ -28,7 +28,7 @@ namespace ArcFormats.Artemis
             public uint PathLenSum { get; set; }
         }
 
-        private class PfsEntry : ArcFormats.Entry
+        private class PfsEntry : Entry
         {
             public int RelativePathLen { get; set; }
             public string RelativePath { get; set; }
@@ -126,7 +126,7 @@ namespace ArcFormats.Artemis
             header.PathLenSum = (uint)Utils.GetLengthSum(relativePaths, ArcSettings.Encoding);
             header.FileCount = (uint)files.Length;
             Logger.InitBar(header.FileCount);
-            Utils.Sort(relativePaths);
+            Array.Sort(relativePaths, StringComparer.Ordinal);
 
             //add entry
             for (int i = 0; i < header.FileCount; i++)

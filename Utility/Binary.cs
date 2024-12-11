@@ -1,6 +1,6 @@
 ﻿// File: Utility/Binary.cs
 // Date: 2024/09/20
-// Description: Rotate.
+// Description: Binary utility functions.
 //
 // Copyright (C) 2024 detached64
 //
@@ -22,7 +22,7 @@ using System;
 
 namespace Utility
 {
-    public class Binary
+    public static class Binary
     {
         public static uint RotL(uint v, int count)
         {

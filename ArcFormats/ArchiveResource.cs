@@ -19,20 +19,21 @@ namespace ArcFormats
     public class Entry
     {
         /// <summary>
-        /// 文件名
+        /// File name
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// 绝对路径
+        /// File path
         /// </summary>
         public string Path { get; set; }
         /// <summary>
-        /// 绝对偏移
+        /// File offset
         /// </summary>
         public uint Offset { get; set; }
         /// <summary>
-        /// 文件大小，等同于PackedSize
+        /// File size
         /// </summary>
+        /// Also used for packed size
         public uint Size { get; set; }
     }
 
@@ -42,7 +43,7 @@ namespace ArcFormats
         public uint UnpackedSize { get; set; }
     }
 
-    public class ArcSettings
+    public static class ArcSettings
     {
         public static Encoding Encoding = ArcEncoding.Shift_JIS;
 

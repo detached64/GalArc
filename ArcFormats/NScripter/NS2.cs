@@ -62,7 +62,7 @@ namespace ArcFormats.NScripter
             Logger.InitBar(fileCount);
             uint dataOffset = 4;
 
-            Utils.Sort(fullPaths);
+            Array.Sort(fullPaths, StringComparer.Ordinal);
 
             List<Ns2Entry> entries = new List<Ns2Entry>();
 

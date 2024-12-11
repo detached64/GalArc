@@ -1,5 +1,6 @@
 ﻿using ArcFormats.Properties;
 using GalArc.Logs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -90,7 +91,7 @@ namespace ArcFormats.AdvHD
             header.FileCountAll = (uint)Utils.GetFileCount(folderPath);
             Logger.InitBar(header.FileCountAll);
             string[] exts = Utils.GetFileExtensions(folderPath);
-            Utils.Sort(exts);
+            Array.Sort(exts, StringComparer.Ordinal);
             int extCount = exts.Length;
 
             header.TypeCount = (uint)extCount;

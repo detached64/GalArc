@@ -1,6 +1,6 @@
 ﻿// File: Utility/ArcEncoding.cs
 // Date: 2024/08/26
-// Description: 对封包的常用编码进行封装
+// Description: Encoding for ArcFormats.
 //
 // Copyright (C) 2024 detached64
 //
@@ -23,10 +23,10 @@ using System.Text;
 
 namespace Utility
 {
-    public class ArcEncoding
+    public static class ArcEncoding
     {
-        public static readonly Encoding GBK = Encoding.GetEncoding(936);
+        public static Encoding GBK => Encoding.GetEncoding(936);
 
-        public static readonly Encoding Shift_JIS = Encoding.GetEncoding(932);
+        public static Encoding Shift_JIS => Encoding.GetEncoding(932);
     }
 }

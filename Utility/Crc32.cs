@@ -1,6 +1,6 @@
 ﻿// File: Utility/Crc32.cs
 // Date: 2024/09/04
-// Description: Crc32校验和计算
+// Description: Crc32 checksum algorithm.
 //
 // Copyright (C) 2024 detached64
 //
@@ -22,9 +22,10 @@ using System;
 
 namespace Utility
 {
-    public class Crc32
+    public static class Crc32
     {
         private const uint Polynomial = 0xedb88320;
+
         private static uint[] InitializeTable()
         {
             uint[] table = new uint[256];
@@ -58,6 +59,5 @@ namespace Utility
 
             return ~crc;
         }
-
     }
 }

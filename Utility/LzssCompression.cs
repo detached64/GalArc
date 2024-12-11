@@ -21,15 +21,10 @@
 
 using System;
 using System.IO;
+using System.IO.Compression;
 
 namespace Utility.Compression
 {
-    public enum LzssMode
-    {
-        Decompress,
-        Compress
-    }
-
     public class LzssSettings
     {
         /// <summary>
@@ -62,11 +57,11 @@ namespace Utility.Compression
     public class LzssCompression : IDisposable
     {
         private Stream input;
-        private LzssMode mode;
+        private CompressionMode mode;
         private LzssSettings settings;
         private MemoryStream output;
 
-        public LzssCompression(Stream input, LzssMode mode, LzssSettings settings)
+        public LzssCompression(Stream input, CompressionMode mode, LzssSettings settings)
         {
             this.input = input;
             this.mode = mode;
@@ -80,13 +75,13 @@ namespace Utility.Compression
                     buffer[j] = settings.FrameFill;
                 }
             }
-            if (mode == LzssMode.Compress)
+            if (mode == CompressionMode.Compress)
             {
                 InitCompress();
             }
         }
 
-        public LzssCompression(Stream input, LzssMode mode)
+        public LzssCompression(Stream input, CompressionMode mode)
             : this(input, mode, new LzssSettings
             {
                 FrameSize = 0x1000,
@@ -97,14 +92,14 @@ namespace Utility.Compression
             })
         { }
 
-        public LzssCompression(Stream input) : this(input, LzssMode.Decompress)
+        public LzssCompression(Stream input) : this(input, CompressionMode.Decompress)
         { }
 
         private byte[] buffer;
 
         public byte[] Decompress()
         {
-            if (mode != LzssMode.Decompress)
+            if (mode != CompressionMode.Decompress)
             {
                 throw new InvalidOperationException("Not in decompression mode");
             }
@@ -300,7 +295,7 @@ namespace Utility.Compression
 
         public byte[] Compress()
         {
-            if (mode != LzssMode.Compress)
+            if (mode != CompressionMode.Compress)
             {
                 throw new InvalidOperationException("Not in compression mode");
             }
@@ -396,7 +391,7 @@ namespace Utility.Compression
             buffer = null;
             input.Dispose();
             output.Dispose();
-            if (mode == LzssMode.Compress)
+            if (mode == CompressionMode.Compress)
             {
                 lc = null;
                 rc = null;
@@ -405,7 +400,7 @@ namespace Utility.Compression
         }
     }
 
-    public class LzssHelper
+    public static class LzssHelper
     {
         public static byte[] Decompress(byte[] input)
         {
@@ -422,7 +417,7 @@ namespace Utility.Compression
         {
             using (MemoryStream ms = new MemoryStream(input))
             {
-                using (LzssCompression lzss = new LzssCompression(ms, LzssMode.Compress))
+                using (LzssCompression lzss = new LzssCompression(ms, CompressionMode.Compress))
                 {
                     return lzss.Compress();
                 }
