@@ -7,7 +7,7 @@ namespace ArcFormats.AdvHD
     {
         internal static bool toEncryptScripts = true;
 
-        private static string versions = "1/2";
+        private readonly string versions = "1/2";
 
         public PackARCOptions()
         {

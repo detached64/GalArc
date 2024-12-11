@@ -25,7 +25,7 @@ namespace ArcFormats.GsPack
             { "scr" , ".scw" }
         };
 
-        protected readonly string[] ValidMagics = new string[] { "DataPack5", "GsPack5", "GsPack4" };
+        protected readonly string[] ValidMagics = { "DataPack5", "GsPack5", "GsPack4" };
 
         public override void Unpack(string filePath, string folderPath)
         {

@@ -79,7 +79,7 @@ namespace GalArc.Logs
             {
                 if (_logCache.Count == 0)
                 {
-                    throw new Exception("Log cache is empty.");
+                    return;
                 }
                 if (!BaseSettings.Default.ToSaveLog)
                 {

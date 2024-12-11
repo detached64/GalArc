@@ -10,7 +10,7 @@ namespace ArcFormats.GsPack
     {
         private readonly string Magic = "GsSYMBOL5BINDATA";
 
-        public new void Unpack(string filePath, string folderPath)
+        public override void Unpack(string filePath, string folderPath)
         {
             using (FileStream fs = File.OpenRead(filePath))
             {
