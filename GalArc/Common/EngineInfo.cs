@@ -9,17 +9,14 @@ namespace GalArc.Common
         public string UnpackFormat { get; set; }
         public string PackFormat { get; set; }
 
-        internal EngineInfo(string engineName, string unpackFormat, string packFormat)
+        public EngineInfo(string engineName, string unpackFormat, string packFormat)
         {
             EngineName = engineName;
             UnpackFormat = unpackFormat;
             PackFormat = packFormat;
         }
-    }
 
-    public static class EngineInfos
-    {
-        public static readonly List<EngineInfo> engineInfos = new List<EngineInfo>
+        public static List<EngineInfo> Infos => new List<EngineInfo>
         {
             new EngineInfo("AdvHD","ARC/PNA","ARC/PNA"),
             new EngineInfo("Ai5Win","ARC/DAT/VSD",string.Empty),

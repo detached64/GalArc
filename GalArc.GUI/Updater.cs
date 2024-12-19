@@ -2,6 +2,7 @@
 using GalArc.Logs;
 using System;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,22 +14,22 @@ namespace GalArc.GUI
 
         private const string LatestVersionURL = "https://pastebin.com/raw/4pvccgbk";
 
-        internal static readonly string currentVersion = Common.Version.CurrentVer;
+        internal static readonly Version CurrentVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
-        internal static string latestVersion;
+        internal static string LatestVersion;
 
-        internal static bool isNewVerExist = false;
+        private bool isNewVerExist;
 
         public async Task DownloadFileAsync()
         {
             Logger.ShowCheckingUpdate();
             using (var cts = new CancellationTokenSource())
             {
-                cts.CancelAfter(10000);     // 10s
+                cts.CancelAfter(10000);
                 try
                 {
-                    latestVersion = await DownloadContentAsync(cts.Token);
-                    CompareVersion(latestVersion);
+                    LatestVersion = await DownloadContentAsync(cts.Token);
+                    CompareVersion(LatestVersion);
                 }
                 catch (OperationCanceledException)
                 {
@@ -42,7 +43,7 @@ namespace GalArc.GUI
                 }
             }
             Logger.ShowCheckSuccess(isNewVerExist);
-            Logger.ShowProgramVersion(currentVersion, latestVersion);
+            Logger.ShowProgramVersion(CurrentVersion.ToString(), LatestVersion);
             if (isNewVerExist)
             {
                 UpdateBox box = new UpdateBox();
@@ -62,7 +63,7 @@ namespace GalArc.GUI
         {
             isNewVerExist = false;
 
-            string[] parts1 = currentVersion.Split('.');
+            string[] parts1 = CurrentVersion.ToString().Split('.');
             string[] parts2 = latestVersion.Split('.');
 
             for (int i = 0; i < Math.Max(parts1.Length, parts2.Length); i++)

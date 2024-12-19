@@ -21,7 +21,7 @@ namespace GalArc.Database
             }
             set
             {
-                BaseSettings.Default.SiglusKeyFinderPath = value;
+                BaseSettings.Default.DatabasePath = value;
                 BaseSettings.Default.Save();
             }
         }

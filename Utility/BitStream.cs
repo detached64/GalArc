@@ -176,7 +176,16 @@ namespace Utility
             }
             currentByte = 0;
             bitPosition = 0;
-            stream?.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                stream.Dispose();
+            }
         }
     }
 }

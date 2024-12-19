@@ -13,13 +13,9 @@ namespace GalArc.GUI
 {
     public partial class AboutBox : Form
     {
-        private List<EngineInfo> Engines = EngineInfos.engineInfos;
+        private const string ProgramUrl = "https://github.com/detached64/GalArc";
 
-        private List<EngineInfo> SearchedEngines = new List<EngineInfo>();
-
-        private string ProgramUrl => "https://github.com/detached64/GalArc";
-
-        private string IssueUrl => "https://github.com/detached64/GalArc/issues";
+        private const string IssueUrl = "https://github.com/detached64/GalArc/issues";
 
         public AboutBox()
         {
@@ -38,8 +34,8 @@ namespace GalArc.GUI
             {
                 this.TopMost = true;
             }
-            this.lbCurrentVer.Text = string.Format(Resources.lbVersion, Common.Version.CurrentVer);
-            UpdateDataGridView(Engines);
+            this.lbCurrentVer.Text = string.Format(Resources.lbVersion, Updater.CurrentVersion);
+            UpdateDataGridView(EngineInfo.Infos);
             UpdateLicense();
             this.dataGridViewEngines.ClearSelection();
         }
@@ -48,12 +44,15 @@ namespace GalArc.GUI
         {
             if (!string.IsNullOrEmpty(this.txtSearchText.Text))
             {
-                SearchedEngines = Engines.Where(engine => engine.EngineName.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.UnpackFormat.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.PackFormat.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-                UpdateDataGridView(SearchedEngines);
+                List<EngineInfo> searched = EngineInfo
+                    .Infos
+                    .Where(engine => engine.EngineName.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.UnpackFormat.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.PackFormat.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0)
+                    .ToList();
+                UpdateDataGridView(searched);
             }
             else
             {
-                UpdateDataGridView(Engines);
+                UpdateDataGridView(EngineInfo.Infos);
             }
         }
 
@@ -127,7 +126,8 @@ namespace GalArc.GUI
             {
                 if (stream == null)
                 {
-                    throw new FileNotFoundException("Resource not found.");
+                    this.txtLicense.Text = "License file not found.";
+                    return;
                 }
 
                 using (StreamReader reader = new StreamReader(stream))

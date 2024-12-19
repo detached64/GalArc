@@ -56,7 +56,6 @@
     <Compile Include="Common\Encodings.cs" />
     <Compile Include="Common\EngineInfo.cs" />
     <Compile Include="Common\Languages.cs" />
-    <Compile Include="Common\Version.cs" />
     <Compile Include="Database\DatabaseConfig.cs" />
     <Compile Include="Database\Deserializer.cs" />
     <Compile Include="Database\Siglus\Scheme.cs" />

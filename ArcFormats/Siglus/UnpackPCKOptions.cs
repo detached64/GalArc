@@ -42,7 +42,7 @@ namespace ArcFormats.Siglus
             pi.SetValue(this.combSchemes, true, null);
 
             ImportSchemes();
-            AddSchemesToComboBox();
+            AppendSchemes();
         }
 
         private void ImportSchemes()
@@ -57,7 +57,7 @@ namespace ArcFormats.Siglus
             }
         }
 
-        private void AddSchemesToComboBox()
+        private void AppendSchemes()
         {
             if (ScenePCK.ImportedSchemes != null)
             {

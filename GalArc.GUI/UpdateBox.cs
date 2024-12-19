@@ -11,14 +11,15 @@ namespace GalArc.GUI
 
         private const string DownloadUrl = "https://github.com/detached64/GalArc/releases/latest";
 
-        private static int maxLocation = 0;
+        private int maxLocation;
 
         public UpdateBox()
         {
             InitializeComponent();
-            this.lbCurrentVer.Text = Updater.currentVersion;
-            this.lbLatestVer.Text = Updater.latestVersion;
+            this.lbCurrentVer.Text = Updater.CurrentVersion.ToString();
+            this.lbLatestVer.Text = Updater.LatestVersion;
         }
+
         private void UpdateBox_Load(object sender, EventArgs e)
         {
             if (MainWindow.Instance.TopMost)

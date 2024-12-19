@@ -388,15 +388,8 @@ namespace Utility.Compression
 
         public void Dispose()
         {
-            buffer = null;
             input.Dispose();
             output.Dispose();
-            if (mode == CompressionMode.Compress)
-            {
-                lc = null;
-                rc = null;
-                parents = null;
-            }
         }
     }
 

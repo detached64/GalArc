@@ -58,8 +58,7 @@ namespace Utility.Compression
 
         private ushort CreateTree()
         {
-            int bit = input.ReadBit();
-            switch (bit)
+            switch (input.ReadBit())
             {
                 case 0:
                     return (ushort)input.ReadBits(8);
@@ -109,7 +108,6 @@ namespace Utility.Compression
 
         public void Dispose()
         {
-            children = null;
             input.Dispose();
             output.Dispose();
         }

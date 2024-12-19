@@ -30,8 +30,8 @@ namespace GalArc
         private string localCulture;
         private bool isFirstChangeLang = true;
 
-        private readonly int deltaStatus = 15;
-        private readonly int delta = 6;
+        private const int deltaStatus = 15;
+        private const int delta = 6;
 
         public MainWindow()
         {
@@ -59,10 +59,10 @@ namespace GalArc
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            this.combLang.Items.AddRange(Languages.languages.Keys.ToArray());
+            this.combLang.Items.AddRange(Languages.SupportedLanguages.Keys.ToArray());
             this.TopMost = Settings.Default.IsTopMost;
             LogWindow.Instance.TopMost = this.TopMost;
-            this.combLang.Text = Languages.languages.FirstOrDefault(x => x.Value == localCulture).Key;
+            this.combLang.Text = Languages.SupportedLanguages.FirstOrDefault(x => x.Value == localCulture).Key;
             if (Properties.BaseSettings.Default.ToAutoSaveState)
             {
                 this.chkbxUnpack.Checked = Settings.Default.IsUnpackMode;
@@ -129,14 +129,14 @@ namespace GalArc
 
         private async void checkUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var downloader = new Updater();
-            await downloader.DownloadFileAsync();
+            Updater updater = new Updater();
+            await updater.DownloadFileAsync();
         }
 
         private void combLang_SelectedIndexChanged(object sender, EventArgs e)
         {
             string previousCulture = localCulture;
-            localCulture = Languages.languages[this.combLang.Text];
+            localCulture = Languages.SupportedLanguages[this.combLang.Text];
             Settings.Default.LastLanguage = localCulture;
             Settings.Default.Save();
             if (isFirstChangeLang)
@@ -234,7 +234,7 @@ namespace GalArc
 
         private void GetExtraOptions(TreeNode node, string fieldName)
         {
-            string[] infos = node.FullPath.Split('/');
+            string[] infos = node.FullPath.Replace(".", string.Empty).Split('/');
             Assembly assembly = Assembly.Load("ArcFormats");
             Type type = assembly.GetType($"ArcFormats.{infos[0]}.{infos[1]}");
             this.SuspendLayout();
@@ -356,7 +356,7 @@ namespace GalArc
             }
             else
             {
-                foreach (var engine in EngineInfos.engineInfos)
+                foreach (var engine in EngineInfo.Infos)
                 {
                     TreeNode rootNode = new TreeNode(engine.EngineName);
                     foreach (var extension in engine.UnpackFormat.Split('/'))
@@ -388,13 +388,12 @@ namespace GalArc
             }
             else
             {
-                foreach (var engine in EngineInfos.engineInfos)
+                foreach (var engine in EngineInfo.Infos)
                 {
                     if (!string.IsNullOrEmpty(engine.PackFormat))
                     {
                         TreeNode rootNode = new TreeNode(engine.EngineName);
-                        string[] extensions = engine.PackFormat.Split('/');
-                        foreach (var extension in extensions)
+                        foreach (var extension in engine.PackFormat.Split('/'))
                         {
                             TreeNode node = new TreeNode(extension);
                             rootNode.Nodes.Add(node);
@@ -599,7 +598,7 @@ namespace GalArc
         private string GetLocalCulture()
         {
             string LocalCulture = string.IsNullOrEmpty(Settings.Default.LastLanguage) ? CultureInfo.CurrentCulture.Name : Settings.Default.LastLanguage;
-            if (!Languages.languages.Values.ToArray().Contains(LocalCulture))
+            if (!Languages.SupportedLanguages.Values.ToArray().Contains(LocalCulture))
             {
                 LocalCulture = "en-US";
             }

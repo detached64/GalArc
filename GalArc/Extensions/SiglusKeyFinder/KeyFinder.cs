@@ -9,24 +9,12 @@ namespace GalArc.Extensions.SiglusKeyFinder
     {
         public static bool IsValidExe()
         {
-            if (string.IsNullOrEmpty(SiglusKeyFinderConfig.Path))
-            {
-                return false;
-            }
-            if (!File.Exists(SiglusKeyFinderConfig.Path))
-            {
-                return false;
-            }
-            return true;
+            return File.Exists(SiglusKeyFinderConfig.Path);
         }
 
         public static string FindKey(string siglusEnginePath)
         {
-            if (!BaseSettings.Default.IsSiglusKeyFinderEnabled)
-            {
-                return null;
-            }
-            if (!IsValidExe())
+            if (!BaseSettings.Default.IsSiglusKeyFinderEnabled || !IsValidExe())
             {
                 return null;
             }
