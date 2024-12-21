@@ -1,4 +1,4 @@
-﻿namespace GalArc
+﻿namespace GalArc.GUI
 {
     partial class MainWindow
     {

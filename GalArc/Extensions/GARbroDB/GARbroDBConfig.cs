@@ -1,5 +1,4 @@
-﻿using GalArc.Properties;
-using System;
+﻿using System;
 
 namespace GalArc.Extensions.GARbroDB
 {

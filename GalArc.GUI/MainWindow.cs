@@ -1,6 +1,5 @@
 ﻿using ArcFormats.Templates;
 using GalArc.Common;
-using GalArc.GUI;
 using GalArc.GUI.Properties;
 using GalArc.Logs;
 using System;
@@ -15,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GalArc
+namespace GalArc.GUI
 {
     public partial class MainWindow : Form
     {
@@ -63,7 +62,7 @@ namespace GalArc
             this.TopMost = Settings.Default.IsTopMost;
             LogWindow.Instance.TopMost = this.TopMost;
             this.combLang.Text = Languages.SupportedLanguages.FirstOrDefault(x => x.Value == localCulture).Key;
-            if (Properties.BaseSettings.Default.ToAutoSaveState)
+            if (BaseSettings.Default.ToAutoSaveState)
             {
                 this.chkbxUnpack.Checked = Settings.Default.IsUnpackMode;
                 this.chkbxPack.Checked = Settings.Default.IsPackMode;
@@ -162,7 +161,7 @@ namespace GalArc
                 this.btExecute.Text = this.chkbxUnpack.Text;
             }
             SyncPath();
-            if (Properties.BaseSettings.Default.ToAutoSaveState)
+            if (BaseSettings.Default.ToAutoSaveState)
             {
                 Settings.Default.IsUnpackMode = this.chkbxUnpack.Checked;
                 Settings.Default.Save();
@@ -178,7 +177,7 @@ namespace GalArc
                 this.btExecute.Text = this.chkbxPack.Text;
             }
             SyncPath();
-            if (Properties.BaseSettings.Default.ToAutoSaveState)
+            if (BaseSettings.Default.ToAutoSaveState)
             {
                 Settings.Default.IsPackMode = this.chkbxPack.Checked;
                 Settings.Default.Save();
@@ -198,7 +197,7 @@ namespace GalArc
                         return;
                     }
 
-                    if (Properties.BaseSettings.Default.ToAutoSaveState)
+                    if (BaseSettings.Default.ToAutoSaveState)
                     {
                         Settings.Default.UnpackSelectedNode0 = e.Node.Parent.Index;
                         Settings.Default.UnpackSelectedNode1 = e.Node.Index;
@@ -218,7 +217,7 @@ namespace GalArc
                         return;
                     }
 
-                    if (Properties.BaseSettings.Default.ToAutoSaveState)
+                    if (BaseSettings.Default.ToAutoSaveState)
                     {
                         Settings.Default.PackSelectedNode0 = e.Node.Parent.Index;
                         Settings.Default.PackSelectedNode1 = e.Node.Index;
@@ -332,7 +331,7 @@ namespace GalArc
         private void chkbxMatch_CheckedChanged(object sender, EventArgs e)
         {
             SyncPath();
-            if (Properties.BaseSettings.Default.ToAutoSaveState)
+            if (BaseSettings.Default.ToAutoSaveState)
             {
                 Settings.Default.ToMatchPath = this.chkbxMatch.Checked;
                 Settings.Default.Save();
@@ -367,7 +366,7 @@ namespace GalArc
                     this.treeViewEngines.Nodes.Add(rootNode);
                 }
             }
-            if (Properties.BaseSettings.Default.ToAutoSaveState)
+            if (BaseSettings.Default.ToAutoSaveState)
             {
                 TreeNode node0 = treeViewEngines.Nodes[Settings.Default.UnpackSelectedNode0];
                 TreeNode node1 = node0.Nodes[Settings.Default.UnpackSelectedNode1];
@@ -402,7 +401,7 @@ namespace GalArc
                     }
                 }
             }
-            if (Properties.BaseSettings.Default.ToAutoSaveState)
+            if (BaseSettings.Default.ToAutoSaveState)
             {
                 TreeNode node0 = treeViewEngines.Nodes[Settings.Default.PackSelectedNode0];
                 TreeNode node1 = node0.Nodes[Settings.Default.PackSelectedNode1];
@@ -565,7 +564,7 @@ namespace GalArc
         {
             LogWindow.Instance.ChangePosition(this.Location.X, this.Location.Y);
             LogWindow.Instance.Visible = this.chkbxShowLog.Checked;
-            if (Properties.BaseSettings.Default.ToAutoSaveState)
+            if (BaseSettings.Default.ToAutoSaveState)
             {
                 Settings.Default.ToShowLog = this.chkbxShowLog.Checked;
                 Settings.Default.Save();

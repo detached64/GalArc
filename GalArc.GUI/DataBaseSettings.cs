@@ -1,5 +1,4 @@
 ﻿using GalArc.Database;
-using GalArc.Properties;
 using System;
 using System.Drawing;
 using System.Windows.Forms;

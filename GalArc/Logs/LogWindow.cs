@@ -18,7 +18,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-using GalArc.Properties;
 using System;
 using System.Drawing;
 using System.Windows.Forms;

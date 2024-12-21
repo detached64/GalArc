@@ -1,5 +1,4 @@
 ﻿using GalArc.Extensions.SiglusKeyFinder;
-using GalArc.GUI.Properties;
 using System;
 using System.Windows.Forms;
 
@@ -25,7 +24,7 @@ namespace GalArc.GUI
         private void ExtensionSiglusKeyFinder_Load(object sender, EventArgs e)
         {
             this.txtExePath.Text = SiglusKeyFinderConfig.Path;
-            this.chkbxEnableGARbroDB.Checked = GalArc.Properties.BaseSettings.Default.IsSiglusKeyFinderEnabled;
+            this.chkbxEnableGARbroDB.Checked = BaseSettings.Default.IsSiglusKeyFinderEnabled;
         }
 
         private void btSelect_Click(object sender, EventArgs e)
@@ -46,8 +45,8 @@ namespace GalArc.GUI
 
         private void chkbxEnableGARbroDB_CheckedChanged(object sender, EventArgs e)
         {
-            GalArc.Properties.BaseSettings.Default.IsSiglusKeyFinderEnabled = this.chkbxEnableGARbroDB.Checked;
-            GalArc.Properties.BaseSettings.Default.Save();
+            BaseSettings.Default.IsSiglusKeyFinderEnabled = this.chkbxEnableGARbroDB.Checked;
+            BaseSettings.Default.Save();
             this.panel.Enabled = this.chkbxEnableGARbroDB.Checked;
         }
 

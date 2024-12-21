@@ -1,9 +1,9 @@
 ﻿using ArcFormats.Properties;
+using GalArc;
 using GalArc.Database;
 using GalArc.Database.Siglus;
 using GalArc.Extensions.SiglusKeyFinder;
 using GalArc.Logs;
-using GalArc.Properties;
 using System;
 using System.Reflection;
 using System.Windows.Forms;

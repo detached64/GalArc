@@ -8,7 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GalArc.Properties {
+namespace GalArc
+{
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

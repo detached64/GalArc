@@ -23,7 +23,7 @@ namespace GalArc.GUI
 
         private void GeneralSettings_Load(object sender, EventArgs e)
         {
-            this.chkbxAutoSave.Checked = GalArc.Properties.BaseSettings.Default.ToAutoSaveState;
+            this.chkbxAutoSave.Checked = BaseSettings.Default.ToAutoSaveState;
             this.chkbxTopMost.Checked = Settings.Default.IsTopMost;
             this.chkbxFreeze.Checked = Settings.Default.ToFreezeControls;
             MainWindow.Instance.TopMost = this.chkbxTopMost.Checked;
@@ -31,8 +31,8 @@ namespace GalArc.GUI
 
         private void chkbxAutoSave_CheckedChanged(object sender, EventArgs e)
         {
-            GalArc.Properties.BaseSettings.Default.ToAutoSaveState = this.chkbxAutoSave.Checked;
-            GalArc.Properties.BaseSettings.Default.Save();
+            BaseSettings.Default.ToAutoSaveState = this.chkbxAutoSave.Checked;
+            BaseSettings.Default.Save();
         }
 
         private void chkbxTopMost_CheckedChanged(object sender, EventArgs e)

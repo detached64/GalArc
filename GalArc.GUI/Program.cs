@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace GalArc
+namespace GalArc.GUI
 {
     internal static class Program
     {
