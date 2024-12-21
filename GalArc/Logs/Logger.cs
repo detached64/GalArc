@@ -1,6 +1,6 @@
 ﻿// File: Logs/Logger.cs
 // Date: 2024/08/28
-// Description: Loggers
+// Description: Logger class for logging and showing logs.
 //
 // Copyright (C) 2024 detached64
 //
@@ -45,7 +45,24 @@ namespace GalArc.Logs
 
         private static readonly List<string> _logCache = new List<string>();
         private static readonly object _lock = new object();
+        private static readonly IProgress<int> progress = new Progress<int>(value => LogWindow.Instance.bar.Value = value);
         private static CancellationTokenSource _cancellationToken = new CancellationTokenSource();
+
+        private static int barMax;
+        private static int _barValue;
+        private static int barValue
+        {
+            get => _barValue;
+            set
+            {
+                _barValue = value;
+                if (_barValue >= barMax)
+                {
+                    _barValue = barMax;
+                }
+                progress.Report(_barValue);
+            }
+        }
 
         private static void Append(string msg)
         {
@@ -174,45 +191,45 @@ namespace GalArc.Logs
             throw new Exception(string.Format(Resources.logErrorOriginalFileNotFound, file));
         }
 
-        public static void InitPack(string input, string output)
-        {
-            Debug(Resources.logInputFolder + "\t" + input);
-            Debug(Resources.logOutputFile + "\t" + output);
-            Info(Resources.logPacking);
-            SetBarValue(0);
-        }
-
-        public static void FinishPack()
-        {
-            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Value = LogWindow.Instance.bar.Maximum));
-            InfoRevoke(Resources.logPackFinished);
-        }
-
         public static void InitUnpack(string input, string output)
         {
+            barValue = 0;
             Debug(Resources.logInputFile + "\t" + input);
             Debug(Resources.logOutputFolder + "\t" + output);
             Info(Resources.logUnpacking);
-            SetBarValue(0);
         }
 
         public static void FinishUnpack()
         {
-            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Value = LogWindow.Instance.bar.Maximum));
+            barValue = barMax;
             InfoRevoke(Resources.logUnpackFinished);
         }
 
-        internal static void OnProcess(string message)
+        public static void InitPack(string input, string output)
+        {
+            barValue = 0;
+            Debug(Resources.logInputFolder + "\t" + input);
+            Debug(Resources.logOutputFile + "\t" + output);
+            Info(Resources.logPacking);
+        }
+
+        public static void FinishPack()
+        {
+            barValue = barMax;
+            InfoRevoke(Resources.logPackFinished);
+        }
+
+        private static void OnProcess(string message)
         {
             Process?.Invoke(null, message);
         }
 
-        internal static void OnErrorOccur(string message)
+        private static void OnErrorOccur(string message)
         {
             ErrorOccured?.Invoke(null, message);
         }
 
-        internal static async Task OnShowAndDisappear(string message, int second = 5)
+        private static async Task OnShowAndDisappear(string message, int second = 5)
         {
             _cancellationToken.Cancel();
             _cancellationToken.Dispose();
@@ -246,34 +263,35 @@ namespace GalArc.Logs
 
         public static void InitBar(int max, int m)
         {
-            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Maximum = m * max));
+            barValue = 0;
+            SetBarMax(max * m);
             Debug(string.Format(Resources.logFileCountInside, max));
         }
 
         public static void InitBar(uint max, int m)
         {
-            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Maximum = m * (int)max));
-            Debug(string.Format(Resources.logFileCountInside, max));
+            InitBar((int)max, m);
         }
 
         public static void UpdateBar()
         {
-            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.PerformStep()));
-        }
-
-        public static void SetBarValue(int value)
-        {
-            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Value = value));
+            barValue++;
         }
 
         public static void SetBarMax(int max)
         {
+            barMax = max;
             LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Maximum = max));
+        }
+
+        public static void SetBarValue(int value)
+        {
+            barValue = value;
         }
 
         public static void ResetBar()
         {
-            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Value = 0));
+            barValue = 0;
         }
 
         public static void ShowCheckingUpdate()
