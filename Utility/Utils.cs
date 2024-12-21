@@ -160,19 +160,6 @@ namespace Utility
             return bytes;
         }
 
-        public static void CreateDirectoryIfNotExists(string path)
-        {
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-        }
-
-        public static void CreateParentDirectoryIfNotExists(string path)
-        {
-            CreateDirectoryIfNotExists(Path.GetDirectoryName(path));
-        }
-
         public static byte[] PaddedBytes(string input, int length, char padChar, Encoding encoding)
         {
             byte[] bytes = encoding.GetBytes(input);

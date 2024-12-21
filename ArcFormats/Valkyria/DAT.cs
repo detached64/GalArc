@@ -63,7 +63,7 @@ namespace ArcFormats.Valkyria
 
                         if (bytesRead == entry.Size)
                         {
-                            Utils.CreateParentDirectoryIfNotExists(outputPath);
+                            Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
                             File.WriteAllBytes(outputPath, data);
                             Logger.UpdateBar();
                             data = null;

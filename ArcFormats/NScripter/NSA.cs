@@ -30,7 +30,7 @@ namespace ArcFormats.NScripter
                 long pos = fs.Position;
                 fs.Position = offset;
                 string fullPath = Path.Combine(folderPath, relativePath);
-                Utils.CreateParentDirectoryIfNotExists(fullPath);
+                Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
                 byte[] buffer = br.ReadBytes((int)packedSize);
                 File.WriteAllBytes(fullPath, buffer);
                 buffer = null;

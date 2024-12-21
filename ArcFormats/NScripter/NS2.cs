@@ -41,7 +41,7 @@ namespace ArcFormats.NScripter
             foreach (Ns2Entry entry in entries)
             {
                 byte[] data = br.ReadBytes((int)entry.Size);
-                Utils.CreateParentDirectoryIfNotExists(entry.Path);
+                Directory.CreateDirectory(Path.GetDirectoryName(entry.Path));
                 File.WriteAllBytes(entry.Path, data);
                 data = null;
                 Logger.UpdateBar();

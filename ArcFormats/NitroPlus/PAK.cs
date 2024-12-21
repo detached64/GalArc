@@ -52,7 +52,7 @@ namespace ArcFormats.NitroPlus
                             entry.Size = size;
                         }
 
-                        Utils.CreateParentDirectoryIfNotExists(entry.Path);
+                        Directory.CreateDirectory(Path.GetDirectoryName(entry.Path));
 
                         byte[] data = br.ReadBytes((int)entry.Size);
                         byte[] backup = new byte[data.Length];

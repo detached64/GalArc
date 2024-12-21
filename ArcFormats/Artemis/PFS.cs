@@ -91,7 +91,7 @@ namespace ArcFormats.Artemis
                 entry.Offset = br.ReadUInt32();
                 entry.Size = br.ReadUInt32();
 
-                Utils.CreateParentDirectoryIfNotExists(entry.Path);
+                Directory.CreateDirectory(Path.GetDirectoryName(entry.Path));
 
                 long pos = fs.Position;
                 fs.Position = entry.Offset;

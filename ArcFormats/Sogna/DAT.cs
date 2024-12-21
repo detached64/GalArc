@@ -48,7 +48,7 @@ namespace ArcFormats.Sogna
             {
                 br.BaseStream.Position = entry.Offset;
                 string fileName = Path.Combine(folderPath, entry.Name);
-                Utils.CreateParentDirectoryIfNotExists(fileName);
+                Directory.CreateDirectory(Path.GetDirectoryName(fileName));
                 byte[] data = br.ReadBytes((int)entry.Size);
                 if (entry.IsPacked)
                 {

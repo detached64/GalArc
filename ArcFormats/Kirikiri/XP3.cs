@@ -138,7 +138,7 @@ NextEntry:
             {
                 fs.Position = entry.DataOffset;
 
-                Utils.CreateParentDirectoryIfNotExists(entry.FullPath);
+                Directory.CreateDirectory(Path.GetDirectoryName(entry.FullPath));
 
                 byte[] data = br.ReadBytes((int)entry.PackedSize);
                 if (entry.UnpackedSize != entry.PackedSize)

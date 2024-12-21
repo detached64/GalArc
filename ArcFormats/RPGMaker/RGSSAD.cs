@@ -70,7 +70,7 @@ namespace ArcFormats.RPGMaker
                 byte[] nameBytes = br.ReadBytes((int)nameLen);
                 string name = Encoding.UTF8.GetString(DecryptName(nameBytes, keygen));
                 string fullPath = Path.Combine(folderPath, name);
-                Utils.CreateParentDirectoryIfNotExists(fullPath);
+                Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
                 uint size = br.ReadUInt32() ^ keygen.Compute();
                 byte[] data = br.ReadBytes((int)size);
                 DecryptData(data, new KeyGen(keygen.GetCurrent()));
@@ -106,7 +106,7 @@ namespace ArcFormats.RPGMaker
                 uint thisKey = br.ReadUInt32() ^ key;
                 uint nameLen = br.ReadUInt32() ^ key;
                 string fullPath = Path.Combine(folderPath, Encoding.UTF8.GetString(DecryptName(br.ReadBytes((int)nameLen), key)));
-                Utils.CreateParentDirectoryIfNotExists(fullPath);
+                Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
                 long pos = fs.Position;
                 fs.Position = dataOffset;
                 byte[] data = br.ReadBytes((int)fileSize);

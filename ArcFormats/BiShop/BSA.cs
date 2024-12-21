@@ -124,7 +124,7 @@ namespace ArcFormats.BiShop
                 {
                     fs.Position = entry.DataOffset;
                     string path = Path.Combine(Path.Combine(this.path.ToArray()), name);
-                    Utils.CreateParentDirectoryIfNotExists(path);
+                    Directory.CreateDirectory(Path.GetDirectoryName(path));
                     File.WriteAllBytes(path, br.ReadBytes((int)entry.Size));
                     realCount++;
                 }

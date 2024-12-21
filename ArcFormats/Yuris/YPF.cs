@@ -82,7 +82,7 @@ namespace ArcFormats.Yuris
                 {
                     entry.Data = ZlibHelper.Decompress(entry.Data);
                 }
-                Utils.CreateParentDirectoryIfNotExists(entry.Path);
+                Directory.CreateDirectory(Path.GetDirectoryName(entry.Path));
                 if (UnpackYPFOptions.toDecryptScripts && Path.GetExtension(entry.Path) == ".ybn" && BitConverter.ToUInt32(entry.Data, 0) == 0x42545359)
                 {
                     Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
