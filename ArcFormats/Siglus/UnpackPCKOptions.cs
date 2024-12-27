@@ -84,7 +84,7 @@ namespace ArcFormats.Siglus
                 case 1:
                     try
                     {
-                        ScenePCK.SelectedScheme = new Tuple<string, byte[]>(this.combSchemes.Text, Utils.HexStringToByteArray(ExtractedKey, '-'));
+                        ScenePCK.SelectedScheme = new Tuple<string, byte[]>(this.combSchemes.Text, Utils.HexStringToByteArray(ExtractedKey));
                     }
                     catch
                     {
@@ -94,11 +94,11 @@ namespace ArcFormats.Siglus
                     this.lbKey.Text = string.Format(Siglus.lbKey, ExtractedKey ?? Siglus.empty);
                     break;
                 default:
-                    string key = ScenePCK.ImportedSchemes.KnownSchemes[this.combSchemes.Text].KnownKey;
+                    byte[] key = ScenePCK.ImportedSchemes.KnownSchemes[this.combSchemes.Text].KnownKey;
                     try
                     {
-                        ScenePCK.SelectedScheme = new Tuple<string, byte[]>(this.combSchemes.Text, Utils.HexStringToByteArray(key, '-'));
-                        this.lbKey.Text = string.Format(Siglus.lbKey, key);
+                        ScenePCK.SelectedScheme = new Tuple<string, byte[]>(this.combSchemes.Text, key);
+                        this.lbKey.Text = string.Format(Siglus.lbKey, BitConverter.ToString(key));
                     }
                     catch
                     {

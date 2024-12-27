@@ -9,7 +9,7 @@ namespace GalArc.Database.Siglus
     {
         public class SiglusKey
         {
-            public string KnownKey { get; set; }
+            public byte[] KnownKey { get; set; }
         }
 
         [JsonProperty("KnownSchemes")]

@@ -149,7 +149,7 @@ namespace Utility
         /// <param name="hexString"></param>
         /// <param name="separator"></param>
         /// <returns></returns>
-        public static byte[] HexStringToByteArray(string hexString, char separator)
+        public static byte[] HexStringToByteArray(string hexString, char separator = '-')
         {
             string[] hexValues = hexString.Split(separator);
             byte[] bytes = new byte[hexValues.Length];

@@ -64,10 +64,6 @@ namespace GalArc.Database
         /// </summary>
         private static void LoadSchemes()
         {
-            if (!BaseSettings.Default.IsDatabaseEnabled)
-            {
-                return;
-            }
             foreach (Type type in Schemes)
             {
                 LoadScheme(type);
@@ -82,11 +78,7 @@ namespace GalArc.Database
         public static Scheme Deserialize(Type type)
         {
             string name = type.Name.Remove(type.Name.Length - 6);
-            if (!BaseSettings.Default.IsDatabaseEnabled)
-            {
-                return null;
-            }
-            if (!LoadedJsons.TryGetValue(name, out var json) || string.IsNullOrEmpty(json))
+            if (!BaseSettings.Default.IsDatabaseEnabled || !LoadedJsons.TryGetValue(name, out var json) || string.IsNullOrEmpty(json))
             {
                 return null;
             }

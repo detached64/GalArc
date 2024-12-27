@@ -3,9 +3,9 @@ using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Utility;
 
 namespace ArcFormats.Siglus
 {
@@ -150,30 +150,28 @@ namespace ArcFormats.Siglus
 
         protected byte[] TryAllSchemes(ScenePckEntry entry, int type)
         {
-            byte[] key;
             foreach (var scheme in ImportedSchemes.KnownSchemes.Values)
             {
-                key = Utils.HexStringToByteArray(scheme.KnownKey, '-');
-                if (key.Length != 16)
+                if (scheme.KnownKey.Length != 16)
                 {
                     continue;
                 }
-                if (IsRightKey(entry.Data, key, type))
+                if (IsRightKey(entry.Data, scheme.KnownKey, type))
                 {
                     Logger.Info(string.Format(Siglus.logFound, scheme.KnownKey));
                     Logger.Info(string.Format(Siglus.logMatchedGame, FindKeyFromValue(scheme.KnownKey)));
-                    return key;
+                    return scheme.KnownKey;
                 }
             }
             Logger.Info(string.Format(Siglus.logNotFound));
             return null;
         }
 
-        protected string FindKeyFromValue(string key)
+        protected string FindKeyFromValue(byte[] key)
         {
             foreach (var dic in ImportedSchemes.KnownSchemes)
             {
-                if (dic.Value.KnownKey == key)
+                if (key.SequenceEqual(dic.Value.KnownKey))
                 {
                     return dic.Key;
                 }
