@@ -1,4 +1,4 @@
-﻿// File: Utility/Crc32.cs
+﻿// File: Utility/Extensions.cs
 // Date: 2024/10/09
 // Description: 提供一系列扩展方法
 //

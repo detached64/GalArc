@@ -32,8 +32,8 @@ namespace ArcFormats.Yuris
             {
                 Key = 0;
                 ScriptKeyBytes = new byte[] { };
-                Table = tables[0];
-                ExtraLen = extraLens[0];
+                Table = Tables[0];
+                ExtraLen = ExtraLens[0];
             }
         }
 
@@ -49,9 +49,9 @@ namespace ArcFormats.Yuris
         private static readonly byte[] Table2 = { 0x0C, 0x10, 0x11, 0x19, 0x1C, 0x1E, 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
         private static readonly byte[] Table3 = { 0x03, 0x48, 0x06, 0x35, 0x0C, 0x10, 0x11, 0x19, 0x1C, 0x1E, 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
         private static readonly byte[] Table0x1F4 = { 0x3, 0xA, 0x6, 0x35, 0xC, 0x10, 0x11, 0x18, 0x1C, 0x1E, 0x9, 0xB, 0xD, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x14, 0x2E };
-        private static readonly List<byte[]> tables = new List<byte[]> { Table3, Table2, Table1 };
-        private static readonly string[] tableNames = { "Table3", "Table2", "Table1" };
-        private static readonly List<int> extraLens = new List<int> { 8, 4, 0 };
+        private static readonly List<byte[]> Tables = new List<byte[]> { Table3, Table2, Table1 };
+        private static readonly string[] TableNames = { "Table3", "Table2", "Table1" };
+        private static readonly List<int> ExtraLens = new List<int> { 8, 4, 0 };
 
         public override void Unpack(string filePath, string folderPath)
         {
@@ -99,13 +99,13 @@ namespace ArcFormats.Yuris
 
         private void TryReadIndex(BinaryReader br, uint version, int fileCount)
         {
-            foreach (var table in tables)
+            foreach (var table in Tables)
             {
-                foreach (var length in extraLens)
+                foreach (var length in ExtraLens)
                 {
                     scheme.Table = table;
                     scheme.ExtraLen = length;
-                    Logger.Debug($"Try {tableNames[tables.IndexOf(table)]} , Extra Length = {length}……");
+                    Logger.Debug($"Try {TableNames[Tables.IndexOf(table)]} , Extra Length = {length}……");
                     try
                     {
                         Reset();
@@ -113,15 +113,13 @@ namespace ArcFormats.Yuris
                         return;
                     }
                     catch
-                    {
-                        continue;
-                    }
+                    { }
                 }
             }
             if (version == 0x1F4)
             {
                 scheme.Table = Table0x1F4;
-                foreach (var length in extraLens)
+                foreach (var length in ExtraLens)
                 {
                     scheme.ExtraLen = length;
                     Logger.Debug($"Try special table , Extra Length = {length}……");
@@ -199,17 +197,17 @@ namespace ArcFormats.Yuris
 
         private byte[] TryDecryptScript(byte[] script)
         {
-            byte[] result = new byte[] { };
+            byte[] result;
             try
             {
-                FindXorKey(script, "new");
+                FindXorKey(script, false);
                 result = DecryptNewScript(script, BitConverter.ToUInt32(script, 12), BitConverter.ToUInt32(script, 16), BitConverter.ToUInt32(script, 20), BitConverter.ToUInt32(script, 24));
             }
             catch
             {
                 try
                 {
-                    FindXorKey(script, "old");
+                    FindXorKey(script, true);
                     result = DecryptOldScript(script, BitConverter.ToUInt32(script, 8), BitConverter.ToUInt32(script, 12));
                 }
                 catch
@@ -223,9 +221,9 @@ namespace ArcFormats.Yuris
             return result;
         }
 
-        private void FindXorKey(byte[] script, string flag)
+        private void FindXorKey(byte[] script, bool isOld)
         {
-            if (flag == "old")
+            if (isOld)
             {
                 if (script.Length < 44 || !isFirstGuessYst)
                 {
