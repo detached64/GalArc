@@ -30,10 +30,12 @@ namespace ArcFormats
         /// <summary>
         /// File path
         /// </summary>
+        /// Absolute path
         public string Path { get; set; }
         /// <summary>
         /// File offset
         /// </summary>
+        /// Offset from the beginning of the file
         public uint Offset { get; set; }
         /// <summary>
         /// File size
