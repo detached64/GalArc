@@ -48,7 +48,6 @@ namespace GalArc.Logs
         private static readonly IProgress<int> progress = new Progress<int>(value => LogWindow.Instance.bar.Value = value);
         private static CancellationTokenSource _cancellationToken = new CancellationTokenSource();
 
-        private static int barMax;
         private static int _barValue;
         private static int barValue
         {
@@ -56,9 +55,9 @@ namespace GalArc.Logs
             set
             {
                 _barValue = value;
-                if (_barValue >= barMax)
+                if (_barValue >= LogWindow.Instance.bar.Maximum)
                 {
-                    _barValue = barMax;
+                    _barValue = LogWindow.Instance.bar.Maximum;
                 }
                 progress.Report(_barValue);
             }
@@ -201,7 +200,7 @@ namespace GalArc.Logs
 
         public static void FinishUnpack()
         {
-            barValue = barMax;
+            barValue = LogWindow.Instance.bar.Maximum;
             InfoRevoke(Resources.logUnpackFinished);
         }
 
@@ -215,7 +214,7 @@ namespace GalArc.Logs
 
         public static void FinishPack()
         {
-            barValue = barMax;
+            barValue = LogWindow.Instance.bar.Maximum;
             InfoRevoke(Resources.logPackFinished);
         }
 
@@ -280,7 +279,6 @@ namespace GalArc.Logs
 
         public static void SetBarMax(int max)
         {
-            barMax = max;
             LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Maximum = max));
         }
 
