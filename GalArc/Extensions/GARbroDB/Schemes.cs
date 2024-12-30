@@ -4,11 +4,7 @@ using System.Collections.Generic;
 
 namespace GalArc.Extensions.GARbroDB
 {
-    public class Scheme
-    {
-    }
-
-    public class SeraphScheme : Scheme
+    public class SeraphScheme : IScheme
     {
         public static string JsonEngineName = "SERAPH/ARCH";
 
@@ -23,7 +19,7 @@ namespace GalArc.Extensions.GARbroDB
         public Dictionary<string, ArchPacScheme> KnownSchemes { get; set; }
     }
 
-    public class AGSScheme : Scheme
+    public class AGSScheme : IScheme
     {
         public static string JsonEngineName = "DAT/AGS";
 
@@ -44,5 +40,9 @@ namespace GalArc.Extensions.GARbroDB
 
         [JsonProperty("EncryptedArchives")]
         public List<string> EncryptedArchives { get; set; }
+    }
+
+    public interface IScheme
+    {
     }
 }

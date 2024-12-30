@@ -70,7 +70,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SchemeInfos.resx</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\GARbroDB\Scheme.cs" />
+    <Compile Include="Extensions\GARbroDB\Schemes.cs" />
     <Compile Include="Logs\LogWindow.cs">
       <SubType>Form</SubType>
     </Compile>

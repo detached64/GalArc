@@ -225,7 +225,7 @@
             // 
             this.AllowDrop = true;
             resources.ApplyResources(this, "$this");
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.gbOptions);
             this.Controls.Add(this.chkbxShowLog);
             this.Controls.Add(this.btClear);

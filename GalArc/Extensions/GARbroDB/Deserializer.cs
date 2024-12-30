@@ -27,7 +27,7 @@ namespace GalArc.Extensions.GARbroDB
         /// <param name="type"></param>
         /// <param name="jsonEngineName"></param>
         /// <returns></returns>
-        public static Scheme Deserialize(Type type, string jsonEngineName)
+        public static IScheme Deserialize(Type type, string jsonEngineName)
         {
             if (!BaseSettings.Default.IsExtensionsEnabled || !BaseSettings.Default.IsGARbroDBEnabled)
             {
@@ -47,7 +47,7 @@ namespace GalArc.Extensions.GARbroDB
                 JObject jsonObject = JObject.Parse(LoadedContent);
                 JToken selectedToken = jsonObject.SelectToken($"['SchemeMap']['{jsonEngineName}']");
                 string selectedJson = selectedToken.ToString();
-                return JsonConvert.DeserializeObject(selectedJson, type) as Scheme;
+                return JsonConvert.DeserializeObject(selectedJson, type) as IScheme;
             }
             catch (Exception ex)
             {
