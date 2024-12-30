@@ -263,43 +263,37 @@ namespace ArcFormats.AdvHD
 
         public override void Unpack(string filePath, string folderPath)
         {
-            char a;
-            int fileCount = 0;
-            using (FileStream fs = File.OpenRead(filePath))
+            List<Action> actions = new List<Action>()
             {
-                using (BinaryReader br = new BinaryReader(fs))
+                () => arcV2_unpack(filePath, folderPath),
+                () => arcV1_unpack(filePath, folderPath)
+            };
+            foreach (var action in actions)
+            {
+                try
                 {
-                    fs.Position = 0;
-                    fileCount = br.ReadInt32();
-                    a = br.ReadChar();
+                    action();
+                    return;
                 }
+                catch
+                { }
             }
-
-            if (a >= 'A' && a <= 'z')
-            {
-                Logger.ShowVersion("arc", 1);
-                arcV1_unpack(filePath, folderPath);
-            }
-            else if (IsSaneCount(fileCount))
-            {
-                Logger.ShowVersion("arc", 2);
-                arcV2_unpack(filePath, folderPath);
-            }
-            else
-            {
-                Logger.ErrorInvalidArchive();
-            }
+            Logger.ErrorInvalidArchive();
         }
 
         public override void Pack(string folderPath, string filePath)
         {
-            if (ArcSettings.Version == "1")
+            switch (ArcSettings.Version)
             {
-                arcV1_pack(folderPath, filePath);
-            }
-            else
-            {
-                arcV2_pack(folderPath, filePath);
+                case "1":
+                    arcV1_pack(folderPath, filePath);
+                    break;
+                case "2":
+                    arcV2_pack(folderPath, filePath);
+                    break;
+                default:
+                    Logger.Error("Wrong version specified.");
+                    break;
             }
         }
 
