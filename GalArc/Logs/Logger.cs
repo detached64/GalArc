@@ -279,7 +279,7 @@ namespace GalArc.Logs
 
         public static void SetBarMax(int max)
         {
-            LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Maximum = max));
+            LogWindow.Instance.bar.Maximum = max;
         }
 
         public static void SetBarValue(int value)
