@@ -70,7 +70,7 @@ namespace GalArc.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Error occurs. Please refer to log for detail. 的本地化字符串。
+        ///   查找类似 Error: {0} 的本地化字符串。
         /// </summary>
         internal static string logErrorOccur {
             get {

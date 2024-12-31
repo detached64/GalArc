@@ -89,13 +89,13 @@
             this.btSelect.UseVisualStyleBackColor = true;
             this.btSelect.Click += new System.EventHandler(this.btSelect_Click);
             // 
-            // DataBaseSettings
+            // DatabaseSettings
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel);
             this.Controls.Add(this.chkbxEnableDataBase);
-            this.Name = "DataBaseSettings";
+            this.Name = "DatabaseSettings";
             this.Load += new System.EventHandler(this.DatabaseSettings_Load);
             this.panel.ResumeLayout(false);
             this.panel.PerformLayout();

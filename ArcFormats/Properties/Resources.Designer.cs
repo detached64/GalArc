@@ -61,6 +61,24 @@ namespace ArcFormats.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Custom scheme 的本地化字符串。
+        /// </summary>
+        internal static string combCustomScheme {
+            get {
+                return ResourceManager.GetString("combCustomScheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 No encryption 的本地化字符串。
+        /// </summary>
+        internal static string combNoEncryption {
+            get {
+                return ResourceManager.GetString("combNoEncryption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Path contains invalid characters. Switching the encoding in the settings might work. 的本地化字符串。
         /// </summary>
         internal static string logErrorContainsInvalid {
@@ -165,6 +183,24 @@ namespace ArcFormats.Properties {
         internal static string logTryEncScr {
             get {
                 return ResourceManager.GetString("logTryEncScr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 The file has been encrypted. Please choose appropriate scheme. 的本地化字符串。
+        /// </summary>
+        internal static string msgNeedDec {
+            get {
+                return ResourceManager.GetString("msgNeedDec", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Wrong scheme! 的本地化字符串。
+        /// </summary>
+        internal static string msgWrongScheme {
+            get {
+                return ResourceManager.GetString("msgWrongScheme", resourceCulture);
             }
         }
     }

@@ -145,7 +145,7 @@ namespace GalArc.Logs
             if (!toThrow)
             {
                 WriteAndSaveLog(log, 0);
-                OnErrorOccur(Resources.logErrorOccur);
+                OnErrorOccur(string.Format(Resources.logErrorOccur, log));
             }
             else
             {

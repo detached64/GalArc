@@ -133,4 +133,16 @@
   <data name="logImportDataBaseSuccess" xml:space="preserve">
     <value>Import {0} schemes from Database.</value>
   </data>
+  <data name="combNoEncryption" xml:space="preserve">
+    <value>No encryption</value>
+  </data>
+  <data name="combCustomScheme" xml:space="preserve">
+    <value>Custom scheme</value>
+  </data>
+  <data name="msgWrongScheme" xml:space="preserve">
+    <value>Wrong scheme!</value>
+  </data>
+  <data name="msgNeedDec" xml:space="preserve">
+    <value>The file has been encrypted. Please choose appropriate scheme.</value>
+  </data>
 </root>

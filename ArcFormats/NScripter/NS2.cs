@@ -1,7 +1,10 @@
-﻿using GalArc.Logs;
+﻿using ArcFormats.Properties;
+using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using System.Windows.Forms;
 using Utility;
 using Utility.Extensions;
 
@@ -9,44 +12,61 @@ namespace ArcFormats.NScripter
 {
     public class NS2 : ArchiveFormat
     {
+        public static UserControl UnpackExtraOptions = new UnpackNS2Options();
+
+        internal static string Key { get; set; }
+
         private class Ns2Entry : PackedEntry
         {
             public string RelativePath { get; set; }
         }
+        private List<Ns2Entry> entries = new List<Ns2Entry>();
 
         public override void Unpack(string filePath, string folderPath)
         {
-            FileStream fs = File.OpenRead(filePath);
-            BinaryReader br = new BinaryReader(fs);
-            uint dataOffset = br.ReadUInt32();
-            if (dataOffset > new FileInfo(filePath).Length || dataOffset <= 0)
+            byte[] data = File.ReadAllBytes(filePath);
+            uint dataOffset = BitConverter.ToUInt32(data, 0);
+            if (dataOffset > data.Length)
             {
-                throw new Exception("Error:Encrypted data detected.");
+                if (string.IsNullOrEmpty(Key))
+                {
+                    Logger.Error(Resources.msgNeedDec);
+                    return;
+                }
+                Ns2Decryptor decryptor = new Ns2Decryptor(data, Encoding.ASCII.GetBytes(Key));
+                decryptor.Decrypt();
             }
+            MemoryStream ms = new MemoryStream(data);
+            BinaryReader br = new BinaryReader(ms);
+            dataOffset = br.ReadUInt32();
+            try
+            {
+                while (ms.Position < dataOffset - 1)
+                {
+                    Ns2Entry entry = new Ns2Entry();
+                    br.ReadByte();              //skip "
+                    entry.Path = Path.Combine(folderPath, br.ReadCString(0x22));
+                    entry.Size = br.ReadUInt32();
+                    entries.Add(entry);
+                }
+            }
+            catch (Exception)
+            {
+                Logger.Error(Resources.msgWrongScheme);
+            }
+            br.ReadByte(); //skip 'e
+
             Directory.CreateDirectory(folderPath);
-            List<Ns2Entry> entries = new List<Ns2Entry>();
-
-            while (fs.Position < dataOffset - 1)//dataOffset - 1 is the end of file path
-            {
-                Ns2Entry entry = new Ns2Entry();
-                br.ReadByte();//skip "
-                entry.Path = Path.Combine(folderPath, br.ReadCString(0x22));
-                entry.Size = br.ReadUInt32();
-                entries.Add(entry);
-            }
-            br.ReadByte(); //skip e
-
             Logger.InitBar(entries.Count);
 
             foreach (Ns2Entry entry in entries)
             {
-                byte[] data = br.ReadBytes((int)entry.Size);
                 Directory.CreateDirectory(Path.GetDirectoryName(entry.Path));
-                File.WriteAllBytes(entry.Path, data);
+                File.WriteAllBytes(entry.Path, br.ReadBytes((int)entry.Size));
                 data = null;
                 Logger.UpdateBar();
             }
-            fs.Dispose();
+            ms.Dispose();
             br.Dispose();
         }
 

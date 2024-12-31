@@ -143,7 +143,7 @@ namespace GalArc.Database
                         continue;
                     }
                     int count = ((JObject)jobject.Value).Count;
-                    result.AppendFormat(SchemeInfos.InfoItems, jobject.Key, count).AppendLine();
+                    result.Append("  ").AppendFormat(SchemeInfos.InfoItems, jobject.Key, count).AppendLine();
                 }
 
                 // file size
@@ -181,7 +181,6 @@ namespace GalArc.Database
             foreach (Type type in Schemes)
             {
                 result.AppendLine(GetInfo(type));
-                result.AppendLine();
             }
             return result.ToString();
         }

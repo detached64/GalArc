@@ -58,6 +58,7 @@
     <Compile Include="Common\Languages.cs" />
     <Compile Include="Database\DatabaseConfig.cs" />
     <Compile Include="Database\Deserializer.cs" />
+    <Compile Include="Database\NScripter\Scheme.cs" />
     <Compile Include="Database\Siglus\Scheme.cs" />
     <Compile Include="Extensions\ExtensionsConfig.cs" />
     <Compile Include="Extensions\GARbroDB\GARbroDBConfig.cs" />

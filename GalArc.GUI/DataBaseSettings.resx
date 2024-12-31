@@ -249,6 +249,9 @@
   <data name="txtDBInfo.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="txtDBInfo.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
+  </data>
   <data name="txtDBInfo.Size" type="System.Drawing.Size, System.Drawing">
     <value>606, 240</value>
   </data>
@@ -334,7 +337,7 @@
     <value>777, 570</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>DataBaseSettings</value>
+    <value>DatabaseSettings</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

@@ -153,4 +153,16 @@
   <data name="logImportDataBaseSuccess" xml:space="preserve">
     <value>从数据库导入{0}个密钥。</value>
   </data>
+  <data name="combNoEncryption" xml:space="preserve">
+    <value>没有加密</value>
+  </data>
+  <data name="combCustomScheme" xml:space="preserve">
+    <value>自定义加密方案</value>
+  </data>
+  <data name="msgWrongScheme" xml:space="preserve">
+    <value>加密方案错误！</value>
+  </data>
+  <data name="msgNeedDec" xml:space="preserve">
+    <value>文件已加密。请选择合适的加密方案。</value>
+  </data>
 </root>

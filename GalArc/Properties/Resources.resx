@@ -166,7 +166,7 @@
     <value>Packing……</value>
   </data>
   <data name="logErrorOccur" xml:space="preserve">
-    <value>Error occurs. Please refer to log for detail.</value>
+    <value>Error: {0}</value>
   </data>
   <data name="logVersions" xml:space="preserve">
     <value>Current version: {0} Latest version: {1}</value>

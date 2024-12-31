@@ -141,6 +141,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataBaseSettings.resx">
       <DependentUpon>DataBaseSettings.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DataBaseSettings.zh-Hans.resx">
       <DependentUpon>DataBaseSettings.cs</DependentUpon>
@@ -216,6 +217,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\Database\NS2.json" />
     <None Include="Resources\Database\Siglus.json" />
     <None Include="Resources\Extensions\Formats.json" />
   </ItemGroup>

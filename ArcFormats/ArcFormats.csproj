@@ -132,7 +132,14 @@
     </Compile>
     <Compile Include="NitroPlus\PAK.cs" />
     <Compile Include="NScripter\NS2.cs" />
+    <Compile Include="NScripter\Ns2Utils.cs" />
     <Compile Include="NScripter\NSA.cs" />
+    <Compile Include="NScripter\UnpackNS2Options.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NScripter\UnpackNS2Options.Designer.cs">
+      <DependentUpon>UnpackNS2Options.cs</DependentUpon>
+    </Compile>
     <Compile Include="Palette\PAK.cs" />
     <Compile Include="PJADV\DAT.cs" />
     <Compile Include="PJADV\PackDATOptions.cs">
@@ -303,6 +310,12 @@
       <DependentUpon>PackPAKOptions.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="NScripter\UnpackNS2Options.resx">
+      <DependentUpon>UnpackNS2Options.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NScripter\UnpackNS2Options.zh-Hans.resx">
+      <DependentUpon>UnpackNS2Options.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PJADV\PackDATOptions.resx">
       <DependentUpon>PackDATOptions.cs</DependentUpon>
     </EmbeddedResource>
@@ -391,5 +404,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Yuris\Yuris.zh-Hans.resx" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
