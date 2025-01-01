@@ -157,12 +157,15 @@
     <value>没有加密</value>
   </data>
   <data name="combCustomScheme" xml:space="preserve">
-    <value>自定义加密方案</value>
+    <value>自定义方案</value>
   </data>
   <data name="msgWrongScheme" xml:space="preserve">
     <value>加密方案错误！</value>
   </data>
   <data name="msgNeedDec" xml:space="preserve">
     <value>文件已加密。请选择合适的加密方案。</value>
+  </data>
+  <data name="combTryEveryScheme" xml:space="preserve">
+    <value>尝试所有加密方案</value>
   </data>
 </root>

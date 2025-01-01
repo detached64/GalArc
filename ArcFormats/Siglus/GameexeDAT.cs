@@ -1,4 +1,5 @@
-﻿using GalArc.Logs;
+﻿using ArcFormats.Properties;
+using GalArc.Logs;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -32,7 +33,7 @@ namespace ArcFormats.Siglus
             entry.PackedLength = BitConverter.ToUInt32(entry.Data, 0);
             if (entry.PackedLength != entry.Data.Length)
             {
-                Logger.Error(Siglus.logWrongKey);
+                Logger.Error(Resources.msgWrongScheme);
             }
             entry.UnpackedLength = BitConverter.ToUInt32(entry.Data, 4);
             byte[] input = new byte[entry.PackedLength - 8];
@@ -43,7 +44,7 @@ namespace ArcFormats.Siglus
             }
             catch
             {
-                Logger.Error(Siglus.logWrongKey);
+                Logger.Error(Resources.msgWrongScheme);
             }
             Directory.CreateDirectory(folderPath);
             using (FileStream fw = File.Create(Path.Combine(folderPath, UnpackedFileName)))

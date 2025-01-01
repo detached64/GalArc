@@ -79,6 +79,15 @@ namespace ArcFormats.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Try every encryption scheme 的本地化字符串。
+        /// </summary>
+        internal static string combTryEveryScheme {
+            get {
+                return ResourceManager.GetString("combTryEveryScheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Path contains invalid characters. Switching the encoding in the settings might work. 的本地化字符串。
         /// </summary>
         internal static string logErrorContainsInvalid {

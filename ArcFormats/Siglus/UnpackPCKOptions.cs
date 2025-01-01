@@ -42,7 +42,6 @@ namespace ArcFormats.Siglus
             pi.SetValue(this.combSchemes, true, null);
 
             ImportSchemes();
-            AppendSchemes();
         }
 
         private void ImportSchemes()
@@ -53,20 +52,16 @@ namespace ArcFormats.Siglus
                 if (ScenePCK.ImportedSchemes != null)
                 {
                     Logger.Debug(string.Format(Resources.logImportDataBaseSuccess, ScenePCK.ImportedSchemes.KnownSchemes.Count));
+                    this.combSchemes.Items.Add(Resources.combTryEveryScheme);
+                    this.combSchemes.Items.Add(Resources.combCustomScheme);
+                    foreach (var scheme in ScenePCK.ImportedSchemes.KnownSchemes)
+                    {
+                        this.combSchemes.Items.Add(scheme.Key);
+                    }
                 }
-            }
-        }
-
-        private void AppendSchemes()
-        {
-            if (ScenePCK.ImportedSchemes != null)
-            {
-                this.combSchemes.Items.Add(Siglus.combItemTryEachScheme);
-                this.combSchemes.Items.Add(Siglus.combCustom);
-
-                foreach (var scheme in ScenePCK.ImportedSchemes.KnownSchemes)
+                else
                 {
-                    this.combSchemes.Items.Add(scheme.Key);
+                    this.combSchemes.Items.Add(Resources.combCustomScheme);
                 }
                 this.combSchemes.SelectedIndex = 0;
             }
