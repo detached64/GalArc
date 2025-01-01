@@ -100,9 +100,6 @@
   <data name="lbKey" xml:space="preserve">
     <value>Key: {0}</value>
   </data>
-  <data name="combItemTryEachScheme" xml:space="preserve">
-    <value>Try each encryption scheme</value>
-  </data>
   <data name="logFound" xml:space="preserve">
     <value>Key found: {0}</value>
   </data>
@@ -112,14 +109,8 @@
   <data name="logMatchedGame" xml:space="preserve">
     <value>Matched game: {0}</value>
   </data>
-  <data name="logWrongKey" xml:space="preserve">
-    <value>Wrong key!</value>
-  </data>
   <data name="lbKeyParseError" xml:space="preserve">
     <value>Failed to parse key.</value>
-  </data>
-  <data name="combCustom" xml:space="preserve">
-    <value>Custom scheme</value>
   </data>
   <data name="logKeyFound" xml:space="preserve">
     <value>Key: {0}</value>

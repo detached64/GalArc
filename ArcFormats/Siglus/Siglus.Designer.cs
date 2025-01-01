@@ -61,24 +61,6 @@ namespace ArcFormats.Siglus {
         }
         
         /// <summary>
-        ///   查找类似 Custom scheme 的本地化字符串。
-        /// </summary>
-        internal static string combCustom {
-            get {
-                return ResourceManager.GetString("combCustom", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Try each encryption scheme 的本地化字符串。
-        /// </summary>
-        internal static string combItemTryEachScheme {
-            get {
-                return ResourceManager.GetString("combItemTryEachScheme", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Empty 的本地化字符串。
         /// </summary>
         internal static string empty {
@@ -147,15 +129,6 @@ namespace ArcFormats.Siglus {
         internal static string logNotFound {
             get {
                 return ResourceManager.GetString("logNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Wrong key! 的本地化字符串。
-        /// </summary>
-        internal static string logWrongKey {
-            get {
-                return ResourceManager.GetString("logWrongKey", resourceCulture);
             }
         }
     }

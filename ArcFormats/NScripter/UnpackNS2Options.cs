@@ -29,17 +29,18 @@ namespace ArcFormats.NScripter
             if (ImportedScheme == null)
             {
                 ImportedScheme = Deserializer.ReadScheme(typeof(NS2Scheme)) as NS2Scheme;
+                combSchemes.Items.Add(Resources.combNoEncryption);
+                combSchemes.Items.Add(Resources.combCustomScheme);
+
                 if (ImportedScheme != null)
                 {
                     Logger.Debug(string.Format(Resources.logImportDataBaseSuccess, ImportedScheme.KnownKeys.Count));
+                    foreach (var key in ImportedScheme.KnownKeys)
+                    {
+                        combSchemes.Items.Add(key.Key);
+                    }
                 }
-                combSchemes.Items.Add(Resources.combNoEncryption);
-                combSchemes.Items.Add(Resources.combCustomScheme);
                 combSchemes.SelectedIndex = 0;
-                foreach (var key in ImportedScheme.KnownKeys)
-                {
-                    combSchemes.Items.Add(key.Key);
-                }
             }
         }
 

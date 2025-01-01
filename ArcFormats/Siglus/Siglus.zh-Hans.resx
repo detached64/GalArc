@@ -120,9 +120,6 @@
   <data name="lbKey" xml:space="preserve">
     <value>密钥：{0}</value>
   </data>
-  <data name="combItemTryEachScheme" xml:space="preserve">
-    <value>尝试所有加密方案</value>
-  </data>
   <data name="logFound" xml:space="preserve">
     <value>已找到密钥：{0}</value>
   </data>
@@ -132,14 +129,8 @@
   <data name="logMatchedGame" xml:space="preserve">
     <value>对应游戏：{0}</value>
   </data>
-  <data name="logWrongKey" xml:space="preserve">
-    <value>密钥错误！</value>
-  </data>
   <data name="lbKeyParseError" xml:space="preserve">
     <value>密钥解析失败。</value>
-  </data>
-  <data name="combCustom" xml:space="preserve">
-    <value>自定义方案</value>
   </data>
   <data name="logKeyFound" xml:space="preserve">
     <value>已找到密钥：{0}</value>
