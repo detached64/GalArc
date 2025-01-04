@@ -31,7 +31,7 @@ namespace ArcFormats.Ai5Win
             {
                 fs.Position = entry.Offset;
                 byte[] data = br.ReadBytes((int)entry.Size);
-                if (entry.Path.HasAnyOfExtensions("mes", "lib", "a", "a6", "msk", "x"))
+                if (entry.Path.HasAnyOfExtensions("mes", "lib", "a", "a6", "msk", "x", "s4", "dat"))
                 {
                     File.WriteAllBytes(entry.Path, LzssHelper.Decompress(data));
                 }
@@ -78,9 +78,7 @@ namespace ArcFormats.Ai5Win
                     return;
                 }
                 catch
-                {
-                    continue;
-                }
+                { }
             }
             Logger.Error("Failed to read index.");
         }
