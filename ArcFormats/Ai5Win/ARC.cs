@@ -12,26 +12,23 @@ namespace ArcFormats.Ai5Win
     {
         private readonly int[] NameLengths = { 0x14, 0x18, 0x1E, 0x20, 0x100 };
 
-        private string FolderPath;
+        private List<Entry> entries;
 
         public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-
-            FolderPath = folderPath;
-
             int fileCount = br.ReadInt32();
             Logger.InitBar(fileCount);
             Directory.CreateDirectory(folderPath);
 
-            TryReadIndex(br, fileCount, out List<Entry> entries);
+            TryReadIndex(br, fileCount, folderPath);
 
             foreach (Entry entry in entries)
             {
                 fs.Position = entry.Offset;
                 byte[] data = br.ReadBytes((int)entry.Size);
-                if (entry.Path.HasAnyOfExtensions("mes", "lib", "a", "a6", "msk", "x", "s4", "dat"))
+                if (entry.Path.HasAnyOfExtensions("mes", "lib", "a", "a6", "msk", "x", "s4", "dat", "map"))
                 {
                     File.WriteAllBytes(entry.Path, LzssHelper.Decompress(data));
                 }
@@ -46,9 +43,9 @@ namespace ArcFormats.Ai5Win
             br.Dispose();
         }
 
-        private void TryReadIndex(BinaryReader br, int fileCount, out List<Entry> entries)
+        private void TryReadIndex(BinaryReader br, int fileCount, string folderPath)
         {
-            entries = new List<Entry>();
+            entries = new List<Entry>(fileCount);
             foreach (int nameLength in NameLengths)
             {
                 try
@@ -70,7 +67,7 @@ namespace ArcFormats.Ai5Win
                         {
                             throw new Exception();
                         }
-                        entry.Path = Path.Combine(FolderPath, entry.Name);
+                        entry.Path = Path.Combine(folderPath, entry.Name);
                         entry.Size = br.ReadUInt32() ^ scheme.SizeKey;
                         entry.Offset = br.ReadUInt32() ^ scheme.OffsetKey;
                         entries.Add(entry);
@@ -82,28 +79,28 @@ namespace ArcFormats.Ai5Win
             }
             Logger.Error("Failed to read index.");
         }
-    }
 
-    internal class ArcScheme
-    {
-        internal byte NameKey { get; set; }
-        internal uint SizeKey { get; set; }
-        internal uint OffsetKey { get; set; }
-
-        internal void GuessScheme(BinaryReader br, int fileCount, int nameLen)
+        protected class ArcScheme
         {
-            // guess name key
-            br.BaseStream.Position = nameLen + 3;    // last byte of name , hopefully 0x00
-            NameKey = br.ReadByte();
-            // guess offset key
-            uint dataOffset = (uint)((nameLen + 8) * fileCount + 4);
-            uint size = br.ReadUInt32();
-            uint offset1 = br.ReadUInt32();
-            OffsetKey = offset1 ^ dataOffset;
-            // guess size key
-            br.BaseStream.Position += nameLen + 4;
-            uint offset2 = br.ReadUInt32() ^ OffsetKey;
-            SizeKey = size ^ (offset2 - dataOffset);
+            public byte NameKey { get; set; }
+            public uint SizeKey { get; set; }
+            public uint OffsetKey { get; set; }
+
+            public void GuessScheme(BinaryReader br, int fileCount, int nameLen)
+            {
+                // guess name key
+                br.BaseStream.Position = nameLen + 3;    // last byte of name , hopefully 0x00
+                NameKey = br.ReadByte();
+                // guess offset key
+                uint dataOffset = (uint)((nameLen + 8) * fileCount + 4);
+                uint size = br.ReadUInt32();
+                uint offset1 = br.ReadUInt32();
+                OffsetKey = offset1 ^ dataOffset;
+                // guess size key
+                br.BaseStream.Position += nameLen + 4;
+                uint offset2 = br.ReadUInt32() ^ OffsetKey;
+                SizeKey = size ^ (offset2 - dataOffset);
+            }
         }
     }
 }

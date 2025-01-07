@@ -5,7 +5,7 @@ using Utility;
 
 namespace ArcFormats.Ai5Win
 {
-    public class DAT : ArchiveFormat
+    public class DAT : ARC
     {
         private readonly int NameLength = 0x14;
 
