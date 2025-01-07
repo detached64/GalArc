@@ -55,11 +55,10 @@ namespace GalArc.Logs
             set
             {
                 _barValue = value;
-                if (_barValue >= LogWindow.Instance.bar.Maximum)
+                if (_barValue <= LogWindow.Instance.bar.Maximum)
                 {
-                    _barValue = LogWindow.Instance.bar.Maximum;
+                    progress.Report(_barValue);
                 }
-                progress.Report(_barValue);
             }
         }
 
@@ -279,7 +278,10 @@ namespace GalArc.Logs
 
         public static void SetBarMax(int max)
         {
-            LogWindow.Instance.bar.Maximum = max;
+            if (LogWindow.Instance.bar.IsHandleCreated)
+            {
+                LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Maximum = max));
+            }
         }
 
         public static void SetBarValue(int value)
