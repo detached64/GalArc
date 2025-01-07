@@ -120,6 +120,7 @@
     </Compile>
     <Compile Include="Kirikiri\XP3.cs" />
     <Compile Include="Majiro\ARC.cs" />
+    <Compile Include="NekoPack\DAT.cs" />
     <Compile Include="NekoSDK\DAT.cs" />
     <Compile Include="NekoSDK\PAK.cs" />
     <Compile Include="NeXAS\PAC.cs" />
