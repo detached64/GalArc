@@ -119,14 +119,14 @@ namespace GalArc.Database
             string name = type.Name.Remove(type.Name.Length - 6);    // remove "Scheme"
             string path = Path.Combine(DatabaseConfig.Path, name + ".json");
 
+            StringBuilder result = new StringBuilder();
+            // engine name
+            result.AppendFormat(SchemeInfos.InfoEngineName, name).AppendLine();
+
             try
             {
-                StringBuilder result = new StringBuilder();
-
                 var json = LoadedJsons[name];
                 JObject jsonObject = JObject.Parse(json);
-                // engine name
-                result.AppendFormat(SchemeInfos.InfoEngineName, name).AppendLine();
 
                 // version
                 int version = (int)jsonObject["Version"];
@@ -158,12 +158,12 @@ namespace GalArc.Database
                 result.AppendFormat(SchemeInfos.InfoHash, json.GetHashCode()).AppendLine();
 
                 jsonObject = null;
-                return result.ToString();
             }
             catch (Exception)
             {
-                return SchemeInfos.InfoFileNotFound;
+                result.AppendLine(SchemeInfos.InfoFileNotFound);
             }
+            return result.ToString();
         }
 
         /// <summary>
