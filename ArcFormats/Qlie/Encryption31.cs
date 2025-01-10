@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GalArc.Logs;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -6,39 +8,132 @@ using Utility;
 
 namespace ArcFormats.Qlie
 {
-    public partial class PACK
+    internal class Encryption31 : QileEncryption
     {
-        private class QlieHeader        // length: 0x1C
+        public Encryption31(QlieHeader qheader)
         {
-            public string Magic { get; set; }   // "FilePackVer3.1"
-            public int FileCount { get; set; }
-            public long IndexOffset { get; set; }
+            header = qheader;
+            entries = new List<QlieEntry>(header.FileCount);
         }
+        private List<QlieEntry> entries;
+        private QlieHeader header;
 
-        private class QlieKey           // length: 0x20 + 0x4 + 0x400 = 0x424
+        public override void Unpack(string input, string output)
         {
-            public byte[] Magic { get; set; }
-            public uint HashSize { get; set; }
-            public byte[] Key { get; set; }    // 0x400, 0x100 key + 0x300 padding
-        }
+            FileStream fs = File.OpenRead(input);
+            BinaryReader br = new BinaryReader(fs);
+            // Init & check
+            fs.Position = fs.Length - 0x440;
+            QlieKey qkey = new QlieKey()
+            {
+                Magic = br.ReadBytes(32),
+                HashSize = br.ReadUInt32(),
+                Key = br.ReadBytes(0x400)
+            };
+            if (!qkey.Magic.SequenceEqual(KeyMagic) || qkey.HashSize > fs.Length || qkey.HashSize < 0x44)
+            {
+                Logger.Error("Invalid key");
+            }
 
-        private class QlieHash          // length: QlieKey.HashSize
-        {
-            public string Magic { get; set; }   // "HashVer1.4"
-            public uint C { get; set; }         // 0x100
-            public int FileCount { get; set; }
-            public uint IndexSize { get; set; } // 4 * FileCount
-            public uint DataSize { get; set; }
-            public bool IsCompressed { get; set; }
-            public byte[] Unknown { get; set; } // length: 0x20
-            public byte[] HashData { get; set; }// length: QlieKey.HashSize - 0x44
-        }
+            fs.Position = fs.Length - 0x440 - qkey.HashSize;
+            QlieHash qhash = new QlieHash()
+            {
+                Magic = Encoding.ASCII.GetString(br.ReadBytes(16)).TrimEnd('\0'),
+                C = br.ReadUInt32(),
+                FileCount = br.ReadInt32(),
+                IndexSize = br.ReadUInt32(),
+                DataSize = br.ReadUInt32(),
+                IsCompressed = br.ReadInt32() != 0,
+                Unknown = br.ReadBytes(0x20),
+                HashData = br.ReadBytes((int)qkey.HashSize - 0x44)
+            };
+            if (!string.Equals(qhash.Magic, HashMagic1_4) || qhash.C != 0x100 || qhash.FileCount != header.FileCount || qhash.IndexSize != 4 * header.FileCount)
+            {
+                Logger.Error("Invalid hash");
+            }
+            if (qhash.DataSize != qkey.HashSize - 0x44)
+            {
+                Logger.Info("Invalid hash data size");
+            }
+            // You can also read names from hashdata.
+            // Skip hashdata for now for speed.
+            //Decrypt(qhash.HashData, qhash.HashData.Length);
+            //File.WriteAllBytes(Path.Combine(output, "hash.bin"), Decompress(hash.HashData));
 
-        private class QlieEntry : PackedEntry
-        {
-            public new long Offset { get; set; }
-            public uint Hash { get; set; }       // for check, not necessary
-            public uint IsEncrypted { get; set; }
+            uint key = ComputeHash(qkey.Key, 256) & 0xFFFFFFF;
+            Decrypt(KeyMagic, KeyMagic.Length, key);
+            if (!string.Equals(Encoding.ASCII.GetString(KeyMagic), KeyMagicStr))
+            {
+                Logger.Error("Invalid key magic");
+            }
+
+            fs.Position = header.IndexOffset;
+            for (int i = 0; i < header.FileCount; i++)
+            {
+                QlieEntry entry = new QlieEntry();
+                int charLength = br.ReadInt16();
+                int nameLength = 2 * charLength;
+                entry.Name = DecryptName(br.ReadBytes(nameLength), key);
+                entry.Path = Path.Combine(output, entry.Name);
+                entry.Offset = br.ReadInt64();
+                entry.Size = br.ReadUInt32();
+                entry.UnpackedSize = br.ReadUInt32();
+                entry.IsPacked = br.ReadInt32() != 0 && entry.Size != entry.UnpackedSize;
+                entry.IsEncrypted = br.ReadUInt32();
+                entry.Hash = br.ReadUInt32();
+                entries.Add(entry);
+            }
+            Logger.InitBar(entries.Count);
+            bool is_common_key_obtained = false;
+            byte[] common_key = new byte[64];
+            foreach (QlieEntry entry in entries)
+            {
+                br.BaseStream.Position = entry.Offset;
+                byte[] data = br.ReadBytes((int)entry.Size);
+                // Check hash. Ignore hash check for speed.
+                //if (ComputeHash(data, data.Length) != entry.Hash)
+                //{
+                //    Logger.Info("Hash failed to match");
+                //}
+                // Decrypt data
+                switch (entry.IsEncrypted)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        DecryptV1(data, entry.Name, key);
+                        break;
+                    case 2:
+                        DecryptV2(data, entry.Name, key, common_key);
+                        break;
+                    default:
+                        Logger.Error("Unknown encryption method");
+                        break;
+                }
+                // Decompress data
+                if (entry.IsPacked)
+                {
+                    data = Decompress(data);
+                }
+                // Get common key for decryption v2
+                // Also, we can obtain the decrypted key from exe resources.
+                if (!is_common_key_obtained && string.Equals(entry.Name, KeyFileName))
+                {
+                    // Ignore for now for speed.
+                    //byte[] res_key = GetResourceKey(input);
+                    //if (res_key != null && !res_key.SequenceEqual(data))
+                    //{
+                    //    Logger.Info("Key mismatch");
+                    //}
+                    common_key = GetCommonKey(data);
+                    is_common_key_obtained = true;
+                }
+                Directory.CreateDirectory(Path.GetDirectoryName(entry.Path));
+                File.WriteAllBytes(entry.Path, data);
+                Logger.UpdateBar();
+            }
+            fs.Dispose();
+            br.Dispose();
         }
 
         private uint ComputeHash(byte[] data, int length)
@@ -196,79 +291,6 @@ namespace ArcFormats.Qlie
             }
         }
 
-        private byte[] Decompress(byte[] input)
-        {
-            if (input.Length < 8 || BitConverter.ToUInt32(input, 0) != 0xFF435031)  // "1PC\xFF"
-            {
-                return input;
-            }
-            int unpacked_size = BitConverter.ToInt32(input, 8);
-            byte[] output = new byte[unpacked_size];
-            byte[,] table = new byte[0x100, 2];
-            byte[] temp = new byte[0x1000];
-            bool is_16bit = (BitConverter.ToUInt32(input, 4) & 1) != 0;
-            int src = 12;
-            int dst = 0;
-            while (src < input.Length)
-            {
-                for (uint i = 0; i < 256;)
-                {
-                    uint c = input[src++];
-                    if (c > 127)
-                    {
-                        for (c -= 127; c > 0; c--, i++)
-                        {
-                            table[i, 0] = (byte)i;
-                        }
-                    }
-                    for (c++; c > 0 && i < 256; c--, i++)
-                    {
-                        table[i, 0] = input[src++];
-                        if (i != table[i, 0])
-                        {
-                            table[i, 1] = input[src++];
-                        }
-                    }
-                }
-
-                uint block_length = 0;
-                uint temp_length = 0;
-                if (is_16bit)
-                {
-                    block_length = BitConverter.ToUInt16(input, src);
-                    src += 2;
-                }
-                else
-                {
-                    block_length = BitConverter.ToUInt32(input, src);
-                    src += 4;
-                }
-                while (block_length > 0 || temp_length > 0)
-                {
-                    byte c = 0;
-                    if (temp_length != 0)
-                    {
-                        c = temp[--temp_length];
-                    }
-                    else
-                    {
-                        c = input[src++];
-                        block_length--;
-                    }
-                    if (c == table[c, 0])
-                    {
-                        output[dst++] = c;
-                    }
-                    else
-                    {
-                        temp[temp_length++] = table[c, 1];
-                        temp[temp_length++] = table[c, 0];
-                    }
-                }
-            }
-            return output;
-        }
-
         /// <summary>
         /// Get common key from key data for decryption v2.
         /// </summary>
@@ -302,21 +324,14 @@ namespace ArcFormats.Qlie
             }
         }
 
-        private byte[] GetResourceKey(string archive_path)
+        private readonly byte[] KeyMagic =                      // length 32
         {
-            string exe_path = Path.GetDirectoryName(Path.GetDirectoryName(archive_path));
-            foreach (string file_path in Directory.GetFiles(exe_path, "*.exe", SearchOption.TopDirectoryOnly))
-            {
-                using (ResourceReader reader = new ResourceReader(file_path))
-                {
-                    byte[] key = reader.ReadResource("RESKEY");
-                    if (key != null)
-                    {
-                        return key;
-                    }
-                }
-            }
-            return null;
-        }
+            0xF2, 0x94, 0x31, 0xB3, 0xF2, 0x89, 0x28, 0xFE,
+            0xF9, 0xA1, 0x6F, 0x06, 0xBC, 0xBC, 0x66, 0x5B,
+            0xA6, 0xD7, 0x7E, 0x2F, 0xA9, 0x25, 0x78, 0xFB,
+            0xE7, 0xAC, 0x6E, 0x19, 0xEE, 0x67, 0x34, 0x1B
+        };
+        private readonly string KeyMagicStr = "8hr48uky,8ugi8ewra4g8d5vbf5hb5s6";
+        private readonly string KeyFileName = "pack_keyfile_kfueheish15538fa9or.key";
     }
 }
