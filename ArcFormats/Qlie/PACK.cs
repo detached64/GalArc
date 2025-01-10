@@ -81,7 +81,7 @@ namespace ArcFormats.Qlie
                 int nameLength = 2 * charLength;
                 entry.Name = DecryptName(br.ReadBytes(nameLength), key);
                 entry.Path = Path.Combine(output, entry.Name);
-                entry.Offset = (uint)br.ReadInt64();
+                entry.Offset = br.ReadInt64();
                 entry.Size = br.ReadUInt32();
                 entry.UnpackedSize = br.ReadUInt32();
                 entry.IsPacked = br.ReadInt32() != 0 && entry.Size != entry.UnpackedSize;

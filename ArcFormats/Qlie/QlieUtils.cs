@@ -35,6 +35,7 @@ namespace ArcFormats.Qlie
 
         private class QlieEntry : PackedEntry
         {
+            public new long Offset { get; set; }
             public uint Hash { get; set; }       // for check, not necessary
             public uint IsEncrypted { get; set; }
         }
