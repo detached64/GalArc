@@ -122,8 +122,15 @@ namespace ArcFormats.Qlie
                     data = Decompress(data);
                 }
                 // Get common key for decryption v2
+                // Also, we can obtain the decrypted key from exe resources.
                 if (!is_common_key_obtained && string.Equals(entry.Name, KeyFileName))
                 {
+                    // Ignore for now for speed.
+                    //byte[] res_key = GetResourceKey(input);
+                    //if (res_key != null && !res_key.SequenceEqual(data))
+                    //{
+                    //    Logger.Info("Key mismatch");
+                    //}
                     common_key = GetCommonKey(data);
                     is_common_key_obtained = true;
                 }

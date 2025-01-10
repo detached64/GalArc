@@ -1,4 +1,4 @@
-﻿// File: Utility/ExeResource.cs
+﻿// File: Utility/ExeResources.cs
 // Date: 2024/12/31
 // Description: A class to read resources from an executable file.
 //
@@ -23,7 +23,7 @@ using System.Runtime.InteropServices;
 
 namespace Utility
 {
-    public sealed class ResourceReader : IDisposable
+    public class ResourceReader : IDisposable
     {
         private IntPtr hModule;
 
@@ -47,7 +47,7 @@ namespace Utility
             return buffer;
         }
 
-        public byte[] ReadReource(string name)
+        public byte[] ReadResource(string name)
         {
             return ReadResource(name, NativeMethods.RT_RCDATA);
         }
@@ -55,8 +55,6 @@ namespace Utility
         public void Dispose()
         {
             NativeMethods.FreeLibrary(hModule);
-            Marshal.FreeCoTaskMem(hModule);
-            Marshal.FreeHGlobal(hModule);
         }
     }
 }

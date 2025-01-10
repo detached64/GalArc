@@ -56,7 +56,7 @@
     <Compile Include="Binary.cs" />
     <Compile Include="BitStream.cs" />
     <Compile Include="Crc32.cs" />
-    <Compile Include="ExeResource.cs" />
+    <Compile Include="ExeResources.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="HuffmanCompression.cs" />
     <Compile Include="LzssCompression.cs" />

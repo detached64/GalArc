@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Utility;
@@ -299,6 +300,23 @@ namespace ArcFormats.Qlie
                 }
                 return key;
             }
+        }
+
+        private byte[] GetResourceKey(string archive_path)
+        {
+            string exe_path = Path.GetDirectoryName(Path.GetDirectoryName(archive_path));
+            foreach (string file_path in Directory.GetFiles(exe_path, "*.exe", SearchOption.TopDirectoryOnly))
+            {
+                using (ResourceReader reader = new ResourceReader(file_path))
+                {
+                    byte[] key = reader.ReadResource("RESKEY");
+                    if (key != null)
+                    {
+                        return key;
+                    }
+                }
+            }
+            return null;
         }
     }
 }
