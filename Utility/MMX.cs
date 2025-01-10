@@ -118,5 +118,10 @@ namespace Utility
         {
             return (x & 0xFFFFFFFFu) | (y & 0xFFFFFFFFu) << 32;
         }
+
+        public static ulong PUNPCKLDQ(ulong x)
+        {
+            return (x & 0xFFFFFFFFu) | (x & 0xFFFFFFFFu) << 32;
+        }
     }
 }

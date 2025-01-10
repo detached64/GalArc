@@ -161,6 +161,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Qlie\PACK.cs" />
+    <Compile Include="Qlie\QlieUtils.cs" />
     <Compile Include="RPGMaker\PackRGSSOptions.cs">
       <SubType>UserControl</SubType>
     </Compile>
