@@ -8,7 +8,7 @@ using Utility;
 
 namespace ArcFormats.Qlie
 {
-    internal class Encryption31 : QileEncryption
+    internal class Encryption31 : QlieEncryption
     {
         public Encryption31(QlieHeader qheader)
         {
@@ -259,36 +259,6 @@ namespace ArcFormats.Qlie
                 table[i] = value;
             }
             return table;
-        }
-
-        /// <summary>
-        /// Used to decrypt hash data and key data
-        /// </summary>
-        private void Decrypt(byte[] data, int length, uint key = 0x428)
-        {
-            if (length < 8)
-            {
-                return;
-            }
-            const ulong c1 = 0xA73C5F9D;
-            const ulong c2 = 0xCE24F523;
-            const ulong c3 = 0xFEC9753E;
-            ulong v5 = MMX.PUNPCKLDQ(c1);
-            ulong v7 = MMX.PUNPCKLDQ(c2);
-            ulong v9 = MMX.PUNPCKLDQ((ulong)(length + key) ^ c3);
-            unsafe
-            {
-                fixed (byte* raw = data)
-                {
-                    ulong* d = (ulong*)raw;
-                    for (int i = 0; i < length / 8; ++i)
-                    {
-                        v5 = MMX.PAddD(v5, v7) ^ v9;
-                        v9 = *d ^ v5;
-                        *d++ = v9;
-                    }
-                }
-            }
         }
 
         /// <summary>

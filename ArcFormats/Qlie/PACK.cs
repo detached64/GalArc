@@ -28,15 +28,17 @@ namespace ArcFormats.Qlie
             List<QlieEntry> entries = new List<QlieEntry>(header.FileCount);
             switch (header.Magic)
             {
-                case HeaderMagic3_1:
-                    Encryption31 encryption = new Encryption31(header);
-                    encryption.Unpack(input, output);
+                case HeaderMagic31:
+                    Encryption31 encryption31 = new Encryption31(header);
+                    encryption31.Unpack(input, output);
                     break;
-                case HeaderMagic3:
+                case HeaderMagic30:
                     break;
-                case HeaderMagic2:
+                case HeaderMagic20:
+                    Encryption20 encryption20 = new Encryption20(header);
+                    encryption20.Unpack(input, output);
                     break;
-                case HeaderMagic1:
+                case HeaderMagic10:
                     break;
                 default:
                     Logger.Error($"Invalid magic: {header.Magic}");
@@ -44,10 +46,10 @@ namespace ArcFormats.Qlie
             }
         }
 
-        private const string HeaderMagic3_1 = "FilePackVer3.1"; // length 16, padded with nulls
-        private const string HeaderMagic3 = "FilePackVer3.0";
-        private const string HeaderMagic2 = "FilePackVer2.0";
-        private const string HeaderMagic1 = "FilePackVer1.0";
+        private const string HeaderMagic31 = "FilePackVer3.1"; // length 16, padded with nulls
+        private const string HeaderMagic30 = "FilePackVer3.0";
+        private const string HeaderMagic20 = "FilePackVer2.0";
+        private const string HeaderMagic10 = "FilePackVer1.0";
     }
 
     internal class QlieHeader        // length: 0x1C

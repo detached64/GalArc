@@ -1,22 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using Utility;
 
 namespace ArcFormats.Qlie
 {
-    internal class Encryption30
-    {
-        public Encryption30(QlieHeader qheader)
-        {
-            header = qheader;
-            entries = new List<QlieEntry>(header.FileCount);
-        }
-        private List<QlieEntry> entries;
-        private QlieHeader header;
-    }
-
-    internal abstract class QileEncryption : ArchiveFormat
+    internal abstract class QlieEncryption : ArchiveFormat
     {
         protected readonly string HashMagic1_4 = "HashVer1.4";       // length 16, padded with nulls
         protected readonly string HashMagic1_3 = "HashVer1.3";
@@ -36,6 +24,36 @@ namespace ArcFormats.Qlie
                 }
             }
             return null;
+        }
+
+        /// <summary>
+        /// Used to decrypt hash & key data and to decrypt entry in FilePackVer2.0.
+        /// </summary>
+        protected static void Decrypt(byte[] data, int length, uint key = 0x428)
+        {
+            if (length < 8)
+            {
+                return;
+            }
+            const ulong c1 = 0xA73C5F9D;
+            const ulong c2 = 0xCE24F523;
+            const ulong c3 = 0xFEC9753E;
+            ulong v5 = MMX.PUNPCKLDQ(c1);
+            ulong v7 = MMX.PUNPCKLDQ(c2);
+            ulong v9 = MMX.PUNPCKLDQ((ulong)(length + key) ^ c3);
+            unsafe
+            {
+                fixed (byte* raw = data)
+                {
+                    ulong* d = (ulong*)raw;
+                    for (int i = 0; i < length / 8; ++i)
+                    {
+                        v5 = MMX.PAddD(v5, v7) ^ v9;
+                        v9 = *d ^ v5;
+                        *d++ = v9;
+                    }
+                }
+            }
         }
 
         protected static byte[] Decompress(byte[] input)
