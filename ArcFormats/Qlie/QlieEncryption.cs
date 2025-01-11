@@ -4,11 +4,8 @@ using Utility;
 
 namespace ArcFormats.Qlie
 {
-    internal abstract class QlieEncryption : ArchiveFormat
+    internal abstract class QlieEncryption : PACK
     {
-        protected readonly string HashMagic1_4 = "HashVer1.4";       // length 16, padded with nulls
-        protected readonly string HashMagic1_3 = "HashVer1.3";
-
         protected readonly string KeyMagic = "8hr48uky,8ugi8ewra4g8d5vbf5hb5s6";
 
         protected static byte[] GetResourceKey(string archive_path)
@@ -53,7 +50,7 @@ namespace ArcFormats.Qlie
         /// <summary>
         /// Used to decrypt hash & key data and to decrypt entry in FilePackVer2.0.
         /// </summary>
-        protected static void Decrypt(byte[] data, int length, uint key = 0x428, bool flag = true)
+        protected static void Decrypt(byte[] data, int length, uint key, bool flag = true)
         {
             if (length < 8)
             {

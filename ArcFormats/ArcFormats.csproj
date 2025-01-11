@@ -165,6 +165,7 @@
     <Compile Include="Qlie\Encryption31.cs" />
     <Compile Include="Qlie\QlieEncryption.cs" />
     <Compile Include="Qlie\PACK.cs" />
+    <Compile Include="Qlie\QlieHash.cs" />
     <Compile Include="RPGMaker\PackRGSSOptions.cs">
       <SubType>UserControl</SubType>
     </Compile>

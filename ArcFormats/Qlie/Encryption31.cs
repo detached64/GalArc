@@ -35,36 +35,19 @@ namespace ArcFormats.Qlie
                 Logger.Error("Invalid key");
             }
 
-            fs.Position = fs.Length - 0x440 - qkey.HashSize;
-            QlieHash qhash = new QlieHash()
-            {
-                Magic = Encoding.ASCII.GetString(br.ReadBytes(16)).TrimEnd('\0'),
-                C = br.ReadUInt32(),
-                FileCount = br.ReadInt32(),
-                IndexSize = br.ReadUInt32(),
-                DataSize = br.ReadUInt32(),
-                IsCompressed = br.ReadInt32() != 0,
-                Unknown = br.ReadBytes(0x20),
-                HashData = br.ReadBytes((int)qkey.HashSize - 0x44)
-            };
-            if (!string.Equals(qhash.Magic, HashMagic1_4) || qhash.C != 0x100 || qhash.FileCount != header.FileCount || qhash.IndexSize != 4 * header.FileCount)
-            {
-                Logger.Error("Invalid hash");
-            }
-            if (qhash.DataSize != qkey.HashSize - 0x44)
-            {
-                Logger.Info("Invalid hash data size");
-            }
             // You can also read names from hashdata.
             // Skip hashdata for now for speed.
-            //Decrypt(qhash.HashData, qhash.HashData.Length);
-            //File.WriteAllBytes(Path.Combine(output, "hash.bin"), Decompress(hash.HashData));
+            //fs.Position = fs.Length - 0x440 - qkey.HashSize;
+            //QlieHash hash = new QlieHash(Encoding.ASCII.GetString(br.ReadBytes(16)).TrimEnd('\0'));
+            //byte[] hashData = hash.GetHash(br.ReadBytes((int)qkey.HashSize - 16));
+            //Directory.CreateDirectory(output);
+            //File.WriteAllBytes(Path.Combine(output, "hash.bin"), Decompress(hashData));
 
             uint key = ComputeHash(qkey.Key, 256) & 0xFFFFFFF;
             Decrypt(qkey.Magic, qkey.Magic.Length, key);
             if (!string.Equals(Encoding.ASCII.GetString(qkey.Magic), KeyMagic))
             {
-                Logger.Error("Invalid key magic");
+                Logger.Info("Key magic failed to match. The archive may be corrupted.");
             }
 
             fs.Position = header.IndexOffset;
@@ -115,7 +98,7 @@ namespace ArcFormats.Qlie
                 {
                     data = Decompress(data);
                 }
-                // Get common key for decryption v2
+                // Get common key for decryptv2
                 // Also, we can obtain the decrypted key from exe resources.
                 if (!is_common_key_obtained && string.Equals(entry.Name, KeyFileName))
                 {

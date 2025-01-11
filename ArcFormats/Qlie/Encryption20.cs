@@ -35,8 +35,16 @@ namespace ArcFormats.Qlie
             Decrypt(qkey.Magic, 32, 0);
             if (!string.Equals(Encoding.ASCII.GetString(qkey.Magic), KeyMagic))
             {
-                Logger.Error("Invalid key magic");
+                Logger.Info("Key magic failed to match. The archive may be corrupted.");
             }
+
+            // You can also read names from hashdata.
+            // Skip hashdata for now for speed.
+            //fs.Position = fs.Length - 0x440 - qkey.HashSize;
+            //QlieHash hash = new QlieHash(Encoding.ASCII.GetString(br.ReadBytes(16)).TrimEnd('\0'));
+            //byte[] hashData = hash.GetHash(br.ReadBytes((int)qkey.HashSize - 16));
+            //Directory.CreateDirectory(output);
+            //File.WriteAllBytes(Path.Combine(output, "hash.bin"), Decompress(hashData));
 
             fs.Position = header.IndexOffset;
             for (int i = 0; i < header.FileCount; i++)
