@@ -30,7 +30,7 @@ namespace ArcFormats.Qlie
                 HashSize = br.ReadUInt32(),
                 Key = br.ReadBytes(0x400)
             };
-            if (!qkey.Magic.SequenceEqual(KeyMagic) || qkey.HashSize > fs.Length || qkey.HashSize < 0x44)
+            if (qkey.HashSize > fs.Length || qkey.HashSize < 0x44)
             {
                 Logger.Error("Invalid key");
             }
@@ -61,8 +61,8 @@ namespace ArcFormats.Qlie
             //File.WriteAllBytes(Path.Combine(output, "hash.bin"), Decompress(hash.HashData));
 
             uint key = ComputeHash(qkey.Key, 256) & 0xFFFFFFF;
-            Decrypt(KeyMagic, KeyMagic.Length, key);
-            if (!string.Equals(Encoding.ASCII.GetString(KeyMagic), KeyMagicStr))
+            Decrypt(qkey.Magic, qkey.Magic.Length, key);
+            if (!string.Equals(Encoding.ASCII.GetString(qkey.Magic), KeyMagic))
             {
                 Logger.Error("Invalid key magic");
             }
@@ -134,28 +134,6 @@ namespace ArcFormats.Qlie
             }
             fs.Dispose();
             br.Dispose();
-        }
-
-        private uint ComputeHash(byte[] data, int length)
-        {
-            if (length > data.Length)
-            {
-                throw new ArgumentException("Invalid length");
-            }
-            int round = length >> 3;
-            ulong c = MMX.PUNPCKLDQ(0xA35793A7);
-            ulong hash = 0;
-            ulong key = 0;
-            int index = 0;
-            for (int i = 0; i < round; i++)
-            {
-                hash = MMX.PAddW(hash, c);
-                ulong v = BitConverter.ToUInt64(data, index);
-                ulong temp = MMX.PAddW(key, hash ^ v);
-                index += 8;
-                key = MMX.PSllD(temp, 3) | MMX.PSrlD(temp, 0x1D);
-            }
-            return (uint)((short)key * (short)(key >> 32) + (short)(key >> 16) * (short)(key >> 48));       // _mm_cvtsi64_si32(_m_pmaddwd(key, _m_psrlqi(key, 0x20u)))
         }
 
         private string DecryptName(byte[] name, uint hash)
@@ -294,14 +272,6 @@ namespace ArcFormats.Qlie
             }
         }
 
-        private readonly byte[] KeyMagic =                      // length 32
-        {
-            0xF2, 0x94, 0x31, 0xB3, 0xF2, 0x89, 0x28, 0xFE,
-            0xF9, 0xA1, 0x6F, 0x06, 0xBC, 0xBC, 0x66, 0x5B,
-            0xA6, 0xD7, 0x7E, 0x2F, 0xA9, 0x25, 0x78, 0xFB,
-            0xE7, 0xAC, 0x6E, 0x19, 0xEE, 0x67, 0x34, 0x1B
-        };
-        private readonly string KeyMagicStr = "8hr48uky,8ugi8ewra4g8d5vbf5hb5s6";
         private readonly string KeyFileName = "pack_keyfile_kfueheish15538fa9or.key";
     }
 }

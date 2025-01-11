@@ -9,6 +9,8 @@ namespace ArcFormats.Qlie
         protected readonly string HashMagic1_4 = "HashVer1.4";       // length 16, padded with nulls
         protected readonly string HashMagic1_3 = "HashVer1.3";
 
+        protected readonly string KeyMagic = "8hr48uky,8ugi8ewra4g8d5vbf5hb5s6";
+
         protected static byte[] GetResourceKey(string archive_path)
         {
             string exe_path = Path.GetDirectoryName(Path.GetDirectoryName(archive_path));
@@ -26,10 +28,32 @@ namespace ArcFormats.Qlie
             return null;
         }
 
+        protected static uint ComputeHash(byte[] data, int length)
+        {
+            if (length > data.Length)
+            {
+                throw new ArgumentException("Invalid length");
+            }
+            int round = length >> 3;
+            ulong c = MMX.PUNPCKLDQ(0xA35793A7);
+            ulong hash = 0;
+            ulong key = 0;
+            int index = 0;
+            for (int i = 0; i < round; i++)
+            {
+                hash = MMX.PAddW(hash, c);
+                ulong v = BitConverter.ToUInt64(data, index);
+                ulong temp = MMX.PAddW(key, hash ^ v);
+                index += 8;
+                key = MMX.PSllD(temp, 3) | MMX.PSrlD(temp, 0x1D);
+            }
+            return (uint)((short)key * (short)(key >> 32) + (short)(key >> 16) * (short)(key >> 48));       // _mm_cvtsi64_si32(_m_pmaddwd(key, _m_psrlqi(key, 0x20u)))
+        }
+
         /// <summary>
         /// Used to decrypt hash & key data and to decrypt entry in FilePackVer2.0.
         /// </summary>
-        protected static void Decrypt(byte[] data, int length, uint key = 0x428)
+        protected static void Decrypt(byte[] data, int length, uint key = 0x428, bool flag = true)
         {
             if (length < 8)
             {
@@ -46,11 +70,24 @@ namespace ArcFormats.Qlie
                 fixed (byte* raw = data)
                 {
                     ulong* d = (ulong*)raw;
-                    for (int i = 0; i < length / 8; ++i)
+                    if (flag)
                     {
-                        v5 = MMX.PAddD(v5, v7) ^ v9;
-                        v9 = *d ^ v5;
-                        *d++ = v9;
+                        for (int i = 0; i < length / 8; ++i)
+                        {
+                            v5 = MMX.PAddD(v5, v7) ^ v9;
+                            v9 = *d ^ v5;
+                            *d++ = v9;
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < length / 8; i++)
+                        {
+                            v5 = MMX.PAddD(v5, v7) ^ v9;
+                            v9 = *d;
+                            *d ^= v5;
+                            d++;
+                        }
                     }
                 }
             }

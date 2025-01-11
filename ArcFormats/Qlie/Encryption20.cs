@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Utility;
 
 namespace ArcFormats.Qlie
@@ -20,6 +21,23 @@ namespace ArcFormats.Qlie
         {
             FileStream fs = File.OpenRead(input);
             BinaryReader br = new BinaryReader(fs);
+            fs.Position = fs.Length - 0x440;
+            QlieKey qkey = new QlieKey()
+            {
+                Magic = br.ReadBytes(32),
+                HashSize = br.ReadUInt32(),
+                Key = br.ReadBytes(0x400)
+            };
+            if (qkey.HashSize > fs.Length || qkey.HashSize < 0x44)
+            {
+                Logger.Error("Invalid key");
+            }
+            Decrypt(qkey.Magic, 32, 0);
+            if (!string.Equals(Encoding.ASCII.GetString(qkey.Magic), KeyMagic))
+            {
+                Logger.Error("Invalid key magic");
+            }
+
             fs.Position = header.IndexOffset;
             for (int i = 0; i < header.FileCount; i++)
             {
