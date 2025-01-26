@@ -161,8 +161,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Qlie\Encryption20.cs" />
-    <Compile Include="Qlie\Encryption31.cs" />
     <Compile Include="Qlie\QlieEncryption.cs" />
     <Compile Include="Qlie\PACK.cs" />
     <Compile Include="Qlie\QlieHash.cs" />
