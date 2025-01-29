@@ -2,7 +2,6 @@
 
 namespace GalArc.Extensions.GARbroDB
 {
-    [Extension]
     public class GARbroDBConfig : IExtension
     {
         public static string Path

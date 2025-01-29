@@ -9,9 +9,4 @@ namespace GalArc.Extensions
         string OriginalWebsite { get; }
         string ExtensionWebsite { get; }
     }
-
-    [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
-    public class ExtensionAttribute : Attribute
-    {
-    }
 }

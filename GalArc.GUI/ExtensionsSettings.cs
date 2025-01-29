@@ -57,37 +57,33 @@ namespace GalArc.GUI
 
         private void LoadExtensionsInfo()
         {
-            Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetName().Name == "GalArc");
-            if (assembly != null)
+            List<Type> types = typeof(IExtension).Assembly.GetTypes()
+                .Where(t => t.IsClass && typeof(IExtension).IsAssignableFrom(t))
+                .ToList();
+            if (types.Count == 0)
             {
-                List<Type> types = assembly.GetTypes()
-                    .Where(t => t.GetCustomAttributes(typeof(ExtensionAttribute), false).Any())
-                    .ToList();
-                if (types.Count == 0)
-                {
-                    return;
-                }
-                int count = 0;
-                foreach (Type type in types)
-                {
-                    object instance = Activator.CreateInstance(type);
-                    if (!type.Name.EndsWith("Config"))
-                    {
-                        continue;
-                    }
-                    this.dataGridViewInfos.Rows.Add
-                    (
-                        type.Name.Remove(type.Name.Length - 6),
-                        type.GetProperty("Description").GetValue(instance) ?? "--",
-                        type.GetProperty("OriginalAuthor").GetValue(instance) ?? "--"
-                    );
-                    this.dataGridViewInfos.Rows[count].Cells[3] = new DataGridViewLinkCell { Value = type.GetProperty("OriginalWebsite").GetValue(instance).ToString() };
-                    this.dataGridViewInfos.Rows[count].Cells[4] = new DataGridViewLinkCell { Value = type.GetProperty("ExtensionWebsite").GetValue(instance).ToString() };
-                    count++;
-                    instance = null;
-                }
-                types = null;
+                return;
             }
+            int count = 0;
+            foreach (Type type in types)
+            {
+                object instance = Activator.CreateInstance(type);
+                if (!type.Name.EndsWith("Config"))
+                {
+                    continue;
+                }
+                this.dataGridViewInfos.Rows.Add
+                (
+                    type.Name.Remove(type.Name.Length - 6),
+                    type.GetProperty("Description").GetValue(instance) ?? "--",
+                    type.GetProperty("OriginalAuthor").GetValue(instance) ?? "--"
+                );
+                this.dataGridViewInfos.Rows[count].Cells[3] = new DataGridViewLinkCell { Value = type.GetProperty("OriginalWebsite").GetValue(instance).ToString() };
+                this.dataGridViewInfos.Rows[count].Cells[4] = new DataGridViewLinkCell { Value = type.GetProperty("ExtensionWebsite").GetValue(instance).ToString() };
+                count++;
+                instance = null;
+            }
+            types = null;
         }
 
         private void dataGridViewInfos_CellContentClick(object sender, DataGridViewCellEventArgs e)

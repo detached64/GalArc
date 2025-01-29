@@ -10,7 +10,7 @@ namespace GalArc.Extensions.GARbroDB
 {
     public static class Deserializer
     {
-        private static string LoadedContent { get; set; } = null;
+        private static string LoadedContent { get; set; }
 
         public static void LoadScheme()
         {
@@ -24,35 +24,34 @@ namespace GalArc.Extensions.GARbroDB
         /// <summary>
         /// Deserialize the specified scheme.
         /// </summary>
-        /// <param name="type"></param>
-        /// <param name="jsonEngineName"></param>
         /// <returns></returns>
-        public static IScheme Deserialize(Type type, string jsonEngineName)
+        public static T Deserialize<T>()
         {
             if (!BaseSettings.Default.IsExtensionsEnabled || !BaseSettings.Default.IsGARbroDBEnabled)
             {
-                return null;
+                return default;
             }
             if (string.IsNullOrEmpty(LoadedContent))
             {
                 LoadScheme();
                 if (string.IsNullOrEmpty(LoadedContent))
                 {
-                    return null;
+                    return default;
                 }
             }
+            string jsonEngineName = typeof(T).GetField("JsonEngineName").GetValue(null).ToString();
 
             try
             {
                 JObject jsonObject = JObject.Parse(LoadedContent);
                 JToken selectedToken = jsonObject.SelectToken($"['SchemeMap']['{jsonEngineName}']");
                 string selectedJson = selectedToken.ToString();
-                return JsonConvert.DeserializeObject(selectedJson, type) as IScheme;
+                return JsonConvert.DeserializeObject<T>(selectedJson);
             }
             catch (Exception ex)
             {
                 Logger.Error($"Failed to deserialize {jsonEngineName} scheme: {ex.Message}", false);
-                return null;
+                return default;
             }
         }
 

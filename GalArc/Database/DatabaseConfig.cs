@@ -27,14 +27,4 @@ namespace GalArc.Database
 
         private static string DefaultPath => System.IO.Path.Combine(Environment.CurrentDirectory, "Database\\");
     }
-
-    public interface Scheme
-    {
-        int Version { get; set; }
-    }
-
-    [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
-    public class DatabaseSchemeAttribute : Attribute
-    {
-    }
 }

@@ -1,10 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace GalArc.Extensions.GARbroDB
 {
-    public class SeraphScheme : IScheme
+    public class SeraphScheme : IGARbroScheme
     {
         public static string JsonEngineName = "SERAPH/ARCH";
 
@@ -15,11 +14,10 @@ namespace GalArc.Extensions.GARbroDB
             public Dictionary<short, short> EventMap { get; set; }
         }
 
-        [JsonProperty("KnownSchemes")]
         public Dictionary<string, ArchPacScheme> KnownSchemes { get; set; }
     }
 
-    public class AGSScheme : IScheme
+    public class AGSScheme : IGARbroScheme
     {
         public static string JsonEngineName = "DAT/AGS";
 
@@ -31,18 +29,15 @@ namespace GalArc.Extensions.GARbroDB
 
         public class AGSFileMap
         {
-            [JsonProperty("FileMap")]
             public Dictionary<string, Key> FileMap { get; set; }
         }
 
-        [JsonProperty("KnownSchemes")]
         public Dictionary<string, AGSFileMap> KnownSchemes { get; set; }
 
-        [JsonProperty("EncryptedArchives")]
         public List<string> EncryptedArchives { get; set; }
     }
 
-    public interface IScheme
+    public interface IGARbroScheme
     {
     }
 }

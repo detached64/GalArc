@@ -26,7 +26,7 @@ namespace ArcFormats.AnimeGameSystem
         {
             if (DAT.ImportedSchemes == null)
             {
-                DAT.ImportedSchemes = Deserializer.Deserialize(typeof(AGSScheme), AGSScheme.JsonEngineName) as AGSScheme;
+                DAT.ImportedSchemes = Deserializer.Deserialize<AGSScheme>();
                 if (DAT.ImportedSchemes != null)
                 {
                     foreach (var scheme in DAT.ImportedSchemes.KnownSchemes)

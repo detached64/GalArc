@@ -13,33 +13,12 @@ namespace GalArc.Database
 {
     public static class Deserializer
     {
-        /// <summary>
-        /// Loaded json strings. Dictionary&lt;engineName, jsonString&gt;.
-        /// </summary>
         public static Dictionary<string, string> LoadedJsons = new Dictionary<string, string>();
 
-        private static List<Type> _Schemes;
+        private static List<Type> Schemes => Assembly.GetExecutingAssembly().GetTypes()
+            .Where(t => t.IsClass && typeof(IScheme).IsAssignableFrom(t))
+            .ToList();
 
-        /// <summary>
-        /// Contains all schemes in the assembly.
-        /// </summary>
-        internal static List<Type> Schemes
-        {
-            get
-            {
-                if (_Schemes == null)
-                {
-                    _Schemes = new List<Type>();
-                    _Schemes.AddRange(Assembly.GetExecutingAssembly().GetTypes().Where(t => t.GetCustomAttributes(typeof(DatabaseSchemeAttribute), false).Any()).ToList());
-                }
-                return _Schemes;
-            }
-        }
-
-        /// <summary>
-        /// Load string from a json file.
-        /// </summary>
-        /// <param name="type"></param>
         private static void LoadScheme(Type type)
         {
             if (!BaseSettings.Default.IsDatabaseEnabled)
@@ -55,65 +34,48 @@ namespace GalArc.Database
             string json = File.ReadAllText(path, Encoding.UTF8);
             if (!string.IsNullOrEmpty(json))
             {
-                LoadedJsons[name] = File.ReadAllText(path, Encoding.UTF8);
+                LoadedJsons[name] = json;
             }
         }
 
-        /// <summary>
-        /// Load all strings from json files.
-        /// </summary>
         private static void LoadSchemes()
         {
+            LoadedJsons.Clear();
             foreach (Type type in Schemes)
             {
                 LoadScheme(type);
             }
         }
 
-        /// <summary>
-        /// Deserialize json string to a dictionary.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static Scheme Deserialize(Type type)
+        public static T Deserialize<T>()
         {
-            string name = type.Name.Remove(type.Name.Length - 6);
+            string name = typeof(T).Name.Remove(typeof(T).Name.Length - 6);    // remove "Scheme"
             if (!BaseSettings.Default.IsDatabaseEnabled || !LoadedJsons.TryGetValue(name, out var json) || string.IsNullOrEmpty(json))
             {
-                return null;
+                return default;
             }
 
             try
             {
-                return JsonConvert.DeserializeObject(json, type) as Scheme;
+                return JsonConvert.DeserializeObject<T>(json);
             }
             catch (Exception ex)
             {
                 Logger.Error($"Failed to deserialize {name} scheme: {ex.Message}", false);
-                return null;
+                return default;
             }
         }
 
-        /// <summary>
-        /// Read json string and deserialize it to Dictionary&lt;gameName, Scheme&gt;.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static Scheme ReadScheme(Type type)
+        public static T ReadScheme<T>()
         {
             if (!BaseSettings.Default.IsDatabaseEnabled)
             {
-                return null;
+                return default;
             }
-            LoadScheme(type);
-            return Deserialize(type);
+            LoadScheme(typeof(T));
+            return Deserialize<T>();
         }
 
-        /// <summary>
-        /// Get specific json file information.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
         private static string GetInfo(Type type)
         {
             string name = type.Name.Remove(type.Name.Length - 6);    // remove "Scheme"
@@ -166,10 +128,6 @@ namespace GalArc.Database
             return result.ToString();
         }
 
-        /// <summary>
-        /// Get all json files information.
-        /// </summary>
-        /// <returns></returns>
         public static string GetInfos()
         {
             if (!BaseSettings.Default.IsDatabaseEnabled)

@@ -54,7 +54,7 @@ namespace ArcFormats.NScripter
             {
                 Logger.Error(Resources.msgWrongScheme);
             }
-            br.ReadByte(); //skip 'e
+            br.ReadByte(); //skip 'e'
 
             Directory.CreateDirectory(folderPath);
             Logger.InitBar(entries.Count);

@@ -1,5 +1,5 @@
 ﻿using ArcFormats.Properties;
-using GalArc.Database.Siglus;
+using GalArc.Database;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;

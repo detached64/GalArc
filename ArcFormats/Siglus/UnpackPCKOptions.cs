@@ -1,7 +1,6 @@
 ﻿using ArcFormats.Properties;
 using GalArc;
 using GalArc.Database;
-using GalArc.Database.Siglus;
 using GalArc.Extensions.SiglusKeyFinder;
 using GalArc.Logs;
 using System;
@@ -48,7 +47,7 @@ namespace ArcFormats.Siglus
         {
             if (ScenePCK.ImportedSchemes == null)
             {
-                ScenePCK.ImportedSchemes = Deserializer.ReadScheme(typeof(SiglusScheme)) as SiglusScheme;
+                ScenePCK.ImportedSchemes = Deserializer.ReadScheme<SiglusScheme>();
                 if (ScenePCK.ImportedSchemes != null)
                 {
                     Logger.Debug(string.Format(Resources.logImportDataBaseSuccess, ScenePCK.ImportedSchemes.KnownSchemes.Count));

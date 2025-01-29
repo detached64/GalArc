@@ -56,7 +56,7 @@ namespace ArcFormats.Seraph
         {
             if (DAT.ImportedSchemes == null)
             {
-                DAT.ImportedSchemes = Deserializer.Deserialize(typeof(SeraphScheme), SeraphScheme.JsonEngineName) as SeraphScheme;
+                DAT.ImportedSchemes = Deserializer.Deserialize<SeraphScheme>();
                 if (DAT.ImportedSchemes != null)
                 {
                     Logger.Debug(string.Format(Resources.logImportGARbroDBSchemeSuccess, DAT.ImportedSchemes.KnownSchemes.Count));

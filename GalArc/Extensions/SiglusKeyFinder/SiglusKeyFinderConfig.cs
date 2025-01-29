@@ -2,7 +2,6 @@
 
 namespace GalArc.Extensions.SiglusKeyFinder
 {
-    [Extension]
     public class SiglusKeyFinderConfig : IExtension
     {
         public static string Path

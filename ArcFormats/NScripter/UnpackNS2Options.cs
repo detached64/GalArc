@@ -1,6 +1,5 @@
 ﻿using ArcFormats.Properties;
 using GalArc.Database;
-using GalArc.Database.NScripter;
 using GalArc.Logs;
 using System;
 using System.Reflection;
@@ -10,7 +9,7 @@ namespace ArcFormats.NScripter
 {
     public partial class UnpackNS2Options : UserControl
     {
-        private NS2Scheme ImportedScheme { get; set; }
+        private Ns2Scheme ImportedScheme { get; set; }
 
         public UnpackNS2Options()
         {
@@ -28,7 +27,7 @@ namespace ArcFormats.NScripter
         {
             if (ImportedScheme == null)
             {
-                ImportedScheme = Deserializer.ReadScheme(typeof(NS2Scheme)) as NS2Scheme;
+                ImportedScheme = Deserializer.ReadScheme<Ns2Scheme>();
                 combSchemes.Items.Add(Resources.combNoEncryption);
                 combSchemes.Items.Add(Resources.combCustomScheme);
 
