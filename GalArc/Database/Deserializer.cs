@@ -118,7 +118,7 @@ namespace GalArc.Database
                             count = property.Value.Children().Count();
                             break;
                     }
-                    result.Append("\t").AppendFormat(SchemeInfos.InfoItems, property.Name, count).AppendLine();
+                    result.Append("  ").AppendFormat(SchemeInfos.InfoItems, property.Name, count).AppendLine();
                 }
 
                 // file size

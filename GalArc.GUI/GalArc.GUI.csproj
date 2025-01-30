@@ -251,7 +251,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Extensions\SiglusKeyFinder.exe" />
+    <None Include="Resources\Extensions\SiglusKeyFinder.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
