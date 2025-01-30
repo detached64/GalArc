@@ -94,20 +94,10 @@ namespace GalArc.Database
                 var json = LoadedJsons[name];
                 JObject jsonObject = JObject.Parse(json);
 
-                // version
-                int version = (int)jsonObject["Version"];
-                result.AppendFormat(SchemeInfos.InfoVersion, version).AppendLine();
-
                 // contents
                 result.AppendLine(SchemeInfos.InfoContents);
-
-                // scheme count
                 foreach (var property in jsonObject.Properties())
                 {
-                    if (property.Name == "Version")
-                    {
-                        continue;
-                    }
                     int count = 0;
                     switch (property.Value.Type)
                     {

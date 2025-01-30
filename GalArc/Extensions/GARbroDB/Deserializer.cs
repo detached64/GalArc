@@ -74,10 +74,10 @@ namespace GalArc.Extensions.GARbroDB
                 // scheme count
                 JObject schemeMap = (JObject)jsonObject["SchemeMap"];
                 int SchemeMapCount = schemeMap.Count;
-                result.AppendFormat(SchemeInfos.InfoItems, "SchemeMap", SchemeMapCount).AppendLine();
+                result.Append("  ").AppendFormat(SchemeInfos.InfoItems, "SchemeMap", SchemeMapCount).AppendLine();
                 JObject gameMap = (JObject)jsonObject["GameMap"];
                 int GameMapCount = gameMap.Count;
-                result.AppendFormat(SchemeInfos.InfoItems, "GameMap", GameMapCount).AppendLine();
+                result.Append("  ").AppendFormat(SchemeInfos.InfoItems, "GameMap", GameMapCount).AppendLine();
 
                 // file size
                 FileInfo fileInfo = new FileInfo(path);

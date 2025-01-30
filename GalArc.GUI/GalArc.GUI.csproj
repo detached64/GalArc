@@ -217,7 +217,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\Database\Ns2.json" />
     <None Include="Resources\Database\Seraph.json" />
     <None Include="Resources\Database\Siglus.json" />
     <None Include="Resources\Extensions\Formats.json" />
