@@ -50,7 +50,7 @@ namespace ArcFormats.Siglus
                 ScenePCK.ImportedSchemes = Deserializer.ReadScheme<SiglusScheme>();
                 if (ScenePCK.ImportedSchemes != null)
                 {
-                    Logger.Debug(string.Format(Resources.logImportDataBaseSuccess, ScenePCK.ImportedSchemes.KnownSchemes.Count));
+                    Logger.ImportDatabaseScheme(ScenePCK.ImportedSchemes.KnownSchemes.Count);
                     this.combSchemes.Items.Add(Resources.combTryEveryScheme);
                     this.combSchemes.Items.Add(Resources.combCustomScheme);
                     foreach (var scheme in ScenePCK.ImportedSchemes.KnownSchemes)

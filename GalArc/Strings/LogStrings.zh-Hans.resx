@@ -117,31 +117,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InfoVersion" xml:space="preserve">
-    <value>版本：{0}</value>
+  <data name="HasUpdate" xml:space="preserve">
+    <value>有新版本可用！</value>
   </data>
-  <data name="InfoSize" xml:space="preserve">
-    <value>大小：{0}字节</value>
+  <data name="NoUpdate" xml:space="preserve">
+    <value>GalArc已是最新版本。</value>
   </data>
-  <data name="InfoContents" xml:space="preserve">
-    <value>内容：</value>
+  <data name="Updating" xml:space="preserve">
+    <value>检查更新……</value>
   </data>
-  <data name="InfoFailedToReadInfos" xml:space="preserve">
-    <value>读取信息失败。</value>
+  <data name="UpdateError" xml:space="preserve">
+    <value>检查更新时出现错误。</value>
   </data>
-  <data name="InfoItems" xml:space="preserve">
-    <value>{0}：{1}个项</value>
+  <data name="ValidArchiveDetected" xml:space="preserve">
+    <value>检测到{0} v{1}封包。</value>
   </data>
-  <data name="InfoLastModified" xml:space="preserve">
-    <value>修改时间：{0}</value>
+  <data name="UnpackFinished" xml:space="preserve">
+    <value>解包已完成。</value>
   </data>
-  <data name="InfoFileNotFound" xml:space="preserve">
-    <value>未找到指定的文件。</value>
+  <data name="PackFinished" xml:space="preserve">
+    <value>封包已完成。</value>
   </data>
-  <data name="InfoDisabled" xml:space="preserve">
-    <value>未启用。</value>
+  <data name="InputFile" xml:space="preserve">
+    <value>输入文件路径：</value>
   </data>
-  <data name="InfoEngineName" xml:space="preserve">
-    <value>数据库名称：{0}</value>
+  <data name="OutputFolder" xml:space="preserve">
+    <value>输出文件夹路径：</value>
+  </data>
+  <data name="InputFolder" xml:space="preserve">
+    <value>输入文件夹路径：</value>
+  </data>
+  <data name="OutputFile" xml:space="preserve">
+    <value>输出文件路径：</value>
+  </data>
+  <data name="FileCountInside" xml:space="preserve">
+    <value>内部有{0}个文件。</value>
+  </data>
+  <data name="NewInstance" xml:space="preserve">
+    <value>启动新实例</value>
+  </data>
+  <data name="ErrorNotValidArc" xml:space="preserve">
+    <value>错误：不是有效的封包。</value>
+  </data>
+  <data name="ErrorOriginalFileNotFound" xml:space="preserve">
+    <value>错误：同目录下未找到{0}原文件。</value>
+  </data>
+  <data name="Unpacking" xml:space="preserve">
+    <value>解包中……</value>
+  </data>
+  <data name="Packing" xml:space="preserve">
+    <value>封包中……</value>
+  </data>
+  <data name="ErrorOccur" xml:space="preserve">
+    <value>错误：{0}</value>
+  </data>
+  <data name="Versions" xml:space="preserve">
+    <value>当前版本：{0} 最新版本：{1}</value>
+  </data>
+  <data name="ErrorSpecifiedFileNotFound" xml:space="preserve">
+    <value>错误：同目录下未找到{0}文件。</value>
+  </data>
+  <data name="ImportGARbroDBScheme" xml:space="preserve">
+    <value>从GARbroDB导入{0}个密钥。</value>
+  </data>
+  <data name="ImportDataBaseScheme" xml:space="preserve">
+    <value>从数据库导入{0}个密钥。</value>
   </data>
 </root>

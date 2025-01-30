@@ -142,24 +142,6 @@ namespace ArcFormats.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Import {0} schemes from Database. 的本地化字符串。
-        /// </summary>
-        internal static string logImportDataBaseSuccess {
-            get {
-                return ResourceManager.GetString("logImportDataBaseSuccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Import {0} schemes from GARbroDB. 的本地化字符串。
-        /// </summary>
-        internal static string logImportGARbroDBSchemeSuccess {
-            get {
-                return ResourceManager.GetString("logImportGARbroDBSchemeSuccess", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Try to decompress: {0}…… 的本地化字符串。
         /// </summary>
         internal static string logTryDecompress {

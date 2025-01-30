@@ -33,7 +33,7 @@ namespace ArcFormats.NScripter
 
                 if (ImportedScheme != null)
                 {
-                    Logger.Debug(string.Format(Resources.logImportDataBaseSuccess, ImportedScheme.KnownKeys.Count));
+                    Logger.ImportDatabaseScheme(ImportedScheme.KnownKeys.Count);
                     foreach (var key in ImportedScheme.KnownKeys)
                     {
                         combSchemes.Items.Add(key.Key);

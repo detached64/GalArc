@@ -1,5 +1,4 @@
-﻿using ArcFormats.Properties;
-using GalArc.Extensions.GARbroDB;
+﻿using GalArc.Database;
 using GalArc.Logs;
 using System;
 using System.Drawing;
@@ -56,10 +55,10 @@ namespace ArcFormats.Seraph
         {
             if (DAT.ImportedSchemes == null)
             {
-                DAT.ImportedSchemes = Deserializer.Deserialize<SeraphScheme>();
+                DAT.ImportedSchemes = Deserializer.ReadScheme<SeraphScheme>();
                 if (DAT.ImportedSchemes != null)
                 {
-                    Logger.Debug(string.Format(Resources.logImportGARbroDBSchemeSuccess, DAT.ImportedSchemes.KnownSchemes.Count));
+                    Logger.ImportDatabaseScheme(DAT.ImportedSchemes.KnownOffsets.Count);
                 }
             }
         }

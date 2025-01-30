@@ -26,6 +26,10 @@ namespace GalArc.Database
                 return;
             }
             string name = type.Name.Remove(type.Name.Length - 6);    // remove "Scheme"
+            if (LoadedJsons.ContainsKey(name))
+            {
+                return;
+            }
             string path = Path.Combine(DatabaseConfig.Path, name + ".json");
             if (!File.Exists(path))
             {
@@ -47,7 +51,7 @@ namespace GalArc.Database
             }
         }
 
-        public static T Deserialize<T>()
+        private static T Deserialize<T>()
         {
             string name = typeof(T).Name.Remove(typeof(T).Name.Length - 6);    // remove "Scheme"
             if (!BaseSettings.Default.IsDatabaseEnabled || !LoadedJsons.TryGetValue(name, out var json) || string.IsNullOrEmpty(json))
@@ -98,14 +102,23 @@ namespace GalArc.Database
                 result.AppendLine(SchemeInfos.InfoContents);
 
                 // scheme count
-                foreach (var jobject in jsonObject)
+                foreach (var property in jsonObject.Properties())
                 {
-                    if (jobject.Key == "Version")
+                    if (property.Name == "Version")
                     {
                         continue;
                     }
-                    int count = ((JObject)jobject.Value).Count;
-                    result.Append("  ").AppendFormat(SchemeInfos.InfoItems, jobject.Key, count).AppendLine();
+                    int count = 0;
+                    switch (property.Value.Type)
+                    {
+                        case JTokenType.Array:
+                            count = property.Value.Count();
+                            break;
+                        case JTokenType.Object:
+                            count = property.Value.Children().Count();
+                            break;
+                    }
+                    result.Append("\t").AppendFormat(SchemeInfos.InfoItems, property.Name, count).AppendLine();
                 }
 
                 // file size
@@ -116,16 +129,16 @@ namespace GalArc.Database
                 DateTime lastModified = File.GetLastWriteTime(path);
                 result.AppendFormat(SchemeInfos.InfoLastModified, lastModified).AppendLine();
 
-                // hash
-                result.AppendFormat(SchemeInfos.InfoHash, json.GetHashCode()).AppendLine();
-
                 jsonObject = null;
+                return result.ToString();
             }
-            catch (Exception)
+            catch
             {
-                result.AppendLine(SchemeInfos.InfoFileNotFound);
+                StringBuilder error = new StringBuilder();
+                error.AppendFormat(SchemeInfos.InfoEngineName, name).AppendLine();
+                error.Append(SchemeInfos.InfoFailedToReadInfos).AppendLine();
+                return error.ToString();
             }
-            return result.ToString();
         }
 
         public static string GetInfos()

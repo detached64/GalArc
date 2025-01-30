@@ -106,9 +106,6 @@
   <data name="InfoContents" xml:space="preserve">
     <value>Contents:</value>
   </data>
-  <data name="InfoHash" xml:space="preserve">
-    <value>Hash: {0}</value>
-  </data>
   <data name="InfoFailedToReadInfos" xml:space="preserve">
     <value>Failed to read information.</value>
   </data>

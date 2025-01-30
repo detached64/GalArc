@@ -18,7 +18,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-using GalArc.Properties;
+using GalArc.Strings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -136,7 +136,7 @@ namespace GalArc.Logs
 
         public static void NewInstance()
         {
-            Append($"[{Resources.logNewInstance}]");
+            Append($"[{LogStrings.NewInstance}]");
         }
 
         public static void Error(string log, bool toThrow = true)
@@ -144,7 +144,7 @@ namespace GalArc.Logs
             if (!toThrow)
             {
                 WriteAndSaveLog(log, 0);
-                OnErrorOccur(string.Format(Resources.logErrorOccur, log));
+                OnErrorOccur(string.Format(LogStrings.ErrorOccur, log));
             }
             else
             {
@@ -176,45 +176,45 @@ namespace GalArc.Logs
 
         public static void ErrorInvalidArchive()
         {
-            throw new Exception(Resources.logErrorNotValidArc);
+            throw new Exception(LogStrings.ErrorNotValidArc);
         }
 
         public static void ErrorNeedAnotherFile(string file)
         {
-            throw new Exception(string.Format(Resources.logErrorSpecifiedFileNotFound, file));
+            throw new Exception(string.Format(LogStrings.ErrorSpecifiedFileNotFound, file));
         }
 
         public static void ErrorNeedOriginalFile(string file)
         {
-            throw new Exception(string.Format(Resources.logErrorOriginalFileNotFound, file));
+            throw new Exception(string.Format(LogStrings.ErrorOriginalFileNotFound, file));
         }
 
         public static void InitUnpack(string input, string output)
         {
             barValue = 0;
-            Debug(Resources.logInputFile + "\t" + input);
-            Debug(Resources.logOutputFolder + "\t" + output);
-            Info(Resources.logUnpacking);
+            Debug(LogStrings.InputFile + "\t" + input);
+            Debug(LogStrings.OutputFolder + "\t" + output);
+            Info(LogStrings.Unpacking);
         }
 
         public static void FinishUnpack()
         {
             barValue = LogWindow.Instance.bar.Maximum;
-            InfoRevoke(Resources.logUnpackFinished);
+            InfoRevoke(LogStrings.UnpackFinished);
         }
 
         public static void InitPack(string input, string output)
         {
             barValue = 0;
-            Debug(Resources.logInputFolder + "\t" + input);
-            Debug(Resources.logOutputFile + "\t" + output);
-            Info(Resources.logPacking);
+            Debug(LogStrings.InputFolder + "\t" + input);
+            Debug(LogStrings.OutputFile + "\t" + output);
+            Info(LogStrings.Packing);
         }
 
         public static void FinishPack()
         {
             barValue = LogWindow.Instance.bar.Maximum;
-            InfoRevoke(Resources.logPackFinished);
+            InfoRevoke(LogStrings.PackFinished);
         }
 
         private static void OnProcess(string message)
@@ -263,7 +263,7 @@ namespace GalArc.Logs
         {
             barValue = 0;
             SetBarMax(max * m);
-            Debug(string.Format(Resources.logFileCountInside, max));
+            Debug(string.Format(LogStrings.FileCountInside, max));
         }
 
         public static void InitBar(uint max, int m)
@@ -296,41 +296,51 @@ namespace GalArc.Logs
 
         public static void ShowCheckingUpdate()
         {
-            InfoRevoke(Resources.logUpdating);
+            InfoRevoke(LogStrings.Updating);
         }
 
         public static async void ShowCheckSuccess(bool existNewer)
         {
             if (existNewer)
             {
-                Info(Resources.logHasUpdate);
-                await OnShowAndDisappear(Resources.logHasUpdate);
+                Info(LogStrings.HasUpdate);
+                await OnShowAndDisappear(LogStrings.HasUpdate);
             }
             else
             {
-                Info(Resources.logNoUpdate);
-                await OnShowAndDisappear(Resources.logNoUpdate);
+                Info(LogStrings.NoUpdate);
+                await OnShowAndDisappear(LogStrings.NoUpdate);
             }
         }
 
         public static void ShowCheckError()
         {
-            Error(Resources.logUpdateError, false);
+            Error(LogStrings.UpdateError, false);
         }
 
         public static void ShowProgramVersion(string cv, string lv)
         {
-            Debug(string.Format(Resources.logVersions, cv, lv));
+            Debug(string.Format(LogStrings.Versions, cv, lv));
         }
 
         public static void ShowVersion(string extension, int version)
         {
-            Info(string.Format(Resources.logValidArchiveDetected, extension, version));
+            Info(string.Format(LogStrings.ValidArchiveDetected, extension, version));
         }
 
         public static void ShowVersion(string extension, string version)
         {
-            Info(string.Format(Resources.logValidArchiveDetected, extension, version));
+            Info(string.Format(LogStrings.ValidArchiveDetected, extension, version));
+        }
+
+        public static void ImportDatabaseScheme(int count)
+        {
+            Debug(string.Format(LogStrings.ImportDataBaseScheme, count));
+        }
+
+        public static void ImportGARbroDBScheme(int count)
+        {
+            Debug(string.Format(LogStrings.ImportGARbroDBScheme, count));
         }
     }
 }

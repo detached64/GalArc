@@ -97,49 +97,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="logTryDecScr" xml:space="preserve">
-    <value>Try to decrypt: {0}……</value>
+  <data name="HasUpdate" xml:space="preserve">
+    <value>New update available!</value>
   </data>
-  <data name="logErrorDecScrFailed" xml:space="preserve">
-    <value>Decryption failed.</value>
+  <data name="NoUpdate" xml:space="preserve">
+    <value>You are using the latest version of GalArc.</value>
   </data>
-  <data name="logTryEncScr" xml:space="preserve">
-    <value>Try to encrypt: {0}……</value>
+  <data name="Updating" xml:space="preserve">
+    <value>Checking for update……</value>
   </data>
-  <data name="logErrorEncScrFailed" xml:space="preserve">
-    <value>Encryption failed.</value>
+  <data name="UpdateError" xml:space="preserve">
+    <value>Error occurs while checking for update.</value>
   </data>
-  <data name="logTryDecompress" xml:space="preserve">
-    <value>Try to decompress: {0}……</value>
+  <data name="ValidArchiveDetected" xml:space="preserve">
+    <value>Valid {0} v{1} archive detected.</value>
   </data>
-  <data name="logErrorDecompressFailed" xml:space="preserve">
-    <value>Decompression failed.</value>
+  <data name="UnpackFinished" xml:space="preserve">
+    <value>Unpack finished.</value>
   </data>
-  <data name="logTryDecompressWithMethod" xml:space="preserve">
-    <value>Try to decompress {0} with {1}……</value>
+  <data name="PackFinished" xml:space="preserve">
+    <value>Pack finished.</value>
   </data>
-  <data name="logErrorContainsInvalid" xml:space="preserve">
-    <value>Path contains invalid characters. Switching the encoding in the settings might work.</value>
+  <data name="InputFile" xml:space="preserve">
+    <value>Input file path:</value>
   </data>
-  <data name="logErrorNotSupportedVersion" xml:space="preserve">
-    <value>{0} v{1} archive temporarily not supported.</value>
+  <data name="OutputFolder" xml:space="preserve">
+    <value>Output folder path:</value>
   </data>
-  <data name="logErrorReadIndexFailed" xml:space="preserve">
-    <value>Failed to read index.</value>
+  <data name="InputFolder" xml:space="preserve">
+    <value>Input folder path:</value>
   </data>
-  <data name="combNoEncryption" xml:space="preserve">
-    <value>No encryption</value>
+  <data name="OutputFile" xml:space="preserve">
+    <value>Output file path:</value>
   </data>
-  <data name="combCustomScheme" xml:space="preserve">
-    <value>Custom scheme</value>
+  <data name="FileCountInside" xml:space="preserve">
+    <value>{0} files inside.</value>
   </data>
-  <data name="msgWrongScheme" xml:space="preserve">
-    <value>Wrong scheme!</value>
+  <data name="NewInstance" xml:space="preserve">
+    <value>New Instance</value>
   </data>
-  <data name="msgNeedDec" xml:space="preserve">
-    <value>The file has been encrypted. Please choose appropriate scheme.</value>
+  <data name="ErrorNotValidArc" xml:space="preserve">
+    <value>Error: Not a valid archive.</value>
   </data>
-  <data name="combTryEveryScheme" xml:space="preserve">
-    <value>Try every encryption scheme</value>
+  <data name="ErrorOriginalFileNotFound" xml:space="preserve">
+    <value>Error: Original {0} file not found in the same directory.</value>
+  </data>
+  <data name="Unpacking" xml:space="preserve">
+    <value>Unpacking……</value>
+  </data>
+  <data name="Packing" xml:space="preserve">
+    <value>Packing……</value>
+  </data>
+  <data name="ErrorOccur" xml:space="preserve">
+    <value>Error: {0}</value>
+  </data>
+  <data name="Versions" xml:space="preserve">
+    <value>Current version: {0} Latest version: {1}</value>
+  </data>
+  <data name="ErrorSpecifiedFileNotFound" xml:space="preserve">
+    <value>Error: {0} file not found in the same directory.</value>
+  </data>
+  <data name="ImportGARbroDBScheme" xml:space="preserve">
+    <value>Import {0} schemes from GARbroDB.</value>
+  </data>
+  <data name="ImportDataBaseScheme" xml:space="preserve">
+    <value>Import {0} schemes from Database.</value>
   </data>
 </root>

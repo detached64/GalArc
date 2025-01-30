@@ -1,8 +1,9 @@
-﻿using GalArc.Extensions.GARbroDB;
+﻿using GalArc.Database;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Utility.Compression;
@@ -100,34 +101,20 @@ namespace ArcFormats.Seraph
                 thisByte = br.ReadByte();
                 if (thisByte == 0 && lastByte != 0)
                 {
-                    AddIndex(br.BaseStream.Position - 1, maxOffset);
+                    Indices.Add(br.BaseStream.Position - 2);
                 }
                 lastByte = thisByte;
             }
         }
 
-        private void AddIndex(long index, long maxOffset)
-        {
-            //for (int i = -1; i < 0; i++)
-            //{
-            // indices.count like: 40 00 00 00(hex)
-            // we have limited indices.count to be less than 0x40, so we just need to back 1 byte to get the index.
-            long pos = index - 1;
-            if (pos < maxOffset && pos >= 0)
-            {
-                Indices.Add(pos);
-            }
-            //}
-        }
-
         private void TryReadIndexArchPac(BinaryReader br, bool isGiven)
         {
-            Logger.SetBarMax(1000);
+            Logger.SetBarMax(Indices.Count);
             int count = 1;
             foreach (var i in Indices)
             {
                 Groups.Clear();
-                Logger.SetBarValue(count * 1000 / Indices.Count);
+                Logger.SetBarValue(count);
                 if (ReadIndexArchPac(br, i))
                 {
                     return;
@@ -274,45 +261,24 @@ namespace ArcFormats.Seraph
                 {
                     byte[] raw = new byte[buffer.Length - 6];
                     Array.Copy(buffer, 6, raw, 0, raw.Length);
-                    raw = ZlibHelper.Decompress(raw);
-                    try
-                    {
-                        byte[] lz = SeraphUtils.Decompress(raw);
-                        File.WriteAllBytes(Path.Combine(folderPath, entry.Name), lz);
-                    }
-                    catch
-                    {
-                        File.WriteAllBytes(Path.Combine(folderPath, entry.Name), raw);
-                    }
-                    finally
-                    {
-                        raw = null;
-                    }
+                    File.WriteAllBytes(Path.Combine(folderPath, entry.Name), ZlibHelper.Decompress(raw));
+                    raw = null;
+                    continue;
                 }
-                else if ((sig & 0xffff) == 0x9c78)
+
+                try
                 {
-                    byte[] raw = new byte[buffer.Length - 2];
-                    Array.Copy(buffer, 2, raw, 0, raw.Length);
-                    raw = ZlibHelper.Decompress(raw);
-                    try
-                    {
-                        byte[] lz = SeraphUtils.Decompress(raw);
-                        File.WriteAllBytes(Path.Combine(folderPath, entry.Name), lz);
-                    }
-                    catch
-                    {
-                        File.WriteAllBytes(Path.Combine(folderPath, entry.Name), raw);
-                    }
-                    finally
-                    {
-                        raw = null;
-                    }
+                    byte[] lz = SeraphUtils.Decompress(buffer);
+                    File.WriteAllBytes(Path.Combine(folderPath, entry.Name), lz);
                 }
-                else
+                catch
                 {
                     File.WriteAllBytes(Path.Combine(folderPath, entry.Name), buffer);
                 }
-                buffer = null;
+                finally
+                {
+                    buffer = null;
+                }
                 Logger.UpdateBar();
             }
         }
@@ -320,7 +286,7 @@ namespace ArcFormats.Seraph
         private void UnpackVoicePac(BinaryReader br, string folderPath)
         {
             int fileCount = br.ReadUInt16();
-            uint dataOffset = 2 + 4 * (uint)(fileCount + 1);
+            uint dataOffset = 2 + 4 * (uint)fileCount;
             uint nextOffset = br.ReadUInt32();
             if (nextOffset < dataOffset || nextOffset > br.BaseStream.Length)
             {
@@ -389,9 +355,9 @@ namespace ArcFormats.Seraph
             {
                 return;
             }
-            foreach (var item in ImportedSchemes.KnownSchemes.Values)
+            foreach (long offset in ImportedSchemes.KnownOffsets)
             {
-                Indices.Add(item.IndexOffset);
+                Indices.Add(offset);
             }
         }
     }

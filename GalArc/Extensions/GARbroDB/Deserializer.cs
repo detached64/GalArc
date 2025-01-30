@@ -21,10 +21,6 @@ namespace GalArc.Extensions.GARbroDB
             LoadedContent = File.ReadAllText(GARbroDBConfig.Path);
         }
 
-        /// <summary>
-        /// Deserialize the specified scheme.
-        /// </summary>
-        /// <returns></returns>
         public static T Deserialize<T>()
         {
             if (!BaseSettings.Default.IsExtensionsEnabled || !BaseSettings.Default.IsGARbroDBEnabled)
@@ -55,12 +51,7 @@ namespace GalArc.Extensions.GARbroDB
             }
         }
 
-        /// <summary>
-        /// Get the GARbroDB information.
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static string GetJsonInfo(string path)
+        public static string GetInfo(string path)
         {
             if (!File.Exists(path))
             {
@@ -95,9 +86,6 @@ namespace GalArc.Extensions.GARbroDB
                 // last modified time
                 DateTime lastModified = File.GetLastWriteTime(path);
                 result.AppendFormat(SchemeInfos.InfoLastModified, lastModified).AppendLine();
-
-                // hash
-                result.AppendFormat(SchemeInfos.InfoHash, LoadedContent.GetHashCode()).AppendLine();
 
                 jsonObject = null;
                 return result.ToString();

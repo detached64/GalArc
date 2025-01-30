@@ -106,15 +106,6 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Hash: {0} 的本地化字符串。
-        /// </summary>
-        internal static string InfoHash {
-            get {
-                return ResourceManager.GetString("InfoHash", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 {0}: {1} items 的本地化字符串。
         /// </summary>
         internal static string InfoItems {

@@ -47,7 +47,7 @@ namespace GalArc.GUI
 
         private void txtJsonPath_TextChanged(object sender, EventArgs e)
         {
-            this.txtDBInfo.Text = Deserializer.GetJsonInfo(this.txtJsonPath.Text).Trim();
+            this.txtDBInfo.Text = Deserializer.GetInfo(this.txtJsonPath.Text).Trim();
             GARbroDBConfig.Path = this.txtJsonPath.Text;
         }
 

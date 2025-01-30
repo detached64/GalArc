@@ -1,5 +1,4 @@
-﻿using ArcFormats.Properties;
-using GalArc.Extensions.GARbroDB;
+﻿using GalArc.Extensions.GARbroDB;
 using GalArc.Logs;
 using System;
 using System.Reflection;
@@ -29,11 +28,11 @@ namespace ArcFormats.AnimeGameSystem
                 DAT.ImportedSchemes = Deserializer.Deserialize<AGSScheme>();
                 if (DAT.ImportedSchemes != null)
                 {
+                    Logger.ImportGARbroDBScheme(DAT.ImportedSchemes.KnownSchemes.Count);
                     foreach (var scheme in DAT.ImportedSchemes.KnownSchemes)
                     {
                         this.combSchemes.Items.Add(scheme.Key);
                     }
-                    Logger.Debug(string.Format(Resources.logImportGARbroDBSchemeSuccess, DAT.ImportedSchemes.KnownSchemes.Count));
                 }
             }
         }

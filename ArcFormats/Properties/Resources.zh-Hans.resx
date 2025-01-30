@@ -147,12 +147,6 @@
   <data name="logErrorReadIndexFailed" xml:space="preserve">
     <value>读取索引失败。</value>
   </data>
-  <data name="logImportGARbroDBSchemeSuccess" xml:space="preserve">
-    <value>从GARbroDB导入{0}个密钥。</value>
-  </data>
-  <data name="logImportDataBaseSuccess" xml:space="preserve">
-    <value>从数据库导入{0}个密钥。</value>
-  </data>
   <data name="combNoEncryption" xml:space="preserve">
     <value>没有加密</value>
   </data>

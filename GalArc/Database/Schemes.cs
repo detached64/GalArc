@@ -10,6 +10,13 @@ namespace GalArc.Database
         public int Version { get; set; }
     }
 
+    public class SeraphScheme : IScheme
+    {
+        public List<long> KnownOffsets { get; set; }
+
+        public int Version { get; set; }
+    }
+
     public class SiglusScheme : IScheme
     {
         public class SiglusKey
