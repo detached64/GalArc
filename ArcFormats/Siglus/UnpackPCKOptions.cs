@@ -13,10 +13,7 @@ namespace ArcFormats.Siglus
     {
         private string ExtractedKey
         {
-            get
-            {
-                return _ExtractedKey;
-            }
+            get => _ExtractedKey;
             set
             {
                 if (string.IsNullOrEmpty(value) || string.Equals(value, "Failed", StringComparison.OrdinalIgnoreCase))

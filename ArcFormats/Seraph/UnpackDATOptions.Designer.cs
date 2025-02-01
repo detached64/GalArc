@@ -67,7 +67,6 @@
             this.Controls.Add(this.chkbxBrutalForce);
             this.Controls.Add(this.chkbxSpecifyIndex);
             this.Name = "UnpackDATOptions";
-            this.Load += new System.EventHandler(this.UnpackDATOptions_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

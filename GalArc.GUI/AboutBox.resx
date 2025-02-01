@@ -292,13 +292,10 @@
     <value>37, 169</value>
   </data>
   <data name="lbCopyright.Size" type="System.Drawing.Size, System.Drawing">
-    <value>280, 24</value>
+    <value>0, 24</value>
   </data>
   <data name="lbCopyright.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
-  </data>
-  <data name="lbCopyright.Text" xml:space="preserve">
-    <value>Copyright (c) 2025 detached64</value>
   </data>
   <data name="&gt;&gt;lbCopyright.Name" xml:space="preserve">
     <value>lbCopyright</value>

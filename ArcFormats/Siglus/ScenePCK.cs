@@ -160,7 +160,7 @@ namespace ArcFormats.Siglus
                 }
                 if (IsRightKey(entry.Data, scheme.KnownKey, type))
                 {
-                    Logger.Info(string.Format(Siglus.logFound, scheme.KnownKey));
+                    Logger.Info(string.Format(Siglus.logFound, BitConverter.ToString(scheme.KnownKey)));
                     Logger.Info(string.Format(Siglus.logMatchedGame, FindKeyFromValue(scheme.KnownKey)));
                     return scheme.KnownKey;
                 }

@@ -124,6 +124,15 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
+        ///   查找类似 Imported schemes count: {0} 的本地化字符串。
+        /// </summary>
+        public static string ImportedSchemeCount {
+            get {
+                return ResourceManager.GetString("ImportedSchemeCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Import {0} schemes from GARbroDB. 的本地化字符串。
         /// </summary>
         public static string ImportGARbroDBScheme {
@@ -223,6 +232,15 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
+        ///   查找类似 Scheme count: {0} 的本地化字符串。
+        /// </summary>
+        public static string SchemeCount {
+            get {
+                return ResourceManager.GetString("SchemeCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Unpack finished. 的本地化字符串。
         /// </summary>
         public static string UnpackFinished {
@@ -264,6 +282,15 @@ namespace GalArc.Strings {
         public static string ValidArchiveDetected {
             get {
                 return ResourceManager.GetString("ValidArchiveDetected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Valid database count: {0} 的本地化字符串。
+        /// </summary>
+        public static string ValidDatabaseCount {
+            get {
+                return ResourceManager.GetString("ValidDatabaseCount", resourceCulture);
             }
         }
         

@@ -34,6 +34,7 @@ namespace GalArc.GUI
             {
                 this.TopMost = true;
             }
+            this.lbCopyright.Text = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyCopyrightAttribute>().Copyright;
             this.lbCurrentVer.Text = string.Format(Resources.lbVersion, Updater.CurrentVersion);
             UpdateDataGridView(EngineInfo.Infos);
             UpdateLicense();

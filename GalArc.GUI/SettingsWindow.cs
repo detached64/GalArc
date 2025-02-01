@@ -31,6 +31,7 @@ namespace GalArc.GUI
 
         private void treeViewOption_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            this.SuspendLayout();
             UserControl userControl = null;
             switch (e.Node.Name)
             {
@@ -63,6 +64,7 @@ namespace GalArc.GUI
                 //userControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
                 this.panel.Controls.Add(userControl);
             }
+            this.ResumeLayout(false);
         }
     }
 }

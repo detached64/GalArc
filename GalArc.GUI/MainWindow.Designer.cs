@@ -55,9 +55,11 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lbStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.pBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.pnlOperation = new System.Windows.Forms.Panel();
             this.menuStrip.SuspendLayout();
             this.gbLog.SuspendLayout();
             this.statusStrip.SuspendLayout();
+            this.pnlOperation.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -136,7 +138,6 @@
             this.chkbxUnpack.Name = "chkbxUnpack";
             this.chkbxUnpack.UseVisualStyleBackColor = true;
             this.chkbxUnpack.CheckedChanged += new System.EventHandler(this.chkbxUnpack_CheckedChanged);
-            this.chkbxUnpack.SizeChanged += new System.EventHandler(this.chkbxUnpack_SizeChanged);
             // 
             // chkbxPack
             // 
@@ -253,11 +254,19 @@
             this.pBar.Name = "pBar";
             resources.ApplyResources(this.pBar, "pBar");
             // 
+            // pnlOperation
+            // 
+            this.pnlOperation.Controls.Add(this.chkbxUnpack);
+            this.pnlOperation.Controls.Add(this.chkbxPack);
+            resources.ApplyResources(this.pnlOperation, "pnlOperation");
+            this.pnlOperation.Name = "pnlOperation";
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.Controls.Add(this.pnlOperation);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.gbLog);
             this.Controls.Add(this.gbOptions);
@@ -270,8 +279,6 @@
             this.Controls.Add(this.txtOutputPath);
             this.Controls.Add(this.txtInputPath);
             this.Controls.Add(this.lbInput);
-            this.Controls.Add(this.chkbxPack);
-            this.Controls.Add(this.chkbxUnpack);
             this.Controls.Add(this.treeViewEngines);
             this.Controls.Add(this.menuStrip);
             this.KeyPreview = true;
@@ -285,6 +292,8 @@
             this.gbLog.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.pnlOperation.ResumeLayout(false);
+            this.pnlOperation.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -317,6 +326,7 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel lbStatus;
         private System.Windows.Forms.ToolStripProgressBar pBar;
+        private System.Windows.Forms.Panel pnlOperation;
     }
 }
 

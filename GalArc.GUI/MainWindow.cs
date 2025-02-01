@@ -1,12 +1,13 @@
-﻿using ArcFormats.Templates;
+﻿using ArcFormats;
+using ArcFormats.Templates;
 using GalArc.Common;
+using GalArc.Database;
 using GalArc.GUI.Properties;
 using GalArc.Logs;
 using GalArc.Strings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -21,18 +22,16 @@ namespace GalArc.GUI
     {
         public static MainWindow Instance;
 
-        private List<TreeNode> treeNodesUnpack = new List<TreeNode>();
-        private List<TreeNode> treeNodesPack = new List<TreeNode>();
+        private List<TreeNode> TreeNodesUnpack = new List<TreeNode>();
+        private List<TreeNode> TreeNodesPack = new List<TreeNode>();
 
-        internal static TreeNode selectedNodeUnpack;
-        internal static TreeNode selectedNodePack;
+        internal static TreeNode SelectedNodeUnpack;
+        internal static TreeNode SelectedNodePack;
 
-        private string localCulture;
+        private string Culture;
         private bool isFirstChangeLang = true;
 
-        private const int delta = 6;
-
-        enum Mode
+        private enum Mode
         {
             Unpack,
             Pack
@@ -42,8 +41,8 @@ namespace GalArc.GUI
         {
             Instance = this;
 
-            localCulture = GetLocalCulture();
-            SetLocalCulture(localCulture);
+            GetLocalCulture();
+            SetLocalCulture();
 
             InitializeComponent();
 
@@ -55,40 +54,48 @@ namespace GalArc.GUI
             this.txtInputPath.DragDrop += txtInputPath_DragDrop;
             this.txtOutputPath.DragEnter += txtOutputPath_DragEnter;
             this.txtOutputPath.DragDrop += txtOutputPath_DragDrop;
-            this.Load += async (sender, e) =>
+            this.Load += ImportSchemes;
+        }
+
+        internal async void ImportSchemes(object sender, EventArgs e)
+        {
+            this.lbStatus.Text = LogStrings.Loading;
+            await Task.Run(() => LoadSchemes());
+            this.lbStatus.Text = LogStrings.Ready;
+            if (BaseSettings.Default.ToAutoSaveState)
             {
-                this.lbStatus.Text = LogStrings.Loading;
-                await Task.Run(() => LoadSchemes());
-                this.lbStatus.Text = LogStrings.Ready;
-                if (BaseSettings.Default.ToAutoSaveState)
-                {
-                    this.chkbxUnpack.Checked = Settings.Default.IsUnpackMode;
-                    this.chkbxPack.Checked = Settings.Default.IsPackMode;
-                }
-            };
+                this.chkbxUnpack.Checked = Settings.Default.IsUnpackMode;
+                this.chkbxPack.Checked = Settings.Default.IsPackMode;
+            }
         }
 
         private void LoadSchemes()
         {
-            int c = ArcFormats.ArcSettings.Formats.Count;
+            int c = ArcSettings.Formats.Count;
             Logger.SetBarMax(c);
 
-            foreach (var format in ArcFormats.ArcSettings.Formats)
+            int im_count = 0;
+            foreach (var format in ArcSettings.Formats)
             {
                 format.DeserializeScheme(out string name, out int count);
                 if (!string.IsNullOrEmpty(name) && count > 0)
                 {
                     Logger.ImportDatabaseScheme(name, count);
+                    im_count++;
                 }
                 Logger.UpdateBar();
             }
+            Deserializer.ImportedSchemeCount = im_count;
+
+            Logger.Debug(string.Format(LogStrings.SchemeCount, Deserializer.SchemeCount));
+            Logger.Debug(string.Format(LogStrings.ImportedSchemeCount, Deserializer.ImportedSchemeCount));
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
             this.combLang.Items.AddRange(Languages.SupportedLanguages.Keys.ToArray());
             this.TopMost = Settings.Default.IsTopMost;
-            this.combLang.Text = Languages.SupportedLanguages.FirstOrDefault(x => x.Value == localCulture).Key;
+            this.combLang.Text = Languages.SupportedLanguages.FirstOrDefault(x => x.Value == Culture).Key;
             if (BaseSettings.Default.ToAutoSaveState)
             {
                 this.chkbxMatch.Checked = Settings.Default.ToMatchPath;
@@ -159,9 +166,9 @@ namespace GalArc.GUI
 
         private void combLang_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string previousCulture = localCulture;
-            localCulture = Languages.SupportedLanguages[this.combLang.Text];
-            Settings.Default.LastLanguage = localCulture;
+            string previousCulture = Culture;
+            Culture = Languages.SupportedLanguages[this.combLang.Text];
+            Settings.Default.LastLanguage = Culture;
             Settings.Default.Save();
             if (isFirstChangeLang)
             {
@@ -169,7 +176,7 @@ namespace GalArc.GUI
             }
             else
             {
-                if (previousCulture != localCulture)
+                if (previousCulture != Culture)
                 {
                     Application.ExitThread();
                     Process.Start(Assembly.GetExecutingAssembly().Location);
@@ -221,7 +228,7 @@ namespace GalArc.GUI
                         Settings.Default.UnpackSelectedNode1 = e.Node.Index;
                         Settings.Default.Save();
                     }
-                    selectedNodeUnpack = e.Node;
+                    SelectedNodeUnpack = e.Node;
                     SyncPath();
                     Logger.Info(string.Format(Resources.logSelectUnpackNode, e.Node.Parent.Text, e.Node.Text));
                     GetExtraOptions(Mode.Unpack);
@@ -234,7 +241,7 @@ namespace GalArc.GUI
                         Settings.Default.PackSelectedNode1 = e.Node.Index;
                         Settings.Default.Save();
                     }
-                    selectedNodePack = e.Node;
+                    SelectedNodePack = e.Node;
                     SyncPath();
                     Logger.Info(string.Format(Resources.logSelectPackNode, e.Node.Parent.Text, e.Node.Text));
                     GetExtraOptions(Mode.Pack);
@@ -248,16 +255,16 @@ namespace GalArc.GUI
             switch (mode)
             {
                 case Mode.Unpack:
-                    node = selectedNodeUnpack;
+                    node = SelectedNodeUnpack;
                     break;
                 case Mode.Pack:
-                    node = selectedNodePack;
+                    node = SelectedNodePack;
                     break;
             }
             string fieldName = mode.ToString() + "ExtraOptions";
             string[] infos = node.FullPath.Replace(".", string.Empty).Split('/');
-            Assembly assembly = Assembly.Load("ArcFormats");
-            Type type = assembly.GetType($"ArcFormats.{infos[0]}.{infos[1]}");
+            Assembly assembly = Assembly.Load(nameof(ArcFormats));
+            Type type = assembly.GetType($"{nameof(ArcFormats)}.{infos[0]}.{infos[1]}");
             this.SuspendLayout();
             this.gbOptions.Controls.Clear();
             if (type != null)
@@ -369,9 +376,9 @@ namespace GalArc.GUI
         private void UpdateTreeUnpack()
         {
             this.treeViewEngines.Nodes.Clear();
-            if (treeNodesUnpack.Count > 0)
+            if (TreeNodesUnpack.Count > 0)
             {
-                foreach (var node in treeNodesUnpack)
+                foreach (var node in TreeNodesUnpack)
                 {
                     this.treeViewEngines.Nodes.Add(node);
                 }
@@ -401,9 +408,9 @@ namespace GalArc.GUI
         private void UpdateTreePack()
         {
             this.treeViewEngines.Nodes.Clear();
-            if (treeNodesPack.Count > 0)
+            if (TreeNodesPack.Count > 0)
             {
-                foreach (var node in treeNodesPack)
+                foreach (var node in TreeNodesPack)
                 {
                     this.treeViewEngines.Nodes.Add(node);
                 }
@@ -433,11 +440,6 @@ namespace GalArc.GUI
             }
         }
 
-        private void chkbxUnpack_SizeChanged(object sender, EventArgs e)
-        {
-            this.chkbxPack.Location = new Point(this.chkbxUnpack.Location.X + this.chkbxUnpack.Size.Width + delta, this.chkbxPack.Location.Y);
-        }
-
         private async void btExecute_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(this.txtInputPath.Text))
@@ -462,10 +464,7 @@ namespace GalArc.GUI
                 {
                     Freeze();
                 }
-                else
-                {
-                    this.btExecute.Enabled = false;
-                }
+                this.btExecute.Enabled = false;
                 this.lbStatus.Text = Resources.logUnpacking;
 
                 try
@@ -502,10 +501,7 @@ namespace GalArc.GUI
                 {
                     Freeze();
                 }
-                else
-                {
-                    this.btExecute.Enabled = false;
-                }
+                this.btExecute.Enabled = false;
                 this.lbStatus.Text = Resources.logPacking;
 
                 try
@@ -551,7 +547,6 @@ namespace GalArc.GUI
             this.chkbxUnpack.Enabled = false;
             this.chkbxPack.Enabled = false;
             this.chkbxMatch.Enabled = false;
-            this.btExecute.Enabled = false;
             this.btClear.Enabled = false;
             this.btSelInput.Enabled = false;
             this.btSelOutput.Enabled = false;
@@ -559,7 +554,6 @@ namespace GalArc.GUI
             this.txtInputPath.Enabled = false;
             this.txtOutputPath.Enabled = false;
             this.gbOptions.Enabled = false;
-            this.menuStrip.Enabled = false;
         }
 
         private void Thaw()
@@ -575,7 +569,6 @@ namespace GalArc.GUI
             this.txtInputPath.Enabled = true;
             this.txtOutputPath.Enabled = true;
             this.gbOptions.Enabled = true;
-            this.menuStrip.Enabled = true;
         }
 
         private void SyncPath()
@@ -594,27 +587,26 @@ namespace GalArc.GUI
                 {
                     if (!string.IsNullOrEmpty(this.txtInputPath.Text) && Directory.Exists(this.txtInputPath.Text))
                     {
-                        string filePath = this.txtInputPath.Text + "." + selectedNodePack.Text.ToLower();
+                        string filePath = this.txtInputPath.Text + "." + SelectedNodePack.Text.ToLower();
                         this.txtOutputPath.Text = File.Exists(filePath) ? filePath + ".new" : filePath;
                     }
                 }
             }
         }
 
-        private string GetLocalCulture()
+        private void GetLocalCulture()
         {
-            string LocalCulture = string.IsNullOrEmpty(Settings.Default.LastLanguage) ? CultureInfo.CurrentCulture.Name : Settings.Default.LastLanguage;
-            if (!Languages.SupportedLanguages.Values.ToArray().Contains(LocalCulture))
+            Culture = string.IsNullOrEmpty(Settings.Default.LastLanguage) ? CultureInfo.CurrentCulture.Name : Settings.Default.LastLanguage;
+            if (!Languages.SupportedLanguages.Values.ToArray().Contains(Culture))
             {
-                LocalCulture = "en-US";
+                Culture = "en-US";
             }
-            return LocalCulture;
         }
 
-        private void SetLocalCulture(string LocalCulture)
+        private void SetLocalCulture()
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo(LocalCulture);
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(LocalCulture);
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(Culture);
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(Culture);
         }
 
         private void AppendLog(object sender, string message)

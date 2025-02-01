@@ -1,5 +1,4 @@
-﻿using GalArc.Logs;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -17,11 +16,6 @@ namespace ArcFormats.Seraph
         public UnpackDATOptions()
         {
             InitializeComponent();
-        }
-
-        private void UnpackDATOptions_Load(object sender, EventArgs e)
-        {
-            this.txtIndexOffset.Enabled = false;
         }
 
         private void chkbxSpecifyIndex_SizeChanged(object sender, EventArgs e)

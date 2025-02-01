@@ -110,7 +110,7 @@ namespace GalArc.Logs
         {
             lock (_lock)
             {
-                _logCache.Add($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}][{(LogLevel)level}]{msg}");
+                _logCache.Add($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}][{(LogLevel)level}]\t{msg}");
             }
 
             if (_logCache.Count > CacheSize)

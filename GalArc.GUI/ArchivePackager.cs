@@ -19,7 +19,7 @@ namespace GalArc.GUI
 
         private string typeName
         {
-            get { return $"ArcFormats.{engineName}.{extension}"; }
+            get { return $"{nameof(ArcFormats)}.{engineName}.{extension}"; }
         }
 
         private object[] param
@@ -33,7 +33,7 @@ namespace GalArc.GUI
             {
                 if (_assembly == null)
                 {
-                    _assembly = Assembly.Load("ArcFormats");
+                    _assembly = Assembly.Load(nameof(ArcFormats));
                 }
                 return _assembly;
             }
@@ -60,7 +60,7 @@ namespace GalArc.GUI
 
         public void UnpackOne()
         {
-            string[] selectedInfo = MainWindow.selectedNodeUnpack.FullPath.Split('/');
+            string[] selectedInfo = MainWindow.SelectedNodeUnpack.FullPath.Split('/');
             engineName = selectedInfo[0];
             extension = selectedInfo[1];
 
@@ -96,7 +96,7 @@ namespace GalArc.GUI
 
         public void Pack()
         {
-            string[] selectedInfo = MainWindow.selectedNodePack.FullPath.Split('/');
+            string[] selectedInfo = MainWindow.SelectedNodePack.FullPath.Split('/');
             engineName = selectedInfo[0];
             extension = selectedInfo[1];
 

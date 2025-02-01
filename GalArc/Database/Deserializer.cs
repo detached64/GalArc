@@ -16,8 +16,13 @@ namespace GalArc.Database
         public static Dictionary<string, string> LoadedJsons = new Dictionary<string, string>();
 
         private static List<Type> Schemes => Assembly.GetExecutingAssembly().GetTypes()
-            .Where(t => t.IsClass && typeof(ArcScheme).IsAssignableFrom(t))
+            .Where(t => t.IsClass && !t.IsAbstract && typeof(ArcScheme).IsAssignableFrom(t))
+            .OrderBy(t => t.Name)
             .ToList();
+
+        public static int SchemeCount => Schemes.Count;
+
+        public static int ImportedSchemeCount { get; set; }
 
         private static void LoadScheme(Type type)
         {
@@ -80,7 +85,7 @@ namespace GalArc.Database
             return Deserialize<T>();
         }
 
-        private static string GetInfo(Type type)
+        private static string GetInfo(Type type, out bool isValid)
         {
             string name = type.Name.Remove(type.Name.Length - 6);    // remove "Scheme"
             string path = Path.Combine(DatabaseConfig.Path, name + ".json");
@@ -120,6 +125,7 @@ namespace GalArc.Database
                 result.AppendFormat(SchemeInfos.InfoLastModified, lastModified).AppendLine();
 
                 jsonObject = null;
+                isValid = true;
                 return result.ToString();
             }
             catch
@@ -127,6 +133,7 @@ namespace GalArc.Database
                 StringBuilder error = new StringBuilder();
                 error.AppendFormat(SchemeInfos.InfoEngineName, name).AppendLine();
                 error.AppendLine(SchemeInfos.InfoFailedToReadInfos);
+                isValid = false;
                 return error.ToString();
             }
         }
@@ -139,10 +146,20 @@ namespace GalArc.Database
             }
             LoadSchemes();
             StringBuilder result = new StringBuilder();
+            int count = 0;
+            StringBuilder info = new StringBuilder();
             foreach (Type type in Schemes)
             {
-                result.AppendLine(GetInfo(type));
+                info.AppendLine(GetInfo(type, out bool flag));
+                if (flag)
+                {
+                    count++;
+                }
             }
+            result.AppendFormat(LogStrings.SchemeCount, SchemeCount).AppendLine();
+            result.AppendFormat(LogStrings.ImportedSchemeCount, ImportedSchemeCount).AppendLine();
+            result.AppendFormat(LogStrings.ValidDatabaseCount, count).AppendLine().AppendLine();
+            result.AppendLine(info.ToString());
             return result.ToString();
         }
     }
