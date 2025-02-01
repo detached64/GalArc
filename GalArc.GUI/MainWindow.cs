@@ -70,6 +70,9 @@ namespace GalArc.GUI
 
         private void LoadSchemes()
         {
+            int c = ArcFormats.ArcSettings.Formats.Count;
+            Logger.SetBarMax(c);
+
             foreach (var format in ArcFormats.ArcSettings.Formats)
             {
                 format.DeserializeScheme(out string name, out int count);
@@ -77,6 +80,7 @@ namespace GalArc.GUI
                 {
                     Logger.ImportDatabaseScheme(name, count);
                 }
+                Logger.UpdateBar();
             }
         }
 

@@ -63,7 +63,7 @@ namespace ArcFormats
 
         public static string Version = null;
 
-        public static IEnumerable<ArchiveFormat> Formats =>
+        public static List<ArchiveFormat> Formats =>
             Assembly.GetExecutingAssembly().GetTypes()
             .Where(t =>
                 t.IsSubclassOf(typeof(ArchiveFormat)) &&
@@ -72,7 +72,7 @@ namespace ArcFormats
             .Select(t => Activator.CreateInstance(t) as ArchiveFormat)
             .OfType<ArchiveFormat>()
             .Reverse()
-            .ToArray();
+            .ToList();
 
         public static object[] Instances
         {
