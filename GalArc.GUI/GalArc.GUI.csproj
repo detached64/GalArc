@@ -93,6 +93,17 @@
     <Compile Include="ExtensionsSettings.Designer.cs">
       <DependentUpon>ExtensionsSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="LogSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LogSettings.Designer.cs">
+      <DependentUpon>LogSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Updater.cs" />
     <Compile Include="GeneralSettings.cs">
       <SubType>UserControl</SubType>
@@ -170,6 +181,12 @@
     <EmbeddedResource Include="GeneralSettings.zh-Hans.resx">
       <DependentUpon>GeneralSettings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LogSettings.resx">
+      <DependentUpon>LogSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogSettings.zh-Hans.resx">
+      <DependentUpon>LogSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -212,11 +229,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
+    <None Include="Resources\Database\AGS.json" />
     <None Include="Resources\Database\Ns2.json" />
     <None Include="Resources\Database\Seraph.json" />
     <None Include="Resources\Database\Siglus.json" />

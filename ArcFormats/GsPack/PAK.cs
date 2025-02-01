@@ -12,7 +12,8 @@ namespace ArcFormats.GsPack
 {
     public class PAK : ArchiveFormat
     {
-        public static UserControl UnpackExtraOptions = new UnpackPAKOptions();
+        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackPAKOptions());
+        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
 
         private Dictionary<string, string> NameExtensionPairs => new Dictionary<string, string>
         {

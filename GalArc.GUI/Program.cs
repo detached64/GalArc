@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalArc.Logs;
+using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -6,17 +7,14 @@ namespace GalArc.GUI
 {
     internal static class Program
     {
-        /// <summary>
-        /// Entry point.
-        /// </summary>
         [STAThread]
         private static void Main()
         {
+            Logger.NewInstance();
             if (Environment.OSVersion.Version.Major >= 6)
             {
                 SetProcessDPIAware();
             }
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainWindow());

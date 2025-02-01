@@ -6,17 +6,12 @@ namespace GalArc.GUI
 {
     public partial class ExtensionSiglusKeyFinder : UserControl
     {
-        private static ExtensionSiglusKeyFinder instance;
+        private static readonly Lazy<ExtensionSiglusKeyFinder> lazyInstance =
+                new Lazy<ExtensionSiglusKeyFinder>(() => new ExtensionSiglusKeyFinder());
 
-        public static ExtensionSiglusKeyFinder Instance
-        {
-            get
-            {
-                return instance ?? (instance = new ExtensionSiglusKeyFinder());
-            }
-        }
+        public static ExtensionSiglusKeyFinder Instance => lazyInstance.Value;
 
-        public ExtensionSiglusKeyFinder()
+        private ExtensionSiglusKeyFinder()
         {
             InitializeComponent();
         }

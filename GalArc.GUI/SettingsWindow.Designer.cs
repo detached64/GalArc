@@ -56,7 +56,8 @@
             ((System.Windows.Forms.TreeNode)(resources.GetObject("treeViewOption.Nodes"))),
             ((System.Windows.Forms.TreeNode)(resources.GetObject("treeViewOption.Nodes1"))),
             ((System.Windows.Forms.TreeNode)(resources.GetObject("treeViewOption.Nodes2"))),
-            ((System.Windows.Forms.TreeNode)(resources.GetObject("treeViewOption.Nodes3")))});
+            ((System.Windows.Forms.TreeNode)(resources.GetObject("treeViewOption.Nodes3"))),
+            ((System.Windows.Forms.TreeNode)(resources.GetObject("treeViewOption.Nodes4")))});
             this.treeViewOption.ShowPlusMinus = false;
             this.treeViewOption.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewOption_AfterSelect);
             // 

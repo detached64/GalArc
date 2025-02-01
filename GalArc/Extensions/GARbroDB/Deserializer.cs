@@ -21,7 +21,7 @@ namespace GalArc.Extensions.GARbroDB
             LoadedContent = File.ReadAllText(GARbroDBConfig.Path);
         }
 
-        public static T Deserialize<T>()
+        public static T Deserialize<T>() where T : IGARbroScheme
         {
             if (!BaseSettings.Default.IsExtensionsEnabled || !BaseSettings.Default.IsGARbroDBEnabled)
             {

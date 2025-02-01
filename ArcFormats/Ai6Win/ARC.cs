@@ -11,7 +11,8 @@ namespace ArcFormats.Ai6Win
 {
     public class ARC : ArchiveFormat
     {
-        public static UserControl PackExtraOptions = new PackARCOptions("1/2/3");
+        private static readonly Lazy<UserControl> _lazyPacKOptions = new Lazy<UserControl>(() => new PackARCOptions("1/2/3"));
+        public static UserControl PackExtraOptions => _lazyPacKOptions.Value;
 
         private class ArcEntry : PackedEntry
         {

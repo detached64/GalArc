@@ -1,5 +1,4 @@
-﻿using GalArc.Extensions.GARbroDB;
-using GalArc.Logs;
+﻿using GalArc.Logs;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
@@ -16,25 +15,18 @@ namespace ArcFormats.AnimeGameSystem
             Type type = this.combSchemes.GetType();
             PropertyInfo pi = type.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
             pi.SetValue(this.combSchemes, true, null);
-
-            ImportSchemesFromGARbroDB();
-            this.combSchemes.SelectedIndex = 0;
         }
 
-        private void ImportSchemesFromGARbroDB()
+        private void UnpackDATOptions_Load(object sender, EventArgs e)
         {
-            if (DAT.ImportedSchemes == null)
+            if (DAT.Scheme != null)
             {
-                DAT.ImportedSchemes = Deserializer.Deserialize<AGSScheme>();
-                if (DAT.ImportedSchemes != null)
+                foreach (var scheme in DAT.Scheme.KnownSchemes)
                 {
-                    Logger.ImportGARbroDBScheme(DAT.ImportedSchemes.KnownSchemes.Count);
-                    foreach (var scheme in DAT.ImportedSchemes.KnownSchemes)
-                    {
-                        this.combSchemes.Items.Add(scheme.Key);
-                    }
+                    this.combSchemes.Items.Add(scheme.Key);
                 }
             }
+            this.combSchemes.SelectedIndex = 0;
         }
 
         private void combSchemes_SelectedIndexChanged(object sender, EventArgs e)
@@ -43,7 +35,7 @@ namespace ArcFormats.AnimeGameSystem
             {
                 try
                 {
-                    DAT.SelectedScheme = DAT.ImportedSchemes.KnownSchemes[this.combSchemes.SelectedItem.ToString()];
+                    DAT.SelectedScheme = DAT.Scheme.KnownSchemes[this.combSchemes.SelectedItem.ToString()];
                 }
                 catch
                 {

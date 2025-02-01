@@ -161,6 +161,12 @@
     <value>Import {0} schemes from GARbroDB.</value>
   </data>
   <data name="ImportDataBaseScheme" xml:space="preserve">
-    <value>Import {0} schemes from Database.</value>
+    <value>{0}: Import {1} schemes.</value>
+  </data>
+  <data name="Ready" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Loading……</value>
   </data>
 </root>

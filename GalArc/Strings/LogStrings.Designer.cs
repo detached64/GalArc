@@ -22,7 +22,7 @@ namespace GalArc.Strings {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class LogStrings {
+    public class LogStrings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace GalArc.Strings {
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GalArc.Strings.LogStrings", typeof(LogStrings).Assembly);
@@ -51,7 +51,7 @@ namespace GalArc.Strings {
         ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 Error: Not a valid archive. 的本地化字符串。
         /// </summary>
-        internal static string ErrorNotValidArc {
+        public static string ErrorNotValidArc {
             get {
                 return ResourceManager.GetString("ErrorNotValidArc", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 Error: {0} 的本地化字符串。
         /// </summary>
-        internal static string ErrorOccur {
+        public static string ErrorOccur {
             get {
                 return ResourceManager.GetString("ErrorOccur", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 Error: Original {0} file not found in the same directory. 的本地化字符串。
         /// </summary>
-        internal static string ErrorOriginalFileNotFound {
+        public static string ErrorOriginalFileNotFound {
             get {
                 return ResourceManager.GetString("ErrorOriginalFileNotFound", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 Error: {0} file not found in the same directory. 的本地化字符串。
         /// </summary>
-        internal static string ErrorSpecifiedFileNotFound {
+        public static string ErrorSpecifiedFileNotFound {
             get {
                 return ResourceManager.GetString("ErrorSpecifiedFileNotFound", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 {0} files inside. 的本地化字符串。
         /// </summary>
-        internal static string FileCountInside {
+        public static string FileCountInside {
             get {
                 return ResourceManager.GetString("FileCountInside", resourceCulture);
             }
@@ -108,16 +108,16 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 New update available! 的本地化字符串。
         /// </summary>
-        internal static string HasUpdate {
+        public static string HasUpdate {
             get {
                 return ResourceManager.GetString("HasUpdate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   查找类似 Import {0} schemes from Database. 的本地化字符串。
+        ///   查找类似 {0}: Import {1} schemes. 的本地化字符串。
         /// </summary>
-        internal static string ImportDataBaseScheme {
+        public static string ImportDataBaseScheme {
             get {
                 return ResourceManager.GetString("ImportDataBaseScheme", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 Import {0} schemes from GARbroDB. 的本地化字符串。
         /// </summary>
-        internal static string ImportGARbroDBScheme {
+        public static string ImportGARbroDBScheme {
             get {
                 return ResourceManager.GetString("ImportGARbroDBScheme", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 Input file path: 的本地化字符串。
         /// </summary>
-        internal static string InputFile {
+        public static string InputFile {
             get {
                 return ResourceManager.GetString("InputFile", resourceCulture);
             }
@@ -144,16 +144,25 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 Input folder path: 的本地化字符串。
         /// </summary>
-        internal static string InputFolder {
+        public static string InputFolder {
             get {
                 return ResourceManager.GetString("InputFolder", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   查找类似 Loading…… 的本地化字符串。
+        /// </summary>
+        public static string Loading {
+            get {
+                return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 New Instance 的本地化字符串。
         /// </summary>
-        internal static string NewInstance {
+        public static string NewInstance {
             get {
                 return ResourceManager.GetString("NewInstance", resourceCulture);
             }
@@ -162,7 +171,7 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 You are using the latest version of GalArc. 的本地化字符串。
         /// </summary>
-        internal static string NoUpdate {
+        public static string NoUpdate {
             get {
                 return ResourceManager.GetString("NoUpdate", resourceCulture);
             }
@@ -171,7 +180,7 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 Output file path: 的本地化字符串。
         /// </summary>
-        internal static string OutputFile {
+        public static string OutputFile {
             get {
                 return ResourceManager.GetString("OutputFile", resourceCulture);
             }
@@ -180,7 +189,7 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 Output folder path: 的本地化字符串。
         /// </summary>
-        internal static string OutputFolder {
+        public static string OutputFolder {
             get {
                 return ResourceManager.GetString("OutputFolder", resourceCulture);
             }
@@ -189,7 +198,7 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 Pack finished. 的本地化字符串。
         /// </summary>
-        internal static string PackFinished {
+        public static string PackFinished {
             get {
                 return ResourceManager.GetString("PackFinished", resourceCulture);
             }
@@ -198,16 +207,25 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 Packing…… 的本地化字符串。
         /// </summary>
-        internal static string Packing {
+        public static string Packing {
             get {
                 return ResourceManager.GetString("Packing", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   查找类似 Ready 的本地化字符串。
+        /// </summary>
+        public static string Ready {
+            get {
+                return ResourceManager.GetString("Ready", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Unpack finished. 的本地化字符串。
         /// </summary>
-        internal static string UnpackFinished {
+        public static string UnpackFinished {
             get {
                 return ResourceManager.GetString("UnpackFinished", resourceCulture);
             }
@@ -216,7 +234,7 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 Unpacking…… 的本地化字符串。
         /// </summary>
-        internal static string Unpacking {
+        public static string Unpacking {
             get {
                 return ResourceManager.GetString("Unpacking", resourceCulture);
             }
@@ -225,7 +243,7 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 Error occurs while checking for update. 的本地化字符串。
         /// </summary>
-        internal static string UpdateError {
+        public static string UpdateError {
             get {
                 return ResourceManager.GetString("UpdateError", resourceCulture);
             }
@@ -234,7 +252,7 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 Checking for update…… 的本地化字符串。
         /// </summary>
-        internal static string Updating {
+        public static string Updating {
             get {
                 return ResourceManager.GetString("Updating", resourceCulture);
             }
@@ -243,7 +261,7 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 Valid {0} v{1} archive detected. 的本地化字符串。
         /// </summary>
-        internal static string ValidArchiveDetected {
+        public static string ValidArchiveDetected {
             get {
                 return ResourceManager.GetString("ValidArchiveDetected", resourceCulture);
             }
@@ -252,7 +270,7 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 Current version: {0} Latest version: {1} 的本地化字符串。
         /// </summary>
-        internal static string Versions {
+        public static string Versions {
             get {
                 return ResourceManager.GetString("Versions", resourceCulture);
             }

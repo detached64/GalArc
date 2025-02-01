@@ -9,7 +9,8 @@ namespace ArcFormats.RPGMaker
 {
     public class RGSSAD : ArchiveFormat
     {
-        public static UserControl PackExtraOptions = new PackRGSSOptions("1/3");
+        private static readonly Lazy<UserControl> _lazyPackOptions = new Lazy<UserControl>(() => new PackRGSSOptions("1/3"));
+        public static UserControl PackExtraOptions => _lazyPackOptions.Value;
 
         public override void Unpack(string filePath, string folderPath)
         {

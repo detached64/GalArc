@@ -8,17 +8,12 @@ namespace GalArc.GUI
 {
     public partial class PreferenceSettings : UserControl
     {
-        private static PreferenceSettings instance;
+        private static readonly Lazy<PreferenceSettings> lazyInstance =
+                new Lazy<PreferenceSettings>(() => new PreferenceSettings());
 
-        public static PreferenceSettings Instance
-        {
-            get
-            {
-                return instance ?? (instance = new PreferenceSettings());
-            }
-        }
+        public static PreferenceSettings Instance => lazyInstance.Value;
 
-        public PreferenceSettings()
+        private PreferenceSettings()
         {
             InitializeComponent();
         }

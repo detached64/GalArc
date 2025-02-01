@@ -1,6 +1,5 @@
 ﻿using ArcFormats.Properties;
 using GalArc;
-using GalArc.Database;
 using GalArc.Extensions.SiglusKeyFinder;
 using GalArc.Logs;
 using System;
@@ -39,31 +38,25 @@ namespace ArcFormats.Siglus
             Type type = this.combSchemes.GetType();
             PropertyInfo pi = type.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
             pi.SetValue(this.combSchemes, true, null);
-
-            ImportSchemes();
         }
 
-        private void ImportSchemes()
+        private void UnpackPCKOptions_Load(object sender, EventArgs e)
         {
-            if (ScenePCK.ImportedSchemes == null)
+            if (ScenePCK.Scheme != null)
             {
-                ScenePCK.ImportedSchemes = Deserializer.ReadScheme<SiglusScheme>();
-                if (ScenePCK.ImportedSchemes != null)
+                this.combSchemes.Items.Add(Resources.combTryEveryScheme);
+                this.combSchemes.Items.Add(Resources.combCustomScheme);
+                foreach (var scheme in ScenePCK.Scheme.KnownSchemes)
                 {
-                    Logger.ImportDatabaseScheme(ScenePCK.ImportedSchemes.KnownSchemes.Count);
-                    this.combSchemes.Items.Add(Resources.combTryEveryScheme);
-                    this.combSchemes.Items.Add(Resources.combCustomScheme);
-                    foreach (var scheme in ScenePCK.ImportedSchemes.KnownSchemes)
-                    {
-                        this.combSchemes.Items.Add(scheme.Key);
-                    }
+                    this.combSchemes.Items.Add(scheme.Key);
                 }
-                else
-                {
-                    this.combSchemes.Items.Add(Resources.combCustomScheme);
-                }
-                this.combSchemes.SelectedIndex = 0;
             }
+            else
+            {
+                this.combSchemes.Items.Add(Resources.combCustomScheme);
+            }
+            this.combSchemes.SelectedIndex = 0;
+            this.panel.Visible = BaseSettings.Default.IsDatabaseEnabled && BaseSettings.Default.IsSiglusKeyFinderEnabled && KeyFinder.IsValidExe();
         }
 
         private void combSchemes_SelectedIndexChanged(object sender, EventArgs e)
@@ -88,7 +81,7 @@ namespace ArcFormats.Siglus
                     this.lbKey.Text = string.Format(Siglus.lbKey, ExtractedKey ?? Siglus.empty);
                     break;
                 default:
-                    byte[] key = ScenePCK.ImportedSchemes.KnownSchemes[this.combSchemes.Text].KnownKey;
+                    byte[] key = ScenePCK.Scheme.KnownSchemes[this.combSchemes.Text].KnownKey;
                     try
                     {
                         ScenePCK.SelectedScheme = new Tuple<string, byte[]>(this.combSchemes.Text, key);
@@ -127,20 +120,16 @@ namespace ArcFormats.Siglus
                     if (ExtractedKey != null)
                     {
                         this.lbKey.Text = string.Format(Siglus.lbKey, ExtractedKey);
-                        Logger.InfoRevoke(string.Format(Siglus.logFound, ExtractedKey));
+                        Logger.Info(string.Format(Siglus.logFound, ExtractedKey));
                     }
                     else
                     {
-                        Logger.InfoRevoke(Siglus.logFailedFindKey);
+                        Logger.Info(Siglus.logFailedFindKey);
                     }
                     this.combSchemes.SelectedIndex = 1;
                 }
             }
         }
 
-        private void UnpackPCKOptions_Load(object sender, EventArgs e)
-        {
-            this.panel.Visible = BaseSettings.Default.IsDatabaseEnabled && BaseSettings.Default.IsSiglusKeyFinderEnabled && KeyFinder.IsValidExe();
-        }
     }
 }

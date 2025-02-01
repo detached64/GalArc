@@ -3,7 +3,6 @@ using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Utility.Compression;
@@ -12,7 +11,8 @@ namespace ArcFormats.Seraph
 {
     public class DAT : ArchiveFormat
     {
-        public static UserControl UnpackExtraOptions = new UnpackDATOptions();
+        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackDATOptions());
+        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
 
         private class Group
         {
@@ -31,7 +31,7 @@ namespace ArcFormats.Seraph
 
         private HashSet<long> Indices { get; } = new HashSet<long>();
 
-        internal static SeraphScheme ImportedSchemes;
+        internal static SeraphScheme Scheme;
 
         public override void Unpack(string filePath, string folderPath)
         {
@@ -351,14 +351,21 @@ namespace ArcFormats.Seraph
 
         private void AddIndex()
         {
-            if (ImportedSchemes == null)
+            if (Scheme == null)
             {
                 return;
             }
-            foreach (long offset in ImportedSchemes.KnownOffsets)
+            foreach (long offset in Scheme.KnownOffsets)
             {
                 Indices.Add(offset);
             }
+        }
+
+        public override void DeserializeScheme(out string name, out int count)
+        {
+            Scheme = Deserializer.ReadScheme<SeraphScheme>();
+            name = "Seraph";
+            count = Scheme?.KnownOffsets?.Count ?? 0;
         }
     }
 }

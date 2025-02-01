@@ -160,7 +160,7 @@ namespace ArcFormats.BiShop
             FileInfo[] files = d.GetFiles();
             int fileCount = files.Length;
             Logger.InitBar(fileCount);
-            LogWindow.Instance.bar.Maximum = fileCount + 1;
+            Logger.SetBarMax(fileCount + 1);
             bw.Write((ushort)fileCount);
             bw.Write(0);
             // data

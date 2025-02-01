@@ -2,6 +2,7 @@
 using GalArc.Common;
 using GalArc.GUI.Properties;
 using GalArc.Logs;
+using GalArc.Strings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,8 +30,13 @@ namespace GalArc.GUI
         private string localCulture;
         private bool isFirstChangeLang = true;
 
-        private const int deltaStatus = 15;
         private const int delta = 6;
+
+        enum Mode
+        {
+            Unpack,
+            Pack
+        }
 
         public MainWindow()
         {
@@ -39,35 +45,49 @@ namespace GalArc.GUI
             localCulture = GetLocalCulture();
             SetLocalCulture(localCulture);
 
-            Logger.NewInstance();
-
             InitializeComponent();
-            this.treeViewEngines.BackColor = Color.FromArgb(249, 249, 249);
 
-            LogWindow logWindow = new LogWindow(this.Width, this.Height);
-            LogWindow.Instance.Owner = this;
-
-            Logger.Process += ChangeStatus;
-            Logger.ErrorOccured += ChangeStatus;
+            Logger.Instance.LogMessageEvent += AppendLog;
+            Logger.Instance.StatusMessageEvent += UpdateStatus;
+            Logger.Instance.ProgressEvent += ProcessBar;
 
             this.txtInputPath.DragEnter += txtInputPath_DragEnter;
             this.txtInputPath.DragDrop += txtInputPath_DragDrop;
             this.txtOutputPath.DragEnter += txtOutputPath_DragEnter;
             this.txtOutputPath.DragDrop += txtOutputPath_DragDrop;
+            this.Load += async (sender, e) =>
+            {
+                this.lbStatus.Text = LogStrings.Loading;
+                await Task.Run(() => LoadSchemes());
+                this.lbStatus.Text = LogStrings.Ready;
+                if (BaseSettings.Default.ToAutoSaveState)
+                {
+                    this.chkbxUnpack.Checked = Settings.Default.IsUnpackMode;
+                    this.chkbxPack.Checked = Settings.Default.IsPackMode;
+                }
+            };
+        }
+
+        private void LoadSchemes()
+        {
+            foreach (var format in ArcFormats.ArcSettings.Formats)
+            {
+                format.DeserializeScheme(out string name, out int count);
+                if (!string.IsNullOrEmpty(name) && count > 0)
+                {
+                    Logger.ImportDatabaseScheme(name, count);
+                }
+            }
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
             this.combLang.Items.AddRange(Languages.SupportedLanguages.Keys.ToArray());
             this.TopMost = Settings.Default.IsTopMost;
-            LogWindow.Instance.TopMost = this.TopMost;
             this.combLang.Text = Languages.SupportedLanguages.FirstOrDefault(x => x.Value == localCulture).Key;
             if (BaseSettings.Default.ToAutoSaveState)
             {
-                this.chkbxUnpack.Checked = Settings.Default.IsUnpackMode;
-                this.chkbxPack.Checked = Settings.Default.IsPackMode;
                 this.chkbxMatch.Checked = Settings.Default.ToMatchPath;
-                this.chkbxShowLog.Checked = Settings.Default.ToShowLog;
             }
         }
 
@@ -113,12 +133,13 @@ namespace GalArc.GUI
             }
         }
 
-        private void MainWindow_LocationChanged(object sender, EventArgs e)
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            LogWindow.Instance.ChangePosition(this.Location.X, this.Location.Y);
+            Logger.Instance.LogMessageEvent -= AppendLog;
+            Logger.Instance.StatusMessageEvent -= UpdateStatus;
+            Logger.Instance.ProgressEvent -= ProcessBar;
+            Logger.Instance.Flush(true);
         }
-
-        private void ChangeStatus(object sender, string message) => this.lbStatus.Invoke(new Action(() => this.lbStatus.Text = message));
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -190,13 +211,6 @@ namespace GalArc.GUI
             {
                 if (this.chkbxUnpack.Checked)
                 {
-                    if (e.Node.Text == selectedNodeUnpack?.Text && e.Node.Parent.Text == selectedNodeUnpack.Parent.Text)
-                    {
-                        selectedNodeUnpack = e.Node;
-                        GetExtraOptions(selectedNodeUnpack, "UnpackExtraOptions");
-                        return;
-                    }
-
                     if (BaseSettings.Default.ToAutoSaveState)
                     {
                         Settings.Default.UnpackSelectedNode0 = e.Node.Parent.Index;
@@ -205,18 +219,11 @@ namespace GalArc.GUI
                     }
                     selectedNodeUnpack = e.Node;
                     SyncPath();
-                    Logger.InfoRevoke(string.Format(Resources.logSelectUnpackNode, e.Node.Parent.Text, e.Node.Text));
-                    GetExtraOptions(selectedNodeUnpack, "UnpackExtraOptions");
+                    Logger.Info(string.Format(Resources.logSelectUnpackNode, e.Node.Parent.Text, e.Node.Text));
+                    GetExtraOptions(Mode.Unpack);
                 }
                 else if (this.chkbxPack.Checked)
                 {
-                    if (e.Node.Text == selectedNodePack?.Text && e.Node.Parent.Text == selectedNodePack.Parent.Text)
-                    {
-                        selectedNodePack = e.Node;
-                        GetExtraOptions(selectedNodePack, "PackExtraOptions");
-                        return;
-                    }
-
                     if (BaseSettings.Default.ToAutoSaveState)
                     {
                         Settings.Default.PackSelectedNode0 = e.Node.Parent.Index;
@@ -225,14 +232,25 @@ namespace GalArc.GUI
                     }
                     selectedNodePack = e.Node;
                     SyncPath();
-                    Logger.InfoRevoke(string.Format(Resources.logSelectPackNode, e.Node.Parent.Text, e.Node.Text));
-                    GetExtraOptions(selectedNodePack, "PackExtraOptions");
+                    Logger.Info(string.Format(Resources.logSelectPackNode, e.Node.Parent.Text, e.Node.Text));
+                    GetExtraOptions(Mode.Pack);
                 }
             }
         }
 
-        private void GetExtraOptions(TreeNode node, string fieldName)
+        private void GetExtraOptions(Mode mode)
         {
+            TreeNode node = null;
+            switch (mode)
+            {
+                case Mode.Unpack:
+                    node = selectedNodeUnpack;
+                    break;
+                case Mode.Pack:
+                    node = selectedNodePack;
+                    break;
+            }
+            string fieldName = mode.ToString() + "ExtraOptions";
             string[] infos = node.FullPath.Replace(".", string.Empty).Split('/');
             Assembly assembly = Assembly.Load("ArcFormats");
             Type type = assembly.GetType($"ArcFormats.{infos[0]}.{infos[1]}");
@@ -240,8 +258,9 @@ namespace GalArc.GUI
             this.gbOptions.Controls.Clear();
             if (type != null)
             {
-                FieldInfo fieldInfo = type.GetField(fieldName);
-                UserControl userControl = fieldInfo != null ? fieldInfo.GetValue(null) as UserControl : Empty.Instance;
+                //FieldInfo fieldInfo = type.GetField(fieldName);
+                PropertyInfo propertyInfo = type.GetProperty(fieldName);
+                UserControl userControl = propertyInfo != null ? propertyInfo.GetValue(null) as UserControl : Empty.Instance;
                 this.gbOptions.Controls.Add(userControl);
                 userControl.Dock = DockStyle.Fill;
             }
@@ -410,11 +429,6 @@ namespace GalArc.GUI
             }
         }
 
-        private void chkbxShowLog_SizeChanged(object sender, EventArgs e)
-        {
-            this.lbStatus.Size = new Size(this.chkbxShowLog.Location.X - this.lbStatus.Location.X - deltaStatus, this.lbStatus.Size.Height);
-        }
-
         private void chkbxUnpack_SizeChanged(object sender, EventArgs e)
         {
             this.chkbxPack.Location = new Point(this.chkbxUnpack.Location.X + this.chkbxUnpack.Size.Width + delta, this.chkbxPack.Location.Y);
@@ -469,7 +483,7 @@ namespace GalArc.GUI
                         Logger.Error(ex.InnerException.Message, false);
                         Logger.Debug(ex.InnerException.ToString());
                     }
-                    LogWindow.Instance.bar.Value = 0;
+                    Logger.ResetBar();
                 }
                 this.btExecute.Enabled = true;
             }
@@ -509,7 +523,7 @@ namespace GalArc.GUI
                         Logger.Error(ex.InnerException.Message, false);
                         Logger.Debug(ex.InnerException.ToString());
                     }
-                    LogWindow.Instance.bar.Value = 0;
+                    Logger.ResetBar();
                 }
                 this.btExecute.Enabled = true;
             }
@@ -560,17 +574,6 @@ namespace GalArc.GUI
             this.menuStrip.Enabled = true;
         }
 
-        private void chkbxShowLog_CheckedChanged(object sender, EventArgs e)
-        {
-            LogWindow.Instance.ChangePosition(this.Location.X, this.Location.Y);
-            LogWindow.Instance.Visible = this.chkbxShowLog.Checked;
-            if (BaseSettings.Default.ToAutoSaveState)
-            {
-                Settings.Default.ToShowLog = this.chkbxShowLog.Checked;
-                Settings.Default.Save();
-            }
-        }
-
         private void SyncPath()
         {
             if (this.chkbxMatch.Checked)
@@ -610,9 +613,53 @@ namespace GalArc.GUI
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(LocalCulture);
         }
 
-        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        private void AppendLog(object sender, string message)
         {
-            Logger.Flush(true);
+            if (this.txtLog.InvokeRequired)
+            {
+                this.txtLog.Invoke(new Action(() => AppendLog(sender, message)));
+                return;
+            }
+
+            this.txtLog.AppendText(message + Environment.NewLine);
+        }
+
+        private void UpdateStatus(object sender, string message)
+        {
+            var container = this.lbStatus.Owner;
+            if (container.InvokeRequired)
+            {
+                container.Invoke(new Action(() => UpdateStatus(sender, message)));
+                return;
+            }
+
+            this.lbStatus.Text = message;
+        }
+
+        private void ProcessBar(object sender, ProgressEventArgs e)
+        {
+            var container = this.pBar.Owner;
+            if (container.InvokeRequired)
+            {
+                container.Invoke(new Action(() => ProcessBar(sender, e)));
+                return;
+            }
+
+            switch (e.Action)
+            {
+                case ProgressAction.Progress:
+                    this.pBar.Increment(1);
+                    break;
+                case ProgressAction.Finish:
+                    this.pBar.Value = this.pBar.Maximum;
+                    break;
+                case ProgressAction.SetVal:
+                    this.pBar.Value = e.Value;
+                    break;
+                case ProgressAction.SetMax:
+                    this.pBar.Maximum = e.Max;
+                    break;
+            }
         }
     }
 }

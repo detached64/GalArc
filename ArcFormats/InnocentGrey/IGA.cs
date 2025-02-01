@@ -1,5 +1,6 @@
 ﻿using ArcFormats.Properties;
 using GalArc.Logs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -9,9 +10,10 @@ namespace ArcFormats.InnocentGrey
 {
     public class IGA : ArchiveFormat
     {
-        public static UserControl UnpackExtraOptions = new UnpackIGAOptions();
-
-        public static UserControl PackExtraOptions = new PackIGAOptions();
+        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackIGAOptions());
+        private static readonly Lazy<UserControl> _lazyPackOptions = new Lazy<UserControl>(() => new PackIGAOptions());
+        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
+        public static UserControl PackExtraOptions => _lazyPackOptions.Value;
 
         private readonly string Magic = "IGA0";
 

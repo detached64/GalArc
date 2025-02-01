@@ -117,178 +117,166 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="log_txtLog.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="chkbxDebug.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="log_txtLog.Location" type="System.Drawing.Point, System.Drawing">
-    <value>30, 12</value>
+  <data name="chkbxDebug.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 64</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="log_txtLog.Multiline" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="chkbxDebug.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 28</value>
   </data>
-  <data name="log_txtLog.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
-    <value>Vertical</value>
-  </data>
-  <data name="log_txtLog.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1069, 230</value>
-  </data>
-  <data name="log_txtLog.TabIndex" type="System.Int32, mscorlib">
+  <data name="chkbxDebug.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;log_txtLog.Name" xml:space="preserve">
-    <value>log_txtLog</value>
+  <data name="chkbxDebug.Text" xml:space="preserve">
+    <value>Debug mode</value>
   </data>
-  <data name="&gt;&gt;log_txtLog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;chkbxDebug.Name" xml:space="preserve">
+    <value>chkbxDebug</value>
   </data>
-  <data name="&gt;&gt;log_txtLog.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;log_txtLog.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="log_chkbxDebug.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="log_chkbxDebug.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="log_chkbxDebug.Location" type="System.Drawing.Point, System.Drawing">
-    <value>890, 254</value>
-  </data>
-  <data name="log_chkbxDebug.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 28</value>
-  </data>
-  <data name="log_chkbxDebug.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="log_chkbxDebug.Text" xml:space="preserve">
-    <value>Debug</value>
-  </data>
-  <data name="&gt;&gt;log_chkbxDebug.Name" xml:space="preserve">
-    <value>log_chkbxDebug</value>
-  </data>
-  <data name="&gt;&gt;log_chkbxDebug.Type" xml:space="preserve">
+  <data name="&gt;&gt;chkbxDebug.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;log_chkbxDebug.Parent" xml:space="preserve">
+  <data name="&gt;&gt;chkbxDebug.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;log_chkbxDebug.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="log_btnClear.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="log_btnClear.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="log_btnClear.Location" type="System.Drawing.Point, System.Drawing">
-    <value>137, 250</value>
-  </data>
-  <data name="log_btnClear.Size" type="System.Drawing.Size, System.Drawing">
-    <value>101, 34</value>
-  </data>
-  <data name="log_btnClear.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;chkbxDebug.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="log_btnClear.Text" xml:space="preserve">
-    <value>Clear</value>
-  </data>
-  <data name="&gt;&gt;log_btnClear.Name" xml:space="preserve">
-    <value>log_btnClear</value>
-  </data>
-  <data name="&gt;&gt;log_btnClear.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;log_btnClear.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;log_btnClear.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="log_btnResize.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left</value>
-  </data>
-  <data name="log_btnResize.Location" type="System.Drawing.Point, System.Drawing">
-    <value>30, 250</value>
-  </data>
-  <data name="log_btnResize.Size" type="System.Drawing.Size, System.Drawing">
-    <value>101, 34</value>
-  </data>
-  <data name="log_btnResize.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="log_btnResize.Text" xml:space="preserve">
-    <value>Resize</value>
-  </data>
-  <data name="&gt;&gt;log_btnResize.Name" xml:space="preserve">
-    <value>log_btnResize</value>
-  </data>
-  <data name="&gt;&gt;log_btnResize.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;log_btnResize.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;log_btnResize.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="log_chkbxSave.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="log_chkbxSave.AutoSize" type="System.Boolean, mscorlib">
+  <data name="chkbxSaveLog.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="log_chkbxSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>991, 254</value>
+  <data name="chkbxSaveLog.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 121</value>
   </data>
-  <data name="log_chkbxSave.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="chkbxSaveLog.Size" type="System.Drawing.Size, System.Drawing">
     <value>108, 28</value>
   </data>
-  <data name="log_chkbxSave.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+  <data name="chkbxSaveLog.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="log_chkbxSave.Text" xml:space="preserve">
+  <data name="chkbxSaveLog.Text" xml:space="preserve">
     <value>Save log</value>
   </data>
-  <data name="&gt;&gt;log_chkbxSave.Name" xml:space="preserve">
-    <value>log_chkbxSave</value>
+  <data name="&gt;&gt;chkbxSaveLog.Name" xml:space="preserve">
+    <value>chkbxSaveLog</value>
   </data>
-  <data name="&gt;&gt;log_chkbxSave.Type" xml:space="preserve">
+  <data name="&gt;&gt;chkbxSaveLog.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;log_chkbxSave.Parent" xml:space="preserve">
+  <data name="&gt;&gt;chkbxSaveLog.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;log_chkbxSave.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;chkbxSaveLog.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="bar.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left, Right</value>
+  <data name="lbLogPath.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="bar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>311, 252</value>
+  <data name="lbLogPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>81, 9</value>
   </data>
-  <data name="bar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>513, 30</value>
+  <data name="lbLogPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 24</value>
   </data>
-  <data name="bar.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="lbLogPath.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
-  <data name="&gt;&gt;bar.Name" xml:space="preserve">
-    <value>bar</value>
+  <data name="lbLogPath.Text" xml:space="preserve">
+    <value>Log path:</value>
   </data>
-  <data name="&gt;&gt;bar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;lbLogPath.Name" xml:space="preserve">
+    <value>lbLogPath</value>
   </data>
-  <data name="&gt;&gt;bar.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lbLogPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbLogPath.Parent" xml:space="preserve">
+    <value>panel</value>
+  </data>
+  <data name="&gt;&gt;lbLogPath.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="txtLogPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="txtLogPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>85, 46</value>
+  </data>
+  <data name="txtLogPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>569, 31</value>
+  </data>
+  <data name="txtLogPath.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;txtLogPath.Name" xml:space="preserve">
+    <value>txtLogPath</value>
+  </data>
+  <data name="&gt;&gt;txtLogPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtLogPath.Parent" xml:space="preserve">
+    <value>panel</value>
+  </data>
+  <data name="&gt;&gt;txtLogPath.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btSelInput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="btSelInput.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="btSelInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>660, 45</value>
+  </data>
+  <data name="btSelInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 31</value>
+  </data>
+  <data name="btSelInput.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="btSelInput.Text" xml:space="preserve">
+    <value>…</value>
+  </data>
+  <data name="&gt;&gt;btSelInput.Name" xml:space="preserve">
+    <value>btSelInput</value>
+  </data>
+  <data name="&gt;&gt;btSelInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btSelInput.Parent" xml:space="preserve">
+    <value>panel</value>
+  </data>
+  <data name="&gt;&gt;btSelInput.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="panel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 164</value>
+  </data>
+  <data name="panel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>777, 100</value>
+  </data>
+  <data name="panel.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="&gt;&gt;panel.Name" xml:space="preserve">
+    <value>panel</value>
+  </data>
+  <data name="&gt;&gt;panel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;bar.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;panel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -297,25 +285,19 @@
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>11, 24</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1125, 306</value>
-  </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>微软雅黑, 9pt</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>
-  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>1147, 200</value>
-  </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>Manual</value>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>777, 570</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>LogWindow</value>
+    <value>LogSettings</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

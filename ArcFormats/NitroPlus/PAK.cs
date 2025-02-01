@@ -9,7 +9,8 @@ namespace ArcFormats.NitroPlus
 {
     public class PAK : ArchiveFormat
     {
-        public static UserControl PackExtraOptions = new PackPAKOptions();
+        private static readonly Lazy<UserControl> _lazyPackOptions = new Lazy<UserControl>(() => new PackPAKOptions());
+        public static UserControl PackExtraOptions => _lazyPackOptions.Value;
 
         private class NitroPakEntry : PackedEntry
         {

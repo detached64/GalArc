@@ -8,7 +8,7 @@ namespace ArcFormats.Siglus
 {
     public class GameexeDAT : ScenePCK
     {
-        public static new UserControl UnpackExtraOptions = ScenePCK.UnpackExtraOptions;
+        public static new UserControl UnpackExtraOptions => ScenePCK.UnpackExtraOptions;
 
         private const string UnpackedFileName = "Gameexe.ini";
 
@@ -55,6 +55,12 @@ namespace ArcFormats.Siglus
             Logger.UpdateBar();
             fs.Dispose();
             br.Dispose();
+        }
+
+        public override void DeserializeScheme(out string name, out int count)
+        {
+            name = "";
+            count = 0;
         }
     }
 }

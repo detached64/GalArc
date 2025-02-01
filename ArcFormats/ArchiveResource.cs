@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using Utility;
@@ -13,6 +14,12 @@ namespace ArcFormats
         public virtual void Pack(string folderPath, string filePath)
         {
             throw new NotImplementedException();
+        }
+
+        public virtual void DeserializeScheme(out string name, out int count)
+        {
+            name = null;
+            count = -1;
         }
 
         public static bool IsSaneCount(int count)
@@ -55,6 +62,17 @@ namespace ArcFormats
         public static Encoding Encoding = ArcEncoding.Shift_JIS;
 
         public static string Version = null;
+
+        public static IEnumerable<ArchiveFormat> Formats =>
+            Assembly.GetExecutingAssembly().GetTypes()
+            .Where(t =>
+                t.IsSubclassOf(typeof(ArchiveFormat)) &&
+                !t.IsAbstract &&
+                t.GetConstructor(Type.EmptyTypes) != null)
+            .Select(t => Activator.CreateInstance(t) as ArchiveFormat)
+            .OfType<ArchiveFormat>()
+            .Reverse()
+            .ToArray();
 
         public static object[] Instances
         {

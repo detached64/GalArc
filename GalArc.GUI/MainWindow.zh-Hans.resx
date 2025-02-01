@@ -133,7 +133,7 @@
     <value>帮助</value>
   </data>
   <data name="menuStrip.Text" xml:space="preserve">
-    <value>menuStrip</value>
+    <value>菜单栏</value>
   </data>
   <data name="languagesToolStripMenuItem.Text" xml:space="preserve">
     <value>语言</value>
@@ -165,13 +165,16 @@
   <data name="$this.Text" xml:space="preserve">
     <value>GalArc</value>
   </data>
-  <data name="chkbxShowLog.Text" xml:space="preserve">
-    <value>显示日志</value>
-  </data>
   <data name="btExecute.Text" xml:space="preserve">
     <value>--</value>
   </data>
   <data name="gbOptions.Text" xml:space="preserve">
-    <value>额外选项</value>
+    <value>选项</value>
+  </data>
+  <data name="gbLog.Text" xml:space="preserve">
+    <value>日志</value>
+  </data>
+  <data name="statusStrip.Text" xml:space="preserve">
+    <value>状态栏</value>
   </data>
 </root>

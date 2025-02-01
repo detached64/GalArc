@@ -17,7 +17,7 @@ namespace ArcFormats.InnocentGrey
 
         private readonly string Magic = "PACKDAT.";
 
-        private class InnoDatEntry : PackedEntry
+        private class DatEntry : PackedEntry
         {
             public uint FileType { get; set; }
         }
@@ -34,12 +34,12 @@ namespace ArcFormats.InnocentGrey
             br.BaseStream.Position += 4;
 
             Logger.InitBar(fileCount);
-            List<InnoDatEntry> entries = new List<InnoDatEntry>();
+            List<DatEntry> entries = new List<DatEntry>();
             Directory.CreateDirectory(folderPath);
 
             for (int i = 0; i < fileCount; i++)
             {
-                InnoDatEntry entry = new InnoDatEntry();
+                DatEntry entry = new DatEntry();
                 entry.Name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(32)).TrimEnd('\0');
                 entry.Offset = br.ReadUInt32();
                 entry.FileType = br.ReadUInt32();
@@ -53,7 +53,7 @@ namespace ArcFormats.InnocentGrey
                 entries.Add(entry);
             }
 
-            foreach (InnoDatEntry entry in entries)
+            foreach (DatEntry entry in entries)
             {
                 fs.Position = entry.Offset;
                 byte[] data = br.ReadBytes((int)entry.UnpackedSize);

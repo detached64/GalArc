@@ -7,16 +7,12 @@ namespace GalArc.GUI
 {
     public partial class DatabaseSettings : UserControl
     {
-        private static DatabaseSettings instance;
-        public static DatabaseSettings Instance
-        {
-            get
-            {
-                return instance ?? (instance = new DatabaseSettings());
-            }
-        }
+        private static readonly Lazy<DatabaseSettings> lazyInstance =
+                new Lazy<DatabaseSettings>(() => new DatabaseSettings());
 
-        public DatabaseSettings()
+        public static DatabaseSettings Instance => lazyInstance.Value;
+
+        private DatabaseSettings()
         {
             InitializeComponent();
             this.txtDBInfo.BackColor = Color.FromArgb(249, 249, 249);

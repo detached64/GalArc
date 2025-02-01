@@ -9,7 +9,8 @@ namespace ArcFormats.GsPack
 {
     public class DAT : PAK
     {
-        public static new UserControl UnpackExtraOptions = new UnpackPAKOptions();
+        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackPAKOptions());
+        public static new UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
 
         private readonly string Magic = "GsSYMBOL5BINDATA";
 

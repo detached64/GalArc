@@ -12,7 +12,8 @@ namespace ArcFormats.Siglus
 {
     public class ScenePCK : ArchiveFormat
     {
-        public static UserControl UnpackExtraOptions = new UnpackPCKOptions();
+        protected static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackPCKOptions());
+        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
 
         private class ScenePckHeader
         {
@@ -36,7 +37,7 @@ namespace ArcFormats.Siglus
             public uint UnpackedLength { get; set; }
         }
 
-        internal static SiglusScheme ImportedSchemes;
+        internal static SiglusScheme Scheme;
 
         internal static Tuple<string, byte[]> SelectedScheme;
 
@@ -151,7 +152,7 @@ namespace ArcFormats.Siglus
 
         protected byte[] TryAllSchemes(ScenePckEntry entry, int type)
         {
-            foreach (var scheme in ImportedSchemes.KnownSchemes.Values)
+            foreach (var scheme in Scheme.KnownSchemes.Values)
             {
                 if (scheme.KnownKey.Length != 16)
                 {
@@ -170,7 +171,7 @@ namespace ArcFormats.Siglus
 
         protected string FindKeyFromValue(byte[] key)
         {
-            foreach (var dic in ImportedSchemes.KnownSchemes)
+            foreach (var dic in Scheme.KnownSchemes)
             {
                 if (key.SequenceEqual(dic.Value.KnownKey))
                 {
@@ -178,6 +179,13 @@ namespace ArcFormats.Siglus
                 }
             }
             return null;
+        }
+
+        public override void DeserializeScheme(out string name, out int count)
+        {
+            Scheme = Deserializer.ReadScheme<SiglusScheme>();
+            name = "Siglus";
+            count = Scheme?.KnownSchemes?.Count ?? 0;
         }
     }
 }

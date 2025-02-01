@@ -1,4 +1,4 @@
-using GalArc.Extensions.GARbroDB;
+using GalArc.Database;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
@@ -12,9 +12,10 @@ namespace ArcFormats.AnimeGameSystem
 {
     public class DAT : ArchiveFormat
     {
-        public static UserControl UnpackExtraOptions = new UnpackDATOptions();
+        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackDATOptions());
+        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
 
-        internal static AGSScheme ImportedSchemes;
+        internal static AGSScheme Scheme;
 
         internal static AGSScheme.AGSFileMap SelectedScheme;
 
@@ -23,7 +24,7 @@ namespace ArcFormats.AnimeGameSystem
         public override void Unpack(string filePath, string folderPath)
         {
             AGSScheme.Key key = null;
-            bool isXored = ImportedSchemes != null && SelectedScheme != null && ImportedSchemes.EncryptedArchives.Any(s => StringComparer.OrdinalIgnoreCase.Equals(s, Path.GetFileName(filePath))) && SelectedScheme.FileMap.TryGetValue(Path.GetFileName(filePath), out key);
+            bool isXored = Scheme != null && SelectedScheme != null && Scheme.EncryptedArchives.Any(s => StringComparer.OrdinalIgnoreCase.Equals(s, Path.GetFileName(filePath))) && SelectedScheme.FileMap.TryGetValue(Path.GetFileName(filePath), out key);
             using (FileStream fs = File.OpenRead(filePath))
             {
                 using (BinaryReader br = new BinaryReader(fs))
@@ -120,6 +121,13 @@ namespace ArcFormats.AnimeGameSystem
             }
             fw.Dispose();
             bw.Dispose();
+        }
+
+        public override void DeserializeScheme(out string name, out int count)
+        {
+            Scheme = Deserializer.ReadScheme<AGSScheme>();
+            name = "AnimeGameSystem";
+            count = Scheme?.KnownSchemes?.Count ?? 0;
         }
     }
 }

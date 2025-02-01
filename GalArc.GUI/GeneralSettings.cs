@@ -6,17 +6,12 @@ namespace GalArc.GUI
 {
     public partial class GeneralSettings : UserControl
     {
-        private static GeneralSettings instance;
+        private static readonly Lazy<GeneralSettings> lazyInstance =
+                new Lazy<GeneralSettings>(() => new GeneralSettings());
 
-        public static GeneralSettings Instance
-        {
-            get
-            {
-                return instance ?? (instance = new GeneralSettings());
-            }
-        }
+        public static GeneralSettings Instance => lazyInstance.Value;
 
-        public GeneralSettings()
+        private GeneralSettings()
         {
             InitializeComponent();
         }

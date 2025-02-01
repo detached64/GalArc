@@ -35,34 +35,65 @@ namespace GalArc.Logs
         Debug
     }
 
-    public static class Logger
+    public enum ProgressAction
     {
-        public static event EventHandler<string> Process;
-        public static event EventHandler<string> ErrorOccured;
+        Progress,
+        SetMax,
+        SetVal,
+        Finish
+    }
 
-        private const int CacheSize = 12;
-        private const string LogPath = "log.txt";
+    public class ProgressEventArgs : EventArgs
+    {
+        public int Value;
+        public int Max;
+        public ProgressAction Action;
+    }
 
-        private static readonly List<string> _logCache = new List<string>();
-        private static readonly object _lock = new object();
-        private static readonly IProgress<int> progress = new Progress<int>(value => LogWindow.Instance.bar.Value = value);
-        private static CancellationTokenSource _cancellationToken = new CancellationTokenSource();
+    public class Logger
+    {
+        public static Logger Instance { get; } = new Logger();
 
-        private static int _barValue;
-        private static int barValue
+        private Logger() { }
+
+        public event EventHandler<string> LogMessageEvent;
+        public event EventHandler<string> StatusMessageEvent;
+        public event EventHandler<ProgressEventArgs> ProgressEvent;
+
+        #region Event invokers
+        private void OnLogMessageEvent(string e) => LogMessageEvent?.Invoke(this, e);
+        private void OnStatusMessageEvent(string e) => StatusMessageEvent?.Invoke(this, e);
+        private void OnProgressEvent(ProgressEventArgs e) => ProgressEvent?.Invoke(this, e);
+        #endregion
+
+        private const int CacheSize = 25;
+        private static string DefaultPath => System.IO.Path.Combine(Environment.CurrentDirectory, "log.txt");
+
+        public static string Path
         {
-            get => _barValue;
+            get
+            {
+                if (string.IsNullOrEmpty(BaseSettings.Default.LogPath))
+                {
+                    BaseSettings.Default.LogPath = DefaultPath;
+                    BaseSettings.Default.Save();
+                    return DefaultPath;
+                }
+                return BaseSettings.Default.LogPath;
+            }
             set
             {
-                _barValue = value;
-                if (_barValue <= LogWindow.Instance.bar.Maximum)
-                {
-                    progress.Report(_barValue);
-                }
+                BaseSettings.Default.LogPath = value;
+                BaseSettings.Default.Save();
             }
         }
 
-        private static void Append(string msg)
+        private static readonly List<string> _logCache = new List<string>();
+        private static readonly object _lock = new object();
+        private static CancellationTokenSource _cancellationToken = new CancellationTokenSource();
+
+        #region Basic internal methods for logging and status
+        private void Append(string msg)
         {
             lock (_lock)
             {
@@ -75,7 +106,7 @@ namespace GalArc.Logs
             }
         }
 
-        private static void Append(string msg, int level)
+        private void Append(string msg, int level)
         {
             lock (_lock)
             {
@@ -88,7 +119,7 @@ namespace GalArc.Logs
             }
         }
 
-        public static void Flush(bool isClosing = false)
+        public void Flush(bool isClosing = false)
         {
             lock (_lock)
             {
@@ -102,11 +133,11 @@ namespace GalArc.Logs
                     return;
                 }
 
-                File.AppendAllLines(LogPath, _logCache, Encoding.UTF8);
+                File.AppendAllLines(Path, _logCache, Encoding.UTF8);
                 _logCache.Clear();
                 if (isClosing)
                 {
-                    using (StreamWriter sw = File.AppendText(LogPath))
+                    using (StreamWriter sw = File.AppendText(Path))
                     {
                         sw.WriteLine();
                     }
@@ -114,37 +145,38 @@ namespace GalArc.Logs
             }
         }
 
-        private static void WriteAndSaveLog(string msg, int logLevel = 1)
+        private void AppendAndSaveLog(string msg, int logLevel = 1)
         {
             LogLevel level = (LogLevel)logLevel;
             if ((level == LogLevel.Debug && BaseSettings.Default.IsDebugMode) || level == LogLevel.Info || level == LogLevel.Error)
             {
-                if (LogWindow.Instance.log_txtLog.InvokeRequired)
-                {
-                    LogWindow.Instance.log_txtLog.Invoke(new Action(() => LogWindow.Instance.log_txtLog.AppendText(msg + Environment.NewLine)));
-                }
-                else
-                {
-                    LogWindow.Instance.log_txtLog.AppendText(msg + Environment.NewLine);
-                }
+                OnLogMessageEvent(msg);
             }
-            if (BaseSettings.Default.ToSaveLog)
-            {
-                Append(msg, logLevel);
-            }
+            Append(msg, logLevel);
         }
 
-        public static void NewInstance()
+        private void DebugInternal(string log) => AppendAndSaveLog(log, 2);
+
+        private void DebugInvokeInternal(string log)
         {
-            Append($"[{LogStrings.NewInstance}]");
+            AppendAndSaveLog(log, 2);
+            OnStatusMessageEvent(log);
         }
 
-        public static void Error(string log, bool toThrow = true)
+        private void InfoInternal(string log) => AppendAndSaveLog(log, 1);
+
+        private void InfoInvokeInternal(string log)
+        {
+            AppendAndSaveLog(log, 1);
+            OnStatusMessageEvent(log);
+        }
+
+        private void ErrorInternal(string log, bool toThrow = true)
         {
             if (!toThrow)
             {
-                WriteAndSaveLog(log, 0);
-                OnErrorOccur(string.Format(LogStrings.ErrorOccur, log));
+                AppendAndSaveLog(log, 0);
+                OnStatusMessageEvent(string.Format(LogStrings.ErrorOccur, log));
             }
             else
             {
@@ -152,195 +184,167 @@ namespace GalArc.Logs
             }
         }
 
-        public static void Info(string log)
+        private void StatusInvokeInternal(string log) => Instance.StatusMessageEvent?.Invoke(null, log);
+        #endregion
+
+        #region Basic internal methods for progress bar
+        private void BarReset()
         {
-            WriteAndSaveLog(log, 1);
+            OnProgressEvent(new ProgressEventArgs
+            {
+                Value = 0,
+                Action = ProgressAction.SetVal
+            });
         }
 
-        public static void Debug(string log)
+        private void BarProgress()
         {
-            WriteAndSaveLog(log, 2);
+            OnProgressEvent(new ProgressEventArgs
+            {
+                Action = ProgressAction.Progress,
+            });
         }
 
-        public static void InfoRevoke(string log)
+        private void BarFinish()
         {
-            WriteAndSaveLog(log, 1);
-            OnProcess(log);
+            OnProgressEvent(new ProgressEventArgs
+            {
+                Action = ProgressAction.Finish
+            });
         }
 
-        public static void DebugRevoke(string log)
+        private void BarSetVal(int v)
         {
-            WriteAndSaveLog(log, 2);
-            OnProcess(log);
+            OnProgressEvent(new ProgressEventArgs
+            {
+                Value = v,
+                Action = ProgressAction.SetVal
+            });
         }
 
-        public static void ErrorInvalidArchive()
+        private void BarSetMax(int m)
         {
-            throw new Exception(LogStrings.ErrorNotValidArc);
+            OnProgressEvent(new ProgressEventArgs
+            {
+                Max = m,
+                Action = ProgressAction.SetMax
+            });
         }
+        #endregion
 
-        public static void ErrorNeedAnotherFile(string file)
-        {
-            throw new Exception(string.Format(LogStrings.ErrorSpecifiedFileNotFound, file));
-        }
-
-        public static void ErrorNeedOriginalFile(string file)
-        {
-            throw new Exception(string.Format(LogStrings.ErrorOriginalFileNotFound, file));
-        }
+        #region Public wrapped methods.
+        public static void Debug(string log) => Instance.DebugInternal(log);
+        public static void DebugInvoke(string log) => Instance.DebugInvokeInternal(log);
+        public static void Info(string log) => Instance.InfoInternal(log);
+        public static void InfoInvoke(string log) => Instance.InfoInvokeInternal(log);
+        public static void Error(string log, bool toThrow = true) => Instance.ErrorInternal(log, toThrow);
+        public static void Status(string log) => Instance.StatusInvokeInternal(log);
+        public static void ErrorInvalidArchive() => throw new Exception(LogStrings.ErrorNotValidArc);
+        public static void ErrorNeedAnotherFile(string file) => throw new Exception(string.Format(LogStrings.ErrorSpecifiedFileNotFound, file));
+        public static void ErrorNeedOriginalFile(string file) => throw new Exception(string.Format(LogStrings.ErrorOriginalFileNotFound, file));
 
         public static void InitUnpack(string input, string output)
         {
-            barValue = 0;
-            Debug(LogStrings.InputFile + "\t" + input);
-            Debug(LogStrings.OutputFolder + "\t" + output);
-            Info(LogStrings.Unpacking);
+            Instance.BarReset();
+            Instance.DebugInternal(LogStrings.InputFile + "\t" + input);
+            Instance.DebugInternal(LogStrings.OutputFolder + "\t" + output);
+            Instance.InfoInternal(LogStrings.Unpacking);
         }
 
         public static void FinishUnpack()
         {
-            barValue = LogWindow.Instance.bar.Maximum;
-            InfoRevoke(LogStrings.UnpackFinished);
+            Instance.BarFinish();
+            Instance.InfoInvokeInternal(LogStrings.UnpackFinished);
         }
 
         public static void InitPack(string input, string output)
         {
-            barValue = 0;
-            Debug(LogStrings.InputFolder + "\t" + input);
-            Debug(LogStrings.OutputFile + "\t" + output);
-            Info(LogStrings.Packing);
+            Instance.BarReset();
+            Instance.DebugInternal(LogStrings.InputFolder + "\t" + input);
+            Instance.DebugInternal(LogStrings.OutputFile + "\t" + output);
+            Instance.InfoInternal(LogStrings.Packing);
         }
 
         public static void FinishPack()
         {
-            barValue = LogWindow.Instance.bar.Maximum;
-            InfoRevoke(LogStrings.PackFinished);
+            Instance.BarFinish();
+            Instance.InfoInvokeInternal(LogStrings.PackFinished);
         }
 
-        private static void OnProcess(string message)
+        public static void NewInstance()
         {
-            Process?.Invoke(null, message);
+            Instance.Append($"[{LogStrings.NewInstance}]");
         }
 
-        private static void OnErrorOccur(string message)
-        {
-            ErrorOccured?.Invoke(null, message);
-        }
-
-        private static async Task OnShowAndDisappear(string message, int second = 5)
+        private static async Task ShowAndDisappear(string message, int time)
         {
             _cancellationToken.Cancel();
             _cancellationToken.Dispose();
             _cancellationToken = new CancellationTokenSource();
             var token = _cancellationToken.Token;
-
-            try
+            Instance.StatusMessageEvent?.Invoke(null, message);
+            if (time > 0)
             {
-                OnProcess(message);
-                await Task.Delay(second * 1000, token);
-                if (!token.IsCancellationRequested)
+                try
                 {
-                    OnProcess(string.Empty);
+                    await Task.Delay(time, token);
+                    if (!token.IsCancellationRequested)
+                    {
+                        Instance.StatusMessageEvent?.Invoke(null, string.Empty);
+                    }
                 }
-            }
-            catch (TaskCanceledException)
-            {
-                //ignore
+                catch { }
             }
         }
 
-        public static void InitBar(int max)
-        {
-            InitBar(max, 1);
-        }
+        public static void InitBar(int max) => InitBar(max, 1);
 
-        public static void InitBar(uint max)
-        {
-            InitBar(max, 1);
-        }
+        public static void InitBar(uint max) => InitBar(max, 1);
+
+        public static void InitBar(uint max, int m) => InitBar((int)max, m);
 
         public static void InitBar(int max, int m)
         {
-            barValue = 0;
-            SetBarMax(max * m);
-            Debug(string.Format(LogStrings.FileCountInside, max));
+            Instance.BarReset();
+            Instance.BarSetMax(max * m);
+            Instance.DebugInternal(string.Format(LogStrings.FileCountInside, max));
         }
 
-        public static void InitBar(uint max, int m)
-        {
-            InitBar((int)max, m);
-        }
+        public static void UpdateBar() => Instance.BarProgress();
 
-        public static void UpdateBar()
-        {
-            barValue++;
-        }
+        public static void SetBarMax(int max) => Instance.BarSetMax(max);
 
-        public static void SetBarMax(int max)
-        {
-            if (LogWindow.Instance.bar.IsHandleCreated)
-            {
-                LogWindow.Instance.bar.Invoke(new Action(() => LogWindow.Instance.bar.Maximum = max));
-            }
-        }
+        public static void SetBarValue(int value) => Instance.BarSetVal(value);
 
-        public static void SetBarValue(int value)
-        {
-            barValue = value;
-        }
+        public static void ResetBar() => Instance.BarReset();
 
-        public static void ResetBar()
-        {
-            barValue = 0;
-        }
-
-        public static void ShowCheckingUpdate()
-        {
-            InfoRevoke(LogStrings.Updating);
-        }
+        public static void ShowCheckingUpdate() => Instance.InfoInvokeInternal(LogStrings.Updating);
 
         public static async void ShowCheckSuccess(bool existNewer)
         {
             if (existNewer)
             {
-                Info(LogStrings.HasUpdate);
-                await OnShowAndDisappear(LogStrings.HasUpdate);
+                Instance.InfoInternal(LogStrings.HasUpdate);
+                await ShowAndDisappear(LogStrings.HasUpdate, 5000);
             }
             else
             {
-                Info(LogStrings.NoUpdate);
-                await OnShowAndDisappear(LogStrings.NoUpdate);
+                Instance.InfoInternal(LogStrings.NoUpdate);
+                await ShowAndDisappear(LogStrings.NoUpdate, 5000);
             }
         }
 
-        public static void ShowCheckError()
-        {
-            Error(LogStrings.UpdateError, false);
-        }
+        public static void ShowCheckError() => Instance.ErrorInternal(LogStrings.UpdateError, false);
 
-        public static void ShowProgramVersion(string cv, string lv)
-        {
-            Debug(string.Format(LogStrings.Versions, cv, lv));
-        }
+        public static void ShowProgramVersion(string cv, string lv) => Instance.DebugInternal(string.Format(LogStrings.Versions, cv, lv));
 
-        public static void ShowVersion(string extension, int version)
-        {
-            Info(string.Format(LogStrings.ValidArchiveDetected, extension, version));
-        }
+        public static void ShowVersion(string extension, int version) => Instance.InfoInternal(string.Format(LogStrings.ValidArchiveDetected, extension, version));
 
-        public static void ShowVersion(string extension, string version)
-        {
-            Info(string.Format(LogStrings.ValidArchiveDetected, extension, version));
-        }
+        public static void ShowVersion(string extension, string version) => Instance.InfoInternal(string.Format(LogStrings.ValidArchiveDetected, extension, version));
 
-        public static void ImportDatabaseScheme(int count)
-        {
-            Debug(string.Format(LogStrings.ImportDataBaseScheme, count));
-        }
+        public static void ImportDatabaseScheme(string name, int count) => Instance.DebugInternal(string.Format(LogStrings.ImportDataBaseScheme, name, count));
 
-        public static void ImportGARbroDBScheme(int count)
-        {
-            Debug(string.Format(LogStrings.ImportGARbroDBScheme, count));
-        }
+        public static void ImportGARbroDBScheme(int count) => Instance.DebugInternal(string.Format(LogStrings.ImportGARbroDBScheme, count));
+        #endregion
     }
 }

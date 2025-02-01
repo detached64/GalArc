@@ -117,38 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lbStatus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>30, 691</value>
-  </data>
-  <data name="lbStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>966, 27</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lbStatus.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="lbStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;lbStatus.Name" xml:space="preserve">
-    <value>lbStatus</value>
-  </data>
-  <data name="&gt;&gt;lbStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbStatus.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbStatus.ZOrder" xml:space="preserve">
-    <value>14</value>
-  </data>
   <metadata name="menuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="menuStrip.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="preferenceToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>203, 34</value>
   </data>
@@ -196,7 +172,7 @@
     <value>0, 0</value>
   </data>
   <data name="menuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1125, 32</value>
+    <value>1178, 32</value>
   </data>
   <data name="menuStrip.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -216,11 +192,14 @@
   <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
     <value>15</value>
   </data>
+  <data name="treeViewEngines.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left</value>
+  </data>
   <data name="treeViewEngines.Location" type="System.Drawing.Point, System.Drawing">
     <value>30, 91</value>
   </data>
   <data name="treeViewEngines.Size" type="System.Drawing.Size, System.Drawing">
-    <value>201, 585</value>
+    <value>201, 807</value>
   </data>
   <data name="treeViewEngines.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -235,7 +214,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;treeViewEngines.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="chkbxUnpack.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -262,7 +241,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;chkbxUnpack.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="chkbxPack.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -289,7 +268,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;chkbxPack.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="lbInput.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -316,13 +295,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbInput.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
+  </data>
+  <data name="txtOutputPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <data name="txtOutputPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>263, 183</value>
+    <value>263, 172</value>
   </data>
   <data name="txtOutputPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>786, 31</value>
+    <value>839, 31</value>
   </data>
   <data name="txtOutputPath.TabIndex" type="System.Int32, mscorlib">
     <value>21</value>
@@ -337,13 +319,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;txtOutputPath.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
+  </data>
+  <data name="txtInputPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <data name="txtInputPath.Location" type="System.Drawing.Point, System.Drawing">
-    <value>263, 91</value>
+    <value>263, 87</value>
   </data>
   <data name="txtInputPath.Size" type="System.Drawing.Size, System.Drawing">
-    <value>786, 31</value>
+    <value>839, 31</value>
   </data>
   <data name="txtInputPath.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
@@ -358,13 +343,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;txtInputPath.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="lbOutput.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="lbOutput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>259, 144</value>
+    <value>259, 138</value>
   </data>
   <data name="lbOutput.Size" type="System.Drawing.Size, System.Drawing">
     <value>73, 24</value>
@@ -385,10 +370,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbOutput.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
+  </data>
+  <data name="btSelInput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
   <data name="btSelInput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1055, 91</value>
+    <value>1108, 86</value>
   </data>
   <data name="btSelInput.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 31</value>
@@ -409,10 +397,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btSelInput.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
+  </data>
+  <data name="btSelOutput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
   <data name="btSelOutput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1055, 183</value>
+    <value>1108, 172</value>
   </data>
   <data name="btSelOutput.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 31</value>
@@ -433,10 +424,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btSelOutput.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
+  </data>
+  <data name="btClear.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
   <data name="btClear.Location" type="System.Drawing.Point, System.Drawing">
-    <value>765, 236</value>
+    <value>818, 218</value>
   </data>
   <data name="btClear.Size" type="System.Drawing.Size, System.Drawing">
     <value>133, 38</value>
@@ -457,7 +451,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btClear.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="chkbxMatch.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -466,7 +460,7 @@
     <value>True</value>
   </data>
   <data name="chkbxMatch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>658, 242</value>
+    <value>711, 224</value>
   </data>
   <data name="chkbxMatch.Size" type="System.Drawing.Size, System.Drawing">
     <value>91, 28</value>
@@ -490,10 +484,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;chkbxMatch.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
+  </data>
+  <data name="btExecute.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
   <data name="btExecute.Location" type="System.Drawing.Point, System.Drawing">
-    <value>916, 236</value>
+    <value>969, 218</value>
   </data>
   <data name="btExecute.Size" type="System.Drawing.Size, System.Drawing">
     <value>133, 38</value>
@@ -514,49 +511,22 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btExecute.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
-  <data name="chkbxShowLog.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="chkbxShowLog.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkbxShowLog.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1018, 691</value>
-  </data>
-  <data name="chkbxShowLog.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 28</value>
-  </data>
-  <data name="chkbxShowLog.TabIndex" type="System.Int32, mscorlib">
-    <value>28</value>
-  </data>
-  <data name="chkbxShowLog.Text" xml:space="preserve">
-    <value>Log</value>
-  </data>
-  <data name="&gt;&gt;chkbxShowLog.Name" xml:space="preserve">
-    <value>chkbxShowLog</value>
-  </data>
-  <data name="&gt;&gt;chkbxShowLog.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkbxShowLog.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;chkbxShowLog.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="gbOptions.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <data name="gbOptions.Location" type="System.Drawing.Point, System.Drawing">
-    <value>263, 283</value>
+    <value>263, 262</value>
   </data>
   <data name="gbOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>823, 393</value>
+    <value>876, 300</value>
   </data>
   <data name="gbOptions.TabIndex" type="System.Int32, mscorlib">
     <value>29</value>
   </data>
   <data name="gbOptions.Text" xml:space="preserve">
-    <value>Extra Options</value>
+    <value>Options</value>
   </data>
   <data name="&gt;&gt;gbOptions.Name" xml:space="preserve">
     <value>gbOptions</value>
@@ -568,6 +538,96 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;gbOptions.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="txtLog.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="txtLog.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 30</value>
+  </data>
+  <data name="txtLog.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="txtLog.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
+  </data>
+  <data name="txtLog.Size" type="System.Drawing.Size, System.Drawing">
+    <value>864, 294</value>
+  </data>
+  <data name="txtLog.TabIndex" type="System.Int32, mscorlib">
+    <value>31</value>
+  </data>
+  <data name="&gt;&gt;txtLog.Name" xml:space="preserve">
+    <value>txtLog</value>
+  </data>
+  <data name="&gt;&gt;txtLog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtLog.Parent" xml:space="preserve">
+    <value>gbLog</value>
+  </data>
+  <data name="&gt;&gt;txtLog.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="gbLog.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="gbLog.Location" type="System.Drawing.Point, System.Drawing">
+    <value>263, 568</value>
+  </data>
+  <data name="gbLog.Size" type="System.Drawing.Size, System.Drawing">
+    <value>876, 330</value>
+  </data>
+  <data name="gbLog.TabIndex" type="System.Int32, mscorlib">
+    <value>32</value>
+  </data>
+  <data name="gbLog.Text" xml:space="preserve">
+    <value>Log</value>
+  </data>
+  <data name="&gt;&gt;gbLog.Name" xml:space="preserve">
+    <value>gbLog</value>
+  </data>
+  <data name="&gt;&gt;gbLog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gbLog.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;gbLog.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <metadata name="statusStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>172, 17</value>
+  </metadata>
+  <data name="lbStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 24</value>
+  </data>
+  <data name="pBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>250, 23</value>
+  </data>
+  <data name="statusStrip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 909</value>
+  </data>
+  <data name="statusStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1178, 31</value>
+  </data>
+  <data name="statusStrip.TabIndex" type="System.Int32, mscorlib">
+    <value>33</value>
+  </data>
+  <data name="statusStrip.Text" xml:space="preserve">
+    <value>statusStrip</value>
+  </data>
+  <data name="&gt;&gt;statusStrip.Name" xml:space="preserve">
+    <value>statusStrip</value>
+  </data>
+  <data name="&gt;&gt;statusStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;statusStrip.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;statusStrip.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -577,7 +637,7 @@
     <value>144, 144</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1125, 739</value>
+    <value>1178, 940</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>微软雅黑, 9pt</value>
@@ -632,6 +692,18 @@
   </data>
   <data name="&gt;&gt;aboutToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lbStatus.Name" xml:space="preserve">
+    <value>lbStatus</value>
+  </data>
+  <data name="&gt;&gt;lbStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pBar.Name" xml:space="preserve">
+    <value>pBar</value>
+  </data>
+  <data name="&gt;&gt;pBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainWindow</value>

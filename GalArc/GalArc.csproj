@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseSettings.cs" />
     <Compile Include="Common\Encodings.cs" />
     <Compile Include="Common\EngineInfo.cs" />
     <Compile Include="Common\Languages.cs" />
@@ -69,23 +70,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LogStrings.resx</DependentUpon>
     </Compile>
-    <Compile Include="Settings.cs" />
     <Compile Include="Strings\SchemeInfos.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SchemeInfos.resx</DependentUpon>
     </Compile>
     <Compile Include="Extensions\GARbroDB\Schemes.cs" />
-    <Compile Include="Logs\LogWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Logs\LogWindow.Designer.cs">
-      <DependentUpon>LogWindow.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Logs\Logger.cs" />
     <EmbeddedResource Include="Strings\LogStrings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LogStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Strings\LogStrings.zh-Hans.resx" />
@@ -94,13 +88,6 @@
       <LastGenOutput>SchemeInfos.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Strings\SchemeInfos.zh-Hans.resx" />
-    <EmbeddedResource Include="Logs\LogWindow.resx">
-      <DependentUpon>LogWindow.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Logs\LogWindow.zh-Hans.resx">
-      <DependentUpon>LogWindow.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -113,15 +100,6 @@
     </Compile>
     <EmbeddedResource Include="Properties\Resources.zh-Hans.resx" />
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

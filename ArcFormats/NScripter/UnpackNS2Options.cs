@@ -1,5 +1,4 @@
 ﻿using ArcFormats.Properties;
-using GalArc.Database;
 using GalArc.Logs;
 using System;
 using System.Reflection;
@@ -9,8 +8,6 @@ namespace ArcFormats.NScripter
 {
     public partial class UnpackNS2Options : UserControl
     {
-        private Ns2Scheme ImportedScheme { get; set; }
-
         public UnpackNS2Options()
         {
             InitializeComponent();
@@ -19,28 +16,21 @@ namespace ArcFormats.NScripter
             Type type = this.combSchemes.GetType();
             PropertyInfo pi = type.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
             pi.SetValue(this.combSchemes, true, null);
-
-            ImportKeys();
         }
 
-        private void ImportKeys()
+        private void UnpackNS2Options_Load(object sender, EventArgs e)
         {
-            if (ImportedScheme == null)
-            {
-                ImportedScheme = Deserializer.ReadScheme<Ns2Scheme>();
-                combSchemes.Items.Add(Resources.combNoEncryption);
-                combSchemes.Items.Add(Resources.combCustomScheme);
+            combSchemes.Items.Add(Resources.combNoEncryption);
+            combSchemes.Items.Add(Resources.combCustomScheme);
 
-                if (ImportedScheme != null)
+            if (NS2.Scheme != null)
+            {
+                foreach (var key in NS2.Scheme.KnownKeys)
                 {
-                    Logger.ImportDatabaseScheme(ImportedScheme.KnownKeys.Count);
-                    foreach (var key in ImportedScheme.KnownKeys)
-                    {
-                        combSchemes.Items.Add(key.Key);
-                    }
+                    combSchemes.Items.Add(key.Key);
                 }
-                combSchemes.SelectedIndex = 0;
             }
+            combSchemes.SelectedIndex = 0;
         }
 
         private void combSchemes_SelectedIndexChanged(object sender, EventArgs e)
@@ -56,7 +46,7 @@ namespace ArcFormats.NScripter
                     txtKey.Enabled = true;
                     break;
                 default:
-                    txtKey.Text = ImportedScheme.KnownKeys[combSchemes.SelectedItem.ToString()];
+                    txtKey.Text = NS2.Scheme.KnownKeys[combSchemes.SelectedItem.ToString()];
                     txtKey.Enabled = true;
                     break;
             }

@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
-            this.lbStatus = new System.Windows.Forms.Label();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.optionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preferenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,16 +49,16 @@
             this.btClear = new System.Windows.Forms.Button();
             this.chkbxMatch = new System.Windows.Forms.CheckBox();
             this.btExecute = new System.Windows.Forms.Button();
-            this.chkbxShowLog = new System.Windows.Forms.CheckBox();
             this.gbOptions = new System.Windows.Forms.GroupBox();
+            this.txtLog = new System.Windows.Forms.TextBox();
+            this.gbLog = new System.Windows.Forms.GroupBox();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.lbStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.pBar = new System.Windows.Forms.ToolStripProgressBar();
             this.menuStrip.SuspendLayout();
+            this.gbLog.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lbStatus
-            // 
-            this.lbStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.lbStatus, "lbStatus");
-            this.lbStatus.Name = "lbStatus";
             // 
             // menuStrip
             // 
@@ -121,10 +120,11 @@
             // 
             // treeViewEngines
             // 
+            resources.ApplyResources(this.treeViewEngines, "treeViewEngines");
+            this.treeViewEngines.BackColor = System.Drawing.SystemColors.Control;
             this.treeViewEngines.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.treeViewEngines.HideSelection = false;
             this.treeViewEngines.HotTracking = true;
-            resources.ApplyResources(this.treeViewEngines, "treeViewEngines");
             this.treeViewEngines.Name = "treeViewEngines";
             this.treeViewEngines.PathSeparator = "/";
             this.treeViewEngines.ShowPlusMinus = false;
@@ -153,15 +153,15 @@
             // txtOutputPath
             // 
             this.txtOutputPath.AllowDrop = true;
-            this.txtOutputPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             resources.ApplyResources(this.txtOutputPath, "txtOutputPath");
+            this.txtOutputPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtOutputPath.Name = "txtOutputPath";
             // 
             // txtInputPath
             // 
             this.txtInputPath.AllowDrop = true;
-            this.txtInputPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             resources.ApplyResources(this.txtInputPath, "txtInputPath");
+            this.txtInputPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtInputPath.Name = "txtInputPath";
             this.txtInputPath.TextChanged += new System.EventHandler(this.txtInputPath_TextChanged);
             // 
@@ -207,27 +207,60 @@
             this.btExecute.UseVisualStyleBackColor = true;
             this.btExecute.Click += new System.EventHandler(this.btExecute_Click);
             // 
-            // chkbxShowLog
-            // 
-            resources.ApplyResources(this.chkbxShowLog, "chkbxShowLog");
-            this.chkbxShowLog.Name = "chkbxShowLog";
-            this.chkbxShowLog.UseVisualStyleBackColor = true;
-            this.chkbxShowLog.CheckedChanged += new System.EventHandler(this.chkbxShowLog_CheckedChanged);
-            this.chkbxShowLog.SizeChanged += new System.EventHandler(this.chkbxShowLog_SizeChanged);
-            // 
             // gbOptions
             // 
             resources.ApplyResources(this.gbOptions, "gbOptions");
             this.gbOptions.Name = "gbOptions";
             this.gbOptions.TabStop = false;
             // 
+            // txtLog
+            // 
+            resources.ApplyResources(this.txtLog, "txtLog");
+            this.txtLog.BackColor = System.Drawing.SystemColors.MenuText;
+            this.txtLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLog.ForeColor = System.Drawing.SystemColors.Window;
+            this.txtLog.Name = "txtLog";
+            this.txtLog.ReadOnly = true;
+            this.txtLog.TabStop = false;
+            // 
+            // gbLog
+            // 
+            resources.ApplyResources(this.gbLog, "gbLog");
+            this.gbLog.Controls.Add(this.txtLog);
+            this.gbLog.Name = "gbLog";
+            this.gbLog.TabStop = false;
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lbStatus,
+            this.pBar});
+            this.statusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            resources.ApplyResources(this.statusStrip, "statusStrip");
+            this.statusStrip.Name = "statusStrip";
+            // 
+            // lbStatus
+            // 
+            this.lbStatus.BorderStyle = System.Windows.Forms.Border3DStyle.Bump;
+            this.lbStatus.Name = "lbStatus";
+            resources.ApplyResources(this.lbStatus, "lbStatus");
+            this.lbStatus.Spring = true;
+            // 
+            // pBar
+            // 
+            this.pBar.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.pBar.Name = "pBar";
+            resources.ApplyResources(this.pBar, "pBar");
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.gbLog);
             this.Controls.Add(this.gbOptions);
-            this.Controls.Add(this.chkbxShowLog);
             this.Controls.Add(this.btClear);
             this.Controls.Add(this.chkbxMatch);
             this.Controls.Add(this.btExecute);
@@ -240,25 +273,24 @@
             this.Controls.Add(this.chkbxPack);
             this.Controls.Add(this.chkbxUnpack);
             this.Controls.Add(this.treeViewEngines);
-            this.Controls.Add(this.lbStatus);
             this.Controls.Add(this.menuStrip);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip;
-            this.MaximizeBox = false;
             this.Name = "MainWindow";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Load += new System.EventHandler(this.MainWindow_Load);
-            this.LocationChanged += new System.EventHandler(this.MainWindow_LocationChanged);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            this.gbLog.ResumeLayout(false);
+            this.gbLog.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        internal System.Windows.Forms.Label lbStatus;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem optionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
@@ -279,8 +311,12 @@
         internal System.Windows.Forms.Button btClear;
         internal System.Windows.Forms.CheckBox chkbxMatch;
         internal System.Windows.Forms.Button btExecute;
-        private System.Windows.Forms.CheckBox chkbxShowLog;
         private System.Windows.Forms.GroupBox gbOptions;
+        public System.Windows.Forms.TextBox txtLog;
+        private System.Windows.Forms.GroupBox gbLog;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel lbStatus;
+        private System.Windows.Forms.ToolStripProgressBar pBar;
     }
 }
 

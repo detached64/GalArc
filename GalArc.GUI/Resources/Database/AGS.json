@@ -1,0 +1,121 @@
+{
+  "KnownSchemes": {
+    "Love Fetish ~Love Hen~": {
+      "FileMap": {
+        "script.dat": {
+          "Initial": 41,
+          "Increment": 13
+        },
+        "bg.dat": {
+          "Initial": 89,
+          "Increment": 59
+        },
+        "mov.dat": {
+          "Initial": 53,
+          "Increment": 19
+        }
+      }
+    },
+    "In Series 1 Inshoku Chikan Densha": {
+      "FileMap": {
+        "script.dat": {
+          "Initial": 71,
+          "Increment": 97
+        },
+        "bg.dat": {
+          "Initial": 67,
+          "Increment": 19
+        },
+        "mov.dat": {
+          "Initial": 53,
+          "Increment": 17
+        }
+      }
+    },
+    "In Series 2 Inbaku Kankin Choukyou": {
+      "FileMap": {
+        "script.dat": {
+          "Initial": 23,
+          "Increment": 67
+        },
+        "bg.dat": {
+          "Initial": 31,
+          "Increment": 17
+        },
+        "mov.dat": {
+          "Initial": 13,
+          "Increment": 41
+        }
+      }
+    },
+    "In Series 3 Injoku Inkou Kaihatsu": {
+      "FileMap": {
+        "script.dat": {
+          "Initial": 67,
+          "Increment": 71
+        },
+        "bg.dat": {
+          "Initial": 31,
+          "Increment": 67
+        },
+        "mov.dat": {
+          "Initial": 53,
+          "Increment": 19
+        }
+      }
+    },
+    "In Series 4 Inran Roshutsu Choukyou": {
+      "FileMap": {
+        "script.dat": {
+          "Initial": 11,
+          "Increment": 41
+        },
+        "bg.dat": {
+          "Initial": 89,
+          "Increment": 97
+        },
+        "mov.dat": {
+          "Initial": 17,
+          "Increment": 31
+        }
+      }
+    },
+    "In Series 5 Ingoku Koushuu Rinkan": {
+      "FileMap": {
+        "script.dat": {
+          "Initial": 23,
+          "Increment": 67
+        },
+        "bg.dat": {
+          "Initial": 19,
+          "Increment": 31
+        },
+        "mov.dat": {
+          "Initial": 41,
+          "Increment": 53
+        }
+      }
+    },
+    "In Series 6 Tokunou Nama Nakadashi": {
+      "FileMap": {
+        "script.dat": {
+          "Initial": 71,
+          "Increment": 23
+        },
+        "bg.dat": {
+          "Initial": 67,
+          "Increment": 97
+        },
+        "mov.dat": {
+          "Initial": 41,
+          "Increment": 13
+        }
+      }
+    }
+  },
+  "EncryptedArchives": [
+    "script.dat",
+    "bg.dat",
+    "mov.dat"
+  ]
+}

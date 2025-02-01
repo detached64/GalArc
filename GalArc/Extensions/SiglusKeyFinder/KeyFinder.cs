@@ -35,8 +35,7 @@ namespace GalArc.Extensions.SiglusKeyFinder
                 try
                 {
                     process.Start();
-                    string output = process.StandardOutput.ReadToEnd().Trim();
-                    return output;
+                    return process.StandardOutput.ReadToEnd().Trim();
                 }
                 catch
                 {

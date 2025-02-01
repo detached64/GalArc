@@ -198,4 +198,7 @@
   <data name="logErrorClassNotFound" xml:space="preserve">
     <value>错误：对应的类未找到。</value>
   </data>
+  <data name="nodeLog" xml:space="preserve">
+    <value>日志</value>
+  </data>
 </root>

@@ -11,17 +11,12 @@ namespace GalArc.GUI
 {
     public partial class ExtensionsSettings : UserControl
     {
-        private static ExtensionsSettings instance;
+        private static readonly Lazy<ExtensionsSettings> lazyInstance =
+                new Lazy<ExtensionsSettings>(() => new ExtensionsSettings());
 
-        public static ExtensionsSettings Instance
-        {
-            get
-            {
-                return instance ?? (instance = new ExtensionsSettings());
-            }
-        }
+        public static ExtensionsSettings Instance => lazyInstance.Value;
 
-        public ExtensionsSettings()
+        private ExtensionsSettings()
         {
             InitializeComponent();
 

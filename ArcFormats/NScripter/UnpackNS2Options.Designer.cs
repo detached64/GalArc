@@ -62,6 +62,7 @@
             this.Controls.Add(this.combSchemes);
             this.Controls.Add(this.lbChooseOrInput);
             this.Name = "UnpackNS2Options";
+            this.Load += new System.EventHandler(this.UnpackNS2Options_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

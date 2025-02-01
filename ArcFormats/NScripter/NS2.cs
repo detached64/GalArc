@@ -1,4 +1,5 @@
 ﻿using ArcFormats.Properties;
+using GalArc.Database;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
@@ -12,18 +13,21 @@ namespace ArcFormats.NScripter
 {
     public class NS2 : ArchiveFormat
     {
-        public static UserControl UnpackExtraOptions = new UnpackNS2Options();
+        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackNS2Options());
+        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
 
-        internal static string Key { get; set; }
+        internal static Ns2Scheme Scheme;
+
+        internal static string Key;
 
         private class Ns2Entry : PackedEntry
         {
             public string RelativePath { get; set; }
         }
-        private List<Ns2Entry> entries = new List<Ns2Entry>();
 
         public override void Unpack(string filePath, string folderPath)
         {
+            List<Ns2Entry> entries = new List<Ns2Entry>();
             byte[] data = File.ReadAllBytes(filePath);
             uint dataOffset = BitConverter.ToUInt32(data, 0);
             if (dataOffset > data.Length)
@@ -116,6 +120,13 @@ namespace ArcFormats.NScripter
             }
             fw.Dispose();
             bw.Dispose();
+        }
+
+        public override void DeserializeScheme(out string name, out int count)
+        {
+            Scheme = Deserializer.ReadScheme<Ns2Scheme>();
+            name = "NScripter";
+            count = Scheme?.KnownKeys?.Count ?? 0;
         }
     }
 }

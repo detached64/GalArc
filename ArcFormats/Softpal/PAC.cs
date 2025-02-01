@@ -13,9 +13,10 @@ namespace ArcFormats.Softpal
 {
     public class PAC : ArchiveFormat
     {
-        public static UserControl UnpackExtraOptions = new UnpackPACOptions();
-
-        public static UserControl PackExtraOptions = new PackPACOptions();
+        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackPACOptions());
+        private static readonly Lazy<UserControl> _lazyPackOptions = new Lazy<UserControl>(() => new PackPACOptions());
+        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
+        public static UserControl PackExtraOptions => _lazyPackOptions.Value;
 
         private readonly byte[] Magic = Utils.HexStringToByteArray("50414320");
 
@@ -178,7 +179,7 @@ namespace ArcFormats.Softpal
             BinaryWriter bw = new BinaryWriter(fw);
             int fileCount = files.Length;
             Logger.InitBar(fileCount);
-            LogWindow.Instance.bar.Maximum = fileCount + 1;
+            Logger.SetBarMax(fileCount + 1);
 
             bw.Write((ushort)fileCount);
             ushort countToThis = 0;
@@ -233,7 +234,7 @@ namespace ArcFormats.Softpal
             uint fileCount = (uint)files.Length;
 
             Logger.InitBar(fileCount);
-            LogWindow.Instance.bar.Maximum = (int)fileCount + 1;
+            Logger.SetBarMax((int)fileCount + 1);
 
             FileStream fw = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
             BinaryWriter bw = new BinaryWriter(fw);

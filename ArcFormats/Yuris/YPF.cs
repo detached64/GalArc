@@ -12,7 +12,8 @@ namespace ArcFormats.Yuris
 {
     public class YPF : ArchiveFormat
     {
-        public static UserControl UnpackExtraOptions = new UnpackYPFOptions();
+        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackYPFOptions());
+        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
 
         class YpfEntry : PackedEntry
         {

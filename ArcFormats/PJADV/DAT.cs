@@ -13,9 +13,10 @@ namespace ArcFormats.PJADV
 {
     public class DAT : ArchiveFormat
     {
-        public static UserControl UnpackExtraOptions = new UnpackDATOptions();
-
-        public static UserControl PackExtraOptions = new PackDATOptions();
+        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackDATOptions());
+        private static readonly Lazy<UserControl> _lazyPackOptions = new Lazy<UserControl>(() => new PackDATOptions());
+        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
+        public static UserControl PackExtraOptions => _lazyPackOptions.Value;
 
         private readonly string Magic = "GAMEDAT PAC";
 

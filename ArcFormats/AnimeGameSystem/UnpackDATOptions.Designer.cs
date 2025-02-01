@@ -55,6 +55,7 @@
             this.Controls.Add(this.combSchemes);
             this.Controls.Add(this.lbChoose);
             this.Name = "UnpackDATOptions";
+            this.Load += new System.EventHandler(this.UnpackDATOptions_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

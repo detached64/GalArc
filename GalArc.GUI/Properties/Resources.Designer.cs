@@ -295,6 +295,15 @@ namespace GalArc.GUI.Properties {
         }
         
         /// <summary>
+        ///   查找类似 Log 的本地化字符串。
+        /// </summary>
+        internal static string nodeLog {
+            get {
+                return ResourceManager.GetString("nodeLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Preference 的本地化字符串。
         /// </summary>
         internal static string nodePreference {

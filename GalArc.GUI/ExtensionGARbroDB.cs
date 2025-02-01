@@ -7,17 +7,12 @@ namespace GalArc.GUI
 {
     public partial class ExtensionGARbroDB : UserControl
     {
-        private static ExtensionGARbroDB instance;
+        private static readonly Lazy<ExtensionGARbroDB> lazyInstance =
+                new Lazy<ExtensionGARbroDB>(() => new ExtensionGARbroDB());
 
-        public static ExtensionGARbroDB Instance
-        {
-            get
-            {
-                return instance ?? (instance = new ExtensionGARbroDB());
-            }
-        }
+        public static ExtensionGARbroDB Instance => lazyInstance.Value;
 
-        public ExtensionGARbroDB()
+        private ExtensionGARbroDB()
         {
             InitializeComponent();
             this.txtDBInfo.BackColor = Color.FromArgb(249, 249, 249);

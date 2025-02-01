@@ -1,4 +1,5 @@
 ﻿using GalArc.Logs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,7 +12,8 @@ namespace ArcFormats.Kirikiri
 {
     public class XP3 : ArchiveFormat
     {
-        public static UserControl PackExtraOptions = new PackXP3Options("1/2");
+        private static readonly Lazy<UserControl> _lazyPackOptions = new Lazy<UserControl>(() => new PackXP3Options("1/2"));
+        public static UserControl PackExtraOptions => _lazyPackOptions.Value;
 
         private readonly byte[] Magic = Utils.HexStringToByteArray("5850330d0a200a1a8b6701");
 
@@ -129,7 +131,7 @@ namespace ArcFormats.Kirikiri
                         }
                     }
                     entries.Add(entry);
-NextEntry:
+                    NextEntry:
                     ms.Position = nextPos;
                 }
             }

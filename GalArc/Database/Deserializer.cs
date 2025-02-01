@@ -16,7 +16,7 @@ namespace GalArc.Database
         public static Dictionary<string, string> LoadedJsons = new Dictionary<string, string>();
 
         private static List<Type> Schemes => Assembly.GetExecutingAssembly().GetTypes()
-            .Where(t => t.IsClass && typeof(IScheme).IsAssignableFrom(t))
+            .Where(t => t.IsClass && typeof(ArcScheme).IsAssignableFrom(t))
             .ToList();
 
         private static void LoadScheme(Type type)
@@ -70,7 +70,7 @@ namespace GalArc.Database
             }
         }
 
-        public static T ReadScheme<T>()
+        public static T ReadScheme<T>() where T : ArcScheme
         {
             if (!BaseSettings.Default.IsDatabaseEnabled)
             {
@@ -126,7 +126,7 @@ namespace GalArc.Database
             {
                 StringBuilder error = new StringBuilder();
                 error.AppendFormat(SchemeInfos.InfoEngineName, name).AppendLine();
-                error.Append(SchemeInfos.InfoFailedToReadInfos).AppendLine();
+                error.AppendLine(SchemeInfos.InfoFailedToReadInfos);
                 return error.ToString();
             }
         }
