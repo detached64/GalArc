@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.optionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.preferenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.languagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.combLang = new System.Windows.Forms.ToolStripComboBox();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,6 +55,8 @@
             this.lbStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.pBar = new System.Windows.Forms.ToolStripProgressBar();
             this.pnlOperation = new System.Windows.Forms.Panel();
+            this.reimportSchemesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.gbLog.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -69,22 +70,17 @@
             this.menuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionToolStripMenuItem,
+            this.settingsToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip.Name = "menuStrip";
             // 
             // optionToolStripMenuItem
             // 
             this.optionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.preferenceToolStripMenuItem,
+            this.reimportSchemesToolStripMenuItem,
             this.languagesToolStripMenuItem});
             this.optionToolStripMenuItem.Name = "optionToolStripMenuItem";
             resources.ApplyResources(this.optionToolStripMenuItem, "optionToolStripMenuItem");
-            // 
-            // preferenceToolStripMenuItem
-            // 
-            this.preferenceToolStripMenuItem.Name = "preferenceToolStripMenuItem";
-            resources.ApplyResources(this.preferenceToolStripMenuItem, "preferenceToolStripMenuItem");
-            this.preferenceToolStripMenuItem.Click += new System.EventHandler(this.preferenceToolStripMenuItem_Click);
             // 
             // languagesToolStripMenuItem
             // 
@@ -261,6 +257,18 @@
             resources.ApplyResources(this.pnlOperation, "pnlOperation");
             this.pnlOperation.Name = "pnlOperation";
             // 
+            // reimportSchemesToolStripMenuItem
+            // 
+            this.reimportSchemesToolStripMenuItem.Name = "reimportSchemesToolStripMenuItem";
+            resources.ApplyResources(this.reimportSchemesToolStripMenuItem, "reimportSchemesToolStripMenuItem");
+            this.reimportSchemesToolStripMenuItem.Click += new System.EventHandler(this.reimportSchemesToolStripMenuItem_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
@@ -310,7 +318,6 @@
         internal System.Windows.Forms.TreeView treeViewEngines;
         private System.Windows.Forms.RadioButton chkbxUnpack;
         private System.Windows.Forms.RadioButton chkbxPack;
-        private System.Windows.Forms.ToolStripMenuItem preferenceToolStripMenuItem;
         private System.Windows.Forms.Label lbInput;
         public System.Windows.Forms.TextBox txtOutputPath;
         public System.Windows.Forms.TextBox txtInputPath;
@@ -327,6 +334,8 @@
         private System.Windows.Forms.ToolStripStatusLabel lbStatus;
         private System.Windows.Forms.ToolStripProgressBar pBar;
         private System.Windows.Forms.Panel pnlOperation;
+        private System.Windows.Forms.ToolStripMenuItem reimportSchemesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
     }
 }
 

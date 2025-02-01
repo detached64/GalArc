@@ -42,6 +42,7 @@ namespace GalArc.GUI
         private void DatabaseSettings_Load(object sender, EventArgs e)
         {
             this.txtDBPath.Text = DatabaseConfig.Path;
+            this.txtDBInfo.Text = Deserializer.GetInfos().Trim();
         }
     }
 }

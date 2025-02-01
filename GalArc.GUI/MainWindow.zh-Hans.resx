@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="preferenceToolStripMenuItem.Text" xml:space="preserve">
-    <value>设置</value>
-  </data>
   <data name="optionToolStripMenuItem.Text" xml:space="preserve">
     <value>选项</value>
   </data>
@@ -176,5 +173,11 @@
   </data>
   <data name="statusStrip.Text" xml:space="preserve">
     <value>状态栏</value>
+  </data>
+  <data name="reimportSchemesToolStripMenuItem.Text" xml:space="preserve">
+    <value>重新导入密钥</value>
+  </data>
+  <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
+    <value>设置</value>
   </data>
 </root>

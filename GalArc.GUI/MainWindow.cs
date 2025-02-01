@@ -57,7 +57,7 @@ namespace GalArc.GUI
             this.Load += ImportSchemes;
         }
 
-        internal async void ImportSchemes(object sender, EventArgs e)
+        private async void ImportSchemes(object sender, EventArgs e)
         {
             this.lbStatus.Text = LogStrings.Loading;
             await Task.Run(() => LoadSchemes());
@@ -69,9 +69,17 @@ namespace GalArc.GUI
             }
         }
 
+        private async void ReimportSchemes(object sender, EventArgs e)
+        {
+            this.lbStatus.Text = LogStrings.Loading;
+            await Task.Run(() => LoadSchemes());
+            this.lbStatus.Text = LogStrings.Ready;
+        }
+
         private void LoadSchemes()
         {
             int c = ArcSettings.Formats.Count;
+            Logger.ResetBar();
             Logger.SetBarMax(c);
 
             int im_count = 0;
@@ -656,6 +664,17 @@ namespace GalArc.GUI
                     this.pBar.Maximum = e.Max;
                     break;
             }
+        }
+
+        private void reimportSchemesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReimportSchemes(sender, e);
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsWindow settingsWindow = new SettingsWindow();
+            settingsWindow.ShowDialog();
         }
     }
 }
