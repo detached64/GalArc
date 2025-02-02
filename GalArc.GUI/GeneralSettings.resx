@@ -144,7 +144,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;chkbxAutoSave.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="chkbxTopMost.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -171,37 +171,6 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;chkbxTopMost.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="chkbxFreeze.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="chkbxFreeze.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="chkbxFreeze.Location" type="System.Drawing.Point, System.Drawing">
-    <value>85, 164</value>
-  </data>
-  <data name="chkbxFreeze.Size" type="System.Drawing.Size, System.Drawing">
-    <value>306, 28</value>
-  </data>
-  <data name="chkbxFreeze.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="chkbxFreeze.Text" xml:space="preserve">
-    <value>Freeze controls while operating</value>
-  </data>
-  <data name="&gt;&gt;chkbxFreeze.Name" xml:space="preserve">
-    <value>chkbxFreeze</value>
-  </data>
-  <data name="&gt;&gt;chkbxFreeze.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkbxFreeze.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;chkbxFreeze.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -213,6 +182,7 @@
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>微软雅黑, 9pt</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
   </data>

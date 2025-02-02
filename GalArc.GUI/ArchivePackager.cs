@@ -2,6 +2,7 @@
 using GalArc.Common;
 using GalArc.GUI.Properties;
 using GalArc.Logs;
+using GalArc.Strings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -68,7 +69,7 @@ namespace GalArc.GUI
             {
                 if (!string.Equals(extension, Path.GetFileName(input), StringComparison.OrdinalIgnoreCase))
                 {
-                    Logger.Error(string.Format(Resources.logFileNameFailToMatch, extension));
+                    Logger.Error(string.Format(LogStrings.ErrorFileNameFailToMatch, extension));
                 }
                 extension = extension.Replace(".", string.Empty);
             }
@@ -85,12 +86,12 @@ namespace GalArc.GUI
                 }
                 else
                 {
-                    Logger.Error(Resources.logErrorUnpackMethodNotFound);
+                    Logger.Error(LogStrings.ErrorUnpackMethodNotFound);
                 }
             }
             else
             {
-                Logger.Error(Resources.logErrorClassNotFound);
+                Logger.Error(LogStrings.ErrorClassNotFound);
             }
         }
 
@@ -112,12 +113,12 @@ namespace GalArc.GUI
                 }
                 else
                 {
-                    Logger.Error(Resources.logErrorPackMethodNotFound);
+                    Logger.Error(LogStrings.ErrorPackMethodNotFound);
                 }
             }
             else
             {
-                Logger.Error(Resources.logErrorClassNotFound);
+                Logger.Error(LogStrings.ErrorClassNotFound);
             }
         }
 

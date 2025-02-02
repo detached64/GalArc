@@ -135,44 +135,11 @@
   <data name="columnPackFormat" xml:space="preserve">
     <value>Pack Format</value>
   </data>
-  <data name="logSelectUnpackNode" xml:space="preserve">
-    <value>Unpack mode: {0} {1} selected.</value>
-  </data>
-  <data name="logSelectPackNode" xml:space="preserve">
-    <value>Pack mode: {0} {1} selected.</value>
-  </data>
-  <data name="logTimedOut" xml:space="preserve">
-    <value>Timed out.</value>
-  </data>
-  <data name="logErrorNeedSpecifyInput" xml:space="preserve">
-    <value>Please specify input path.</value>
-  </data>
-  <data name="logErrorNeedSpecifyOutput" xml:space="preserve">
-    <value>Please specify output path.</value>
-  </data>
-  <data name="logErrorFileNotFound" xml:space="preserve">
-    <value>File specified does not exist.</value>
-  </data>
-  <data name="logErrorDirNotFound" xml:space="preserve">
-    <value>Folder specified does not exist.</value>
-  </data>
-  <data name="logErrorNeedSelectOperation" xml:space="preserve">
-    <value>Please select operation.</value>
-  </data>
-  <data name="logUnpacking" xml:space="preserve">
-    <value>Unpacking……</value>
-  </data>
-  <data name="logPacking" xml:space="preserve">
-    <value>Packing……</value>
-  </data>
   <data name="nodeExtensions" xml:space="preserve">
     <value>Extensions</value>
   </data>
   <data name="nodeDataBase" xml:space="preserve">
     <value>Database</value>
-  </data>
-  <data name="logFileNameFailToMatch" xml:space="preserve">
-    <value>Error: File name must be {0}.</value>
   </data>
   <data name="columnExtName" xml:space="preserve">
     <value>Extension Name</value>
@@ -188,15 +155,6 @@
   </data>
   <data name="columnExtLink" xml:space="preserve">
     <value>Extension Website</value>
-  </data>
-  <data name="logErrorUnpackMethodNotFound" xml:space="preserve">
-    <value>Error: Specified unpack method not found.</value>
-  </data>
-  <data name="logErrorPackMethodNotFound" xml:space="preserve">
-    <value>Error: Specified pack method not found.</value>
-  </data>
-  <data name="logErrorClassNotFound" xml:space="preserve">
-    <value>Error: Specified class not found.</value>
   </data>
   <data name="nodeLog" xml:space="preserve">
     <value>Log</value>

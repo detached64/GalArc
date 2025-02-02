@@ -35,6 +35,7 @@ namespace GalArc
             set => this["ToAutoSaveState"] = value;
         }
 
+        #region Functions Enabled
         [UserScopedSetting]
         [DebuggerNonUserCode]
         [DefaultSettingValue("True")]
@@ -47,12 +48,32 @@ namespace GalArc
         [UserScopedSetting]
         [DebuggerNonUserCode]
         [DefaultSettingValue("True")]
+        public bool IsDatabaseEnabled
+        {
+            get => (bool)this["IsDatabaseEnabled"];
+            set => this["IsDatabaseEnabled"] = value;
+        }
+
+        [UserScopedSetting]
+        [DebuggerNonUserCode]
+        [DefaultSettingValue("True")]
         public bool IsGARbroDBEnabled
         {
             get => (bool)this["IsGARbroDBEnabled"];
             set => this["IsGARbroDBEnabled"] = value;
         }
 
+        [UserScopedSetting]
+        [DebuggerNonUserCode]
+        [DefaultSettingValue("True")]
+        public bool IsSiglusKeyFinderEnabled
+        {
+            get => (bool)this["IsSiglusKeyFinderEnabled"];
+            set => this["IsSiglusKeyFinderEnabled"] = value;
+        }
+        #endregion
+
+        #region Paths
         [UserScopedSetting]
         [DebuggerNonUserCode]
         [DefaultSettingValue("")]
@@ -88,23 +109,6 @@ namespace GalArc
             get => (string)this["SiglusKeyFinderPath"];
             set => this["SiglusKeyFinderPath"] = value;
         }
-
-        [UserScopedSetting]
-        [DebuggerNonUserCode]
-        [DefaultSettingValue("True")]
-        public bool IsSiglusKeyFinderEnabled
-        {
-            get => (bool)this["IsSiglusKeyFinderEnabled"];
-            set => this["IsSiglusKeyFinderEnabled"] = value;
-        }
-
-        [UserScopedSetting]
-        [DebuggerNonUserCode]
-        [DefaultSettingValue("True")]
-        public bool IsDatabaseEnabled
-        {
-            get => (bool)this["IsDatabaseEnabled"];
-            set => this["IsDatabaseEnabled"] = value;
-        }
+        #endregion
     }
 }

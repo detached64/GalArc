@@ -137,10 +137,10 @@
     <value>New Instance</value>
   </data>
   <data name="ErrorNotValidArc" xml:space="preserve">
-    <value>Error: Not a valid archive.</value>
+    <value>Not a valid archive.</value>
   </data>
   <data name="ErrorOriginalFileNotFound" xml:space="preserve">
-    <value>Error: Original {0} file not found in the same directory.</value>
+    <value>Original {0} file not found in the same directory.</value>
   </data>
   <data name="Unpacking" xml:space="preserve">
     <value>Unpacking……</value>
@@ -155,7 +155,7 @@
     <value>Current version: {0} Latest version: {1}</value>
   </data>
   <data name="ErrorSpecifiedFileNotFound" xml:space="preserve">
-    <value>Error: {0} file not found in the same directory.</value>
+    <value>{0} file not found in the same directory.</value>
   </data>
   <data name="ImportGARbroDBScheme" xml:space="preserve">
     <value>Import {0} schemes from GARbroDB.</value>
@@ -176,6 +176,42 @@
     <value>Valid database count: {0}</value>
   </data>
   <data name="ImportedSchemeCount" xml:space="preserve">
-    <value>Imported schemes count: {0}</value>
+    <value>Imported scheme count: {0}</value>
+  </data>
+  <data name="SelectUnpackNode" xml:space="preserve">
+    <value>Unpack mode: {0} {1} selected.</value>
+  </data>
+  <data name="SelectPackNode" xml:space="preserve">
+    <value>Pack mode: {0} {1} selected.</value>
+  </data>
+  <data name="TimedOut" xml:space="preserve">
+    <value>Timed out.</value>
+  </data>
+  <data name="ErrorNeedSpecifyInput" xml:space="preserve">
+    <value>Please specify input path.</value>
+  </data>
+  <data name="ErrorNeedSpecifyOutput" xml:space="preserve">
+    <value>Please specify output path.</value>
+  </data>
+  <data name="ErrorFileNotFound" xml:space="preserve">
+    <value>File specified does not exist.</value>
+  </data>
+  <data name="ErrorDirNotFound" xml:space="preserve">
+    <value>Folder specified does not exist.</value>
+  </data>
+  <data name="ErrorNeedSelectOperation" xml:space="preserve">
+    <value>Please select operation.</value>
+  </data>
+  <data name="ErrorFileNameFailToMatch" xml:space="preserve">
+    <value>File name must be {0}.</value>
+  </data>
+  <data name="ErrorUnpackMethodNotFound" xml:space="preserve">
+    <value>Specified unpack method not found.</value>
+  </data>
+  <data name="ErrorPackMethodNotFound" xml:space="preserve">
+    <value>Specified pack method not found.</value>
+  </data>
+  <data name="ErrorClassNotFound" xml:space="preserve">
+    <value>Specified class not found.</value>
   </data>
 </root>

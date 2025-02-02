@@ -132,7 +132,7 @@
     <value>0</value>
   </data>
   <data name="chkbxDebug.Text" xml:space="preserve">
-    <value>Debug mode</value>
+    <value>Show debug logs</value>
   </data>
   <data name="&gt;&gt;chkbxDebug.Name" xml:space="preserve">
     <value>chkbxDebug</value>

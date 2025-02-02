@@ -175,8 +175,9 @@ namespace GalArc.Logs
         {
             if (!toThrow)
             {
-                AppendAndSaveLog(log, 0);
-                OnStatusMessageEvent(string.Format(LogStrings.ErrorOccur, log));
+                string msg = string.Format(LogStrings.ErrorOccur, log);
+                AppendAndSaveLog(msg, 0);
+                OnStatusMessageEvent(msg);
             }
             else
             {
@@ -232,7 +233,7 @@ namespace GalArc.Logs
         }
         #endregion
 
-        #region Public wrapped methods.
+        #region Public wrapped methods
         public static void Debug(string log) => Instance.DebugInternal(log);
         public static void DebugInvoke(string log) => Instance.DebugInvokeInternal(log);
         public static void Info(string log) => Instance.InfoInternal(log);

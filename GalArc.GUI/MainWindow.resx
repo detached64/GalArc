@@ -125,53 +125,68 @@
     <value>False</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="reimportSchemesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>277, 34</value>
+  <data name="matchPathsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>270, 34</value>
   </data>
-  <data name="reimportSchemesToolStripMenuItem.Text" xml:space="preserve">
-    <value>Re-import schemes</value>
+  <data name="matchPathsMenuItem.Text" xml:space="preserve">
+    <value>Match Paths</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="combLang.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>System</value>
+  <data name="clearPathsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>270, 34</value>
   </data>
-  <data name="combLang.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 32</value>
+  <data name="clearPathsMenuItem.Text" xml:space="preserve">
+    <value>Clear Paths</value>
   </data>
-  <data name="languagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>277, 34</value>
+  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>267, 6</value>
   </data>
-  <data name="languagesToolStripMenuItem.Text" xml:space="preserve">
-    <value>Languages</value>
+  <data name="reimportSchemesMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>270, 34</value>
   </data>
-  <data name="optionToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="reimportSchemesMenuItem.Text" xml:space="preserve">
+    <value>Reload schemes</value>
+  </data>
+  <data name="optionMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>87, 28</value>
   </data>
-  <data name="optionToolStripMenuItem.Text" xml:space="preserve">
+  <data name="optionMenuItem.Text" xml:space="preserve">
     <value>Option</value>
   </data>
-  <data name="settingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="settingsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 28</value>
   </data>
-  <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
+  <data name="settingsMenuItem.Text" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="checkUpdateToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>266, 34</value>
+  <data name="checkUpdateMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>270, 34</value>
   </data>
-  <data name="checkUpdateToolStripMenuItem.Text" xml:space="preserve">
+  <data name="checkUpdateMenuItem.Text" xml:space="preserve">
     <value>Check for updates</value>
   </data>
-  <data name="aboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>266, 34</value>
+  <data name="aboutMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>270, 34</value>
   </data>
-  <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
+  <data name="aboutMenuItem.Text" xml:space="preserve">
     <value>About</value>
   </data>
-  <data name="helpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="combLanguages.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>System</value>
+  </data>
+  <data name="combLanguages.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 32</value>
+  </data>
+  <data name="languagesMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>270, 34</value>
+  </data>
+  <data name="languagesMenuItem.Text" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="helpMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>67, 28</value>
   </data>
-  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
+  <data name="helpMenuItem.Text" xml:space="preserve">
     <value>Help</value>
   </data>
   <data name="menuStrip.Location" type="System.Drawing.Point, System.Drawing">
@@ -196,7 +211,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>12</value>
   </data>
   <data name="treeViewEngines.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left</value>
@@ -220,7 +235,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;treeViewEngines.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>11</value>
   </data>
   <data name="chkbxUnpack.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -304,7 +319,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbInput.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>10</value>
   </data>
   <data name="txtOutputPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -328,7 +343,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;txtOutputPath.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>8</value>
   </data>
   <data name="txtInputPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -352,7 +367,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;txtInputPath.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>9</value>
   </data>
   <data name="lbOutput.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -379,7 +394,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbOutput.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>7</value>
   </data>
   <data name="btSelInput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -406,7 +421,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btSelInput.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>5</value>
   </data>
   <data name="btSelOutput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -433,67 +448,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btSelOutput.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="btClear.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="btClear.Location" type="System.Drawing.Point, System.Drawing">
-    <value>818, 218</value>
-  </data>
-  <data name="btClear.Size" type="System.Drawing.Size, System.Drawing">
-    <value>133, 38</value>
-  </data>
-  <data name="btClear.TabIndex" type="System.Int32, mscorlib">
-    <value>25</value>
-  </data>
-  <data name="btClear.Text" xml:space="preserve">
-    <value>Clear</value>
-  </data>
-  <data name="&gt;&gt;btClear.Name" xml:space="preserve">
-    <value>btClear</value>
-  </data>
-  <data name="&gt;&gt;btClear.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btClear.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;btClear.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="chkbxMatch.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="chkbxMatch.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="chkbxMatch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>711, 224</value>
-  </data>
-  <data name="chkbxMatch.Size" type="System.Drawing.Size, System.Drawing">
-    <value>91, 28</value>
-  </data>
-  <data name="chkbxMatch.TabIndex" type="System.Int32, mscorlib">
-    <value>27</value>
-  </data>
-  <data name="chkbxMatch.Text" xml:space="preserve">
-    <value>Match</value>
-  </data>
-  <data name="chkbxMatch.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="&gt;&gt;chkbxMatch.Name" xml:space="preserve">
-    <value>chkbxMatch</value>
-  </data>
-  <data name="&gt;&gt;chkbxMatch.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;chkbxMatch.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;chkbxMatch.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="btExecute.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -520,7 +475,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btExecute.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>4</value>
   </data>
   <data name="gbOptions.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -681,41 +636,71 @@
   <data name="$this.Text" xml:space="preserve">
     <value>GalArc</value>
   </data>
-  <data name="&gt;&gt;optionToolStripMenuItem.Name" xml:space="preserve">
-    <value>optionToolStripMenuItem</value>
+  <data name="&gt;&gt;optionMenuItem.Name" xml:space="preserve">
+    <value>optionMenuItem</value>
   </data>
-  <data name="&gt;&gt;optionToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;optionMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;languagesToolStripMenuItem.Name" xml:space="preserve">
-    <value>languagesToolStripMenuItem</value>
+  <data name="&gt;&gt;matchPathsMenuItem.Name" xml:space="preserve">
+    <value>matchPathsMenuItem</value>
   </data>
-  <data name="&gt;&gt;languagesToolStripMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;matchPathsMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;combLang.Name" xml:space="preserve">
-    <value>combLang</value>
+  <data name="&gt;&gt;clearPathsMenuItem.Name" xml:space="preserve">
+    <value>clearPathsMenuItem</value>
   </data>
-  <data name="&gt;&gt;combLang.Type" xml:space="preserve">
+  <data name="&gt;&gt;clearPathsMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
+    <value>toolStripSeparator1</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;reimportSchemesMenuItem.Name" xml:space="preserve">
+    <value>reimportSchemesMenuItem</value>
+  </data>
+  <data name="&gt;&gt;reimportSchemesMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;settingsMenuItem.Name" xml:space="preserve">
+    <value>settingsMenuItem</value>
+  </data>
+  <data name="&gt;&gt;settingsMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;helpMenuItem.Name" xml:space="preserve">
+    <value>helpMenuItem</value>
+  </data>
+  <data name="&gt;&gt;helpMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkUpdateMenuItem.Name" xml:space="preserve">
+    <value>checkUpdateMenuItem</value>
+  </data>
+  <data name="&gt;&gt;checkUpdateMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;aboutMenuItem.Name" xml:space="preserve">
+    <value>aboutMenuItem</value>
+  </data>
+  <data name="&gt;&gt;aboutMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;languagesMenuItem.Name" xml:space="preserve">
+    <value>languagesMenuItem</value>
+  </data>
+  <data name="&gt;&gt;languagesMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;combLanguages.Name" xml:space="preserve">
+    <value>combLanguages</value>
+  </data>
+  <data name="&gt;&gt;combLanguages.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;helpToolStripMenuItem.Name" xml:space="preserve">
-    <value>helpToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;helpToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkUpdateToolStripMenuItem.Name" xml:space="preserve">
-    <value>checkUpdateToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;checkUpdateToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;aboutToolStripMenuItem.Name" xml:space="preserve">
-    <value>aboutToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;aboutToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lbStatus.Name" xml:space="preserve">
     <value>lbStatus</value>
@@ -728,18 +713,6 @@
   </data>
   <data name="&gt;&gt;pBar.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;reimportSchemesToolStripMenuItem.Name" xml:space="preserve">
-    <value>reimportSchemesToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;reimportSchemesToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;settingsToolStripMenuItem.Name" xml:space="preserve">
-    <value>settingsToolStripMenuItem</value>
-  </data>
-  <data name="&gt;&gt;settingsToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainWindow</value>

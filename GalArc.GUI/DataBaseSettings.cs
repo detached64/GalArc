@@ -15,7 +15,6 @@ namespace GalArc.GUI
         private DatabaseSettings()
         {
             InitializeComponent();
-            this.txtDBInfo.BackColor = Color.FromArgb(249, 249, 249);
         }
 
         private void btSelect_Click(object sender, EventArgs e)

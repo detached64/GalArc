@@ -77,7 +77,7 @@
             // txtDBInfo
             // 
             resources.ApplyResources(this.txtDBInfo, "txtDBInfo");
-            this.txtDBInfo.BackColor = System.Drawing.Color.White;
+            this.txtDBInfo.BackColor = System.Drawing.SystemColors.Control;
             this.txtDBInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtDBInfo.Name = "txtDBInfo";
             this.txtDBInfo.ReadOnly = true;

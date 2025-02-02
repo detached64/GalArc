@@ -61,7 +61,70 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Error: Not a valid archive. 的本地化字符串。
+        ///   查找类似 Specified class not found. 的本地化字符串。
+        /// </summary>
+        public static string ErrorClassNotFound {
+            get {
+                return ResourceManager.GetString("ErrorClassNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Folder specified does not exist. 的本地化字符串。
+        /// </summary>
+        public static string ErrorDirNotFound {
+            get {
+                return ResourceManager.GetString("ErrorDirNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 File name must be {0}. 的本地化字符串。
+        /// </summary>
+        public static string ErrorFileNameFailToMatch {
+            get {
+                return ResourceManager.GetString("ErrorFileNameFailToMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 File specified does not exist. 的本地化字符串。
+        /// </summary>
+        public static string ErrorFileNotFound {
+            get {
+                return ResourceManager.GetString("ErrorFileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Please select operation. 的本地化字符串。
+        /// </summary>
+        public static string ErrorNeedSelectOperation {
+            get {
+                return ResourceManager.GetString("ErrorNeedSelectOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Please specify input path. 的本地化字符串。
+        /// </summary>
+        public static string ErrorNeedSpecifyInput {
+            get {
+                return ResourceManager.GetString("ErrorNeedSpecifyInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Please specify output path. 的本地化字符串。
+        /// </summary>
+        public static string ErrorNeedSpecifyOutput {
+            get {
+                return ResourceManager.GetString("ErrorNeedSpecifyOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Not a valid archive. 的本地化字符串。
         /// </summary>
         public static string ErrorNotValidArc {
             get {
@@ -79,7 +142,7 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Error: Original {0} file not found in the same directory. 的本地化字符串。
+        ///   查找类似 Original {0} file not found in the same directory. 的本地化字符串。
         /// </summary>
         public static string ErrorOriginalFileNotFound {
             get {
@@ -88,11 +151,29 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Error: {0} file not found in the same directory. 的本地化字符串。
+        ///   查找类似 Specified pack method not found. 的本地化字符串。
+        /// </summary>
+        public static string ErrorPackMethodNotFound {
+            get {
+                return ResourceManager.GetString("ErrorPackMethodNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 {0} file not found in the same directory. 的本地化字符串。
         /// </summary>
         public static string ErrorSpecifiedFileNotFound {
             get {
                 return ResourceManager.GetString("ErrorSpecifiedFileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Specified unpack method not found. 的本地化字符串。
+        /// </summary>
+        public static string ErrorUnpackMethodNotFound {
+            get {
+                return ResourceManager.GetString("ErrorUnpackMethodNotFound", resourceCulture);
             }
         }
         
@@ -124,7 +205,7 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Imported schemes count: {0} 的本地化字符串。
+        ///   查找类似 Imported scheme count: {0} 的本地化字符串。
         /// </summary>
         public static string ImportedSchemeCount {
             get {
@@ -237,6 +318,33 @@ namespace GalArc.Strings {
         public static string SchemeCount {
             get {
                 return ResourceManager.GetString("SchemeCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Pack mode: {0} {1} selected. 的本地化字符串。
+        /// </summary>
+        public static string SelectPackNode {
+            get {
+                return ResourceManager.GetString("SelectPackNode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unpack mode: {0} {1} selected. 的本地化字符串。
+        /// </summary>
+        public static string SelectUnpackNode {
+            get {
+                return ResourceManager.GetString("SelectUnpackNode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Timed out. 的本地化字符串。
+        /// </summary>
+        public static string TimedOut {
+            get {
+                return ResourceManager.GetString("TimedOut", resourceCulture);
             }
         }
         

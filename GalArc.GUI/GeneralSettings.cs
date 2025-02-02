@@ -20,7 +20,6 @@ namespace GalArc.GUI
         {
             this.chkbxAutoSave.Checked = BaseSettings.Default.ToAutoSaveState;
             this.chkbxTopMost.Checked = Settings.Default.IsTopMost;
-            this.chkbxFreeze.Checked = Settings.Default.ToFreezeControls;
             MainWindow.Instance.TopMost = this.chkbxTopMost.Checked;
         }
 
@@ -34,12 +33,6 @@ namespace GalArc.GUI
         {
             MainWindow.Instance.TopMost = this.chkbxTopMost.Checked;
             Settings.Default.IsTopMost = this.chkbxTopMost.Checked;
-            Settings.Default.Save();
-        }
-
-        private void chkbxFreeze_CheckedChanged(object sender, EventArgs e)
-        {
-            Settings.Default.ToFreezeControls = this.chkbxFreeze.Checked;
             Settings.Default.Save();
         }
     }

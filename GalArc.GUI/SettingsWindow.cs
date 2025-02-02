@@ -19,8 +19,6 @@ namespace GalArc.GUI
             {
                 this.TopMost = true;
             }
-            this.treeViewOption.BackColor = Color.FromArgb(249, 249, 249);
-            this.panel.BackColor = Color.FromArgb(249, 249, 249);
             this.treeViewOption.SelectedNode = treeViewOption.Nodes[0];
             this.treeViewOption.Nodes[0].Text = Resources.nodeGeneral;
             this.treeViewOption.Nodes[1].Text = Resources.nodePreference;

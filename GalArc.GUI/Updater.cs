@@ -1,5 +1,5 @@
-﻿using GalArc.GUI.Properties;
-using GalArc.Logs;
+﻿using GalArc.Logs;
+using GalArc.Strings;
 using System;
 using System.Net.Http;
 using System.Reflection;
@@ -33,7 +33,7 @@ namespace GalArc.GUI
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger.Error(Resources.logTimedOut, false);
+                    Logger.Error(LogStrings.TimedOut, false);
                     return;
                 }
                 catch (Exception)

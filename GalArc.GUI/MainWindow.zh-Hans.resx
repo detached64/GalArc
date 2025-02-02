@@ -117,23 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="optionToolStripMenuItem.Text" xml:space="preserve">
-    <value>选项</value>
-  </data>
-  <data name="checkUpdateToolStripMenuItem.Text" xml:space="preserve">
-    <value>检查更新</value>
-  </data>
-  <data name="aboutToolStripMenuItem.Text" xml:space="preserve">
-    <value>关于</value>
-  </data>
-  <data name="helpToolStripMenuItem.Text" xml:space="preserve">
-    <value>帮助</value>
-  </data>
   <data name="menuStrip.Text" xml:space="preserve">
     <value>菜单栏</value>
-  </data>
-  <data name="languagesToolStripMenuItem.Text" xml:space="preserve">
-    <value>语言</value>
   </data>
   <data name="chkbxUnpack.Text" xml:space="preserve">
     <value>解包</value>
@@ -153,12 +138,6 @@
   <data name="btSelOutput.Text" xml:space="preserve">
     <value>…</value>
   </data>
-  <data name="btClear.Text" xml:space="preserve">
-    <value>清空路径</value>
-  </data>
-  <data name="chkbxMatch.Text" xml:space="preserve">
-    <value>匹配路径</value>
-  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>GalArc</value>
   </data>
@@ -174,10 +153,31 @@
   <data name="statusStrip.Text" xml:space="preserve">
     <value>状态栏</value>
   </data>
-  <data name="reimportSchemesToolStripMenuItem.Text" xml:space="preserve">
+  <data name="settingsMenuItem.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="reimportSchemesMenuItem.Text" xml:space="preserve">
     <value>重新导入密钥</value>
   </data>
-  <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
-    <value>设置</value>
+  <data name="optionMenuItem.Text" xml:space="preserve">
+    <value>选项</value>
+  </data>
+  <data name="matchPathsMenuItem.Text" xml:space="preserve">
+    <value>匹配路径</value>
+  </data>
+  <data name="languagesMenuItem.Text" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="helpMenuItem.Text" xml:space="preserve">
+    <value>帮助</value>
+  </data>
+  <data name="clearPathsMenuItem.Text" xml:space="preserve">
+    <value>清空路径</value>
+  </data>
+  <data name="checkUpdateMenuItem.Text" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+  <data name="aboutMenuItem.Text" xml:space="preserve">
+    <value>关于</value>
   </data>
 </root>

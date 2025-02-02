@@ -30,12 +30,17 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.optionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.languagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.combLang = new System.Windows.Forms.ToolStripComboBox();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.checkUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.matchPathsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearPathsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.reimportSchemesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkUpdateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.languagesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.combLanguages = new System.Windows.Forms.ToolStripComboBox();
             this.treeViewEngines = new System.Windows.Forms.TreeView();
             this.chkbxUnpack = new System.Windows.Forms.RadioButton();
             this.chkbxPack = new System.Windows.Forms.RadioButton();
@@ -45,8 +50,6 @@
             this.lbOutput = new System.Windows.Forms.Label();
             this.btSelInput = new System.Windows.Forms.Button();
             this.btSelOutput = new System.Windows.Forms.Button();
-            this.btClear = new System.Windows.Forms.Button();
-            this.chkbxMatch = new System.Windows.Forms.CheckBox();
             this.btExecute = new System.Windows.Forms.Button();
             this.gbOptions = new System.Windows.Forms.GroupBox();
             this.txtLog = new System.Windows.Forms.TextBox();
@@ -55,8 +58,6 @@
             this.lbStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.pBar = new System.Windows.Forms.ToolStripProgressBar();
             this.pnlOperation = new System.Windows.Forms.Panel();
-            this.reimportSchemesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.gbLog.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -69,52 +70,85 @@
             this.menuStrip.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionToolStripMenuItem,
-            this.settingsToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.optionMenuItem,
+            this.settingsMenuItem,
+            this.helpMenuItem});
             this.menuStrip.Name = "menuStrip";
             // 
-            // optionToolStripMenuItem
+            // optionMenuItem
             // 
-            this.optionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.reimportSchemesToolStripMenuItem,
-            this.languagesToolStripMenuItem});
-            this.optionToolStripMenuItem.Name = "optionToolStripMenuItem";
-            resources.ApplyResources(this.optionToolStripMenuItem, "optionToolStripMenuItem");
+            this.optionMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.matchPathsMenuItem,
+            this.clearPathsMenuItem,
+            this.toolStripSeparator1,
+            this.reimportSchemesMenuItem});
+            this.optionMenuItem.Name = "optionMenuItem";
+            resources.ApplyResources(this.optionMenuItem, "optionMenuItem");
             // 
-            // languagesToolStripMenuItem
+            // matchPathsMenuItem
             // 
-            this.languagesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.combLang});
-            this.languagesToolStripMenuItem.Name = "languagesToolStripMenuItem";
-            resources.ApplyResources(this.languagesToolStripMenuItem, "languagesToolStripMenuItem");
+            this.matchPathsMenuItem.CheckOnClick = true;
+            this.matchPathsMenuItem.Name = "matchPathsMenuItem";
+            resources.ApplyResources(this.matchPathsMenuItem, "matchPathsMenuItem");
+            this.matchPathsMenuItem.CheckedChanged += new System.EventHandler(this.matchPathsMenuItem_CheckedChanged);
             // 
-            // combLang
+            // clearPathsMenuItem
             // 
-            this.combLang.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            resources.ApplyResources(this.combLang, "combLang");
-            this.combLang.Name = "combLang";
-            this.combLang.SelectedIndexChanged += new System.EventHandler(this.combLang_SelectedIndexChanged);
+            this.clearPathsMenuItem.Name = "clearPathsMenuItem";
+            resources.ApplyResources(this.clearPathsMenuItem, "clearPathsMenuItem");
+            this.clearPathsMenuItem.Click += new System.EventHandler(this.clearPathsMenuStrip_Click);
             // 
-            // helpToolStripMenuItem
+            // toolStripSeparator1
             // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.checkUpdateToolStripMenuItem,
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            resources.ApplyResources(this.helpToolStripMenuItem, "helpToolStripMenuItem");
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             // 
-            // checkUpdateToolStripMenuItem
+            // reimportSchemesMenuItem
             // 
-            this.checkUpdateToolStripMenuItem.Name = "checkUpdateToolStripMenuItem";
-            resources.ApplyResources(this.checkUpdateToolStripMenuItem, "checkUpdateToolStripMenuItem");
-            this.checkUpdateToolStripMenuItem.Click += new System.EventHandler(this.checkUpdateToolStripMenuItem_Click);
+            this.reimportSchemesMenuItem.Name = "reimportSchemesMenuItem";
+            resources.ApplyResources(this.reimportSchemesMenuItem, "reimportSchemesMenuItem");
+            this.reimportSchemesMenuItem.Click += new System.EventHandler(this.reimportSchemesToolStripMenuItem_Click);
             // 
-            // aboutToolStripMenuItem
+            // settingsMenuItem
             // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            resources.ApplyResources(this.aboutToolStripMenuItem, "aboutToolStripMenuItem");
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.settingsMenuItem.Name = "settingsMenuItem";
+            resources.ApplyResources(this.settingsMenuItem, "settingsMenuItem");
+            this.settingsMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
+            // helpMenuItem
+            // 
+            this.helpMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.checkUpdateMenuItem,
+            this.aboutMenuItem,
+            this.languagesMenuItem});
+            this.helpMenuItem.Name = "helpMenuItem";
+            resources.ApplyResources(this.helpMenuItem, "helpMenuItem");
+            // 
+            // checkUpdateMenuItem
+            // 
+            this.checkUpdateMenuItem.Name = "checkUpdateMenuItem";
+            resources.ApplyResources(this.checkUpdateMenuItem, "checkUpdateMenuItem");
+            this.checkUpdateMenuItem.Click += new System.EventHandler(this.checkUpdateToolStripMenuItem_Click);
+            // 
+            // aboutMenuItem
+            // 
+            this.aboutMenuItem.Name = "aboutMenuItem";
+            resources.ApplyResources(this.aboutMenuItem, "aboutMenuItem");
+            this.aboutMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // languagesMenuItem
+            // 
+            this.languagesMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.combLanguages});
+            this.languagesMenuItem.Name = "languagesMenuItem";
+            resources.ApplyResources(this.languagesMenuItem, "languagesMenuItem");
+            // 
+            // combLanguages
+            // 
+            this.combLanguages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            resources.ApplyResources(this.combLanguages, "combLanguages");
+            this.combLanguages.Name = "combLanguages";
+            this.combLanguages.SelectedIndexChanged += new System.EventHandler(this.combLang_SelectedIndexChanged);
             // 
             // treeViewEngines
             // 
@@ -181,22 +215,6 @@
             this.btSelOutput.UseVisualStyleBackColor = true;
             this.btSelOutput.Click += new System.EventHandler(this.btSelOutput_Click);
             // 
-            // btClear
-            // 
-            resources.ApplyResources(this.btClear, "btClear");
-            this.btClear.Name = "btClear";
-            this.btClear.UseVisualStyleBackColor = true;
-            this.btClear.Click += new System.EventHandler(this.btClear_Click);
-            // 
-            // chkbxMatch
-            // 
-            resources.ApplyResources(this.chkbxMatch, "chkbxMatch");
-            this.chkbxMatch.Checked = true;
-            this.chkbxMatch.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkbxMatch.Name = "chkbxMatch";
-            this.chkbxMatch.UseVisualStyleBackColor = true;
-            this.chkbxMatch.CheckedChanged += new System.EventHandler(this.chkbxMatch_CheckedChanged);
-            // 
             // btExecute
             // 
             resources.ApplyResources(this.btExecute, "btExecute");
@@ -257,18 +275,6 @@
             resources.ApplyResources(this.pnlOperation, "pnlOperation");
             this.pnlOperation.Name = "pnlOperation";
             // 
-            // reimportSchemesToolStripMenuItem
-            // 
-            this.reimportSchemesToolStripMenuItem.Name = "reimportSchemesToolStripMenuItem";
-            resources.ApplyResources(this.reimportSchemesToolStripMenuItem, "reimportSchemesToolStripMenuItem");
-            this.reimportSchemesToolStripMenuItem.Click += new System.EventHandler(this.reimportSchemesToolStripMenuItem_Click);
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
-            // 
             // MainWindow
             // 
             this.AllowDrop = true;
@@ -278,8 +284,6 @@
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.gbLog);
             this.Controls.Add(this.gbOptions);
-            this.Controls.Add(this.btClear);
-            this.Controls.Add(this.chkbxMatch);
             this.Controls.Add(this.btExecute);
             this.Controls.Add(this.btSelInput);
             this.Controls.Add(this.btSelOutput);
@@ -309,12 +313,10 @@
 
         #endregion
         private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.ToolStripMenuItem optionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem checkUpdateToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem languagesToolStripMenuItem;
-        internal System.Windows.Forms.ToolStripComboBox combLang;
+        private System.Windows.Forms.ToolStripMenuItem optionMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkUpdateMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutMenuItem;
         internal System.Windows.Forms.TreeView treeViewEngines;
         private System.Windows.Forms.RadioButton chkbxUnpack;
         private System.Windows.Forms.RadioButton chkbxPack;
@@ -324,8 +326,6 @@
         private System.Windows.Forms.Label lbOutput;
         private System.Windows.Forms.Button btSelInput;
         private System.Windows.Forms.Button btSelOutput;
-        internal System.Windows.Forms.Button btClear;
-        internal System.Windows.Forms.CheckBox chkbxMatch;
         internal System.Windows.Forms.Button btExecute;
         private System.Windows.Forms.GroupBox gbOptions;
         public System.Windows.Forms.TextBox txtLog;
@@ -334,8 +334,13 @@
         private System.Windows.Forms.ToolStripStatusLabel lbStatus;
         private System.Windows.Forms.ToolStripProgressBar pBar;
         private System.Windows.Forms.Panel pnlOperation;
-        private System.Windows.Forms.ToolStripMenuItem reimportSchemesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reimportSchemesMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem languagesMenuItem;
+        internal System.Windows.Forms.ToolStripComboBox combLanguages;
+        private System.Windows.Forms.ToolStripMenuItem matchPathsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearPathsMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

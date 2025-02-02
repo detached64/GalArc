@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="chkbxDebug.Text" xml:space="preserve">
-    <value>调试模式</value>
+    <value>显示调试日志</value>
   </data>
   <data name="chkbxSaveLog.Text" xml:space="preserve">
     <value>保存日志</value>

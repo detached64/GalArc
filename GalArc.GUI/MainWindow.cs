@@ -59,9 +59,11 @@ namespace GalArc.GUI
 
         private async void ImportSchemes(object sender, EventArgs e)
         {
+            this.pnlOperation.Enabled = false;
             this.lbStatus.Text = LogStrings.Loading;
             await Task.Run(() => LoadSchemes());
             this.lbStatus.Text = LogStrings.Ready;
+            this.pnlOperation.Enabled = true;
             if (BaseSettings.Default.ToAutoSaveState)
             {
                 this.chkbxUnpack.Checked = Settings.Default.IsUnpackMode;
@@ -94,19 +96,18 @@ namespace GalArc.GUI
                 Logger.UpdateBar();
             }
             Deserializer.ImportedSchemeCount = im_count;
-
             Logger.Debug(string.Format(LogStrings.SchemeCount, Deserializer.SchemeCount));
             Logger.Debug(string.Format(LogStrings.ImportedSchemeCount, Deserializer.ImportedSchemeCount));
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            this.combLang.Items.AddRange(Languages.SupportedLanguages.Keys.ToArray());
+            this.combLanguages.Items.AddRange(Languages.SupportedLanguages.Keys.ToArray());
             this.TopMost = Settings.Default.IsTopMost;
-            this.combLang.Text = Languages.SupportedLanguages.FirstOrDefault(x => x.Value == Culture).Key;
+            this.combLanguages.Text = Languages.SupportedLanguages.FirstOrDefault(x => x.Value == Culture).Key;
             if (BaseSettings.Default.ToAutoSaveState)
             {
-                this.chkbxMatch.Checked = Settings.Default.ToMatchPath;
+                this.matchPathsMenuItem.Checked = Settings.Default.ToMatchPath;
             }
         }
 
@@ -175,7 +176,7 @@ namespace GalArc.GUI
         private void combLang_SelectedIndexChanged(object sender, EventArgs e)
         {
             string previousCulture = Culture;
-            Culture = Languages.SupportedLanguages[this.combLang.Text];
+            Culture = Languages.SupportedLanguages[this.combLanguages.Text];
             Settings.Default.LastLanguage = Culture;
             Settings.Default.Save();
             if (isFirstChangeLang)
@@ -238,7 +239,7 @@ namespace GalArc.GUI
                     }
                     SelectedNodeUnpack = e.Node;
                     SyncPath();
-                    Logger.Info(string.Format(Resources.logSelectUnpackNode, e.Node.Parent.Text, e.Node.Text));
+                    Logger.Info(string.Format(LogStrings.SelectUnpackNode, e.Node.Parent.Text, e.Node.Text));
                     GetExtraOptions(Mode.Unpack);
                 }
                 else if (this.chkbxPack.Checked)
@@ -251,7 +252,7 @@ namespace GalArc.GUI
                     }
                     SelectedNodePack = e.Node;
                     SyncPath();
-                    Logger.Info(string.Format(Resources.logSelectPackNode, e.Node.Parent.Text, e.Node.Text));
+                    Logger.Info(string.Format(LogStrings.SelectPackNode, e.Node.Parent.Text, e.Node.Text));
                     GetExtraOptions(Mode.Pack);
                 }
             }
@@ -298,7 +299,7 @@ namespace GalArc.GUI
             }
             else
             {
-                Logger.Error(Resources.logErrorNeedSelectOperation, false);
+                Logger.Error(LogStrings.ErrorNeedSelectOperation, false);
             }
         }
 
@@ -314,7 +315,7 @@ namespace GalArc.GUI
             }
             else
             {
-                Logger.Error(Resources.logErrorNeedSelectOperation, false);
+                Logger.Error(LogStrings.ErrorNeedSelectOperation, false);
             }
         }
 
@@ -360,18 +361,18 @@ namespace GalArc.GUI
             settingsWindow.ShowDialog();
         }
 
-        private void btClear_Click(object sender, EventArgs e)
+        private void clearPathsMenuStrip_Click(object sender, EventArgs e)
         {
             this.txtInputPath.Text = string.Empty;
             this.txtOutputPath.Text = string.Empty;
         }
 
-        private void chkbxMatch_CheckedChanged(object sender, EventArgs e)
+        private void matchPathsMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             SyncPath();
             if (BaseSettings.Default.ToAutoSaveState)
             {
-                Settings.Default.ToMatchPath = this.chkbxMatch.Checked;
+                Settings.Default.ToMatchPath = this.matchPathsMenuItem.Checked;
                 Settings.Default.Save();
             }
         }
@@ -452,12 +453,12 @@ namespace GalArc.GUI
         {
             if (string.IsNullOrEmpty(this.txtInputPath.Text))
             {
-                Logger.Error(Resources.logErrorNeedSpecifyInput, false);
+                Logger.Error(LogStrings.ErrorNeedSpecifyInput, false);
                 return;
             }
             if (string.IsNullOrEmpty(this.txtOutputPath.Text))
             {
-                Logger.Error(Resources.logErrorNeedSpecifyOutput, false);
+                Logger.Error(LogStrings.ErrorNeedSpecifyOutput, false);
                 return;
             }
 
@@ -465,15 +466,12 @@ namespace GalArc.GUI
             {
                 if (!File.Exists(this.txtInputPath.Text))
                 {
-                    Logger.Error(Resources.logErrorFileNotFound, false);
+                    Logger.Error(LogStrings.ErrorFileNotFound, false);
                     return;
                 }
-                if (Settings.Default.ToFreezeControls)
-                {
-                    Freeze();
-                }
+                Freeze();
                 this.btExecute.Enabled = false;
-                this.lbStatus.Text = Resources.logUnpacking;
+                this.lbStatus.Text = LogStrings.Unpacking;
 
                 try
                 {
@@ -502,15 +500,12 @@ namespace GalArc.GUI
             {
                 if (!Directory.Exists(this.txtInputPath.Text))
                 {
-                    Logger.Error(Resources.logErrorDirNotFound, false);
+                    Logger.Error(LogStrings.ErrorDirNotFound, false);
                     return;
                 }
-                if (Settings.Default.ToFreezeControls)
-                {
-                    Freeze();
-                }
+                Freeze();
                 this.btExecute.Enabled = false;
-                this.lbStatus.Text = Resources.logPacking;
+                this.lbStatus.Text = LogStrings.Packing;
 
                 try
                 {
@@ -537,25 +532,17 @@ namespace GalArc.GUI
             }
             else
             {
-                Logger.Error(Resources.logErrorNeedSelectOperation, false);
+                Logger.Error(LogStrings.ErrorNeedSelectOperation, false);
             }
 
-            if (Settings.Default.ToFreezeControls)
-            {
-                Thaw();
-            }
-            else
-            {
-                this.btExecute.Enabled = true;
-            }
+            Thaw();
         }
 
         private void Freeze()
         {
+            this.menuStrip.Enabled = false;
             this.chkbxUnpack.Enabled = false;
             this.chkbxPack.Enabled = false;
-            this.chkbxMatch.Enabled = false;
-            this.btClear.Enabled = false;
             this.btSelInput.Enabled = false;
             this.btSelOutput.Enabled = false;
             this.treeViewEngines.Enabled = false;
@@ -566,11 +553,10 @@ namespace GalArc.GUI
 
         private void Thaw()
         {
+            this.menuStrip.Enabled = true;
             this.chkbxUnpack.Enabled = true;
             this.chkbxPack.Enabled = true;
-            this.chkbxMatch.Enabled = true;
             this.btExecute.Enabled = true;
-            this.btClear.Enabled = true;
             this.btSelInput.Enabled = true;
             this.btSelOutput.Enabled = true;
             this.treeViewEngines.Enabled = true;
@@ -581,7 +567,7 @@ namespace GalArc.GUI
 
         private void SyncPath()
         {
-            if (this.chkbxMatch.Checked)
+            if (this.matchPathsMenuItem.Checked)
             {
                 if (this.chkbxUnpack.Checked)
                 {

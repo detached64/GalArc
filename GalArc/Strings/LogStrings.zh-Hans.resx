@@ -157,10 +157,10 @@
     <value>启动新实例</value>
   </data>
   <data name="ErrorNotValidArc" xml:space="preserve">
-    <value>错误：不是有效的封包。</value>
+    <value>不是有效的封包。</value>
   </data>
   <data name="ErrorOriginalFileNotFound" xml:space="preserve">
-    <value>错误：同目录下未找到{0}原文件。</value>
+    <value>同目录下未找到{0}原文件。</value>
   </data>
   <data name="Unpacking" xml:space="preserve">
     <value>解包中……</value>
@@ -175,7 +175,7 @@
     <value>当前版本：{0} 最新版本：{1}</value>
   </data>
   <data name="ErrorSpecifiedFileNotFound" xml:space="preserve">
-    <value>错误：同目录下未找到{0}文件。</value>
+    <value>同目录下未找到{0}文件。</value>
   </data>
   <data name="ImportGARbroDBScheme" xml:space="preserve">
     <value>从GARbroDB导入{0}个密钥。</value>
@@ -197,5 +197,41 @@
   </data>
   <data name="ImportedSchemeCount" xml:space="preserve">
     <value>导入密钥总数：{0}</value>
+  </data>
+  <data name="SelectUnpackNode" xml:space="preserve">
+    <value>已选择：解包{0}引擎的{1}文件。</value>
+  </data>
+  <data name="SelectPackNode" xml:space="preserve">
+    <value>已选择：封包{0}引擎的{1}文件。</value>
+  </data>
+  <data name="TimedOut" xml:space="preserve">
+    <value>连接超时。</value>
+  </data>
+  <data name="ErrorNeedSpecifyInput" xml:space="preserve">
+    <value>请指定输入路径。</value>
+  </data>
+  <data name="ErrorNeedSpecifyOutput" xml:space="preserve">
+    <value>请指定输出路径。</value>
+  </data>
+  <data name="ErrorFileNotFound" xml:space="preserve">
+    <value>指定的文件不存在。</value>
+  </data>
+  <data name="ErrorDirNotFound" xml:space="preserve">
+    <value>指定的文件夹不存在。</value>
+  </data>
+  <data name="ErrorNeedSelectOperation" xml:space="preserve">
+    <value>请选择要执行的操作。</value>
+  </data>
+  <data name="ErrorFileNameFailToMatch" xml:space="preserve">
+    <value>文件名必须为{0}。</value>
+  </data>
+  <data name="ErrorUnpackMethodNotFound" xml:space="preserve">
+    <value>对应的解包方法未找到。</value>
+  </data>
+  <data name="ErrorPackMethodNotFound" xml:space="preserve">
+    <value>对应的封包方法未找到。</value>
+  </data>
+  <data name="ErrorClassNotFound" xml:space="preserve">
+    <value>对应的类未找到。</value>
   </data>
 </root>

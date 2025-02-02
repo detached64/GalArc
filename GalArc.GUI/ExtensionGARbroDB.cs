@@ -15,7 +15,6 @@ namespace GalArc.GUI
         private ExtensionGARbroDB()
         {
             InitializeComponent();
-            this.txtDBInfo.BackColor = Color.FromArgb(249, 249, 249);
         }
 
         private void ExtensionGARbroDB_Load(object sender, EventArgs e)

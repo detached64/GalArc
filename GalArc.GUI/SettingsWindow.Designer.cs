@@ -41,12 +41,13 @@
             // panel
             // 
             resources.ApplyResources(this.panel, "panel");
-            this.panel.BackColor = System.Drawing.SystemColors.Window;
+            this.panel.BackColor = System.Drawing.SystemColors.Control;
             this.panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel.Name = "panel";
             // 
             // treeViewOption
             // 
+            this.treeViewOption.BackColor = System.Drawing.SystemColors.Control;
             this.treeViewOption.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             resources.ApplyResources(this.treeViewOption, "treeViewOption");
             this.treeViewOption.HideSelection = false;
