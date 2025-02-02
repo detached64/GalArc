@@ -125,27 +125,6 @@
     <value>False</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="matchPathsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 34</value>
-  </data>
-  <data name="matchPathsMenuItem.Text" xml:space="preserve">
-    <value>Match Paths</value>
-  </data>
-  <data name="clearPathsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 34</value>
-  </data>
-  <data name="clearPathsMenuItem.Text" xml:space="preserve">
-    <value>Clear Paths</value>
-  </data>
-  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>267, 6</value>
-  </data>
-  <data name="reimportSchemesMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 34</value>
-  </data>
-  <data name="reimportSchemesMenuItem.Text" xml:space="preserve">
-    <value>Reload schemes</value>
-  </data>
   <data name="optionMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>87, 28</value>
   </data>
@@ -157,31 +136,6 @@
   </data>
   <data name="settingsMenuItem.Text" xml:space="preserve">
     <value>Settings</value>
-  </data>
-  <data name="checkUpdateMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 34</value>
-  </data>
-  <data name="checkUpdateMenuItem.Text" xml:space="preserve">
-    <value>Check for updates</value>
-  </data>
-  <data name="aboutMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 34</value>
-  </data>
-  <data name="aboutMenuItem.Text" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="combLanguages.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>System</value>
-  </data>
-  <data name="combLanguages.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 32</value>
-  </data>
-  <data name="languagesMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>270, 34</value>
-  </data>
-  <data name="languagesMenuItem.Text" xml:space="preserve">
-    <value>Languages</value>
   </data>
   <data name="helpMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>67, 28</value>
@@ -211,7 +165,53 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>8</value>
+  </data>
+  <data name="matchPathsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>248, 34</value>
+  </data>
+  <data name="matchPathsMenuItem.Text" xml:space="preserve">
+    <value>Match Paths</value>
+  </data>
+  <data name="clearPathsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>248, 34</value>
+  </data>
+  <data name="clearPathsMenuItem.Text" xml:space="preserve">
+    <value>Clear Paths</value>
+  </data>
+  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>245, 6</value>
+  </data>
+  <data name="reimportSchemesMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>248, 34</value>
+  </data>
+  <data name="reimportSchemesMenuItem.Text" xml:space="preserve">
+    <value>Reload schemes</value>
+  </data>
+  <data name="checkUpdateMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>266, 34</value>
+  </data>
+  <data name="checkUpdateMenuItem.Text" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
+  <data name="aboutMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>266, 34</value>
+  </data>
+  <data name="aboutMenuItem.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="languagesMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>266, 34</value>
+  </data>
+  <data name="languagesMenuItem.Text" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="combLanguages.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>System</value>
+  </data>
+  <data name="combLanguages.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 32</value>
   </data>
   <data name="treeViewEngines.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left</value>
@@ -235,7 +235,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;treeViewEngines.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>7</value>
   </data>
   <data name="chkbxUnpack.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -319,7 +319,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbInput.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>6</value>
   </data>
   <data name="txtOutputPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -343,7 +343,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;txtOutputPath.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>4</value>
   </data>
   <data name="txtInputPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -367,7 +367,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;txtInputPath.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>5</value>
   </data>
   <data name="lbOutput.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -394,7 +394,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbOutput.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>3</value>
   </data>
   <data name="btSelInput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -421,7 +421,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btSelInput.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>10</value>
   </data>
   <data name="btSelOutput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -448,7 +448,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btSelOutput.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>11</value>
   </data>
   <data name="btExecute.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -475,7 +475,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btExecute.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>9</value>
   </data>
   <data name="gbOptions.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -502,7 +502,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;gbOptions.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="txtLog.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -559,17 +559,11 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;gbLog.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <metadata name="statusStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>172, 17</value>
   </metadata>
-  <data name="lbStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 24</value>
-  </data>
-  <data name="pBar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>250, 23</value>
-  </data>
   <data name="statusStrip.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 909</value>
   </data>
@@ -592,10 +586,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;statusStrip.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
+  </data>
+  <data name="lbStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 24</value>
+  </data>
+  <data name="pBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>250, 23</value>
   </data>
   <data name="pnlOperation.Location" type="System.Drawing.Point, System.Drawing">
-    <value>30, 50</value>
+    <value>30, 49</value>
   </data>
   <data name="pnlOperation.Size" type="System.Drawing.Size, System.Drawing">
     <value>201, 35</value>
@@ -613,7 +613,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pnlOperation.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>12</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

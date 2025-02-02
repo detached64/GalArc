@@ -123,7 +123,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkbxSpecifyIndex.Location" type="System.Drawing.Point, System.Drawing">
-    <value>83, 70</value>
+    <value>83, 60</value>
   </data>
   <data name="chkbxSpecifyIndex.Size" type="System.Drawing.Size, System.Drawing">
     <value>139, 28</value>
@@ -150,7 +150,7 @@
     <value>True</value>
   </data>
   <data name="chkbxBrutalForce.Location" type="System.Drawing.Point, System.Drawing">
-    <value>83, 125</value>
+    <value>83, 115</value>
   </data>
   <data name="chkbxBrutalForce.Size" type="System.Drawing.Size, System.Drawing">
     <value>134, 28</value>
@@ -174,7 +174,7 @@
     <value>1</value>
   </data>
   <data name="txtIndexOffset.Location" type="System.Drawing.Point, System.Drawing">
-    <value>228, 70</value>
+    <value>228, 60</value>
   </data>
   <data name="txtIndexOffset.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 31</value>
@@ -208,7 +208,7 @@
     <value>4, 4, 4, 4</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>823, 393</value>
+    <value>876, 300</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>UnpackDATOptions</value>

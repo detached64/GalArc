@@ -148,7 +148,7 @@
             this.combLanguages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             resources.ApplyResources(this.combLanguages, "combLanguages");
             this.combLanguages.Name = "combLanguages";
-            this.combLanguages.SelectedIndexChanged += new System.EventHandler(this.combLang_SelectedIndexChanged);
+            this.combLanguages.SelectedIndexChanged += new System.EventHandler(this.combLanguages_SelectedIndexChanged);
             // 
             // treeViewEngines
             // 
@@ -280,19 +280,19 @@
             this.AllowDrop = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.Controls.Add(this.pnlOperation);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.gbLog);
             this.Controls.Add(this.gbOptions);
-            this.Controls.Add(this.btExecute);
-            this.Controls.Add(this.btSelInput);
-            this.Controls.Add(this.btSelOutput);
             this.Controls.Add(this.lbOutput);
             this.Controls.Add(this.txtOutputPath);
             this.Controls.Add(this.txtInputPath);
             this.Controls.Add(this.lbInput);
             this.Controls.Add(this.treeViewEngines);
             this.Controls.Add(this.menuStrip);
+            this.Controls.Add(this.btExecute);
+            this.Controls.Add(this.btSelInput);
+            this.Controls.Add(this.btSelOutput);
+            this.Controls.Add(this.pnlOperation);
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainWindow";

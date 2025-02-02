@@ -119,7 +119,7 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="combVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 109</value>
+    <value>87, 99</value>
   </data>
   <data name="combVersion.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 32</value>
@@ -148,7 +148,7 @@
     <value>NoControl</value>
   </data>
   <data name="lbVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>83, 70</value>
+    <value>83, 60</value>
   </data>
   <data name="lbVersion.Size" type="System.Drawing.Size, System.Drawing">
     <value>74, 24</value>
@@ -172,7 +172,7 @@
     <value>3</value>
   </data>
   <data name="txtSeed.Location" type="System.Drawing.Point, System.Drawing">
-    <value>149, 242</value>
+    <value>149, 175</value>
   </data>
   <data name="txtSeed.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 31</value>
@@ -196,7 +196,7 @@
     <value>True</value>
   </data>
   <data name="lbSeed.Location" type="System.Drawing.Point, System.Drawing">
-    <value>87, 244</value>
+    <value>87, 177</value>
   </data>
   <data name="lbSeed.Size" type="System.Drawing.Size, System.Drawing">
     <value>56, 24</value>
@@ -232,7 +232,7 @@
     <value>4, 4, 4, 4</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>823, 393</value>
+    <value>876, 300</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>PackRGSSOptions</value>

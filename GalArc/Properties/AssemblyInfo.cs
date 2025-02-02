@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("GalArc")]
-[assembly: AssemblyDescription("Base part of GarArc.")]
+[assembly: AssemblyDescription("The base of GarArc.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("detached64")]
 [assembly: AssemblyProduct("GalArc")]
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      生成号
 //      修订号
 //
-[assembly: AssemblyVersion("1.3.3.0")]
-[assembly: AssemblyFileVersion("1.3.3.0")]
+[assembly: AssemblyVersion("1.4.0.0")]
+[assembly: AssemblyFileVersion("1.4.0.0")]

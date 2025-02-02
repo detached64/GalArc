@@ -59,7 +59,23 @@ namespace GalArc.GUI
             }
         }
 
-        public void UnpackOne()
+        public void Work(OperationMode mode)
+        {
+            switch (mode)
+            {
+                case OperationMode.Unpack:
+                    UnpackOne();
+                    break;
+                case OperationMode.Pack:
+                    Pack();
+                    break;
+                case OperationMode.None:
+                    Logger.Error(LogStrings.ErrorNeedSelectOperation);
+                    return;
+            }
+        }
+
+        private void UnpackOne()
         {
             string[] selectedInfo = MainWindow.SelectedNodeUnpack.FullPath.Split('/');
             engineName = selectedInfo[0];
@@ -95,7 +111,7 @@ namespace GalArc.GUI
             }
         }
 
-        public void Pack()
+        private void Pack()
         {
             string[] selectedInfo = MainWindow.SelectedNodePack.FullPath.Split('/');
             engineName = selectedInfo[0];

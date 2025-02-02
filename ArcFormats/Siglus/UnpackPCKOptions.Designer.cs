@@ -33,8 +33,8 @@
             this.combSchemes = new System.Windows.Forms.ComboBox();
             this.lbKey = new System.Windows.Forms.Label();
             this.panel = new System.Windows.Forms.Panel();
-            this.lbFromGameExe = new System.Windows.Forms.Label();
             this.btCheckExe = new System.Windows.Forms.Button();
+            this.lbFromGameExe = new System.Windows.Forms.Label();
             this.panel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,17 +63,17 @@
             resources.ApplyResources(this.panel, "panel");
             this.panel.Name = "panel";
             // 
-            // lbFromGameExe
-            // 
-            resources.ApplyResources(this.lbFromGameExe, "lbFromGameExe");
-            this.lbFromGameExe.Name = "lbFromGameExe";
-            // 
             // btCheckExe
             // 
             resources.ApplyResources(this.btCheckExe, "btCheckExe");
             this.btCheckExe.Name = "btCheckExe";
             this.btCheckExe.UseVisualStyleBackColor = true;
             this.btCheckExe.Click += new System.EventHandler(this.btCheckExe_Click);
+            // 
+            // lbFromGameExe
+            // 
+            resources.ApplyResources(this.lbFromGameExe, "lbFromGameExe");
+            this.lbFromGameExe.Name = "lbFromGameExe";
             // 
             // UnpackPCKOptions
             // 

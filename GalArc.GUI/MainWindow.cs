@@ -29,13 +29,8 @@ namespace GalArc.GUI
         internal static TreeNode SelectedNodePack;
 
         private string Culture;
-        private bool isFirstChangeLang = true;
-
-        private enum Mode
-        {
-            Unpack,
-            Pack
-        }
+        private bool IsFirstChangeLang = true;
+        private OperationMode Mode => GetOperationMode();
 
         public MainWindow()
         {
@@ -173,15 +168,15 @@ namespace GalArc.GUI
             await updater.DownloadFileAsync();
         }
 
-        private void combLang_SelectedIndexChanged(object sender, EventArgs e)
+        private void combLanguages_SelectedIndexChanged(object sender, EventArgs e)
         {
             string previousCulture = Culture;
             Culture = Languages.SupportedLanguages[this.combLanguages.Text];
             Settings.Default.LastLanguage = Culture;
             Settings.Default.Save();
-            if (isFirstChangeLang)
+            if (IsFirstChangeLang)
             {
-                isFirstChangeLang = false;
+                IsFirstChangeLang = false;
             }
             else
             {
@@ -196,10 +191,10 @@ namespace GalArc.GUI
         private void chkbxUnpack_CheckedChanged(object sender, EventArgs e)
         {
             this.gbOptions.Controls.Clear();
-            if (this.chkbxUnpack.Checked)
+            if (Mode == OperationMode.Unpack)
             {
-                UpdateTreeUnpack();
                 this.btExecute.Text = this.chkbxUnpack.Text;
+                UpdateTreeUnpack();
             }
             SyncPath();
             if (BaseSettings.Default.ToAutoSaveState)
@@ -212,10 +207,10 @@ namespace GalArc.GUI
         private void chkbxPack_CheckedChanged(object sender, EventArgs e)
         {
             this.gbOptions.Controls.Clear();
-            if (this.chkbxPack.Checked)
+            if (Mode == OperationMode.Pack)
             {
-                UpdateTreePack();
                 this.btExecute.Text = this.chkbxPack.Text;
+                UpdateTreePack();
             }
             SyncPath();
             if (BaseSettings.Default.ToAutoSaveState)
@@ -227,46 +222,45 @@ namespace GalArc.GUI
 
         private void treeViewEngines_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node.Parent != null)
+            if (e.Node.Parent == null || Mode == OperationMode.None)
             {
-                if (this.chkbxUnpack.Checked)
-                {
-                    if (BaseSettings.Default.ToAutoSaveState)
-                    {
-                        Settings.Default.UnpackSelectedNode0 = e.Node.Parent.Index;
-                        Settings.Default.UnpackSelectedNode1 = e.Node.Index;
-                        Settings.Default.Save();
-                    }
-                    SelectedNodeUnpack = e.Node;
-                    SyncPath();
-                    Logger.Info(string.Format(LogStrings.SelectUnpackNode, e.Node.Parent.Text, e.Node.Text));
-                    GetExtraOptions(Mode.Unpack);
-                }
-                else if (this.chkbxPack.Checked)
-                {
-                    if (BaseSettings.Default.ToAutoSaveState)
-                    {
-                        Settings.Default.PackSelectedNode0 = e.Node.Parent.Index;
-                        Settings.Default.PackSelectedNode1 = e.Node.Index;
-                        Settings.Default.Save();
-                    }
-                    SelectedNodePack = e.Node;
-                    SyncPath();
-                    Logger.Info(string.Format(LogStrings.SelectPackNode, e.Node.Parent.Text, e.Node.Text));
-                    GetExtraOptions(Mode.Pack);
-                }
+                return;
             }
+            if (Mode == OperationMode.Unpack)
+            {
+                if (BaseSettings.Default.ToAutoSaveState)
+                {
+                    Settings.Default.UnpackSelectedNode0 = e.Node.Parent.Index;
+                    Settings.Default.UnpackSelectedNode1 = e.Node.Index;
+                    Settings.Default.Save();
+                }
+                SelectedNodeUnpack = e.Node;
+                Logger.Info(string.Format(LogStrings.SelectUnpackNode, e.Node.Parent.Text, e.Node.Text));
+            }
+            else
+            {
+                if (BaseSettings.Default.ToAutoSaveState)
+                {
+                    Settings.Default.PackSelectedNode0 = e.Node.Parent.Index;
+                    Settings.Default.PackSelectedNode1 = e.Node.Index;
+                    Settings.Default.Save();
+                }
+                SelectedNodePack = e.Node;
+                Logger.Info(string.Format(LogStrings.SelectPackNode, e.Node.Parent.Text, e.Node.Text));
+            }
+            SyncPath();
+            GetExtraOptions(Mode);
         }
 
-        private void GetExtraOptions(Mode mode)
+        private void GetExtraOptions(OperationMode mode)
         {
             TreeNode node = null;
             switch (mode)
             {
-                case Mode.Unpack:
+                case OperationMode.Unpack:
                     node = SelectedNodeUnpack;
                     break;
-                case Mode.Pack:
+                case OperationMode.Pack:
                     node = SelectedNodePack;
                     break;
             }
@@ -278,7 +272,6 @@ namespace GalArc.GUI
             this.gbOptions.Controls.Clear();
             if (type != null)
             {
-                //FieldInfo fieldInfo = type.GetField(fieldName);
                 PropertyInfo propertyInfo = type.GetProperty(fieldName);
                 UserControl userControl = propertyInfo != null ? propertyInfo.GetValue(null) as UserControl : Empty.Instance;
                 this.gbOptions.Controls.Add(userControl);
@@ -289,37 +282,37 @@ namespace GalArc.GUI
 
         private void btSelInput_Click(object sender, EventArgs e)
         {
-            if (this.chkbxUnpack.Checked)
+            switch (Mode)
             {
-                this.txtInputPath.Text = ChooseFile() ?? this.txtInputPath.Text;
-            }
-            else if (this.chkbxPack.Checked)
-            {
-                this.txtInputPath.Text = ChooseFolder() ?? this.txtInputPath.Text;
-            }
-            else
-            {
-                Logger.Error(LogStrings.ErrorNeedSelectOperation, false);
+                case OperationMode.Unpack:
+                    this.txtInputPath.Text = ChooseFile() ?? this.txtInputPath.Text;
+                    break;
+                case OperationMode.Pack:
+                    this.txtInputPath.Text = ChooseFolder() ?? this.txtInputPath.Text;
+                    break;
+                default:
+                    Logger.Error(LogStrings.ErrorNeedSelectOperation, false);
+                    break;
             }
         }
 
         private void btSelOutput_Click(object sender, EventArgs e)
         {
-            if (this.chkbxUnpack.Checked)
+            switch (Mode)
             {
-                this.txtOutputPath.Text = ChooseFolder() ?? this.txtOutputPath.Text;
-            }
-            else if (this.chkbxPack.Checked)
-            {
-                this.txtOutputPath.Text = SaveFile() ?? this.txtOutputPath.Text;
-            }
-            else
-            {
-                Logger.Error(LogStrings.ErrorNeedSelectOperation, false);
+                case OperationMode.Unpack:
+                    this.txtOutputPath.Text = ChooseFolder() ?? this.txtOutputPath.Text;
+                    break;
+                case OperationMode.Pack:
+                    this.txtOutputPath.Text = SaveFile() ?? this.txtOutputPath.Text;
+                    break;
+                default:
+                    Logger.Error(LogStrings.ErrorNeedSelectOperation, false);
+                    break;
             }
         }
 
-        private static string ChooseFile()
+        private string ChooseFile()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -331,7 +324,7 @@ namespace GalArc.GUI
             }
         }
 
-        private static string SaveFile()
+        private string SaveFile()
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
@@ -343,7 +336,7 @@ namespace GalArc.GUI
             }
         }
 
-        private static string ChooseFolder()
+        private string ChooseFolder()
         {
             using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
             {
@@ -451,6 +444,11 @@ namespace GalArc.GUI
 
         private async void btExecute_Click(object sender, EventArgs e)
         {
+            if (Mode == OperationMode.None)
+            {
+                Logger.Error(LogStrings.ErrorNeedSelectOperation, false);
+                return;
+            }
             if (string.IsNullOrEmpty(this.txtInputPath.Text))
             {
                 Logger.Error(LogStrings.ErrorNeedSpecifyInput, false);
@@ -462,77 +460,47 @@ namespace GalArc.GUI
                 return;
             }
 
-            if (this.chkbxUnpack.Checked)
+            if (Mode == OperationMode.Unpack)
             {
                 if (!File.Exists(this.txtInputPath.Text))
                 {
                     Logger.Error(LogStrings.ErrorFileNotFound, false);
                     return;
                 }
-                Freeze();
-                this.btExecute.Enabled = false;
                 this.lbStatus.Text = LogStrings.Unpacking;
-
-                try
-                {
-                    using (ArchivePackager packager = new ArchivePackager(this.txtInputPath.Text, this.txtOutputPath.Text))
-                    {
-                        await Task.Run(() => packager.UnpackOne());
-                    }
-                }
-                catch (Exception ex)
-                {
-                    if (ex.InnerException == null)
-                    {
-                        Logger.Error(ex.Message, false);
-                        Logger.Debug(ex.ToString());
-                    }
-                    else
-                    {
-                        Logger.Error(ex.InnerException.Message, false);
-                        Logger.Debug(ex.InnerException.ToString());
-                    }
-                    Logger.ResetBar();
-                }
-                this.btExecute.Enabled = true;
             }
-            else if (this.chkbxPack.Checked)
+            else
             {
                 if (!Directory.Exists(this.txtInputPath.Text))
                 {
                     Logger.Error(LogStrings.ErrorDirNotFound, false);
                     return;
                 }
-                Freeze();
-                this.btExecute.Enabled = false;
                 this.lbStatus.Text = LogStrings.Packing;
-
-                try
-                {
-                    using (ArchivePackager packager = new ArchivePackager(this.txtInputPath.Text, this.txtOutputPath.Text))
-                    {
-                        await Task.Run(() => packager.Pack());
-                    }
-                }
-                catch (Exception ex)
-                {
-                    if (ex.InnerException == null)
-                    {
-                        Logger.Error(ex.Message, false);
-                        Logger.Debug(ex.ToString());
-                    }
-                    else
-                    {
-                        Logger.Error(ex.InnerException.Message, false);
-                        Logger.Debug(ex.InnerException.ToString());
-                    }
-                    Logger.ResetBar();
-                }
-                this.btExecute.Enabled = true;
             }
-            else
+            Freeze();
+            this.btExecute.Enabled = false;
+
+            try
             {
-                Logger.Error(LogStrings.ErrorNeedSelectOperation, false);
+                using (ArchivePackager packager = new ArchivePackager(this.txtInputPath.Text, this.txtOutputPath.Text))
+                {
+                    await Task.Run(() => packager.Work(Mode));
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null)
+                {
+                    Logger.Error(ex.Message, false);
+                    Logger.Debug(ex.ToString());
+                }
+                else
+                {
+                    Logger.Error(ex.InnerException.Message, false);
+                    Logger.Debug(ex.InnerException.ToString());
+                }
+                Logger.ResetBar();
             }
 
             Thaw();
@@ -603,6 +571,19 @@ namespace GalArc.GUI
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(Culture);
         }
 
+        private OperationMode GetOperationMode()
+        {
+            if (this.chkbxUnpack.Checked)
+            {
+                return OperationMode.Unpack;
+            }
+            else if (this.chkbxPack.Checked)
+            {
+                return OperationMode.Pack;
+            }
+            return OperationMode.None;
+        }
+
         private void AppendLog(object sender, string message)
         {
             if (this.txtLog.InvokeRequired)
@@ -662,5 +643,12 @@ namespace GalArc.GUI
             SettingsWindow settingsWindow = new SettingsWindow();
             settingsWindow.ShowDialog();
         }
+    }
+
+    internal enum OperationMode
+    {
+        Unpack,
+        Pack,
+        None
     }
 }
