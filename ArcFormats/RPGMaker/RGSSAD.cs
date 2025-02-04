@@ -1,16 +1,15 @@
-﻿using GalArc.Logs;
+﻿using GalArc.Controls;
+using GalArc.Logs;
 using System;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
-using Utility;
 
 namespace ArcFormats.RPGMaker
 {
     public class RGSSAD : ArchiveFormat
     {
-        private static readonly Lazy<UserControl> _lazyPackOptions = new Lazy<UserControl>(() => new PackRGSSOptions("1/3"));
-        public static UserControl PackExtraOptions => _lazyPackOptions.Value;
+        private static readonly Lazy<OptionsTemplate> _lazyPackOptions = new Lazy<OptionsTemplate>(() => new PackRGSSOptions("1/3"));
+        public static OptionsTemplate PackExtraOptions => _lazyPackOptions.Value;
 
         public override void Unpack(string filePath, string folderPath)
         {
@@ -32,11 +31,11 @@ namespace ArcFormats.RPGMaker
             {
                 case 1:
                     Logger.ShowVersion(Path.GetExtension(filePath).Trim('.'), version);
-                    rgssV1_unpack(filePath, folderPath);
+                    UnpackV1(filePath, folderPath);
                     break;
                 case 3:
                     Logger.ShowVersion(Path.GetExtension(filePath).Trim('.'), version);
-                    rgssV3_unpack(filePath, folderPath);
+                    UnpackV3(filePath, folderPath);
                     break;
                 default:
                     Logger.Error($"Error: version {version} not recognized.");
@@ -46,18 +45,18 @@ namespace ArcFormats.RPGMaker
 
         public override void Pack(string folderPath, string filePath)
         {
-            switch (ArcSettings.Version)
+            switch (PackExtraOptions.Version)
             {
                 case "1":
-                    rgssV1_pack(folderPath, filePath);
+                    PackV1(folderPath, filePath);
                     break;
                 case "3":
-                    rgssV3_pack(folderPath, filePath);
+                    PackV3(folderPath, filePath);
                     break;
             }
         }
 
-        private void rgssV1_unpack(string filePath, string folderPath)
+        private void UnpackV1(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -83,7 +82,7 @@ namespace ArcFormats.RPGMaker
             br.Dispose();
         }
 
-        private void rgssV3_unpack(string filePath, string folderPath)
+        private void UnpackV3(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -121,7 +120,7 @@ namespace ArcFormats.RPGMaker
             br.Dispose();
         }
 
-        private void rgssV1_pack(string folderPath, string filePath)
+        private void PackV1(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -148,7 +147,7 @@ namespace ArcFormats.RPGMaker
             fw.Dispose();
         }
 
-        private void rgssV3_pack(string folderPath, string filePath)
+        private void PackV3(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -250,11 +249,11 @@ namespace ArcFormats.RPGMaker
 
     public class RGSS2A : RGSSAD
     {
-        public static new UserControl PackExtraOptions = RGSSAD.PackExtraOptions;
+        public static new OptionsTemplate PackExtraOptions = RGSSAD.PackExtraOptions;
     }
 
     public class RGSS3A : RGSSAD
     {
-        public static new UserControl PackExtraOptions = RGSSAD.PackExtraOptions;
+        public static new OptionsTemplate PackExtraOptions = RGSSAD.PackExtraOptions;
     }
 }

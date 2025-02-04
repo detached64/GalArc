@@ -123,7 +123,4 @@
   <data name="chkbxTopMost.Text" xml:space="preserve">
     <value>总在最上方</value>
   </data>
-  <data name="chkbxFreeze.Text" xml:space="preserve">
-    <value>执行操作时锁定控件</value>
-  </data>
 </root>

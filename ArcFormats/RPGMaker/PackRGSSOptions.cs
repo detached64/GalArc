@@ -1,11 +1,11 @@
-﻿using System;
+﻿using GalArc.Controls;
+using System;
 using System.Drawing;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 
 namespace ArcFormats.RPGMaker
 {
-    public partial class PackRGSSOptions : UserControl
+    public partial class PackRGSSOptions : OptionsTemplate
     {
         internal static string inputSeedString = "00000000";
 
@@ -22,17 +22,9 @@ namespace ArcFormats.RPGMaker
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ArcSettings.Version = this.combVersion.Text;
-            if (this.combVersion.Text == "1")
-            {
-                this.txtSeed.Visible = false;
-                this.lbSeed.Visible = false;
-            }
-            else
-            {
-                this.txtSeed.Visible = true;
-                this.lbSeed.Visible = true;
-            }
+            Version = this.combVersion.Text;
+            this.txtSeed.Visible = this.combVersion.Text != "1";
+            this.lbSeed.Visible = this.combVersion.Text != "1";
         }
 
         private void txtSeed_TextChanged(object sender, EventArgs e)

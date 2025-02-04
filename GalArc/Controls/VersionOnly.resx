@@ -118,36 +118,53 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="chkbxDecScr.AutoSize" type="System.Boolean, mscorlib">
+  <data name="lbVersion.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="chkbxDecScr.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="chkbxDecScr.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lbVersion.Location" type="System.Drawing.Point, System.Drawing">
     <value>83, 60</value>
   </data>
-  <data name="chkbxDecScr.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 28</value>
+  <data name="lbVersion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 24</value>
   </data>
-  <data name="chkbxDecScr.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="lbVersion.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="chkbxDecScr.Text" xml:space="preserve">
-    <value>Decrypt scripts</value>
+  <data name="lbVersion.Text" xml:space="preserve">
+    <value>Version</value>
   </data>
-  <data name="&gt;&gt;chkbxDecScr.Name" xml:space="preserve">
-    <value>chkbxDecScr</value>
+  <data name="&gt;&gt;lbVersion.Name" xml:space="preserve">
+    <value>lbVersion</value>
   </data>
-  <data name="&gt;&gt;chkbxDecScr.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;lbVersion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;chkbxDecScr.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lbVersion.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;chkbxDecScr.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lbVersion.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="combVersion.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 99</value>
+  </data>
+  <data name="combVersion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 32</value>
+  </data>
+  <data name="combVersion.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;combVersion.Name" xml:space="preserve">
+    <value>combVersion</value>
+  </data>
+  <data name="&gt;&gt;combVersion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;combVersion.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;combVersion.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -156,19 +173,10 @@
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>11, 24</value>
   </data>
-  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>微软雅黑, 9pt</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>876, 300</value>
-  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>UnpackARCOptions</value>
+    <value>VersionOnly</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.OptionsTemplate, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>GalArc.Controls.OptionsTemplate, GalArc, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

@@ -1,11 +1,11 @@
-﻿using GalArc.Logs;
+﻿using GalArc.Controls;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
 
 namespace ArcFormats.AnimeGameSystem
 {
-    public partial class UnpackDATOptions : UserControl
+    public partial class UnpackDATOptions : OptionsTemplate
     {
         public UnpackDATOptions()
         {

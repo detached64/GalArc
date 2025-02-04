@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using GalArc.Controls;
+using System;
 
 namespace ArcFormats.PJADV
 {
-    public partial class UnpackDATOptions : UserControl
+    public partial class UnpackDATOptions : OptionsTemplate
     {
         internal static bool toDecryptScripts = true;
 

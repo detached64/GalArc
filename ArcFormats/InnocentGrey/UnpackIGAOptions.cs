@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using GalArc.Controls;
+using System;
 
 namespace ArcFormats.InnocentGrey
 {
-    public partial class UnpackIGAOptions : UserControl
+    public partial class UnpackIGAOptions : OptionsTemplate
     {
         internal static bool toDecryptScripts = true;
 

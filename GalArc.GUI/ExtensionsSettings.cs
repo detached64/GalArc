@@ -1,4 +1,5 @@
-﻿using GalArc.Extensions;
+﻿using GalArc.Controls;
+using GalArc.Extensions;
 using GalArc.GUI.Properties;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GalArc.GUI
 {
-    public partial class ExtensionsSettings : UserControl
+    public partial class ExtensionsSettings : SettingsTemplate
     {
         private static readonly Lazy<ExtensionsSettings> lazyInstance =
                 new Lazy<ExtensionsSettings>(() => new ExtensionsSettings());

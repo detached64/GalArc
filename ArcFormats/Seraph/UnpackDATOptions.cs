@@ -1,11 +1,11 @@
-﻿using System;
+﻿using GalArc.Controls;
+using System;
 using System.Drawing;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 
 namespace ArcFormats.Seraph
 {
-    public partial class UnpackDATOptions : UserControl
+    public partial class UnpackDATOptions : OptionsTemplate
     {
         internal static string SpecifiedIndexOffsetString = "00000000";
 

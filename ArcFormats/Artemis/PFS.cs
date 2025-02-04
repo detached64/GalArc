@@ -1,5 +1,5 @@
 ﻿using ArcFormats.Properties;
-using ArcFormats.Templates;
+using GalArc.Controls;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Windows.Forms;
 using Utility;
 using Utility.Extensions;
 
@@ -15,9 +14,8 @@ namespace ArcFormats.Artemis
 {
     public class PFS : ArchiveFormat
     {
-        public static UserControl PackExtraOptions = new VersionOnly("8/6/2");
-
-        private readonly string[] Versions = { "8", "6", "2" };
+        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new VersionOnly("8/6/2"));
+        public static OptionsTemplate PackExtraOptions => _lazyUnpackOptions.Value;
 
         private class Header
         {
@@ -47,7 +45,7 @@ namespace ArcFormats.Artemis
                 Logger.ErrorInvalidArchive();
             }
             header.Version = br.ReadChar().ToString();
-            if (!Versions.Contains(header.Version))
+            if (!"8/6/2".Split('/').Contains(header.Version))
             {
                 Logger.Error(string.Format(Resources.logErrorNotSupportedVersion, "pfs", header.Version));
             }
@@ -117,7 +115,7 @@ namespace ArcFormats.Artemis
             //init
             Header header = new Header()
             {
-                Version = ArcSettings.Version,
+                Version = PackExtraOptions.Version,
                 PathLenSum = 0
             };
             List<PfsEntry> entries = new List<PfsEntry>();
@@ -139,7 +137,7 @@ namespace ArcFormats.Artemis
                 entries.Add(entry);
             }
 
-            switch (ArcSettings.Version)
+            switch (PackExtraOptions.Version)
             {
                 case "8":
                     header.IndexSize = 4 + 16 * header.FileCount + header.PathLenSum + 4 + 8 * header.FileCount + 12;

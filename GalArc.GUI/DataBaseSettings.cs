@@ -1,10 +1,11 @@
-﻿using GalArc.Database;
+﻿using GalArc.Controls;
+using GalArc.Database;
 using System;
 using System.Windows.Forms;
 
 namespace GalArc.GUI
 {
-    public partial class DatabaseSettings : UserControl
+    public partial class DatabaseSettings : SettingsTemplate
     {
         private static readonly Lazy<DatabaseSettings> lazyInstance =
                 new Lazy<DatabaseSettings>(() => new DatabaseSettings());

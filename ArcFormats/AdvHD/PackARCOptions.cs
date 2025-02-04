@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using GalArc.Controls;
+using System;
 
 namespace ArcFormats.AdvHD
 {
-    public partial class PackARCOptions : UserControl
+    public partial class PackARCOptions : OptionsTemplate
     {
         internal static bool toEncryptScripts = true;
 
@@ -26,7 +26,7 @@ namespace ArcFormats.AdvHD
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ArcSettings.Version = this.combVersion.Text;
+            Version = this.combVersion.Text;
         }
     }
 }

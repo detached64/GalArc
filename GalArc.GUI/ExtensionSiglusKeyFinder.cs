@@ -1,10 +1,11 @@
-﻿using GalArc.Extensions.SiglusKeyFinder;
+﻿using GalArc.Controls;
+using GalArc.Extensions.SiglusKeyFinder;
 using System;
 using System.Windows.Forms;
 
 namespace GalArc.GUI
 {
-    public partial class ExtensionSiglusKeyFinder : UserControl
+    public partial class ExtensionSiglusKeyFinder : SettingsTemplate
     {
         private static readonly Lazy<ExtensionSiglusKeyFinder> lazyInstance =
                 new Lazy<ExtensionSiglusKeyFinder>(() => new ExtensionSiglusKeyFinder());

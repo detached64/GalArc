@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using GalArc.Controls;
+using System;
 
 namespace ArcFormats.Softpal
 {
-    public partial class UnpackPACOptions : UserControl
+    public partial class UnpackPACOptions : OptionsTemplate
     {
         internal static bool toDecryptScripts = true;
 

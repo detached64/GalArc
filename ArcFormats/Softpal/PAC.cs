@@ -1,11 +1,11 @@
 ﻿using ArcFormats.Properties;
+using GalArc.Controls;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using Utility;
 using Utility.Extensions;
 
@@ -13,10 +13,10 @@ namespace ArcFormats.Softpal
 {
     public class PAC : ArchiveFormat
     {
-        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackPACOptions());
-        private static readonly Lazy<UserControl> _lazyPackOptions = new Lazy<UserControl>(() => new PackPACOptions());
-        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
-        public static UserControl PackExtraOptions => _lazyPackOptions.Value;
+        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackPACOptions());
+        private static readonly Lazy<OptionsTemplate> _lazyPackOptions = new Lazy<OptionsTemplate>(() => new PackPACOptions());
+        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
+        public static OptionsTemplate PackExtraOptions => _lazyPackOptions.Value;
 
         private readonly byte[] Magic = Utils.HexStringToByteArray("50414320");
 
@@ -30,16 +30,16 @@ namespace ArcFormats.Softpal
             if (isVer1)
             {
                 Logger.ShowVersion("pac", 1);
-                pacV1_unpack(filePath, folderPath);
+                UnpackV1(filePath, folderPath);
             }
             else
             {
                 Logger.ShowVersion("pac", 2);
-                pacV2_unpack(filePath, folderPath);
+                UnpackV2(filePath, folderPath);
             }
         }
 
-        private void pacV1_unpack(string filePath, string folderPath)
+        private void UnpackV1(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -79,7 +79,7 @@ namespace ArcFormats.Softpal
             fs.Dispose();
         }
 
-        private void pacV2_unpack(string filePath, string folderPath)
+        private void UnpackV2(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -161,17 +161,17 @@ namespace ArcFormats.Softpal
 
         public override void Pack(string folderPath, string filePath)
         {
-            if (ArcSettings.Version == "1")
+            if (PackExtraOptions.Version == "1")
             {
-                pacV1_pack(folderPath, filePath);
+                PackV1(folderPath, filePath);
             }
             else
             {
-                pacV2_pack(folderPath, filePath);
+                PackV2(folderPath, filePath);
             }
         }
 
-        private void pacV1_pack(string folderPath, string filePath)
+        private void PackV1(string folderPath, string filePath)
         {
             string[] files = Directory.GetFiles(folderPath);
             var characterCount = CountFirstCharacters(files);
@@ -227,7 +227,7 @@ namespace ArcFormats.Softpal
             bw.Dispose();
         }
 
-        private void pacV2_pack(string folderPath, string filePath)
+        private void PackV2(string folderPath, string filePath)
         {
             string[] files = Directory.GetFiles(folderPath);
             var characterCount = CountFirstCharacters(files);

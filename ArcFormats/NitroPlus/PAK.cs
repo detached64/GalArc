@@ -1,7 +1,7 @@
-﻿using GalArc.Logs;
+﻿using GalArc.Controls;
+using GalArc.Logs;
 using System;
 using System.IO;
-using System.Windows.Forms;
 using Utility;
 using Utility.Compression;
 
@@ -9,8 +9,8 @@ namespace ArcFormats.NitroPlus
 {
     public class PAK : ArchiveFormat
     {
-        private static readonly Lazy<UserControl> _lazyPackOptions = new Lazy<UserControl>(() => new PackPAKOptions());
-        public static UserControl PackExtraOptions => _lazyPackOptions.Value;
+        private static readonly Lazy<OptionsTemplate> _lazyPackOptions = new Lazy<OptionsTemplate>(() => new PackPAKOptions());
+        public static OptionsTemplate PackExtraOptions => _lazyPackOptions.Value;
 
         private class NitroPakEntry : PackedEntry
         {

@@ -1,10 +1,10 @@
-﻿using GalArc.Logs;
+﻿using GalArc.Controls;
+using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using Utility;
 using Utility.Compression;
 
@@ -12,8 +12,8 @@ namespace ArcFormats.Kirikiri
 {
     public class XP3 : ArchiveFormat
     {
-        private static readonly Lazy<UserControl> _lazyPackOptions = new Lazy<UserControl>(() => new PackXP3Options("1/2"));
-        public static UserControl PackExtraOptions => _lazyPackOptions.Value;
+        private static readonly Lazy<OptionsTemplate> _lazyPackOptions = new Lazy<OptionsTemplate>(() => new PackXP3Options("1/2"));
+        public static OptionsTemplate PackExtraOptions => _lazyPackOptions.Value;
 
         private readonly byte[] Magic = Utils.HexStringToByteArray("5850330d0a200a1a8b6701");
 
@@ -82,59 +82,62 @@ namespace ArcFormats.Kirikiri
             }
             List<Xp3Entry> entries = new List<Xp3Entry>();
             using (MemoryStream ms = new MemoryStream(Index))
-            using (BinaryReader brIndex = new BinaryReader(ms))
             {
-                while (ms.Position < ms.Length)
+                using (BinaryReader brIndex = new BinaryReader(ms))
                 {
-                    string secSig = Encoding.ASCII.GetString(brIndex.ReadBytes(4));
-                    if (secSig != "File")
+                    while (ms.Position < ms.Length)
                     {
-                        Logger.ErrorInvalidArchive();
-                    }
-                    Xp3Entry entry = new Xp3Entry();
-                    long thisRemaining = brIndex.ReadInt64();
-                    long thisPos = brIndex.BaseStream.Position;
-                    long nextPos = thisPos + thisRemaining;
-
-                    while (thisRemaining > 0)
-                    {
-                        string secMagic = Encoding.ASCII.GetString(brIndex.ReadBytes(4));
-                        long secLen = brIndex.ReadInt64();
-                        long secEnd = brIndex.BaseStream.Position + secLen;
-                        thisRemaining -= 12 + secLen;
-                        switch (secMagic)
+                        string secSig = Encoding.ASCII.GetString(brIndex.ReadBytes(4));
+                        if (secSig != "File")
                         {
-                            case "info":
-                                int flag = brIndex.ReadInt32();
-                                if (flag != 0)
-                                {
-                                    Logger.Info("Encrypted file detected, skipping...");
-                                    goto NextEntry;
-                                }
-                                entry.UnpackedSize = brIndex.ReadUInt64();
-                                entry.PackedSize = brIndex.ReadUInt64();
-                                ushort fileNameLen = brIndex.ReadUInt16();
-                                entry.RelativePath = Encoding.Unicode.GetString(brIndex.ReadBytes(fileNameLen * 2));
-                                entry.FullPath = Path.Combine(folderPath, entry.RelativePath);
-                                brIndex.BaseStream.Position = secEnd;
-                                break;
-
-                            case "segm":
-                                entry.IsCompressed = brIndex.ReadInt32() != 0;
-                                entry.DataOffset = brIndex.ReadInt64();
-                                brIndex.BaseStream.Position = secEnd;
-                                break;
-
-                            case "adlr":
-                                brIndex.BaseStream.Position = secEnd;      // skip
-                                break;
+                            Logger.ErrorInvalidArchive();
                         }
+                        Xp3Entry entry = new Xp3Entry();
+                        long thisRemaining = brIndex.ReadInt64();
+                        long thisPos = brIndex.BaseStream.Position;
+                        long nextPos = thisPos + thisRemaining;
+
+                        while (thisRemaining > 0)
+                        {
+                            string secMagic = Encoding.ASCII.GetString(brIndex.ReadBytes(4));
+                            long secLen = brIndex.ReadInt64();
+                            long secEnd = brIndex.BaseStream.Position + secLen;
+                            thisRemaining -= 12 + secLen;
+                            switch (secMagic)
+                            {
+                                case "info":
+                                    int flag = brIndex.ReadInt32();
+                                    if (flag != 0)
+                                    {
+                                        Logger.Info("Encrypted file detected, skipping...");
+                                        goto NextEntry;
+                                    }
+                                    entry.UnpackedSize = brIndex.ReadUInt64();
+                                    entry.PackedSize = brIndex.ReadUInt64();
+                                    ushort fileNameLen = brIndex.ReadUInt16();
+                                    entry.RelativePath = Encoding.Unicode.GetString(brIndex.ReadBytes(fileNameLen * 2));
+                                    entry.FullPath = Path.Combine(folderPath, entry.RelativePath);
+                                    brIndex.BaseStream.Position = secEnd;
+                                    break;
+
+                                case "segm":
+                                    entry.IsCompressed = brIndex.ReadInt32() != 0;
+                                    entry.DataOffset = brIndex.ReadInt64();
+                                    brIndex.BaseStream.Position = secEnd;
+                                    break;
+
+                                case "adlr":
+                                    brIndex.BaseStream.Position = secEnd;      // skip
+                                    break;
+                            }
+                        }
+                        entries.Add(entry);
+                        NextEntry:
+                        ms.Position = nextPos;
                     }
-                    entries.Add(entry);
-                    NextEntry:
-                    ms.Position = nextPos;
                 }
             }
+
             Logger.InitBar(entries.Count);
             foreach (Xp3Entry entry in entries)
             {
@@ -161,7 +164,7 @@ namespace ArcFormats.Kirikiri
             FileStream xp3Stream = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(xp3Stream);
             bw.Write(Magic);
-            if (PackXP3Options.Version == "2")
+            if (PackExtraOptions.Version == "2")
             {
                 bw.Write((long)0x17);
                 bw.Write(1);
@@ -241,7 +244,7 @@ namespace ArcFormats.Kirikiri
                 bw.Write(ms.ToArray());
                 indexOffset = xp3Stream.Length - 8 - 1 - uncomLen;
             }
-            xp3Stream.Position = PackXP3Options.Version == "1" ? Magic.Length : 32;
+            xp3Stream.Position = PackExtraOptions.Version == "1" ? Magic.Length : 32;
             bw.Write(indexOffset);
 
             ms.Dispose();

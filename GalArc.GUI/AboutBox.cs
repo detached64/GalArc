@@ -45,8 +45,7 @@ namespace GalArc.GUI
         {
             if (!string.IsNullOrEmpty(this.txtSearchText.Text))
             {
-                List<EngineInfo> searched = EngineInfo
-                    .Infos
+                List<EngineInfo> searched = EngineInfo.Infos
                     .Where(engine => engine.EngineName.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.UnpackFormat.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0 || engine.PackFormat.IndexOf(this.txtSearchText.Text, StringComparison.OrdinalIgnoreCase) >= 0)
                     .ToList();
                 UpdateDataGridView(searched);

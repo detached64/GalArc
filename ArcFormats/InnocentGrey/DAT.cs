@@ -1,19 +1,19 @@
 ﻿using ArcFormats.Properties;
+using GalArc.Controls;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using Utility;
 
 namespace ArcFormats.InnocentGrey
 {
     public class DAT : ArchiveFormat
     {
-        public static UserControl UnpackExtraOptions = IGA.UnpackExtraOptions;
+        public static OptionsTemplate UnpackExtraOptions = IGA.UnpackExtraOptions;
 
-        public static UserControl PackExtraOptions = IGA.PackExtraOptions;
+        public static OptionsTemplate PackExtraOptions = IGA.PackExtraOptions;
 
         private readonly string Magic = "PACKDAT.";
 

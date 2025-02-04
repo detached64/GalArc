@@ -1,16 +1,16 @@
-﻿using GalArc.Logs;
+﻿using GalArc.Controls;
+using GalArc.Logs;
 using System;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using Utility.Compression;
 
 namespace ArcFormats.GsPack
 {
     public class DAT : PAK
     {
-        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackPAKOptions());
-        public static new UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
+        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackPAKOptions());
+        public static new OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
 
         private readonly string Magic = "GsSYMBOL5BINDATA";
 

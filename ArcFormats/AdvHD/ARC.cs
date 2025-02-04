@@ -1,11 +1,11 @@
 ﻿using ArcFormats.Properties;
+using GalArc.Controls;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using Utility;
 using Utility.Extensions;
 
@@ -13,11 +13,11 @@ namespace ArcFormats.AdvHD
 {
     public class ARC : ArchiveFormat
     {
-        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackARCOptions());
-        private static readonly Lazy<UserControl> _lazyPackOptions = new Lazy<UserControl>(() => new PackARCOptions());
+        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackARCOptions());
+        private static readonly Lazy<OptionsTemplate> _lazyPackOptions = new Lazy<OptionsTemplate>(() => new PackARCOptions());
 
-        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
-        public static UserControl PackExtraOptions => _lazyPackOptions.Value;
+        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
+        public static OptionsTemplate PackExtraOptions => _lazyPackOptions.Value;
 
         private readonly string[] EncryptedFileExtV1 = { "wsc", "scr" };
 
@@ -36,7 +36,7 @@ namespace ArcFormats.AdvHD
             public uint IndexOffset { get; set; }
         }
 
-        private void arcV1_unpack(string filePath, string folderPath)
+        private void UnpackV1(string filePath, string folderPath)
         {
             HeaderV1 header = new HeaderV1();
             FileStream fs = File.OpenRead(filePath);
@@ -85,7 +85,7 @@ namespace ArcFormats.AdvHD
             br.Dispose();
         }
 
-        private void arcV1_pack(string folderPath, string filePath)
+        private void PackV1(string folderPath, string filePath)
         {
             HashSet<string> uniqueExtension = new HashSet<string>();
 
@@ -161,7 +161,7 @@ namespace ArcFormats.AdvHD
             public uint EntrySize { get; set; }
         }
 
-        private void arcV2_unpack(string filePath, string folderPath)
+        private void UnpackV2(string filePath, string folderPath)
         {
             //init
             HeaderV2 header = new HeaderV2();
@@ -202,7 +202,7 @@ namespace ArcFormats.AdvHD
             br1.Dispose();
         }
 
-        private void arcV2_pack(string folderPath, string filePath)
+        private void PackV2(string folderPath, string filePath)
         {
             HeaderV2 header = new HeaderV2();
             List<Entry> l = new List<Entry>();
@@ -267,8 +267,8 @@ namespace ArcFormats.AdvHD
         {
             List<Action> actions = new List<Action>()
             {
-                () => arcV2_unpack(filePath, folderPath),
-                () => arcV1_unpack(filePath, folderPath)
+                () => UnpackV2(filePath, folderPath),
+                () => UnpackV1(filePath, folderPath)
             };
             foreach (var action in actions)
             {
@@ -285,13 +285,13 @@ namespace ArcFormats.AdvHD
 
         public override void Pack(string folderPath, string filePath)
         {
-            switch (ArcSettings.Version)
+            switch (PackExtraOptions.Version)
             {
                 case "1":
-                    arcV1_pack(folderPath, filePath);
+                    PackV1(folderPath, filePath);
                     break;
                 case "2":
-                    arcV2_pack(folderPath, filePath);
+                    PackV2(folderPath, filePath);
                     break;
                 default:
                     Logger.Error("Wrong version specified.");

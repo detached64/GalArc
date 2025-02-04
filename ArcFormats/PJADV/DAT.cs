@@ -1,11 +1,11 @@
 ﻿using ArcFormats.Properties;
+using GalArc.Controls;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using Utility;
 using Utility.Extensions;
 
@@ -13,10 +13,10 @@ namespace ArcFormats.PJADV
 {
     public class DAT : ArchiveFormat
     {
-        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackDATOptions());
-        private static readonly Lazy<UserControl> _lazyPackOptions = new Lazy<UserControl>(() => new PackDATOptions());
-        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
-        public static UserControl PackExtraOptions => _lazyPackOptions.Value;
+        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackDATOptions());
+        private static readonly Lazy<OptionsTemplate> _lazyPackOptions = new Lazy<OptionsTemplate>(() => new PackDATOptions());
+        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
+        public static OptionsTemplate PackExtraOptions => _lazyPackOptions.Value;
 
         private readonly string Magic = "GAMEDAT PAC";
 
@@ -87,8 +87,8 @@ namespace ArcFormats.PJADV
             FileStream fs = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fs);
             bw.Write(Encoding.ASCII.GetBytes(Magic));
-            int nameLength = ArcSettings.Version == "1" ? 16 : 32;
-            bw.Write(ArcSettings.Version == "1" ? (byte)'K' : (byte)'2');
+            int nameLength = PackExtraOptions.Version == "1" ? 16 : 32;
+            bw.Write(PackExtraOptions.Version == "1" ? (byte)'K' : (byte)'2');
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles();
 
@@ -145,8 +145,8 @@ namespace ArcFormats.PJADV
 
     public class PAK : DAT
     {
-        public static new UserControl UnpackExtraOptions = DAT.UnpackExtraOptions;
+        public static new OptionsTemplate UnpackExtraOptions = DAT.UnpackExtraOptions;
 
-        public static new UserControl PackExtraOptions = DAT.PackExtraOptions;
+        public static new OptionsTemplate PackExtraOptions = DAT.PackExtraOptions;
     }
 }

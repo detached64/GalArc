@@ -1,10 +1,10 @@
-﻿using ArcFormats.Templates;
+﻿using GalArc.Controls;
 using GalArc.Logs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 using Utility;
 using Utility.Extensions;
 
@@ -12,7 +12,8 @@ namespace ArcFormats.BiShop
 {
     public class BSA : ArchiveFormat
     {
-        public static UserControl PackExtraOptions = new VersionOnly("1/2");
+        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new VersionOnly("1/2"));
+        public static OptionsTemplate PackExtraOptions => _lazyUnpackOptions.Value;
 
         private byte[] Magic = Utils.HexStringToByteArray("4253417263000000");
 
@@ -46,12 +47,12 @@ namespace ArcFormats.BiShop
             if (version > 1)
             {
                 Logger.ShowVersion("bsa", 2);
-                bsaV2_unpack(filePath, folderPath);
+                UnpackV2(filePath, folderPath);
             }
             else if (version == 1)
             {
                 Logger.ShowVersion("bsa", 1);
-                bsaV1_unpack(filePath, folderPath);
+                UnpackV1(filePath, folderPath);
             }
             else
             {
@@ -59,7 +60,7 @@ namespace ArcFormats.BiShop
             }
         }
 
-        private void bsaV1_unpack(string filePath, string folderPath)
+        private void UnpackV1(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -85,7 +86,7 @@ namespace ArcFormats.BiShop
             br.Dispose();
         }
 
-        private void bsaV2_unpack(string filePath, string folderPath)
+        private void UnpackV2(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -138,18 +139,18 @@ namespace ArcFormats.BiShop
 
         public override void Pack(string folderPath, string filePath)
         {
-            switch (ArcSettings.Version)
+            switch (PackExtraOptions.Version)
             {
                 case "1":
-                    bsaV1_pack(folderPath, filePath);
+                    PackV1(folderPath, filePath);
                     break;
                 case "2":
-                    bsaV2_pack(folderPath, filePath);
+                    PackV2(folderPath, filePath);
                     break;
             }
         }
 
-        private void bsaV1_pack(string folderPath, string filePath)
+        private void PackV1(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -189,7 +190,7 @@ namespace ArcFormats.BiShop
             bwIndex.Dispose();
         }
 
-        private void bsaV2_pack(string folderPath, string filePath)
+        private void PackV2(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);

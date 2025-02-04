@@ -2,7 +2,6 @@ using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Utility;
 using Utility.Extensions;
 
 namespace ArcFormats.Valkyria

@@ -1,12 +1,12 @@
 ﻿using GalArc.Common;
+using GalArc.Controls;
 using GalArc.GUI.Properties;
 using System;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace GalArc.GUI
 {
-    public partial class PreferenceSettings : UserControl
+    public partial class PreferenceSettings : SettingsTemplate
     {
         private static readonly Lazy<PreferenceSettings> lazyInstance =
                 new Lazy<PreferenceSettings>(() => new PreferenceSettings());

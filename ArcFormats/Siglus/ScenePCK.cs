@@ -1,4 +1,5 @@
 ﻿using ArcFormats.Properties;
+using GalArc.Controls;
 using GalArc.Database;
 using GalArc.Logs;
 using System;
@@ -6,14 +7,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 
 namespace ArcFormats.Siglus
 {
     public class ScenePCK : ArchiveFormat
     {
-        protected static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackPCKOptions());
-        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
+        protected static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackPCKOptions());
+        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
 
         private class ScenePckHeader
         {

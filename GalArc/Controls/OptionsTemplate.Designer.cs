@@ -1,6 +1,6 @@
-﻿namespace ArcFormats.Templates
+﻿namespace GalArc.Controls
 {
-    partial class Empty
+    partial class OptionsTemplate
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -28,28 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Empty));
-            this.lbEmpty = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OptionsTemplate));
             this.SuspendLayout();
             // 
-            // lbEmpty
-            // 
-            resources.ApplyResources(this.lbEmpty, "lbEmpty");
-            this.lbEmpty.Name = "lbEmpty";
-            // 
-            // Empty
+            // OptionsTemplate
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.lbEmpty);
-            this.Name = "Empty";
+            this.DoubleBuffered = true;
+            this.Name = "OptionsTemplate";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lbEmpty;
     }
 }

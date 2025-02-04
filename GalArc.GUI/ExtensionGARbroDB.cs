@@ -1,11 +1,11 @@
-﻿using GalArc.Extensions.GARbroDB;
+﻿using GalArc.Controls;
+using GalArc.Extensions.GARbroDB;
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace GalArc.GUI
 {
-    public partial class ExtensionGARbroDB : UserControl
+    public partial class ExtensionGARbroDB : SettingsTemplate
     {
         private static readonly Lazy<ExtensionGARbroDB> lazyInstance =
                 new Lazy<ExtensionGARbroDB>(() => new ExtensionGARbroDB());

@@ -1,10 +1,9 @@
 ﻿using ArcFormats.Properties;
-using ArcFormats.Templates;
+using GalArc.Controls;
 using GalArc.Logs;
 using System;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using Utility;
 using Utility.Extensions;
 
@@ -12,7 +11,8 @@ namespace ArcFormats.Cmvs
 {
     public class CPZ : ArchiveFormat
     {
-        public static UserControl PackExtraOptions = new VersionOnly("1");
+        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new VersionOnly("1"));
+        public static OptionsTemplate PackExtraOptions => _lazyUnpackOptions.Value;
 
         private byte[] KeyV1 =
         {
@@ -22,7 +22,7 @@ namespace ArcFormats.Cmvs
             0x9C, 0x58, 0x8C, 0xD3, 0x96, 0xC8, 0x8C, 0xCB, 0x8C, 0xCE, 0x8C, 0xF3, 0x8C, 0xD6, 0x8B, 0x52,
         };
 
-        private void cpzV1_unpack(string filePath, string folderPath)
+        private void UnpackV1(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -64,7 +64,7 @@ namespace ArcFormats.Cmvs
             br.Dispose();
         }
 
-        private void cpzV1_pack(string folderPath, string filePath)
+        private void PackV1(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -167,7 +167,7 @@ namespace ArcFormats.Cmvs
             header.IndexSeed += 0x13712765u;
         }
 
-        private void cpzV6_unpack(string filePath, string folderPath)
+        private void UnpackV6(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -191,11 +191,10 @@ namespace ArcFormats.Cmvs
             switch (version)
             {
                 case 1:
-                    cpzV1_unpack(filePath, folderPath);
+                    UnpackV1(filePath, folderPath);
                     break;
                 case 6:
-                    cpzV6_unpack(filePath, folderPath);
-                    break;
+                //UnpackV6(filePath, folderPath);
                 default:
                     Logger.Error(Resources.logErrorNotSupportedVersion);
                     break;
@@ -204,10 +203,10 @@ namespace ArcFormats.Cmvs
 
         public override void Pack(string folderPath, string filePath)
         {
-            switch (ArcSettings.Version)
+            switch (PackExtraOptions.Version)
             {
                 case "1":
-                    cpzV1_pack(folderPath, filePath);
+                    PackV1(folderPath, filePath);
                     break;
             }
         }

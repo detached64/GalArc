@@ -61,8 +61,6 @@ namespace ArcFormats
     {
         public static Encoding Encoding = ArcEncoding.Shift_JIS;
 
-        public static string Version = null;
-
         public static List<ArchiveFormat> Formats =>
             Assembly.GetExecutingAssembly().GetTypes()
             .Where(t =>

@@ -1,17 +1,16 @@
-﻿using ArcFormats.Templates;
+﻿using GalArc.Controls;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows.Forms;
-using Utility;
 using Utility.Extensions;
 
 namespace ArcFormats.Triangle
 {
     public class CGF : ArchiveFormat
     {
-        public static UserControl PackExtraOptions = new VersionOnly("1");
+        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new VersionOnly("1"));
+        public static OptionsTemplate PackExtraOptions => _lazyUnpackOptions.Value;
 
         public override void Unpack(string filePath, string folderPath)
         {
@@ -28,7 +27,7 @@ namespace ArcFormats.Triangle
 
             if (offset1 == 4 + 20 * (uint)fileCount)
             {
-                cgfV1_unpack(filePath, folderPath);
+                UnpackV1(filePath, folderPath);
             }
             else if ((offset2 & ~0xc0000000) == 4 + 32 * (uint)fileCount)
             {
@@ -42,17 +41,17 @@ namespace ArcFormats.Triangle
 
         public override void Pack(string folderPath, string filePath)
         {
-            if (ArcSettings.Version == "1")
+            switch (PackExtraOptions.Version)
             {
-                cgfV1_pack(folderPath, filePath);
-            }
-            else if (ArcSettings.Version == "2")
-            {
-                throw new NotImplementedException();
+                case "1":
+                    PackV1(folderPath, filePath);
+                    break;
+                case "2":
+                    throw new NotImplementedException();
             }
         }
 
-        private void cgfV1_unpack(string filePath, string folderPath)
+        private void UnpackV1(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -86,7 +85,7 @@ namespace ArcFormats.Triangle
             br.Dispose();
         }
 
-        private void cgfV1_pack(string folderPath, string filePath)
+        private void PackV1(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);

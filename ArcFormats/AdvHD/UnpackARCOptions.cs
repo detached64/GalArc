@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using GalArc.Controls;
+using System;
 
 namespace ArcFormats.AdvHD
 {
-    public partial class UnpackARCOptions : UserControl
+    public partial class UnpackARCOptions : OptionsTemplate
     {
         internal static bool toDecryptScripts = true;
 

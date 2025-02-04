@@ -13,8 +13,7 @@ namespace ArcFormats.NScripter
         private byte[] key2;
         private byte[] m_buffer = new byte[64];
         private readonly MD5 md5 = new MD5();
-
-        public byte[] data { get; }
+        private readonly byte[] data;
 
         public Ns2Decryptor(byte[] data, byte[] key)
         {

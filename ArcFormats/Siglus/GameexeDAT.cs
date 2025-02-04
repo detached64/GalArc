@@ -1,14 +1,14 @@
 ﻿using ArcFormats.Properties;
+using GalArc.Controls;
 using GalArc.Logs;
 using System;
 using System.IO;
-using System.Windows.Forms;
 
 namespace ArcFormats.Siglus
 {
     public class GameexeDAT : ScenePCK
     {
-        public static new UserControl UnpackExtraOptions => ScenePCK.UnpackExtraOptions;
+        public static new OptionsTemplate UnpackExtraOptions => ScenePCK.UnpackExtraOptions;
 
         private const string UnpackedFileName = "Gameexe.ini";
 
@@ -59,7 +59,7 @@ namespace ArcFormats.Siglus
 
         public override void DeserializeScheme(out string name, out int count)
         {
-            name = "";
+            name = string.Empty;
             count = 0;
         }
     }

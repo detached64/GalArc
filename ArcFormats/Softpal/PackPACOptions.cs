@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using GalArc.Controls;
+using System;
 
 namespace ArcFormats.Softpal
 {
-    public partial class PackPACOptions : UserControl
+    public partial class PackPACOptions : OptionsTemplate
     {
         internal static bool toCompute = false;
 
@@ -28,7 +28,7 @@ namespace ArcFormats.Softpal
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ArcSettings.Version = this.combVersion.Text;
+            Version = this.combVersion.Text;
             this.chkbxCompute.Visible = this.combVersion.Text != "1";
         }
 

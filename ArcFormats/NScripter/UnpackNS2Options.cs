@@ -1,12 +1,12 @@
 ﻿using ArcFormats.Properties;
-using GalArc.Logs;
+using GalArc.Controls;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
 
 namespace ArcFormats.NScripter
 {
-    public partial class UnpackNS2Options : UserControl
+    public partial class UnpackNS2Options : OptionsTemplate
     {
         public UnpackNS2Options()
         {

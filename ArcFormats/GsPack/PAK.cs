@@ -1,10 +1,10 @@
 using ArcFormats.Properties;
+using GalArc.Controls;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using Utility.Compression;
 using Utility.Extensions;
 
@@ -12,8 +12,8 @@ namespace ArcFormats.GsPack
 {
     public class PAK : ArchiveFormat
     {
-        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackPAKOptions());
-        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
+        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackPAKOptions());
+        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
 
         private Dictionary<string, string> NameExtensionPairs => new Dictionary<string, string>
         {

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using GalArc.Controls;
+using System;
 
 namespace ArcFormats.Kirikiri
 {
-    public partial class PackXP3Options : UserControl
+    public partial class PackXP3Options : OptionsTemplate
     {
-        internal static string Version;
-
         internal static bool CompressIndex = true;
 
         internal static bool CompressContents = true;

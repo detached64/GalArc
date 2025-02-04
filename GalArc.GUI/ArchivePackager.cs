@@ -144,26 +144,6 @@ namespace GalArc.GUI
             return assembly != null && type != null;
         }
 
-        private List<object> instances;
-
-        private bool LoadTypes()
-        {
-            Type[] types = assembly.GetTypes();
-            instances = new List<object>();
-            if (assembly == null || types.Length == 0)
-            {
-                return false;
-            }
-            foreach (Type type in types)
-            {
-                if (type.IsSubclassOf(typeof(ArchiveFormat)))
-                {
-                    instances.Add(Activator.CreateInstance(type));
-                }
-            }
-            return instances.Count > 0;
-        }
-
         public void Dispose()
         {
             _assembly = null;

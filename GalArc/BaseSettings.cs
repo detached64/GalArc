@@ -13,8 +13,8 @@ namespace GalArc
         [DefaultSettingValue("False")]
         public bool IsDebugMode
         {
-            get => (bool)this["IsDebugMode"];
-            set => this["IsDebugMode"] = value;
+            get => (bool)this[nameof(IsDebugMode)];
+            set => this[nameof(IsDebugMode)] = value;
         }
 
         [UserScopedSetting]
@@ -22,8 +22,8 @@ namespace GalArc
         [DefaultSettingValue("True")]
         public bool ToSaveLog
         {
-            get => (bool)this["ToSaveLog"];
-            set => this["ToSaveLog"] = value;
+            get => (bool)this[nameof(ToSaveLog)];
+            set => this[nameof(ToSaveLog)] = value;
         }
 
         [UserScopedSetting]
@@ -31,8 +31,8 @@ namespace GalArc
         [DefaultSettingValue("True")]
         public bool ToAutoSaveState
         {
-            get => (bool)this["ToAutoSaveState"];
-            set => this["ToAutoSaveState"] = value;
+            get => (bool)this[nameof(ToAutoSaveState)];
+            set => this[nameof(ToAutoSaveState)] = value;
         }
 
         #region Functions Enabled
@@ -42,7 +42,7 @@ namespace GalArc
         public bool IsExtensionsEnabled
         {
             get => (bool)this["IsExtensionsEnabled"];
-            set => this["IsExtensionsEnabled"] = value;
+            set => this[nameof(IsExtensionsEnabled)] = value;
         }
 
         [UserScopedSetting]
@@ -51,7 +51,7 @@ namespace GalArc
         public bool IsDatabaseEnabled
         {
             get => (bool)this["IsDatabaseEnabled"];
-            set => this["IsDatabaseEnabled"] = value;
+            set => this[nameof(IsDatabaseEnabled)] = value;
         }
 
         [UserScopedSetting]
@@ -60,7 +60,7 @@ namespace GalArc
         public bool IsGARbroDBEnabled
         {
             get => (bool)this["IsGARbroDBEnabled"];
-            set => this["IsGARbroDBEnabled"] = value;
+            set => this[nameof(IsGARbroDBEnabled)] = value;
         }
 
         [UserScopedSetting]
@@ -69,7 +69,7 @@ namespace GalArc
         public bool IsSiglusKeyFinderEnabled
         {
             get => (bool)this["IsSiglusKeyFinderEnabled"];
-            set => this["IsSiglusKeyFinderEnabled"] = value;
+            set => this[nameof(IsSiglusKeyFinderEnabled)] = value;
         }
         #endregion
 
@@ -79,8 +79,8 @@ namespace GalArc
         [DefaultSettingValue("")]
         public string LogPath
         {
-            get => (string)this["LogPath"];
-            set => this["LogPath"] = value;
+            get => (string)this[nameof(LogPath)];
+            set => this[nameof(LogPath)] = value;
         }
 
         [UserScopedSetting]
@@ -88,8 +88,8 @@ namespace GalArc
         [DefaultSettingValue("")]
         public string DatabasePath
         {
-            get => (string)this["DatabasePath"];
-            set => this["DatabasePath"] = value;
+            get => (string)this[nameof(DatabasePath)];
+            set => this[nameof(DatabasePath)] = value;
         }
 
         [UserScopedSetting]
@@ -97,8 +97,8 @@ namespace GalArc
         [DefaultSettingValue("")]
         public string GARbroDBPath
         {
-            get => (string)this["GARbroDBPath"];
-            set => this["GARbroDBPath"] = value;
+            get => (string)this[nameof(GARbroDBPath)];
+            set => this[nameof(GARbroDBPath)] = value;
         }
 
         [UserScopedSetting]
@@ -106,8 +106,8 @@ namespace GalArc
         [DefaultSettingValue("")]
         public string SiglusKeyFinderPath
         {
-            get => (string)this["SiglusKeyFinderPath"];
-            set => this["SiglusKeyFinderPath"] = value;
+            get => (string)this[nameof(SiglusKeyFinderPath)];
+            set => this[nameof(SiglusKeyFinderPath)] = value;
         }
         #endregion
     }

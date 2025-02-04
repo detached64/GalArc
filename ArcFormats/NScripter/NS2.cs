@@ -1,11 +1,11 @@
 ﻿using ArcFormats.Properties;
+using GalArc.Controls;
 using GalArc.Database;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using Utility;
 using Utility.Extensions;
 
@@ -13,8 +13,8 @@ namespace ArcFormats.NScripter
 {
     public class NS2 : ArchiveFormat
     {
-        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackNS2Options());
-        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
+        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackNS2Options());
+        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
 
         internal static Ns2Scheme Scheme;
 

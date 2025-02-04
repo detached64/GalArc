@@ -1,8 +1,8 @@
-﻿using GalArc.Logs;
+﻿using GalArc.Controls;
+using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows.Forms;
 using Utility;
 using Utility.Compression;
 using Utility.Extensions;
@@ -11,8 +11,8 @@ namespace ArcFormats.Ai6Win
 {
     public class ARC : ArchiveFormat
     {
-        private static readonly Lazy<UserControl> _lazyPacKOptions = new Lazy<UserControl>(() => new PackARCOptions("1/2/3"));
-        public static UserControl PackExtraOptions => _lazyPacKOptions.Value;
+        private static readonly Lazy<OptionsTemplate> _lazyPacKOptions = new Lazy<OptionsTemplate>(() => new PackARCOptions("1/2/3"));
+        public static OptionsTemplate PackExtraOptions => _lazyPacKOptions.Value;
 
         private class ArcEntry : PackedEntry
         {
@@ -42,7 +42,7 @@ namespace ArcFormats.Ai6Win
 
         public override void Pack(string folderPath, string filePath)
         {
-            switch (ArcSettings.Version)
+            switch (PackExtraOptions.Version)
             {
                 case "1":
                     PackV1(folderPath, filePath);

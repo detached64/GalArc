@@ -49,10 +49,10 @@ namespace ArcFormats.Cmvs
             uint d = state[3];
 
             // Main MD5 operations (similar to the original C code)
-            Func<uint, uint, uint, uint> F1 = (x, y, z) => (z ^ (x & (y ^ z)));
-            Func<uint, uint, uint, uint> F2 = (x, y, z) => F1(z, x, y);
-            Func<uint, uint, uint, uint> F3 = (x, y, z) => (x ^ y ^ z);
-            Func<uint, uint, uint, uint> F4 = (x, y, z) => (y ^ (x | ~z));
+            uint F1(uint x, uint y, uint z) => z ^ (x & (y ^ z));
+            uint F2(uint x, uint y, uint z) => F1(z, x, y);
+            uint F3(uint x, uint y, uint z) => x ^ y ^ z;
+            uint F4(uint x, uint y, uint z) => y ^ (x | ~z);
 
             // Perform MD5 steps
             MD5Step(F1, ref a, b, c, d, block[0] + 0xd76aa478, 7);

@@ -1,6 +1,6 @@
 ﻿using ArcFormats;
-using ArcFormats.Templates;
 using GalArc.Common;
+using GalArc.Controls;
 using GalArc.Database;
 using GalArc.GUI.Properties;
 using GalArc.Logs;

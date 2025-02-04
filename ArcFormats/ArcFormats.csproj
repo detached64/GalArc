@@ -222,18 +222,6 @@
     <Compile Include="Triangle\CG.cs" />
     <Compile Include="Triangle\CGF.cs" />
     <Compile Include="Triangle\SUD.cs" />
-    <Compile Include="Templates\Empty.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Templates\Empty.Designer.cs">
-      <DependentUpon>Empty.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Templates\VersionOnly.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Templates\VersionOnly.Designer.cs">
-      <DependentUpon>VersionOnly.cs</DependentUpon>
-    </Compile>
     <Compile Include="Valkyria\DAT.cs" />
     <Compile Include="Yuris\UnpackYPFOptions.cs">
       <SubType>UserControl</SubType>
@@ -383,18 +371,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Softpal\UnpackPACOptions.zh-Hans.resx">
       <DependentUpon>UnpackPACOptions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\Empty.resx">
-      <DependentUpon>Empty.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\Empty.zh-Hans.resx">
-      <DependentUpon>Empty.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\VersionOnly.resx">
-      <DependentUpon>VersionOnly.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\VersionOnly.zh-Hans.resx">
-      <DependentUpon>VersionOnly.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Yuris\UnpackYPFOptions.resx">
       <DependentUpon>UnpackYPFOptions.cs</DependentUpon>

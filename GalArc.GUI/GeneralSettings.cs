@@ -1,10 +1,10 @@
-﻿using GalArc.GUI.Properties;
+﻿using GalArc.Controls;
+using GalArc.GUI.Properties;
 using System;
-using System.Windows.Forms;
 
 namespace GalArc.GUI
 {
-    public partial class GeneralSettings : UserControl
+    public partial class GeneralSettings : SettingsTemplate
     {
         private static readonly Lazy<GeneralSettings> lazyInstance =
                 new Lazy<GeneralSettings>(() => new GeneralSettings());

@@ -1,9 +1,9 @@
-﻿using ArcFormats.Templates;
+﻿using GalArc.Controls;
 using GalArc.Logs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using Utility;
 using Utility.Extensions;
 
@@ -11,7 +11,8 @@ namespace ArcFormats.Majiro
 {
     public class ARC : ArchiveFormat
     {
-        public static UserControl PackExtraOptions = new VersionOnly("1/2/3");
+        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new VersionOnly("1/2/3"));
+        public static OptionsTemplate PackExtraOptions => _lazyUnpackOptions.Value;
 
         private readonly string Magic = "MajiroArcV";
 
@@ -39,11 +40,11 @@ namespace ArcFormats.Majiro
                 switch (UnpackVersion)
                 {
                     case 1:
-                        arcV1_unpack(filePath, folderPath);
+                        UnpackV1(filePath, folderPath);
                         break;
                     case 2:
                     case 3:
-                        arcV2_unpack(filePath, folderPath);
+                        UnpackV2(filePath, folderPath);
                         break;
                 }
             }
@@ -53,7 +54,7 @@ namespace ArcFormats.Majiro
             }
         }
 
-        private void arcV1_unpack(string filePath, string folderPath)
+        private void UnpackV1(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -97,7 +98,7 @@ namespace ArcFormats.Majiro
             ms.Dispose();
         }
 
-        private void arcV2_unpack(string filePath, string folderPath)
+        private void UnpackV2(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
@@ -136,20 +137,20 @@ namespace ArcFormats.Majiro
 
         public override void Pack(string folderPath, string filePath)
         {
-            PackVersion = int.Parse(ArcSettings.Version);
+            PackVersion = int.Parse(PackExtraOptions.Version);
             switch (PackVersion)
             {
                 case 1:
-                    arcV1_pack(folderPath, filePath);
+                    PackV1(folderPath, filePath);
                     break;
                 case 2:
                 case 3:
-                    arcV2_pack(folderPath, filePath);
+                    PackV2(folderPath, filePath);
                     break;
             }
         }
 
-        private void arcV1_pack(string folderPath, string filePath)
+        private void PackV1(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -196,7 +197,7 @@ namespace ArcFormats.Majiro
             fw.Dispose();
         }
 
-        private void arcV2_pack(string folderPath, string filePath)
+        private void PackV2(string folderPath, string filePath)
         {
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);

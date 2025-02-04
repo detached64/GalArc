@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Windows.Forms;
 
-namespace ArcFormats.Templates
+namespace GalArc.Controls
 {
-    public partial class Empty : UserControl
+    public partial class Empty : OptionsTemplate
     {
         private static readonly Lazy<Empty> lazyInstance =
                 new Lazy<Empty>(() => new Empty());

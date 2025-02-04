@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using GalArc.Controls;
+using System;
 
 namespace ArcFormats.Ai6Win
 {
-    public partial class PackARCOptions : UserControl
+    public partial class PackARCOptions : OptionsTemplate
     {
         internal static bool toCompressContents = false;
 
@@ -24,8 +24,8 @@ namespace ArcFormats.Ai6Win
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ArcSettings.Version = this.combVersion.Text;
-            this.chkbxCompress.Visible = ArcSettings.Version != "1";
+            Version = this.combVersion.Text;
+            this.chkbxCompress.Visible = Version != "1";
         }
     }
 }

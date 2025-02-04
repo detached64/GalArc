@@ -49,7 +49,6 @@
             this.combVersion.FormattingEnabled = true;
             resources.ApplyResources(this.combVersion, "combVersion");
             this.combVersion.Name = "combVersion";
-            this.combVersion.SelectedIndexChanged += new System.EventHandler(this.combVersion_SelectedIndexChanged);
             // 
             // lbVersion
             // 
@@ -60,9 +59,9 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.chkbxEncScr);
             this.Controls.Add(this.combVersion);
             this.Controls.Add(this.lbVersion);
+            this.Controls.Add(this.chkbxEncScr);
             this.Name = "PackDATOptions";
             this.ResumeLayout(false);
             this.PerformLayout();

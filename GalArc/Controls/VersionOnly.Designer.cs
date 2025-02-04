@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.Templates
+﻿namespace GalArc.Controls
 {
     partial class VersionOnly
     {

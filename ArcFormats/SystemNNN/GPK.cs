@@ -1,16 +1,16 @@
-﻿using ArcFormats.Templates;
+﻿using GalArc.Controls;
 using GalArc.Logs;
 using System;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using Utility.Extensions;
 
 namespace ArcFormats.SystemNNN
 {
     public class GPK : ArchiveFormat
     {
-        public static UserControl PackExtraOptions = new VersionOnly("1/2");
+        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new VersionOnly("1/2"));
+        public static OptionsTemplate PackExtraOptions => _lazyUnpackOptions.Value;
 
         public override void Unpack(string filePath, string folderPath)
         {
@@ -149,7 +149,7 @@ namespace ArcFormats.SystemNNN
                 Logger.UpdateBar();
             }
 
-            if (ArcSettings.Version == "1")
+            if (PackExtraOptions.Version == "1")
             {
                 //skip this
             }

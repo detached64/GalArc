@@ -1,18 +1,18 @@
-﻿using GalArc.Database;
+﻿using GalArc.Controls;
+using GalArc.Database;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 using Utility.Compression;
 
 namespace ArcFormats.Seraph
 {
     public class DAT : ArchiveFormat
     {
-        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackDATOptions());
-        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
+        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackDATOptions());
+        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
 
         private class Group
         {

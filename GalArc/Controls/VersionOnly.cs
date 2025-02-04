@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Windows.Forms;
 
-namespace ArcFormats.Templates
+namespace GalArc.Controls
 {
-    public partial class VersionOnly : UserControl
+    public partial class VersionOnly : OptionsTemplate
     {
         public VersionOnly(string versions)
         {
@@ -17,7 +16,7 @@ namespace ArcFormats.Templates
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ArcSettings.Version = this.combVersion.Text;
+            Version = this.combVersion.Text;
         }
     }
 }

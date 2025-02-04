@@ -1,10 +1,11 @@
-﻿using System;
+﻿using GalArc.Controls;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace ArcFormats.NitroPlus
 {
-    public partial class PackPAKOptions : UserControl
+    public partial class PackPAKOptions : OptionsTemplate
     {
         internal static string OriginalFilePath = string.Empty;
 

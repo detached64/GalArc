@@ -1,9 +1,9 @@
 ﻿using ArcFormats.Properties;
+using GalArc.Controls;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows.Forms;
 using Utility;
 using Utility.Compression;
 using Utility.Extensions;
@@ -12,16 +12,16 @@ namespace ArcFormats.Yuris
 {
     public class YPF : ArchiveFormat
     {
-        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackYPFOptions());
-        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
+        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackYPFOptions());
+        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
 
-        class YpfEntry : PackedEntry
+        private class YpfEntry : PackedEntry
         {
             public int NameLen { get; set; }
             public byte[] Data { get; set; }
         }
 
-        class Scheme
+        private class Scheme
         {
             public byte Key { get; set; }
             public byte[] Table { get; set; }

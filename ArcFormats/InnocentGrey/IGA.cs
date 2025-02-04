@@ -1,19 +1,19 @@
 ﻿using ArcFormats.Properties;
+using GalArc.Controls;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 
 namespace ArcFormats.InnocentGrey
 {
     public class IGA : ArchiveFormat
     {
-        private static readonly Lazy<UserControl> _lazyUnpackOptions = new Lazy<UserControl>(() => new UnpackIGAOptions());
-        private static readonly Lazy<UserControl> _lazyPackOptions = new Lazy<UserControl>(() => new PackIGAOptions());
-        public static UserControl UnpackExtraOptions => _lazyUnpackOptions.Value;
-        public static UserControl PackExtraOptions => _lazyPackOptions.Value;
+        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackIGAOptions());
+        private static readonly Lazy<OptionsTemplate> _lazyPackOptions = new Lazy<OptionsTemplate>(() => new PackIGAOptions());
+        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
+        public static OptionsTemplate PackExtraOptions => _lazyPackOptions.Value;
 
         private readonly string Magic = "IGA0";
 
@@ -171,7 +171,7 @@ namespace ArcFormats.InnocentGrey
         }
     }
 
-    static class VarInt
+    internal static class VarInt
     {
         public static uint UnpackUint(BinaryReader br)
         {
