@@ -73,33 +73,5 @@ namespace ArcFormats
             .OfType<ArchiveFormat>()
             .Reverse()
             .ToList();
-
-        public static object[] Instances
-        {
-            get
-            {
-                if (instances == null)
-                {
-                    GetTypes();
-                }
-                return instances.ToArray();
-            }
-        }
-
-        private static List<object> instances;
-
-        public static void GetTypes()
-        {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            Type[] types = assembly.GetTypes();
-            instances = new List<object>();
-            foreach (Type type in types)
-            {
-                if (type.IsSubclassOf(typeof(ArchiveFormat)))
-                {
-                    instances.Add(Activator.CreateInstance(type));
-                }
-            }
-        }
     }
 }

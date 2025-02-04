@@ -66,7 +66,7 @@ namespace GalArc.GUI
             }
         }
 
-        private async void ReimportSchemes(object sender, EventArgs e)
+        private async void ReloadSchemes(object sender, EventArgs e)
         {
             this.lbStatus.Text = LogStrings.Loading;
             await Task.Run(() => LoadSchemes());
@@ -635,7 +635,7 @@ namespace GalArc.GUI
 
         private void reimportSchemesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ReimportSchemes(sender, e);
+            ReloadSchemes(sender, e);
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)

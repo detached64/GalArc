@@ -104,10 +104,10 @@
     <value>You are using the latest version of GalArc.</value>
   </data>
   <data name="Updating" xml:space="preserve">
-    <value>Checking for update……</value>
+    <value>Checking for updates……</value>
   </data>
   <data name="UpdateError" xml:space="preserve">
-    <value>Error occurs while checking for update.</value>
+    <value>Failed to check for updates.</value>
   </data>
   <data name="ValidArchiveDetected" xml:space="preserve">
     <value>Valid {0} v{1} archive detected.</value>

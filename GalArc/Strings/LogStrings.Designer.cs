@@ -367,7 +367,7 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Error occurs while checking for update. 的本地化字符串。
+        ///   查找类似 Failed to check for updates. 的本地化字符串。
         /// </summary>
         public static string UpdateError {
             get {
@@ -376,7 +376,7 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Checking for update…… 的本地化字符串。
+        ///   查找类似 Checking for updates…… 的本地化字符串。
         /// </summary>
         public static string Updating {
             get {

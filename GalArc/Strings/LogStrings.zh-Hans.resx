@@ -127,7 +127,7 @@
     <value>检查更新……</value>
   </data>
   <data name="UpdateError" xml:space="preserve">
-    <value>检查更新时出现错误。</value>
+    <value>检查更新失败。</value>
   </data>
   <data name="ValidArchiveDetected" xml:space="preserve">
     <value>检测到{0} v{1}封包。</value>

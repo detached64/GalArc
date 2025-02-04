@@ -1,6 +1,6 @@
 ﻿// File: Logs/Logger.cs
 // Date: 2024/08/28
-// Description: Logger class for logging and showing logs.
+// Description: Logger class for logging, change status and progress bar.
 //
 // Copyright (C) 2024 detached64
 //
@@ -37,10 +37,10 @@ namespace GalArc.Logs
 
     public enum ProgressAction
     {
-        Progress,
-        SetMax,
-        SetVal,
-        Finish
+        Progress,   // Increment
+        SetMax,     // Set maximum value
+        SetVal,     // Set value
+        Finish      // Finish
     }
 
     public class ProgressEventArgs : EventArgs
