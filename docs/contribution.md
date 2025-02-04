@@ -24,11 +24,11 @@
 3. Add unpack or pack method there. Make sure the methods are like these:
 
    ```C#
-   public void Unpack(string filePath, string folderPath)
+   public override void Unpack(string filePath, string folderPath)
    {
        
    }
-   public void Pack(string folderPath, string filePath)
+   public override void Pack(string folderPath, string filePath)
    {
        
    }

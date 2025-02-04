@@ -2,34 +2,38 @@
 
 Attention:this file may not be updated regularly.
 
-| Engine(Producer) | Extension                  | Unpack | Pack | Supported               |
-| ---------------- | -------------------------- | ------ | ---- | ----------------------- |
-| AdvHD            | `arc` `pna`                | ✔️      | ✔️    | All                     |
-| Ai5Win           | `arc` `dat` `VSD`          | ✔️      | ❌    | All                     |
-| Ai6Win           | `arc`                      | ✔️      | ✔️    | All                     |
-| Artemis          | `pfs`                      | ✔️      | ✔️    | All                     |
-| BiShop           | `bsa`                      | ✔️      | ✔️    | All                     |
-| Cmvs             | `cpz`                      | ✔️      | ✔️    | v1                      |
-| EntisGLS         | `noa`                      | ✔️      | ✔️    | unencrypted             |
-| Eushully         | `alf`                      | ✔️      | ❌    | All                     |
-| InnocentGrey     | `iga` `dat`                | ✔️      | ✔️    | `iga`:All `dat`:Limited |
-| KID              | `dat`                      | ✔️      | ✔️    | All                     |
-| Kirikiri         | `xp3`                      | ✔️      | ✔️    | unencrypted             |
-| Majiro           | `arc`                      | ✔️      | ✔️    | All                     |
-| NekoSDK          | `pak`                      | ✔️      | ✔️    | All                     |
-| NeXAS            | `pac`                      | ✔️      | ❌    | All                     |
-| NextonLikeC      | `lst`                      | ✔️      | ❌    | All                     |
-| Nitro+           | `pak`                      | ✔️      | ✔️    | All                     |
-| NScripter        | `ns2` `nsa`                | ✔️      | ✔️    | unencrypted             |
-| Palette          | `pak`                      | ✔️      | ✔️    | All                     |
-| PJADV            | `dat` `pak`                | ✔️      | ✔️    | All                     |
-| RPGMaker         | `rgssad` `rgss2a` `rgss3a` | ✔️      | ✔️    | All                     |
-| Seraph           | `dat`                      | ✔️      | ❌    | All                     |
-| Siglus           | `Scene.pck` `Gameexe.dat`  | ✔️      | ❌    | All                     |
-| Softpal          | `pac`                      | ✔️      | ✔️    | All                     |
-| SystemNNN        | `gpk` `vpk`                | ✔️      | ✔️    | All                     |
-| Triangle         | `CG` `SUD` `CGF`           | ✔️      | ✔️    | cgf:v1 only             |
-| Yuris            | `ypf`                      | ✔️      | ❌    | All                     |
-
-
+| Engine(Producer) | Extension                  | Unpack | Pack | Supported                   |
+| ---------------- | -------------------------- | ------ | ---- | --------------------------- |
+| AdvHD            | `arc` `pna`                | ✔️      | ✔️    | all                         |
+| Ai5Win/elf       | `arc` `dat` `VSD`          | ✔️      | ❌    | all                         |
+| Ai6Win/Silky     | `arc`                      | ✔️      | ✔️    | all                         |
+| Artemis          | `pfs`                      | ✔️      | ✔️    | all                         |
+| BiShop           | `bsa`                      | ✔️      | ✔️    | all                         |
+| Cmvs             | `cpz`                      | ✔️      | ✔️    | v1                          |
+| EmonEngine       | `bsa`                      | ✔️      | ✔️    | all                         |
+| EntisGLS         | `noa`                      | ✔️      | ✔️    | unencrypted                 |
+| Eushully         | `alf`                      | ✔️      | ❌    | all                         |
+| GsPack/GsWin     | `pak` `dat`                | ✔️      | ❌    | all                         |
+| InnocentGrey     | `iga` `dat`                | ✔️      | ✔️    | `iga`:all `dat`:limited     |
+| KID              | `dat`                      | ✔️      | ✔️    | all                         |
+| Kirikiri         | `xp3`                      | ✔️      | ✔️    | unencrypted                 |
+| Majiro           | `arc`                      | ✔️      | ✔️    | all                         |
+| NekoPack         | `dat`                      | ✔️      | ❌    | limited                     |
+| NekoSDK          | `pak`                      | ✔️      | ✔️    | all                         |
+| NeXAS/Giga       | `pac`                      | ✔️      | ❌    | all                         |
+| NextonLikeC      | `lst`                      | ✔️      | ❌    | all                         |
+| Nitro+           | `pak`                      | ✔️      | ✔️    | limited                     |
+| NScripter        | `ns2` `nsa`                | ✔️      | ✔️    | `ns2`:all `nsa`:unencrypted |
+| Palette          | `pak`                      | ✔️      | ✔️    | all                         |
+| PJADV            | `dat` `pak`                | ✔️      | ✔️    | all                         |
+| Qlie/Clie        | `pack`                     | ✔️      | ❌    | limited                     |
+| RPGMaker         | `rgssad` `rgss2a` `rgss3a` | ✔️      | ✔️    | all                         |
+| Seraph/Seraphim  | `dat`                      | ✔️      | ❌    | all                         |
+| Siglus           | `Scene.pck` `Gameexe.dat`  | ✔️      | ❌    | all                         |
+| Softpal          | `pac`                      | ✔️      | ✔️    | all                         |
+| Sogna            | `dat`                      | ✔️      | ✔️    | all                         |
+| SystemNNN        | `gpk` `vpk`                | ✔️      | ✔️    | all                         |
+| Triangle         | `CG` `SUD` `CGF`           | ✔️      | ✔️    | cgf:v1 only                 |
+| Valkyria         | `dat`                      | ✔️      | ✔️    | all                         |
+| Yuris            | `ypf`                      | ✔️      | ❌    | all                         |
 
