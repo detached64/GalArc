@@ -126,7 +126,7 @@
     <value>85, 64</value>
   </data>
   <data name="chkbxDebug.Size" type="System.Drawing.Size, System.Drawing">
-    <value>150, 28</value>
+    <value>185, 28</value>
   </data>
   <data name="chkbxDebug.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -150,7 +150,7 @@
     <value>True</value>
   </data>
   <data name="chkbxSaveLog.Location" type="System.Drawing.Point, System.Drawing">
-    <value>85, 121</value>
+    <value>85, 114</value>
   </data>
   <data name="chkbxSaveLog.Size" type="System.Drawing.Size, System.Drawing">
     <value>108, 28</value>
