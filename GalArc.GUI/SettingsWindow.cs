@@ -1,6 +1,5 @@
 ﻿using GalArc.GUI.Properties;
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace GalArc.GUI

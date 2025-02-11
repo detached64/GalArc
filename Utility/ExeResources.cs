@@ -36,10 +36,16 @@ namespace Utility
         {
             IntPtr res = NativeMethods.FindResource(hModule, name, type);
             if (res == IntPtr.Zero)
+            {
                 return null;
+            }
+
             IntPtr data = NativeMethods.LoadResource(hModule, res);
             if (data == IntPtr.Zero)
+            {
                 return null;
+            }
+
             uint size = NativeMethods.SizeofResource(hModule, res);
             NativeMethods.LockResource(data);
             byte[] buffer = new byte[size];
