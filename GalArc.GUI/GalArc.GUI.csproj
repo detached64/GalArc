@@ -75,12 +75,6 @@
     <Compile Include="DataBaseSettings.Designer.cs">
       <DependentUpon>DataBaseSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExtensionGARbroDB.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ExtensionGARbroDB.Designer.cs">
-      <DependentUpon>ExtensionGARbroDB.cs</DependentUpon>
-    </Compile>
     <Compile Include="ExtensionSiglusKeyFinder.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -157,12 +151,6 @@
     <EmbeddedResource Include="DataBaseSettings.zh-Hans.resx">
       <DependentUpon>DataBaseSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExtensionGARbroDB.resx">
-      <DependentUpon>ExtensionGARbroDB.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExtensionGARbroDB.zh-Hans.resx">
-      <DependentUpon>ExtensionGARbroDB.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ExtensionSiglusKeyFinder.resx">
       <DependentUpon>ExtensionSiglusKeyFinder.cs</DependentUpon>
     </EmbeddedResource>
@@ -234,7 +222,6 @@
     <None Include="Resources\Database\Ns2.json" />
     <None Include="Resources\Database\Seraph.json" />
     <None Include="Resources\Database\Siglus.json" />
-    <None Include="Resources\Extensions\Formats.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

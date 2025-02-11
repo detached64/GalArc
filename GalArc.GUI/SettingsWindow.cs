@@ -48,9 +48,6 @@ namespace GalArc.GUI
                 case "nodeExtensions":
                     userControl = ExtensionsSettings.Instance;
                     break;
-                case "nodeGARbroDB":
-                    userControl = ExtensionGARbroDB.Instance;
-                    break;
                 case "nodeSiglusKeyFinder":
                     userControl = ExtensionSiglusKeyFinder.Instance;
                     break;
@@ -59,7 +56,6 @@ namespace GalArc.GUI
             {
                 this.panel.Controls.Clear();
                 userControl.Dock = DockStyle.Fill;
-                //userControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
                 this.panel.Controls.Add(userControl);
             }
             this.ResumeLayout(false);
