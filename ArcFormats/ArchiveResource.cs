@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using Utility;
 
 namespace ArcFormats
 {
@@ -59,7 +58,7 @@ namespace ArcFormats
 
     public static class ArcSettings
     {
-        public static Encoding Encoding = ArcEncoding.Shift_JIS;
+        public static Encoding Encoding { internal get; set; }
 
         public static List<ArchiveFormat> Formats =>
             Assembly.GetExecutingAssembly().GetTypes()

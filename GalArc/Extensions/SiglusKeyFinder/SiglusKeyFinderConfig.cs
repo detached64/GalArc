@@ -26,8 +26,8 @@ namespace GalArc.Extensions.SiglusKeyFinder
         private static string DefaultPath => System.IO.Path.Combine(Environment.CurrentDirectory, "Extensions\\SiglusKeyFinder.exe");
 
         public string Description => "Extract xor key from SiglusEngine games.";
-        public string OriginalAuthor => "yanhua0518";
-        public string OriginalWebsite => "https://github.com/yanhua0518/GALgameScriptTools/tree/master/SiglusEngine";
+        public string OriginalAuthor => "marcussacana";
+        public string OriginalWebsite => "https://github.com/marcussacana/SiglusSceneManager";
         public string ExtensionWebsite => "https://github.com/detached64/SiglusKeyFinder";
     }
 }

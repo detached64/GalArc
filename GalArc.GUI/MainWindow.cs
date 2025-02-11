@@ -535,24 +535,32 @@ namespace GalArc.GUI
 
         private void SyncPath()
         {
-            if (this.matchPathsMenuItem.Checked)
+            if (!this.matchPathsMenuItem.Checked || Mode == OperationMode.None || string.IsNullOrEmpty(this.txtInputPath.Text))
             {
-                if (this.chkbxUnpack.Checked)
+                return;
+            }
+            if (Mode == OperationMode.Unpack)
+            {
+                // handle two cases:
+                // 1. xxx.pfs.001
+                // 2. xxx
+                switch (this.txtInputPath.Text.Count(chr => chr == '.'))
                 {
-                    if (!string.IsNullOrEmpty(this.txtInputPath.Text) && File.Exists(this.txtInputPath.Text))
-                    {
-                        string folderPath = Path.Combine(Path.GetDirectoryName(this.txtInputPath.Text), Path.GetFileNameWithoutExtension(this.txtInputPath.Text));
-                        this.txtOutputPath.Text = File.Exists(folderPath) ? folderPath.Replace('.', '_') + "_unpacked" : folderPath;
-                    }
+                    case 0:
+                        this.txtOutputPath.Text = this.txtInputPath.Text + "_unpacked";
+                        break;
+                    case 1:
+                        this.txtOutputPath.Text = Path.Combine(Path.GetDirectoryName(this.txtInputPath.Text), Path.GetFileNameWithoutExtension(this.txtInputPath.Text));
+                        break;
+                    default:
+                        this.txtOutputPath.Text = this.txtInputPath.Text.Replace('.', '_');
+                        break;
                 }
-                else if (this.chkbxPack.Checked)
-                {
-                    if (!string.IsNullOrEmpty(this.txtInputPath.Text) && Directory.Exists(this.txtInputPath.Text))
-                    {
-                        string filePath = this.txtInputPath.Text + "." + SelectedNodePack.Text.ToLower();
-                        this.txtOutputPath.Text = File.Exists(filePath) ? filePath + ".new" : filePath;
-                    }
-                }
+            }
+            else
+            {
+                string filePath = this.txtInputPath.Text + "." + SelectedNodePack.Text.ToLower();
+                this.txtOutputPath.Text = File.Exists(filePath) ? filePath + ".new" : filePath;
             }
         }
 
