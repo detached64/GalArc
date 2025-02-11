@@ -58,17 +58,21 @@ namespace ArcFormats
 
     public static class ArcSettings
     {
+        static ArcSettings()
+        {
+            Formats = Assembly.GetExecutingAssembly().GetTypes()
+                .Where(t =>
+                    t.IsSubclassOf(typeof(ArchiveFormat)) &&
+                    !t.IsAbstract &&
+                    t.GetConstructor(Type.EmptyTypes) != null)
+                .Select(t => Activator.CreateInstance(t) as ArchiveFormat)
+                .OfType<ArchiveFormat>()
+                .Reverse()
+                .ToList();
+        }
+
         public static Encoding Encoding { internal get; set; }
 
-        public static List<ArchiveFormat> Formats =>
-            Assembly.GetExecutingAssembly().GetTypes()
-            .Where(t =>
-                t.IsSubclassOf(typeof(ArchiveFormat)) &&
-                !t.IsAbstract &&
-                t.GetConstructor(Type.EmptyTypes) != null)
-            .Select(t => Activator.CreateInstance(t) as ArchiveFormat)
-            .OfType<ArchiveFormat>()
-            .Reverse()
-            .ToList();
+        public static List<ArchiveFormat> Formats { get; }
     }
 }

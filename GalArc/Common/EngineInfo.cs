@@ -16,7 +16,9 @@ namespace GalArc.Common
             PackFormat = packFormat;
         }
 
-        public static List<EngineInfo> Infos => new List<EngineInfo>
+        private static List<EngineInfo> infos;
+
+        public static List<EngineInfo> Infos => infos ?? (infos = new List<EngineInfo>
         {
             new EngineInfo("AdvHD","ARC/PNA","ARC/PNA"),
             new EngineInfo("Ai5Win","ARC/DAT/VSD",string.Empty),
@@ -51,6 +53,6 @@ namespace GalArc.Common
             new EngineInfo("Triangle","CG/CGF/SUD","CG/CGF/SUD"),
             new EngineInfo("Valkyria","DAT","DAT"),
             new EngineInfo("Yuris","YPF",string.Empty),
-        };
+        });
     }
 }

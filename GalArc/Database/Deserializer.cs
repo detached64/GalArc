@@ -15,10 +15,12 @@ namespace GalArc.Database
     {
         public static Dictionary<string, string> LoadedJsons = new Dictionary<string, string>();
 
-        private static List<Type> Schemes => Assembly.GetExecutingAssembly().GetTypes()
+        private static List<Type> schemes;
+
+        private static List<Type> Schemes => schemes ?? (schemes = Assembly.GetExecutingAssembly().GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract && typeof(ArcScheme).IsAssignableFrom(t))
             .OrderBy(t => t.Name)
-            .ToList();
+            .ToList());
 
         public static int SchemeCount => Schemes.Count;
 

@@ -28,18 +28,8 @@ namespace GalArc.GUI
             get { return new List<object> { input, output }.ToArray(); }
         }
 
-        private Assembly assembly
-        {
-            get
-            {
-                if (_assembly == null)
-                {
-                    _assembly = Assembly.Load(nameof(ArcFormats));
-                }
-                return _assembly;
-            }
-        }
-        private Assembly _assembly;
+        private Assembly _assembly = null;
+        private Assembly assembly => _assembly ?? (_assembly = Assembly.Load(nameof(ArcFormats)));
         private Type type;
         private object instance;
         private MethodInfo method;
@@ -56,6 +46,8 @@ namespace GalArc.GUI
             else
             {
                 ArcSettings.Encoding = Encoding.UTF8;
+                Settings.Default.DefaultEncoding = "UTF-8";
+                Settings.Default.Save();
             }
         }
 
