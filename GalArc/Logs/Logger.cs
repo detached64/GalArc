@@ -323,17 +323,22 @@ namespace GalArc.Logs
 
         public static void ShowCheckingUpdate() => Instance.InfoInvokeInternal(LogStrings.Updating);
 
-        public static async void ShowCheckSuccess(bool existNewer)
+        public static async void ShowCheckSuccess(int result)
         {
-            if (existNewer)
+            switch (result)
             {
-                Instance.InfoInternal(LogStrings.HasUpdate);
-                await ShowAndDisappear(LogStrings.HasUpdate, 5000);
-            }
-            else
-            {
-                Instance.InfoInternal(LogStrings.NoUpdate);
-                await ShowAndDisappear(LogStrings.NoUpdate, 5000);
+                case 0:
+                    Instance.InfoInternal(LogStrings.NoUpdate);
+                    await ShowAndDisappear(LogStrings.NoUpdate, 5000);
+                    break;
+                case 1:
+                    Instance.InfoInternal(LogStrings.HasUpdate);
+                    await ShowAndDisappear(LogStrings.HasUpdate, 5000);
+                    break;
+                case -1:
+                    Instance.InfoInternal(LogStrings.PreReleaseVer);
+                    await ShowAndDisappear(LogStrings.PreReleaseVer, 5000);
+                    break;
             }
         }
 
@@ -346,8 +351,6 @@ namespace GalArc.Logs
         public static void ShowVersion(string extension, string version) => Instance.InfoInternal(string.Format(LogStrings.ValidArchiveDetected, extension, version));
 
         public static void ImportDatabaseScheme(string name, int count) => Instance.DebugInternal(string.Format(LogStrings.ImportDataBaseScheme, name, count));
-
-        public static void ImportGARbroDBScheme(int count) => Instance.DebugInternal(string.Format(LogStrings.ImportGARbroDBScheme, count));
         #endregion
     }
 }

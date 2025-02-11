@@ -41,7 +41,7 @@ namespace GalArc
         [DefaultSettingValue("True")]
         public bool IsExtensionsEnabled
         {
-            get => (bool)this["IsExtensionsEnabled"];
+            get => (bool)this[nameof(IsExtensionsEnabled)];
             set => this[nameof(IsExtensionsEnabled)] = value;
         }
 
@@ -50,17 +50,8 @@ namespace GalArc
         [DefaultSettingValue("True")]
         public bool IsDatabaseEnabled
         {
-            get => (bool)this["IsDatabaseEnabled"];
+            get => (bool)this[nameof(IsDatabaseEnabled)];
             set => this[nameof(IsDatabaseEnabled)] = value;
-        }
-
-        [UserScopedSetting]
-        [DebuggerNonUserCode]
-        [DefaultSettingValue("True")]
-        public bool IsGARbroDBEnabled
-        {
-            get => (bool)this["IsGARbroDBEnabled"];
-            set => this[nameof(IsGARbroDBEnabled)] = value;
         }
 
         [UserScopedSetting]
@@ -68,7 +59,7 @@ namespace GalArc
         [DefaultSettingValue("True")]
         public bool IsSiglusKeyFinderEnabled
         {
-            get => (bool)this["IsSiglusKeyFinderEnabled"];
+            get => (bool)this[nameof(IsSiglusKeyFinderEnabled)];
             set => this[nameof(IsSiglusKeyFinderEnabled)] = value;
         }
         #endregion
@@ -90,15 +81,6 @@ namespace GalArc
         {
             get => (string)this[nameof(DatabasePath)];
             set => this[nameof(DatabasePath)] = value;
-        }
-
-        [UserScopedSetting]
-        [DebuggerNonUserCode]
-        [DefaultSettingValue("")]
-        public string GARbroDBPath
-        {
-            get => (string)this[nameof(GARbroDBPath)];
-            set => this[nameof(GARbroDBPath)] = value;
         }
 
         [UserScopedSetting]

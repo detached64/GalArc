@@ -35,7 +35,7 @@ namespace GalArc.GUI
                 this.TopMost = true;
             }
             this.lbCopyright.Text = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyCopyrightAttribute>().Copyright;
-            this.lbCurrentVer.Text = string.Format(Resources.lbVersion, Updater.CurrentVersion);
+            this.lbCurrentVer.Text = string.Format(Resources.lbVersion, Updater.CurrentVersion) + (Updater.CurrentVersion.Revision == 0 ? string.Empty : " beta");
             UpdateDataGridView(EngineInfo.Infos);
             UpdateLicense();
             this.dataGridViewEngines.ClearSelection();
@@ -104,16 +104,6 @@ namespace GalArc.GUI
 
             // update the rows
             this.dataGridViewEngines.Rows.Clear();
-            //int count = engines.Count;
-            //DataGridViewRow[] rows = new DataGridViewRow[count];
-            //for (int i = 0; i < count; i++)
-            //{
-            //    rows[i] = new DataGridViewRow();
-            //    rows[i].CreateCells(AboutWindow.Instance.dataGridViewEngines);
-            //    rows[i].Cells[0].Value = engines[i].EngineName;
-            //    rows[i].Cells[1].Value = engines[i].UnpackFormat;
-            //    rows[i].Cells[2].Value = engines[i].PackFormat;
-            //}
             foreach (var engine in engines)
             {
                 this.dataGridViewEngines.Rows.Add(engine.EngineName, engine.UnpackFormat, engine.PackFormat);

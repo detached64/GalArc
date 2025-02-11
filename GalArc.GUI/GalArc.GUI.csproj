@@ -156,6 +156,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ExtensionSiglusKeyFinder.zh-Hans.resx">
       <DependentUpon>ExtensionSiglusKeyFinder.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ExtensionsSettings.resx">
       <DependentUpon>ExtensionsSettings.cs</DependentUpon>

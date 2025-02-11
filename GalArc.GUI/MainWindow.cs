@@ -49,14 +49,22 @@ namespace GalArc.GUI
             this.txtInputPath.DragDrop += txtInputPath_DragDrop;
             this.txtOutputPath.DragEnter += txtOutputPath_DragEnter;
             this.txtOutputPath.DragDrop += txtOutputPath_DragDrop;
-            this.Load += ImportSchemes;
+            this.Load += ImportSchemesAsync;
         }
 
-        private async void ImportSchemes(object sender, EventArgs e)
+        private async void ImportSchemesAsync(object sender, EventArgs e)
         {
             this.pnlOperation.Enabled = false;
             this.lbStatus.Text = LogStrings.Loading;
-            await Task.Run(() => LoadSchemes());
+            try
+            {
+                await Task.Run(() => LoadSchemes()).ConfigureAwait(true);
+            }
+            catch
+            {
+                Logger.Error(LogStrings.ErrorImportScheme, false);
+                return;
+            }
             this.lbStatus.Text = LogStrings.Ready;
             this.pnlOperation.Enabled = true;
             if (BaseSettings.Default.ToAutoSaveState)
@@ -66,10 +74,18 @@ namespace GalArc.GUI
             }
         }
 
-        private async void ReloadSchemes(object sender, EventArgs e)
+        private async void ReloadSchemesAsync(object sender, EventArgs e)
         {
             this.lbStatus.Text = LogStrings.Loading;
-            await Task.Run(() => LoadSchemes());
+            try
+            {
+                await Task.Run(() => LoadSchemes()).ConfigureAwait(true);
+            }
+            catch
+            {
+                Logger.Error(LogStrings.ErrorImportScheme, false);
+                return;
+            }
             this.lbStatus.Text = LogStrings.Ready;
         }
 
@@ -165,7 +181,15 @@ namespace GalArc.GUI
         private async void checkUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Updater updater = new Updater();
-            await updater.DownloadFileAsync();
+            try
+            {
+                await updater.DownloadVersionAsync();
+            }
+            catch
+            {
+                Logger.Info(LogStrings.UpdateError);
+                return;
+            }
         }
 
         private void combLanguages_SelectedIndexChanged(object sender, EventArgs e)
@@ -643,7 +667,7 @@ namespace GalArc.GUI
 
         private void reimportSchemesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ReloadSchemes(sender, e);
+            ReloadSchemesAsync(sender, e);
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)

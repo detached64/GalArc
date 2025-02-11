@@ -97,6 +97,15 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
+        ///   查找类似 Failed to import schemes. 的本地化字符串。
+        /// </summary>
+        public static string ErrorImportScheme {
+            get {
+                return ResourceManager.GetString("ErrorImportScheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Please select operation. 的本地化字符串。
         /// </summary>
         public static string ErrorNeedSelectOperation {
@@ -214,15 +223,6 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Import {0} schemes from GARbroDB. 的本地化字符串。
-        /// </summary>
-        public static string ImportGARbroDBScheme {
-            get {
-                return ResourceManager.GetString("ImportGARbroDBScheme", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Input file path: 的本地化字符串。
         /// </summary>
         public static string InputFile {
@@ -300,6 +300,15 @@ namespace GalArc.Strings {
         public static string Packing {
             get {
                 return ResourceManager.GetString("Packing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 You are using a pre-release version of GalArc. 的本地化字符串。
+        /// </summary>
+        public static string PreReleaseVer {
+            get {
+                return ResourceManager.GetString("PreReleaseVer", resourceCulture);
             }
         }
         

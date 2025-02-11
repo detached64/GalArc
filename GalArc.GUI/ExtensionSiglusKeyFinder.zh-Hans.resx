@@ -117,13 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="chkbxEnableGARbroDB.Text" xml:space="preserve">
-    <value>启用此扩展</value>
-  </data>
   <data name="lbKeyFinderPath.Text" xml:space="preserve">
     <value>SiglusKeyFinder.exe文件路径</value>
   </data>
   <data name="btSelect.Text" xml:space="preserve">
     <value>…</value>
+  </data>
+  <data name="chkbxEnableSiglusFinder.Text" xml:space="preserve">
+    <value>启用此扩展</value>
   </data>
 </root>

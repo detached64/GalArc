@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExtensionSiglusKeyFinder));
-            this.chkbxEnableGARbroDB = new System.Windows.Forms.CheckBox();
+            this.chkbxEnableSiglusFinder = new System.Windows.Forms.CheckBox();
             this.lbKeyFinderPath = new System.Windows.Forms.Label();
             this.txtExePath = new System.Windows.Forms.TextBox();
             this.btSelect = new System.Windows.Forms.Button();
@@ -37,14 +37,14 @@
             this.panel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // chkbxEnableGARbroDB
+            // chkbxEnableSiglusFinder
             // 
-            resources.ApplyResources(this.chkbxEnableGARbroDB, "chkbxEnableGARbroDB");
-            this.chkbxEnableGARbroDB.Checked = true;
-            this.chkbxEnableGARbroDB.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkbxEnableGARbroDB.Name = "chkbxEnableGARbroDB";
-            this.chkbxEnableGARbroDB.UseVisualStyleBackColor = true;
-            this.chkbxEnableGARbroDB.CheckedChanged += new System.EventHandler(this.chkbxEnableGARbroDB_CheckedChanged);
+            resources.ApplyResources(this.chkbxEnableSiglusFinder, "chkbxEnableSiglusFinder");
+            this.chkbxEnableSiglusFinder.Checked = true;
+            this.chkbxEnableSiglusFinder.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkbxEnableSiglusFinder.Name = "chkbxEnableSiglusFinder";
+            this.chkbxEnableSiglusFinder.UseVisualStyleBackColor = true;
+            this.chkbxEnableSiglusFinder.CheckedChanged += new System.EventHandler(this.chkbxEnableFinder_CheckedChanged);
             // 
             // lbKeyFinderPath
             // 
@@ -78,7 +78,7 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel);
-            this.Controls.Add(this.chkbxEnableGARbroDB);
+            this.Controls.Add(this.chkbxEnableSiglusFinder);
             this.Name = "ExtensionSiglusKeyFinder";
             this.Load += new System.EventHandler(this.ExtensionSiglusKeyFinder_Load);
             this.panel.ResumeLayout(false);
@@ -90,7 +90,7 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckBox chkbxEnableGARbroDB;
+        private System.Windows.Forms.CheckBox chkbxEnableSiglusFinder;
         private System.Windows.Forms.Label lbKeyFinderPath;
         private System.Windows.Forms.TextBox txtExePath;
         private System.Windows.Forms.Button btSelect;

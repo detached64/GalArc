@@ -177,9 +177,6 @@
   <data name="ErrorSpecifiedFileNotFound" xml:space="preserve">
     <value>同目录下未找到{0}文件。</value>
   </data>
-  <data name="ImportGARbroDBScheme" xml:space="preserve">
-    <value>从GARbroDB导入{0}个密钥。</value>
-  </data>
   <data name="ImportDataBaseScheme" xml:space="preserve">
     <value>{0}：导入{1}个密钥。</value>
   </data>
@@ -233,5 +230,11 @@
   </data>
   <data name="ErrorClassNotFound" xml:space="preserve">
     <value>对应的类未找到。</value>
+  </data>
+  <data name="PreReleaseVer" xml:space="preserve">
+    <value>您正在使用预发布版本。</value>
+  </data>
+  <data name="ErrorImportScheme" xml:space="preserve">
+    <value>未能导入密钥。</value>
   </data>
 </root>

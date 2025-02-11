@@ -14,22 +14,21 @@ namespace GalArc.GUI
 
         private const string LatestVersionURL = "https://pastebin.com/raw/4pvccgbk";
 
-        internal static readonly Version CurrentVersion = Assembly.GetExecutingAssembly().GetName().Version;
+        internal static Version CurrentVersion => Assembly.GetExecutingAssembly().GetName().Version;
 
-        internal static string LatestVersion;
+        internal static string LatestVersion { get; private set; }
 
-        private bool isNewVerExist;
-
-        public async Task DownloadFileAsync()
+        public async Task DownloadVersionAsync()
         {
             Logger.ShowCheckingUpdate();
+            int result = 0;
             using (var cts = new CancellationTokenSource())
             {
                 cts.CancelAfter(10000);
                 try
                 {
                     LatestVersion = await DownloadContentAsync(cts.Token);
-                    CompareVersion(LatestVersion);
+                    result = CompareVersion(LatestVersion, CurrentVersion.ToString());
                 }
                 catch (OperationCanceledException)
                 {
@@ -42,9 +41,9 @@ namespace GalArc.GUI
                     return;
                 }
             }
-            Logger.ShowCheckSuccess(isNewVerExist);
+            Logger.ShowCheckSuccess(result);
             Logger.ShowProgramVersion(CurrentVersion.ToString(), LatestVersion);
-            if (isNewVerExist)
+            if (result > 0)
             {
                 UpdateBox box = new UpdateBox();
                 box.ShowDialog();
@@ -59,27 +58,25 @@ namespace GalArc.GUI
             return await response.Content.ReadAsStringAsync();
         }
 
-        private void CompareVersion(string latestVersion)
+        private int CompareVersion(string v1, string v2)
         {
-            isNewVerExist = false;
-
-            string[] parts1 = CurrentVersion.ToString().Split('.');
-            string[] parts2 = latestVersion.Split('.');
+            string[] parts1 = v1.Split('.');
+            string[] parts2 = v2.Split('.');
 
             for (int i = 0; i < Math.Max(parts1.Length, parts2.Length); i++)
             {
-                int num1 = (i < parts1.Length) ? int.Parse(parts1[i]) : 0;
-                int num2 = (i < parts2.Length) ? int.Parse(parts2[i]) : 0;
+                int num1 = int.Parse(parts1[i]);
+                int num2 = int.Parse(parts2[i]);
                 if (num1 > num2)
                 {
-                    break;
+                    return 1;
                 }
                 if (num1 < num2)
                 {
-                    isNewVerExist = true;
-                    break;
+                    return -1;
                 }
             }
+            return 0;
         }
     }
 }

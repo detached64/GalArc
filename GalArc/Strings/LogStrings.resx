@@ -157,9 +157,6 @@
   <data name="ErrorSpecifiedFileNotFound" xml:space="preserve">
     <value>{0} file not found in the same directory.</value>
   </data>
-  <data name="ImportGARbroDBScheme" xml:space="preserve">
-    <value>Import {0} schemes from GARbroDB.</value>
-  </data>
   <data name="ImportDataBaseScheme" xml:space="preserve">
     <value>{0}: Import {1} schemes.</value>
   </data>
@@ -213,5 +210,11 @@
   </data>
   <data name="ErrorClassNotFound" xml:space="preserve">
     <value>Specified class not found.</value>
+  </data>
+  <data name="PreReleaseVer" xml:space="preserve">
+    <value>You are using a pre-release version of GalArc.</value>
+  </data>
+  <data name="ErrorImportScheme" xml:space="preserve">
+    <value>Failed to import schemes.</value>
   </data>
 </root>
