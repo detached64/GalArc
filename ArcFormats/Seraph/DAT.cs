@@ -261,14 +261,12 @@ namespace ArcFormats.Seraph
                 {
                     byte[] raw = new byte[buffer.Length - 6];
                     Array.Copy(buffer, 6, raw, 0, raw.Length);
-                    File.WriteAllBytes(Path.Combine(folderPath, entry.Name), ZlibHelper.Decompress(raw));
-                    raw = null;
-                    continue;
+                    buffer = ZlibHelper.Decompress(raw);
                 }
 
                 try
                 {
-                    byte[] lz = SeraphUtils.Decompress(buffer);
+                    byte[] lz = SeraphUtils.LzDecompress(buffer);
                     File.WriteAllBytes(Path.Combine(folderPath, entry.Name), lz);
                 }
                 catch

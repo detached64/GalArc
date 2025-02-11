@@ -6,53 +6,48 @@ namespace ArcFormats.Seraph
 {
     internal static class SeraphUtils
     {
-        public static byte[] Decompress(byte[] data)
+        public static byte[] LzDecompress(byte[] data)
         {
-            using (MemoryStream input = new MemoryStream(data))
+            uint unpacked_size = BitConverter.ToUInt32(data, 0);
+            byte[] output = new byte[unpacked_size];
+            int src = 4;
+            int dst = 0;
+            while (dst < unpacked_size)
             {
-                int unpacked_size = ReadInt32(input);
-                var output = new byte[unpacked_size];
-                int dst = 0;
-                while (dst < unpacked_size)
+                if (src >= data.Length)
                 {
-                    int ctl = input.ReadByte();
-                    if (-1 == ctl)
-                    {
-                        throw new EndOfStreamException();
-                    }
-
-                    if ((ctl & 0x80) != 0)
-                    {
-                        byte lo = (byte)input.ReadByte();
-                        int offset = ((ctl << 3 | lo >> 5) & 0x3FF) + 1;
-                        int count = (lo & 0x1F) + 1;
-                        Binary.CopyOverlapped(output, dst - offset, dst, count);
-                        dst += count;
-                    }
-                    else
-                    {
-                        int count = ctl + 1;
-                        if (input.Read(output, dst, count) != count)
-                        {
-                            throw new EndOfStreamException();
-                        }
-
-                        dst += count;
-                    }
+                    throw new InvalidDataException("Unexpected end of input");
                 }
-                return output;
+                byte ctl = data[src++];
+                if ((ctl & 0x80) != 0)
+                {
+                    ushort param = (ushort)(ctl << 8 | data[src++]);
+                    int offset = ((param >> 5) & 0x3FF) + 1;
+                    int count = (param & 0x1F) + 1;
+                    if (dst - offset < 0 || dst - offset + count > output.Length)
+                    {
+                        throw new InvalidDataException("Invalid backreference");
+                    }
+                    Binary.CopyOverlapped(output, dst - offset, dst, count);
+                    dst += count;
+                }
+                else
+                {
+                    int count = (ctl & 0x7F) + 1;
+                    if (src + count > data.Length)
+                    {
+                        throw new InvalidDataException("Unexpected end of input");
+                    }
+                    Array.Copy(data, src, output, dst, count);
+                    dst += count;
+                    src += count;
+                }
             }
-        }
-
-        private static int ReadInt32(Stream stream)
-        {
-            byte[] buffer = new byte[4];
-            if (stream.Read(buffer, 0, 4) != 4)
+            if (dst != unpacked_size)
             {
-                throw new EndOfStreamException();
+                throw new InvalidDataException("Output size mismatch");
             }
-
-            return BitConverter.ToInt32(buffer, 0);
+            return output;
         }
     }
 }

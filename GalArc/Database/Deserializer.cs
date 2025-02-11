@@ -24,46 +24,35 @@ namespace GalArc.Database
 
         public static int ImportedSchemeCount { get; set; }
 
-        private static void LoadScheme(Type type)
+        private static bool LoadScheme<T>() where T : ArcScheme
         {
-            if (!BaseSettings.Default.IsDatabaseEnabled)
-            {
-                return;
-            }
-            string name = type.Name.Remove(type.Name.Length - 6);    // remove "Scheme"
+            string class_name = typeof(T).Name;
+            string name = class_name.Remove(class_name.Length - 6);    // remove "Scheme"
             if (LoadedJsons.ContainsKey(name))
             {
-                return;
+                return true;
             }
             string path = Path.Combine(DatabaseConfig.Path, name + ".json");
             if (!File.Exists(path))
             {
-                return;
+                return false;
             }
             string json = File.ReadAllText(path, Encoding.UTF8);
-            if (!string.IsNullOrEmpty(json))
+            if (string.IsNullOrEmpty(json))
             {
-                LoadedJsons[name] = json;
+                return false;
             }
+            LoadedJsons[name] = json;
+            return true;
         }
 
-        private static void LoadSchemes()
-        {
-            LoadedJsons.Clear();
-            foreach (Type type in Schemes)
-            {
-                LoadScheme(type);
-            }
-        }
-
-        private static T Deserialize<T>()
+        private static T DeserializeScheme<T>()
         {
             string name = typeof(T).Name.Remove(typeof(T).Name.Length - 6);    // remove "Scheme"
-            if (!BaseSettings.Default.IsDatabaseEnabled || !LoadedJsons.TryGetValue(name, out var json) || string.IsNullOrEmpty(json))
+            if (!LoadedJsons.TryGetValue(name, out var json) || string.IsNullOrEmpty(json))
             {
                 return default;
             }
-
             try
             {
                 return JsonConvert.DeserializeObject<T>(json);
@@ -77,12 +66,11 @@ namespace GalArc.Database
 
         public static T ReadScheme<T>() where T : ArcScheme
         {
-            if (!BaseSettings.Default.IsDatabaseEnabled)
+            if (!BaseSettings.Default.IsDatabaseEnabled || !LoadScheme<T>())
             {
                 return default;
             }
-            LoadScheme(typeof(T));
-            return Deserialize<T>();
+            return DeserializeScheme<T>();
         }
 
         private static string GetInfo(Type type, out bool isValid)
@@ -144,7 +132,24 @@ namespace GalArc.Database
             {
                 return SchemeInfos.InfoDisabled;
             }
-            LoadSchemes();
+            foreach (Type type in Schemes)
+            {
+                string name = type.Name.Remove(type.Name.Length - 6);    // remove "Scheme"
+                if (LoadedJsons.ContainsKey(name))
+                {
+                    continue;
+                }
+                string path = Path.Combine(DatabaseConfig.Path, name + ".json");
+                if (!File.Exists(path))
+                {
+                    continue;
+                }
+                string json = File.ReadAllText(path, Encoding.UTF8);
+                if (!string.IsNullOrEmpty(json))
+                {
+                    LoadedJsons[name] = json;
+                }
+            }
             StringBuilder result = new StringBuilder();
             int count = 0;
             StringBuilder info = new StringBuilder();

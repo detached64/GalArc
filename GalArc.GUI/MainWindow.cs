@@ -153,7 +153,7 @@ namespace GalArc.GUI
             Logger.Instance.LogMessageEvent -= AppendLog;
             Logger.Instance.StatusMessageEvent -= UpdateStatus;
             Logger.Instance.ProgressEvent -= ProcessBar;
-            Logger.Instance.Flush(true);
+            Logger.FlushLog();
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

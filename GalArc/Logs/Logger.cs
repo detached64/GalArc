@@ -119,7 +119,7 @@ namespace GalArc.Logs
             }
         }
 
-        public void Flush(bool isClosing = false)
+        private void Flush()
         {
             lock (_lock)
             {
@@ -135,20 +135,13 @@ namespace GalArc.Logs
 
                 File.AppendAllLines(Path, _logCache, Encoding.UTF8);
                 _logCache.Clear();
-                if (isClosing)
-                {
-                    using (StreamWriter sw = File.AppendText(Path))
-                    {
-                        sw.WriteLine();
-                    }
-                }
             }
         }
 
         private void AppendAndSaveLog(string msg, int logLevel = 1)
         {
             LogLevel level = (LogLevel)logLevel;
-            if ((level == LogLevel.Debug && BaseSettings.Default.IsDebugMode) || level == LogLevel.Info || level == LogLevel.Error)
+            if (!(level == LogLevel.Debug && !BaseSettings.Default.IsDebugMode))
             {
                 OnLogMessageEvent(msg);
             }
@@ -243,6 +236,15 @@ namespace GalArc.Logs
         public static void ErrorInvalidArchive() => throw new Exception(LogStrings.ErrorNotValidArc);
         public static void ErrorNeedAnotherFile(string file) => throw new Exception(string.Format(LogStrings.ErrorSpecifiedFileNotFound, file));
         public static void ErrorNeedOriginalFile(string file) => throw new Exception(string.Format(LogStrings.ErrorOriginalFileNotFound, file));
+
+        public static void FlushLog()
+        {
+            Instance.Flush();
+            using (StreamWriter sw = File.AppendText(Path))
+            {
+                sw.WriteLine();
+            }
+        }
 
         public static void InitUnpack(string input, string output)
         {
