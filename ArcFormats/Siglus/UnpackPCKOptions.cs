@@ -11,22 +11,6 @@ namespace ArcFormats.Siglus
 {
     public partial class UnpackPCKOptions : OptionsTemplate
     {
-        private string ExtractedKey
-        {
-            get => _ExtractedKey;
-            set
-            {
-                if (string.IsNullOrEmpty(value) || string.Equals(value, "Failed", StringComparison.OrdinalIgnoreCase))
-                {
-                    _ExtractedKey = null;
-                    return;
-                }
-                _ExtractedKey = value;
-            }
-        }
-
-        private string _ExtractedKey;
-
         public UnpackPCKOptions()
         {
             InitializeComponent();
@@ -42,18 +26,12 @@ namespace ArcFormats.Siglus
             if (ScenePCK.Scheme != null)
             {
                 this.combSchemes.Items.Add(Resources.combTryEveryScheme);
-                this.combSchemes.Items.Add(Resources.combCustomScheme);
                 foreach (var scheme in ScenePCK.Scheme.KnownSchemes)
                 {
                     this.combSchemes.Items.Add(scheme.Key);
                 }
             }
-            else
-            {
-                this.combSchemes.Items.Add(Resources.combCustomScheme);
-            }
             this.combSchemes.SelectedIndex = 0;
-            this.panel.Visible = BaseSettings.Default.IsDatabaseEnabled;
         }
 
         private void combSchemes_SelectedIndexChanged(object sender, EventArgs e)
@@ -64,18 +42,6 @@ namespace ArcFormats.Siglus
                     ScenePCK.SelectedScheme = null;
                     ScenePCK.TryEachKey = true;
                     this.lbKey.Text = string.Empty;
-                    break;
-                case 1:
-                    try
-                    {
-                        ScenePCK.SelectedScheme = new Tuple<string, byte[]>(this.combSchemes.Text, Utils.HexStringToByteArray(ExtractedKey));
-                    }
-                    catch
-                    {
-                        ScenePCK.SelectedScheme = null;
-                    }
-                    ScenePCK.TryEachKey = false;
-                    this.lbKey.Text = string.Format(Siglus.lbKey, ExtractedKey ?? Siglus.empty);
                     break;
                 default:
                     byte[] key = ScenePCK.Scheme.KnownSchemes[this.combSchemes.Text].KnownKey;
@@ -91,40 +57,6 @@ namespace ArcFormats.Siglus
                     }
                     ScenePCK.TryEachKey = false;
                     break;
-            }
-        }
-
-        private void btCheckExe_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.Filter = "Game Executable file (*.exe)|*.exe";
-                openFileDialog.FilterIndex = 1;
-                openFileDialog.RestoreDirectory = true;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        //ExtractedKey = SiglusKeyFinder.FindKey(openFileDialog.FileName);
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.Error(ex.Message, false);
-                        return;
-                    }
-
-                    if (ExtractedKey != null)
-                    {
-                        this.lbKey.Text = string.Format(Siglus.lbKey, ExtractedKey);
-                        Logger.Info(string.Format(Siglus.logFound, ExtractedKey));
-                    }
-                    else
-                    {
-                        Logger.Info(Siglus.logFailedFindKey);
-                    }
-                    this.combSchemes.SelectedIndex = 1;
-                }
             }
         }
     }

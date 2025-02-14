@@ -61,15 +61,6 @@ namespace ArcFormats.Siglus {
         }
         
         /// <summary>
-        ///   查找类似 Empty 的本地化字符串。
-        /// </summary>
-        internal static string empty {
-            get {
-                return ResourceManager.GetString("empty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Key: {0} 的本地化字符串。
         /// </summary>
         internal static string lbKey {
@@ -88,29 +79,11 @@ namespace ArcFormats.Siglus {
         }
         
         /// <summary>
-        ///   查找类似 Failed to find key. 的本地化字符串。
-        /// </summary>
-        internal static string logFailedFindKey {
-            get {
-                return ResourceManager.GetString("logFailedFindKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Key found: {0} 的本地化字符串。
         /// </summary>
         internal static string logFound {
             get {
                 return ResourceManager.GetString("logFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Key: {0} 的本地化字符串。
-        /// </summary>
-        internal static string logKeyFound {
-            get {
-                return ResourceManager.GetString("logKeyFound", resourceCulture);
             }
         }
         

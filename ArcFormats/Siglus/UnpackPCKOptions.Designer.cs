@@ -32,10 +32,6 @@
             this.lbChoose = new System.Windows.Forms.Label();
             this.combSchemes = new System.Windows.Forms.ComboBox();
             this.lbKey = new System.Windows.Forms.Label();
-            this.panel = new System.Windows.Forms.Panel();
-            this.btCheckExe = new System.Windows.Forms.Button();
-            this.lbFromGameExe = new System.Windows.Forms.Label();
-            this.panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbChoose
@@ -56,37 +52,15 @@
             resources.ApplyResources(this.lbKey, "lbKey");
             this.lbKey.Name = "lbKey";
             // 
-            // panel
-            // 
-            this.panel.Controls.Add(this.btCheckExe);
-            this.panel.Controls.Add(this.lbFromGameExe);
-            resources.ApplyResources(this.panel, "panel");
-            this.panel.Name = "panel";
-            // 
-            // btCheckExe
-            // 
-            resources.ApplyResources(this.btCheckExe, "btCheckExe");
-            this.btCheckExe.Name = "btCheckExe";
-            this.btCheckExe.UseVisualStyleBackColor = true;
-            this.btCheckExe.Click += new System.EventHandler(this.btCheckExe_Click);
-            // 
-            // lbFromGameExe
-            // 
-            resources.ApplyResources(this.lbFromGameExe, "lbFromGameExe");
-            this.lbFromGameExe.Name = "lbFromGameExe";
-            // 
             // UnpackPCKOptions
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panel);
             this.Controls.Add(this.lbKey);
             this.Controls.Add(this.combSchemes);
             this.Controls.Add(this.lbChoose);
             this.Name = "UnpackPCKOptions";
             this.Load += new System.EventHandler(this.UnpackPCKOptions_Load);
-            this.panel.ResumeLayout(false);
-            this.panel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -97,8 +71,5 @@
         private System.Windows.Forms.Label lbChoose;
         private System.Windows.Forms.ComboBox combSchemes;
         private System.Windows.Forms.Label lbKey;
-        private System.Windows.Forms.Panel panel;
-        private System.Windows.Forms.Label lbFromGameExe;
-        private System.Windows.Forms.Button btCheckExe;
     }
 }

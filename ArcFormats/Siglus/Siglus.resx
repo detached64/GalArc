@@ -112,13 +112,4 @@
   <data name="lbKeyParseError" xml:space="preserve">
     <value>Failed to parse key.</value>
   </data>
-  <data name="logKeyFound" xml:space="preserve">
-    <value>Key: {0}</value>
-  </data>
-  <data name="empty" xml:space="preserve">
-    <value>Empty</value>
-  </data>
-  <data name="logFailedFindKey" xml:space="preserve">
-    <value>Failed to find key.</value>
-  </data>
 </root>

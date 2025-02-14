@@ -144,7 +144,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbChoose.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="combSchemes.Location" type="System.Drawing.Point, System.Drawing">
     <value>87, 99</value>
@@ -165,7 +165,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;combSchemes.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="lbKey.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -192,78 +192,6 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lbKey.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="btCheckExe.Location" type="System.Drawing.Point, System.Drawing">
-    <value>656, 8</value>
-  </data>
-  <data name="btCheckExe.Size" type="System.Drawing.Size, System.Drawing">
-    <value>112, 32</value>
-  </data>
-  <data name="btCheckExe.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="btCheckExe.Text" xml:space="preserve">
-    <value>Find key</value>
-  </data>
-  <data name="&gt;&gt;btCheckExe.Name" xml:space="preserve">
-    <value>btCheckExe</value>
-  </data>
-  <data name="&gt;&gt;btCheckExe.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;btCheckExe.Parent" xml:space="preserve">
-    <value>panel</value>
-  </data>
-  <data name="&gt;&gt;btCheckExe.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="lbFromGameExe.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbFromGameExe.Location" type="System.Drawing.Point, System.Drawing">
-    <value>83, 12</value>
-  </data>
-  <data name="lbFromGameExe.Size" type="System.Drawing.Size, System.Drawing">
-    <value>474, 24</value>
-  </data>
-  <data name="lbFromGameExe.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lbFromGameExe.Text" xml:space="preserve">
-    <value>Alternatively, look for key within game executable file:</value>
-  </data>
-  <data name="&gt;&gt;lbFromGameExe.Name" xml:space="preserve">
-    <value>lbFromGameExe</value>
-  </data>
-  <data name="&gt;&gt;lbFromGameExe.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbFromGameExe.Parent" xml:space="preserve">
-    <value>panel</value>
-  </data>
-  <data name="&gt;&gt;lbFromGameExe.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="panel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 190</value>
-  </data>
-  <data name="panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>876, 50</value>
-  </data>
-  <data name="panel.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;panel.Name" xml:space="preserve">
-    <value>panel</value>
-  </data>
-  <data name="&gt;&gt;panel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panel.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;panel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

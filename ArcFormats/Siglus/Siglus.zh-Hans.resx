@@ -132,13 +132,4 @@
   <data name="lbKeyParseError" xml:space="preserve">
     <value>密钥解析失败。</value>
   </data>
-  <data name="logKeyFound" xml:space="preserve">
-    <value>已找到密钥：{0}</value>
-  </data>
-  <data name="empty" xml:space="preserve">
-    <value>空</value>
-  </data>
-  <data name="logFailedFindKey" xml:space="preserve">
-    <value>寻找密钥失败。</value>
-  </data>
 </root>
