@@ -20,31 +20,22 @@ namespace GalArc
         [UserScopedSetting]
         [DebuggerNonUserCode]
         [DefaultSettingValue("True")]
-        public bool ToSaveLog
+        public bool SaveLog
         {
-            get => (bool)this[nameof(ToSaveLog)];
-            set => this[nameof(ToSaveLog)] = value;
+            get => (bool)this[nameof(SaveLog)];
+            set => this[nameof(SaveLog)] = value;
         }
 
         [UserScopedSetting]
         [DebuggerNonUserCode]
         [DefaultSettingValue("True")]
-        public bool ToAutoSaveState
+        public bool SaveControlState
         {
-            get => (bool)this[nameof(ToAutoSaveState)];
-            set => this[nameof(ToAutoSaveState)] = value;
+            get => (bool)this[nameof(SaveControlState)];
+            set => this[nameof(SaveControlState)] = value;
         }
 
         #region Functions Enabled
-        [UserScopedSetting]
-        [DebuggerNonUserCode]
-        [DefaultSettingValue("True")]
-        public bool IsExtensionsEnabled
-        {
-            get => (bool)this[nameof(IsExtensionsEnabled)];
-            set => this[nameof(IsExtensionsEnabled)] = value;
-        }
-
         [UserScopedSetting]
         [DebuggerNonUserCode]
         [DefaultSettingValue("True")]
@@ -52,15 +43,6 @@ namespace GalArc
         {
             get => (bool)this[nameof(IsDatabaseEnabled)];
             set => this[nameof(IsDatabaseEnabled)] = value;
-        }
-
-        [UserScopedSetting]
-        [DebuggerNonUserCode]
-        [DefaultSettingValue("True")]
-        public bool IsSiglusKeyFinderEnabled
-        {
-            get => (bool)this[nameof(IsSiglusKeyFinderEnabled)];
-            set => this[nameof(IsSiglusKeyFinderEnabled)] = value;
         }
         #endregion
 
@@ -81,15 +63,6 @@ namespace GalArc
         {
             get => (string)this[nameof(DatabasePath)];
             set => this[nameof(DatabasePath)] = value;
-        }
-
-        [UserScopedSetting]
-        [DebuggerNonUserCode]
-        [DefaultSettingValue("")]
-        public string SiglusKeyFinderPath
-        {
-            get => (string)this[nameof(SiglusKeyFinderPath)];
-            set => this[nameof(SiglusKeyFinderPath)] = value;
         }
         #endregion
     }

@@ -84,9 +84,6 @@
     <Compile Include="Database\DatabaseConfig.cs" />
     <Compile Include="Database\Deserializer.cs" />
     <Compile Include="Database\Schemes.cs" />
-    <Compile Include="Extensions\ExtensionsConfig.cs" />
-    <Compile Include="Extensions\SiglusKeyFinder\KeyFinder.cs" />
-    <Compile Include="Extensions\SiglusKeyFinder\SiglusKeyFinderConfig.cs" />
     <Compile Include="Strings\LogStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

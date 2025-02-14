@@ -127,7 +127,7 @@ namespace GalArc.Logs
                 {
                     return;
                 }
-                if (!BaseSettings.Default.ToSaveLog)
+                if (!BaseSettings.Default.SaveLog)
                 {
                     _logCache.Clear();
                     return;

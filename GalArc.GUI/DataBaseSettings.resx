@@ -253,7 +253,7 @@
     <value>Vertical</value>
   </data>
   <data name="txtDBInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>606, 240</value>
+    <value>606, 238</value>
   </data>
   <data name="txtDBInfo.TabIndex" type="System.Int32, mscorlib">
     <value>15</value>
@@ -301,10 +301,10 @@
     <value>4</value>
   </data>
   <data name="panel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 98</value>
+    <value>0, 100</value>
   </data>
   <data name="panel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>777, 472</value>
+    <value>777, 470</value>
   </data>
   <data name="panel.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -327,19 +327,10 @@
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>11, 24</value>
   </data>
-  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
-    <value>微软雅黑, 9pt</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>4, 4, 4, 4</value>
-  </data>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>777, 570</value>
-  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>DatabaseSettings</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>GalArc.Controls.SettingsTemplate, GalArc, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

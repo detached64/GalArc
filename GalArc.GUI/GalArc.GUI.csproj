@@ -75,18 +75,6 @@
     <Compile Include="DataBaseSettings.Designer.cs">
       <DependentUpon>DataBaseSettings.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExtensionSiglusKeyFinder.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ExtensionSiglusKeyFinder.Designer.cs">
-      <DependentUpon>ExtensionSiglusKeyFinder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ExtensionsSettings.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ExtensionsSettings.Designer.cs">
-      <DependentUpon>ExtensionsSettings.cs</DependentUpon>
-    </Compile>
     <Compile Include="LogSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -151,19 +139,6 @@
     <EmbeddedResource Include="DataBaseSettings.zh-Hans.resx">
       <DependentUpon>DataBaseSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExtensionSiglusKeyFinder.resx">
-      <DependentUpon>ExtensionSiglusKeyFinder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExtensionSiglusKeyFinder.zh-Hans.resx">
-      <DependentUpon>ExtensionSiglusKeyFinder.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExtensionsSettings.resx">
-      <DependentUpon>ExtensionsSettings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExtensionsSettings.zh-Hans.resx">
-      <DependentUpon>ExtensionsSettings.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GeneralSettings.resx">
       <DependentUpon>GeneralSettings.cs</DependentUpon>
     </EmbeddedResource>
@@ -213,7 +188,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.zh-Hans.resx" />
+    <EmbeddedResource Include="Properties\Resources.zh-Hans.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

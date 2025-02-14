@@ -20,7 +20,7 @@ namespace GalArc.GUI
         private void LogSettings_Load(object sender, EventArgs e)
         {
             this.chkbxDebug.Checked = BaseSettings.Default.IsDebugMode;
-            this.chkbxSaveLog.Checked = BaseSettings.Default.ToSaveLog;
+            this.chkbxSaveLog.Checked = BaseSettings.Default.SaveLog;
             this.txtLogPath.Text = Logger.Path;
             this.panel.Enabled = this.chkbxSaveLog.Checked;
         }
@@ -33,7 +33,7 @@ namespace GalArc.GUI
 
         private void chkbxSaveLog_CheckedChanged(object sender, EventArgs e)
         {
-            BaseSettings.Default.ToSaveLog = this.chkbxSaveLog.Checked;
+            BaseSettings.Default.SaveLog = this.chkbxSaveLog.Checked;
             BaseSettings.Default.Save();
             this.panel.Enabled = this.chkbxSaveLog.Checked;
         }

@@ -67,7 +67,7 @@ namespace GalArc.GUI
             }
             this.lbStatus.Text = LogStrings.Ready;
             this.pnlOperation.Enabled = true;
-            if (BaseSettings.Default.ToAutoSaveState)
+            if (BaseSettings.Default.SaveControlState)
             {
                 this.chkbxUnpack.Checked = Settings.Default.IsUnpackMode;
                 this.chkbxPack.Checked = Settings.Default.IsPackMode;
@@ -116,7 +116,7 @@ namespace GalArc.GUI
             this.combLanguages.Items.AddRange(Languages.SupportedLanguages.Keys.ToArray());
             this.TopMost = Settings.Default.IsTopMost;
             this.combLanguages.Text = Languages.SupportedLanguages.FirstOrDefault(x => x.Value == Culture).Key;
-            if (BaseSettings.Default.ToAutoSaveState)
+            if (BaseSettings.Default.SaveControlState)
             {
                 this.matchPathsMenuItem.Checked = Settings.Default.ToMatchPath;
             }
@@ -221,7 +221,7 @@ namespace GalArc.GUI
                 UpdateTreeUnpack();
             }
             SyncPath();
-            if (BaseSettings.Default.ToAutoSaveState)
+            if (BaseSettings.Default.SaveControlState)
             {
                 Settings.Default.IsUnpackMode = this.chkbxUnpack.Checked;
                 Settings.Default.Save();
@@ -237,7 +237,7 @@ namespace GalArc.GUI
                 UpdateTreePack();
             }
             SyncPath();
-            if (BaseSettings.Default.ToAutoSaveState)
+            if (BaseSettings.Default.SaveControlState)
             {
                 Settings.Default.IsPackMode = this.chkbxPack.Checked;
                 Settings.Default.Save();
@@ -252,7 +252,7 @@ namespace GalArc.GUI
             }
             if (Mode == OperationMode.Unpack)
             {
-                if (BaseSettings.Default.ToAutoSaveState)
+                if (BaseSettings.Default.SaveControlState)
                 {
                     Settings.Default.UnpackSelectedNode0 = e.Node.Parent.Index;
                     Settings.Default.UnpackSelectedNode1 = e.Node.Index;
@@ -263,7 +263,7 @@ namespace GalArc.GUI
             }
             else
             {
-                if (BaseSettings.Default.ToAutoSaveState)
+                if (BaseSettings.Default.SaveControlState)
                 {
                     Settings.Default.PackSelectedNode0 = e.Node.Parent.Index;
                     Settings.Default.PackSelectedNode1 = e.Node.Index;
@@ -387,7 +387,7 @@ namespace GalArc.GUI
         private void matchPathsMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             SyncPath();
-            if (BaseSettings.Default.ToAutoSaveState)
+            if (BaseSettings.Default.SaveControlState)
             {
                 Settings.Default.ToMatchPath = this.matchPathsMenuItem.Checked;
                 Settings.Default.Save();
@@ -422,7 +422,7 @@ namespace GalArc.GUI
                     this.treeViewEngines.Nodes.Add(rootNode);
                 }
             }
-            if (BaseSettings.Default.ToAutoSaveState)
+            if (BaseSettings.Default.SaveControlState)
             {
                 TreeNode node0 = treeViewEngines.Nodes[Settings.Default.UnpackSelectedNode0];
                 TreeNode node1 = node0.Nodes[Settings.Default.UnpackSelectedNode1];
@@ -457,7 +457,7 @@ namespace GalArc.GUI
                     }
                 }
             }
-            if (BaseSettings.Default.ToAutoSaveState)
+            if (BaseSettings.Default.SaveControlState)
             {
                 TreeNode node0 = treeViewEngines.Nodes[Settings.Default.PackSelectedNode0];
                 TreeNode node1 = node0.Nodes[Settings.Default.PackSelectedNode1];

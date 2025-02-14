@@ -1,7 +1,6 @@
 ﻿using ArcFormats.Properties;
 using GalArc;
 using GalArc.Controls;
-using GalArc.Extensions.SiglusKeyFinder;
 using GalArc.Logs;
 using System;
 using System.Reflection;
@@ -54,7 +53,7 @@ namespace ArcFormats.Siglus
                 this.combSchemes.Items.Add(Resources.combCustomScheme);
             }
             this.combSchemes.SelectedIndex = 0;
-            this.panel.Visible = BaseSettings.Default.IsDatabaseEnabled && BaseSettings.Default.IsSiglusKeyFinderEnabled && KeyFinder.IsValidExe();
+            this.panel.Visible = BaseSettings.Default.IsDatabaseEnabled;
         }
 
         private void combSchemes_SelectedIndexChanged(object sender, EventArgs e)
@@ -107,7 +106,7 @@ namespace ArcFormats.Siglus
                 {
                     try
                     {
-                        ExtractedKey = KeyFinder.FindKey(openFileDialog.FileName);
+                        //ExtractedKey = SiglusKeyFinder.FindKey(openFileDialog.FileName);
                     }
                     catch (Exception ex)
                     {

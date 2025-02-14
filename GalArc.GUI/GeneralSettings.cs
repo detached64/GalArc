@@ -18,14 +18,14 @@ namespace GalArc.GUI
 
         private void GeneralSettings_Load(object sender, EventArgs e)
         {
-            this.chkbxAutoSave.Checked = BaseSettings.Default.ToAutoSaveState;
+            this.chkbxAutoSave.Checked = BaseSettings.Default.SaveControlState;
             this.chkbxTopMost.Checked = Settings.Default.IsTopMost;
             MainWindow.Instance.TopMost = this.chkbxTopMost.Checked;
         }
 
         private void chkbxAutoSave_CheckedChanged(object sender, EventArgs e)
         {
-            BaseSettings.Default.ToAutoSaveState = this.chkbxAutoSave.Checked;
+            BaseSettings.Default.SaveControlState = this.chkbxAutoSave.Checked;
             BaseSettings.Default.Save();
         }
 

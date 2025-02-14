@@ -4,8 +4,6 @@ namespace GalArc.Database
 {
     public static class DatabaseConfig
     {
-        public static bool IsEnabled { get; set; } = true;
-
         public static string Path
         {
             get

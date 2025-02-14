@@ -31,8 +31,6 @@ namespace GalArc.GUI
         private Assembly _assembly = null;
         private Assembly assembly => _assembly ?? (_assembly = Assembly.Load(nameof(ArcFormats)));
         private Type type;
-        private object instance;
-        private MethodInfo method;
 
         public ArchivePackager(string input, string output)
         {
@@ -84,18 +82,10 @@ namespace GalArc.GUI
 
             if (LoadType())
             {
-                instance = Activator.CreateInstance(type);
-                method = type.GetMethod("Unpack", BindingFlags.Instance | BindingFlags.Public);
-                if (method != null)
-                {
-                    Logger.InitUnpack(input, output);
-                    method.Invoke(instance, param);
-                    Logger.FinishUnpack();
-                }
-                else
-                {
-                    Logger.Error(LogStrings.ErrorUnpackMethodNotFound);
-                }
+                Logger.InitUnpack(input, output);
+                ArchiveFormat instance = Activator.CreateInstance(type) as ArchiveFormat;
+                instance.Unpack(input, output);
+                Logger.FinishUnpack();
             }
             else
             {
@@ -111,18 +101,10 @@ namespace GalArc.GUI
 
             if (LoadType())
             {
-                instance = Activator.CreateInstance(type);
-                method = type.GetMethod("Pack", BindingFlags.Instance | BindingFlags.Public);
-                if (method != null)
-                {
-                    Logger.InitPack(input, output);
-                    method.Invoke(instance, param);
-                    Logger.FinishPack();
-                }
-                else
-                {
-                    Logger.Error(LogStrings.ErrorPackMethodNotFound);
-                }
+                Logger.InitPack(input, output);
+                ArchiveFormat instance = Activator.CreateInstance(type) as ArchiveFormat;
+                instance.Pack(input, output);
+                Logger.FinishPack();
             }
             else
             {
@@ -140,8 +122,6 @@ namespace GalArc.GUI
         {
             _assembly = null;
             type = null;
-            instance = null;
-            method = null;
         }
     }
 }

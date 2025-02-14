@@ -135,26 +135,8 @@
   <data name="columnPackFormat" xml:space="preserve">
     <value>Pack Format</value>
   </data>
-  <data name="nodeExtensions" xml:space="preserve">
-    <value>Extensions</value>
-  </data>
   <data name="nodeDataBase" xml:space="preserve">
     <value>Database</value>
-  </data>
-  <data name="columnExtName" xml:space="preserve">
-    <value>Extension Name</value>
-  </data>
-  <data name="columnExtDescription" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="columnExtOriginalAuthor" xml:space="preserve">
-    <value>Original Author</value>
-  </data>
-  <data name="columnExtOriginalLink" xml:space="preserve">
-    <value>Original Website</value>
-  </data>
-  <data name="columnExtLink" xml:space="preserve">
-    <value>Extension Website</value>
   </data>
   <data name="nodeLog" xml:space="preserve">
     <value>Log</value>
