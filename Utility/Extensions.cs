@@ -122,7 +122,10 @@ namespace Utility.Extensions
         {
             return ReadCString(br, ArcEncoding.Shift_JIS, terminator);
         }
+    }
 
+    public static class BinaryWriterExtensions
+    {
         public static void WritePaddedString(this BinaryWriter bw, string input, int length, char padChar, Encoding encoding)
         {
             bw.Write(Utils.PaddedBytes(input, length, padChar, encoding));
@@ -138,12 +141,16 @@ namespace Utility.Extensions
     {
         public static string ToHexString(this byte[] bytes)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (byte b in bytes)
+            char[] c = new char[bytes.Length * 2];
+            byte b;
+            for (int i = 0; i < bytes.Length; i++)
             {
-                sb.Append(b.ToString("X2"));
+                b = ((byte)(bytes[i] >> 4));
+                c[i * 2] = (char)(b > 9 ? b + 0x37 : b + 0x30);
+                b = ((byte)(bytes[i] & 0xF));
+                c[i * 2 + 1] = (char)(b > 9 ? b + 0x37 : b + 0x30);
             }
-            return sb.ToString();
+            return new string(c);
         }
 
         public static string GetCString(this byte[] bytes, int offset, int maxLength, Encoding encoding, byte separator)

@@ -86,24 +86,20 @@ namespace Utility.Compression
             ushort root = CreateTree();
             output = new MemoryStream();
 
-            while (true)
+            while (output.Length == decompressedLength)
             {
-                ushort value = root;
-                while (value >= 256)
+                ushort node = root;
+                while (node >= 256)
                 {
                     int bit = input.ReadBit();
                     if (bit != -1)
                     {
-                        value = children[value, bit];
+                        node = children[node, bit];
                     }
                 }
-                output.WriteByte((byte)value);
-
-                if (output.Length == decompressedLength)
-                {
-                    return output.ToArray();
-                }
+                output.WriteByte((byte)node);
             }
+            return output.ToArray();
         }
 
         public void Dispose()

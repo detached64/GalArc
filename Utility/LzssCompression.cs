@@ -52,6 +52,21 @@ namespace Utility.Compression
         /// </summary>
         /// "THRESHOLD" in the original code. Original value is 2.
         public int MinMatchLength { get; set; }
+        /// <summary>
+        /// Default settings.
+        /// </summary>
+        /// There are several requirements for the settings to work properly.
+        /// 1. FrameSize must be a power of 2.
+        /// 2. MaxMatchLength = 16 + MinMatchLength.
+        /// 3. FrameInitPos = FrameSize - MaxMatchLength.
+        public LzssSettings()
+        {
+            FrameSize = 0x1000;
+            FrameFill = 0x20;
+            FrameInitPos = 0xFEE;
+            MaxMatchLength = 0x12;
+            MinMatchLength = 2;
+        }
     }
 
     public class LzssCompression : IDisposable
@@ -82,14 +97,7 @@ namespace Utility.Compression
         }
 
         public LzssCompression(Stream input, CompressionMode mode)
-            : this(input, mode, new LzssSettings
-            {
-                FrameSize = 0x1000,
-                FrameFill = 0,
-                FrameInitPos = 0xFEE,
-                MaxMatchLength = 0x12,
-                MinMatchLength = 2
-            })
+            : this(input, mode, new LzssSettings())
         { }
 
         public LzssCompression(Stream input) : this(input, CompressionMode.Decompress)

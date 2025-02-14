@@ -126,9 +126,6 @@ namespace Utility
         /// <summary>
         /// 123456 -> 0x12 0x34 0x56
         /// </summary>
-        /// <param name="hexString"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
         public static byte[] HexStringToByteArray(string hexString)
         {
             if (hexString.Length % 2 != 0)
@@ -146,9 +143,6 @@ namespace Utility
         /// <summary>
         /// 12-34-56 -> 0x12 0x34 0x56
         /// </summary>
-        /// <param name="hexString"></param>
-        /// <param name="separator"></param>
-        /// <returns></returns>
         public static byte[] HexStringToByteArray(string hexString, char separator = '-')
         {
             string[] hexValues = hexString.Split(separator);

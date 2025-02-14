@@ -55,6 +55,15 @@ namespace Utility
             this.endianness = endianness;
             currentByte = 0;
             bitPosition = mode == BitStreamMode.Write ? 0 : 8;
+
+            if (mode == BitStreamMode.Read && !stream.CanRead)
+            {
+                throw new ArgumentException("Stream must be readable for Read mode.", nameof(stream));
+            }
+            if (mode == BitStreamMode.Write && !stream.CanWrite)
+            {
+                throw new ArgumentException("Stream must be writable for Write mode.", nameof(stream));
+            }
         }
 
         public BitStream(Stream stream, BitStreamMode mode) : this(stream, mode, BitStreamEndianness.Msb)
@@ -65,7 +74,7 @@ namespace Utility
         {
             if (mode != BitStreamMode.Read)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("Stream is not in Read mode.");
             }
             if (bitCount < 1 || bitCount > 32)
             {
@@ -81,7 +90,7 @@ namespace Utility
                     int readByte = stream.ReadByte();
                     if (readByte == -1)
                     {
-                        throw new EndOfStreamException("End of stream.");
+                        throw new EndOfStreamException("Reached end of stream.");
                     }
 
                     currentByte = (byte)readByte;
@@ -114,7 +123,7 @@ namespace Utility
         {
             if (mode != BitStreamMode.Write)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("Stream is not in Write mode.");
             }
             if (bit != 0 && bit != 1)
             {
@@ -143,7 +152,7 @@ namespace Utility
         {
             if (mode != BitStreamMode.Write)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("Stream is not in Write mode.");
             }
             if (endianness != BitStreamEndianness.Msb)
             {
