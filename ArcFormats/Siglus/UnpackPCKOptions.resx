@@ -174,13 +174,10 @@
     <value>83, 156</value>
   </data>
   <data name="lbKey.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 24</value>
+    <value>0, 24</value>
   </data>
   <data name="lbKey.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
-  </data>
-  <data name="lbKey.Text" xml:space="preserve">
-    <value>Key: Empty</value>
   </data>
   <data name="&gt;&gt;lbKey.Name" xml:space="preserve">
     <value>lbKey</value>

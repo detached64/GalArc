@@ -8,10 +8,6 @@ namespace ArcFormats.Qlie
     internal interface IQlieHash
     {
         string Magic { get; set; }
-        uint Const { get; set; }
-        int FileCount { get; set; }
-        uint IndexSize { get; set; }
-        uint HashDataSize { get; set; }
         byte[] HashData { get; set; }
     }
 

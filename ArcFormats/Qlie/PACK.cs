@@ -17,7 +17,7 @@ namespace ArcFormats.Qlie
         private readonly string KeyMagic = "8hr48uky,8ugi8ewra4g8d5vbf5hb5s6";
 
         /// <summary>
-        /// Key file name in pack archives. Used by 3.1.
+        /// Key file name in pack archives. Used by 3.0 and above.
         /// </summary>
         private readonly string KeyFileName = "pack_keyfile_kfueheish15538fa9or.key";
 
@@ -26,7 +26,7 @@ namespace ArcFormats.Qlie
             FileStream fs = File.OpenRead(input);
             BinaryReader br = new BinaryReader(fs);
 
-            // read header
+            #region read header
             QlieHeader qheader = new QlieHeader();
             fs.Position = fs.Length - 0x1C;
             qheader.Magic = Encoding.ASCII.GetString(br.ReadBytes(16)).TrimEnd('\0');
@@ -37,8 +37,9 @@ namespace ArcFormats.Qlie
                 Logger.Error("Invalid header");
             }
             List<QlieEntry> entries = new List<QlieEntry>(qheader.FileCount);
+            #endregion
 
-            // get version & init encryption
+            #region get version & init encryption
             QlieEncryption qenc;
             int major = int.Parse(qheader.Magic.Substring(11, 1));
             int minor = int.Parse(qheader.Magic.Substring(13, 1));
@@ -53,15 +54,17 @@ namespace ArcFormats.Qlie
                     qenc = new Encryption20();
                     break;
                 case 30:
-                    throw new NotImplementedException("Encryption 3.0 not supported yet.");
+                    qenc = new Encryption30();
+                    break;
                 case 31:
                     qenc = new Encryption31();
                     break;
                 default:
                     throw new ArgumentException("Unknown version", nameof(version));
             }
+            #endregion
 
-            // read key
+            #region read key
             uint key = 0;
             QlieKey qkey = null;
             if (version >= 20)
@@ -79,7 +82,7 @@ namespace ArcFormats.Qlie
                 }
                 if (version >= 30)
                 {
-                    key = QlieEncryption.ComputeHash(qkey.Key, 0x100) & 0xFFFFFFF;
+                    key = qenc.ComputeHash(qkey.Key, 0x100) & 0xFFFFFFF;
                 }
                 // Optional: decrypt & check key
                 QlieEncryption.Decrypt(qkey.Magic, 32, key);
@@ -87,9 +90,16 @@ namespace ArcFormats.Qlie
                 {
                     Logger.Info("Key magic failed to match. The archive may be corrupted.");
                 }
+                // Optional: save key
+                if (qkey.Key != null)
+                {
+                    Directory.CreateDirectory(output);
+                    File.WriteAllBytes(Path.Combine(output, "key.bin"), qkey.Key);
+                }
             }
+            #endregion
 
-            // read hash
+            #region read hash
             byte[] hashData = null;
             if (version >= 20)
             {
@@ -108,11 +118,12 @@ namespace ArcFormats.Qlie
             Logger.Info($"Hash Version: {hashReader.HashVersion / 10.0:0.0}");
             byte[] hash = hashReader.GetHashData();
             // Optional: save hash
-            /*if (hash != null)
+            if (hash != null)
             {
                 Directory.CreateDirectory(output);
                 File.WriteAllBytes(Path.Combine(output, "hash.bin"), hash);
-            }*/
+            }
+            #endregion
 
             #region read entries
             TryAgainWithEnc20:
@@ -127,7 +138,7 @@ namespace ArcFormats.Qlie
                     {
                         length *= 2;
                     }
-                    entry.Name = qenc.DecryptName(br.ReadBytes(length), length, key);
+                    entry.Name = qenc.DecryptName(br.ReadBytes(length), length, (int)key);
                     entry.Path = Path.Combine(output, entry.Name);
                     entry.Offset = br.ReadInt64();
                     entry.Size = br.ReadUInt32();
@@ -151,7 +162,7 @@ namespace ArcFormats.Qlie
             }
             #endregion
 
-            // extract files
+            #region extract files
             Logger.InitBar(qheader.FileCount);
             bool need_common_key = version == 31;
             bool is_common_key_obtained = false;
@@ -171,7 +182,7 @@ namespace ArcFormats.Qlie
                 }
                 if (need_common_key && !is_common_key_obtained && string.Equals(entry.Name, KeyFileName))
                 {
-                    // Ignore for now for speed.
+                    //Optional: get & check key; check hash
                     //byte[] res_key = GetResourceKey(input);
                     //if (res_key != null && !res_key.SequenceEqual(data))
                     //{
@@ -185,6 +196,8 @@ namespace ArcFormats.Qlie
                 data = null;
                 Logger.UpdateBar();
             }
+            #endregion
+
             fs.Dispose();
             br.Dispose();
         }

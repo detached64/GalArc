@@ -16,7 +16,12 @@ namespace ArcFormats.Qlie
 
         public virtual bool IsUnicode { get; } = false;
 
-        public abstract string DecryptName(byte[] name, int name_length, uint hash);
+        public virtual uint ComputeHash(byte[] data, int length)
+        {
+            return 0;
+        }
+
+        public abstract string DecryptName(byte[] name, int name_length, int hash);
 
         public abstract void DecryptEntry(byte[] data, QlieEntry entry);
 
@@ -38,28 +43,6 @@ namespace ArcFormats.Qlie
                 }
             }
             return null;
-        }
-
-        public static uint ComputeHash(byte[] data, int length)
-        {
-            if (length > data.Length)
-            {
-                throw new ArgumentException("Invalid length");
-            }
-            int round = length >> 3;
-            ulong c = MMX.PUNPCKLDQ(0xA35793A7);
-            ulong hash = 0;
-            ulong key = 0;
-            int index = 0;
-            for (int i = 0; i < round; i++)
-            {
-                hash = MMX.PAddW(hash, c);
-                ulong v = BitConverter.ToUInt64(data, index);
-                ulong temp = MMX.PAddW(key, hash ^ v);
-                index += 8;
-                key = MMX.PSllD(temp, 3) | MMX.PSrlD(temp, 0x1D);
-            }
-            return (uint)((short)key * (short)(key >> 32) + (short)(key >> 16) * (short)(key >> 48));       // _mm_cvtsi64_si32(_m_pmaddwd(key, _m_psrlqi(key, 0x20u)))
         }
 
         public static unsafe byte[] GetCommonKey(byte[] data)
@@ -93,7 +76,7 @@ namespace ArcFormats.Qlie
         }
 
         /// <summary>
-        /// Widely used decryption method. Used to decrypt hash, key data and entry in FilePackVer2.0.
+        /// Widely used decryption method. Used to decrypt hash, key data and entry in some versions.
         /// </summary>
         public static void Decrypt(byte[] data, int length, uint key)
         {
@@ -200,7 +183,7 @@ namespace ArcFormats.Qlie
     {
         public override int Version => 10;
 
-        public override string DecryptName(byte[] name, int name_length, uint hash)
+        public override string DecryptName(byte[] name, int name_length, int hash)
         {
             uint key = 0xFA;        // 0xC4 ^ 0x3E
             for (int i = 1; i <= name_length; i++)
@@ -223,7 +206,7 @@ namespace ArcFormats.Qlie
     {
         public override int Version => 20;
 
-        public override string DecryptName(byte[] input, int name_length, uint hash = 0)
+        public override string DecryptName(byte[] input, int name_length, int hash)
         {
             uint key = 0xFA + (uint)name_length;        // 0xC4 ^ 0x3E
             for (int i = 1; i <= name_length; i++)
@@ -234,16 +217,79 @@ namespace ArcFormats.Qlie
         }
     }
 
+    internal class Encryption30 : Encryption20
+    {
+        public override int Version => 30;
+
+        public override uint ComputeHash(byte[] data, int length)
+        {
+            if (length > data.Length)
+            {
+                throw new ArgumentException("Invalid length");
+            }
+            int round = length >> 3;
+            ulong c = MMX.PUNPCKLDQ(0x03070307);
+            ulong hash = 0;
+            ulong key = 0;
+            int index = 0;
+            for (int i = 0; i < round; i++)
+            {
+                hash = MMX.PAddW(hash, c);
+                ulong v = BitConverter.ToUInt64(data, index);
+                key = MMX.PAddW(key, hash ^ v);
+                index += 8;
+            }
+            return (uint)(key ^ (key >> 32));
+        }
+
+        public override string DecryptName(byte[] input, int name_length, int hash)
+        {
+            int key = (hash ^ 0x3E) + name_length;        // 0xC4 ^ 0x3E
+            for (int i = 1; i <= name_length; i++)
+            {
+                input[i - 1] ^= (byte)((key ^ i) + i);
+            }
+            return ArcEncoding.Shift_JIS.GetString(input);
+        }
+
+        public override void DecryptEntry(byte[] data, QlieEntry entry)
+        {
+            base.DecryptEntry(data, entry);
+        }
+    }
+
     internal class Encryption31 : QlieEncryption
     {
         public override int Version => 31;
 
         public override bool IsUnicode => true;
 
-        public override string DecryptName(byte[] name, int name_length, uint hash)
+        public override uint ComputeHash(byte[] data, int length)
+        {
+            if (length > data.Length)
+            {
+                throw new ArgumentException("Invalid length");
+            }
+            int round = length >> 3;
+            ulong c = MMX.PUNPCKLDQ(0xA35793A7);
+            ulong hash = 0;
+            ulong key = 0;
+            int index = 0;
+            for (int i = 0; i < round; i++)
+            {
+                hash = MMX.PAddW(hash, c);
+                ulong v = BitConverter.ToUInt64(data, index);
+                ulong temp = MMX.PAddW(key, hash ^ v);
+                index += 8;
+                key = MMX.PSllD(temp, 3) | MMX.PSrlD(temp, 0x1D);
+            }
+            return (uint)((short)key * (short)(key >> 32) + (short)(key >> 16) * (short)(key >> 48));       // _mm_cvtsi64_si32(_m_pmaddwd(key, _m_psrlqi(key, 0x20u)))
+        }
+
+        public override string DecryptName(byte[] name, int name_length, int hash)
         {
             int char_length = name_length / 2;        // Unicode
-            int temp = ((char_length * char_length) ^ char_length ^ 0x3E13 ^ ((int)hash >> 16) ^ (int)hash) & 0xFFFF;       // unsigned __int16
+            int temp = ((char_length * char_length) ^ char_length ^ 0x3E13 ^ (hash >> 16) ^ hash) & 0xFFFF;       // unsigned __int16
             int key = temp;
             for (int i = 0; i < char_length; i++)
             {

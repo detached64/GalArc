@@ -1,11 +1,8 @@
 ﻿using ArcFormats.Properties;
-using GalArc;
 using GalArc.Controls;
-using GalArc.Logs;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
-using Utility;
 
 namespace ArcFormats.Siglus
 {

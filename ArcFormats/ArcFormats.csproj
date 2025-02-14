@@ -88,6 +88,7 @@
     <Compile Include="EmonEngine\EME.cs" />
     <Compile Include="EmonEngine\EmonUtils.cs" />
     <Compile Include="EntisGLS\NOA.cs" />
+    <Compile Include="Escude\BIN.cs" />
     <Compile Include="Eushully\ALF.cs" />
     <Compile Include="GsPack\DAT.cs" />
     <Compile Include="GsPack\PAK.cs" />
@@ -121,6 +122,8 @@
     <Compile Include="Kirikiri\XP3.cs" />
     <Compile Include="Majiro\ARC.cs" />
     <Compile Include="NekoPack\DAT.cs" />
+    <Compile Include="NekoPack\DatV1.cs" />
+    <Compile Include="NekoPack\DatV2.cs" />
     <Compile Include="NekoSDK\DAT.cs" />
     <Compile Include="NekoSDK\PAK.cs" />
     <Compile Include="NeXAS\PAC.cs" />
@@ -164,6 +167,7 @@
     <Compile Include="Qlie\QlieEncryption.cs" />
     <Compile Include="Qlie\PACK.cs" />
     <Compile Include="Qlie\QlieHash.cs" />
+    <Compile Include="Qlie\QlieMersenneTwister.cs" />
     <Compile Include="RPGMaker\PackRGSSOptions.cs">
       <SubType>UserControl</SubType>
     </Compile>
