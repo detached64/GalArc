@@ -201,7 +201,7 @@ namespace ArcFormats.Seraph
                     if (sig == 1 && buffer[4] == 0x78)
                     {
                         byte[] raw = new byte[buffer.Length - 6];
-                        Array.Copy(buffer, 6, raw, 0, raw.Length);
+                        Buffer.BlockCopy(buffer, 6, raw, 0, raw.Length);
                         raw = ZlibHelper.Decompress(raw);
                         File.WriteAllBytes(Path.Combine(folderPath, entry.Name), raw);
                         raw = null;
@@ -209,7 +209,7 @@ namespace ArcFormats.Seraph
                     else if ((sig & 0xffff) == 0x9c78)
                     {
                         byte[] raw = new byte[buffer.Length - 2];
-                        Array.Copy(buffer, 2, raw, 0, raw.Length);
+                        Buffer.BlockCopy(buffer, 2, raw, 0, raw.Length);
                         raw = ZlibHelper.Decompress(raw);
                         File.WriteAllBytes(Path.Combine(folderPath, entry.Name), raw);
                         raw = null;
@@ -260,7 +260,7 @@ namespace ArcFormats.Seraph
                 if (sig == 1 && buffer[4] == 0x78)
                 {
                     byte[] raw = new byte[buffer.Length - 6];
-                    Array.Copy(buffer, 6, raw, 0, raw.Length);
+                    Buffer.BlockCopy(buffer, 6, raw, 0, raw.Length);
                     buffer = ZlibHelper.Decompress(raw);
                 }
 

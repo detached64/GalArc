@@ -154,7 +154,7 @@ namespace Utility
             return bytes;
         }
 
-        public static byte[] PaddedBytes(string input, int length, char padChar, Encoding encoding)
+        public static byte[] GetPaddedBytes(string input, int length, char padChar, Encoding encoding)
         {
             byte[] bytes = encoding.GetBytes(input);
             if (length > bytes.Length)
@@ -178,9 +178,9 @@ namespace Utility
             }
         }
 
-        public static byte[] PaddedBytes(string input, int length)
+        public static byte[] GetPaddedBytes(string input, int length)
         {
-            return PaddedBytes(input, length, '\0', ArcEncoding.Shift_JIS);
+            return GetPaddedBytes(input, length, '\0', ArcEncoding.Shift_JIS);
         }
     }
 }

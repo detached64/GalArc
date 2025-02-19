@@ -1,6 +1,6 @@
 ﻿// File: Utility/Extensions.cs
 // Date: 2024/10/09
-// Description: 提供一系列扩展方法
+// Description: Provides many useful extension methods.
 //
 // Copyright (C) 2024 detached64
 //
@@ -128,7 +128,7 @@ namespace Utility.Extensions
     {
         public static void WritePaddedString(this BinaryWriter bw, string input, int length, char padChar, Encoding encoding)
         {
-            bw.Write(Utils.PaddedBytes(input, length, padChar, encoding));
+            bw.Write(Utils.GetPaddedBytes(input, length, padChar, encoding));
         }
 
         public static void WritePaddedString(this BinaryWriter bw, string input, int length)

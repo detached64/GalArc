@@ -110,7 +110,7 @@ namespace ArcFormats.EmonEngine
             if (entry.LzssFrameSize == 0)
             {
                 byte[] data = new byte[entry.Size + 12];
-                Array.Copy(header, 0, data, 0, 12);
+                Buffer.BlockCopy(header, 0, data, 0, 12);
                 br.Read(data, 12, (int)entry.Size);
                 File.WriteAllBytes(entry.Path, data);
                 return;
@@ -132,8 +132,8 @@ namespace ArcFormats.EmonEngine
 
                 //Combine part1data and part2data
                 byte[] combinedData = new byte[entry.UnpackedSize];
-                Array.Copy(part1data, 0, combinedData, 0, part1data.Length);
-                Array.Copy(part2data, 0, combinedData, part1data.Length, entry.UnpackedSize - part1data.Length);
+                Buffer.BlockCopy(part1data, 0, combinedData, 0, part1data.Length);
+                Buffer.BlockCopy(part2data, 0, combinedData, part1data.Length, (int)(entry.UnpackedSize - part1data.Length));
 
                 File.WriteAllBytes(entry.Path, combinedData);
                 part1data = null;
@@ -163,7 +163,7 @@ namespace ArcFormats.EmonEngine
             }
             br.BaseStream.Position = entry.Offset;
             byte[] data = br.ReadBytes((int)entrySize);
-            Array.Copy(header, 0, data, 0, 32);
+            Buffer.BlockCopy(header, 0, data, 0, 32);
             File.WriteAllBytes(entry.Path, data);
             data = null;
         }

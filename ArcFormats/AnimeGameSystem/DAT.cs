@@ -99,7 +99,7 @@ namespace ArcFormats.AnimeGameSystem
             foreach (FileInfo file in files)
             {
                 fw.Position = indexOffset;
-                byte[] nameBytes = Utils.PaddedBytes(file.Name, 0x10);
+                byte[] nameBytes = Utils.GetPaddedBytes(file.Name, 0x10);
                 bw.Write(nameBytes);
                 bw.Write(0);
                 bw.Write((uint)file.Length);

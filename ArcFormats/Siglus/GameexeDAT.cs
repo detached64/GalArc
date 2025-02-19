@@ -37,7 +37,7 @@ namespace ArcFormats.Siglus
             }
             entry.UnpackedLength = BitConverter.ToUInt32(entry.Data, 4);
             byte[] input = new byte[entry.PackedLength - 8];
-            Array.Copy(entry.Data, 8, input, 0, input.Length);
+            Buffer.BlockCopy(entry.Data, 8, input, 0, input.Length);
             try
             {
                 entry.Data = SiglusUtils.Decompress(input, entry.UnpackedLength);

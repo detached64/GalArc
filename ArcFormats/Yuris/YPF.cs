@@ -230,7 +230,7 @@ namespace ArcFormats.Yuris
                 {
                     return;
                 }
-                Array.Copy(script, 44, scheme.ScriptKeyBytes, 0, 4);
+                Buffer.BlockCopy(script, 44, scheme.ScriptKeyBytes, 0, 4);
             }
             else
             {
@@ -252,7 +252,7 @@ namespace ArcFormats.Yuris
         private byte[] DecryptNewScript(byte[] script, uint len1, uint len2, uint len3, uint len4)
         {
             byte[] result = new byte[script.Length];
-            Array.Copy(script, result, script.Length);
+            Buffer.BlockCopy(script, 0, result, 0, script.Length);
             uint pos = 32;
             for (uint i = 0; i < len1; i++)
             {
@@ -279,7 +279,7 @@ namespace ArcFormats.Yuris
         private byte[] DecryptOldScript(byte[] script, uint len1, uint len2)
         {
             byte[] result = new byte[script.Length];
-            Array.Copy(script, result, script.Length);
+            Buffer.BlockCopy(script, 0, result, 0, script.Length);
             uint pos = 32;
             for (uint i = 0; i < len1; i++)
             {

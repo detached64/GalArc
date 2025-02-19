@@ -102,7 +102,7 @@ namespace ArcFormats.Siglus
                 }
                 entry.UnpackedLength = BitConverter.ToUInt32(entry.Data, 4);
                 byte[] input = new byte[entry.PackedLength - 8];
-                Array.Copy(entry.Data, 8, input, 0, input.Length);
+                Buffer.BlockCopy(entry.Data, 8, input, 0, input.Length);
                 try
                 {
                     entry.Data = SiglusUtils.Decompress(input, entry.UnpackedLength);
@@ -128,7 +128,7 @@ namespace ArcFormats.Siglus
         protected bool IsRightKey(byte[] data, byte[] key, int type)
         {
             byte[] backup = new byte[data.Length];
-            Array.Copy(data, backup, data.Length);
+            Buffer.BlockCopy(data, 0, backup, 0, data.Length);
 
             SiglusUtils.DecryptWithKey(backup, key);
             SiglusUtils.Decrypt(backup, type);
@@ -140,7 +140,7 @@ namespace ArcFormats.Siglus
             try
             {
                 byte[] bytes = new byte[backup.Length - 8];
-                Array.Copy(backup, 8, bytes, 0, bytes.Length);
+                Buffer.BlockCopy(backup, 8, bytes, 0, bytes.Length);
                 SiglusUtils.Decompress(bytes, BitConverter.ToUInt32(backup, 4));
             }
             catch

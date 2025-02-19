@@ -178,7 +178,7 @@ namespace ArcFormats.GsPack
             uint packedSize = BitConverter.ToUInt32(data, 28);
 
             byte[] bytes = new byte[packedSize];
-            Array.Copy(data, dataOffset, bytes, 0, packedSize);
+            Buffer.BlockCopy(data, (int)dataOffset, bytes, 0, (int)packedSize);
             for (int i = 0; i < bytes.Length; i++)
             {
                 bytes[i] ^= (byte)(i & 0xFF);
@@ -188,8 +188,8 @@ namespace ArcFormats.GsPack
             {
                 byte[] decompressed = LzssHelper.Decompress(bytes);
                 byte[] result = new byte[decompressed.Length + dataOffset];
-                Array.Copy(data, 0, result, 0, dataOffset);
-                Array.Copy(decompressed, 0, result, dataOffset, decompressed.Length);
+                Buffer.BlockCopy(data, 0, result, 0, (int)dataOffset);
+                Buffer.BlockCopy(decompressed, 0, result, (int)dataOffset, decompressed.Length);
                 bytes = null;
                 decompressed = null;
                 return result;

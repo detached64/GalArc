@@ -188,7 +188,7 @@ namespace ArcFormats.Artemis
                     using (SHA1 sha1 = SHA1.Create())
                     {
                         byte[] xorBuf = new byte[buf.Length - 7];
-                        Array.Copy(buf, 7, xorBuf, 0, buf.Length - 7);
+                        Buffer.BlockCopy(buf, 7, xorBuf, 0, buf.Length - 7);
                         key = sha1.ComputeHash(xorBuf);
                     }
                     FileStream fw8 = File.Create(filePath);

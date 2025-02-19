@@ -228,7 +228,7 @@ namespace ArcFormats.Ai6Win
             Logger.InitBar(fileCount);
             foreach (FileInfo file in files)
             {
-                byte[] nameBuffer = Utils.PaddedBytes(file.Name, 260);
+                byte[] nameBuffer = Utils.GetPaddedBytes(file.Name, 260);
                 int nameLen = Array.IndexOf<byte>(nameBuffer, 0);
                 if (nameLen == -1)
                 {

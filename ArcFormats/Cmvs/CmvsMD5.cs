@@ -25,7 +25,7 @@ namespace ArcFormats.Cmvs
             };
 
             uint[] buffer = new uint[16];
-            Array.Copy(data, buffer, 4);
+            Buffer.BlockCopy(data, 0, buffer, 0, 4);
             buffer[4] = 0x80; // Padding
 
             // Append length in bits (16 bytes = 128 bits for simplicity)

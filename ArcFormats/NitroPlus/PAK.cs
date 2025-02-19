@@ -57,7 +57,7 @@ namespace ArcFormats.NitroPlus
 
                         byte[] data = br.ReadBytes((int)entry.Size);
                         byte[] backup = new byte[data.Length];
-                        Array.Copy(data, backup, data.Length);
+                        Buffer.BlockCopy(data, 0, backup, 0, data.Length);
                         try
                         {
                             byte[] result = ZlibHelper.Decompress(data);
