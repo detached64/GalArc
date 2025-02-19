@@ -25,6 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -34,6 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -127,6 +129,12 @@
     <Compile Include="NekoSDK\DAT.cs" />
     <Compile Include="NekoSDK\PAK.cs" />
     <Compile Include="NeXAS\PAC.cs" />
+    <Compile Include="NeXAS\PackPACOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NeXAS\PackPACOptions.Designer.cs">
+      <DependentUpon>PackPACOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="NextonLikeC\LST.cs" />
     <Compile Include="NitroPlus\PackPAKOptions.cs">
       <SubType>UserControl</SubType>
@@ -253,54 +261,69 @@
   <ItemGroup>
     <EmbeddedResource Include="AdvHD\PackARCOptions.resx">
       <DependentUpon>PackARCOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="AdvHD\PackARCOptions.zh-Hans.resx">
       <DependentUpon>PackARCOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AdvHD\UnpackARCOptions.resx">
       <DependentUpon>UnpackARCOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="AdvHD\UnpackARCOptions.zh-Hans.resx">
       <DependentUpon>UnpackARCOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Ai6Win\PackARCOptions.resx">
       <DependentUpon>PackARCOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Ai6Win\PackARCOptions.zh-Hans.resx">
       <DependentUpon>PackARCOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AnimeGameSystem\UnpackDATOptions.resx">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="AnimeGameSystem\UnpackDATOptions.zh-Hans.resx">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GsPack\UnpackPAKOptions.resx">
       <DependentUpon>UnpackPAKOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GsPack\UnpackPAKOptions.zh-Hans.resx">
       <DependentUpon>UnpackPAKOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InnocentGrey\PackIGAOptions.resx">
       <DependentUpon>PackIGAOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="InnocentGrey\PackIGAOptions.zh-Hans.resx">
       <DependentUpon>PackIGAOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InnocentGrey\UnpackIGAOptions.resx">
       <DependentUpon>UnpackIGAOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="InnocentGrey\UnpackIGAOptions.zh-Hans.resx">
       <DependentUpon>UnpackIGAOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Kirikiri\PackXP3Options.resx">
       <DependentUpon>PackXP3Options.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Kirikiri\PackXP3Options.zh-Hans.resx">
       <DependentUpon>PackXP3Options.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NeXAS\PackPACOptions.resx">
+      <DependentUpon>PackPACOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NeXAS\PackPACOptions.zh-Hans.resx">
+      <DependentUpon>PackPACOptions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NitroPlus\PackPAKOptions.resx">
       <DependentUpon>PackPAKOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="NitroPlus\PackPAKOptions.zh-Hans.resx">
       <DependentUpon>PackPAKOptions.cs</DependentUpon>
@@ -308,6 +331,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NScripter\UnpackNS2Options.resx">
       <DependentUpon>UnpackNS2Options.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="NScripter\UnpackNS2Options.zh-Hans.resx">
       <DependentUpon>UnpackNS2Options.cs</DependentUpon>
@@ -320,6 +344,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PJADV\UnpackDATOptions.resx">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="PJADV\UnpackDATOptions.zh-Hans.resx">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
@@ -331,6 +356,7 @@
     <EmbeddedResource Include="Properties\Resources.zh-Hans.resx" />
     <EmbeddedResource Include="RPGMaker\PackRGSSOptions.resx">
       <DependentUpon>PackRGSSOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="RPGMaker\PackRGSSOptions.zh-Hans.resx">
       <DependentUpon>PackRGSSOptions.cs</DependentUpon>
@@ -347,6 +373,7 @@
     <EmbeddedResource Include="Seraph\Seraph.zh-Hans.resx" />
     <EmbeddedResource Include="Seraph\UnpackDATOptions.resx">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Seraph\UnpackDATOptions.zh-Hans.resx">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
@@ -367,18 +394,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Softpal\PackPACOptions.resx">
       <DependentUpon>PackPACOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Softpal\PackPACOptions.zh-Hans.resx">
       <DependentUpon>PackPACOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Softpal\UnpackPACOptions.resx">
       <DependentUpon>UnpackPACOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Softpal\UnpackPACOptions.zh-Hans.resx">
       <DependentUpon>UnpackPACOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Yuris\UnpackYPFOptions.resx">
       <DependentUpon>UnpackYPFOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Yuris\UnpackYPFOptions.zh-Hans.resx">
       <DependentUpon>UnpackYPFOptions.cs</DependentUpon>

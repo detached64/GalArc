@@ -30,7 +30,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -40,7 +40,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\bin\Release\</OutputPath>
@@ -141,6 +141,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GeneralSettings.resx">
       <DependentUpon>GeneralSettings.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GeneralSettings.zh-Hans.resx">
       <DependentUpon>GeneralSettings.cs</DependentUpon>
@@ -161,6 +162,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PreferenceSettings.resx">
       <DependentUpon>PreferenceSettings.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="PreferenceSettings.zh-Hans.resx">
       <DependentUpon>PreferenceSettings.cs</DependentUpon>
