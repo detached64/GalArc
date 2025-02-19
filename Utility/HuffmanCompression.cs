@@ -1,6 +1,6 @@
 ﻿// File: Utility/HuffmanCompression.cs
 // Date: 2024/11/28
-// Description: Standard Huffman decompression algorithm.
+// Description: Standard Huffman compression algorithm.
 //
 // Copyright (C) 2024 detached64
 //
@@ -19,107 +19,35 @@
 //
 
 using System;
-using System.IO;
-using System.IO.Compression;
+using System.Runtime.InteropServices;
 
 namespace Utility.Compression
 {
-    public class HuffmanCompression : IDisposable
+    public static class HuffmanCompression
     {
-        private const ushort MAX = 512;
-        private ushort index = 256;
+        [DllImport("UtilityNative.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int huffman_uncompress(byte[] dec, ulong dec_len, byte[] enc, ulong enc_len);
 
-        private ushort[,] children = new ushort[MAX, 2];
+        [DllImport("UtilityNative.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int huffman_compress(byte[] enc, ulong enc_len, byte[] dec, ulong dec_len);
 
-        private BitStream input;
-        private CompressionMode mode;
-        private int decompressedLength;
-        private MemoryStream output;
-
-        public HuffmanCompression(Stream input, CompressionMode mode, int length)
+        public static byte[] Decompress(byte[] enc, int dec_length)
         {
-            if (mode == CompressionMode.Decompress)
-            {
-                this.input = new BitStream(input, BitStreamMode.Read);
-                decompressedLength = length;
-            }
-            else
-            {
-                this.input = new BitStream(input, BitStreamMode.Write);
-            }
-            this.mode = mode;
+            byte[] dec = new byte[dec_length];
+            huffman_uncompress(dec, (ulong)dec_length, enc, (ulong)enc.Length);
+            return dec;
         }
 
-        public HuffmanCompression(Stream input, int length) : this(input, CompressionMode.Decompress, length)
-        { }
-
-        public HuffmanCompression(Stream input) : this(input, CompressionMode.Compress, 0)
-        { }
-
-        private ushort CreateTree()
+        public static byte[] Compress(byte[] dec, int enc_length)
         {
-            switch (input.ReadBit())
-            {
-                case 0:
-                    return (ushort)input.ReadBits(8);
-                case 1:
-                    ushort parent = index++;
-                    if (parent >= MAX)
-                    {
-                        throw new Exception("Exceeded huffman tree.");
-                    }
-                    children[parent, 0] = CreateTree();
-                    children[parent, 1] = CreateTree();
-                    return parent;
-                default:
-                    throw new Exception("Invalid bit.");
-            }
+            byte[] enc = new byte[enc_length];
+            huffman_compress(enc, (ulong)enc_length, dec, (ulong)dec.Length);
+            return enc;
         }
 
-        public byte[] Decompress()
+        public static byte[] Compress(byte[] dec)
         {
-            if (mode != CompressionMode.Decompress)
-            {
-                throw new InvalidOperationException("Not in decompression mode.");
-            }
-
-            ushort root = CreateTree();
-            output = new MemoryStream();
-
-            while (output.Length == decompressedLength)
-            {
-                ushort node = root;
-                while (node >= 256)
-                {
-                    int bit = input.ReadBit();
-                    if (bit != -1)
-                    {
-                        node = children[node, bit];
-                    }
-                }
-                output.WriteByte((byte)node);
-            }
-            return output.ToArray();
-        }
-
-        public void Dispose()
-        {
-            input.Dispose();
-            output.Dispose();
-        }
-    }
-
-    public static class HuffmanDecoder
-    {
-        public static byte[] Decompress(byte[] input, int length)
-        {
-            using (MemoryStream stream = new MemoryStream(input))
-            {
-                using (HuffmanCompression huffman = new HuffmanCompression(stream, length))
-                {
-                    return huffman.Decompress();
-                }
-            }
+            return Compress(dec, dec.Length);
         }
     }
 }
