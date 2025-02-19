@@ -118,8 +118,11 @@
     <EmbeddedResource Include="Strings\LogStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LogStrings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Strings\LogStrings.zh-Hans.resx" />
+    <EmbeddedResource Include="Strings\LogStrings.zh-Hans.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Strings\SchemeInfos.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SchemeInfos.Designer.cs</LastGenOutput>

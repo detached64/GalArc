@@ -217,4 +217,10 @@
   <data name="ErrorImportScheme" xml:space="preserve">
     <value>Failed to import schemes.</value>
   </data>
+  <data name="ArcVersion" xml:space="preserve">
+    <value>Version: {0}</value>
+  </data>
+  <data name="ArcComprMethod" xml:space="preserve">
+    <value>Compression method: {0}</value>
+  </data>
 </root>

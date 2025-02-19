@@ -61,6 +61,24 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
+        ///   查找类似 Compression method: {0} 的本地化字符串。
+        /// </summary>
+        public static string ArcComprMethod {
+            get {
+                return ResourceManager.GetString("ArcComprMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Version: {0} 的本地化字符串。
+        /// </summary>
+        public static string ArcVersion {
+            get {
+                return ResourceManager.GetString("ArcVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Specified class not found. 的本地化字符串。
         /// </summary>
         public static string ErrorClassNotFound {

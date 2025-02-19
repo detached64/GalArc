@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,130 +117,118 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="HasUpdate" xml:space="preserve">
-    <value>有新版本可用！</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="combVersion.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 99</value>
   </data>
-  <data name="NoUpdate" xml:space="preserve">
-    <value>GalArc已是最新版本。</value>
+  <data name="combVersion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 32</value>
   </data>
-  <data name="Updating" xml:space="preserve">
-    <value>检查更新……</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="combVersion.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
-  <data name="UpdateError" xml:space="preserve">
-    <value>检查更新失败。</value>
+  <data name="&gt;&gt;combVersion.Name" xml:space="preserve">
+    <value>combVersion</value>
   </data>
-  <data name="ValidArchiveDetected" xml:space="preserve">
-    <value>检测到{0} v{1}封包。</value>
+  <data name="&gt;&gt;combVersion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="UnpackFinished" xml:space="preserve">
-    <value>解包已完成。</value>
+  <data name="&gt;&gt;combVersion.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="PackFinished" xml:space="preserve">
-    <value>封包已完成。</value>
+  <data name="&gt;&gt;combVersion.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
-  <data name="InputFile" xml:space="preserve">
-    <value>输入文件路径：</value>
+  <data name="lbVersion.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="OutputFolder" xml:space="preserve">
-    <value>输出文件夹路径：</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lbVersion.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="InputFolder" xml:space="preserve">
-    <value>输入文件夹路径：</value>
+  <data name="lbVersion.Location" type="System.Drawing.Point, System.Drawing">
+    <value>83, 60</value>
   </data>
-  <data name="OutputFile" xml:space="preserve">
-    <value>输出文件路径：</value>
+  <data name="lbVersion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>74, 24</value>
   </data>
-  <data name="FileCountInside" xml:space="preserve">
-    <value>内部有{0}个文件。</value>
+  <data name="lbVersion.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
-  <data name="NewInstance" xml:space="preserve">
-    <value>启动新实例</value>
+  <data name="lbVersion.Text" xml:space="preserve">
+    <value>Version</value>
   </data>
-  <data name="ErrorNotValidArc" xml:space="preserve">
-    <value>不是有效的封包。</value>
+  <data name="&gt;&gt;lbVersion.Name" xml:space="preserve">
+    <value>lbVersion</value>
   </data>
-  <data name="ErrorOriginalFileNotFound" xml:space="preserve">
-    <value>同目录下未找到{0}原文件。</value>
+  <data name="&gt;&gt;lbVersion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Unpacking" xml:space="preserve">
-    <value>解包中……</value>
+  <data name="&gt;&gt;lbVersion.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="Packing" xml:space="preserve">
-    <value>封包中……</value>
+  <data name="&gt;&gt;lbVersion.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
-  <data name="ErrorOccur" xml:space="preserve">
-    <value>错误：{0}</value>
+  <data name="lbComprMagic.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="Versions" xml:space="preserve">
-    <value>当前版本：{0} 最新版本：{1}</value>
+  <data name="lbComprMagic.Location" type="System.Drawing.Point, System.Drawing">
+    <value>271, 60</value>
   </data>
-  <data name="ErrorSpecifiedFileNotFound" xml:space="preserve">
-    <value>同目录下未找到{0}文件。</value>
+  <data name="lbComprMagic.Size" type="System.Drawing.Size, System.Drawing">
+    <value>195, 24</value>
   </data>
-  <data name="ImportDataBaseScheme" xml:space="preserve">
-    <value>{0}：导入{1}个密钥。</value>
+  <data name="lbComprMagic.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
-  <data name="Ready" xml:space="preserve">
-    <value>就绪</value>
+  <data name="lbComprMagic.Text" xml:space="preserve">
+    <value>Compression method</value>
   </data>
-  <data name="Loading" xml:space="preserve">
-    <value>加载中……</value>
+  <data name="&gt;&gt;lbComprMagic.Name" xml:space="preserve">
+    <value>lbComprMagic</value>
   </data>
-  <data name="SchemeCount" xml:space="preserve">
-    <value>密钥总数：{0}</value>
+  <data name="&gt;&gt;lbComprMagic.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ValidDatabaseCount" xml:space="preserve">
-    <value>有效数据库总数：{0}</value>
+  <data name="&gt;&gt;lbComprMagic.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="ImportedSchemeCount" xml:space="preserve">
-    <value>导入密钥总数：{0}</value>
+  <data name="&gt;&gt;lbComprMagic.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="SelectUnpackNode" xml:space="preserve">
-    <value>已选择：解包{0}引擎的{1}文件。</value>
+  <data name="combMethods.Location" type="System.Drawing.Point, System.Drawing">
+    <value>275, 99</value>
   </data>
-  <data name="SelectPackNode" xml:space="preserve">
-    <value>已选择：封包{0}引擎的{1}文件。</value>
+  <data name="combMethods.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 32</value>
   </data>
-  <data name="TimedOut" xml:space="preserve">
-    <value>连接超时。</value>
+  <data name="combMethods.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
   </data>
-  <data name="ErrorNeedSpecifyInput" xml:space="preserve">
-    <value>请指定输入路径。</value>
+  <data name="&gt;&gt;combMethods.Name" xml:space="preserve">
+    <value>combMethods</value>
   </data>
-  <data name="ErrorNeedSpecifyOutput" xml:space="preserve">
-    <value>请指定输出路径。</value>
+  <data name="&gt;&gt;combMethods.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ErrorFileNotFound" xml:space="preserve">
-    <value>指定的文件不存在。</value>
+  <data name="&gt;&gt;combMethods.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="ErrorDirNotFound" xml:space="preserve">
-    <value>指定的文件夹不存在。</value>
+  <data name="&gt;&gt;combMethods.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="ErrorNeedSelectOperation" xml:space="preserve">
-    <value>请选择要执行的操作。</value>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>11, 24</value>
   </data>
-  <data name="ErrorFileNameFailToMatch" xml:space="preserve">
-    <value>文件名必须为{0}。</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>PackPACOptions</value>
   </data>
-  <data name="ErrorUnpackMethodNotFound" xml:space="preserve">
-    <value>对应的解包方法未找到。</value>
-  </data>
-  <data name="ErrorPackMethodNotFound" xml:space="preserve">
-    <value>对应的封包方法未找到。</value>
-  </data>
-  <data name="ErrorClassNotFound" xml:space="preserve">
-    <value>对应的类未找到。</value>
-  </data>
-  <data name="PreReleaseVer" xml:space="preserve">
-    <value>您正在使用预发布版本。</value>
-  </data>
-  <data name="ErrorImportScheme" xml:space="preserve">
-    <value>未能导入密钥。</value>
-  </data>
-  <data name="ArcVersion" xml:space="preserve">
-    <value>版本：{0}</value>
-  </data>
-  <data name="ArcComprMethod" xml:space="preserve">
-    <value>压缩方式：{0}</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>GalArc.Controls.OptionsTemplate, GalArc, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>
