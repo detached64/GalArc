@@ -38,7 +38,7 @@ namespace ArcFormats.Seraph
                     {
                         throw new InvalidDataException("Unexpected end of input");
                     }
-                    Array.Copy(data, src, output, dst, count);
+                    Buffer.BlockCopy(data, src, output, dst, count);
                     dst += count;
                     src += count;
                 }
