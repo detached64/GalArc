@@ -220,7 +220,6 @@ namespace GalArc.GUI
                 this.btExecute.Text = this.chkbxUnpack.Text;
                 UpdateTreeUnpack();
             }
-            SyncPath();
             if (BaseSettings.Default.SaveControlState)
             {
                 Settings.Default.IsUnpackMode = this.chkbxUnpack.Checked;
@@ -236,7 +235,6 @@ namespace GalArc.GUI
                 this.btExecute.Text = this.chkbxPack.Text;
                 UpdateTreePack();
             }
-            SyncPath();
             if (BaseSettings.Default.SaveControlState)
             {
                 Settings.Default.IsPackMode = this.chkbxPack.Checked;
@@ -273,13 +271,13 @@ namespace GalArc.GUI
                 Logger.Info(string.Format(LogStrings.SelectPackNode, e.Node.Parent.Text, e.Node.Text));
             }
             SyncPath();
-            GetExtraOptions(Mode);
+            GetExtraOptions();
         }
 
-        private void GetExtraOptions(OperationMode mode)
+        private void GetExtraOptions()
         {
             TreeNode node = null;
-            switch (mode)
+            switch (Mode)
             {
                 case OperationMode.Unpack:
                     node = SelectedNodeUnpack;
@@ -288,7 +286,7 @@ namespace GalArc.GUI
                     node = SelectedNodePack;
                     break;
             }
-            string fieldName = mode.ToString() + "ExtraOptions";
+            string fieldName = $"{Mode}ExtraOptions";
             string[] infos = node.FullPath.Replace(".", string.Empty).Split('/');
             Assembly assembly = Assembly.Load(nameof(ArcFormats));
             Type type = assembly.GetType($"{nameof(ArcFormats)}.{infos[0]}.{infos[1]}");
