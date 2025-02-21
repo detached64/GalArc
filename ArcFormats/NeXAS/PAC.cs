@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Utility;
 using Utility.Compression;
 using Utility.Extensions;
 
@@ -186,8 +185,15 @@ namespace ArcFormats.NeXAS
             bw.Write(Encoding.ASCII.GetBytes(Magic));
             bw.Write('\0');
             bw.Write((uint)files.Length);
-            bw.Write(7);
+            bw.Write(PackPACOptions.methods[PackPACOptions.SelectedMethods][0] - '0');
+            int indexLength = 76 * files.Length;
             uint offset = (uint)fw.Position;
+            if (PackExtraOptions.Version == "1")
+            {
+                bw.BaseStream.Position += indexLength;  // Reserve space for index
+            }
+            Logger.InitBar(files.Length, 2);
+
             List<PackedEntry> entries = new List<PackedEntry>();
             foreach (string file in files)
             {
@@ -222,6 +228,7 @@ namespace ArcFormats.NeXAS
                 offset += entry.Size;
                 entries.Add(entry);
                 data = null;
+                Logger.UpdateBar();
             }
 
             using (MemoryStream index = new MemoryStream())
@@ -250,9 +257,10 @@ namespace ArcFormats.NeXAS
                 }
                 else
                 {
+                    bw.BaseStream.Position = 12;
                     bw.Write(raw);
-                    bw.Write(raw.Length);
                 }
+                Logger.UpdateBar();
             }
 
             bw.Dispose();

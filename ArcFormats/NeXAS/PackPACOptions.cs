@@ -7,7 +7,7 @@ namespace ArcFormats.NeXAS
     {
         private const string versions = "1/2";
 
-        private readonly string[] methods =
+        internal static readonly string[] methods =
         {
             "0-None",
             "1-Lzss",
