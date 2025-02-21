@@ -123,6 +123,18 @@
     </Compile>
     <Compile Include="Kirikiri\XP3.cs" />
     <Compile Include="Majiro\ARC.cs" />
+    <Compile Include="Majiro\PackARCOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Majiro\PackARCOptions.Designer.cs">
+      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Majiro\UnpackARCOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Majiro\UnpackARCOptions.Designer.cs">
+      <DependentUpon>UnpackARCOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="NekoPack\DAT.cs" />
     <Compile Include="NekoPack\DatV1.cs" />
     <Compile Include="NekoPack\DatV2.cs" />
@@ -315,6 +327,18 @@
     <EmbeddedResource Include="Kirikiri\PackXP3Options.zh-Hans.resx">
       <DependentUpon>PackXP3Options.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Majiro\PackARCOptions.resx">
+      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Majiro\PackARCOptions.zh-Hans.resx">
+      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Majiro\UnpackARCOptions.resx">
+      <DependentUpon>UnpackARCOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Majiro\UnpackARCOptions.zh-Hans.resx">
+      <DependentUpon>UnpackARCOptions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NeXAS\PackPACOptions.resx">
       <DependentUpon>PackPACOptions.cs</DependentUpon>
     </EmbeddedResource>
@@ -391,6 +415,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Siglus\UnpackPCKOptions.zh-Hans.resx">
       <DependentUpon>UnpackPCKOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Softpal\PackPACOptions.resx">
       <DependentUpon>PackPACOptions.cs</DependentUpon>

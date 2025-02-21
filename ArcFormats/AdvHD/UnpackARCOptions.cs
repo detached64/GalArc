@@ -5,7 +5,7 @@ namespace ArcFormats.AdvHD
 {
     public partial class UnpackARCOptions : OptionsTemplate
     {
-        internal static bool toDecryptScripts = true;
+        internal static bool DecryptScripts = true;
 
         public UnpackARCOptions()
         {
@@ -14,7 +14,7 @@ namespace ArcFormats.AdvHD
 
         private void chkbxDecScr_CheckedChanged(object sender, EventArgs e)
         {
-            toDecryptScripts = this.chkbxDecScr.Checked;
+            DecryptScripts = this.chkbxDecScr.Checked;
         }
     }
 }

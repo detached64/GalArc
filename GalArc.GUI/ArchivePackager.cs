@@ -4,7 +4,6 @@ using GalArc.GUI.Properties;
 using GalArc.Logs;
 using GalArc.Strings;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -21,11 +20,6 @@ namespace GalArc.GUI
         private string typeName
         {
             get { return $"{nameof(ArcFormats)}.{engineName}.{extension}"; }
-        }
-
-        private object[] param
-        {
-            get { return new List<object> { input, output }.ToArray(); }
         }
 
         private Assembly _assembly = null;

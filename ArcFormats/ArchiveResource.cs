@@ -65,7 +65,7 @@ namespace ArcFormats
                     t.IsSubclassOf(typeof(ArchiveFormat)) &&
                     !t.IsAbstract &&
                     t.GetConstructor(Type.EmptyTypes) != null)
-                .OrderBy(t => t.Name)
+                .Reverse()
                 .Select(t => Activator.CreateInstance(t) as ArchiveFormat)
                 .ToList();
         }

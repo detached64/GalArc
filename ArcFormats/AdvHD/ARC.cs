@@ -70,7 +70,7 @@ namespace ArcFormats.AdvHD
                     index.Path = Path.Combine(folderPath, index.Name);
                     fs.Seek(index.Offset, SeekOrigin.Begin);
                     byte[] buffer = br.ReadBytes((int)index.Size);
-                    if (UnpackARCOptions.toDecryptScripts && IsScriptFile(Path.GetExtension(index.Path), "1"))
+                    if (UnpackARCOptions.DecryptScripts && IsScriptFile(Path.GetExtension(index.Path), "1"))
                     {
                         Logger.Debug(string.Format(Resources.logTryDecScr, index.Name));
                         DecryptScript(buffer);
@@ -124,7 +124,7 @@ namespace ArcFormats.AdvHD
                     bwentry.Write((uint)file.Length);
                     bwentry.Write((uint)(4 + 12 * header.TypeCount + 21 * header.FileCountAll + msdata.Length));
                     byte[] buffer = File.ReadAllBytes(file.FullName);
-                    if (PackARCOptions.toEncryptScripts && IsScriptFile(exts[i], "1"))
+                    if (PackARCOptions.EncryptScripts && IsScriptFile(exts[i], "1"))
                     {
                         Logger.Debug(string.Format(Resources.logTryEncScr, file.Name));
                         EncryptScript(buffer);
@@ -189,7 +189,7 @@ namespace ArcFormats.AdvHD
             foreach (var entry in l)
             {
                 byte[] buffer = br1.ReadBytes((int)entry.Size);
-                if (UnpackARCOptions.toDecryptScripts && IsScriptFile(Path.GetExtension(entry.Path), "2"))
+                if (UnpackARCOptions.DecryptScripts && IsScriptFile(Path.GetExtension(entry.Path), "2"))
                 {
                     Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
                     DecryptScript(buffer);
@@ -250,7 +250,7 @@ namespace ArcFormats.AdvHD
                     foreach (FileInfo file in files)
                     {
                         byte[] buffer = File.ReadAllBytes(file.FullName);
-                        if (PackARCOptions.toEncryptScripts && IsScriptFile(file.Extension, "2"))
+                        if (PackARCOptions.EncryptScripts && IsScriptFile(file.Extension, "2"))
                         {
                             Logger.Debug(string.Format(Resources.logTryEncScr, file.Name));
                             EncryptScript(buffer);
