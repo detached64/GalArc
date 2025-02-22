@@ -1,9 +1,11 @@
-﻿using GalArc.Controls;
+﻿using ArcFormats.Properties;
+using GalArc.Controls;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using Utility;
 using Utility.Extensions;
 
@@ -17,10 +19,8 @@ namespace ArcFormats.Majiro
         private static readonly Lazy<OptionsTemplate> _lazyPackOptions = new Lazy<OptionsTemplate>(() => new PackARCOptions());
         public static OptionsTemplate PackExtraOptions => _lazyPackOptions.Value;
 
-        private const string Magic = "MajiroArcV";
-        private const string MagicV1 = "MajiroArcV1.000\x00";
-        private const string MagicV2 = "MajiroArcV2.000\x00";
-        private const string MagicV3 = "MajiroArcV3.000\x00";
+        private string Magic = "MajiroArcV{0}.000\x00";
+        private string MagicPattern = @"^MajiroArcV(\d)\.000\x00$";
         private const string ScriptMagicDec = "MajiroObjV1.000\x00";
         private const string ScriptMagicEnc = "MajiroObjX1.000\x00";
 
@@ -29,74 +29,80 @@ namespace ArcFormats.Majiro
             public ulong Hash;
         }
 
-        private int UnpackVersion;
-
-        private int PackVersion;
-
         public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            string magic = Encoding.ASCII.GetString(br.ReadBytes(10));
-            UnpackVersion = br.ReadByte() - '0';
-            fs.Dispose();
-            br.Dispose();
-            if (magic == Magic)
-            {
-                Logger.ShowVersion("arc", UnpackVersion);
-                switch (UnpackVersion)
-                {
-                    case 1:
-                        UnpackV1(filePath, folderPath);
-                        break;
-                    case 2:
-                    case 3:
-                        UnpackV2(filePath, folderPath);
-                        break;
-                }
-            }
-            else
+            string magic = Encoding.ASCII.GetString(br.ReadBytes(16));
+            var match = Regex.Match(magic, MagicPattern);
+            int version = int.Parse(match.Groups[1].Value);
+            if (!match.Success || version < 1 || version > 3)
             {
                 Logger.ErrorInvalidArchive();
+                return;
             }
-        }
-
-        private void UnpackV1(string filePath, string folderPath)
-        {
-            FileStream fs = File.OpenRead(filePath);
-            BinaryReader br = new BinaryReader(fs);
+            Logger.ShowVersion("arc", version);
             fs.Position = 16;
             int fileCount = br.ReadInt32();
             uint nameOffset = br.ReadUInt32();
             uint dataOffset = br.ReadUInt32();
+            int indexLength = (version + 1) * 4 * fileCount;
+            if (version == 1)
+            {
+                indexLength += 8;
+            }
+            List<MajiroEntry> entries = new List<MajiroEntry>();
 
-            uint indexLength = 8 * (uint)fileCount + 8;
-            List<Entry> entries = new List<Entry>();
-            Directory.CreateDirectory(folderPath);
-            Logger.InitBar(fileCount);
-
-            using (MemoryStream ms = new MemoryStream(br.ReadBytes((int)indexLength)))
+            using (MemoryStream ms = new MemoryStream(br.ReadBytes(indexLength)))
             {
                 using (BinaryReader indexReader = new BinaryReader(ms))
                 {
                     for (int i = 0; i < fileCount; i++)
                     {
-                        Entry entry = new Entry();
-                        indexReader.ReadBytes(4);            //skip crc32
+                        MajiroEntry entry = new MajiroEntry();
+                        if (version < 3)
+                        {
+                            entry.Hash = indexReader.ReadUInt32();
+                        }
+                        else
+                        {
+                            entry.Hash = indexReader.ReadUInt64();
+                        }
                         entry.Offset = indexReader.ReadUInt32();
+                        if (version > 1)
+                        {
+                            entry.Size = indexReader.ReadUInt32();
+                        }
                         entry.Name = br.ReadCString();
                         entries.Add(entry);
                     }
-                    Entry lastEntry = new Entry();
-                    indexReader.ReadBytes(4);               //skip 0x00000000
-                    lastEntry.Offset = indexReader.ReadUInt32();
-                    entries.Add(lastEntry);
+                    if (version == 1)
+                    {
+                        MajiroEntry lastEntry = new MajiroEntry();
+                        lastEntry.Hash = indexReader.ReadUInt32();
+                        lastEntry.Offset = indexReader.ReadUInt32();
+                        entries.Add(lastEntry);
+                    }
                 }
+
+                Directory.CreateDirectory(folderPath);
+                Logger.InitBar(fileCount);
+
                 for (int i = 0; i < fileCount; i++)
                 {
-                    byte[] data = br.ReadBytes((int)(entries[i + 1].Offset - entries[i].Offset));
+                    byte[] data;
+                    if (version == 1)
+                    {
+                        data = br.ReadBytes((int)(entries[i + 1].Offset - entries[i].Offset));
+                    }
+                    else
+                    {
+                        fs.Position = entries[i].Offset;
+                        data = br.ReadBytes((int)entries[i].Size);
+                    }
                     if (UnpackARCOptions.DecryptScripts && Path.GetExtension(entries[i].Name) == ".mjo")
                     {
+                        Logger.Debug(string.Format(Resources.logTryDecScr, entries[i].Name));
                         DecryptScript(data);
                     }
                     File.WriteAllBytes(Path.Combine(folderPath, entries[i].Name), data);
@@ -104,170 +110,57 @@ namespace ArcFormats.Majiro
                     Logger.UpdateBar();
                 }
             }
+
             fs.Dispose();
             br.Dispose();
-        }
-
-        private void UnpackV2(string filePath, string folderPath)
-        {
-            FileStream fs = File.OpenRead(filePath);
-            BinaryReader br = new BinaryReader(fs);
-            fs.Position = 16;
-            int fileCount = br.ReadInt32();
-            uint nameOffset = br.ReadUInt32();
-            uint dataOffset = br.ReadUInt32();
-
-            uint indexLength = (uint)((UnpackVersion + 1) * 4 * fileCount);
-            MemoryStream ms = new MemoryStream(br.ReadBytes((int)indexLength));
-            BinaryReader brIndex = new BinaryReader(ms);
-
-            Directory.CreateDirectory(folderPath);
-            Logger.InitBar(fileCount);
-
-            for (int i = 0; i < fileCount; i++)
-            {
-                MajiroEntry entry = new MajiroEntry();
-                switch (UnpackVersion)
-                {
-                    case 2:
-                        entry.Hash = brIndex.ReadUInt32();
-                        break;
-                    case 3:
-                        entry.Hash = brIndex.ReadUInt64();
-                        break;
-                }
-                entry.Offset = brIndex.ReadUInt32();
-                entry.Size = brIndex.ReadUInt32();
-                entry.Name = br.ReadCString();
-                long pos = fs.Position;
-                fs.Position = entry.Offset;
-                byte[] data = br.ReadBytes((int)entry.Size);
-                if (UnpackARCOptions.DecryptScripts && Path.GetExtension(entry.Name) == ".mjo")
-                {
-                    DecryptScript(data);
-                }
-                File.WriteAllBytes(Path.Combine(folderPath, entry.Name), data);
-                data = null;
-                fs.Position = pos;
-                Logger.UpdateBar();
-            }
-            fs.Dispose();
-            br.Dispose();
-            brIndex.Dispose();
-            ms.Dispose();
         }
 
         public override void Pack(string folderPath, string filePath)
         {
-            PackVersion = int.Parse(PackExtraOptions.Version);
-            switch (PackVersion)
-            {
-                case 1:
-                    PackV1(folderPath, filePath);
-                    break;
-                case 2:
-                case 3:
-                    PackV2(folderPath, filePath);
-                    break;
-            }
-        }
-
-        private void PackV1(string folderPath, string filePath)
-        {
-            FileStream fw = File.Create(filePath);
-            BinaryWriter bw = new BinaryWriter(fw);
-            DirectoryInfo d = new DirectoryInfo(folderPath);
-            FileInfo[] files = d.GetFiles();
-            int fileCount = files.Length;
-            Logger.InitBar(fileCount);
-            bw.Write(Encoding.ASCII.GetBytes(MagicV1));
-            bw.Write(fileCount);
-            uint nameOffset = 28 + 8 * ((uint)fileCount + 1);
-            uint dataOffset = 0;
-            bw.Write(nameOffset);
-            bw.Write(dataOffset);       // pos = 24
-
-            // write name
-            bw.BaseStream.Position = nameOffset;
-            foreach (FileInfo file in files)
-            {
-                bw.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name));
-                bw.Write('\0');
-            }
-            // write data
-            dataOffset = (uint)fw.Position;
-            foreach (FileInfo file in files)
-            {
-                byte[] data = File.ReadAllBytes(file.FullName);
-                if (PackARCOptions.EncryptScripts && file.Extension == ".mjo")
-                {
-                    EncryptScript(data);
-                }
-                bw.Write(data);
-                data = null;
-            }
-            uint maxOffset = (uint)fw.Position;
-            // write index
-            bw.BaseStream.Position = 24;
-            bw.Write(dataOffset);
-            foreach (FileInfo file in files)
-            {
-                bw.Write(Crc32.Calculate(ArcEncoding.Shift_JIS.GetBytes(file.Name)));
-                bw.Write(dataOffset);
-                dataOffset += (uint)file.Length;
-                Logger.UpdateBar();
-            }
-            bw.Write(0);
-            bw.Write(maxOffset);
-            bw.Dispose();
-            fw.Dispose();
-        }
-
-        private void PackV2(string folderPath, string filePath)
-        {
+            int version = int.Parse(PackExtraOptions.Version);
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles();
             int fileCount = files.Length;
             Logger.InitBar(fileCount, 3);
-
-            bw.Write(Encoding.ASCII.GetBytes(PackVersion == 2 ? MagicV2 : MagicV3));
+            // write header
+            bw.Write(Encoding.ASCII.GetBytes(string.Format(Magic, version)));
             bw.Write(fileCount);
-            uint nameOffset = 28 + (uint)((PackVersion + 1) * 4 * fileCount);
+            uint nameOffset = 28 + (uint)((version + 1) * 4 * fileCount);
+            if (version == 1)
+            {
+                nameOffset += 8;
+            }
             uint dataOffset = 0;
             bw.Write(nameOffset);
-            bw.Write(dataOffset);   // Reserved
-
+            bw.Write(dataOffset);
+            // collect entries
             List<MajiroEntry> entries = new List<MajiroEntry>();
-            foreach (FileInfo file in files)
+            foreach (var file in files)
             {
                 MajiroEntry entry = new MajiroEntry();
                 entry.Name = file.Name;
                 entry.Path = file.FullName;
                 entry.Size = (uint)file.Length;
-                switch (PackVersion)
+                if (version < 3)
                 {
-                    case 2:
-                        entry.Hash = Crc32.Calculate(ArcEncoding.Shift_JIS.GetBytes(entry.Name));
-                        break;
-                    case 3:
-                        entry.Hash = CalculateHash(ArcEncoding.Shift_JIS.GetBytes(entry.Name));
-                        break;
+                    entry.Hash = Crc32.Calculate(ArcEncoding.Shift_JIS.GetBytes(entry.Name));
+                }
+                else
+                {
+                    entry.Hash = CalculateHash(ArcEncoding.Shift_JIS.GetBytes(entry.Name));
                 }
                 entries.Add(entry);
             }
             entries.Sort((a, b) => a.Hash.CompareTo(b.Hash));
-
             // write name
-            bw.BaseStream.Position = nameOffset;
-            foreach (MajiroEntry entry in entries)
+            fw.Position = nameOffset;
+            foreach (var entry in entries)
             {
                 bw.Write(ArcEncoding.Shift_JIS.GetBytes(entry.Name));
                 bw.Write('\0');
-                Logger.UpdateBar();
             }
-
             // write data
             dataOffset = (uint)fw.Position;
             foreach (MajiroEntry entry in entries)
@@ -275,19 +168,20 @@ namespace ArcFormats.Majiro
                 byte[] data = File.ReadAllBytes(entry.Path);
                 if (PackARCOptions.EncryptScripts && Path.GetExtension(entry.Name) == ".mjo")
                 {
+                    Logger.Debug(string.Format(Resources.logTryEncScr, entry.Name));
                     EncryptScript(data);
                 }
                 bw.Write(data);
                 data = null;
                 Logger.UpdateBar();
             }
-
+            uint maxOffset = (uint)fw.Position;
             // write index
-            bw.BaseStream.Position = 24;
+            fw.Position = 24;
             bw.Write(dataOffset);
             foreach (MajiroEntry entry in entries)
             {
-                if (PackVersion == 2)
+                if (version < 3)
                 {
                     bw.Write((uint)entry.Hash);
                 }
@@ -296,13 +190,20 @@ namespace ArcFormats.Majiro
                     bw.Write(entry.Hash);
                 }
                 bw.Write(dataOffset);
-                bw.Write(entry.Size);
+                if (version > 1)
+                {
+                    bw.Write(entry.Size);
+                }
                 dataOffset += entry.Size;
                 Logger.UpdateBar();
             }
-
-            bw.Dispose();
+            if (version == 1)
+            {
+                bw.Write(0);
+                bw.Write(maxOffset);
+            }
             fw.Dispose();
+            bw.Dispose();
         }
 
         private void DecryptScript(byte[] data)
