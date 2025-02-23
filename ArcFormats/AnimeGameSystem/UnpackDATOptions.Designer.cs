@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.AnimeGameSystem
+namespace ArcFormats.AnimeGameSystem
 {
     partial class UnpackDATOptions
     {

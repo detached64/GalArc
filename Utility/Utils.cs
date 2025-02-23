@@ -1,4 +1,4 @@
-﻿// File: Utility/Utils.cs
+// File: Utility/Utils.cs
 // Date: 2024/08/26
 // Description: Utility functions.
 //

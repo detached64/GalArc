@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.Majiro
+namespace ArcFormats.Majiro
 {
     partial class PackARCOptions
     {

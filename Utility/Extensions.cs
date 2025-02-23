@@ -1,4 +1,4 @@
-﻿// File: Utility/Extensions.cs
+// File: Utility/Extensions.cs
 // Date: 2024/10/09
 // Description: Provides many useful extension methods.
 //

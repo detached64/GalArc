@@ -1,4 +1,4 @@
-﻿// File: Utility/BigEndian.cs
+// File: Utility/BigEndian.cs
 // Date: 2024/08/28
 // Description: BigEndian conversion functions. Supports 16, 32 and 64 bit integers.
 //

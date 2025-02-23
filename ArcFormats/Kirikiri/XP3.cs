@@ -1,4 +1,4 @@
-﻿using GalArc.Controls;
+using GalArc.Controls;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;

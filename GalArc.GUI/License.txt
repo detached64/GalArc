@@ -1,4 +1,4 @@
-﻿The GNU General Public License v3.0
+The GNU General Public License v3.0
 
 Copyright (C) 2025 detached64
 

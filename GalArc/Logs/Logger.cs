@@ -1,4 +1,4 @@
-﻿// File: Logs/Logger.cs
+// File: Logs/Logger.cs
 // Date: 2024/08/28
 // Description: Logger class for logging, change status and progress bar.
 //

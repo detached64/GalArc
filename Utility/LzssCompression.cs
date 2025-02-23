@@ -1,4 +1,4 @@
-﻿// File: Utility/LzssCompression.cs
+// File: Utility/LzssCompression.cs
 // Date: 2024/11/29
 // Description: C# port of the Lzss compression algorithm, based on
 // the original code by Haruhiko Okumura, 1989, licensed under MIT License.

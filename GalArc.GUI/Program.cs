@@ -1,4 +1,4 @@
-﻿using GalArc.Logs;
+using GalArc.Logs;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;

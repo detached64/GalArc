@@ -1,4 +1,4 @@
-﻿namespace GalArc.GUI
+namespace GalArc.GUI
 {
     partial class LogSettings
     {

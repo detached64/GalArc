@@ -1,4 +1,4 @@
-﻿// File: Utility/ZstdHelper.cs
+// File: Utility/ZstdHelper.cs
 // Date: 2024/08/31
 // Description: Zstd compression method based on Zstandard.Net.
 //

@@ -1,4 +1,4 @@
-﻿using GalArc.Controls;
+using GalArc.Controls;
 using System;
 
 namespace ArcFormats.Yuris

@@ -1,4 +1,4 @@
-﻿// File: Utility/ArcEncoding.cs
+// File: Utility/ArcEncoding.cs
 // Date: 2024/08/26
 // Description: Encoding for ArcFormats.
 //

@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.Ai6Win
+namespace ArcFormats.Ai6Win
 {
     partial class PackARCOptions
     {

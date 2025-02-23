@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.RPGMaker
+namespace ArcFormats.RPGMaker
 {
     partial class PackRGSSOptions
     {

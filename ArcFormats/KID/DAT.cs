@@ -1,4 +1,4 @@
-﻿using GalArc.Logs;
+using GalArc.Logs;
 using System.IO;
 using System.Text;
 using Utility;

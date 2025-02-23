@@ -1,4 +1,4 @@
-﻿// File: Utility/NativeMethods.cs
+// File: Utility/NativeMethods.cs
 // Date: 2024/12/31
 // Description: Native methods.
 //

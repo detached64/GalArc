@@ -1,4 +1,4 @@
-﻿// File: Utility/MMX.cs
+// File: Utility/MMX.cs
 // Date: 2024/12/30
 // Description: MMX instruction set partial implementation.
 //

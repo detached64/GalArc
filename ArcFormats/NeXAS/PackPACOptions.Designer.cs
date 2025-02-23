@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.NeXAS
+namespace ArcFormats.NeXAS
 {
     partial class PackPACOptions
     {

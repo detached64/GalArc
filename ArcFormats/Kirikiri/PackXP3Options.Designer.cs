@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.Kirikiri
+namespace ArcFormats.Kirikiri
 {
     partial class PackXP3Options
     {

@@ -1,4 +1,4 @@
-﻿// File: Utility/MD5.cs
+// File: Utility/MD5.cs
 // Date: 2024/12/31
 // Description: MD5 hash algorithm.
 //

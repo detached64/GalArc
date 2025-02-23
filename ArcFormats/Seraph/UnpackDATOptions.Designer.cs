@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.Seraph
+namespace ArcFormats.Seraph
 {
     partial class UnpackDATOptions
     {

@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.GsPack
+namespace ArcFormats.GsPack
 {
     partial class UnpackPAKOptions
     {

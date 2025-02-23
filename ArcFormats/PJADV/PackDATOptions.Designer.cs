@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.PJADV
+namespace ArcFormats.PJADV
 {
     partial class PackDATOptions
     {

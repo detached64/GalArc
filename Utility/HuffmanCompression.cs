@@ -1,4 +1,4 @@
-﻿// File: Utility/HuffmanCompression.cs
+// File: Utility/HuffmanCompression.cs
 // Date: 2024/11/28
 // Description: Standard Huffman compression algorithm.
 //

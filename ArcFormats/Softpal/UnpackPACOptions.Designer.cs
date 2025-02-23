@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.Softpal
+namespace ArcFormats.Softpal
 {
     partial class UnpackPACOptions
     {

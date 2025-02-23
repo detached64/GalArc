@@ -1,4 +1,4 @@
-﻿// File: Utility/ZlibStream.cs
+// File: Utility/ZlibStream.cs
 // Date: 2024/12/02
 // Description: Standard Zlib compression method based on DeflateStream.
 //

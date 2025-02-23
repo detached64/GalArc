@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.NitroPlus
+namespace ArcFormats.NitroPlus
 {
     partial class PackPAKOptions
     {

@@ -1,4 +1,4 @@
-﻿using GalArc.Logs;
+using GalArc.Logs;
 using GalArc.Strings;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

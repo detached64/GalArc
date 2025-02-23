@@ -1,4 +1,4 @@
-﻿// File: Utility/Binary.cs
+// File: Utility/Binary.cs
 // Date: 2024/09/20
 // Description: Binary utility functions.
 //

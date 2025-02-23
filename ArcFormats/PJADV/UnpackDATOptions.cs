@@ -1,11 +1,11 @@
-﻿using GalArc.Controls;
+using GalArc.Controls;
 using System;
 
 namespace ArcFormats.PJADV
 {
     public partial class UnpackDATOptions : OptionsTemplate
     {
-        internal static bool toDecryptScripts = true;
+        internal static bool DecryptScripts = true;
 
         public UnpackDATOptions()
         {
@@ -14,7 +14,7 @@ namespace ArcFormats.PJADV
 
         private void chkbxDecScr_CheckedChanged(object sender, EventArgs e)
         {
-            toDecryptScripts = this.chkbxDecScr.Checked;
+            DecryptScripts = this.chkbxDecScr.Checked;
         }
     }
 }

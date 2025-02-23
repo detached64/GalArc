@@ -1,4 +1,4 @@
-﻿// File: Utility/Crc32.cs
+// File: Utility/Crc32.cs
 // Date: 2024/09/04
 // Description: Crc32 checksum algorithm.
 //

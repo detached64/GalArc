@@ -1,4 +1,4 @@
-﻿// File: Utility/WindowsSorter.cs
+// File: Utility/WindowsSorter.cs
 // Date: 2024/10/28
 // Description: Windows sort comparer.
 //

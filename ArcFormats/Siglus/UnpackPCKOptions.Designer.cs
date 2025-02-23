@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.Siglus
+namespace ArcFormats.Siglus
 {
     partial class UnpackPCKOptions
     {

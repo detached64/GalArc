@@ -1,4 +1,4 @@
-﻿using ArcFormats.Properties;
+using ArcFormats.Properties;
 using GalArc.Controls;
 using System;
 using System.Reflection;

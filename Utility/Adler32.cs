@@ -1,4 +1,4 @@
-﻿// File: Utility/Adler32.cs
+// File: Utility/Adler32.cs
 // Date: 2024/08/27
 // Description: Adler32 checksum algorithm.
 //

@@ -19,7 +19,7 @@ namespace ArcFormats.AnimeGameSystem
 
         internal static AGSScheme.AGSFileMap SelectedScheme;
 
-        private readonly byte[] Magic = Utils.HexStringToByteArray("7061636B");  // 'pack'
+        private const string Magic = "pack";
 
         public override void Unpack(string filePath, string folderPath)
         {
@@ -77,7 +77,7 @@ namespace ArcFormats.AnimeGameSystem
         {
             for (int i = 0; i < data.Length; i++)
             {
-                data[i] = (byte)(data[i] ^ initial);
+                data[i] ^= initial;
                 initial += increment;
             }
         }

@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.Yuris
+namespace ArcFormats.Yuris
 {
     partial class UnpackYPFOptions
     {

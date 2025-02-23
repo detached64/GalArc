@@ -1,4 +1,4 @@
-﻿using GalArc.Logs;
+using GalArc.Logs;
 using GalArc.Strings;
 using System;
 using System.Net.Http;

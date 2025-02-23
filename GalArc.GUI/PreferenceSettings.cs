@@ -1,4 +1,4 @@
-﻿using GalArc.Common;
+using GalArc.Common;
 using GalArc.Controls;
 using GalArc.GUI.Properties;
 using System;

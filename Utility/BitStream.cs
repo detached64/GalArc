@@ -1,4 +1,4 @@
-﻿// File: Utility/BitStream.cs
+// File: Utility/BitStream.cs
 // Date: 2024/11/27
 // Description: Bit stream.
 //

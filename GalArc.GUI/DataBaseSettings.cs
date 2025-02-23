@@ -1,4 +1,4 @@
-﻿using GalArc.Controls;
+using GalArc.Controls;
 using GalArc.Database;
 using System;
 using System.Windows.Forms;

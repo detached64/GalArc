@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.AdvHD
+namespace ArcFormats.AdvHD
 {
     partial class UnpackARCOptions
     {

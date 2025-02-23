@@ -1,4 +1,4 @@
-﻿using GalArc.GUI.Properties;
+using GalArc.GUI.Properties;
 using System;
 using System.Windows.Forms;
 

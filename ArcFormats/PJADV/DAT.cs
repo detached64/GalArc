@@ -1,4 +1,4 @@
-﻿using ArcFormats.Properties;
+using ArcFormats.Properties;
 using GalArc.Controls;
 using GalArc.Logs;
 using System;
@@ -18,7 +18,8 @@ namespace ArcFormats.PJADV
         public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
         public static OptionsTemplate PackExtraOptions => _lazyPackOptions.Value;
 
-        private readonly string Magic = "GAMEDAT PAC";
+        private const string Magic = "GAMEDAT PAC";
+        private readonly byte[] ScriptMagic = { 0x95, 0x6b, 0x3c, 0x9d, 0x63 };
 
         public override void Unpack(string filePath, string folderPath)
         {
@@ -31,20 +32,19 @@ namespace ArcFormats.PJADV
             }
             int version = br.ReadByte();
             int nameLen;
-            if (version == 'K')
+            switch (version)
             {
-                nameLen = 16;
-                Logger.ShowVersion("dat", 1);
-            }
-            else if (version == '2')
-            {
-                nameLen = 32;
-                Logger.ShowVersion("dat", 2);
-            }
-            else
-            {
-                Logger.Error(string.Format(Resources.logErrorNotSupportedVersion, "dat", version));
-                return;
+                case 'K':
+                    nameLen = 16;
+                    Logger.ShowVersion("dat", 1);
+                    break;
+                case '2':
+                    nameLen = 32;
+                    Logger.ShowVersion("dat", 2);
+                    break;
+                default:
+                    Logger.Error(string.Format(Resources.logErrorNotSupportedVersion, "dat", version));
+                    return;
             }
 
             int count = br.ReadInt32();
@@ -69,7 +69,7 @@ namespace ArcFormats.PJADV
             {
                 fs.Position = entry.Offset;
                 byte[] buffer = br.ReadBytes((int)entry.Size);
-                if (UnpackDATOptions.toDecryptScripts && entry.Name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(new byte[] { 0x95, 0x6b, 0x3c, 0x9d, 0x63 }))
+                if (UnpackDATOptions.DecryptScripts && entry.Name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(ScriptMagic))
                 {
                     Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
                     DecryptScript(buffer);

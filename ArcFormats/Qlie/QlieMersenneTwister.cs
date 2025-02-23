@@ -1,4 +1,4 @@
-﻿// Mersenne Twister random number generator modified for QLIE decryption.
+// Mersenne Twister random number generator modified for QLIE decryption.
 //
 // Copyright (C) 2015 by morkt
 //

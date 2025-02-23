@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.NScripter
+namespace ArcFormats.NScripter
 {
     partial class UnpackNS2Options
     {

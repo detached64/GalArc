@@ -1,4 +1,4 @@
-﻿// File: Utility/ExeResources.cs
+// File: Utility/ExeResources.cs
 // Date: 2024/12/31
 // Description: A class to read resources from an executable file.
 //

@@ -1,4 +1,4 @@
-﻿namespace ArcFormats.InnocentGrey
+namespace ArcFormats.InnocentGrey
 {
     partial class UnpackIGAOptions
     {
