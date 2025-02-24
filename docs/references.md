@@ -6,4 +6,3 @@
 
 [GALgameScriptTools/SiglusEngine](https://github.com/yanhua0518/GALgameScriptTools/tree/master/SiglusEngine)
 
-[SiglusSceneManager](https://github.com/marcussacana/SiglusSceneManager)

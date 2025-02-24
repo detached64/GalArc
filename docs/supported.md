@@ -1,10 +1,10 @@
 ## Supported Formats
 
-Attention:this file may not be updated regularly.
+Attention: this file is updated manually, so it may not be up-to-date. For the latest information, please refer to the source code.
 
-| Engine(Producer) | Extension                  | Unpack | Pack | Supported                   |
+| Engine/Alias/Producer | Extension                  | Unpack | Pack | Supported                   |
 | ---------------- | -------------------------- | ------ | ---- | --------------------------- |
-| AdvHD            | `arc` `pna`                | ✔️      | ✔️    | all                         |
+| AdvHD            | `arc` `pna`                | ✔️      | ✔️    | all                        |
 | Ai5Win/elf       | `arc` `dat` `VSD`          | ✔️      | ❌    | all                         |
 | Ai6Win/Silky     | `arc`                      | ✔️      | ✔️    | all                         |
 | Artemis          | `pfs`                      | ✔️      | ✔️    | all                         |
@@ -20,7 +20,7 @@ Attention:this file may not be updated regularly.
 | Majiro           | `arc`                      | ✔️      | ✔️    | all                         |
 | NekoPack         | `dat`                      | ✔️      | ❌    | limited                     |
 | NekoSDK          | `pak`                      | ✔️      | ✔️    | all                         |
-| NeXAS/Giga       | `pac`                      | ✔️      | ❌    | all                         |
+| NeXAS/Giga       | `pac`                      | ✔️      | ✔️    | all                         |
 | NextonLikeC      | `lst`                      | ✔️      | ❌    | all                         |
 | Nitro+           | `pak`                      | ✔️      | ✔️    | limited                     |
 | NScripter        | `ns2` `nsa`                | ✔️      | ✔️    | `ns2`:all `nsa`:unencrypted |
