@@ -213,17 +213,7 @@
       <DependentUpon>PackRGSSOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="RPGMaker\RGSSAD.cs" />
-    <Compile Include="RPGMaker\RPGMaker.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RPGMaker.resx</DependentUpon>
-    </Compile>
     <Compile Include="Seraph\DAT.cs" />
-    <Compile Include="Seraph\Seraph.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Seraph.resx</DependentUpon>
-    </Compile>
     <Compile Include="Seraph\SeraphUtils.cs" />
     <Compile Include="Seraph\UnpackDATOptions.cs">
       <SubType>UserControl</SubType>
@@ -233,11 +223,6 @@
     </Compile>
     <Compile Include="Siglus\GameexeDAT.cs" />
     <Compile Include="Siglus\ScenePCK.cs" />
-    <Compile Include="Siglus\Siglus.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Siglus.resx</DependentUpon>
-    </Compile>
     <Compile Include="Siglus\SiglusUtils.cs" />
     <Compile Include="Siglus\UnpackPCKOptions.cs">
       <SubType>UserControl</SubType>
@@ -284,11 +269,6 @@
       <DependentUpon>UnpackYPFOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="Yuris\YPF.cs" />
-    <Compile Include="Yuris\Yuris.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Yuris.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GalArc\GalArc.csproj">
@@ -434,29 +414,12 @@
     <EmbeddedResource Include="RPGMaker\PackRGSSOptions.zh-Hans.resx">
       <DependentUpon>PackRGSSOptions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RPGMaker\RPGMaker.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>RPGMaker.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RPGMaker\RPGMaker.zh-Hans.resx" />
-    <EmbeddedResource Include="Seraph\Seraph.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Seraph.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Seraph\Seraph.zh-Hans.resx" />
     <EmbeddedResource Include="Seraph\UnpackDATOptions.resx">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Seraph\UnpackDATOptions.zh-Hans.resx">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Siglus\Siglus.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Siglus.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Siglus\Siglus.zh-Hans.resx">
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Siglus\UnpackPCKOptions.resx">
       <DependentUpon>UnpackPCKOptions.cs</DependentUpon>
@@ -499,11 +462,6 @@
     <EmbeddedResource Include="Yuris\UnpackYPFOptions.zh-Hans.resx">
       <DependentUpon>UnpackYPFOptions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Yuris\Yuris.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Yuris.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Yuris\Yuris.zh-Hans.resx" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

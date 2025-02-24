@@ -1,5 +1,6 @@
 using GalArc.Controls;
 using GalArc.Logs;
+using GalArc.Strings;
 using System;
 using System.IO;
 using System.Text;
@@ -87,7 +88,7 @@ namespace ArcFormats.RPGMaker
             BinaryReader br = new BinaryReader(fs);
             fs.Position = 8;
             uint seed = br.ReadUInt32();
-            Logger.Debug(string.Format(RPGMaker.logSeed, $"{seed:X8}"));
+            Logger.Debug(string.Format(LogStrings.Seed, $"{seed:X8}"));
             uint key = seed * 9 + 3;
             long fileCount = 0;
             bool isFirst = true;

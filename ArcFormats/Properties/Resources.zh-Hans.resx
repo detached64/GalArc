@@ -117,47 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="logTryDecScr" xml:space="preserve">
-    <value>尝试解密：{0}……</value>
-  </data>
-  <data name="logErrorDecScrFailed" xml:space="preserve">
-    <value>解密失败。</value>
-  </data>
-  <data name="logTryEncScr" xml:space="preserve">
-    <value>尝试加密：{0}……</value>
-  </data>
-  <data name="logErrorEncScrFailed" xml:space="preserve">
-    <value>加密失败。</value>
-  </data>
-  <data name="logTryDecompress" xml:space="preserve">
-    <value>尝试解压缩：{0}……</value>
-  </data>
-  <data name="logErrorDecompressFailed" xml:space="preserve">
-    <value>解压缩失败。</value>
-  </data>
-  <data name="logTryDecompressWithMethod" xml:space="preserve">
-    <value>尝试以{1}方式解压缩：{0}……</value>
-  </data>
-  <data name="logErrorContainsInvalid" xml:space="preserve">
-    <value>路径中有非法字符。在设置里切换编码或许能解决此问题。</value>
-  </data>
-  <data name="logErrorNotSupportedVersion" xml:space="preserve">
-    <value>{0} v{1}封包暂时不支持。</value>
-  </data>
-  <data name="logErrorReadIndexFailed" xml:space="preserve">
-    <value>读取索引失败。</value>
-  </data>
   <data name="combNoEncryption" xml:space="preserve">
     <value>没有加密</value>
   </data>
   <data name="combCustomScheme" xml:space="preserve">
     <value>自定义方案</value>
-  </data>
-  <data name="msgWrongScheme" xml:space="preserve">
-    <value>加密方案错误！</value>
-  </data>
-  <data name="msgNeedDec" xml:space="preserve">
-    <value>文件已加密。请选择合适的加密方案。</value>
   </data>
   <data name="combTryEveryScheme" xml:space="preserve">
     <value>尝试所有加密方案</value>

@@ -1,4 +1,3 @@
-using ArcFormats.Properties;
 using GalArc.Controls;
 using GalArc.Logs;
 using GalArc.Strings;
@@ -67,7 +66,7 @@ namespace ArcFormats.NeXAS
 
                 if (entry.UnpackedSize != entry.Size && method != Method.None && Enum.IsDefined(typeof(Method), method)) // compressed
                 {
-                    Logger.Debug(string.Format(Resources.logTryDecompressWithMethod, entry.Name, method.ToString()));
+                    Logger.Debug(string.Format(LogStrings.TryDecompressWithMethod, entry.Name, method.ToString()));
                     try
                     {
                         switch (method)
@@ -91,7 +90,7 @@ namespace ArcFormats.NeXAS
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(Resources.logErrorDecompressFailed, false);
+                        Logger.Error(LogStrings.ErrorDecompressFailed, false);
                         Logger.Debug(ex.Message);
                     }
                 }
@@ -120,7 +119,7 @@ namespace ArcFormats.NeXAS
                 }
                 catch
                 {
-                    throw new Exception(Resources.logErrorContainsInvalid);
+                    throw new Exception(LogStrings.ErrorContainsInvalid);
                 }
             }
         }

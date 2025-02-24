@@ -1,5 +1,3 @@
-using System;
-
 namespace ArcFormats.Cmvs
 {
     internal static class CmvsUtils

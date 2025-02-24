@@ -1,6 +1,6 @@
-using ArcFormats.Properties;
 using GalArc.Controls;
 using GalArc.Logs;
+using GalArc.Strings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -69,7 +69,7 @@ namespace ArcFormats.AdvHD
                     byte[] buffer = br.ReadBytes((int)index.Size);
                     if (UnpackARCOptions.DecryptScripts && IsScriptFile(Path.GetExtension(index.Path), "1"))
                     {
-                        Logger.Debug(string.Format(Resources.logTryDecScr, index.Name));
+                        Logger.Debug(string.Format(LogStrings.TryDecScr, index.Name));
                         DecryptScript(buffer);
                     }
                     File.WriteAllBytes(index.Path, buffer);
@@ -123,7 +123,7 @@ namespace ArcFormats.AdvHD
                     byte[] buffer = File.ReadAllBytes(file.FullName);
                     if (PackARCOptions.EncryptScripts && IsScriptFile(exts[i], "1"))
                     {
-                        Logger.Debug(string.Format(Resources.logTryEncScr, file.Name));
+                        Logger.Debug(string.Format(LogStrings.TryEncScr, file.Name));
                         EncryptScript(buffer);
                     }
                     bwdata.Write(buffer);
@@ -188,7 +188,7 @@ namespace ArcFormats.AdvHD
                 byte[] buffer = br1.ReadBytes((int)entry.Size);
                 if (UnpackARCOptions.DecryptScripts && IsScriptFile(Path.GetExtension(entry.Path), "2"))
                 {
-                    Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
+                    Logger.Debug(string.Format(LogStrings.TryDecScr, entry.Name));
                     DecryptScript(buffer);
                 }
                 File.WriteAllBytes(entry.Path, buffer);
@@ -249,7 +249,7 @@ namespace ArcFormats.AdvHD
                         byte[] buffer = File.ReadAllBytes(file.FullName);
                         if (PackARCOptions.EncryptScripts && IsScriptFile(file.Extension, "2"))
                         {
-                            Logger.Debug(string.Format(Resources.logTryEncScr, file.Name));
+                            Logger.Debug(string.Format(LogStrings.TryEncScr, file.Name));
                             EncryptScript(buffer);
                         }
                         bw.Write(buffer);

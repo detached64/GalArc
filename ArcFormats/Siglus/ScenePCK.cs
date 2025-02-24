@@ -1,7 +1,7 @@
-using ArcFormats.Properties;
 using GalArc.Controls;
 using GalArc.Database;
 using GalArc.Logs;
+using GalArc.Strings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -97,7 +97,7 @@ namespace ArcFormats.Siglus
                 entry.PackedLength = BitConverter.ToUInt32(entry.Data, 0);
                 if (entry.PackedLength != entry.Data.Length)
                 {
-                    Logger.Error(Resources.msgWrongScheme);
+                    Logger.Error(LogStrings.WrongScheme);
                 }
                 entry.UnpackedLength = BitConverter.ToUInt32(entry.Data, 4);
                 byte[] input = new byte[entry.PackedLength - 8];
@@ -108,7 +108,7 @@ namespace ArcFormats.Siglus
                 }
                 catch
                 {
-                    Logger.Error(Resources.msgWrongScheme);
+                    Logger.Error(LogStrings.WrongScheme);
                 }
             }
 
@@ -159,12 +159,12 @@ namespace ArcFormats.Siglus
                 }
                 if (IsRightKey(entry.Data, scheme.KnownKey, type))
                 {
-                    Logger.Info(string.Format(Siglus.logFound, BitConverter.ToString(scheme.KnownKey)));
-                    Logger.Info(string.Format(Siglus.logMatchedGame, FindKeyFromValue(scheme.KnownKey)));
+                    Logger.Info(string.Format(LogStrings.KeyFound, BitConverter.ToString(scheme.KnownKey)));
+                    Logger.Info(string.Format(LogStrings.MatchedGame, FindKeyFromValue(scheme.KnownKey)));
                     return scheme.KnownKey;
                 }
             }
-            Logger.Info(string.Format(Siglus.logNotFound));
+            Logger.Info(string.Format(LogStrings.KeyNotFound));
             return null;
         }
 

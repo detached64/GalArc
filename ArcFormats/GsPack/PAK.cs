@@ -1,6 +1,6 @@
-using ArcFormats.Properties;
 using GalArc.Controls;
 using GalArc.Logs;
+using GalArc.Strings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -123,12 +123,12 @@ namespace ArcFormats.GsPack
                 {
                     try
                     {
-                        Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name + ".scw"));
+                        Logger.Debug(string.Format(LogStrings.TryDecScr, entry.Name + ".scw"));
                         data = DecryptScript(data);
                     }
                     catch
                     {
-                        Logger.Error(Resources.logErrorDecScrFailed, false);
+                        Logger.Error(LogStrings.ErrorDecScrFailed, false);
                     }
                 }
                 File.WriteAllBytes(Path.Combine(folderPath, entry.Name + ext), data);

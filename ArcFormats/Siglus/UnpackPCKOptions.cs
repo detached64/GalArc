@@ -1,5 +1,6 @@
 using ArcFormats.Properties;
 using GalArc.Controls;
+using GalArc.Strings;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
@@ -47,12 +48,12 @@ namespace ArcFormats.Siglus
                     try
                     {
                         ScenePCK.SelectedScheme = new Tuple<string, byte[]>(this.combSchemes.Text, key);
-                        this.lbKey.Text = string.Format(Siglus.lbKey, BitConverter.ToString(key));
+                        this.lbKey.Text = string.Format(LogStrings.Key, BitConverter.ToString(key));
                     }
                     catch
                     {
                         ScenePCK.SelectedScheme = null;
-                        this.lbKey.Text = Siglus.lbKeyParseError;
+                        this.lbKey.Text = LogStrings.KeyParseError;
                     }
                     ScenePCK.TryEachKey = false;
                     break;

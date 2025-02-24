@@ -1,7 +1,7 @@
-using ArcFormats.Properties;
 using GalArc.Controls;
 using GalArc.Database;
 using GalArc.Logs;
+using GalArc.Strings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,7 +33,7 @@ namespace ArcFormats.NScripter
             {
                 if (string.IsNullOrEmpty(Key))
                 {
-                    Logger.Error(Resources.msgNeedDec);
+                    Logger.Error(LogStrings.NeedDec);
                     return;
                 }
                 Ns2Decryptor decryptor = new Ns2Decryptor(data, Encoding.ASCII.GetBytes(Key));
@@ -55,7 +55,7 @@ namespace ArcFormats.NScripter
             }
             catch (Exception)
             {
-                Logger.Error(Resources.msgWrongScheme);
+                Logger.Error(LogStrings.WrongScheme);
             }
             br.ReadByte(); //skip 'e'
 

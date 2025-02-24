@@ -1,6 +1,7 @@
 using GalArc.Controls;
 using GalArc.Database;
 using GalArc.Logs;
+using GalArc.Strings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -45,7 +46,7 @@ namespace ArcFormats.Seraph
                         bool isGiven = false;
                         if (UnpackDATOptions.UseBrutalForce)
                         {
-                            Logger.Debug(Seraph.logBrutalForcing);
+                            Logger.Debug(LogStrings.BrutalForcing);
                             AddIndex();
                             GuessIndexArchPac(br);
                         }
@@ -65,7 +66,7 @@ namespace ArcFormats.Seraph
                 {
                     using (BinaryReader br = new BinaryReader(fs))
                     {
-                        Logger.Info(string.Format(Seraph.logIndexOffset, "00000000"));
+                        Logger.Info(string.Format(LogStrings.IndexOffset, "00000000"));
                         UnpackScnPac(br, folderPath);
                     }
                 }
@@ -82,7 +83,7 @@ namespace ArcFormats.Seraph
             }
             else
             {
-                Logger.Error(Seraph.logInvalidArchiveType);
+                Logger.Error(LogStrings.InvalidArchiveType);
             }
         }
 
@@ -122,11 +123,11 @@ namespace ArcFormats.Seraph
             }
             if (isGiven)
             {
-                Logger.Error(Seraph.logSpecifiedIndexOffsetFailed);
+                Logger.Error(LogStrings.SpecifiedIndexOffsetFailed);
             }
             else
             {
-                Logger.Error(Seraph.logBrutalForceFailed);
+                Logger.Error(LogStrings.BrutalForceFailed);
             }
         }
 
@@ -175,7 +176,7 @@ namespace ArcFormats.Seraph
                 }
                 baseOffset = Groups[i].Entries[Groups[i].FileCount - 1].Offset + Groups[i].Entries[Groups[i].FileCount - 1].Size;
             }
-            Logger.Info(string.Format(Seraph.logIndexOffset, $"{indexOffset:X8}"));
+            Logger.Info(string.Format(LogStrings.IndexOffset, $"{indexOffset:X8}"));
             Logger.ResetBar();
             Logger.InitBar(fileCount);
             return true;

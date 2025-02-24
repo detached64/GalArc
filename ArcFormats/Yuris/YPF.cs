@@ -1,6 +1,6 @@
-using ArcFormats.Properties;
 using GalArc.Controls;
 using GalArc.Logs;
+using GalArc.Strings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -85,7 +85,7 @@ namespace ArcFormats.Yuris
                 Directory.CreateDirectory(Path.GetDirectoryName(entry.Path));
                 if (UnpackYPFOptions.DecryptScripts && Path.GetExtension(entry.Path) == ".ybn" && BitConverter.ToUInt32(entry.Data, 0) == 0x42545359)
                 {
-                    Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
+                    Logger.Debug(string.Format(LogStrings.TryDecScr, entry.Name));
                     entry.Data = TryDecryptScript(entry.Data);
                 }
                 File.WriteAllBytes(entry.Path, entry.Data);
@@ -213,7 +213,7 @@ namespace ArcFormats.Yuris
                 catch
                 {
                     isFirstGuessYst = true;
-                    Logger.Error(Resources.logErrorDecScrFailed, false);
+                    Logger.Error(LogStrings.ErrorDecScrFailed, false);
                     return script;
                 }
             }

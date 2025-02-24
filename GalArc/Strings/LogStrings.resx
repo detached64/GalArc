@@ -223,4 +223,73 @@
   <data name="ArcComprMethod" xml:space="preserve">
     <value>Compression method: {0}</value>
   </data>
+  <data name="Seed" xml:space="preserve">
+    <value>Seed: {0}</value>
+  </data>
+  <data name="BrutalForcing" xml:space="preserve">
+    <value>Brutal forcing……</value>
+  </data>
+  <data name="BrutalForceFailed" xml:space="preserve">
+    <value>Error: Index offset not found.</value>
+  </data>
+  <data name="IndexOffset" xml:space="preserve">
+    <value>Index offset: {0}</value>
+  </data>
+  <data name="InvalidArchiveType" xml:space="preserve">
+    <value>Error: Invalid archive type.</value>
+  </data>
+  <data name="SpecifiedIndexOffsetFailed" xml:space="preserve">
+    <value>Error: Invalid index offset.</value>
+  </data>
+  <data name="Key" xml:space="preserve">
+    <value>Key: {0}</value>
+  </data>
+  <data name="KeyFound" xml:space="preserve">
+    <value>Key found: {0}</value>
+  </data>
+  <data name="KeyNotFound" xml:space="preserve">
+    <value>Key not found.</value>
+  </data>
+  <data name="MatchedGame" xml:space="preserve">
+    <value>Matched game: {0}</value>
+  </data>
+  <data name="KeyParseError" xml:space="preserve">
+    <value>Failed to parse key.</value>
+  </data>
+  <data name="TryDecScr" xml:space="preserve">
+    <value>Try to decrypt: {0}……</value>
+  </data>
+  <data name="ErrorDecScrFailed" xml:space="preserve">
+    <value>Decryption failed.</value>
+  </data>
+  <data name="TryEncScr" xml:space="preserve">
+    <value>Try to encrypt: {0}……</value>
+  </data>
+  <data name="ErrorEncScrFailed" xml:space="preserve">
+    <value>Encryption failed.</value>
+  </data>
+  <data name="TryDecompress" xml:space="preserve">
+    <value>Try to decompress: {0}……</value>
+  </data>
+  <data name="ErrorDecompressFailed" xml:space="preserve">
+    <value>Decompression failed.</value>
+  </data>
+  <data name="TryDecompressWithMethod" xml:space="preserve">
+    <value>Try to decompress {0} with {1}……</value>
+  </data>
+  <data name="ErrorContainsInvalid" xml:space="preserve">
+    <value>Path contains invalid characters. Switching the encoding in the settings might work.</value>
+  </data>
+  <data name="ErrorNotSupportedVersion" xml:space="preserve">
+    <value>{0} v{1} archive temporarily not supported.</value>
+  </data>
+  <data name="ErrorReadIndexFailed" xml:space="preserve">
+    <value>Failed to read index.</value>
+  </data>
+  <data name="WrongScheme" xml:space="preserve">
+    <value>Wrong scheme!</value>
+  </data>
+  <data name="NeedDec" xml:space="preserve">
+    <value>The file has been encrypted. Please choose appropriate scheme.</value>
+  </data>
 </root>

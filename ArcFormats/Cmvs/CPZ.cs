@@ -1,7 +1,6 @@
-using ArcFormats.Properties;
 using GalArc.Controls;
 using GalArc.Logs;
-using System;
+using GalArc.Strings;
 using System.IO;
 using System.Text;
 using Utility;
@@ -195,7 +194,7 @@ namespace ArcFormats.Cmvs
                 case 6:
                 //UnpackV6(filePath, folderPath);
                 default:
-                    Logger.Error(Resources.logErrorNotSupportedVersion);
+                    Logger.Error(LogStrings.ErrorNotSupportedVersion);
                     break;
             }
         }

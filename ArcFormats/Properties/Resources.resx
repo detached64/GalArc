@@ -97,47 +97,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="logTryDecScr" xml:space="preserve">
-    <value>Try to decrypt: {0}……</value>
-  </data>
-  <data name="logErrorDecScrFailed" xml:space="preserve">
-    <value>Decryption failed.</value>
-  </data>
-  <data name="logTryEncScr" xml:space="preserve">
-    <value>Try to encrypt: {0}……</value>
-  </data>
-  <data name="logErrorEncScrFailed" xml:space="preserve">
-    <value>Encryption failed.</value>
-  </data>
-  <data name="logTryDecompress" xml:space="preserve">
-    <value>Try to decompress: {0}……</value>
-  </data>
-  <data name="logErrorDecompressFailed" xml:space="preserve">
-    <value>Decompression failed.</value>
-  </data>
-  <data name="logTryDecompressWithMethod" xml:space="preserve">
-    <value>Try to decompress {0} with {1}……</value>
-  </data>
-  <data name="logErrorContainsInvalid" xml:space="preserve">
-    <value>Path contains invalid characters. Switching the encoding in the settings might work.</value>
-  </data>
-  <data name="logErrorNotSupportedVersion" xml:space="preserve">
-    <value>{0} v{1} archive temporarily not supported.</value>
-  </data>
-  <data name="logErrorReadIndexFailed" xml:space="preserve">
-    <value>Failed to read index.</value>
-  </data>
   <data name="combNoEncryption" xml:space="preserve">
     <value>No encryption</value>
   </data>
   <data name="combCustomScheme" xml:space="preserve">
     <value>Custom scheme</value>
-  </data>
-  <data name="msgWrongScheme" xml:space="preserve">
-    <value>Wrong scheme!</value>
-  </data>
-  <data name="msgNeedDec" xml:space="preserve">
-    <value>The file has been encrypted. Please choose appropriate scheme.</value>
   </data>
   <data name="combTryEveryScheme" xml:space="preserve">
     <value>Try every encryption scheme</value>

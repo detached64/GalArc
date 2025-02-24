@@ -1,6 +1,5 @@
-using ArcFormats.Properties;
 using GalArc.Logs;
-using System;
+using GalArc.Strings;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -54,7 +53,7 @@ namespace ArcFormats.InnocentGrey
                 byte[] data = br.ReadBytes((int)entry.UnpackedSize);
                 if (UnpackIGAOptions.DecryptScripts && Path.GetExtension(entry.Name) == ".s")
                 {
-                    Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
+                    Logger.Debug(string.Format(LogStrings.TryDecScr, entry.Name));
                     for (int i = 0; i < data.Length; i++)
                     {
                         data[i] ^= 0xFF;
@@ -97,7 +96,7 @@ namespace ArcFormats.InnocentGrey
                 byte[] data = File.ReadAllBytes(file.FullName);
                 if (UnpackIGAOptions.DecryptScripts && file.Extension == ".s")
                 {
-                    Logger.Debug(string.Format(Resources.logTryEncScr, file.Name));
+                    Logger.Debug(string.Format(LogStrings.TryEncScr, file.Name));
                     for (int i = 0; i < data.Length; i++)
                     {
                         data[i] ^= 0xFF;

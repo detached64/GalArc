@@ -1,7 +1,6 @@
-using ArcFormats.Properties;
 using GalArc.Controls;
 using GalArc.Logs;
-using System;
+using GalArc.Strings;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -99,7 +98,7 @@ namespace ArcFormats.Majiro
                     }
                     if (UnpackARCOptions.DecryptScripts && Path.GetExtension(entries[i].Name) == ".mjo")
                     {
-                        Logger.Debug(string.Format(Resources.logTryDecScr, entries[i].Name));
+                        Logger.Debug(string.Format(LogStrings.TryDecScr, entries[i].Name));
                         DecryptScript(data);
                     }
                     File.WriteAllBytes(Path.Combine(folderPath, entries[i].Name), data);
@@ -165,7 +164,7 @@ namespace ArcFormats.Majiro
                 byte[] data = File.ReadAllBytes(entry.Path);
                 if (PackARCOptions.EncryptScripts && Path.GetExtension(entry.Name) == ".mjo")
                 {
-                    Logger.Debug(string.Format(Resources.logTryEncScr, entry.Name));
+                    Logger.Debug(string.Format(LogStrings.TryEncScr, entry.Name));
                     EncryptScript(data);
                 }
                 bw.Write(data);

@@ -1,7 +1,6 @@
-using ArcFormats.Properties;
 using GalArc.Controls;
 using GalArc.Logs;
-using System;
+using GalArc.Strings;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -78,7 +77,7 @@ namespace ArcFormats.InnocentGrey
                 int key = UnpackIGAOptions.DecryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
                 if (key != 0)
                 {
-                    Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
+                    Logger.Debug(string.Format(LogStrings.TryDecScr, entry.Name));
                 }
                 for (uint j = 0; j < entry.Size; j++)
                 {
@@ -152,7 +151,7 @@ namespace ArcFormats.InnocentGrey
                 int key = PackIGAOptions.EncryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
                 if (key != 0)
                 {
-                    Logger.Debug(string.Format(Resources.logTryEncScr, entry.Name));
+                    Logger.Debug(string.Format(LogStrings.TryEncScr, entry.Name));
                 }
                 for (uint j = 0; j < entry.Size; j++)
                 {

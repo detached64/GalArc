@@ -1,6 +1,6 @@
-using ArcFormats.Properties;
 using GalArc.Controls;
 using GalArc.Logs;
+using GalArc.Strings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,7 +46,7 @@ namespace ArcFormats.Artemis
             header.Version = br.ReadChar().ToString();
             if (!"8/6/2".Split('/').Contains(header.Version))
             {
-                Logger.Error(string.Format(Resources.logErrorNotSupportedVersion, "pfs", header.Version));
+                Logger.Error(string.Format(LogStrings.ErrorNotSupportedVersion, "pfs", header.Version));
             }
             Logger.ShowVersion("pfs", header.Version);
             // read header
@@ -76,7 +76,7 @@ namespace ArcFormats.Artemis
                 string name = ArcSettings.Encoding.GetString(br.ReadBytes(entry.RelativePathLen));
                 if (name.ContainsInvalidChars())
                 {
-                    throw new Exception(Resources.logErrorContainsInvalid);
+                    throw new Exception(LogStrings.ErrorContainsInvalid);
                 }
                 entry.Path = Path.Combine(folderPath, name);
 

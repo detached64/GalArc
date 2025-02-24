@@ -1,7 +1,6 @@
-using ArcFormats.Properties;
 using GalArc.Controls;
 using GalArc.Logs;
-using System;
+using GalArc.Strings;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -41,7 +40,7 @@ namespace ArcFormats.PJADV
                     Logger.ShowVersion("dat", 2);
                     break;
                 default:
-                    Logger.Error(string.Format(Resources.logErrorNotSupportedVersion, "dat", version));
+                    Logger.Error(string.Format(LogStrings.ErrorNotSupportedVersion, "dat", version));
                     return;
             }
 
@@ -69,7 +68,7 @@ namespace ArcFormats.PJADV
                 byte[] buffer = br.ReadBytes((int)entry.Size);
                 if (UnpackDATOptions.DecryptScripts && entry.Name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(ScriptMagic))
                 {
-                    Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
+                    Logger.Debug(string.Format(LogStrings.TryDecScr, entry.Name));
                     DecryptScript(buffer);
                 }
                 File.WriteAllBytes(entry.Path, buffer);
@@ -119,7 +118,7 @@ namespace ArcFormats.PJADV
                 byte[] buffer = File.ReadAllBytes(entry.Path);
                 if (PackDATOptions.EncryptScripts && entry.Name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(new byte[] { 0x95, 0x6b, 0x3c, 0x9d, 0x63 }))
                 {
-                    Logger.Debug(string.Format(Resources.logTryEncScr, entry.Name));
+                    Logger.Debug(string.Format(LogStrings.TryEncScr, entry.Name));
                     DecryptScript(buffer);
                 }
                 bw.Write(buffer);

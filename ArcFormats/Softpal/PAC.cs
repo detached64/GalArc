@@ -1,6 +1,6 @@
-using ArcFormats.Properties;
 using GalArc.Controls;
 using GalArc.Logs;
+using GalArc.Strings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -62,12 +62,12 @@ namespace ArcFormats.Softpal
                 {
                     try
                     {
-                        Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
+                        Logger.Debug(string.Format(LogStrings.TryDecScr, entry.Name));
                         DecryptScript(data);
                     }
                     catch
                     {
-                        Logger.Error(Resources.logErrorDecScrFailed, false);
+                        Logger.Error(LogStrings.ErrorDecScrFailed, false);
                     }
                 }
                 File.WriteAllBytes(Path.Combine(folderPath, entry.Name), data);
@@ -103,12 +103,12 @@ namespace ArcFormats.Softpal
                 {
                     try
                     {
-                        Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
+                        Logger.Debug(string.Format(LogStrings.TryDecScr, entry.Name));
                         DecryptScript(fileData);
                     }
                     catch
                     {
-                        Logger.Error(Resources.logErrorDecScrFailed, false);
+                        Logger.Error(LogStrings.ErrorDecScrFailed, false);
                     }
                 }
 
@@ -207,12 +207,12 @@ namespace ArcFormats.Softpal
                 {
                     try
                     {
-                        Logger.Debug(string.Format(Resources.logTryEncScr, Path.GetFileName(str)));
+                        Logger.Debug(string.Format(LogStrings.TryEncScr, Path.GetFileName(str)));
                         EncryptScript(buffer);
                     }
                     catch
                     {
-                        Logger.Error(Resources.logErrorEncScrFailed, false);
+                        Logger.Error(LogStrings.ErrorEncScrFailed, false);
                     }
                 }
                 bw.Write(buffer);
@@ -267,12 +267,12 @@ namespace ArcFormats.Softpal
                 {
                     try
                     {
-                        Logger.Debug(string.Format(Resources.logTryEncScr, Path.GetFileName(str)));
+                        Logger.Debug(string.Format(LogStrings.TryEncScr, Path.GetFileName(str)));
                         EncryptScript(buffer);
                     }
                     catch
                     {
-                        Logger.Error(Resources.logErrorEncScrFailed, false);
+                        Logger.Error(LogStrings.ErrorEncScrFailed, false);
                     }
                 }
                 bw.Write(buffer);
