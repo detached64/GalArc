@@ -23,8 +23,6 @@
 // IN THE SOFTWARE.
 //
 
-using System;
-
 namespace Utility
 {
     public static class BigEndian
