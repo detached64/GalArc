@@ -13,11 +13,8 @@ namespace ArcFormats.Majiro
 {
     public class ARC : ArchiveFormat
     {
-        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackARCOptions());
-        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
-
-        private static readonly Lazy<OptionsTemplate> _lazyPackOptions = new Lazy<OptionsTemplate>(() => new PackARCOptions());
-        public static OptionsTemplate PackExtraOptions => _lazyPackOptions.Value;
+        public override OptionsTemplate UnpackExtraOptions => UnpackARCOptions.Instance;
+        public override OptionsTemplate PackExtraOptions => PackARCOptions.Instance;
 
         private string Magic = "MajiroArcV{0}.000\x00";
         private string MagicPattern = @"^MajiroArcV(\d)\.000\x00$";

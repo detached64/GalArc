@@ -11,8 +11,7 @@ namespace ArcFormats.Ai6Win
 {
     public class ARC : ArchiveFormat
     {
-        private static readonly Lazy<OptionsTemplate> _lazyPacKOptions = new Lazy<OptionsTemplate>(() => new PackARCOptions("1/2/3"));
-        public static OptionsTemplate PackExtraOptions => _lazyPacKOptions.Value;
+        public override OptionsTemplate PackExtraOptions => PackARCOptions.Instance;
 
         private class ArcEntry : PackedEntry
         {
@@ -243,7 +242,7 @@ namespace ArcFormats.Ai6Win
                 bw.Write(nameBuffer);
                 uint unpackedSize = (uint)file.Length;
                 byte[] data = File.ReadAllBytes(file.FullName);
-                if (PackARCOptions.toCompressContents)
+                if (PackARCOptions.CompressContents)
                 {
                     data = LzssHelper.Compress(data);
                 }
@@ -285,7 +284,7 @@ namespace ArcFormats.Ai6Win
                 bw.Write(nameBuf);
                 uint unpackedSize = (uint)file.Length;
                 byte[] data = File.ReadAllBytes(file.FullName);
-                if (PackARCOptions.toCompressContents)
+                if (PackARCOptions.CompressContents)
                 {
                     data = LzssHelper.Compress(data);
                 }

@@ -5,14 +5,18 @@ namespace ArcFormats.Kirikiri
 {
     public partial class PackXP3Options : OptionsTemplate
     {
+        public static PackXP3Options Instance { get; } = new PackXP3Options();
+
         internal static bool CompressIndex = true;
 
         internal static bool CompressContents = true;
 
-        public PackXP3Options(string versions)
+        private readonly string Versions = "1/2";
+
+        public PackXP3Options()
         {
             InitializeComponent();
-            this.combVersion.Items.AddRange(versions.Split('/'));
+            this.combVersion.Items.AddRange(Versions.Split('/'));
             if (this.combVersion.Items.Count > 0)
             {
                 this.combVersion.SelectedIndex = 0;

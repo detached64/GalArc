@@ -5,7 +5,9 @@ namespace ArcFormats.InnocentGrey
 {
     public partial class UnpackIGAOptions : OptionsTemplate
     {
-        internal static bool toDecryptScripts = true;
+        public static UnpackIGAOptions Instance { get; } = new UnpackIGAOptions();
+
+        internal static bool DecryptScripts = true;
 
         public UnpackIGAOptions()
         {
@@ -14,7 +16,7 @@ namespace ArcFormats.InnocentGrey
 
         private void chkbxDecScr_CheckedChanged(object sender, EventArgs e)
         {
-            toDecryptScripts = this.chkbxDecScr.Checked;
+            DecryptScripts = this.chkbxDecScr.Checked;
         }
     }
 }

@@ -9,8 +9,7 @@ namespace ArcFormats.Triangle
 {
     public class CGF : ArchiveFormat
     {
-        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new VersionOnly("1"));
-        public static OptionsTemplate PackExtraOptions => _lazyUnpackOptions.Value;
+        public override OptionsTemplate PackExtraOptions => PackCGFOptions.Instance;
 
         public override void Unpack(string filePath, string folderPath)
         {

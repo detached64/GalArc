@@ -7,6 +7,8 @@ namespace ArcFormats.NitroPlus
 {
     public partial class PackPAKOptions : OptionsTemplate
     {
+        public static PackPAKOptions Instance { get; } = new PackPAKOptions();
+
         internal static string OriginalFilePath = string.Empty;
 
         public PackPAKOptions()

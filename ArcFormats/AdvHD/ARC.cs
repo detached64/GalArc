@@ -13,11 +13,8 @@ namespace ArcFormats.AdvHD
 {
     public class ARC : ArchiveFormat
     {
-        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackARCOptions());
-        private static readonly Lazy<OptionsTemplate> _lazyPackOptions = new Lazy<OptionsTemplate>(() => new PackARCOptions());
-
-        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
-        public static OptionsTemplate PackExtraOptions => _lazyPackOptions.Value;
+        public override OptionsTemplate UnpackExtraOptions => UnpackARCOptions.Instance;
+        public override OptionsTemplate PackExtraOptions => PackARCOptions.Instance;
 
         private readonly string[] EncryptedFileExtV1 = { "wsc", "scr" };
 

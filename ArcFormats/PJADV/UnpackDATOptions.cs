@@ -5,6 +5,8 @@ namespace ArcFormats.PJADV
 {
     public partial class UnpackDATOptions : OptionsTemplate
     {
+        public static UnpackDATOptions Instance { get; } = new UnpackDATOptions();
+
         internal static bool DecryptScripts = true;
 
         public UnpackDATOptions()

@@ -5,7 +5,9 @@ namespace ArcFormats.InnocentGrey
 {
     public partial class PackIGAOptions : OptionsTemplate
     {
-        internal static bool toEncryptScripts = true;
+        public static PackIGAOptions Instance { get; } = new PackIGAOptions();
+
+        internal static bool EncryptScripts = true;
 
         public PackIGAOptions()
         {
@@ -14,7 +16,7 @@ namespace ArcFormats.InnocentGrey
 
         private void chkbxEncScr_CheckedChanged(object sender, EventArgs e)
         {
-            toEncryptScripts = this.chkbxEncScr.Checked;
+            EncryptScripts = this.chkbxEncScr.Checked;
         }
     }
 }

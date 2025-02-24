@@ -12,8 +12,7 @@ namespace ArcFormats.Siglus
 {
     public class ScenePCK : ArchiveFormat
     {
-        protected static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackPCKOptions());
-        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
+        public override OptionsTemplate UnpackExtraOptions => UnpackPCKOptions.Instance;
 
         private class ScenePckHeader
         {

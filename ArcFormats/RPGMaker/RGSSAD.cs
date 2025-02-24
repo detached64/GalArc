@@ -8,8 +8,7 @@ namespace ArcFormats.RPGMaker
 {
     public class RGSSAD : ArchiveFormat
     {
-        private static readonly Lazy<OptionsTemplate> _lazyPackOptions = new Lazy<OptionsTemplate>(() => new PackRGSSOptions("1/3"));
-        public static OptionsTemplate PackExtraOptions => _lazyPackOptions.Value;
+        public override OptionsTemplate PackExtraOptions => PackRGSSOptions.Instance;
 
         public override void Unpack(string filePath, string folderPath)
         {
@@ -249,11 +248,9 @@ namespace ArcFormats.RPGMaker
 
     public class RGSS2A : RGSSAD
     {
-        public static new OptionsTemplate PackExtraOptions = RGSSAD.PackExtraOptions;
     }
 
     public class RGSS3A : RGSSAD
     {
-        public static new OptionsTemplate PackExtraOptions = RGSSAD.PackExtraOptions;
     }
 }

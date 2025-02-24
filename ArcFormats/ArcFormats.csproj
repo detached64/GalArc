@@ -82,11 +82,29 @@
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="ArchiveResource.cs" />
+    <Compile Include="Artemis\PackPFSOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Artemis\PackPFSOptions.Designer.cs">
+      <DependentUpon>PackPFSOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Artemis\PFS.cs" />
     <Compile Include="BiShop\BSA.cs" />
+    <Compile Include="BiShop\PackBSAOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BiShop\PackBSAOptions.Designer.cs">
+      <DependentUpon>PackBSAOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cmvs\CmvsMD5.cs" />
     <Compile Include="Cmvs\CPZ.cs" />
     <Compile Include="Cmvs\CmvsUtils.cs" />
+    <Compile Include="Cmvs\PackCPZOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Cmvs\PackCPZOptions.Designer.cs">
+      <DependentUpon>PackCPZOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="EmonEngine\EME.cs" />
     <Compile Include="EmonEngine\EmonUtils.cs" />
     <Compile Include="EntisGLS\NOA.cs" />
@@ -242,9 +260,21 @@
     </Compile>
     <Compile Include="Sogna\DAT.cs" />
     <Compile Include="SystemNNN\GPK.cs" />
+    <Compile Include="SystemNNN\PackGPKOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SystemNNN\PackGPKOptions.Designer.cs">
+      <DependentUpon>PackGPKOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="SystemNNN\VPK.cs" />
     <Compile Include="Triangle\CG.cs" />
     <Compile Include="Triangle\CGF.cs" />
+    <Compile Include="Triangle\PackCGFOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Triangle\PackCGFOptions.Designer.cs">
+      <DependentUpon>PackCGFOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Triangle\SUD.cs" />
     <Compile Include="Valkyria\DAT.cs" />
     <Compile Include="Yuris\UnpackYPFOptions.cs">
@@ -298,6 +328,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AnimeGameSystem\UnpackDATOptions.zh-Hans.resx">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Artemis\PackPFSOptions.resx">
+      <DependentUpon>PackPFSOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Artemis\PackPFSOptions.zh-Hans.resx">
+      <DependentUpon>PackPFSOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BiShop\PackBSAOptions.resx">
+      <DependentUpon>PackBSAOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BiShop\PackBSAOptions.zh-Hans.resx">
+      <DependentUpon>PackBSAOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cmvs\PackCPZOptions.resx">
+      <DependentUpon>PackCPZOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cmvs\PackCPZOptions.zh-Hans.resx">
+      <DependentUpon>PackCPZOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GsPack\UnpackPAKOptions.resx">
       <DependentUpon>UnpackPAKOptions.cs</DependentUpon>
@@ -431,6 +479,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Softpal\UnpackPACOptions.zh-Hans.resx">
       <DependentUpon>UnpackPACOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SystemNNN\PackGPKOptions.resx">
+      <DependentUpon>PackGPKOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SystemNNN\PackGPKOptions.zh-Hans.resx">
+      <DependentUpon>PackGPKOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Triangle\PackCGFOptions.resx">
+      <DependentUpon>PackCGFOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Triangle\PackCGFOptions.zh-Hans.resx">
+      <DependentUpon>PackCGFOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Yuris\UnpackYPFOptions.resx">
       <DependentUpon>UnpackYPFOptions.cs</DependentUpon>

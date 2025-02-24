@@ -5,7 +5,9 @@ namespace ArcFormats.GsPack
 {
     public partial class UnpackPAKOptions : OptionsTemplate
     {
-        internal static bool toDecryptScripts = true;
+        public static UnpackPAKOptions Instance { get; } = new UnpackPAKOptions();
+
+        internal static bool DecryptScripts = true;
 
         public UnpackPAKOptions()
         {
@@ -14,7 +16,7 @@ namespace ArcFormats.GsPack
 
         private void chkbxDecScr_CheckedChanged(object sender, EventArgs e)
         {
-            toDecryptScripts = this.chkbxDecScr.Checked;
+            DecryptScripts = this.chkbxDecScr.Checked;
         }
     }
 }

@@ -5,16 +5,18 @@ namespace ArcFormats.Softpal
 {
     public partial class PackPACOptions : OptionsTemplate
     {
-        internal static bool toCompute = false;
+        public static PackPACOptions Instance { get; } = new PackPACOptions();
 
-        internal static bool toEncryptScripts = true;
+        internal static bool ComputeChecksum = false;
 
-        private string versions = "1/2";
+        internal static bool EncryptScripts = true;
+
+        private readonly string Versions = "1/2";
 
         public PackPACOptions()
         {
             InitializeComponent();
-            this.combVersion.Items.AddRange(versions.Split('/'));
+            this.combVersion.Items.AddRange(Versions.Split('/'));
             if (this.combVersion.Items.Count > 0)
             {
                 this.combVersion.SelectedIndex = 0;
@@ -23,7 +25,7 @@ namespace ArcFormats.Softpal
 
         private void chkbxCompute_CheckedChanged(object sender, EventArgs e)
         {
-            toCompute = this.chkbxCompute.Checked;
+            ComputeChecksum = this.chkbxCompute.Checked;
         }
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
@@ -34,7 +36,7 @@ namespace ArcFormats.Softpal
 
         private void chkbxEncScr_CheckedChanged(object sender, EventArgs e)
         {
-            toEncryptScripts = this.chkbxEncScr.Checked;
+            EncryptScripts = this.chkbxEncScr.Checked;
         }
     }
 }

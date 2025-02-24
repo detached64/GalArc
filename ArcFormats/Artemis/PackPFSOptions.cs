@@ -1,13 +1,18 @@
+using GalArc.Controls;
 using System;
 
-namespace GalArc.Controls
+namespace ArcFormats.Artemis
 {
-    public partial class VersionOnly : OptionsTemplate
+    public partial class PackPFSOptions : OptionsTemplate
     {
-        public VersionOnly(string versions)
+        public static PackPFSOptions Instance { get; } = new PackPFSOptions();
+
+        private readonly string Versions = "8/6/2";
+
+        public PackPFSOptions()
         {
             InitializeComponent();
-            this.combVersion.Items.AddRange(versions.Split('/'));
+            this.combVersion.Items.AddRange(Versions.Split('/'));
             if (this.combVersion.Items.Count > 0)
             {
                 this.combVersion.SelectedIndex = 0;

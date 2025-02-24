@@ -1,6 +1,6 @@
-namespace GalArc.Controls
+namespace ArcFormats.Triangle
 {
-    partial class VersionOnly
+    partial class PackCGFOptions
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -28,15 +28,10 @@ namespace GalArc.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VersionOnly));
-            this.lbVersion = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PackCGFOptions));
             this.combVersion = new System.Windows.Forms.ComboBox();
+            this.lbVersion = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // lbVersion
-            // 
-            resources.ApplyResources(this.lbVersion, "lbVersion");
-            this.lbVersion.Name = "lbVersion";
             // 
             // combVersion
             // 
@@ -46,13 +41,18 @@ namespace GalArc.Controls
             this.combVersion.Name = "combVersion";
             this.combVersion.SelectedIndexChanged += new System.EventHandler(this.combVersion_SelectedIndexChanged);
             // 
-            // VersionOnly
+            // lbVersion
+            // 
+            resources.ApplyResources(this.lbVersion, "lbVersion");
+            this.lbVersion.Name = "lbVersion";
+            // 
+            // PackPFSOptions
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.combVersion);
             this.Controls.Add(this.lbVersion);
-            this.Name = "VersionOnly";
+            this.Name = "PackPFSOptions";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -60,7 +60,7 @@ namespace GalArc.Controls
 
         #endregion
 
-        private System.Windows.Forms.Label lbVersion;
         private System.Windows.Forms.ComboBox combVersion;
+        private System.Windows.Forms.Label lbVersion;
     }
 }

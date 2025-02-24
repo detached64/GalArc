@@ -8,8 +8,6 @@ namespace ArcFormats.Siglus
 {
     public class GameexeDAT : ScenePCK
     {
-        public static new OptionsTemplate UnpackExtraOptions => ScenePCK.UnpackExtraOptions;
-
         private const string UnpackedFileName = "Gameexe.ini";
 
         public override void Unpack(string filePath, string folderPath)

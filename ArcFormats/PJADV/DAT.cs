@@ -13,10 +13,8 @@ namespace ArcFormats.PJADV
 {
     public class DAT : ArchiveFormat
     {
-        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackDATOptions());
-        private static readonly Lazy<OptionsTemplate> _lazyPackOptions = new Lazy<OptionsTemplate>(() => new PackDATOptions());
-        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
-        public static OptionsTemplate PackExtraOptions => _lazyPackOptions.Value;
+        public override OptionsTemplate UnpackExtraOptions => UnpackDATOptions.Instance;
+        public override OptionsTemplate PackExtraOptions => PackDATOptions.Instance;
 
         private const string Magic = "GAMEDAT PAC";
         private readonly byte[] ScriptMagic = { 0x95, 0x6b, 0x3c, 0x9d, 0x63 };
@@ -119,7 +117,7 @@ namespace ArcFormats.PJADV
             foreach (Entry entry in entries)
             {
                 byte[] buffer = File.ReadAllBytes(entry.Path);
-                if (PackDATOptions.toEncryptScripts && entry.Name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(new byte[] { 0x95, 0x6b, 0x3c, 0x9d, 0x63 }))
+                if (PackDATOptions.EncryptScripts && entry.Name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(new byte[] { 0x95, 0x6b, 0x3c, 0x9d, 0x63 }))
                 {
                     Logger.Debug(string.Format(Resources.logTryEncScr, entry.Name));
                     DecryptScript(buffer);
@@ -145,8 +143,5 @@ namespace ArcFormats.PJADV
 
     public class PAK : DAT
     {
-        public static new OptionsTemplate UnpackExtraOptions = DAT.UnpackExtraOptions;
-
-        public static new OptionsTemplate PackExtraOptions = DAT.PackExtraOptions;
     }
 }

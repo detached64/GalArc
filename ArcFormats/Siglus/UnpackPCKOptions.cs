@@ -8,6 +8,8 @@ namespace ArcFormats.Siglus
 {
     public partial class UnpackPCKOptions : OptionsTemplate
     {
+        public static UnpackPCKOptions Instance { get; } = new UnpackPCKOptions();
+
         public UnpackPCKOptions()
         {
             InitializeComponent();

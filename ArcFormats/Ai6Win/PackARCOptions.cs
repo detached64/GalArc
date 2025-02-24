@@ -5,12 +5,16 @@ namespace ArcFormats.Ai6Win
 {
     public partial class PackARCOptions : OptionsTemplate
     {
-        internal static bool toCompressContents = false;
+        public static PackARCOptions Instance { get; } = new PackARCOptions();
 
-        public PackARCOptions(string versions)
+        internal static bool CompressContents = false;
+
+        private readonly string Versions = "1/2";
+
+        public PackARCOptions()
         {
             InitializeComponent();
-            this.combVersion.Items.AddRange(versions.Split('/'));
+            this.combVersion.Items.AddRange(Versions.Split('/'));
             if (this.combVersion.Items.Count > 0)
             {
                 this.combVersion.SelectedIndex = 0;
@@ -19,7 +23,7 @@ namespace ArcFormats.Ai6Win
 
         private void chkbxCompress_CheckedChanged(object sender, EventArgs e)
         {
-            toCompressContents = this.chkbxCompress.Checked;
+            CompressContents = this.chkbxCompress.Checked;
         }
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)

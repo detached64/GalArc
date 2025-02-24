@@ -75,12 +75,6 @@
     <Compile Include="Controls\SettingsTemplate.Designer.cs">
       <DependentUpon>SettingsTemplate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\VersionOnly.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\VersionOnly.Designer.cs">
-      <DependentUpon>VersionOnly.cs</DependentUpon>
-    </Compile>
     <Compile Include="Database\DatabaseConfig.cs" />
     <Compile Include="Database\Deserializer.cs" />
     <Compile Include="Database\Schemes.cs" />
@@ -108,12 +102,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SettingsTemplate.resx">
       <DependentUpon>SettingsTemplate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\VersionOnly.resx">
-      <DependentUpon>VersionOnly.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\VersionOnly.zh-Hans.resx">
-      <DependentUpon>VersionOnly.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Strings\LogStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

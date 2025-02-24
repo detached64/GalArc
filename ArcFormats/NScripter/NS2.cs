@@ -13,8 +13,7 @@ namespace ArcFormats.NScripter
 {
     public class NS2 : ArchiveFormat
     {
-        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackNS2Options());
-        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
+        public override OptionsTemplate UnpackExtraOptions => UnpackNS2Options.Instance;
 
         internal static Ns2Scheme Scheme;
 

@@ -1,6 +1,5 @@
 using ArcFormats;
 using GalArc.Common;
-using GalArc.Controls;
 using GalArc.Database;
 using GalArc.GUI.Properties;
 using GalArc.Logs;
@@ -52,6 +51,7 @@ namespace GalArc.GUI
             this.Load += ImportSchemesAsync;
         }
 
+        #region SchemeImport
         private async void ImportSchemesAsync(object sender, EventArgs e)
         {
             this.pnlOperation.Enabled = false;
@@ -110,7 +110,9 @@ namespace GalArc.GUI
             Logger.Debug(string.Format(LogStrings.SchemeCount, Deserializer.SchemeCount));
             Logger.Debug(string.Format(LogStrings.ImportedSchemeCount, Deserializer.ImportedSchemeCount));
         }
+        #endregion
 
+        #region MainFormEvents
         private void MainWindow_Load(object sender, EventArgs e)
         {
             this.combLanguages.Items.AddRange(Languages.SupportedLanguages.Keys.ToArray());
@@ -122,6 +124,16 @@ namespace GalArc.GUI
             }
         }
 
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Logger.Instance.LogMessageEvent -= AppendLog;
+            Logger.Instance.StatusMessageEvent -= UpdateStatus;
+            Logger.Instance.ProgressEvent -= ProcessBar;
+            Logger.FlushLog();
+        }
+        #endregion
+
+        #region DragDropEvents
         private void txtInputPath_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data?.GetDataPresent(DataFormats.FileDrop) == true)
@@ -163,15 +175,9 @@ namespace GalArc.GUI
                 this.txtOutputPath.Text = files[0];
             }
         }
+        #endregion
 
-        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Logger.Instance.LogMessageEvent -= AppendLog;
-            Logger.Instance.StatusMessageEvent -= UpdateStatus;
-            Logger.Instance.ProgressEvent -= ProcessBar;
-            Logger.FlushLog();
-        }
-
+        #region ToolStripMenuEvents
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AboutBox aboutBox = new AboutBox();
@@ -190,6 +196,17 @@ namespace GalArc.GUI
                 Logger.Info(LogStrings.UpdateError);
                 return;
             }
+        }
+
+        private void reimportSchemesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReloadSchemesAsync(sender, e);
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsWindow settingsWindow = new SettingsWindow();
+            settingsWindow.ShowDialog();
         }
 
         private void combLanguages_SelectedIndexChanged(object sender, EventArgs e)
@@ -211,6 +228,80 @@ namespace GalArc.GUI
                 }
             }
         }
+
+        private void preferenceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsWindow settingsWindow = new SettingsWindow();
+            settingsWindow.ShowDialog();
+        }
+
+        private void clearPathsMenuStrip_Click(object sender, EventArgs e)
+        {
+            this.txtInputPath.Text = string.Empty;
+            this.txtOutputPath.Text = string.Empty;
+        }
+
+        private void matchPathsMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            SyncPath();
+            if (BaseSettings.Default.SaveControlState)
+            {
+                Settings.Default.ToMatchPath = this.matchPathsMenuItem.Checked;
+                Settings.Default.Save();
+            }
+        }
+        #endregion
+
+        #region LoggerEvents
+        private void AppendLog(object sender, string message)
+        {
+            if (this.txtLog.InvokeRequired)
+            {
+                this.txtLog.Invoke(new Action(() => AppendLog(sender, message)));
+                return;
+            }
+
+            this.txtLog.AppendText(message + Environment.NewLine);
+        }
+
+        private void UpdateStatus(object sender, string message)
+        {
+            var container = this.lbStatus.Owner;
+            if (container.InvokeRequired)
+            {
+                container.Invoke(new Action(() => UpdateStatus(sender, message)));
+                return;
+            }
+
+            this.lbStatus.Text = message;
+        }
+
+        private void ProcessBar(object sender, ProgressEventArgs e)
+        {
+            var container = this.pBar.Owner;
+            if (container.InvokeRequired)
+            {
+                container.Invoke(new Action(() => ProcessBar(sender, e)));
+                return;
+            }
+
+            switch (e.Action)
+            {
+                case ProgressAction.Progress:
+                    this.pBar.Increment(1);
+                    break;
+                case ProgressAction.Finish:
+                    this.pBar.Value = this.pBar.Maximum;
+                    break;
+                case ProgressAction.SetVal:
+                    this.pBar.Value = e.Value;
+                    break;
+                case ProgressAction.SetMax:
+                    this.pBar.Maximum = e.Max;
+                    break;
+            }
+        }
+        #endregion
 
         private void chkbxUnpack_CheckedChanged(object sender, EventArgs e)
         {
@@ -276,30 +367,40 @@ namespace GalArc.GUI
 
         private void GetExtraOptions()
         {
-            TreeNode node = null;
-            switch (Mode)
+            if (Mode == OperationMode.None)
             {
-                case OperationMode.Unpack:
-                    node = SelectedNodeUnpack;
-                    break;
-                case OperationMode.Pack:
-                    node = SelectedNodePack;
-                    break;
+                Logger.Error(LogStrings.ErrorNeedSelectOperation, false);
+                return;
             }
-            string fieldName = $"{Mode}ExtraOptions";
-            string[] infos = node.FullPath.Replace(".", string.Empty).Split('/');
-            Assembly assembly = Assembly.Load(nameof(ArcFormats));
-            Type type = assembly.GetType($"{nameof(ArcFormats)}.{infos[0]}.{infos[1]}");
-            this.SuspendLayout();
-            this.gbOptions.Controls.Clear();
-            if (type != null)
+            TreeNode node = null;
+            if (Mode == OperationMode.Unpack)
             {
-                PropertyInfo propertyInfo = type.GetProperty(fieldName);
-                UserControl userControl = propertyInfo != null ? propertyInfo.GetValue(null) as UserControl : Empty.Instance;
+                node = SelectedNodeUnpack;
+            }
+            else
+            {
+                node = SelectedNodePack;
+            }
+            string[] infos = node.FullPath.Replace(".", string.Empty).Split('/');
+            string fullPath = $"{nameof(ArcFormats)}.{infos[0]}.{infos[1]}";
+            ArchiveFormat format = ArcSettings.Formats.FirstOrDefault(x => x.GetType().FullName == fullPath);
+            if (format != null)
+            {
+                this.SuspendLayout();
+                this.gbOptions.Controls.Clear();
+                UserControl userControl;
+                if (Mode == OperationMode.Unpack)
+                {
+                    userControl = format.UnpackExtraOptions;
+                }
+                else
+                {
+                    userControl = format.PackExtraOptions;
+                }
                 this.gbOptions.Controls.Add(userControl);
                 userControl.Dock = DockStyle.Fill;
+                this.ResumeLayout();
             }
-            this.ResumeLayout();
         }
 
         private void btSelInput_Click(object sender, EventArgs e)
@@ -367,28 +468,6 @@ namespace GalArc.GUI
                     return folderBrowserDialog.SelectedPath;
                 }
                 return null;
-            }
-        }
-
-        private void preferenceToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SettingsWindow settingsWindow = new SettingsWindow();
-            settingsWindow.ShowDialog();
-        }
-
-        private void clearPathsMenuStrip_Click(object sender, EventArgs e)
-        {
-            this.txtInputPath.Text = string.Empty;
-            this.txtOutputPath.Text = string.Empty;
-        }
-
-        private void matchPathsMenuItem_CheckedChanged(object sender, EventArgs e)
-        {
-            SyncPath();
-            if (BaseSettings.Default.SaveControlState)
-            {
-                Settings.Default.ToMatchPath = this.matchPathsMenuItem.Checked;
-                Settings.Default.Save();
             }
         }
 
@@ -612,66 +691,6 @@ namespace GalArc.GUI
                 return OperationMode.Pack;
             }
             return OperationMode.None;
-        }
-
-        private void AppendLog(object sender, string message)
-        {
-            if (this.txtLog.InvokeRequired)
-            {
-                this.txtLog.Invoke(new Action(() => AppendLog(sender, message)));
-                return;
-            }
-
-            this.txtLog.AppendText(message + Environment.NewLine);
-        }
-
-        private void UpdateStatus(object sender, string message)
-        {
-            var container = this.lbStatus.Owner;
-            if (container.InvokeRequired)
-            {
-                container.Invoke(new Action(() => UpdateStatus(sender, message)));
-                return;
-            }
-
-            this.lbStatus.Text = message;
-        }
-
-        private void ProcessBar(object sender, ProgressEventArgs e)
-        {
-            var container = this.pBar.Owner;
-            if (container.InvokeRequired)
-            {
-                container.Invoke(new Action(() => ProcessBar(sender, e)));
-                return;
-            }
-
-            switch (e.Action)
-            {
-                case ProgressAction.Progress:
-                    this.pBar.Increment(1);
-                    break;
-                case ProgressAction.Finish:
-                    this.pBar.Value = this.pBar.Maximum;
-                    break;
-                case ProgressAction.SetVal:
-                    this.pBar.Value = e.Value;
-                    break;
-                case ProgressAction.SetMax:
-                    this.pBar.Maximum = e.Max;
-                    break;
-            }
-        }
-
-        private void reimportSchemesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ReloadSchemesAsync(sender, e);
-        }
-
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SettingsWindow settingsWindow = new SettingsWindow();
-            settingsWindow.ShowDialog();
         }
     }
 

@@ -12,8 +12,7 @@ namespace ArcFormats.Kirikiri
 {
     public class XP3 : ArchiveFormat
     {
-        private static readonly Lazy<OptionsTemplate> _lazyPackOptions = new Lazy<OptionsTemplate>(() => new PackXP3Options("1/2"));
-        public static OptionsTemplate PackExtraOptions => _lazyPackOptions.Value;
+        public override OptionsTemplate PackExtraOptions => PackXP3Options.Instance;
 
         private readonly byte[] Magic = Utils.HexStringToByteArray("5850330d0a200a1a8b6701");
 

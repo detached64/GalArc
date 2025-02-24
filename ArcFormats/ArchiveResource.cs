@@ -1,3 +1,4 @@
+using GalArc.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,10 @@ namespace ArcFormats
 {
     public abstract class ArchiveFormat
     {
+        public virtual OptionsTemplate UnpackExtraOptions => Empty.Instance;
+
+        public virtual OptionsTemplate PackExtraOptions => Empty.Instance;
+
         public abstract void Unpack(string filePath, string folderPath);
 
         public virtual void Pack(string folderPath, string filePath)

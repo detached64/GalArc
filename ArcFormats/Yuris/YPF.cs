@@ -12,8 +12,7 @@ namespace ArcFormats.Yuris
 {
     public class YPF : ArchiveFormat
     {
-        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackYPFOptions());
-        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
+        public override OptionsTemplate UnpackExtraOptions => UnpackYPFOptions.Instance;
 
         private class YpfEntry : PackedEntry
         {
@@ -84,7 +83,7 @@ namespace ArcFormats.Yuris
                     entry.Data = ZlibHelper.Decompress(entry.Data);
                 }
                 Directory.CreateDirectory(Path.GetDirectoryName(entry.Path));
-                if (UnpackYPFOptions.toDecryptScripts && Path.GetExtension(entry.Path) == ".ybn" && BitConverter.ToUInt32(entry.Data, 0) == 0x42545359)
+                if (UnpackYPFOptions.DecryptScripts && Path.GetExtension(entry.Path) == ".ybn" && BitConverter.ToUInt32(entry.Data, 0) == 0x42545359)
                 {
                     Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
                     entry.Data = TryDecryptScript(entry.Data);

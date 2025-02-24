@@ -12,8 +12,7 @@ namespace ArcFormats.AnimeGameSystem
 {
     public class DAT : ArchiveFormat
     {
-        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackDATOptions());
-        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
+        public override OptionsTemplate UnpackExtraOptions => UnpackDATOptions.Instance;
 
         internal static AGSScheme Scheme;
 

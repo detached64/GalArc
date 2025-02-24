@@ -13,8 +13,7 @@ namespace ArcFormats.NeXAS
 {
     public class PAC : ArchiveFormat
     {
-        protected static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new PackPACOptions());
-        public static OptionsTemplate PackExtraOptions => _lazyUnpackOptions.Value;
+        public override OptionsTemplate PackExtraOptions => PackPACOptions.Instance;
 
         internal enum Method
         {

@@ -5,6 +5,8 @@ namespace ArcFormats.AdvHD
 {
     public partial class PackARCOptions : OptionsTemplate
     {
+        public static PackARCOptions Instance { get; } = new PackARCOptions();
+
         internal static bool EncryptScripts = true;
 
         private readonly string Versions = "1/2";

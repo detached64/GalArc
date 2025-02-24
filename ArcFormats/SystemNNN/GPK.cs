@@ -9,8 +9,7 @@ namespace ArcFormats.SystemNNN
 {
     public class GPK : ArchiveFormat
     {
-        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new VersionOnly("1/2"));
-        public static OptionsTemplate PackExtraOptions => _lazyUnpackOptions.Value;
+        public override OptionsTemplate PackExtraOptions => PackGPKOptions.Instance;
 
         public override void Unpack(string filePath, string folderPath)
         {

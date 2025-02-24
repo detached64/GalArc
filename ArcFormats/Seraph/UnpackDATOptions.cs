@@ -7,6 +7,8 @@ namespace ArcFormats.Seraph
 {
     public partial class UnpackDATOptions : OptionsTemplate
     {
+        public static UnpackDATOptions Instance { get; } = new UnpackDATOptions();
+
         internal static string SpecifiedIndexOffsetString = "00000000";
 
         internal static bool UseSpecifiedIndexOffset = false;

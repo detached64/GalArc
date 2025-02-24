@@ -5,6 +5,8 @@ namespace ArcFormats.Majiro
 {
     public partial class UnpackARCOptions : OptionsTemplate
     {
+        public static UnpackARCOptions Instance { get; } = new UnpackARCOptions();
+
         internal static bool DecryptScripts = true;
 
         public UnpackARCOptions()

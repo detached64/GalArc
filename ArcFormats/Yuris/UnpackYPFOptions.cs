@@ -5,7 +5,10 @@ namespace ArcFormats.Yuris
 {
     public partial class UnpackYPFOptions : OptionsTemplate
     {
-        internal static bool toDecryptScripts = true;
+        public static UnpackYPFOptions Instance { get; } = new UnpackYPFOptions();
+
+        internal static bool DecryptScripts = true;
+
         public UnpackYPFOptions()
         {
             InitializeComponent();
@@ -13,7 +16,7 @@ namespace ArcFormats.Yuris
 
         private void chkbxDecScr_CheckedChanged(object sender, EventArgs e)
         {
-            toDecryptScripts = this.chkbxDecScr.Checked;
+            DecryptScripts = this.chkbxDecScr.Checked;
         }
     }
 }

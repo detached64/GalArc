@@ -1,5 +1,4 @@
 using ArcFormats.Properties;
-using GalArc.Controls;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
@@ -9,13 +8,9 @@ using Utility;
 
 namespace ArcFormats.InnocentGrey
 {
-    public class DAT : ArchiveFormat
+    public class DAT : IGA
     {
-        public static OptionsTemplate UnpackExtraOptions = IGA.UnpackExtraOptions;
-
-        public static OptionsTemplate PackExtraOptions = IGA.PackExtraOptions;
-
-        private readonly string Magic = "PACKDAT.";
+        private const string Magic = "PACKDAT.";
 
         private class DatEntry : PackedEntry
         {
@@ -57,7 +52,7 @@ namespace ArcFormats.InnocentGrey
             {
                 fs.Position = entry.Offset;
                 byte[] data = br.ReadBytes((int)entry.UnpackedSize);
-                if (UnpackIGAOptions.toDecryptScripts && Path.GetExtension(entry.Name) == ".s")
+                if (UnpackIGAOptions.DecryptScripts && Path.GetExtension(entry.Name) == ".s")
                 {
                     Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
                     for (int i = 0; i < data.Length; i++)
@@ -100,7 +95,7 @@ namespace ArcFormats.InnocentGrey
             foreach (FileInfo file in files)
             {
                 byte[] data = File.ReadAllBytes(file.FullName);
-                if (UnpackIGAOptions.toDecryptScripts && file.Extension == ".s")
+                if (UnpackIGAOptions.DecryptScripts && file.Extension == ".s")
                 {
                     Logger.Debug(string.Format(Resources.logTryEncScr, file.Name));
                     for (int i = 0; i < data.Length; i++)

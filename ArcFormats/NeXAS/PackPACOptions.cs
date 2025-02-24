@@ -5,7 +5,7 @@ namespace ArcFormats.NeXAS
 {
     public partial class PackPACOptions : OptionsTemplate
     {
-        private const string versions = "1/2";
+        public static PackPACOptions Instance { get; } = new PackPACOptions();
 
         internal static readonly string[] methods =
         {
@@ -20,10 +20,12 @@ namespace ArcFormats.NeXAS
 
         internal static int SelectedMethods;
 
+        private readonly string Versions = "1/2";
+
         public PackPACOptions()
         {
             InitializeComponent();
-            this.combVersion.Items.AddRange(versions.Split('/'));
+            this.combVersion.Items.AddRange(Versions.Split('/'));
             this.combVersion.SelectedIndex = 0;
             this.combMethods.Items.AddRange(methods);
             this.combMethods.SelectedIndex = 0;

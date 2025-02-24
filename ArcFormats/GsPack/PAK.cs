@@ -12,8 +12,7 @@ namespace ArcFormats.GsPack
 {
     public class PAK : ArchiveFormat
     {
-        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackPAKOptions());
-        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
+        public override OptionsTemplate UnpackExtraOptions => UnpackPAKOptions.Instance;
 
         private Dictionary<string, string> NameExtensionPairs => new Dictionary<string, string>
         {
@@ -120,7 +119,7 @@ namespace ArcFormats.GsPack
                 {
                     Decrypt(data, entry.Name);
                 }
-                if (UnpackPAKOptions.toDecryptScripts && ext == ".scw")
+                if (UnpackPAKOptions.DecryptScripts && ext == ".scw")
                 {
                     try
                     {

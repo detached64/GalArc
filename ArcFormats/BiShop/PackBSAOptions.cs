@@ -1,17 +1,15 @@
 using GalArc.Controls;
 using System;
 
-namespace ArcFormats.PJADV
+namespace ArcFormats.BiShop
 {
-    public partial class PackDATOptions : OptionsTemplate
+    public partial class PackBSAOptions : OptionsTemplate
     {
-        public static PackDATOptions Instance { get; } = new PackDATOptions();
-
-        internal static bool EncryptScripts = true;
+        public static PackBSAOptions Instance { get; } = new PackBSAOptions();
 
         private readonly string Versions = "1/2";
 
-        public PackDATOptions()
+        public PackBSAOptions()
         {
             InitializeComponent();
             this.combVersion.Items.AddRange(Versions.Split('/'));
@@ -24,11 +22,6 @@ namespace ArcFormats.PJADV
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
             Version = this.combVersion.Text;
-        }
-
-        private void chkbxEncScr_CheckedChanged(object sender, EventArgs e)
-        {
-            EncryptScripts = this.chkbxEncScr.Checked;
         }
     }
 }

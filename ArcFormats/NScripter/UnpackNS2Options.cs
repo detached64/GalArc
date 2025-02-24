@@ -8,6 +8,8 @@ namespace ArcFormats.NScripter
 {
     public partial class UnpackNS2Options : OptionsTemplate
     {
+        public static UnpackNS2Options Instance { get; } = new UnpackNS2Options();
+
         public UnpackNS2Options()
         {
             InitializeComponent();

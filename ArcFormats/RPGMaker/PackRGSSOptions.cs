@@ -7,13 +7,17 @@ namespace ArcFormats.RPGMaker
 {
     public partial class PackRGSSOptions : OptionsTemplate
     {
+        public static PackRGSSOptions Instance { get; } = new PackRGSSOptions();
+
         internal static string inputSeedString = "00000000";
 
-        public PackRGSSOptions(string versions)
+        private readonly string Versions = "1/3";
+
+        public PackRGSSOptions()
         {
             InitializeComponent();
             this.txtSeed.Text = inputSeedString;
-            this.combVersion.Items.AddRange(versions.Split('/'));
+            this.combVersion.Items.AddRange(Versions.Split('/'));
             if (this.combVersion.Items.Count > 0)
             {
                 this.combVersion.SelectedIndex = 0;

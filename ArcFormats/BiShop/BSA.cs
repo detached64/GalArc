@@ -12,8 +12,7 @@ namespace ArcFormats.BiShop
 {
     public class BSA : ArchiveFormat
     {
-        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new VersionOnly("1/2"));
-        public static OptionsTemplate PackExtraOptions => _lazyUnpackOptions.Value;
+        public override OptionsTemplate PackExtraOptions => PackBSAOptions.Instance;
 
         private byte[] Magic = Utils.HexStringToByteArray("4253417263000000");
 

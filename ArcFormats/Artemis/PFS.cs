@@ -14,8 +14,7 @@ namespace ArcFormats.Artemis
 {
     public class PFS : ArchiveFormat
     {
-        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new VersionOnly("8/6/2"));
-        public static OptionsTemplate PackExtraOptions => _lazyUnpackOptions.Value;
+        public override OptionsTemplate PackExtraOptions => PackPFSOptions.Instance;
 
         private class Header
         {

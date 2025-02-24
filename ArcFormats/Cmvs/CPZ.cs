@@ -11,8 +11,7 @@ namespace ArcFormats.Cmvs
 {
     public class CPZ : ArchiveFormat
     {
-        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new VersionOnly("1"));
-        public static OptionsTemplate PackExtraOptions => _lazyUnpackOptions.Value;
+        public override OptionsTemplate PackExtraOptions => PackCPZOptions.Instance;
 
         private byte[] KeyV1 =
         {

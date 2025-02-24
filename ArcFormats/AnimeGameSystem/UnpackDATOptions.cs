@@ -7,6 +7,8 @@ namespace ArcFormats.AnimeGameSystem
 {
     public partial class UnpackDATOptions : OptionsTemplate
     {
+        public static UnpackDATOptions Instance { get; } = new UnpackDATOptions();
+
         public UnpackDATOptions()
         {
             InitializeComponent();

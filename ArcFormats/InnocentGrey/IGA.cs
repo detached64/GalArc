@@ -10,19 +10,15 @@ namespace ArcFormats.InnocentGrey
 {
     public class IGA : ArchiveFormat
     {
-        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackIGAOptions());
-        private static readonly Lazy<OptionsTemplate> _lazyPackOptions = new Lazy<OptionsTemplate>(() => new PackIGAOptions());
-        public static OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
-        public static OptionsTemplate PackExtraOptions => _lazyPackOptions.Value;
+        public override OptionsTemplate UnpackExtraOptions => UnpackIGAOptions.Instance;
+        public override OptionsTemplate PackExtraOptions => PackIGAOptions.Instance;
 
-        private readonly string Magic = "IGA0";
+        private const string Magic = "IGA0";
 
-        private class InnoIgaEntry
+        private class InnoIgaEntry : Entry
         {
             public uint NameOffset { get; set; }
             public uint DataOffset { get; set; }
-            public uint Size { get; set; }
-            public string Name { get; set; }
             public uint NameLen { get; set; }
         }
 
@@ -79,7 +75,7 @@ namespace ArcFormats.InnocentGrey
                 fs.Position = entry.DataOffset;
                 byte[] buffer = new byte[entry.Size];
                 br.Read(buffer, 0, (int)entry.Size);
-                int key = UnpackIGAOptions.toDecryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
+                int key = UnpackIGAOptions.DecryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
                 if (key != 0)
                 {
                     Logger.Debug(string.Format(Resources.logTryDecScr, entry.Name));
@@ -153,7 +149,7 @@ namespace ArcFormats.InnocentGrey
             foreach (var entry in l)
             {
                 byte[] buffer = File.ReadAllBytes(Path.Combine(folderPath, entry.Name));
-                int key = PackIGAOptions.toEncryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
+                int key = PackIGAOptions.EncryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
                 if (key != 0)
                 {
                     Logger.Debug(string.Format(Resources.logTryEncScr, entry.Name));

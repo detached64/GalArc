@@ -5,7 +5,9 @@ namespace ArcFormats.Softpal
 {
     public partial class UnpackPACOptions : OptionsTemplate
     {
-        internal static bool toDecryptScripts = true;
+        public static UnpackPACOptions Instance { get; } = new UnpackPACOptions();
+
+        internal static bool DecryptScripts = true;
 
         public UnpackPACOptions()
         {
@@ -14,7 +16,7 @@ namespace ArcFormats.Softpal
 
         private void chkbxDecScr_CheckedChanged(object sender, EventArgs e)
         {
-            toDecryptScripts = this.chkbxDecScr.Checked;
+            DecryptScripts = this.chkbxDecScr.Checked;
         }
     }
 }
