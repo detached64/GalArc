@@ -1,15 +1,12 @@
 using GalArc.Controls;
-using GalArc.GUI.Properties;
+using GalArc.Settings;
 using System;
 
 namespace GalArc.GUI
 {
     public partial class GeneralSettings : SettingsTemplate
     {
-        private static readonly Lazy<GeneralSettings> lazyInstance =
-                new Lazy<GeneralSettings>(() => new GeneralSettings());
-
-        public static GeneralSettings Instance => lazyInstance.Value;
+        public static GeneralSettings Instance { get; } = new GeneralSettings();
 
         private GeneralSettings()
         {
@@ -18,22 +15,16 @@ namespace GalArc.GUI
 
         private void GeneralSettings_Load(object sender, EventArgs e)
         {
-            this.chkbxAutoSave.Checked = BaseSettings.Default.SaveControlState;
-            this.chkbxTopMost.Checked = Settings.Default.IsTopMost;
+            this.chkbxTopMost.Checked = GUISettings.Default.IsTopMost;
             MainWindow.Instance.TopMost = this.chkbxTopMost.Checked;
-        }
-
-        private void chkbxAutoSave_CheckedChanged(object sender, EventArgs e)
-        {
-            BaseSettings.Default.SaveControlState = this.chkbxAutoSave.Checked;
-            BaseSettings.Default.Save();
         }
 
         private void chkbxTopMost_CheckedChanged(object sender, EventArgs e)
         {
+            SettingsWindow.Instance.TopMost = this.chkbxTopMost.Checked;
             MainWindow.Instance.TopMost = this.chkbxTopMost.Checked;
-            Settings.Default.IsTopMost = this.chkbxTopMost.Checked;
-            Settings.Default.Save();
+            GUISettings.Default.IsTopMost = this.chkbxTopMost.Checked;
+            GUISettings.Default.Save();
         }
     }
 }

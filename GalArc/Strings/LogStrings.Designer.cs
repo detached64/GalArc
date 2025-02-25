@@ -297,9 +297,9 @@ namespace GalArc.Strings {
         /// <summary>
         ///   查找类似 {0}: Import {1} schemes. 的本地化字符串。
         /// </summary>
-        public static string ImportDataBaseScheme {
+        public static string ImportDatabaseScheme {
             get {
-                return ResourceManager.GetString("ImportDataBaseScheme", resourceCulture);
+                return ResourceManager.GetString("ImportDatabaseScheme", resourceCulture);
             }
         }
         

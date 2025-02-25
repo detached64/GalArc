@@ -135,7 +135,7 @@
   <data name="columnUnpackFormat" xml:space="preserve">
     <value>解包格式</value>
   </data>
-  <data name="nodeDataBase" xml:space="preserve">
+  <data name="nodeDatabase" xml:space="preserve">
     <value>数据库</value>
   </data>
   <data name="nodeLog" xml:space="preserve">

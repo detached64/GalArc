@@ -118,39 +118,39 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="chkbxEnableDataBase.AutoSize" type="System.Boolean, mscorlib">
+  <data name="chkbxEnableDatabase.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="chkbxEnableDataBase.Enabled" type="System.Boolean, mscorlib">
+  <data name="chkbxEnableDatabase.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="chkbxEnableDataBase.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="chkbxEnableDatabase.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="chkbxEnableDataBase.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="chkbxEnableDatabase.Location" type="System.Drawing.Point, System.Drawing">
     <value>85, 64</value>
   </data>
-  <data name="chkbxEnableDataBase.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="chkbxEnableDatabase.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 28</value>
   </data>
-  <data name="chkbxEnableDataBase.TabIndex" type="System.Int32, mscorlib">
+  <data name="chkbxEnableDatabase.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="chkbxEnableDataBase.Text" xml:space="preserve">
+  <data name="chkbxEnableDatabase.Text" xml:space="preserve">
     <value>Enable database</value>
   </data>
-  <data name="&gt;&gt;chkbxEnableDataBase.Name" xml:space="preserve">
-    <value>chkbxEnableDataBase</value>
+  <data name="&gt;&gt;chkbxEnableDatabase.Name" xml:space="preserve">
+    <value>chkbxEnableDatabase</value>
   </data>
-  <data name="&gt;&gt;chkbxEnableDataBase.Type" xml:space="preserve">
+  <data name="&gt;&gt;chkbxEnableDatabase.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;chkbxEnableDataBase.Parent" xml:space="preserve">
+  <data name="&gt;&gt;chkbxEnableDatabase.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;chkbxEnableDataBase.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;chkbxEnableDatabase.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="panel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -331,6 +331,6 @@
     <value>DatabaseSettings</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>GalArc.Controls.SettingsTemplate, GalArc, Version=1.4.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>GalArc.Controls.SettingsTemplate, GalArc, Version=1.4.1.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

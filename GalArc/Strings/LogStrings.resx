@@ -157,7 +157,7 @@
   <data name="ErrorSpecifiedFileNotFound" xml:space="preserve">
     <value>{0} file not found in the same directory.</value>
   </data>
-  <data name="ImportDataBaseScheme" xml:space="preserve">
+  <data name="ImportDatabaseScheme" xml:space="preserve">
     <value>{0}: Import {1} schemes.</value>
   </data>
   <data name="Ready" xml:space="preserve">

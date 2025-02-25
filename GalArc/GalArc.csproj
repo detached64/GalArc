@@ -53,7 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseSettings.cs" />
+    <Compile Include="Settings\BaseSettings.cs" />
     <Compile Include="Common\Encodings.cs" />
     <Compile Include="Common\EngineInfo.cs" />
     <Compile Include="Common\Languages.cs" />
@@ -78,6 +78,7 @@
     <Compile Include="Database\DatabaseConfig.cs" />
     <Compile Include="Database\Deserializer.cs" />
     <Compile Include="Database\Schemes.cs" />
+    <Compile Include="Settings\GUISettings.cs" />
     <Compile Include="Strings\LogStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

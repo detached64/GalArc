@@ -1,4 +1,5 @@
 using GalArc.Logs;
+using GalArc.Settings;
 using GalArc.Strings;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

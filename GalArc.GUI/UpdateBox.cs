@@ -1,3 +1,4 @@
+using GalArc.Settings;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -22,7 +23,7 @@ namespace GalArc.GUI
 
         private void UpdateBox_Load(object sender, EventArgs e)
         {
-            if (MainWindow.Instance.TopMost)
+            if (GUISettings.Default.IsTopMost)
             {
                 this.TopMost = true;
             }

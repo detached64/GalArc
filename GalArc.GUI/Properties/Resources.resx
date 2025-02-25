@@ -135,7 +135,7 @@
   <data name="columnPackFormat" xml:space="preserve">
     <value>Pack Format</value>
   </data>
-  <data name="nodeDataBase" xml:space="preserve">
+  <data name="nodeDatabase" xml:space="preserve">
     <value>Database</value>
   </data>
   <data name="nodeLog" xml:space="preserve">

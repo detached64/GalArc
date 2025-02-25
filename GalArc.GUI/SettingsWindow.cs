@@ -1,4 +1,5 @@
 using GalArc.GUI.Properties;
+using GalArc.Settings;
 using System;
 using System.Windows.Forms;
 
@@ -6,6 +7,8 @@ namespace GalArc.GUI
 {
     public partial class SettingsWindow : Form
     {
+        public static SettingsWindow Instance { get; } = new SettingsWindow();
+
         public SettingsWindow()
         {
             InitializeComponent();
@@ -14,7 +17,7 @@ namespace GalArc.GUI
 
         private void SettingsWindow_Load(object sender, EventArgs e)
         {
-            if (MainWindow.Instance.TopMost)
+            if (GUISettings.Default.IsTopMost)
             {
                 this.TopMost = true;
             }
@@ -22,7 +25,7 @@ namespace GalArc.GUI
             this.treeViewOption.Nodes[0].Text = Resources.nodeGeneral;
             this.treeViewOption.Nodes[1].Text = Resources.nodePreference;
             this.treeViewOption.Nodes[2].Text = Resources.nodeLog;
-            this.treeViewOption.Nodes[3].Text = Resources.nodeDataBase;
+            this.treeViewOption.Nodes[3].Text = Resources.nodeDatabase;
         }
 
         private void treeViewOption_AfterSelect(object sender, TreeViewEventArgs e)
@@ -34,13 +37,13 @@ namespace GalArc.GUI
                 case "nodeGeneral":
                     userControl = GeneralSettings.Instance;
                     break;
-                case "nodePreferences":
+                case "nodePreference":
                     userControl = PreferenceSettings.Instance;
                     break;
                 case "nodeLog":
                     userControl = LogSettings.Instance;
                     break;
-                case "nodeDataBase":
+                case "nodeDatabase":
                     userControl = DatabaseSettings.Instance;
                     break;
             }

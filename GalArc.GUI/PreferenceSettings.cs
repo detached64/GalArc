@@ -1,6 +1,6 @@
 using GalArc.Common;
 using GalArc.Controls;
-using GalArc.GUI.Properties;
+using GalArc.Settings;
 using System;
 using System.Linq;
 
@@ -8,10 +8,7 @@ namespace GalArc.GUI
 {
     public partial class PreferenceSettings : SettingsTemplate
     {
-        private static readonly Lazy<PreferenceSettings> lazyInstance =
-                new Lazy<PreferenceSettings>(() => new PreferenceSettings());
-
-        public static PreferenceSettings Instance => lazyInstance.Value;
+        public static PreferenceSettings Instance { get; } = new PreferenceSettings();
 
         private PreferenceSettings()
         {
@@ -25,10 +22,10 @@ namespace GalArc.GUI
                 this.combEncoding.Items.AddRange(Encodings.CodePages.Keys.ToArray());
             }
 
-            string encoding = Settings.Default.DefaultEncoding;
+            string encoding = GUISettings.Default.DefaultEncoding;
             if (this.combEncoding.Items.Contains(encoding))
             {
-                this.combEncoding.Text = Settings.Default.DefaultEncoding;
+                this.combEncoding.Text = GUISettings.Default.DefaultEncoding;
             }
             else
             {
@@ -38,8 +35,8 @@ namespace GalArc.GUI
 
         private void combEncoding_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Settings.Default.DefaultEncoding = this.combEncoding.Text;
-            Settings.Default.Save();
+            GUISettings.Default.DefaultEncoding = this.combEncoding.Text;
+            GUISettings.Default.Save();
         }
     }
 }

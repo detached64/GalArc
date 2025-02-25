@@ -29,7 +29,7 @@ namespace GalArc.GUI
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DatabaseSettings));
-            this.chkbxEnableDataBase = new System.Windows.Forms.CheckBox();
+            this.chkbxEnableDatabase = new System.Windows.Forms.CheckBox();
             this.panel = new System.Windows.Forms.Panel();
             this.lbDBPath = new System.Windows.Forms.Label();
             this.lbDBInfo = new System.Windows.Forms.Label();
@@ -39,13 +39,13 @@ namespace GalArc.GUI
             this.panel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // chkbxEnableDataBase
+            // chkbxEnableDatabase
             // 
-            resources.ApplyResources(this.chkbxEnableDataBase, "chkbxEnableDataBase");
-            this.chkbxEnableDataBase.Checked = true;
-            this.chkbxEnableDataBase.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkbxEnableDataBase.Name = "chkbxEnableDataBase";
-            this.chkbxEnableDataBase.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.chkbxEnableDatabase, "chkbxEnableDatabase");
+            this.chkbxEnableDatabase.Checked = true;
+            this.chkbxEnableDatabase.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkbxEnableDatabase.Name = "chkbxEnableDatabase";
+            this.chkbxEnableDatabase.UseVisualStyleBackColor = true;
             // 
             // panel
             // 
@@ -94,7 +94,7 @@ namespace GalArc.GUI
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel);
-            this.Controls.Add(this.chkbxEnableDataBase);
+            this.Controls.Add(this.chkbxEnableDatabase);
             this.Name = "DatabaseSettings";
             this.Load += new System.EventHandler(this.DatabaseSettings_Load);
             this.panel.ResumeLayout(false);
@@ -106,7 +106,7 @@ namespace GalArc.GUI
 
         #endregion
 
-        private System.Windows.Forms.CheckBox chkbxEnableDataBase;
+        private System.Windows.Forms.CheckBox chkbxEnableDatabase;
         private System.Windows.Forms.Panel panel;
         private System.Windows.Forms.Label lbDBPath;
         private System.Windows.Forms.Label lbDBInfo;

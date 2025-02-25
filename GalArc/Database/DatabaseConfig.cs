@@ -1,3 +1,4 @@
+using GalArc.Settings;
 using System;
 
 namespace GalArc.Database

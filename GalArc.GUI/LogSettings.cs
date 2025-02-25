@@ -1,5 +1,6 @@
 using GalArc.Controls;
 using GalArc.Logs;
+using GalArc.Settings;
 using System;
 using System.Windows.Forms;
 
@@ -7,10 +8,7 @@ namespace GalArc.GUI
 {
     public partial class LogSettings : SettingsTemplate
     {
-        private static readonly Lazy<LogSettings> lazyInstance =
-            new Lazy<LogSettings>(() => new LogSettings());
-
-        public static LogSettings Instance => lazyInstance.Value;
+        public static LogSettings Instance { get; } = new LogSettings();
 
         private LogSettings()
         {

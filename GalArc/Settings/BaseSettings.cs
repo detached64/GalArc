@@ -1,7 +1,7 @@
 using System.Configuration;
 using System.Diagnostics;
 
-namespace GalArc
+namespace GalArc.Settings
 {
     public class BaseSettings : ApplicationSettingsBase
     {
@@ -23,15 +23,6 @@ namespace GalArc
         {
             get => (bool)this[nameof(SaveLog)];
             set => this[nameof(SaveLog)] = value;
-        }
-
-        [UserScopedSetting]
-        [DebuggerNonUserCode]
-        [DefaultSettingValue("True")]
-        public bool SaveControlState
-        {
-            get => (bool)this[nameof(SaveControlState)];
-            set => this[nameof(SaveControlState)] = value;
         }
 
         #region Functions Enabled

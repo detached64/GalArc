@@ -99,9 +99,9 @@ namespace GalArc.GUI.Properties {
         /// <summary>
         ///   查找类似 Database 的本地化字符串。
         /// </summary>
-        internal static string nodeDataBase {
+        internal static string nodeDatabase {
             get {
-                return ResourceManager.GetString("nodeDataBase", resourceCulture);
+                return ResourceManager.GetString("nodeDatabase", resourceCulture);
             }
         }
         

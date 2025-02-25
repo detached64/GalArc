@@ -68,23 +68,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArchivePackager.cs" />
-    <Compile Include="DataBaseSettings.cs">
+    <Compile Include="DatabaseSetting.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DataBaseSettings.Designer.cs">
-      <DependentUpon>DataBaseSettings.cs</DependentUpon>
+    <Compile Include="DatabaseSetting.Designer.cs">
+      <DependentUpon>DatabaseSetting.cs</DependentUpon>
     </Compile>
     <Compile Include="LogSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="LogSettings.Designer.cs">
       <DependentUpon>LogSettings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Updater.cs" />
     <Compile Include="GeneralSettings.cs">
@@ -132,12 +126,12 @@
     <EmbeddedResource Include="AboutBox.zh-Hans.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DataBaseSettings.resx">
-      <DependentUpon>DataBaseSettings.cs</DependentUpon>
+    <EmbeddedResource Include="DatabaseSetting.resx">
+      <DependentUpon>DatabaseSetting.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="DataBaseSettings.zh-Hans.resx">
-      <DependentUpon>DataBaseSettings.cs</DependentUpon>
+    <EmbeddedResource Include="DatabaseSetting.zh-Hans.resx">
+      <DependentUpon>DatabaseSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GeneralSettings.resx">
       <DependentUpon>GeneralSettings.cs</DependentUpon>
@@ -194,10 +188,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="app.manifest" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

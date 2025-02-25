@@ -1,5 +1,6 @@
 using GalArc.Common;
 using GalArc.GUI.Properties;
+using GalArc.Settings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,7 +31,7 @@ namespace GalArc.GUI
 
         private void AboutBox_Load(object sender, EventArgs e)
         {
-            if (MainWindow.Instance.TopMost)
+            if (GUISettings.Default.IsTopMost)
             {
                 this.TopMost = true;
             }

@@ -18,6 +18,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+using GalArc.Settings;
 using GalArc.Strings;
 using System;
 using System.Collections.Generic;
@@ -350,7 +351,7 @@ namespace GalArc.Logs
 
         public static void ShowVersion(string extension, string version) => Instance.InfoInternal(string.Format(LogStrings.ValidArchiveDetected, extension, version));
 
-        public static void ImportDatabaseScheme(string name, int count) => Instance.DebugInternal(string.Format(LogStrings.ImportDataBaseScheme, name, count));
+        public static void ImportDatabaseScheme(string name, int count) => Instance.DebugInternal(string.Format(LogStrings.ImportDatabaseScheme, name, count));
         #endregion
     }
 }

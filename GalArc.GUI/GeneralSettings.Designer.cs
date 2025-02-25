@@ -29,18 +29,8 @@ namespace GalArc.GUI
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GeneralSettings));
-            this.chkbxAutoSave = new System.Windows.Forms.CheckBox();
             this.chkbxTopMost = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
-            // 
-            // chkbxAutoSave
-            // 
-            resources.ApplyResources(this.chkbxAutoSave, "chkbxAutoSave");
-            this.chkbxAutoSave.Checked = true;
-            this.chkbxAutoSave.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkbxAutoSave.Name = "chkbxAutoSave";
-            this.chkbxAutoSave.UseVisualStyleBackColor = true;
-            this.chkbxAutoSave.CheckedChanged += new System.EventHandler(this.chkbxAutoSave_CheckedChanged);
             // 
             // chkbxTopMost
             // 
@@ -54,7 +44,6 @@ namespace GalArc.GUI
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.chkbxTopMost);
-            this.Controls.Add(this.chkbxAutoSave);
             this.Name = "GeneralSettings";
             this.Load += new System.EventHandler(this.GeneralSettings_Load);
             this.ResumeLayout(false);
@@ -63,8 +52,6 @@ namespace GalArc.GUI
         }
 
         #endregion
-
-        private System.Windows.Forms.CheckBox chkbxAutoSave;
         private System.Windows.Forms.CheckBox chkbxTopMost;
     }
 }
