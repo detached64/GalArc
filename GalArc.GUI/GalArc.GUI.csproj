@@ -68,11 +68,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseSetting.cs">
+    <Compile Include="DatabaseSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DatabaseSetting.Designer.cs">
-      <DependentUpon>DatabaseSetting.cs</DependentUpon>
+    <Compile Include="DatabaseSettings.Designer.cs">
+      <DependentUpon>DatabaseSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="LogSettings.cs">
       <SubType>UserControl</SubType>
@@ -126,12 +126,12 @@
     <EmbeddedResource Include="AboutBox.zh-Hans.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DatabaseSetting.resx">
-      <DependentUpon>DatabaseSetting.cs</DependentUpon>
+    <EmbeddedResource Include="DatabaseSettings.resx">
+      <DependentUpon>DatabaseSettings.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="DatabaseSetting.zh-Hans.resx">
-      <DependentUpon>DatabaseSetting.cs</DependentUpon>
+    <EmbeddedResource Include="DatabaseSettings.zh-Hans.resx">
+      <DependentUpon>DatabaseSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GeneralSettings.resx">
       <DependentUpon>GeneralSettings.cs</DependentUpon>
