@@ -70,6 +70,7 @@ namespace ArcFormats.NeXAS
             this.Controls.Add(this.combVersion);
             this.Controls.Add(this.lbVersion);
             this.Name = "PackPACOptions";
+            this.Load += new System.EventHandler(this.PackPACOptions_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -25,6 +25,10 @@ namespace ArcFormats.NeXAS
         public PackPACOptions()
         {
             InitializeComponent();
+        }
+
+        private void PackPACOptions_Load(object sender, EventArgs e)
+        {
             this.combVersion.Items.AddRange(Versions.Split('/'));
             this.combVersion.SelectedIndex = 0;
             this.combMethods.Items.AddRange(methods);
