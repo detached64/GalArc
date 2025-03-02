@@ -48,6 +48,8 @@ namespace Utility
         /// If bitPosition is 8, we need to read a new byte.
         private int bitPosition;
 
+        public Stream BaseStream => stream;
+
         public BitStream(Stream stream, BitStreamMode mode, BitStreamEndianness endianness)
         {
             this.stream = stream ?? throw new ArgumentNullException(nameof(stream));
