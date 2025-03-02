@@ -109,6 +109,9 @@
     <Compile Include="EmonEngine\EmonUtils.cs" />
     <Compile Include="EntisGLS\NOA.cs" />
     <Compile Include="Escude\BIN.cs" />
+    <Compile Include="Ethornell\ARC.cs" />
+    <Compile Include="Ethornell\GDB.cs" />
+    <Compile Include="Ethornell\EthornellUtils.cs" />
     <Compile Include="Eushully\ALF.cs" />
     <Compile Include="GsPack\DAT.cs" />
     <Compile Include="GsPack\PAK.cs" />
