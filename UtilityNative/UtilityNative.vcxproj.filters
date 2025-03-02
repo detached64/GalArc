@@ -26,5 +26,8 @@
     <ClInclude Include="def.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="bits.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

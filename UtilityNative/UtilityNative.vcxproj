@@ -27,6 +27,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bits.h" />
     <ClInclude Include="def.h" />
     <ClInclude Include="native.h" />
   </ItemGroup>
