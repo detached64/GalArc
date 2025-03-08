@@ -1,7 +1,9 @@
 using GalArc.Controls;
+using GalArc.Strings;
+using System;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using System;
 
 namespace ArcFormats.Qlie
 {
@@ -21,17 +23,15 @@ namespace ArcFormats.Qlie
 
         private void UnpackPACKOptions_Load(object sender, EventArgs e)
         {
+            combSchemes.Items.Add(GUIStrings.ItemDefaultEnc);
             if (PACK.Scheme != null)
             {
-                foreach (var key in PACK.Scheme.KnownKeys)
+                foreach (var key in PACK.Scheme.KnownKeys.Keys)
                 {
-                    combSchemes.Items.Add(key.Key);
-                }
-                if (combSchemes.Items.Count > 0)
-                {
-                    combSchemes.SelectedIndex = 0;
+                    combSchemes.Items.Add(key);
                 }
             }
+            combSchemes.SelectedIndex = 0;
         }
 
         private void combSchemes_SelectedIndexChanged(object sender, EventArgs e)

@@ -1,5 +1,5 @@
-using GalArc.GUI.Properties;
 using GalArc.Settings;
+using GalArc.Strings;
 using System;
 using System.Windows.Forms;
 
@@ -22,10 +22,10 @@ namespace GalArc.GUI
                 this.TopMost = true;
             }
             this.treeViewOption.SelectedNode = treeViewOption.Nodes[0];
-            this.treeViewOption.Nodes[0].Text = Resources.nodeGeneral;
-            this.treeViewOption.Nodes[1].Text = Resources.nodePreference;
-            this.treeViewOption.Nodes[2].Text = Resources.nodeLog;
-            this.treeViewOption.Nodes[3].Text = Resources.nodeDatabase;
+            this.treeViewOption.Nodes[0].Text = GUIStrings.nodeGeneral;
+            this.treeViewOption.Nodes[1].Text = GUIStrings.nodePreference;
+            this.treeViewOption.Nodes[2].Text = GUIStrings.nodeLog;
+            this.treeViewOption.Nodes[3].Text = GUIStrings.nodeDatabase;
         }
 
         private void treeViewOption_AfterSelect(object sender, TreeViewEventArgs e)

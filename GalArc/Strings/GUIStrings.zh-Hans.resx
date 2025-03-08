@@ -117,28 +117,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ItemDefaultEnc" xml:space="preserve">
+    <value>默认加密方案</value>
+  </data>
+  <data name="ItemNoEnc" xml:space="preserve">
+    <value>没有加密</value>
+  </data>
+  <data name="ItemCustomEnc" xml:space="preserve">
+    <value>自定义加密方案</value>
+  </data>
+  <data name="ItemTryEveryEnc" xml:space="preserve">
+    <value>尝试所有加密方案</value>
+  </data>
   <data name="lbVersion" xml:space="preserve">
-    <value>Version {0}</value>
+    <value>版本 {0}</value>
   </data>
   <data name="nodeGeneral" xml:space="preserve">
-    <value>General</value>
+    <value>常规</value>
   </data>
   <data name="nodePreference" xml:space="preserve">
-    <value>Preference</value>
+    <value>偏好设置</value>
   </data>
   <data name="columnEngineName" xml:space="preserve">
-    <value>Engine Name</value>
+    <value>引擎名称</value>
   </data>
   <data name="columnUnpackFormat" xml:space="preserve">
-    <value>Unpack Format</value>
+    <value>解包格式</value>
   </data>
   <data name="columnPackFormat" xml:space="preserve">
-    <value>Pack Format</value>
+    <value>封包格式</value>
   </data>
   <data name="nodeDatabase" xml:space="preserve">
-    <value>Database</value>
+    <value>数据库</value>
   </data>
   <data name="nodeLog" xml:space="preserve">
-    <value>Log</value>
+    <value>日志</value>
+  </data>
+  <data name="InfoSize" xml:space="preserve">
+    <value>大小：{0}字节</value>
+  </data>
+  <data name="InfoFailedToReadInfos" xml:space="preserve">
+    <value>读取信息失败。</value>
+  </data>
+  <data name="InfoEngineName" xml:space="preserve">
+    <value>名称：{0}</value>
+  </data>
+  <data name="InfoContents" xml:space="preserve">
+    <value>内容：</value>
+  </data>
+  <data name="InfoDisabled" xml:space="preserve">
+    <value>未启用。</value>
+  </data>
+  <data name="InfoFileNotFound" xml:space="preserve">
+    <value>未找到指定的文件。</value>
+  </data>
+  <data name="InfoLastModified" xml:space="preserve">
+    <value>修改时间：{0}</value>
+  </data>
+  <data name="InfoItems" xml:space="preserve">
+    <value>{0}：{1}个项</value>
   </data>
 </root>

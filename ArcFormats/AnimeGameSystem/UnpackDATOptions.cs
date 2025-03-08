@@ -1,4 +1,5 @@
 using GalArc.Controls;
+using GalArc.Strings;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
@@ -21,6 +22,7 @@ namespace ArcFormats.AnimeGameSystem
 
         private void UnpackDATOptions_Load(object sender, EventArgs e)
         {
+            this.combSchemes.Items.Add(GUIStrings.ItemNoEnc);
             if (DAT.Scheme != null)
             {
                 foreach (var scheme in DAT.Scheme.KnownSchemes)

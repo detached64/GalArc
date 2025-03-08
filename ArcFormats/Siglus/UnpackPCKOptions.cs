@@ -1,4 +1,3 @@
-using ArcFormats.Properties;
 using GalArc.Controls;
 using GalArc.Strings;
 using System;
@@ -23,9 +22,9 @@ namespace ArcFormats.Siglus
 
         private void UnpackPCKOptions_Load(object sender, EventArgs e)
         {
+            this.combSchemes.Items.Add(GUIStrings.ItemTryEveryEnc);
             if (ScenePCK.Scheme != null)
             {
-                this.combSchemes.Items.Add(Resources.combTryEveryScheme);
                 foreach (var scheme in ScenePCK.Scheme.KnownSchemes)
                 {
                     this.combSchemes.Items.Add(scheme.Key);

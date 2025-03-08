@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
 		Microsoft ResX Schema
@@ -97,13 +97,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="combNoEncryption" xml:space="preserve">
+  <data name="ItemDefaultEnc" xml:space="preserve">
+    <value>Default encryption scheme</value>
+  </data>
+  <data name="ItemNoEnc" xml:space="preserve">
     <value>No encryption</value>
   </data>
-  <data name="combCustomScheme" xml:space="preserve">
-    <value>Custom scheme</value>
+  <data name="ItemCustomEnc" xml:space="preserve">
+    <value>Custom encryption scheme</value>
   </data>
-  <data name="combTryEveryScheme" xml:space="preserve">
+  <data name="ItemTryEveryEnc" xml:space="preserve">
     <value>Try every encryption scheme</value>
+  </data>
+  <data name="lbVersion" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="nodeGeneral" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="nodePreference" xml:space="preserve">
+    <value>Preference</value>
+  </data>
+  <data name="columnEngineName" xml:space="preserve">
+    <value>Engine Name</value>
+  </data>
+  <data name="columnUnpackFormat" xml:space="preserve">
+    <value>Unpack Format</value>
+  </data>
+  <data name="columnPackFormat" xml:space="preserve">
+    <value>Pack Format</value>
+  </data>
+  <data name="nodeDatabase" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="nodeLog" xml:space="preserve">
+    <value>Log</value>
+  </data>
+  <data name="InfoSize" xml:space="preserve">
+    <value>Size: {0} bytes</value>
+  </data>
+  <data name="InfoFailedToReadInfos" xml:space="preserve">
+    <value>Failed to read information.</value>
+  </data>
+  <data name="InfoEngineName" xml:space="preserve">
+    <value>Name: {0}</value>
+  </data>
+  <data name="InfoContents" xml:space="preserve">
+    <value>Contents:</value>
+  </data>
+  <data name="InfoDisabled" xml:space="preserve">
+    <value>Disabled.</value>
+  </data>
+  <data name="InfoFileNotFound" xml:space="preserve">
+    <value>Specified file not found.</value>
+  </data>
+  <data name="InfoLastModified" xml:space="preserve">
+    <value>Last modified time: {0}</value>
+  </data>
+  <data name="InfoItems" xml:space="preserve">
+    <value>{0}: {1} items</value>
   </data>
 </root>

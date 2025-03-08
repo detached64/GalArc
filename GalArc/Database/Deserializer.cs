@@ -83,7 +83,7 @@ namespace GalArc.Database
 
             StringBuilder result = new StringBuilder();
             // engine name
-            result.AppendFormat(SchemeInfos.InfoEngineName, name).AppendLine();
+            result.AppendFormat(GUIStrings.InfoEngineName, name).AppendLine();
 
             try
             {
@@ -91,7 +91,7 @@ namespace GalArc.Database
                 JObject jsonObject = JObject.Parse(json);
 
                 // contents
-                result.AppendLine(SchemeInfos.InfoContents);
+                result.AppendLine(GUIStrings.InfoContents);
                 foreach (var property in jsonObject.Properties())
                 {
                     int count = 0;
@@ -104,16 +104,16 @@ namespace GalArc.Database
                             count = property.Value.Children().Count();
                             break;
                     }
-                    result.Append("  ").AppendFormat(SchemeInfos.InfoItems, property.Name, count).AppendLine();
+                    result.Append("  ").AppendFormat(GUIStrings.InfoItems, property.Name, count).AppendLine();
                 }
 
                 // file size
                 FileInfo fileInfo = new FileInfo(path);
-                result.AppendFormat(SchemeInfos.InfoSize, fileInfo.Length).AppendLine();
+                result.AppendFormat(GUIStrings.InfoSize, fileInfo.Length).AppendLine();
 
                 // last modified time
                 DateTime lastModified = File.GetLastWriteTime(path);
-                result.AppendFormat(SchemeInfos.InfoLastModified, lastModified).AppendLine();
+                result.AppendFormat(GUIStrings.InfoLastModified, lastModified).AppendLine();
 
                 jsonObject = null;
                 isValid = true;
@@ -122,8 +122,8 @@ namespace GalArc.Database
             catch
             {
                 StringBuilder error = new StringBuilder();
-                error.AppendFormat(SchemeInfos.InfoEngineName, name).AppendLine();
-                error.AppendLine(SchemeInfos.InfoFailedToReadInfos);
+                error.AppendFormat(GUIStrings.InfoEngineName, name).AppendLine();
+                error.AppendLine(GUIStrings.InfoFailedToReadInfos);
                 isValid = false;
                 return error.ToString();
             }
@@ -133,7 +133,7 @@ namespace GalArc.Database
         {
             if (!BaseSettings.Default.IsDatabaseEnabled)
             {
-                return SchemeInfos.InfoDisabled;
+                return GUIStrings.InfoDisabled;
             }
             foreach (Type type in Schemes)
             {

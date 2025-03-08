@@ -42,8 +42,6 @@ namespace ArcFormats.Qlie
             // 
             this.combSchemes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.combSchemes.FormattingEnabled = true;
-            this.combSchemes.Items.AddRange(new object[] {
-            resources.GetString("combSchemes.Items")});
             resources.ApplyResources(this.combSchemes, "combSchemes");
             this.combSchemes.Name = "combSchemes";
             this.combSchemes.SelectedIndexChanged += new System.EventHandler(this.combSchemes_SelectedIndexChanged);

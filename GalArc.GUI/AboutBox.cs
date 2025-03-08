@@ -1,6 +1,6 @@
 using GalArc.Common;
-using GalArc.GUI.Properties;
 using GalArc.Settings;
+using GalArc.Strings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,7 +36,7 @@ namespace GalArc.GUI
                 this.TopMost = true;
             }
             this.lbCopyright.Text = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyCopyrightAttribute>().Copyright;
-            this.lbCurrentVer.Text = string.Format(Resources.lbVersion, Updater.CurrentVersion) + (Updater.CurrentVersion.Revision == 0 ? string.Empty : " beta");
+            this.lbCurrentVer.Text = string.Format(GUIStrings.lbVersion, Updater.CurrentVersion) + (Updater.CurrentVersion.Revision == 0 ? string.Empty : " beta");
             UpdateDataGridView(EngineInfo.Infos);
             UpdateLicense();
             this.dataGridViewEngines.ClearSelection();
@@ -91,16 +91,16 @@ namespace GalArc.GUI
             // update the column names
             if (this.dataGridViewEngines.Columns.Count == 3)
             {
-                this.dataGridViewEngines.Columns[0].HeaderText = Resources.columnEngineName;
-                this.dataGridViewEngines.Columns[1].HeaderText = Resources.columnUnpackFormat;
-                this.dataGridViewEngines.Columns[2].HeaderText = Resources.columnPackFormat;
+                this.dataGridViewEngines.Columns[0].HeaderText = GUIStrings.columnEngineName;
+                this.dataGridViewEngines.Columns[1].HeaderText = GUIStrings.columnUnpackFormat;
+                this.dataGridViewEngines.Columns[2].HeaderText = GUIStrings.columnPackFormat;
             }
             else
             {
                 this.dataGridViewEngines.Columns.Clear();
-                this.dataGridViewEngines.Columns.Add("EngineName", Resources.columnEngineName);
-                this.dataGridViewEngines.Columns.Add("UnpackFormat", Resources.columnUnpackFormat);
-                this.dataGridViewEngines.Columns.Add("PackFormat", Resources.columnPackFormat);
+                this.dataGridViewEngines.Columns.Add("EngineName", GUIStrings.columnEngineName);
+                this.dataGridViewEngines.Columns.Add("UnpackFormat", GUIStrings.columnUnpackFormat);
+                this.dataGridViewEngines.Columns.Add("PackFormat", GUIStrings.columnPackFormat);
             }
 
             // update the rows

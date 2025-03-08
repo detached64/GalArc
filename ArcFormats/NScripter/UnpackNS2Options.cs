@@ -1,5 +1,5 @@
-using ArcFormats.Properties;
 using GalArc.Controls;
+using GalArc.Strings;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
@@ -22,8 +22,8 @@ namespace ArcFormats.NScripter
 
         private void UnpackNS2Options_Load(object sender, EventArgs e)
         {
-            combSchemes.Items.Add(Resources.combNoEncryption);
-            combSchemes.Items.Add(Resources.combCustomScheme);
+            combSchemes.Items.Add(GUIStrings.ItemNoEnc);
+            combSchemes.Items.Add(GUIStrings.ItemCustomEnc);
 
             if (NS2.Scheme != null)
             {

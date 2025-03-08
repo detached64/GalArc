@@ -79,15 +79,15 @@
     <Compile Include="Database\Deserializer.cs" />
     <Compile Include="Database\Schemes.cs" />
     <Compile Include="Settings\GUISettings.cs" />
+    <Compile Include="Strings\GUIStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GUIStrings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Strings\LogStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LogStrings.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings\SchemeInfos.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SchemeInfos.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Logs\Logger.cs" />
@@ -104,6 +104,11 @@
     <EmbeddedResource Include="Controls\SettingsTemplate.resx">
       <DependentUpon>SettingsTemplate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Strings\GUIStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GUIStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Strings\GUIStrings.zh-Hans.resx" />
     <EmbeddedResource Include="Strings\LogStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LogStrings.Designer.cs</LastGenOutput>
@@ -112,11 +117,6 @@
     <EmbeddedResource Include="Strings\LogStrings.zh-Hans.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Strings\SchemeInfos.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SchemeInfos.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings\SchemeInfos.zh-Hans.resx" />
     <None Include="packages.config" />
     <None Include="Resources\Database\AGS.json" />
     <None Include="Resources\Database\Ns2.json" />
