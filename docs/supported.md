@@ -7,14 +7,15 @@ Attention: this file is updated manually, so it may not be up-to-date. For the l
 | AdvHD            | `arc` `pna`                | ✔️      | ✔️    | all                        |
 | Ai5Win/elf       | `arc` `dat` `VSD`          | ✔️      | ❌    | all                         |
 | Ai6Win/Silky     | `arc`                      | ✔️      | ✔️    | all                         |
-| Artemis          | `pfs`                      | ✔️      | ✔️    | all                         |
+| Artemis/Artemis Engine | `pfs`                      | ✔️      | ✔️    | all                         |
 | BiShop           | `bsa`                      | ✔️      | ✔️    | all                         |
-| Cmvs             | `cpz`                      | ✔️      | ✔️    | v1                          |
+| Cmvs             | `cpz`                      | ✔️      | ✔️    | v1 only                     |
 | EmonEngine       | `bsa`                      | ✔️      | ✔️    | all                         |
 | EntisGLS         | `noa`                      | ✔️      | ✔️    | unencrypted                 |
+| Ethornell/BGI | `arc` | ✔️ | ❌ | all |
 | Eushully         | `alf`                      | ✔️      | ❌    | all                         |
 | GsPack/GsWin     | `pak` `dat`                | ✔️      | ❌    | all                         |
-| InnocentGrey     | `iga` `dat`                | ✔️      | ✔️    | `iga`:all `dat`:limited     |
+| InnocentGrey/Noesis | `iga` `dat`                | ✔️      | ✔️    | `iga`: all `dat`: limited   |
 | KID              | `dat`                      | ✔️      | ✔️    | all                         |
 | Kirikiri         | `xp3`                      | ✔️      | ✔️    | unencrypted                 |
 | Majiro           | `arc`                      | ✔️      | ✔️    | all                         |
@@ -23,17 +24,17 @@ Attention: this file is updated manually, so it may not be up-to-date. For the l
 | NeXAS/Giga       | `pac`                      | ✔️      | ✔️    | all                         |
 | NextonLikeC      | `lst`                      | ✔️      | ❌    | all                         |
 | Nitro+           | `pak`                      | ✔️      | ✔️    | limited                     |
-| NScripter        | `ns2` `nsa`                | ✔️      | ✔️    | `ns2`:all `nsa`:unencrypted |
+| NScripter        | `ns2` `nsa`                | ✔️      | ✔️    | `ns2`: all `nsa`: unencrypted |
 | Palette          | `pak`                      | ✔️      | ✔️    | all                         |
 | PJADV            | `dat` `pak`                | ✔️      | ✔️    | all                         |
-| Qlie/Clie        | `pack`                     | ✔️      | ❌    | limited                     |
+| Qlie/Clie        | `pack`                     | ✔️      | ❌    | all                   |
 | RPGMaker         | `rgssad` `rgss2a` `rgss3a` | ✔️      | ✔️    | all                         |
 | Seraph/Seraphim  | `dat`                      | ✔️      | ❌    | all                         |
 | Siglus           | `Scene.pck` `Gameexe.dat`  | ✔️      | ❌    | all                         |
 | Softpal          | `pac`                      | ✔️      | ✔️    | all                         |
 | Sogna            | `dat`                      | ✔️      | ✔️    | all                         |
 | SystemNNN        | `gpk` `vpk`                | ✔️      | ✔️    | all                         |
-| Triangle         | `CG` `SUD` `CGF`           | ✔️      | ✔️    | cgf:v1 only                 |
+| Triangle         | `CG` `SUD` `CGF`           | ✔️      | ✔️    | `cgf`: v1 only              |
 | Valkyria         | `dat`                      | ✔️      | ✔️    | all                         |
 | Yuris            | `ypf`                      | ✔️      | ❌    | all                         |
 
