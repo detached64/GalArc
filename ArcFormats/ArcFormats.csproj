@@ -112,6 +112,12 @@
     <Compile Include="Ethornell\ARC.cs" />
     <Compile Include="Ethornell\GDB.cs" />
     <Compile Include="Ethornell\EthornellUtils.cs" />
+    <Compile Include="Ethornell\PackARCOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Ethornell\PackARCOptions.Designer.cs">
+      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Eushully\ALF.cs" />
     <Compile Include="GsPack\DAT.cs" />
     <Compile Include="GsPack\PAK.cs" />
@@ -330,6 +336,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cmvs\PackCPZOptions.zh-Hans.resx">
       <DependentUpon>PackCPZOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ethornell\PackARCOptions.resx">
+      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ethornell\PackARCOptions.zh-Hans.resx">
+      <DependentUpon>PackARCOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GsPack\UnpackPAKOptions.resx">
       <DependentUpon>UnpackPAKOptions.cs</DependentUpon>

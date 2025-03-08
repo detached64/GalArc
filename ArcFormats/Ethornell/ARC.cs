@@ -1,3 +1,4 @@
+using GalArc.Controls;
 using GalArc.Logs;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +9,9 @@ namespace ArcFormats.Ethornell
 {
     public class ARC : ArchiveFormat
     {
+        public override OptionsTemplate PackExtraOptions => PackARCOptions.Instance;
+
+        private const string Magic = "PackFile    ";
         private const string Magic20 = "BURIKO ARC20";
         private const string MagicDSCFormat100 = "DSC FORMAT 1.00\0";
 
@@ -15,20 +19,30 @@ namespace ArcFormats.Ethornell
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            if (Encoding.ASCII.GetString(br.ReadBytes(12)) != Magic20)
+            int version = 0;
+            switch (Encoding.ASCII.GetString(br.ReadBytes(12)))
             {
-                Logger.ErrorInvalidArchive();
+                case Magic:
+                    version = 1;
+                    break;
+                case Magic20:
+                    version = 2;
+                    break;
+                default:
+                    Logger.ErrorInvalidArchive();
+                    break;
             }
+            Logger.ShowVersion("arc", version);
             int count = br.ReadInt32();
             List<Entry> entries = new List<Entry>(count);
-            uint baseOffset = (uint)(16 + 0x80 * count);
+            uint baseOffset = (uint)(16 + (version == 1 ? 0x20 : 0x80) * count);
             for (int i = 0; i < count; i++)
             {
                 Entry entry = new Entry();
-                entry.Name = Encoding.ASCII.GetString(br.ReadBytes(0x60)).TrimEnd('\0');
+                entry.Name = Encoding.ASCII.GetString(br.ReadBytes(version == 1 ? 0x10 : 0x60)).TrimEnd('\0');
                 entry.Offset = br.ReadUInt32() + baseOffset;
                 entry.Size = br.ReadUInt32();
-                br.BaseStream.Position += 0x18;
+                br.BaseStream.Position += version == 1 ? 8 : 0x18;
                 entries.Add(entry);
             }
             Logger.InitBar(count);
@@ -39,6 +53,7 @@ namespace ArcFormats.Ethornell
                 byte[] data = br.ReadBytes((int)entry.Size);
                 File.WriteAllBytes(Path.Combine(folderPath, entry.Name), Decrypt(data));
                 Logger.UpdateBar();
+                data = null;
             }
             fs.Dispose();
             br.Dispose();
@@ -49,22 +64,24 @@ namespace ArcFormats.Ethornell
             FileInfo[] files = new DirectoryInfo(folderPath).GetFiles();
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
-            bw.Write(Encoding.ASCII.GetBytes(Magic20));
+            string magic = PackExtraOptions.Version == "1" ? Magic : Magic20;
+            bw.Write(Encoding.ASCII.GetBytes(magic));
             bw.Write(files.Length);
             uint baseOffset = 0;
             foreach (FileInfo file in files)
             {
-                bw.WritePaddedString(file.Name, 0x60);
+                bw.WritePaddedString(file.Name, PackExtraOptions.Version == "1" ? 0x10 : 0x60);
                 bw.Write(baseOffset);
                 uint size = (uint)file.Length;
                 bw.Write(size);
                 baseOffset += size;
-                bw.Write(new byte[0x18]);
+                bw.Write(new byte[PackExtraOptions.Version == "1" ? 8 : 0x18]);
             }
             foreach (FileInfo file in files)
             {
                 byte[] data = File.ReadAllBytes(file.FullName);
                 bw.Write(data);
+                data = null;
             }
             fw.Dispose();
             bw.Dispose();
