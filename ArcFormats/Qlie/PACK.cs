@@ -1,14 +1,19 @@
+using GalArc.Controls;
+using GalArc.Database;
 using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using Utility;
 
 namespace ArcFormats.Qlie
 {
     public class PACK : ArchiveFormat
     {
+        public override OptionsTemplate UnpackExtraOptions => UnpackPACKOptions.Instance;
+
         private readonly string HeaderMagicPattern = "^FilePackVer[0-9]\\.[0-9]$";
 
         /// <summary>
@@ -20,6 +25,17 @@ namespace ArcFormats.Qlie
         /// Key file name in pack archives. Used by 3.0 and above.
         /// </summary>
         private readonly string KeyFileName = "pack_keyfile_kfueheish15538fa9or.key";
+
+        /// <summary>
+        /// Possible locations of key.fkey.
+        /// </summary>
+        private static readonly string[] KeyLocations = { ".", "..", "..\\DLL", "DLL" };
+
+        internal static QlieScheme Scheme;
+        internal static string SelectedKey;
+        internal static string FKeyPath;
+        internal static bool SaveKey = false;
+        internal static bool SaveHash = false;
 
         public override void Unpack(string input, string output)
         {
@@ -39,29 +55,13 @@ namespace ArcFormats.Qlie
             List<QlieEntry> entries = new List<QlieEntry>(qheader.FileCount);
             #endregion
 
-            #region get version & init encryption
-            QlieEncryption qenc;
+            #region get version, retrieve arc_key and init encryption
             int major = int.Parse(qheader.Magic.Substring(11, 1));
             int minor = int.Parse(qheader.Magic.Substring(13, 1));
             int version = major * 10 + minor;
             Logger.Info($"File Pack Version: {major}.{minor}");
-            switch (version)
-            {
-                case 10:
-                    qenc = new Encryption10();
-                    break;
-                case 20:
-                    qenc = new Encryption20();
-                    break;
-                case 30:
-                    qenc = new Encryption30();
-                    break;
-                case 31:
-                    qenc = new Encryption31();
-                    break;
-                default:
-                    throw new ArgumentException("Unknown version", nameof(version));
-            }
+            byte[] local_key_data = !string.IsNullOrWhiteSpace(SelectedKey) ? Convert.FromBase64String(SelectedKey) : null;
+            QlieEncryption qenc = QlieEncryption.CreateEncryption(version, local_key_data);
             #endregion
 
             #region read key
@@ -91,7 +91,7 @@ namespace ArcFormats.Qlie
                     Logger.Info("Key magic failed to match. The archive may be corrupted.");
                 }
                 // Optional: save key
-                if (qkey.Key != null)
+                if (SaveKey && qkey.Key != null)
                 {
                     Directory.CreateDirectory(output);
                     File.WriteAllBytes(Path.Combine(output, "key.bin"), qkey.Key);
@@ -100,28 +100,28 @@ namespace ArcFormats.Qlie
             #endregion
 
             #region read hash
-            byte[] hashData = null;
+            byte[] rawHashData = null;
             if (version >= 20)
             {
                 fs.Position = fs.Length - 0x440 - qkey.HashSize;
-                hashData = br.ReadBytes((int)qkey.HashSize);
+                rawHashData = br.ReadBytes((int)qkey.HashSize);
             }
             else
             {
                 string hashFile = Path.ChangeExtension(input, "hash");
                 if (File.Exists(hashFile))
                 {
-                    hashData = File.ReadAllBytes(hashFile);
+                    rawHashData = File.ReadAllBytes(hashFile);
                 }
             }
-            QlieHashReader hashReader = new QlieHashReader(hashData);
+            QlieHashReader hashReader = new QlieHashReader(rawHashData);
             Logger.Info($"Hash Version: {hashReader.HashVersion / 10.0:0.0}");
-            byte[] hash = hashReader.GetHashData();
+            byte[] hashData = hashReader.GetHashData();
             // Optional: save hash
-            if (hash != null)
+            if (SaveHash && hashData != null)
             {
                 Directory.CreateDirectory(output);
-                File.WriteAllBytes(Path.Combine(output, "hash.bin"), hash);
+                File.WriteAllBytes(Path.Combine(output, "hash.bin"), hashData);
             }
             #endregion
 
@@ -138,7 +138,8 @@ namespace ArcFormats.Qlie
                     {
                         length *= 2;
                     }
-                    entry.Name = qenc.DecryptName(br.ReadBytes(length), length, (int)key);
+                    entry.RawName = br.ReadBytes(length);
+                    entry.Name = qenc.DecryptName(entry.RawName, length, (int)key);
                     entry.Path = Path.Combine(output, entry.Name);
                     entry.Offset = br.ReadInt64();
                     entry.Size = br.ReadUInt32();
@@ -164,9 +165,17 @@ namespace ArcFormats.Qlie
 
             #region extract files
             Logger.InitBar(qheader.FileCount);
-            bool need_common_key = version == 31;
+            bool need_common_key = version >= 30;
             bool is_common_key_obtained = false;
             byte[] common_key = null;
+            if (need_common_key)
+            {
+                common_key = TryFindLocalKey(input);
+                if (common_key != null)
+                {
+                    is_common_key_obtained = true;
+                }
+            }
             foreach (QlieEntry entry in entries)
             {
                 if (need_common_key)
@@ -180,7 +189,7 @@ namespace ArcFormats.Qlie
                 {
                     data = QlieEncryption.Decompress(data);
                 }
-                if (need_common_key && !is_common_key_obtained && string.Equals(entry.Name, KeyFileName))
+                if (need_common_key && !is_common_key_obtained && string.Equals(entry.Name, KeyFileName, StringComparison.OrdinalIgnoreCase))
                 {
                     //Optional: get & check key; check hash
                     //byte[] res_key = GetResourceKey(input);
@@ -188,8 +197,15 @@ namespace ArcFormats.Qlie
                     //{
                     //    Logger.Info("Key mismatch");
                     //}
-                    common_key = QlieEncryption.GetCommonKey(data);
-                    is_common_key_obtained = true;
+                    if (version == 31)
+                    {
+                        common_key = QlieEncryption.GetCommonKey(data);
+                        is_common_key_obtained = true;
+                    }
+                    else
+                    {
+                        throw new FileNotFoundException("key.fkey path must be specified.");
+                    }
                 }
                 Directory.CreateDirectory(Path.GetDirectoryName(entry.Path));
                 File.WriteAllBytes(entry.Path, data);
@@ -200,6 +216,61 @@ namespace ArcFormats.Qlie
 
             fs.Dispose();
             br.Dispose();
+        }
+
+        /// <summary>
+        /// Try to find key.fkey in possible locations.
+        /// </summary>
+        private byte[] TryFindLocalKey(string input)
+        {
+            string folder = Path.GetDirectoryName(input);
+            if (!string.IsNullOrEmpty(FKeyPath))
+            {
+                if (File.Exists(FKeyPath))
+                {
+                    return File.ReadAllBytes(FKeyPath);
+                }
+                else
+                {
+                    throw new FileNotFoundException("Specified file not found.");
+                }
+            }
+            foreach (string p in KeyLocations)
+            {
+                string path = Path.GetFullPath(Path.Combine(folder, p, "key.fkey"));
+                if (File.Exists(path))
+                {
+                    return File.ReadAllBytes(path);
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Get key from the game executable.
+        /// </summary>
+        public static byte[] GetLocalKeyFromExe(string archive_path)
+        {
+            string exe_path = Path.GetDirectoryName(Path.GetDirectoryName(archive_path));
+            foreach (string file_path in Directory.GetFiles(exe_path, "*.exe", SearchOption.TopDirectoryOnly))
+            {
+                using (ResourceReader reader = new ResourceReader(file_path))
+                {
+                    byte[] key = reader.ReadResource("RESKEY");
+                    if (key != null)
+                    {
+                        return key;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public override void DeserializeScheme(out string name, out int count)
+        {
+            Scheme = Deserializer.ReadScheme<QlieScheme>();
+            name = "Qlie";
+            count = Scheme?.KnownKeys?.Count ?? 0;
         }
     }
 
@@ -219,6 +290,7 @@ namespace ArcFormats.Qlie
 
     internal class QlieEntry : PackedEntry
     {
+        public byte[] RawName { get; set; }
         public new long Offset { get; set; }
         public uint Hash { get; set; }          // for check, not necessary
         public uint IsEncrypted { get; set; }

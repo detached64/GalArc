@@ -209,6 +209,12 @@
     <Compile Include="Qlie\PACK.cs" />
     <Compile Include="Qlie\QlieHash.cs" />
     <Compile Include="Qlie\QlieMersenneTwister.cs" />
+    <Compile Include="Qlie\UnpackPACKOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Qlie\UnpackPACKOptions.Designer.cs">
+      <DependentUpon>UnpackPACKOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="RPGMaker\PackRGSSOptions.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -410,6 +416,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.zh-Hans.resx" />
+    <EmbeddedResource Include="Qlie\UnpackPACKOptions.resx">
+      <DependentUpon>UnpackPACKOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Qlie\UnpackPACKOptions.zh-Hans.resx">
+      <DependentUpon>UnpackPACKOptions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RPGMaker\PackRGSSOptions.resx">
       <DependentUpon>PackRGSSOptions.cs</DependentUpon>
       <SubType>Designer</SubType>

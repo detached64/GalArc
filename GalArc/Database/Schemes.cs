@@ -25,6 +25,11 @@ namespace GalArc.Database
         public Dictionary<string, string> KnownKeys { get; set; }
     }
 
+    public class QlieScheme : ArcScheme
+    {
+        public Dictionary<string, string> KnownKeys { get; set; }
+    }
+
     public class SeraphScheme : ArcScheme
     {
         public List<long> KnownOffsets { get; set; }

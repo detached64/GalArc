@@ -120,6 +120,7 @@
     <None Include="packages.config" />
     <None Include="Resources\Database\AGS.json" />
     <None Include="Resources\Database\Ns2.json" />
+    <None Include="Resources\Database\Qlie.json" />
     <None Include="Resources\Database\Seraph.json" />
     <None Include="Resources\Database\Siglus.json" />
   </ItemGroup>

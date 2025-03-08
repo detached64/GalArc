@@ -11,7 +11,7 @@ namespace ArcFormats.Qlie
         byte[] HashData { get; set; }
     }
 
-    internal class QlieHash1_2 : IQlieHash      // The hash bytes lie in a separate file "datax.hash".
+    internal class QlieHash12 : IQlieHash      // The hash bytes lie in a separate file "datax.hash".
     {
         public string Magic { get; set; }
         public uint Const { get; set; }         // 0x200
@@ -21,12 +21,12 @@ namespace ArcFormats.Qlie
         public byte[] HashData { get; set; }    // length: QlieKey.HashSize - 32
     }
 
-    internal class QlieHash1_3 : QlieHash1_2
+    internal class QlieHash13 : QlieHash12
     {
         public new uint Const { get; set; }     // 0x100
     }
 
-    internal class QlieHash1_4 : IQlieHash
+    internal class QlieHash14 : IQlieHash
     {
         public string Magic { get; set; }
         public uint Const { get; set; }         // 0x100
@@ -78,20 +78,19 @@ namespace ArcFormats.Qlie
             switch (HashVersion)
             {
                 case 12:
-                    return GetHash1_2();
+                    return GetHash12();
                 case 13:
-                    return GetHash1_3();
+                    return GetHash13();
                 case 14:
-                    return GetHash1_4();
+                    return GetHash14();
                 default:
-                    Logger.Error("Invalid hash version.", false);
-                    return null;
+                    throw new ArgumentException("Unsupported hash version.");
             }
         }
 
-        private IQlieHash GetHash1_2()
+        private IQlieHash GetHash12()
         {
-            QlieHash1_2 qhash = new QlieHash1_2()
+            QlieHash12 qhash = new QlieHash12()
             {
                 Const = BitConverter.ToUInt32(Hash, 16),
                 FileCount = BitConverter.ToInt32(Hash, 20),
@@ -102,16 +101,15 @@ namespace ArcFormats.Qlie
             Buffer.BlockCopy(Hash, 32, qhash.HashData, 0, qhash.HashData.Length);
             if (qhash.Const != 0x200 || !IsSaneCount(qhash.FileCount) || qhash.HashDataSize != qhash.HashData.Length)
             {
-                Logger.Error("Invalid hash ver 1.2.", false);
-                return null;
+                throw new ArgumentException("Invalid hash ver 1.2.");
             }
             QlieEncryption.Decrypt(qhash.HashData, qhash.HashData.Length, 0x428);
             return qhash;
         }
 
-        private IQlieHash GetHash1_3()
+        private IQlieHash GetHash13()
         {
-            QlieHash1_3 qhash = new QlieHash1_3()
+            QlieHash13 qhash = new QlieHash13()
             {
                 Const = BitConverter.ToUInt32(Hash, 16),
                 FileCount = BitConverter.ToInt32(Hash, 20),
@@ -122,16 +120,15 @@ namespace ArcFormats.Qlie
             Buffer.BlockCopy(Hash, 32, qhash.HashData, 0, qhash.HashData.Length);
             if (qhash.Const != 0x100 || !IsSaneCount(qhash.FileCount) || qhash.HashDataSize != qhash.HashData.Length)
             {
-                Logger.Error("Invalid hash ver 1.3.", false);
-                return null;
+                throw new ArgumentException("Invalid hash ver 1.3.");
             }
             QlieEncryption.Decrypt(qhash.HashData, qhash.HashData.Length, 0x428);
             return qhash;
         }
 
-        private IQlieHash GetHash1_4()
+        private IQlieHash GetHash14()
         {
-            QlieHash1_4 qhash = new QlieHash1_4()
+            QlieHash14 qhash = new QlieHash14()
             {
                 Const = BitConverter.ToUInt32(Hash, 16),
                 FileCount = BitConverter.ToInt32(Hash, 20),
@@ -143,10 +140,9 @@ namespace ArcFormats.Qlie
             };
             Buffer.BlockCopy(Hash, 36, qhash.Unknown, 0, qhash.Unknown.Length);
             Buffer.BlockCopy(Hash, 68, qhash.HashData, 0, qhash.HashData.Length);
-            if (qhash.Const != 0x100 || !IsSaneCount(qhash.FileCount) || qhash.IndexSize != qhash.FileCount * 4 || qhash.HashDataSize != qhash.HashData.Length)
+            if (qhash.Const != 0x100 || !IsSaneCount(qhash.FileCount) || qhash.IndexSize != qhash.FileCount * 4 && qhash.IndexSize != qhash.FileCount * 2 || qhash.HashDataSize != qhash.HashData.Length)
             {
-                Logger.Error("Invalid hash ver 1.4.", false);
-                return null;
+                throw new ArgumentException("Invalid hash ver 1.4.");
             }
             QlieEncryption.Decrypt(qhash.HashData, qhash.HashData.Length, 0x428);
             return qhash;

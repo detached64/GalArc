@@ -1,6 +1,5 @@
 using GalArc.Logs;
 using System;
-using System.IO;
 using System.Linq;
 using System.Text;
 using Utility;
@@ -25,26 +24,6 @@ namespace ArcFormats.Qlie
 
         public abstract void DecryptEntry(byte[] data, QlieEntry entry);
 
-        /// <summary>
-        /// Get the resource key from the game executable. Used by 3.0 and above encryption.
-        /// </summary>
-        public static byte[] GetResourceKey(string archive_path)
-        {
-            string exe_path = Path.GetDirectoryName(Path.GetDirectoryName(archive_path));
-            foreach (string file_path in Directory.GetFiles(exe_path, "*.exe", SearchOption.TopDirectoryOnly))
-            {
-                using (ResourceReader reader = new ResourceReader(file_path))
-                {
-                    byte[] key = reader.ReadResource("RESKEY");
-                    if (key != null)
-                    {
-                        return key;
-                    }
-                }
-            }
-            return null;
-        }
-
         public static unsafe byte[] GetCommonKey(byte[] data)
         {
             byte[] key = new byte[0x400];
@@ -64,7 +43,7 @@ namespace ArcFormats.Qlie
                     }
                     key32[i] = (uint)temp;
                 }
-                int v1 = data[49] % 0x49 + 128;
+                int v1 = data[49] % 0x49 + 0x80;
                 int v2 = data[79] % 7 + 7;
                 for (int i = 0; i < key.Length; ++i)
                 {
@@ -76,7 +55,7 @@ namespace ArcFormats.Qlie
         }
 
         /// <summary>
-        /// Widely used decryption method. Used to decrypt hash, key data and entry in some versions.
+        /// Widely used decryption method. Used to decrypt hash, key data and entry among various versions.
         /// </summary>
         public static void Decrypt(byte[] data, int length, uint key)
         {
@@ -105,6 +84,9 @@ namespace ArcFormats.Qlie
             }
         }
 
+        /// <summary>
+        /// Byte pair encoding decompression method.
+        /// </summary>
         public static byte[] Decompress(byte[] input)
         {
             if (input.Length < 8 || BitConverter.ToUInt32(input, 0) != 0xFF435031)  // "1PC\xFF"
@@ -177,6 +159,23 @@ namespace ArcFormats.Qlie
             }
             return output;
         }
+
+        public static QlieEncryption CreateEncryption(int version, byte[] game_data)
+        {
+            switch (version)
+            {
+                case 10:
+                    return new Encryption10();
+                case 20:
+                    return new Encryption20();
+                case 30:
+                    return new Encryption30(game_data);
+                case 31:
+                    return new Encryption31();
+                default:
+                    throw new ArgumentException("Unknown version", nameof(version));
+            }
+        }
     }
 
     internal class Encryption10 : QlieEncryption
@@ -221,6 +220,13 @@ namespace ArcFormats.Qlie
     {
         public override int Version => 30;
 
+        private byte[] LocalKeyData;
+
+        public Encryption30(byte[] data)
+        {
+            LocalKeyData = data;
+        }
+
         public override uint ComputeHash(byte[] data, int length)
         {
             if (length > data.Length)
@@ -252,9 +258,68 @@ namespace ArcFormats.Qlie
             return ArcEncoding.Shift_JIS.GetString(input);
         }
 
+        // This part of code is originated from GARbro.
         public override void DecryptEntry(byte[] data, QlieEntry entry)
         {
-            base.DecryptEntry(data, entry);
+            var key_file = entry.CommmonKey;
+            uint length = entry.Size;
+            if (key_file == null || LocalKeyData == null)
+            {
+                base.DecryptEntry(data, entry);
+                return;
+            }
+
+            var file_name = entry.RawName;
+            uint hash = 0x85F532;
+            uint seed = 0x33F641;
+
+            for (uint i = 0; i < file_name.Length; i++)
+            {
+                hash += (i & 0xFF) * file_name[i];
+                seed ^= hash;
+            }
+
+            seed += entry.Key ^ (7 * (length & 0xFFFFFF) + length + hash + (hash ^ length ^ 0x8F32DCu));
+            seed = 9 * (seed & 0xFFFFFF);
+            seed ^= 0x453A;
+
+            var mt = new QlieMersenneTwister(seed);
+            mt.XorState(key_file);
+            mt.XorState(LocalKeyData);
+
+            ulong[] table = new ulong[16];
+            for (int i = 0; i < table.Length; ++i)
+            {
+                table[i] = mt.Rand64();
+            }
+            for (int i = 0; i < 9; ++i)
+            {
+                mt.Rand();
+            }
+
+            ulong hash64 = mt.Rand64();
+            uint t = mt.Rand() & 0xF;
+            unsafe
+            {
+                fixed (byte* raw_data = &data[0])
+                {
+                    ulong* data64 = (ulong*)raw_data;
+                    uint qword_length = length / 8;
+                    for (int i = 0; i < qword_length; ++i)
+                    {
+                        hash64 = MMX.PAddD(hash64 ^ table[t], table[t]);
+
+                        ulong d = data64[i] ^ hash64;
+                        data64[i] = d;
+
+                        hash64 = MMX.PAddB(hash64, d) ^ d;
+                        hash64 = MMX.PAddW(MMX.PSllD(hash64, 1), d);
+
+                        t++;
+                        t &= 0xF;
+                    }
+                }
+            }
         }
     }
 

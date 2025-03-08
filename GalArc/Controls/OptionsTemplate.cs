@@ -9,6 +9,19 @@ namespace GalArc.Controls
     {
         public string Version { get; set; }
 
+        public string ChooseFile(string pattern = "")
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = string.IsNullOrWhiteSpace(pattern) ? "All files (*.*)|*.*" : pattern;
+                if (openFileDialog.ShowDialog() == DialogResult.OK && !string.IsNullOrEmpty(openFileDialog.FileName))
+                {
+                    return openFileDialog.FileName;
+                }
+                return null;
+            }
+        }
+
         public OptionsTemplate()
         {
             InitializeComponent();
