@@ -1,4 +1,3 @@
-using GalArc.Controls;
 using GalArc.Logs;
 using System;
 using System.IO;
@@ -9,9 +8,6 @@ namespace ArcFormats.GsPack
 {
     public class DAT : PAK
     {
-        private static readonly Lazy<OptionsTemplate> _lazyUnpackOptions = new Lazy<OptionsTemplate>(() => new UnpackPAKOptions());
-        public static new OptionsTemplate UnpackExtraOptions => _lazyUnpackOptions.Value;
-
         private readonly string Magic = "GsSYMBOL5BINDATA";
 
         public override void Unpack(string filePath, string folderPath)

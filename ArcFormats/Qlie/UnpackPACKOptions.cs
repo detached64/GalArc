@@ -1,7 +1,6 @@
 using GalArc.Controls;
 using GalArc.Strings;
 using System;
-using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
