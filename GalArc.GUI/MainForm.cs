@@ -18,9 +18,9 @@ using System.Windows.Forms;
 
 namespace GalArc.GUI
 {
-    public partial class MainWindow : Form
+    public partial class MainForm : Form
     {
-        internal static MainWindow Instance;
+        internal static MainForm Instance;
 
         private List<TreeNode> TreeNodesUnpack = new List<TreeNode>();
         private List<TreeNode> TreeNodesPack = new List<TreeNode>();
@@ -31,7 +31,7 @@ namespace GalArc.GUI
         private bool IsFirstChangeLang = true;
         private OperationMode Mode => GetOperationMode();
 
-        public MainWindow()
+        public MainForm()
         {
             Instance = this;
             GetLocalCulture();

@@ -16,13 +16,13 @@ namespace GalArc.GUI
         private void GeneralSettings_Load(object sender, EventArgs e)
         {
             this.chkbxTopMost.Checked = GUISettings.Default.IsTopMost;
-            MainWindow.Instance.TopMost = this.chkbxTopMost.Checked;
+            MainForm.Instance.TopMost = this.chkbxTopMost.Checked;
         }
 
         private void chkbxTopMost_CheckedChanged(object sender, EventArgs e)
         {
             SettingsWindow.Instance.TopMost = this.chkbxTopMost.Checked;
-            MainWindow.Instance.TopMost = this.chkbxTopMost.Checked;
+            MainForm.Instance.TopMost = this.chkbxTopMost.Checked;
             GUISettings.Default.IsTopMost = this.chkbxTopMost.Checked;
             GUISettings.Default.Save();
         }

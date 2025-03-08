@@ -17,8 +17,9 @@ namespace GalArc.GUI
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainWindow());
+            Application.Run(new MainForm());
         }
+
         [DllImport("user32.dll")]
         private static extern bool SetProcessDPIAware();
     }
