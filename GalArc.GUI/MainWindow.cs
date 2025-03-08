@@ -643,7 +643,7 @@ namespace GalArc.GUI
                 // handle two cases:
                 // 1. xxx.pfs.001
                 // 2. xxx
-                switch (this.txtInputPath.Text.Count(chr => chr == '.'))
+                switch (Path.GetFileName(this.txtInputPath.Text).Count(chr => chr == '.'))
                 {
                     case 0:
                         this.txtOutputPath.Text = this.txtInputPath.Text + "_unpacked";
@@ -652,7 +652,7 @@ namespace GalArc.GUI
                         this.txtOutputPath.Text = Path.Combine(Path.GetDirectoryName(this.txtInputPath.Text), Path.GetFileNameWithoutExtension(this.txtInputPath.Text));
                         break;
                     default:
-                        this.txtOutputPath.Text = this.txtInputPath.Text.Replace('.', '_');
+                        this.txtOutputPath.Text = Path.Combine(Path.GetDirectoryName(this.txtInputPath.Text), Path.GetFileName(this.txtInputPath.Text).Replace('.', '_'));
                         break;
                 }
             }

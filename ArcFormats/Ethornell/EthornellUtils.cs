@@ -23,7 +23,7 @@ namespace ArcFormats.Ethornell
     }
 
     /// <summary>
-    /// DSC FORMAT 1.00 is used in Ethornell scripts "BurikoCompiledScriptVer1.00".
+    /// DSC FORMAT 1.00. Used in Ethornell scripts "BurikoCompiledScriptVer1.00".
     /// </summary>
     /// This part of code is based on the code from Crass.
     internal class DscDecoder : DecryptionBase
@@ -168,6 +168,9 @@ namespace ArcFormats.Ethornell
         }
     }
 
+    /// <summary>
+    /// SDC FORMAT 1.00. Used in BGI.gdb.
+    /// </summary>
     internal class SdcDecoder : DecryptionBase
     {
         private int size;

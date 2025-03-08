@@ -108,8 +108,7 @@ namespace ArcFormats.SystemNNN
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles("*.dwq");
             int fileCount = files.Length;
-            Logger.InitBar(fileCount);
-            Logger.SetBarMax(fileCount * 3);
+            Logger.InitBar(fileCount, 3);
 
             string gpkPath = filePath;
             string gtbPath = filePath.Contains(".gpk") ? gpkPath.Replace(".gpk", ".gtb") : gpkPath + ".gtb";
@@ -158,11 +157,11 @@ namespace ArcFormats.SystemNNN
                 {
                     writer1.Write('\0');
                 }
-                ulong sizeToNowNew = 0;
+                long sizeToNowNew = 0;
                 foreach (FileInfo file in files)
                 {
                     writer1.Write(sizeToNowNew);
-                    sizeToNowNew += (ulong)file.Length;
+                    sizeToNowNew += file.Length;
                 }
                 writer1.Write((ulong)0);
                 writer1.Write(Encoding.ASCII.GetBytes("over2G!\0"));

@@ -22,6 +22,18 @@ namespace GalArc.Controls
             }
         }
 
+        public string ChooseFolder()
+        {
+            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+            {
+                if (folderBrowserDialog.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(folderBrowserDialog.SelectedPath))
+                {
+                    return folderBrowserDialog.SelectedPath;
+                }
+                return null;
+            }
+        }
+
         public OptionsTemplate()
         {
             InitializeComponent();

@@ -80,36 +80,36 @@ namespace Utility.Extensions
     {
         public static string ReadCString(this BinaryReader br, Encoding encoding, byte terminator = 0x00)
         {
-            List<byte> byteList = new List<byte>();
             bool isUnicode = encoding == Encoding.Unicode;
+            int bytesToRead = isUnicode ? 2 : 1;
+            byte[] buffer = new byte[bytesToRead];
+            List<byte> byteList = new List<byte>();
 
-            if (isUnicode)
+            while (true)
             {
-                while (true)
+                int bytesRead = br.Read(buffer, 0, bytesToRead);
+
+                if (bytesRead != bytesToRead)
                 {
-                    byte b1 = br.ReadByte();
-                    byte b2 = br.ReadByte();
-                    if (b1 == 0 && b2 == 0)
+                    break; // Premature end of stream
+                }
+
+                if (isUnicode)
+                {
+                    if (buffer[0] == 0 && buffer[1] == 0)
                     {
                         break;
                     }
-                    byteList.Add(b1);
-                    byteList.Add(b2);
                 }
-            }
-            else
-            {
-                while (true)
+                else
                 {
-                    byte b = br.ReadByte();
-                    if (b == terminator)
+                    if (buffer[0] == terminator)
                     {
                         break;
                     }
-                    byteList.Add(b);
                 }
+                byteList.AddRange(buffer);
             }
-
             return encoding.GetString(byteList.ToArray());
         }
 
