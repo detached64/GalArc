@@ -28,6 +28,7 @@ namespace GalArc.Common
             new EngineInfo("Cmvs","CPZ","CPZ"),
             new EngineInfo("EmonEngine","EME","EME"),
             new EngineInfo("EntisGLS","NOA","NOA"),
+            new EngineInfo("Escude","BIN","BIN"),
             new EngineInfo("Ethornell","ARC/GDB","ARC"),
             new EngineInfo("Eushully","ALF",string.Empty),
             new EngineInfo("GsPack","PAK/DAT",string.Empty),

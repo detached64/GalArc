@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Utility;
 using Utility.Extensions;
 
 namespace ArcFormats.Escude
@@ -10,6 +11,7 @@ namespace ArcFormats.Escude
     public class BIN : ArchiveFormat
     {
         private readonly string Magic = "ESC-ARC";
+
         public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
@@ -23,10 +25,11 @@ namespace ArcFormats.Escude
                 case 1:
                     break;
                 case 2:
+                    Logger.ShowVersion("bin", 2);
                     UnpackV2(br, folderPath);
                     break;
                 default:
-                    throw new Exception("Unknown ver");
+                    throw new InvalidDataException("Unknown version");
             }
             fs.Dispose();
             br.Dispose();
@@ -60,8 +63,18 @@ namespace ArcFormats.Escude
             {
                 br.BaseStream.Position = entry.Offset;
                 byte[] data = br.ReadBytes((int)entry.Size);
+                if (BitConverter.ToUInt32(data, 0) == 0x00706361)  // "acp\0"
+                {
+                    entry.UnpackedSize = BigEndian.Convert(BitConverter.ToUInt32(data, 4));
+                    byte[] raw = new byte[data.Length - 8];
+                    Buffer.BlockCopy(data, 8, raw, 0, raw.Length);
+                    data = Decompress(raw, (int)entry.UnpackedSize);
+                    raw = null;
+                }
+                Directory.CreateDirectory(Path.GetDirectoryName(entry.Path));
                 File.WriteAllBytes(entry.Path, data);
                 Logger.UpdateBar();
+                data = null;
             }
             br.BaseStream.Dispose();
             br.Dispose();
@@ -79,10 +92,56 @@ namespace ArcFormats.Escude
             }
         }
 
-        //private byte[] Decompress(byte[] data)
-        //{
-
-        //}
+        private byte[] Decompress(byte[] data, int unpacked_size)
+        {
+            byte[] output = new byte[unpacked_size];
+            using (MemoryStream ms = new MemoryStream(data))
+            using (BitStream input = new BitStream(ms, BitStreamMode.Read))
+            {
+                int[] dic = new int[0x8900];
+                int dic_pos = 0;
+                int dst_pos = 0;
+                int length = 9;
+                while (dst_pos < unpacked_size)
+                {
+                    int prefix_code = input.ReadBits(length);
+                    switch (prefix_code)
+                    {
+                        case -1:
+                            throw new EndOfStreamException();
+                        case 256:
+                            break;
+                        case 257:
+                            length++;
+                            if (length > 24)
+                            {
+                                throw new InvalidDataException(nameof(length));
+                            }
+                            break;
+                        case 258:
+                            length = 9;
+                            dic_pos = 0;
+                            break;
+                        default:
+                            dic[dic_pos++] = dst_pos;
+                            if (prefix_code < 256)
+                            {
+                                output[dst_pos++] = (byte)prefix_code;
+                            }
+                            else
+                            {
+                                prefix_code -= 259;
+                                int offset = dic[prefix_code];
+                                int count = Math.Min(unpacked_size - dst_pos, dic[prefix_code + 1] - offset + 1);
+                                Binary.CopyOverlapped(output, offset, dst_pos, count);
+                                dst_pos += count;
+                            }
+                            break;
+                    }
+                }
+            }
+            return output;
+        }
 
         private class Keygen
         {
