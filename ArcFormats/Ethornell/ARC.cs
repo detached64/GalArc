@@ -3,6 +3,7 @@ using GalArc.Logs;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Utility;
 using Utility.Extensions;
 
 namespace ArcFormats.Ethornell
@@ -39,7 +40,7 @@ namespace ArcFormats.Ethornell
             for (int i = 0; i < count; i++)
             {
                 Entry entry = new Entry();
-                entry.Name = Encoding.ASCII.GetString(br.ReadBytes(version == 1 ? 0x10 : 0x60)).TrimEnd('\0');
+                entry.Name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(version == 1 ? 0x10 : 0x60)).TrimEnd('\0');
                 entry.Offset = br.ReadUInt32() + baseOffset;
                 entry.Size = br.ReadUInt32();
                 br.BaseStream.Position += version == 1 ? 8 : 0x18;
