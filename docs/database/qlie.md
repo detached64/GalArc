@@ -33,6 +33,10 @@ Buffer.BlockCopy(data, 6, output, 0, output.Length);
 Console.WriteLine(Convert.ToBase64String(output));
 ```
 
+## Attention
+
+- Some games don't have `Picture.Data` section in their `TFORM1` resource. It is very likely that you may simply use default scheme to unpack it.
+
 ## Fun fact
 
 If you save `data` as a file and open it with a hex editor, you might see the game's logo.
