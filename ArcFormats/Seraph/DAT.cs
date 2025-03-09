@@ -361,7 +361,7 @@ namespace ArcFormats.Seraph
 
         public override void DeserializeScheme(out string name, out int count)
         {
-            Scheme = Deserializer.ReadScheme<SeraphScheme>();
+            Scheme = Deserializer.LoadScheme<SeraphScheme>();
             name = "Seraph";
             count = Scheme?.KnownOffsets?.Count ?? 0;
         }

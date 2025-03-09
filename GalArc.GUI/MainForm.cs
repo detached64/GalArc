@@ -6,13 +6,9 @@ using GalArc.Settings;
 using GalArc.Strings;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -51,12 +47,11 @@ namespace GalArc.GUI
         private async void ImportSchemesAsync(object sender, EventArgs e)
         {
             this.pnlOperation.Enabled = false;
-            this.lbStatus.Text = LogStrings.Loading;
             this.pBar.Value = 0;
             this.pBar.Maximum = ArcSettings.Formats.Count;
             try
             {
-                await Task.Run(() => LoadSchemes()).ConfigureAwait(true);
+                await Task.Run(() => LoadSchemes(true)).ConfigureAwait(true);
             }
             catch
             {
@@ -71,10 +66,10 @@ namespace GalArc.GUI
 
         private async void ReloadSchemesAsync(object sender, EventArgs e)
         {
-            this.lbStatus.Text = LogStrings.Loading;
             try
             {
-                await Task.Run(() => LoadSchemes()).ConfigureAwait(true);
+                await Task.Run(() => LoadSchemes(false)).ConfigureAwait(true);
+                RefreshSchemes();
             }
             catch
             {
@@ -84,10 +79,12 @@ namespace GalArc.GUI
             this.lbStatus.Text = LogStrings.Ready;
         }
 
-        private void LoadSchemes()
+        private void LoadSchemes(bool isFirstLoad)
         {
+            Logger.InfoInvoke(LogStrings.SchemeLoading);
+            Logger.Debug(string.Format(LogStrings.SchemeCount, Deserializer.SchemeCount));
             Logger.ResetBar();
-            Logger.SetBarMax(ArcSettings.Formats.Count);
+            Logger.SetBarMax(isFirstLoad ? ArcSettings.Formats.Count : ArcSettings.Formats.Count * 2);
             int im_count = 0;
             foreach (var format in ArcSettings.Formats)
             {
@@ -99,9 +96,20 @@ namespace GalArc.GUI
                 }
                 Logger.UpdateBar();
             }
-            Deserializer.ImportedSchemeCount = im_count;
-            Logger.Debug(string.Format(LogStrings.SchemeCount, Deserializer.SchemeCount));
-            Logger.Debug(string.Format(LogStrings.ImportedSchemeCount, Deserializer.ImportedSchemeCount));
+            Deserializer.LoadedSchemeCount = im_count;
+            Logger.Info(string.Format(LogStrings.SchemeLoadedCount, Deserializer.LoadedSchemeCount));
+        }
+
+        private void RefreshSchemes()
+        {
+            Logger.InfoInvoke(LogStrings.SchemeRefreshing);
+            foreach (var format in ArcSettings.Formats)
+            {
+                format.UnpackExtraOptions.AddSchemes();
+                format.PackExtraOptions.AddSchemes();
+                Logger.UpdateBar();
+            }
+            Logger.Info(LogStrings.SchemeRefreshed);
         }
         #endregion
 
@@ -215,7 +223,6 @@ namespace GalArc.GUI
                 {
                     Application.Restart();
                     Environment.Exit(0);
-                    //Process.Start(Assembly.GetExecutingAssembly().Location);
                 }
             }
         }

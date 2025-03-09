@@ -148,9 +148,6 @@
   <data name="InfoDisabled" xml:space="preserve">
     <value>Disabled.</value>
   </data>
-  <data name="InfoFileNotFound" xml:space="preserve">
-    <value>Specified file not found.</value>
-  </data>
   <data name="InfoLastModified" xml:space="preserve">
     <value>Last modified time: {0}</value>
   </data>

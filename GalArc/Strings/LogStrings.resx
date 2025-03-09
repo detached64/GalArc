@@ -157,14 +157,11 @@
   <data name="ErrorSpecifiedFileNotFound" xml:space="preserve">
     <value>{0} file not found in the same directory.</value>
   </data>
-  <data name="ImportDatabaseScheme" xml:space="preserve">
+  <data name="SchemeLoadedNameCount" xml:space="preserve">
     <value>{0}: Import {1} schemes.</value>
   </data>
   <data name="Ready" xml:space="preserve">
     <value>Ready</value>
-  </data>
-  <data name="Loading" xml:space="preserve">
-    <value>Loading……</value>
   </data>
   <data name="SchemeCount" xml:space="preserve">
     <value>Scheme count: {0}</value>
@@ -172,8 +169,8 @@
   <data name="ValidDatabaseCount" xml:space="preserve">
     <value>Valid database count: {0}</value>
   </data>
-  <data name="ImportedSchemeCount" xml:space="preserve">
-    <value>Imported scheme count: {0}</value>
+  <data name="SchemeLoadedCount" xml:space="preserve">
+    <value>Done. {0} schemes were loaded in total.</value>
   </data>
   <data name="SelectUnpackNode" xml:space="preserve">
     <value>Unpack mode: {0} {1} selected.</value>
@@ -201,15 +198,6 @@
   </data>
   <data name="ErrorFileNameFailToMatch" xml:space="preserve">
     <value>File name must be {0}.</value>
-  </data>
-  <data name="ErrorUnpackMethodNotFound" xml:space="preserve">
-    <value>Specified unpack method not found.</value>
-  </data>
-  <data name="ErrorPackMethodNotFound" xml:space="preserve">
-    <value>Specified pack method not found.</value>
-  </data>
-  <data name="ErrorClassNotFound" xml:space="preserve">
-    <value>Specified class not found.</value>
   </data>
   <data name="PreReleaseVer" xml:space="preserve">
     <value>You are using a pre-release version of GalArc.</value>
@@ -283,13 +271,19 @@
   <data name="ErrorNotSupportedVersion" xml:space="preserve">
     <value>{0} v{1} archive temporarily not supported.</value>
   </data>
-  <data name="ErrorReadIndexFailed" xml:space="preserve">
-    <value>Failed to read index.</value>
-  </data>
   <data name="WrongScheme" xml:space="preserve">
     <value>Wrong scheme!</value>
   </data>
   <data name="NeedDec" xml:space="preserve">
     <value>The file has been encrypted. Please choose appropriate scheme.</value>
+  </data>
+  <data name="SchemeRefreshing" xml:space="preserve">
+    <value>Refreshing interface……</value>
+  </data>
+  <data name="SchemeRefreshed" xml:space="preserve">
+    <value>Done.</value>
+  </data>
+  <data name="SchemeLoading" xml:space="preserve">
+    <value>Loading schemes……</value>
   </data>
 </root>

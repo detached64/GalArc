@@ -182,7 +182,7 @@ namespace ArcFormats.Siglus
 
         public override void DeserializeScheme(out string name, out int count)
         {
-            Scheme = Deserializer.ReadScheme<SiglusScheme>();
+            Scheme = Deserializer.LoadScheme<SiglusScheme>();
             name = "Siglus";
             count = Scheme?.KnownKeys?.Count ?? 0;
         }

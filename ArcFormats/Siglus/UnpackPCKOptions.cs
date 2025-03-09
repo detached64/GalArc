@@ -22,8 +22,14 @@ namespace ArcFormats.Siglus
 
         private void UnpackPCKOptions_Load(object sender, EventArgs e)
         {
+            AddSchemes();
+        }
+
+        public override void AddSchemes()
+        {
+            this.combSchemes.Items.Clear();
             this.combSchemes.Items.Add(GUIStrings.ItemTryEveryEnc);
-            if (ScenePCK.Scheme != null)
+            if (ScenePCK.Scheme?.KnownKeys != null)
             {
                 foreach (var scheme in ScenePCK.Scheme.KnownKeys)
                 {

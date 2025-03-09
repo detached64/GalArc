@@ -168,9 +168,6 @@
   <data name="InfoDisabled" xml:space="preserve">
     <value>未启用。</value>
   </data>
-  <data name="InfoFileNotFound" xml:space="preserve">
-    <value>未找到指定的文件。</value>
-  </data>
   <data name="InfoLastModified" xml:space="preserve">
     <value>修改时间：{0}</value>
   </data>

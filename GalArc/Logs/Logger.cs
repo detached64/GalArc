@@ -351,7 +351,7 @@ namespace GalArc.Logs
 
         public static void ShowVersion(string extension, string version) => Instance.InfoInternal(string.Format(LogStrings.ValidArchiveDetected, extension, version));
 
-        public static void ImportDatabaseScheme(string name, int count) => Instance.DebugInternal(string.Format(LogStrings.ImportDatabaseScheme, name, count));
+        public static void ImportDatabaseScheme(string name, int count) => Instance.DebugInternal(string.Format(LogStrings.SchemeLoadedNameCount, name, count));
         #endregion
     }
 }

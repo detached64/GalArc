@@ -1,4 +1,3 @@
-using GalArc.Logs;
 using GalArc.Settings;
 using GalArc.Strings;
 using Newtonsoft.Json;
@@ -14,8 +13,6 @@ namespace GalArc.Database
 {
     public static class Deserializer
     {
-        public static Dictionary<string, string> LoadedJsons = new Dictionary<string, string>();
-
         private static List<Type> schemes;
 
         private static List<Type> Schemes => schemes ?? (schemes = Assembly.GetExecutingAssembly().GetTypes()
@@ -25,55 +22,43 @@ namespace GalArc.Database
 
         public static int SchemeCount => Schemes.Count;
 
-        public static int ImportedSchemeCount { get; set; }
+        public static int LoadedSchemeCount { get; set; }
 
-        private static bool LoadScheme<T>() where T : ArcScheme
+        private static string ReadScheme(string name)
         {
-            string class_name = typeof(T).Name;
-            string name = class_name.Remove(class_name.Length - 6);    // remove "Scheme"
-            if (LoadedJsons.ContainsKey(name))
-            {
-                return true;
-            }
             string path = Path.Combine(DatabaseConfig.Path, name + ".json");
             if (!File.Exists(path))
             {
-                return false;
+                return null;
             }
-            string json = File.ReadAllText(path, Encoding.UTF8);
-            if (string.IsNullOrEmpty(json))
-            {
-                return false;
-            }
-            LoadedJsons[name] = json;
-            return true;
+            return File.ReadAllText(path, Encoding.UTF8);
         }
 
-        private static T DeserializeScheme<T>()
+        private static string ReadScheme<T>() where T : ArcScheme
         {
-            string name = typeof(T).Name.Remove(typeof(T).Name.Length - 6);    // remove "Scheme"
-            if (!LoadedJsons.TryGetValue(name, out var json) || string.IsNullOrEmpty(json))
+            return ReadScheme(typeof(T).Name.Remove(typeof(T).Name.Length - 6));
+        }
+
+        public static T LoadScheme<T>() where T : ArcScheme
+        {
+            if (!BaseSettings.Default.IsDatabaseEnabled)
             {
                 return default;
             }
+            string json = ReadScheme<T>();
+            if (string.IsNullOrEmpty(json))
+            {
+                throw new InvalidDataException($"Failed to read {typeof(T).Name} scheme.");
+            }
+
             try
             {
                 return JsonConvert.DeserializeObject<T>(json);
             }
             catch (Exception ex)
             {
-                Logger.Error($"Failed to deserialize {name} scheme: {ex.Message}", false);
-                return default;
+                throw new InvalidOperationException($"Failed to deserialize scheme: {ex.Message}");
             }
-        }
-
-        public static T ReadScheme<T>() where T : ArcScheme
-        {
-            if (!BaseSettings.Default.IsDatabaseEnabled || !LoadScheme<T>())
-            {
-                return default;
-            }
-            return DeserializeScheme<T>();
         }
 
         private static string GetInfo(Type type, out bool isValid)
@@ -87,7 +72,7 @@ namespace GalArc.Database
 
             try
             {
-                var json = LoadedJsons[name];
+                string json = ReadScheme(name);
                 JObject jsonObject = JObject.Parse(json);
 
                 // contents
@@ -135,24 +120,6 @@ namespace GalArc.Database
             {
                 return GUIStrings.InfoDisabled;
             }
-            foreach (Type type in Schemes)
-            {
-                string name = type.Name.Remove(type.Name.Length - 6);    // remove "Scheme"
-                if (LoadedJsons.ContainsKey(name))
-                {
-                    continue;
-                }
-                string path = Path.Combine(DatabaseConfig.Path, name + ".json");
-                if (!File.Exists(path))
-                {
-                    continue;
-                }
-                string json = File.ReadAllText(path, Encoding.UTF8);
-                if (!string.IsNullOrEmpty(json))
-                {
-                    LoadedJsons[name] = json;
-                }
-            }
             StringBuilder result = new StringBuilder();
             int count = 0;
             StringBuilder info = new StringBuilder();
@@ -165,7 +132,7 @@ namespace GalArc.Database
                 }
             }
             result.AppendFormat(LogStrings.SchemeCount, SchemeCount).AppendLine();
-            result.AppendFormat(LogStrings.ImportedSchemeCount, ImportedSchemeCount).AppendLine();
+            result.AppendFormat(LogStrings.SchemeLoadedCount, LoadedSchemeCount).AppendLine();
             result.AppendFormat(LogStrings.ValidDatabaseCount, count).AppendLine().AppendLine();
             result.AppendLine(info.ToString());
             return result.ToString();

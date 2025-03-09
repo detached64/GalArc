@@ -124,15 +124,6 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Specified file not found. 的本地化字符串。
-        /// </summary>
-        public static string InfoFileNotFound {
-            get {
-                return ResourceManager.GetString("InfoFileNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 {0}: {1} items 的本地化字符串。
         /// </summary>
         public static string InfoItems {

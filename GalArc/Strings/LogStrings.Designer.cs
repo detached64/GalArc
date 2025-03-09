@@ -97,15 +97,6 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Specified class not found. 的本地化字符串。
-        /// </summary>
-        public static string ErrorClassNotFound {
-            get {
-                return ResourceManager.GetString("ErrorClassNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Path contains invalid characters. Switching the encoding in the settings might work. 的本地化字符串。
         /// </summary>
         public static string ErrorContainsInvalid {
@@ -241,38 +232,11 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Specified pack method not found. 的本地化字符串。
-        /// </summary>
-        public static string ErrorPackMethodNotFound {
-            get {
-                return ResourceManager.GetString("ErrorPackMethodNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Failed to read index. 的本地化字符串。
-        /// </summary>
-        public static string ErrorReadIndexFailed {
-            get {
-                return ResourceManager.GetString("ErrorReadIndexFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 {0} file not found in the same directory. 的本地化字符串。
         /// </summary>
         public static string ErrorSpecifiedFileNotFound {
             get {
                 return ResourceManager.GetString("ErrorSpecifiedFileNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Specified unpack method not found. 的本地化字符串。
-        /// </summary>
-        public static string ErrorUnpackMethodNotFound {
-            get {
-                return ResourceManager.GetString("ErrorUnpackMethodNotFound", resourceCulture);
             }
         }
         
@@ -291,24 +255,6 @@ namespace GalArc.Strings {
         public static string HasUpdate {
             get {
                 return ResourceManager.GetString("HasUpdate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 {0}: Import {1} schemes. 的本地化字符串。
-        /// </summary>
-        public static string ImportDatabaseScheme {
-            get {
-                return ResourceManager.GetString("ImportDatabaseScheme", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Imported scheme count: {0} 的本地化字符串。
-        /// </summary>
-        public static string ImportedSchemeCount {
-            get {
-                return ResourceManager.GetString("ImportedSchemeCount", resourceCulture);
             }
         }
         
@@ -381,15 +327,6 @@ namespace GalArc.Strings {
         public static string KeyParseError {
             get {
                 return ResourceManager.GetString("KeyParseError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Loading…… 的本地化字符串。
-        /// </summary>
-        public static string Loading {
-            get {
-                return ResourceManager.GetString("Loading", resourceCulture);
             }
         }
         
@@ -489,6 +426,51 @@ namespace GalArc.Strings {
         public static string SchemeCount {
             get {
                 return ResourceManager.GetString("SchemeCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Done. {0} schemes were loaded in total. 的本地化字符串。
+        /// </summary>
+        public static string SchemeLoadedCount {
+            get {
+                return ResourceManager.GetString("SchemeLoadedCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 {0}: Import {1} schemes. 的本地化字符串。
+        /// </summary>
+        public static string SchemeLoadedNameCount {
+            get {
+                return ResourceManager.GetString("SchemeLoadedNameCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Loading schemes…… 的本地化字符串。
+        /// </summary>
+        public static string SchemeLoading {
+            get {
+                return ResourceManager.GetString("SchemeLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Done. 的本地化字符串。
+        /// </summary>
+        public static string SchemeRefreshed {
+            get {
+                return ResourceManager.GetString("SchemeRefreshed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Refreshing interface…… 的本地化字符串。
+        /// </summary>
+        public static string SchemeRefreshing {
+            get {
+                return ResourceManager.GetString("SchemeRefreshing", resourceCulture);
             }
         }
         

@@ -22,17 +22,22 @@ namespace ArcFormats.NScripter
 
         private void UnpackNS2Options_Load(object sender, EventArgs e)
         {
-            combSchemes.Items.Add(GUIStrings.ItemNoEnc);
-            combSchemes.Items.Add(GUIStrings.ItemCustomEnc);
+            AddSchemes();
+        }
 
-            if (NS2.Scheme != null)
+        public override void AddSchemes()
+        {
+            this.combSchemes.Items.Clear();
+            this.combSchemes.Items.Add(GUIStrings.ItemNoEnc);
+            this.combSchemes.Items.Add(GUIStrings.ItemCustomEnc);
+            if (NS2.Scheme?.KnownKeys != null)
             {
                 foreach (var key in NS2.Scheme.KnownKeys)
                 {
-                    combSchemes.Items.Add(key.Key);
+                    this.combSchemes.Items.Add(key.Key);
                 }
             }
-            combSchemes.SelectedIndex = 0;
+            this.combSchemes.SelectedIndex = 0;
         }
 
         private void combSchemes_SelectedIndexChanged(object sender, EventArgs e)

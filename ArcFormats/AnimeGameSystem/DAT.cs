@@ -124,7 +124,7 @@ namespace ArcFormats.AnimeGameSystem
 
         public override void DeserializeScheme(out string name, out int count)
         {
-            Scheme = Deserializer.ReadScheme<AGSScheme>();
+            Scheme = Deserializer.LoadScheme<AGSScheme>();
             name = "AnimeGameSystem";
             count = Scheme?.KnownSchemes?.Count ?? 0;
         }

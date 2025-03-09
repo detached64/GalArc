@@ -177,14 +177,11 @@
   <data name="ErrorSpecifiedFileNotFound" xml:space="preserve">
     <value>同目录下未找到{0}文件。</value>
   </data>
-  <data name="ImportDatabaseScheme" xml:space="preserve">
+  <data name="SchemeLoadedNameCount" xml:space="preserve">
     <value>{0}：导入{1}个密钥。</value>
   </data>
   <data name="Ready" xml:space="preserve">
     <value>就绪</value>
-  </data>
-  <data name="Loading" xml:space="preserve">
-    <value>加载中……</value>
   </data>
   <data name="SchemeCount" xml:space="preserve">
     <value>密钥总数：{0}</value>
@@ -192,8 +189,8 @@
   <data name="ValidDatabaseCount" xml:space="preserve">
     <value>有效数据库总数：{0}</value>
   </data>
-  <data name="ImportedSchemeCount" xml:space="preserve">
-    <value>导入密钥总数：{0}</value>
+  <data name="SchemeLoadedCount" xml:space="preserve">
+    <value>导入完成。共导入{0}组密钥。</value>
   </data>
   <data name="SelectUnpackNode" xml:space="preserve">
     <value>已选择：解包{0}引擎的{1}文件。</value>
@@ -221,15 +218,6 @@
   </data>
   <data name="ErrorFileNameFailToMatch" xml:space="preserve">
     <value>文件名必须为{0}。</value>
-  </data>
-  <data name="ErrorUnpackMethodNotFound" xml:space="preserve">
-    <value>对应的解包方法未找到。</value>
-  </data>
-  <data name="ErrorPackMethodNotFound" xml:space="preserve">
-    <value>对应的封包方法未找到。</value>
-  </data>
-  <data name="ErrorClassNotFound" xml:space="preserve">
-    <value>对应的类未找到。</value>
   </data>
   <data name="PreReleaseVer" xml:space="preserve">
     <value>您正在使用预发布版本。</value>
@@ -303,13 +291,19 @@
   <data name="ErrorNotSupportedVersion" xml:space="preserve">
     <value>{0} v{1}封包暂时不支持。</value>
   </data>
-  <data name="ErrorReadIndexFailed" xml:space="preserve">
-    <value>读取索引失败。</value>
-  </data>
   <data name="WrongScheme" xml:space="preserve">
     <value>加密方案错误！</value>
   </data>
   <data name="NeedDec" xml:space="preserve">
     <value>文件已加密。请选择合适的加密方案。</value>
+  </data>
+  <data name="SchemeRefreshing" xml:space="preserve">
+    <value>刷新界面中……</value>
+  </data>
+  <data name="SchemeRefreshed" xml:space="preserve">
+    <value>刷新完成。</value>
+  </data>
+  <data name="SchemeLoading" xml:space="preserve">
+    <value>导入密钥中……</value>
   </data>
 </root>

@@ -22,8 +22,14 @@ namespace ArcFormats.AnimeGameSystem
 
         private void UnpackDATOptions_Load(object sender, EventArgs e)
         {
+            AddSchemes();
+        }
+
+        public override void AddSchemes()
+        {
+            this.combSchemes.Items.Clear();
             this.combSchemes.Items.Add(GUIStrings.ItemNoEnc);
-            if (DAT.Scheme != null)
+            if (DAT.Scheme?.KnownSchemes != null)
             {
                 foreach (var scheme in DAT.Scheme.KnownSchemes)
                 {

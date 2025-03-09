@@ -34,6 +34,10 @@ namespace GalArc.Controls
             }
         }
 
+        public virtual void AddSchemes()
+        {
+        }
+
         public OptionsTemplate()
         {
             InitializeComponent();

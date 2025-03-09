@@ -22,15 +22,21 @@ namespace ArcFormats.Qlie
 
         private void UnpackPACKOptions_Load(object sender, EventArgs e)
         {
-            combSchemes.Items.Add(GUIStrings.ItemDefaultEnc);
-            if (PACK.Scheme != null)
+            AddSchemes();
+        }
+
+        public override void AddSchemes()
+        {
+            this.combSchemes.Items.Clear();
+            this.combSchemes.Items.Add(GUIStrings.ItemDefaultEnc);
+            if (PACK.Scheme?.KnownKeys != null)
             {
-                foreach (var key in PACK.Scheme.KnownKeys.Keys)
+                foreach (var scheme in PACK.Scheme.KnownKeys)
                 {
-                    combSchemes.Items.Add(key);
+                    this.combSchemes.Items.Add(scheme.Key);
                 }
             }
-            combSchemes.SelectedIndex = 0;
+            this.combSchemes.SelectedIndex = 0;
         }
 
         private void combSchemes_SelectedIndexChanged(object sender, EventArgs e)

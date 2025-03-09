@@ -123,7 +123,7 @@ namespace ArcFormats.NScripter
 
         public override void DeserializeScheme(out string name, out int count)
         {
-            Scheme = Deserializer.ReadScheme<Ns2Scheme>();
+            Scheme = Deserializer.LoadScheme<Ns2Scheme>();
             name = "Ns2";
             count = Scheme?.KnownKeys?.Count ?? 0;
         }
