@@ -114,14 +114,17 @@ namespace ArcFormats.Qlie
                     rawHashData = File.ReadAllBytes(hashFile);
                 }
             }
-            QlieHashReader hashReader = new QlieHashReader(rawHashData);
-            Logger.Info($"Hash Version: {hashReader.HashVersion / 10.0:0.0}");
-            byte[] hashData = hashReader.GetHashData();
-            // Optional: save hash
-            if (SaveHash && hashData != null)
+            if (rawHashData != null)
             {
-                Directory.CreateDirectory(output);
-                File.WriteAllBytes(Path.Combine(output, "hash.bin"), hashData);
+                QlieHashReader hashReader = new QlieHashReader(rawHashData);
+                Logger.Info($"Hash Version: {hashReader.HashVersion / 10.0:0.0}");
+                byte[] hashData = hashReader.GetHashData();
+                // Optional: save hash
+                if (SaveHash && hashData != null)
+                {
+                    Directory.CreateDirectory(output);
+                    File.WriteAllBytes(Path.Combine(output, "hash.bin"), hashData);
+                }
             }
             #endregion
 
