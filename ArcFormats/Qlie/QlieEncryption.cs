@@ -216,7 +216,7 @@ namespace ArcFormats.Qlie
         }
     }
 
-    internal class Encryption30 : Encryption20
+    internal class Encryption30 : QlieEncryption
     {
         public override int Version => 30;
 
@@ -265,7 +265,7 @@ namespace ArcFormats.Qlie
             uint length = entry.Size;
             if (key_file == null || GameKey == null)
             {
-                base.DecryptEntry(data, entry);
+                Decrypt(data, data.Length, entry.Key);
                 return;
             }
 
