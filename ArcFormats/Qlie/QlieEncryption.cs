@@ -160,7 +160,7 @@ namespace ArcFormats.Qlie
             return output;
         }
 
-        public static QlieEncryption CreateEncryption(int version, byte[] game_data)
+        public static QlieEncryption CreateEncryption(int version, byte[] game_key)
         {
             switch (version)
             {
@@ -169,7 +169,7 @@ namespace ArcFormats.Qlie
                 case 20:
                     return new Encryption20();
                 case 30:
-                    return new Encryption30(game_data);
+                    return new Encryption30(game_key);
                 case 31:
                     return new Encryption31();
                 default:
@@ -220,11 +220,11 @@ namespace ArcFormats.Qlie
     {
         public override int Version => 30;
 
-        private byte[] LocalKeyData;
+        private byte[] GameKey;
 
         public Encryption30(byte[] data)
         {
-            LocalKeyData = data;
+            GameKey = data;
         }
 
         public override uint ComputeHash(byte[] data, int length)
@@ -250,7 +250,7 @@ namespace ArcFormats.Qlie
 
         public override string DecryptName(byte[] input, int name_length, int hash)
         {
-            int key = (hash ^ 0x3E) + name_length;        // 0xC4 ^ 0x3E
+            int key = (hash ^ 0x3E) + name_length;
             for (int i = 1; i <= name_length; i++)
             {
                 input[i - 1] ^= (byte)((key ^ i) + i);
@@ -263,7 +263,7 @@ namespace ArcFormats.Qlie
         {
             var key_file = entry.CommmonKey;
             uint length = entry.Size;
-            if (key_file == null || LocalKeyData == null)
+            if (key_file == null || GameKey == null)
             {
                 base.DecryptEntry(data, entry);
                 return;
@@ -284,8 +284,15 @@ namespace ArcFormats.Qlie
             seed ^= 0x453A;
 
             var mt = new QlieMersenneTwister(seed);
-            mt.XorState(key_file);
-            mt.XorState(LocalKeyData);
+
+            if (key_file.Length > 0)
+            {
+                mt.XorState(key_file);
+            }
+            if (GameKey.Length > 0)
+            {
+                mt.XorState(GameKey);
+            }
 
             ulong[] table = new ulong[16];
             for (int i = 0; i < table.Length; ++i)

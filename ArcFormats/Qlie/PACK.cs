@@ -60,8 +60,8 @@ namespace ArcFormats.Qlie
             int minor = int.Parse(qheader.Magic.Substring(13, 1));
             int version = major * 10 + minor;
             Logger.Info($"File Pack Version: {major}.{minor}");
-            byte[] local_key_data = !string.IsNullOrWhiteSpace(SelectedKey) ? Convert.FromBase64String(SelectedKey) : null;
-            QlieEncryption qenc = QlieEncryption.CreateEncryption(version, local_key_data);
+            byte[] game_key = !string.IsNullOrWhiteSpace(SelectedKey) ? Convert.FromBase64String(SelectedKey) : null;
+            QlieEncryption qenc = QlieEncryption.CreateEncryption(version, game_key);
             #endregion
 
             #region read key
