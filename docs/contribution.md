@@ -35,3 +35,7 @@
    ```
 
 4. Add a new EngineInfo in GalArc/Common/EngineInfo.cs.
+
+## Find and add custom scheme in database
+
+Follow the tutorials [here](https://github.com/detached64/GalArc/tree/master/docs/database)
