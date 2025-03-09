@@ -275,7 +275,7 @@ namespace GalArc.GUI
             resources.ApplyResources(this.pnlOperation, "pnlOperation");
             this.pnlOperation.Name = "pnlOperation";
             // 
-            // MainWindow
+            // MainForm
             // 
             this.AllowDrop = true;
             resources.ApplyResources(this, "$this");
@@ -295,9 +295,9 @@ namespace GalArc.GUI
             this.Controls.Add(this.pnlOperation);
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip;
-            this.Name = "MainWindow";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
-            this.Load += new System.EventHandler(this.MainWindow_Load);
+            this.Name = "MainForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.gbLog.ResumeLayout(false);

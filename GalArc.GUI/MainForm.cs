@@ -27,16 +27,13 @@ namespace GalArc.GUI
 
         private ArchiveFormat SelectedFormat;
 
-        private string CurrentCulture;
+        internal static string CurrentCulture;
         private bool IsFirstChangeLang = true;
         private OperationMode Mode => GetOperationMode();
 
         public MainForm()
         {
             Instance = this;
-            GetLocalCulture();
-            SetLocalCulture();
-
             InitializeComponent();
 
             Logger.Instance.LogMessageEvent += AppendLog;
@@ -109,7 +106,7 @@ namespace GalArc.GUI
         #endregion
 
         #region MainFormEvents
-        private void MainWindow_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
             this.combLanguages.Items.AddRange(Languages.SupportedLanguages.Keys.ToArray());
             this.TopMost = GUISettings.Default.IsTopMost;
@@ -117,7 +114,7 @@ namespace GalArc.GUI
             this.matchPathsMenuItem.Checked = GUISettings.Default.MatchPath;
         }
 
-        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Logger.Instance.LogMessageEvent -= AppendLog;
             Logger.Instance.StatusMessageEvent -= UpdateStatus;
@@ -216,8 +213,9 @@ namespace GalArc.GUI
             {
                 if (previousCulture != CurrentCulture)
                 {
-                    Application.ExitThread();
-                    Process.Start(Assembly.GetExecutingAssembly().Location);
+                    Application.Restart();
+                    Environment.Exit(0);
+                    //Process.Start(Assembly.GetExecutingAssembly().Location);
                 }
             }
         }
@@ -661,21 +659,6 @@ namespace GalArc.GUI
                 string filePath = this.txtInputPath.Text + "." + this.treeViewEngines.SelectedNode.Text.ToLower();
                 this.txtOutputPath.Text = File.Exists(filePath) ? filePath + ".new" : filePath;
             }
-        }
-
-        private void GetLocalCulture()
-        {
-            CurrentCulture = string.IsNullOrEmpty(GUISettings.Default.LastLanguage) ? CultureInfo.CurrentCulture.Name : GUISettings.Default.LastLanguage;
-            if (!Languages.SupportedLanguages.Values.ToArray().Contains(CurrentCulture))
-            {
-                CurrentCulture = "en-US";
-            }
-        }
-
-        private void SetLocalCulture()
-        {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo(CurrentCulture);
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(CurrentCulture);
         }
 
         private OperationMode GetOperationMode()
