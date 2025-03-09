@@ -5,7 +5,6 @@ using GalArc.Strings;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace ArcFormats.Siglus
@@ -38,7 +37,7 @@ namespace ArcFormats.Siglus
 
         internal static SiglusScheme Scheme;
 
-        internal static Tuple<string, byte[]> SelectedScheme;
+        internal static byte[] SelectedKey;
 
         internal static bool TryEachKey;
 
@@ -88,7 +87,7 @@ namespace ArcFormats.Siglus
             }
             Directory.CreateDirectory(folderPath);
 
-            byte[] key = header.UseExtraKey ? (TryEachKey ? TryAllSchemes(entries[0], 0) : (SelectedScheme?.Item2)) : null;
+            byte[] key = header.UseExtraKey ? (TryEachKey ? TryAllSchemes(entries[0], 0) : SelectedKey) : null;
             foreach (ScenePckEntry entry in entries)
             {
                 SiglusUtils.DecryptWithKey(entry.Data, key);
@@ -151,28 +150,29 @@ namespace ArcFormats.Siglus
 
         protected byte[] TryAllSchemes(ScenePckEntry entry, int type)
         {
-            foreach (var scheme in Scheme.KnownSchemes.Values)
+            foreach (string scheme in Scheme.KnownKeys.Values)
             {
-                if (scheme.KnownKey.Length != 16)
+                byte[] key = Convert.FromBase64String(scheme);
+                if (key.Length != 16)
                 {
                     continue;
                 }
-                if (IsRightKey(entry.Data, scheme.KnownKey, type))
+                if (IsRightKey(entry.Data, key, type))
                 {
-                    Logger.Info(string.Format(LogStrings.KeyFound, BitConverter.ToString(scheme.KnownKey)));
-                    Logger.Info(string.Format(LogStrings.MatchedGame, FindKeyFromValue(scheme.KnownKey)));
-                    return scheme.KnownKey;
+                    Logger.Info(string.Format(LogStrings.KeyFound, BitConverter.ToString(key)));
+                    Logger.Info(string.Format(LogStrings.MatchedGame, FindKeyFromValue(scheme)));
+                    return key;
                 }
             }
             Logger.Info(string.Format(LogStrings.KeyNotFound));
             return null;
         }
 
-        protected string FindKeyFromValue(byte[] key)
+        protected string FindKeyFromValue(string scheme)
         {
-            foreach (var dic in Scheme.KnownSchemes)
+            foreach (var dic in Scheme.KnownKeys)
             {
-                if (key.SequenceEqual(dic.Value.KnownKey))
+                if (string.Equals(scheme, dic.Value))
                 {
                     return dic.Key;
                 }
@@ -184,7 +184,7 @@ namespace ArcFormats.Siglus
         {
             Scheme = Deserializer.ReadScheme<SiglusScheme>();
             name = "Siglus";
-            count = Scheme?.KnownSchemes?.Count ?? 0;
+            count = Scheme?.KnownKeys?.Count ?? 0;
         }
     }
 }

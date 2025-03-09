@@ -1,229 +1,80 @@
 {
-  "KnownSchemes": {
-    "神待ちサナちゃん　DL版": {
-      "KnownKey": "LkvdKnuwCrr4GvlhsBiYXA=="
-    },
-    "神待ちサナちゃん　PKG版": {
-      "KnownKey": "LkvdKnuwCrr4GvlhsEfcEA=="
-    },
-    "円交少女　～陸上部ゆっきーの場合～": {
-      "KnownKey": "cTGmAFqYWdGLE7Ym5VyDDw=="
-    },
-    "円交少女２　～ＪＫアイドル真鈴の場合～": {
-      "KnownKey": "Nl7JQq3SijNn33E0IaBvOg=="
-    },
-    "清楚で真面目な彼女が、最凶ヤリサーに勧誘されたら…？": {
-      "KnownKey": "VDiiFlzUfc6FLpMBx0aNCA=="
-    },
-    "初恋１／１": {
-      "KnownKey": "WzCiGkHBZteNJ5sdzVmFFw=="
-    },
-    "初恋１／１ Memorical Collection Version": {
-      "KnownKey": "NkDOfzWkBLj1J5sdzWuPEw=="
-    },
-    "星織ユメミライ": {
-      "KnownKey": "cTGmAFqYWM6FPp0tylufCA=="
-    },
-    "星織ユメミライ Memorical Collection Version": {
-      "KnownKey": "AV3DdD/6N7aFPp01/VeDEQ=="
-    },
-    "星織ユメミライ　律佳とあなたの１周年記念、いちゃらぶバースデー": {
-      "KnownKey": "RDCiGE/qZs6FIoADyV+NIw=="
-    },
-    "星織ユメミライ Perfect Edition": {
-      "KnownKey": "pvZZN60zi81nMnHjIEd80w=="
-    },
-    "銀色、遥か": {
-      "KnownKey": "A16mAFqYJJfJYd9Hj2WYHQ=="
-    },
-    "銀色、遥か Memorical Collection Version": {
-      "KnownKey": "A175YzX1VPusFbol4B2YHQ=="
-    },
-    "月の彼方で逢いましょう　体験版": {
-      "KnownKey": "eQHIAHOIC52JSsh+sAuqYg=="
-    },
-    "月の彼方で逢いましょう": {
-      "KnownKey": "fTKbIhfyffKsBKcM6V++LQ=="
-    },
-    "月の彼方で逢いましょうSSR 体験版": {
-      "KnownKey": "ARqKNEyHWt7TD7EtwAa/GA=="
-    },
-    "月の彼方で逢いましょうSSR DL版": {
-      "KnownKey": "ZDT9K2rCeN27CL44zwC0OA=="
-    },
-    "月の彼方で逢いましょうSSR PKG版": {
-      "KnownKey": "ZDT9K2rCeN22IcYy5kOdGw=="
-    },
-    "AIR Android Version": {
-      "KnownKey": "WzKkGFfAYtHJYd8HyVmHBQ=="
-    },
-    "Kanon Android Version": {
-      "KnownKey": "VyC8ElfAaMOROYcfw1WVCQ=="
-    },
-    "Rewrite": {
-      "KnownKey": "Ng/Jbi7Tiw9mpXDDI6NulA=="
-    },
-    "Rewrite Harvest festa!": {
-      "KnownKey": "NiXKly7CCbjkY3DDIItt6w=="
-    },
-    "Rewriteオカ研活動記録外伝　前編": {
-      "KnownKey": "tLDJNy66Cc/kR/JzoVLsNg=="
-    },
-    "Rewriteオカ研活動記録外伝　後編": {
-      "KnownKey": "Ng/JNy66Cc/kR/JzoVLsXQ=="
-    },
-    "Rewrite＋": {
-      "KnownKey": "Ng/JNy66CdzkDfIAI6NulA=="
-    },
-    "Rewrite＋ Steam English Version": {
-      "KnownKey": "wKGKUumNFiKL987M+HpWrw=="
-    },
-    "Harmonia": {
-      "KnownKey": "fw2IIXvqQfOqA6cv62CtLg=="
-    },
-    "Angel Beats! -1st beat-": {
-      "KnownKey": "XweKKmanEaaEbZ1Gn3q5fg=="
-    },
-    "Summer Pockets": {
-      "KnownKey": "fiO6CkuoKZr2fP0ZiDTRdw=="
-    },
-    "Summer Pockets Mobile Version": {
-      "KnownKey": "u4IP6THcEfIauvhM81Nr0g=="
-    },
-    "Summer Pockets Steam English Version": {
-      "KnownKey": "zM9XyGuSFJCTLbcWiFcVMA=="
-    },
-    "Summer Pockets REFLECTION BLUE DL版": {
-      "KnownKey": "CGOAC3npUfHnKudg8HyXTg=="
-    },
-    "Summer Pockets REFLECTION BLUE PKG版": {
-      "KnownKey": "CGOAC3npUfHnKudgrzjbTg=="
-    },
-    "CLANNAD Steam Chinese Version": {
-      "KnownKey": "O1TcdC+6DNasCNIj7GCpLg=="
-    },
-    "LOOPERS 体験版": {
-      "KnownKey": "E0mKXm+nZJreX8tjshLoeA=="
-    },
-    "LOOPERS DL版": {
-      "KnownKey": "cROxFQn6DePTRdZ4rinmBQ=="
-    },
-    "LOOPERS Mobile Version": {
-      "KnownKey": "SxfJLgmYIYvJM+ltiFj2Vw=="
-    },
-    "LUNARiA 体験版": {
-      "KnownKey": "Bg3fYwiga6Lbct5fqE/ufg=="
-    },
-    "LUNARiA DL版": {
-      "KnownKey": "YwP5PgX0LZb5Hpk+mDbUUw=="
-    },
-    "LUNARiA PKG版": {
-      "KnownKey": "Y1y9cgX0LZb5Hpk+mDbUUw=="
-    },
-    "LUNARiA Mobile Version": {
-      "KnownKey": "m5R8NoMLrumgbu1+xHeJdQ=="
-    },
-    "終のステラ 体験版": {
-      "KnownKey": "VTGdGEz7MO67H4YPzliNHw=="
-    },
-    "終のステラ DL版": {
-      "KnownKey": "TiqzFEyMfe27CL4S0U6LHg=="
-    },
-    "LAMUNATION!": {
-      "KnownKey": "tSRKJq/uis5nDHEIIX5tJw=="
-    },
-    "ゆめいろアルエット！": {
-      "KnownKey": "t85Lr6x9CoTkRfIXo9ftEQ=="
-    },
-    "ましろサマー": {
-      "KnownKey": "NbPB2S6hCAbmU3HnIWBvAQ=="
-    },
-    "ノーブルリージュ！": {
-      "KnownKey": "fRibOmD6S/+qFr0h42alMg=="
-    },
-    "キサラギGOLD★STAR": {
-      "KnownKey": "9EdKJ608ivejA74uI66/KA=="
-    },
-    "はつゆきさくら": {
-      "KnownKey": "3eAu9t4w72QHixmoTtO7FA=="
-    },
-    "カルマルカ＊サークル": {
-      "KnownKey": "GXKiEU/lBcCXa21767W3/g=="
-    },
-    "花咲ワークスプリング！": {
-      "KnownKey": "uR1H5r0NCb/n6P1+rBf9Og=="
-    },
-    "フローラル·フローラブ": {
-      "KnownKey": "Nm3JTCFbB9P1VP/lqzz+3Q=="
-    },
-    "金色ラブリッチェ": {
-      "KnownKey": "pbfJJyNLGKDqJeNPr4D9TA=="
-    },
-    "歪んだ嘘の恋とレッテル": {
-      "KnownKey": "WziiGgPRaNGBIpsHw1+FUQ=="
-    },
-    "星逢のプリズムギア": {
-      "KnownKey": "tGRGTqxgi8bkXPlnrtTtuQ=="
-    },
-    "地味っ子むちむち委員長とドスケベ調教性活": {
-      "KnownKey": "tR5K/rVrhi23JJsF0F2C/w=="
-    },
-    "勇者と踊れ【体験版】": {
-      "KnownKey": "wKGKUumNFiKL987M+HpWrw=="
-    },
-    "勇者と踊れ！": {
-      "KnownKey": "JK3JDi63itVnD3EkNUpuyQ=="
-    },
-    "LOVE・デスティネーション【体験版】": {
-      "KnownKey": "Wja/FlbRbMmcOIADw1iAEw=="
-    },
-    "LOVE・デスティネーション": {
-      "KnownKey": "Wja/FlbRbMmII4QP2lCJDw=="
-    },
-    "アインシュタインより愛を込めて【体験版】": {
-      "KnownKey": "wKGKUumNFiKL987M+HpWrw=="
-    },
-    "アインシュタインより愛を込めて": {
-      "KnownKey": "tQZKLK3qiuW7CL7p/bez/w=="
-    },
-    "アインシュタインより愛を込めて APOLLOCRISIS": {
-      "KnownKey": "tQxKJq3giu9nGXE/IWFvKQ=="
-    },
-    "妹サポ": {
-      "KnownKey": "KXfJQy6/Fp451DyAIPB6+Q=="
-    },
-    "痴漢専用車両～未発達な身体のテニス少女・蛍～【Android版】": {
-      "KnownKey": "bQ6PB0/HfNKLOIYL0EHYRQ=="
-    },
-    "聖娼女～気高きご令嬢・紫苑～【Android版】": {
-      "KnownKey": "NlXJeS7xi19m6HDcINFusA=="
-    },
-    "聖娼女～現役アイドル・彩葉～【Android版】": {
-      "KnownKey": "NlvJei61CbLkS3CiIJZuug=="
-    },
-    "聖娼女～優しき女子校生・優莉～【Android版】": {
-      "KnownKey": "NhfK+qx6ixhm5HDCIJ9u3g=="
-    },
-    "聖娼女～バレー部のエース・翼～【Android版】": {
-      "KnownKey": "tTZK/6/unC5nI3HmI2956A=="
-    },
-    "聖娼女～人妻女教師・涼香～【Android版】": {
-      "KnownKey": "NkxLyKwDi2dm93DcIJZu2A=="
-    },
-    "キミベタ～キミをベタベタにさせてあげる～【Android版】": {
-      "KnownKey": "gWMtDa3NiuSCLZhT1USbFg=="
-    },
-    "しゅきしゅきだいしゅき！！【Android版】": {
-      "KnownKey": "SD+8Jnbwdt2Ed6R8riHjeg=="
-    },
-    "沙耶の唄【Android版】": {
-      "KnownKey": "N4/IyS9Gi0tmkHDcIXtv8Q=="
-    },
-    "メアメアメアＳＰ【Android版】": {
-      "KnownKey": "tRpK+K00ijFnx3HgIXdv9w=="
-    },
-    "彼女たちの流儀【Android版】": {
-      "KnownKey": "HXLiAEvGbMiWPt1FiR/HDw=="
-    }
+  "KnownKeys": {
+    "AIR Android Version": "WzKkGFfAYtHJYd8HyVmHBQ==",
+    "Angel Beats! -1st beat-": "XweKKmanEaaEbZ1Gn3q5fg==",
+    "CLANNAD Steam Chinese Version": "O1TcdC+6DNasCNIj7GCpLg==",
+    "Harmonia": "fw2IIXvqQfOqA6cv62CtLg==",
+    "Kanon Android Version": "VyC8ElfAaMOROYcfw1WVCQ==",
+    "LAMUNATION!": "tSRKJq/uis5nDHEIIX5tJw==",
+    "LOOPERS DL版": "cROxFQn6DePTRdZ4rinmBQ==",
+    "LOOPERS Mobile Version": "SxfJLgmYIYvJM+ltiFj2Vw==",
+    "LOOPERS 体験版": "E0mKXm+nZJreX8tjshLoeA==",
+    "LOVE・デスティネーション": "Wja/FlbRbMmII4QP2lCJDw==",
+    "LOVE・デスティネーション 体験版": "Wja/FlbRbMmcOIADw1iAEw==",
+    "LUNARiA DL版": "YwP5PgX0LZb5Hpk+mDbUUw==",
+    "LUNARiA Mobile Version": "m5R8NoMLrumgbu1+xHeJdQ==",
+    "LUNARiA PKG版": "Y1y9cgX0LZb5Hpk+mDbUUw==",
+    "LUNARiA 体験版": "Bg3fYwiga6Lbct5fqE/ufg==",
+    "Rewrite": "Ng/Jbi7Tiw9mpXDDI6NulA==",
+    "Rewrite Harvest festa!": "NiXKly7CCbjkY3DDIItt6w==",
+    "Rewrite＋": "Ng/JNy66CdzkDfIAI6NulA==",
+    "Rewrite＋ Steam English Version": "wKGKUumNFiKL987M+HpWrw==",
+    "Rewriteオカ研活動記録外伝　後編": "Ng/JNy66Cc/kR/JzoVLsXQ==",
+    "Rewriteオカ研活動記録外伝　前編": "tLDJNy66Cc/kR/JzoVLsNg==",
+    "Summer Pockets": "fiO6CkuoKZr2fP0ZiDTRdw==",
+    "Summer Pockets Mobile Version": "u4IP6THcEfIauvhM81Nr0g==",
+    "Summer Pockets REFLECTION BLUE DL版": "CGOAC3npUfHnKudg8HyXTg==",
+    "Summer Pockets REFLECTION BLUE PKG版": "CGOAC3npUfHnKudgrzjbTg==",
+    "Summer Pockets Steam English Version": "zM9XyGuSFJCTLbcWiFcVMA==",
+    "アインシュタインより愛を込めて": "tQZKLK3qiuW7CL7p/bez/w==",
+    "アインシュタインより愛を込めて APOLLOCRISIS": "tQxKJq3giu9nGXE/IWFvKQ==",
+    "アインシュタインより愛を込めて 体験版": "wKGKUumNFiKL987M+HpWrw==",
+    "カルマルカ＊サークル": "GXKiEU/lBcCXa21767W3/g==",
+    "キサラギGOLD★STAR": "9EdKJ608ivejA74uI66/KA==",
+    "キミベタ～キミをベタベタにさせてあげる～ Android版": "gWMtDa3NiuSCLZhT1USbFg==",
+    "しゅきしゅきだいしゅき！！ Android版": "SD+8Jnbwdt2Ed6R8riHjeg==",
+    "ノーブルリージュ！": "fRibOmD6S/+qFr0h42alMg==",
+    "はつゆきさくら": "3eAu9t4w72QHixmoTtO7FA==",
+    "フローラル·フローラブ": "Nm3JTCFbB9P1VP/lqzz+3Q==",
+    "ましろサマー": "NbPB2S6hCAbmU3HnIWBvAQ==",
+    "メアメアメアＳＰ Android版": "tRpK+K00ijFnx3HgIXdv9w==",
+    "ゆめいろアルエット！": "t85Lr6x9CoTkRfIXo9ftEQ==",
+    "彼女たちの流儀 Android版": "HXLiAEvGbMiWPt1FiR/HDw==",
+    "痴漢専用車両～未発達な身体のテニス少女・蛍～ Android版": "bQ6PB0/HfNKLOIYL0EHYRQ==",
+    "初恋１／１": "WzCiGkHBZteNJ5sdzVmFFw==",
+    "初恋１／１ Memorical Collection Version": "NkDOfzWkBLj1J5sdzWuPEw==",
+    "地味っ子むちむち委員長とドスケベ調教性活": "tR5K/rVrhi23JJsF0F2C/w==",
+    "花咲ワークスプリング！": "uR1H5r0NCb/n6P1+rBf9Og==",
+    "金色ラブリッチェ": "pbfJJyNLGKDqJeNPr4D9TA==",
+    "妹サポ": "KXfJQy6/Fp451DyAIPB6+Q==",
+    "清楚で真面目な彼女が、最凶ヤリサーに勧誘されたら…？": "VDiiFlzUfc6FLpMBx0aNCA==",
+    "沙耶の唄 Android版": "N4/IyS9Gi0tmkHDcIXtv8Q==",
+    "神待ちサナちゃん　DL版": "LkvdKnuwCrr4GvlhsBiYXA==",
+    "神待ちサナちゃん　PKG版": "LkvdKnuwCrr4GvlhsEfcEA==",
+    "聖娼女～バレー部のエース・翼～ Android版": "tTZK/6/unC5nI3HmI2956A==",
+    "聖娼女～気高きご令嬢・紫苑～ Android版": "NlXJeS7xi19m6HDcINFusA==",
+    "聖娼女～人妻女教師・涼香～ Android版": "NkxLyKwDi2dm93DcIJZu2A==",
+    "聖娼女～現役アイドル・彩葉～ Android版": "NlvJei61CbLkS3CiIJZuug==",
+    "聖娼女～優しき女子校生・優莉～ Android版": "NhfK+qx6ixhm5HDCIJ9u3g==",
+    "歪んだ嘘の恋とレッテル": "WziiGgPRaNGBIpsHw1+FUQ==",
+    "星逢のプリズムギア": "tGRGTqxgi8bkXPlnrtTtuQ==",
+    "星織ユメミライ": "cTGmAFqYWM6FPp0tylufCA==",
+    "星織ユメミライ Memorical Collection Version": "AV3DdD/6N7aFPp01/VeDEQ==",
+    "星織ユメミライ Perfect Edition": "pvZZN60zi81nMnHjIEd80w==",
+    "星織ユメミライ　律佳とあなたの１周年記念、いちゃらぶバースデー": "RDCiGE/qZs6FIoADyV+NIw==",
+    "銀色、遥か": "A16mAFqYJJfJYd9Hj2WYHQ==",
+    "銀色、遥か Memorical Collection Version": "A175YzX1VPusFbol4B2YHQ==",
+    "勇者と踊れ！": "JK3JDi63itVnD3EkNUpuyQ==",
+    "勇者と踊れ 体験版": "wKGKUumNFiKL987M+HpWrw==",
+    "円交少女　～陸上部ゆっきーの場合～": "cTGmAFqYWdGLE7Ym5VyDDw==",
+    "円交少女２　～ＪＫアイドル真鈴の場合～": "Nl7JQq3SijNn33E0IaBvOg==",
+    "月の彼方で逢いましょう": "fTKbIhfyffKsBKcM6V++LQ==",
+    "月の彼方で逢いましょう　体験版": "eQHIAHOIC52JSsh+sAuqYg==",
+    "月の彼方で逢いましょうSSR DL版": "ZDT9K2rCeN27CL44zwC0OA==",
+    "月の彼方で逢いましょうSSR PKG版": "ZDT9K2rCeN22IcYy5kOdGw==",
+    "月の彼方で逢いましょうSSR 体験版": "ARqKNEyHWt7TD7EtwAa/GA==",
+    "終のステラ DL版": "TiqzFEyMfe27CL4S0U6LHg==",
+    "終のステラ 体験版": "VTGdGEz7MO67H4YPzliNHw==",
+    "プリマドール 無名典礼 DL版": "LBmYKhDBd+WFOMUc2kOEFw=="
   }
 }

@@ -37,12 +37,7 @@ namespace GalArc.Database
 
     public class SiglusScheme : ArcScheme
     {
-        public class SiglusKey
-        {
-            public byte[] KnownKey { get; set; }
-        }
-
-        public Dictionary<string, SiglusKey> KnownSchemes { get; set; }
+        public Dictionary<string, string> KnownKeys { get; set; }
     }
 
     public abstract class ArcScheme

@@ -25,7 +25,7 @@ namespace ArcFormats.Siglus
             this.combSchemes.Items.Add(GUIStrings.ItemTryEveryEnc);
             if (ScenePCK.Scheme != null)
             {
-                foreach (var scheme in ScenePCK.Scheme.KnownSchemes)
+                foreach (var scheme in ScenePCK.Scheme.KnownKeys)
                 {
                     this.combSchemes.Items.Add(scheme.Key);
                 }
@@ -38,20 +38,20 @@ namespace ArcFormats.Siglus
             switch (this.combSchemes.SelectedIndex)
             {
                 case 0:
-                    ScenePCK.SelectedScheme = null;
+                    ScenePCK.SelectedKey = null;
                     ScenePCK.TryEachKey = true;
                     this.lbKey.Text = string.Empty;
                     break;
                 default:
-                    byte[] key = ScenePCK.Scheme.KnownSchemes[this.combSchemes.Text].KnownKey;
+                    byte[] key = Convert.FromBase64String(ScenePCK.Scheme.KnownKeys[this.combSchemes.Text]);
                     try
                     {
-                        ScenePCK.SelectedScheme = new Tuple<string, byte[]>(this.combSchemes.Text, key);
+                        ScenePCK.SelectedKey = key;
                         this.lbKey.Text = string.Format(LogStrings.Key, BitConverter.ToString(key));
                     }
                     catch
                     {
-                        ScenePCK.SelectedScheme = null;
+                        ScenePCK.SelectedKey = null;
                         this.lbKey.Text = LogStrings.KeyParseError;
                     }
                     ScenePCK.TryEachKey = false;
