@@ -115,11 +115,20 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Failed to read information. 的本地化字符串。
+        ///   查找类似 Failed to read information: {0} not found. 的本地化字符串。
         /// </summary>
-        public static string InfoFailedToReadInfos {
+        public static string InfoFailedToReadNotFound {
             get {
-                return ResourceManager.GetString("InfoFailedToReadInfos", resourceCulture);
+                return ResourceManager.GetString("InfoFailedToReadNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to read information: failed to parse. 的本地化字符串。
+        /// </summary>
+        public static string InfoFailedToReadParseError {
+            get {
+                return ResourceManager.GetString("InfoFailedToReadParseError", resourceCulture);
             }
         }
         

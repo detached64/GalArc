@@ -430,7 +430,7 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Done. {0} schemes were loaded in total. 的本地化字符串。
+        ///   查找类似 Loaded schemes: {0} 的本地化字符串。
         /// </summary>
         public static string SchemeLoadedCount {
             get {
@@ -439,11 +439,20 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 {0}: Import {1} schemes. 的本地化字符串。
+        ///   查找类似 {0}: Load {1} schemes. 的本地化字符串。
         /// </summary>
         public static string SchemeLoadedNameCount {
             get {
                 return ResourceManager.GetString("SchemeLoadedNameCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Done. {0} schemes were loaded in total. 的本地化字符串。
+        /// </summary>
+        public static string SchemeLoadedWithCount {
+            get {
+                return ResourceManager.GetString("SchemeLoadedWithCount", resourceCulture);
             }
         }
         

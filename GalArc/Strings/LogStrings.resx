@@ -158,7 +158,7 @@
     <value>{0} file not found in the same directory.</value>
   </data>
   <data name="SchemeLoadedNameCount" xml:space="preserve">
-    <value>{0}: Import {1} schemes.</value>
+    <value>{0}: Load {1} schemes.</value>
   </data>
   <data name="Ready" xml:space="preserve">
     <value>Ready</value>
@@ -169,7 +169,7 @@
   <data name="ValidDatabaseCount" xml:space="preserve">
     <value>Valid database count: {0}</value>
   </data>
-  <data name="SchemeLoadedCount" xml:space="preserve">
+  <data name="SchemeLoadedWithCount" xml:space="preserve">
     <value>Done. {0} schemes were loaded in total.</value>
   </data>
   <data name="SelectUnpackNode" xml:space="preserve">
@@ -285,5 +285,8 @@
   </data>
   <data name="SchemeLoading" xml:space="preserve">
     <value>Loading schemes……</value>
+  </data>
+  <data name="SchemeLoadedCount" xml:space="preserve">
+    <value>Loaded schemes: {0}</value>
   </data>
 </root>

@@ -48,16 +48,16 @@ namespace GalArc.Database
             string json = ReadScheme<T>();
             if (string.IsNullOrEmpty(json))
             {
-                throw new InvalidDataException($"Failed to read {typeof(T).Name} scheme.");
+                return default;
             }
 
             try
             {
                 return JsonConvert.DeserializeObject<T>(json);
             }
-            catch (Exception ex)
+            catch
             {
-                throw new InvalidOperationException($"Failed to deserialize scheme: {ex.Message}");
+                return default;
             }
         }
 
@@ -69,6 +69,15 @@ namespace GalArc.Database
             StringBuilder result = new StringBuilder();
             // engine name
             result.AppendFormat(GUIStrings.InfoEngineName, name).AppendLine();
+
+            if (!File.Exists(path))
+            {
+                StringBuilder error = new StringBuilder();
+                error.AppendFormat(GUIStrings.InfoEngineName, name).AppendLine();
+                error.AppendFormat(GUIStrings.InfoFailedToReadNotFound, path).AppendLine();
+                isValid = false;
+                return error.ToString();
+            }
 
             try
             {
@@ -108,7 +117,7 @@ namespace GalArc.Database
             {
                 StringBuilder error = new StringBuilder();
                 error.AppendFormat(GUIStrings.InfoEngineName, name).AppendLine();
-                error.AppendLine(GUIStrings.InfoFailedToReadInfos);
+                error.AppendLine(GUIStrings.InfoFailedToReadParseError);
                 isValid = false;
                 return error.ToString();
             }

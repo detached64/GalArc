@@ -136,9 +136,6 @@
   <data name="InfoSize" xml:space="preserve">
     <value>Size: {0} bytes</value>
   </data>
-  <data name="InfoFailedToReadInfos" xml:space="preserve">
-    <value>Failed to read information.</value>
-  </data>
   <data name="InfoEngineName" xml:space="preserve">
     <value>Name: {0}</value>
   </data>
@@ -153,5 +150,11 @@
   </data>
   <data name="InfoItems" xml:space="preserve">
     <value>{0}: {1} items</value>
+  </data>
+  <data name="InfoFailedToReadNotFound" xml:space="preserve">
+    <value>Failed to read information: {0} not found.</value>
+  </data>
+  <data name="InfoFailedToReadParseError" xml:space="preserve">
+    <value>Failed to read information: failed to parse.</value>
   </data>
 </root>

@@ -31,6 +31,7 @@ namespace GalArc.GUI
         {
             Instance = this;
             InitializeComponent();
+            this.BringToFront();
 
             Logger.Instance.LogMessageEvent += AppendLog;
             Logger.Instance.StatusMessageEvent += UpdateStatus;
@@ -97,7 +98,7 @@ namespace GalArc.GUI
                 Logger.UpdateBar();
             }
             Deserializer.LoadedSchemeCount = im_count;
-            Logger.Info(string.Format(LogStrings.SchemeLoadedCount, Deserializer.LoadedSchemeCount));
+            Logger.Info(string.Format(LogStrings.SchemeLoadedWithCount, Deserializer.LoadedSchemeCount));
         }
 
         private void RefreshSchemes()
@@ -192,7 +193,6 @@ namespace GalArc.GUI
             catch
             {
                 Logger.Info(LogStrings.UpdateError);
-                return;
             }
         }
 

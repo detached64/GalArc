@@ -189,7 +189,7 @@
   <data name="ValidDatabaseCount" xml:space="preserve">
     <value>有效数据库总数：{0}</value>
   </data>
-  <data name="SchemeLoadedCount" xml:space="preserve">
+  <data name="SchemeLoadedWithCount" xml:space="preserve">
     <value>导入完成。共导入{0}组密钥。</value>
   </data>
   <data name="SelectUnpackNode" xml:space="preserve">
@@ -305,5 +305,8 @@
   </data>
   <data name="SchemeLoading" xml:space="preserve">
     <value>导入密钥中……</value>
+  </data>
+  <data name="SchemeLoadedCount" xml:space="preserve">
+    <value>导入密钥总数：{0}</value>
   </data>
 </root>

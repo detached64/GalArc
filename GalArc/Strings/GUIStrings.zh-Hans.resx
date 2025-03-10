@@ -156,9 +156,6 @@
   <data name="InfoSize" xml:space="preserve">
     <value>大小：{0}字节</value>
   </data>
-  <data name="InfoFailedToReadInfos" xml:space="preserve">
-    <value>读取信息失败。</value>
-  </data>
   <data name="InfoEngineName" xml:space="preserve">
     <value>名称：{0}</value>
   </data>
@@ -173,5 +170,11 @@
   </data>
   <data name="InfoItems" xml:space="preserve">
     <value>{0}：{1}个项</value>
+  </data>
+  <data name="InfoFailedToReadNotFound" xml:space="preserve">
+    <value>读取信息失败：未找到{0}。</value>
+  </data>
+  <data name="InfoFailedToReadParseError" xml:space="preserve">
+    <value>读取信息失败：解析失败。</value>
   </data>
 </root>
