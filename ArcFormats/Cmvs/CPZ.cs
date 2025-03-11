@@ -1,9 +1,9 @@
 using GalArc.Controls;
 using GalArc.Logs;
-using GalArc.Strings;
 using System.IO;
 using System.Text;
 using Utility;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.Cmvs
@@ -179,7 +179,7 @@ namespace ArcFormats.Cmvs
             BinaryReader br = new BinaryReader(fs);
             if (Encoding.ASCII.GetString(br.ReadBytes(3)) != "CPZ")
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
 
             int version = br.ReadChar() - '0';
@@ -191,11 +191,10 @@ namespace ArcFormats.Cmvs
                 case 1:
                     UnpackV1(filePath, folderPath);
                     break;
-                case 6:
+                //case 6:
                 //UnpackV6(filePath, folderPath);
                 default:
-                    Logger.Error(LogStrings.ErrorNotSupportedVersion);
-                    break;
+                    throw new InvalidVersionException(InvalidVersionType.NotSupported);
             }
         }
 

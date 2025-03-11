@@ -1,6 +1,6 @@
-using GalArc.Logs;
 using System.IO;
 using System.Text;
+using Utility.Exceptions;
 
 namespace ArcFormats.Ethornell
 {
@@ -13,7 +13,7 @@ namespace ArcFormats.Ethornell
             byte[] data = File.ReadAllBytes(filePath);
             if (Encoding.ASCII.GetString(data, 0, 16) != MagicSDCFormat100)
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
             SdcDecoder decoder = new SdcDecoder(data);
             byte[] output = decoder.Decode();

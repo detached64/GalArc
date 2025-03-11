@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using Utility;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.Majiro
@@ -32,10 +33,13 @@ namespace ArcFormats.Majiro
             string magic = Encoding.ASCII.GetString(br.ReadBytes(16));
             var match = Regex.Match(magic, MagicPattern);
             int version = int.Parse(match.Groups[1].Value);
-            if (!match.Success || version < 1 || version > 3)
+            if (!match.Success)
             {
-                Logger.ErrorInvalidArchive();
-                return;
+                throw new InvalidArchiveException();
+            }
+            if (version < 1 || version > 3)
+            {
+                throw new InvalidVersionException(InvalidVersionType.Unknown);
             }
             Logger.ShowVersion("arc", version);
             fs.Position = 16;

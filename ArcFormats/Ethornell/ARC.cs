@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Utility;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.Ethornell
@@ -30,8 +31,7 @@ namespace ArcFormats.Ethornell
                     version = 2;
                     break;
                 default:
-                    Logger.ErrorInvalidArchive();
-                    break;
+                    throw new InvalidArchiveException();
             }
             Logger.ShowVersion("arc", version);
             int count = br.ReadInt32();

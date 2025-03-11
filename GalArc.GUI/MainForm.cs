@@ -56,7 +56,7 @@ namespace GalArc.GUI
             }
             catch
             {
-                Logger.Error(LogStrings.ErrorImportScheme, false);
+                Logger.Error(LogStrings.ErrorImportScheme);
                 return;
             }
             this.lbStatus.Text = LogStrings.Ready;
@@ -74,7 +74,7 @@ namespace GalArc.GUI
             }
             catch
             {
-                Logger.Error(LogStrings.ErrorImportScheme, false);
+                Logger.Error(LogStrings.ErrorImportScheme);
                 return;
             }
             this.lbStatus.Text = LogStrings.Ready;
@@ -128,7 +128,7 @@ namespace GalArc.GUI
             Logger.Instance.LogMessageEvent -= AppendLog;
             Logger.Instance.StatusMessageEvent -= UpdateStatus;
             Logger.Instance.ProgressEvent -= ProcessBar;
-            Logger.FlushLog();
+            Logger.Instance.Dispose();
         }
         #endregion
 
@@ -369,7 +369,7 @@ namespace GalArc.GUI
         {
             if (Mode == OperationMode.None)
             {
-                Logger.Error(LogStrings.ErrorNeedSelectOperation, false);
+                Logger.Error(LogStrings.ErrorNeedSelectOperation);
                 return;
             }
             string[] infos = this.treeViewEngines.SelectedNode.FullPath.Replace(".", string.Empty).Split('/');
@@ -397,7 +397,7 @@ namespace GalArc.GUI
                     this.txtInputPath.Text = ChooseFolder() ?? this.txtInputPath.Text;
                     break;
                 default:
-                    Logger.Error(LogStrings.ErrorNeedSelectOperation, false);
+                    Logger.Error(LogStrings.ErrorNeedSelectOperation);
                     break;
             }
         }
@@ -413,7 +413,7 @@ namespace GalArc.GUI
                     this.txtOutputPath.Text = SaveFile() ?? this.txtOutputPath.Text;
                     break;
                 default:
-                    Logger.Error(LogStrings.ErrorNeedSelectOperation, false);
+                    Logger.Error(LogStrings.ErrorNeedSelectOperation);
                     break;
             }
         }
@@ -525,24 +525,24 @@ namespace GalArc.GUI
             #region Check valid & Freeze controls
             if (Mode == OperationMode.None)
             {
-                Logger.Error(LogStrings.ErrorNeedSelectOperation, false);
+                Logger.Error(LogStrings.ErrorNeedSelectOperation);
                 return;
             }
             if (string.IsNullOrEmpty(this.txtInputPath.Text))
             {
-                Logger.Error(LogStrings.ErrorNeedSpecifyInput, false);
+                Logger.Error(LogStrings.ErrorNeedSpecifyInput);
                 return;
             }
             if (string.IsNullOrEmpty(this.txtOutputPath.Text))
             {
-                Logger.Error(LogStrings.ErrorNeedSpecifyOutput, false);
+                Logger.Error(LogStrings.ErrorNeedSpecifyOutput);
                 return;
             }
             if (Mode == OperationMode.Unpack)
             {
                 if (!File.Exists(this.txtInputPath.Text))
                 {
-                    Logger.Error(LogStrings.ErrorFileNotFound, false);
+                    Logger.Error(LogStrings.ErrorFileNotFound);
                     return;
                 }
                 this.lbStatus.Text = LogStrings.Unpacking;
@@ -551,7 +551,7 @@ namespace GalArc.GUI
             {
                 if (!Directory.Exists(this.txtInputPath.Text))
                 {
-                    Logger.Error(LogStrings.ErrorDirNotFound, false);
+                    Logger.Error(LogStrings.ErrorDirNotFound);
                     return;
                 }
                 this.lbStatus.Text = LogStrings.Packing;
@@ -592,12 +592,12 @@ namespace GalArc.GUI
             {
                 if (ex.InnerException == null)
                 {
-                    Logger.Error(ex.Message, false);
+                    Logger.Error(ex.Message);
                     Logger.Debug(ex.ToString());
                 }
                 else
                 {
-                    Logger.Error(ex.InnerException.Message, false);
+                    Logger.Error(ex.InnerException.Message);
                     Logger.Debug(ex.InnerException.ToString());
                 }
                 Logger.ResetBar();

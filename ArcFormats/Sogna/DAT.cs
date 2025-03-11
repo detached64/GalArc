@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Utility;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.Sogna
@@ -18,7 +19,7 @@ namespace ArcFormats.Sogna
 
             if (Encoding.ASCII.GetString(br.ReadBytes(12)) != Magic)
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
 
             uint fileCount = br.ReadUInt32();

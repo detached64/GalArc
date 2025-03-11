@@ -51,7 +51,7 @@ namespace GalArc.Logs
         public ProgressAction Action;
     }
 
-    public class Logger
+    public class Logger : IDisposable
     {
         public static Logger Instance { get; } = new Logger();
 
@@ -67,7 +67,13 @@ namespace GalArc.Logs
         private void OnProgressEvent(ProgressEventArgs e) => ProgressEvent?.Invoke(this, e);
         #endregion
 
-        private const int CacheSize = 25;
+        private const int CacheSize =
+#if DEBUG
+            250;
+#else
+            25;
+#endif
+
         private static string DefaultPath => System.IO.Path.Combine(Environment.CurrentDirectory, "log.txt");
 
         public static string Path
@@ -89,32 +95,39 @@ namespace GalArc.Logs
             }
         }
 
-        private static readonly List<string> _logCache = new List<string>();
+        private static readonly List<string> logCache = new List<string>();
         private static readonly object _lock = new object();
-        private static CancellationTokenSource _cancellationToken = new CancellationTokenSource();
+        private static CancellationTokenSource cts = new CancellationTokenSource();
 
         #region Basic internal methods for logging and status
-        private void Append(string msg)
+        private void Append(string msg, int level = -1)
         {
             lock (_lock)
             {
-                _logCache.Add($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}]{msg}");
+                if (level == -1)
+                {
+                    logCache.Add($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}]{msg}");
+                }
+                else
+                {
+                    logCache.Add($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}][{(LogLevel)level}]\t{msg}");
+                }
             }
 
-            if (_logCache.Count > CacheSize)
+            if (logCache.Count > CacheSize)
             {
                 Flush();
             }
         }
 
-        private void Append(string msg, int level)
+        private void AppendLine()
         {
             lock (_lock)
             {
-                _logCache.Add($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}][{(LogLevel)level}]\t{msg}");
+                logCache.Add(string.Empty);
             }
 
-            if (_logCache.Count > CacheSize)
+            if (logCache.Count > CacheSize)
             {
                 Flush();
             }
@@ -124,19 +137,26 @@ namespace GalArc.Logs
         {
             lock (_lock)
             {
-                if (_logCache.Count == 0)
+                if (logCache.Count == 0)
                 {
                     return;
                 }
                 if (!BaseSettings.Default.SaveLog)
                 {
-                    _logCache.Clear();
+                    logCache.Clear();
                     return;
                 }
 
-                File.AppendAllLines(Path, _logCache, Encoding.UTF8);
-                _logCache.Clear();
+                File.AppendAllLines(Path, logCache, Encoding.UTF8);
+                logCache.Clear();
             }
+        }
+
+        public void Dispose()
+        {
+            Flush();
+            cts.Cancel();
+            cts.Dispose();
         }
 
         private void AppendAndSaveLog(string msg, int logLevel = 1)
@@ -165,18 +185,11 @@ namespace GalArc.Logs
             OnStatusMessageEvent(log);
         }
 
-        private void ErrorInternal(string log, bool toThrow = true)
+        private void ErrorInternal(string log)
         {
-            if (!toThrow)
-            {
-                string msg = string.Format(LogStrings.ErrorOccur, log);
-                AppendAndSaveLog(msg, 0);
-                OnStatusMessageEvent(msg);
-            }
-            else
-            {
-                throw new Exception(log);
-            }
+            string msg = string.Format(LogStrings.Error, log);
+            AppendAndSaveLog(msg, 0);
+            OnStatusMessageEvent(msg);
         }
 
         private void StatusInvokeInternal(string log) => Instance.StatusMessageEvent?.Invoke(null, log);
@@ -232,9 +245,8 @@ namespace GalArc.Logs
         public static void DebugInvoke(string log) => Instance.DebugInvokeInternal(log);
         public static void Info(string log) => Instance.InfoInternal(log);
         public static void InfoInvoke(string log) => Instance.InfoInvokeInternal(log);
-        public static void Error(string log, bool toThrow = true) => Instance.ErrorInternal(log, toThrow);
+        public static void Error(string log) => Instance.ErrorInternal(log);
         public static void Status(string log) => Instance.StatusInvokeInternal(log);
-        public static void ErrorInvalidArchive() => throw new Exception(LogStrings.ErrorNotValidArc);
         public static void ErrorNeedAnotherFile(string file) => throw new Exception(string.Format(LogStrings.ErrorSpecifiedFileNotFound, file));
         public static void ErrorNeedOriginalFile(string file) => throw new Exception(string.Format(LogStrings.ErrorOriginalFileNotFound, file));
 
@@ -277,15 +289,16 @@ namespace GalArc.Logs
 
         public static void NewInstance()
         {
+            Instance.AppendLine();
             Instance.Append($"[{LogStrings.NewInstance}]");
         }
 
         private static async Task ShowAndDisappear(string message, int time)
         {
-            _cancellationToken.Cancel();
-            _cancellationToken.Dispose();
-            _cancellationToken = new CancellationTokenSource();
-            var token = _cancellationToken.Token;
+            cts.Cancel();
+            cts.Dispose();
+            cts = new CancellationTokenSource();
+            var token = cts.Token;
             Instance.StatusMessageEvent?.Invoke(null, message);
             if (time > 0)
             {
@@ -343,7 +356,7 @@ namespace GalArc.Logs
             }
         }
 
-        public static void ShowCheckError() => Instance.ErrorInternal(LogStrings.UpdateError, false);
+        public static void ShowCheckError() => Instance.ErrorInternal(LogStrings.UpdateError);
 
         public static void ShowProgramVersion(string cv, string lv) => Instance.DebugInternal(string.Format(LogStrings.Versions, cv, lv));
 

@@ -4,6 +4,7 @@ using GalArc.Strings;
 using System;
 using System.IO;
 using System.Text;
+using Utility.Exceptions;
 
 namespace ArcFormats.RPGMaker
 {
@@ -20,7 +21,7 @@ namespace ArcFormats.RPGMaker
                 {
                     if (br.ReadUInt32() != 0x53534752) // "RGSS"
                     {
-                        Logger.ErrorInvalidArchive();
+                        throw new InvalidArchiveException();
                     }
                     fs.Position = 7;
                     version = br.ReadByte();
@@ -38,8 +39,7 @@ namespace ArcFormats.RPGMaker
                     UnpackV3(filePath, folderPath);
                     break;
                 default:
-                    Logger.Error($"Error: version {version} not recognized.");
-                    break;
+                    throw new InvalidVersionException(InvalidVersionType.Unknown);
             }
         }
 

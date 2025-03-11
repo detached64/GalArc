@@ -1,6 +1,6 @@
-using GalArc.Logs;
 using System.IO;
 using System.Text;
+using Utility.Exceptions;
 
 namespace ArcFormats.NekoPack
 {
@@ -17,7 +17,7 @@ namespace ArcFormats.NekoPack
                 {
                     if (!string.Equals(Encoding.ASCII.GetString(br.ReadBytes(8)), Magic))
                     {
-                        Logger.ErrorInvalidArchive();
+                        throw new InvalidArchiveException();
                     }
                     fs.Position = 16;
                     count = br.ReadInt32();

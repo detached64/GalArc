@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Utility;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.PJADV
@@ -25,7 +26,7 @@ namespace ArcFormats.PJADV
 
             if (Encoding.ASCII.GetString(br.ReadBytes(11)) != Magic)
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
             int version = br.ReadByte();
             int nameLen;
@@ -40,8 +41,7 @@ namespace ArcFormats.PJADV
                     Logger.ShowVersion("dat", 2);
                     break;
                 default:
-                    Logger.Error(string.Format(LogStrings.ErrorNotSupportedVersion, "dat", version));
-                    return;
+                    throw new InvalidVersionException(InvalidVersionType.Unknown);
             }
 
             int count = br.ReadInt32();

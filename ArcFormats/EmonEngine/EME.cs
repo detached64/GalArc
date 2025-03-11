@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Utility.Compression;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.EmonEngine
@@ -27,7 +28,7 @@ namespace ArcFormats.EmonEngine
 
             if (Encoding.ASCII.GetString(br.ReadBytes(8)) != Magic)
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
 
             fs.Position = fs.Length - 4;

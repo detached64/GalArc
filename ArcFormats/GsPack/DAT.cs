@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Text;
 using Utility.Compression;
+using Utility.Exceptions;
 
 namespace ArcFormats.GsPack
 {
@@ -29,7 +30,7 @@ namespace ArcFormats.GsPack
                     fs.Position = 0;
                     if (!Magic.Equals(Encoding.ASCII.GetString(br.ReadBytes(16))))
                     {
-                        Logger.ErrorInvalidArchive();
+                        throw new InvalidArchiveException();
                     }
                     fs.Position = 0xa4;
                     uint headerSize = br.ReadUInt32();
@@ -42,7 +43,7 @@ namespace ArcFormats.GsPack
                     uint dataOffset = br.ReadUInt32();
                     if (unpackedIndexSize != 0x18 * fileCount)
                     {
-                        Logger.ErrorInvalidArchive();
+                        throw new InvalidArchiveException();
                     }
                     fs.Position = indexOffset;
                     byte[] packedIndex = br.ReadBytes((int)indexSize);

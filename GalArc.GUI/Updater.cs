@@ -32,7 +32,7 @@ namespace GalArc.GUI
                 }
                 catch (OperationCanceledException)
                 {
-                    Logger.Error(LogStrings.TimedOut, false);
+                    Logger.Error(LogStrings.TimedOut);
                     return;
                 }
                 catch (Exception)

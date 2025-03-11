@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Utility;
+using Utility.Exceptions;
 
 namespace ArcFormats.EntisGLS
 {
@@ -75,7 +76,7 @@ namespace ArcFormats.EntisGLS
 
             if (!header.Magic1.SequenceEqual(Magic1) || !header.Magic2.SequenceEqual(Magic2))
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
 
             br.ReadBytes(22);
@@ -86,7 +87,7 @@ namespace ArcFormats.EntisGLS
             entry_header.Magic = Encoding.ASCII.GetString(br.ReadBytes(8));
             if (entry_header.Magic != "DirEntry")
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
 
             entry_header.IndexSize = br.ReadUInt64();

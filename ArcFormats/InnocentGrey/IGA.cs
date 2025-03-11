@@ -4,6 +4,7 @@ using GalArc.Strings;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Utility.Exceptions;
 
 namespace ArcFormats.InnocentGrey
 {
@@ -29,7 +30,7 @@ namespace ArcFormats.InnocentGrey
             List<InnoIgaEntry> entriesUpdate = new List<InnoIgaEntry>();
             if (Encoding.ASCII.GetString(br.ReadBytes(4)) != Magic)
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
 
             fs.Position = 16;

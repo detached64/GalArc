@@ -3,6 +3,7 @@ using GalArc.Logs;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.Triangle
@@ -30,11 +31,11 @@ namespace ArcFormats.Triangle
             }
             else if ((offset2 & ~0xc0000000) == 4 + 32 * (uint)fileCount)
             {
-                Logger.Error("cgf v2 archive not implemented.");
+                throw new InvalidVersionException(InvalidVersionType.NotSupported);
             }
             else
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
         }
 

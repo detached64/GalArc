@@ -97,6 +97,15 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
+        ///   查找类似 Error: {0} 的本地化字符串。
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Path contains invalid characters. Switching the encoding in the settings might work. 的本地化字符串。
         /// </summary>
         public static string ErrorContainsInvalid {
@@ -169,6 +178,69 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
+        ///   查找类似 Invalid archive. 的本地化字符串。
+        /// </summary>
+        public static string ErrorInvalidArchive {
+            get {
+                return ResourceManager.GetString("ErrorInvalidArchive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Invalid archive: {0} 的本地化字符串。
+        /// </summary>
+        public static string ErrorInvalidArchiveCaption {
+            get {
+                return ResourceManager.GetString("ErrorInvalidArchiveCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Error: Invalid index offset. 的本地化字符串。
+        /// </summary>
+        public static string ErrorInvalidIndexOffset {
+            get {
+                return ResourceManager.GetString("ErrorInvalidIndexOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Invalid encryption scheme. 的本地化字符串。
+        /// </summary>
+        public static string ErrorInvalidScheme {
+            get {
+                return ResourceManager.GetString("ErrorInvalidScheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unknown or not supported archive version. 的本地化字符串。
+        /// </summary>
+        public static string ErrorInvalidVersion {
+            get {
+                return ResourceManager.GetString("ErrorInvalidVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 {0} v{1} archive temporarily not supported. 的本地化字符串。
+        /// </summary>
+        public static string ErrorInvalidVersionNotSupported {
+            get {
+                return ResourceManager.GetString("ErrorInvalidVersionNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unknown version. 的本地化字符串。
+        /// </summary>
+        public static string ErrorInvalidVersionUnknown {
+            get {
+                return ResourceManager.GetString("ErrorInvalidVersionUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Please select operation. 的本地化字符串。
         /// </summary>
         public static string ErrorNeedSelectOperation {
@@ -192,33 +264,6 @@ namespace GalArc.Strings {
         public static string ErrorNeedSpecifyOutput {
             get {
                 return ResourceManager.GetString("ErrorNeedSpecifyOutput", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 {0} v{1} archive temporarily not supported. 的本地化字符串。
-        /// </summary>
-        public static string ErrorNotSupportedVersion {
-            get {
-                return ResourceManager.GetString("ErrorNotSupportedVersion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Not a valid archive. 的本地化字符串。
-        /// </summary>
-        public static string ErrorNotValidArc {
-            get {
-                return ResourceManager.GetString("ErrorNotValidArc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Error: {0} 的本地化字符串。
-        /// </summary>
-        public static string ErrorOccur {
-            get {
-                return ResourceManager.GetString("ErrorOccur", resourceCulture);
             }
         }
         
@@ -507,15 +552,6 @@ namespace GalArc.Strings {
         public static string SelectUnpackNode {
             get {
                 return ResourceManager.GetString("SelectUnpackNode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Error: Invalid index offset. 的本地化字符串。
-        /// </summary>
-        public static string SpecifiedIndexOffsetFailed {
-            get {
-                return ResourceManager.GetString("SpecifiedIndexOffsetFailed", resourceCulture);
             }
         }
         

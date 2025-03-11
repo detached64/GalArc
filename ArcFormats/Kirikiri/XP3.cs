@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using Utility;
 using Utility.Compression;
+using Utility.Exceptions;
 
 namespace ArcFormats.Kirikiri
 {
@@ -31,7 +32,7 @@ namespace ArcFormats.Kirikiri
             BinaryReader br = new BinaryReader(fs);
             if (!br.ReadBytes(11).SequenceEqual(Magic))
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
 
             if (br.ReadByte() == 0x17)
@@ -45,8 +46,7 @@ namespace ArcFormats.Kirikiri
                 br.BaseStream.Position--;
             }
 
-            uint indexOffset = br.ReadUInt32();
-            fs.Position = indexOffset;
+            fs.Position = br.ReadUInt32();
             byte[] Index;
             switch (br.ReadByte())
             {
@@ -55,7 +55,7 @@ namespace ArcFormats.Kirikiri
                     Index = br.ReadBytes((int)indexSize);
                     if (fs.Position != new FileInfo(filePath).Length)
                     {
-                        Logger.Error("Error: additional bytes beyond index.");
+                        throw new InvalidArchiveException("Additional bytes beyond index.");
                     }
                     break;
 
@@ -65,7 +65,7 @@ namespace ArcFormats.Kirikiri
                     byte[] packedIndex = br.ReadBytes((int)packedIndexSize);
                     if (fs.Position != new FileInfo(filePath).Length)
                     {
-                        Logger.Error("Error: additional bytes beyond index.");
+                        throw new InvalidArchiveException("Additional bytes beyond index.");
                     }
                     Index = ZlibHelper.Decompress(packedIndex);
                     if (Index.Length != unpackedIndexSize)
@@ -75,8 +75,7 @@ namespace ArcFormats.Kirikiri
                     break;
 
                 default:
-                    Logger.ErrorInvalidArchive();
-                    return;
+                    throw new InvalidArchiveException();
             }
             List<Xp3Entry> entries = new List<Xp3Entry>();
             using (MemoryStream ms = new MemoryStream(Index))
@@ -88,7 +87,7 @@ namespace ArcFormats.Kirikiri
                         string secSig = Encoding.ASCII.GetString(brIndex.ReadBytes(4));
                         if (secSig != "File")
                         {
-                            Logger.ErrorInvalidArchive();
+                            throw new InvalidArchiveException();
                         }
                         Xp3Entry entry = new Xp3Entry();
                         long thisRemaining = brIndex.ReadInt64();

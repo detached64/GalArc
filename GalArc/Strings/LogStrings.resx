@@ -136,8 +136,8 @@
   <data name="NewInstance" xml:space="preserve">
     <value>New Instance</value>
   </data>
-  <data name="ErrorNotValidArc" xml:space="preserve">
-    <value>Not a valid archive.</value>
+  <data name="ErrorInvalidArchive" xml:space="preserve">
+    <value>Invalid archive.</value>
   </data>
   <data name="ErrorOriginalFileNotFound" xml:space="preserve">
     <value>Original {0} file not found in the same directory.</value>
@@ -148,7 +148,7 @@
   <data name="Packing" xml:space="preserve">
     <value>Packing……</value>
   </data>
-  <data name="ErrorOccur" xml:space="preserve">
+  <data name="Error" xml:space="preserve">
     <value>Error: {0}</value>
   </data>
   <data name="Versions" xml:space="preserve">
@@ -226,7 +226,7 @@
   <data name="InvalidArchiveType" xml:space="preserve">
     <value>Error: Invalid archive type.</value>
   </data>
-  <data name="SpecifiedIndexOffsetFailed" xml:space="preserve">
+  <data name="ErrorInvalidIndexOffset" xml:space="preserve">
     <value>Error: Invalid index offset.</value>
   </data>
   <data name="Key" xml:space="preserve">
@@ -268,7 +268,7 @@
   <data name="ErrorContainsInvalid" xml:space="preserve">
     <value>Path contains invalid characters. Switching the encoding in the settings might work.</value>
   </data>
-  <data name="ErrorNotSupportedVersion" xml:space="preserve">
+  <data name="ErrorInvalidVersionNotSupported" xml:space="preserve">
     <value>{0} v{1} archive temporarily not supported.</value>
   </data>
   <data name="WrongScheme" xml:space="preserve">
@@ -288,5 +288,17 @@
   </data>
   <data name="SchemeLoadedCount" xml:space="preserve">
     <value>Loaded schemes: {0}</value>
+  </data>
+  <data name="ErrorInvalidVersion" xml:space="preserve">
+    <value>Unknown or not supported archive version.</value>
+  </data>
+  <data name="ErrorInvalidVersionUnknown" xml:space="preserve">
+    <value>Unknown version.</value>
+  </data>
+  <data name="ErrorInvalidScheme" xml:space="preserve">
+    <value>Invalid encryption scheme.</value>
+  </data>
+  <data name="ErrorInvalidArchiveCaption" xml:space="preserve">
+    <value>Invalid archive: {0}</value>
   </data>
 </root>

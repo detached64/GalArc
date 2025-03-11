@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using Utility.Compression;
+using Utility.Exceptions;
 
 namespace ArcFormats.Seraph
 {
@@ -83,7 +84,7 @@ namespace ArcFormats.Seraph
             }
             else
             {
-                Logger.Error(LogStrings.InvalidArchiveType);
+                throw new InvalidArchiveException();
             }
         }
 
@@ -123,11 +124,11 @@ namespace ArcFormats.Seraph
             }
             if (isGiven)
             {
-                Logger.Error(LogStrings.SpecifiedIndexOffsetFailed);
+                throw new ArgumentException(LogStrings.ErrorInvalidIndexOffset);
             }
             else
             {
-                Logger.Error(LogStrings.BrutalForceFailed);
+                throw new InvalidOperationException(LogStrings.BrutalForceFailed);
             }
         }
 

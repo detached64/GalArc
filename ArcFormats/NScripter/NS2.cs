@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Utility;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.NScripter
@@ -33,8 +34,7 @@ namespace ArcFormats.NScripter
             {
                 if (string.IsNullOrEmpty(Key))
                 {
-                    Logger.Error(LogStrings.NeedDec);
-                    return;
+                    throw new InvalidArchiveException(LogStrings.NeedDec);
                 }
                 Ns2Decryptor decryptor = new Ns2Decryptor(data, Encoding.ASCII.GetBytes(Key));
                 decryptor.Decrypt();
@@ -53,9 +53,9 @@ namespace ArcFormats.NScripter
                     entries.Add(entry);
                 }
             }
-            catch (Exception)
+            catch
             {
-                Logger.Error(LogStrings.WrongScheme);
+                throw new InvalidSchemeException();
             }
             br.ReadByte(); //skip 'e'
 

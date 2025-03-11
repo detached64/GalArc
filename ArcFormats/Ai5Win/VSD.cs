@@ -1,6 +1,7 @@
 using GalArc.Logs;
 using System.IO;
 using System.Text;
+using Utility.Exceptions;
 
 namespace ArcFormats.Ai5Win
 {
@@ -12,7 +13,7 @@ namespace ArcFormats.Ai5Win
             BinaryReader br = new BinaryReader(fs);
             if (Encoding.ASCII.GetString(br.ReadBytes(4)) != "VSD1")
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
             Directory.CreateDirectory(folderPath);
             Logger.InitBar(1);

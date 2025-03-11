@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Utility;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.Softpal
@@ -67,7 +68,7 @@ namespace ArcFormats.Softpal
                     }
                     catch
                     {
-                        Logger.Error(LogStrings.ErrorDecScrFailed, false);
+                        Logger.Error(LogStrings.ErrorDecScrFailed);
                     }
                 }
                 File.WriteAllBytes(Path.Combine(folderPath, entry.Name), data);
@@ -83,7 +84,7 @@ namespace ArcFormats.Softpal
             BinaryReader br = new BinaryReader(fs);
             if (!br.ReadBytes(4).SequenceEqual(Magic))
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
             br.ReadInt32();
             uint fileCount = br.ReadUInt32();
@@ -108,7 +109,7 @@ namespace ArcFormats.Softpal
                     }
                     catch
                     {
-                        Logger.Error(LogStrings.ErrorDecScrFailed, false);
+                        Logger.Error(LogStrings.ErrorDecScrFailed);
                     }
                 }
 
@@ -212,7 +213,7 @@ namespace ArcFormats.Softpal
                     }
                     catch
                     {
-                        Logger.Error(LogStrings.ErrorEncScrFailed, false);
+                        Logger.Error(LogStrings.ErrorEncScrFailed);
                     }
                 }
                 bw.Write(buffer);
@@ -272,7 +273,7 @@ namespace ArcFormats.Softpal
                     }
                     catch
                     {
-                        Logger.Error(LogStrings.ErrorEncScrFailed, false);
+                        Logger.Error(LogStrings.ErrorEncScrFailed);
                     }
                 }
                 bw.Write(buffer);

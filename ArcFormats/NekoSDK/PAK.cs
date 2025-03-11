@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Utility;
 using Utility.Compression;
+using Utility.Exceptions;
 
 namespace ArcFormats.NekoSDK
 {
@@ -18,7 +19,7 @@ namespace ArcFormats.NekoSDK
             BinaryReader br = new BinaryReader(fs);
             if (Encoding.ASCII.GetString(br.ReadBytes(8)) != Magic)
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
             string version = Encoding.ASCII.GetString(br.ReadBytes(2));
             uint dataOffset;
@@ -31,8 +32,7 @@ namespace ArcFormats.NekoSDK
                     dataOffset = 16 + (uint)br.ReadUInt16();
                     break;
                 default:
-                    Logger.Error("Unknown version: " + version);
-                    return;
+                    throw new InvalidVersionException(InvalidVersionType.Unknown);
             }
             List<Entry> entries = new List<Entry>();
 

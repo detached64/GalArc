@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Utility;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.BiShop
@@ -36,7 +37,7 @@ namespace ArcFormats.BiShop
 
             if (!br.ReadBytes(8).SequenceEqual(Magic))
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
 
             ushort version = br.ReadUInt16();
@@ -54,7 +55,7 @@ namespace ArcFormats.BiShop
             }
             else
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidVersionException(InvalidVersionType.Unknown);
             }
         }
 

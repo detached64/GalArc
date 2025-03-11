@@ -156,8 +156,8 @@
   <data name="NewInstance" xml:space="preserve">
     <value>启动新实例</value>
   </data>
-  <data name="ErrorNotValidArc" xml:space="preserve">
-    <value>不是有效的封包。</value>
+  <data name="ErrorInvalidArchive" xml:space="preserve">
+    <value>无效封包。</value>
   </data>
   <data name="ErrorOriginalFileNotFound" xml:space="preserve">
     <value>同目录下未找到{0}原文件。</value>
@@ -168,7 +168,7 @@
   <data name="Packing" xml:space="preserve">
     <value>封包中……</value>
   </data>
-  <data name="ErrorOccur" xml:space="preserve">
+  <data name="Error" xml:space="preserve">
     <value>错误：{0}</value>
   </data>
   <data name="Versions" xml:space="preserve">
@@ -246,7 +246,7 @@
   <data name="InvalidArchiveType" xml:space="preserve">
     <value>错误：非法的文件类型。</value>
   </data>
-  <data name="SpecifiedIndexOffsetFailed" xml:space="preserve">
+  <data name="ErrorInvalidIndexOffset" xml:space="preserve">
     <value>错误：给定的索引偏移有误。</value>
   </data>
   <data name="Key" xml:space="preserve">
@@ -288,7 +288,7 @@
   <data name="ErrorContainsInvalid" xml:space="preserve">
     <value>路径中有非法字符。在设置里切换编码或许能解决此问题。</value>
   </data>
-  <data name="ErrorNotSupportedVersion" xml:space="preserve">
+  <data name="ErrorInvalidVersionNotSupported" xml:space="preserve">
     <value>{0} v{1}封包暂时不支持。</value>
   </data>
   <data name="WrongScheme" xml:space="preserve">
@@ -308,5 +308,17 @@
   </data>
   <data name="SchemeLoadedCount" xml:space="preserve">
     <value>导入密钥总数：{0}</value>
+  </data>
+  <data name="ErrorInvalidVersion" xml:space="preserve">
+    <value>未知版本或该版本暂未支持。</value>
+  </data>
+  <data name="ErrorInvalidVersionUnknown" xml:space="preserve">
+    <value>未知版本。</value>
+  </data>
+  <data name="ErrorInvalidScheme" xml:space="preserve">
+    <value>无效的加密方案。</value>
+  </data>
+  <data name="ErrorInvalidArchiveCaption" xml:space="preserve">
+    <value>无效封包：{0}</value>
   </data>
 </root>

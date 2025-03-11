@@ -2,6 +2,7 @@ using GalArc.Logs;
 using System.IO;
 using System.Text;
 using Utility;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.KID
@@ -16,7 +17,7 @@ namespace ArcFormats.KID
             BinaryReader br = new BinaryReader(fs);
             if (Encoding.ASCII.GetString(br.ReadBytes(4)) != Magic)
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
             int fileCount = br.ReadInt32();
             br.ReadBytes(8);

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using Utility;
 using Utility.Compression;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.Yuris
@@ -20,7 +21,7 @@ namespace ArcFormats.Yuris
             public byte[] Data { get; set; }
         }
 
-        private class Scheme
+        private class YpfScheme
         {
             public byte Key { get; set; }
             public byte[] Table { get; set; }
@@ -28,7 +29,7 @@ namespace ArcFormats.Yuris
             public byte[] ScriptKeyBytes { get; set; }
             public uint ScriptKey { get; set; }
 
-            public Scheme()
+            public YpfScheme()
             {
                 Key = 0;
                 ScriptKeyBytes = new byte[] { };
@@ -38,7 +39,7 @@ namespace ArcFormats.Yuris
         }
 
         private List<YpfEntry> entries = new List<YpfEntry>();
-        private Scheme scheme = new Scheme();
+        private YpfScheme scheme = new YpfScheme();
 
         private bool isFirstGuessYpf = true;
         private bool isFirstGuessYst = true;
@@ -59,7 +60,7 @@ namespace ArcFormats.Yuris
             BinaryReader br = new BinaryReader(fs);
             if (br.ReadUInt32() != 0x00465059)
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
 
             this.folderPath = folderPath;
@@ -135,7 +136,7 @@ namespace ArcFormats.Yuris
                     }
                 }
             }
-            Logger.Error("Failed to read index.");
+            throw new InvalidOperationException("Failed to read index.");
         }
 
         private void ReadIndex(BinaryReader br, int fileCount)
@@ -213,7 +214,7 @@ namespace ArcFormats.Yuris
                 catch
                 {
                     isFirstGuessYst = true;
-                    Logger.Error(LogStrings.ErrorDecScrFailed, false);
+                    Logger.Error(LogStrings.ErrorDecScrFailed);
                     return script;
                 }
             }

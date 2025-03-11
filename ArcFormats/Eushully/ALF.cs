@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Utility.Compression;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.Eushully
@@ -50,7 +51,7 @@ namespace ArcFormats.Eushully
                 {
                     if (Encoding.ASCII.GetString(br.ReadBytes(8)) != IndexFileMagicV4)
                     {
-                        Logger.ErrorInvalidArchive();
+                        throw new InvalidArchiveException();
                     }
                     fs.Position = 312;
                     byte[] raw = br.ReadBytes((int)fs.Length - 312);
@@ -79,7 +80,7 @@ namespace ArcFormats.Eushully
                     archiveIndex = archives.IndexOf(Path.GetFileName(filePath).ToLower());
                     if (archiveIndex == -1)
                     {
-                        Logger.ErrorInvalidArchive();
+                        throw new InvalidArchiveException();
                     }
                     else
                     {
@@ -134,7 +135,7 @@ namespace ArcFormats.Eushully
                 {
                     if (Encoding.Unicode.GetString(br.ReadBytes(16)) != IndexFileMagicV5)
                     {
-                        Logger.ErrorInvalidArchive();
+                        throw new InvalidArchiveException();
                     }
                     fs.Position = 552;
                     byte[] raw = br.ReadBytes((int)fs.Length - 552);
@@ -163,7 +164,7 @@ namespace ArcFormats.Eushully
                     archiveIndex = archives.IndexOf(Path.GetFileName(filePath).ToLower());
                     if (archiveIndex == -1)
                     {
-                        Logger.ErrorInvalidArchive();
+                        throw new InvalidArchiveException();
                     }
                     else
                     {

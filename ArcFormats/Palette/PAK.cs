@@ -2,6 +2,7 @@ using GalArc.Logs;
 using System.IO;
 using System.Linq;
 using Utility;
+using Utility.Exceptions;
 
 namespace ArcFormats.Palette
 {
@@ -15,7 +16,7 @@ namespace ArcFormats.Palette
             BinaryReader br = new BinaryReader(fs);
             if (!br.ReadBytes(6).SequenceEqual(Magic))
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
             int count = br.ReadInt32();
             Logger.InitBar(count);

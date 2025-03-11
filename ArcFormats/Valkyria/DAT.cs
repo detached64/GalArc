@@ -51,30 +51,23 @@ namespace ArcFormats.Valkyria
 
                 foreach (var entry in entries)
                 {
-                    try
+                    string safeName = Path.GetFileName(entry.Name);
+                    string outputPath = Path.Combine(folderPath, safeName);
+
+                    fs.Position = entry.Offset;
+                    byte[] data = new byte[entry.Size];
+                    int bytesRead = fs.Read(data, 0, (int)entry.Size);
+
+                    if (bytesRead == entry.Size)
                     {
-                        string safeName = Path.GetFileName(entry.Name);
-                        string outputPath = Path.Combine(folderPath, safeName);
-
-                        fs.Position = entry.Offset;
-                        byte[] data = new byte[entry.Size];
-                        int bytesRead = fs.Read(data, 0, (int)entry.Size);
-
-                        if (bytesRead == entry.Size)
-                        {
-                            Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
-                            File.WriteAllBytes(outputPath, data);
-                            Logger.UpdateBar();
-                            data = null;
-                        }
-                        else
-                        {
-                            throw new InvalidDataException($"Failed to read complete file: {entry.Name}");
-                        }
+                        Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
+                        File.WriteAllBytes(outputPath, data);
+                        Logger.UpdateBar();
+                        data = null;
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        Logger.Error($"Error extracting {entry.Name}: {ex.Message}");
+                        throw new InvalidDataException($"Failed to read complete file: {entry.Name}");
                     }
                 }
             }

@@ -2,6 +2,7 @@ using GalArc.Logs;
 using GalArc.Strings;
 using System;
 using System.IO;
+using Utility.Exceptions;
 
 namespace ArcFormats.Siglus
 {
@@ -17,7 +18,7 @@ namespace ArcFormats.Siglus
             uint reserve = br.ReadUInt32();
             if (reserve != 0)
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
             bool flag = br.ReadUInt32() == 1;
             entry.Data = br.ReadBytes((int)br.BaseStream.Length - 8);
@@ -30,7 +31,7 @@ namespace ArcFormats.Siglus
             entry.PackedLength = BitConverter.ToUInt32(entry.Data, 0);
             if (entry.PackedLength != entry.Data.Length)
             {
-                Logger.Error(LogStrings.WrongScheme);
+                throw new InvalidSchemeException();
             }
             entry.UnpackedLength = BitConverter.ToUInt32(entry.Data, 4);
             byte[] input = new byte[entry.PackedLength - 8];
@@ -41,7 +42,7 @@ namespace ArcFormats.Siglus
             }
             catch
             {
-                Logger.Error(LogStrings.WrongScheme);
+                throw new InvalidSchemeException();
             }
             Directory.CreateDirectory(folderPath);
             using (FileStream fw = File.Create(Path.Combine(folderPath, UnpackedFileName)))

@@ -4,10 +4,10 @@ using GalArc.Strings;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Utility;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.Artemis
@@ -19,7 +19,7 @@ namespace ArcFormats.Artemis
         private class Header
         {
             public string Magic { get; } = "pf";
-            public string Version { get; set; }
+            public int Version { get; set; }
             public uint IndexSize { get; set; }
             public uint FileCount { get; set; }
             public uint PathLenSum { get; set; }
@@ -41,17 +41,17 @@ namespace ArcFormats.Artemis
 
             if (Encoding.ASCII.GetString(br.ReadBytes(2)) != header.Magic)
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
-            header.Version = br.ReadChar().ToString();
-            if (!"8/6/2".Split('/').Contains(header.Version))
+            header.Version = br.ReadChar() - '0';
+            if (header.Version != 8 && header.Version != 2 && header.Version != 6)
             {
-                Logger.Error(string.Format(LogStrings.ErrorNotSupportedVersion, "pfs", header.Version));
+                throw new InvalidVersionException(InvalidVersionType.Unknown);
             }
             Logger.ShowVersion("pfs", header.Version);
             // read header
             header.IndexSize = br.ReadUInt32();
-            if (header.Version == "2")
+            if (header.Version == 2)
             {
                 br.ReadUInt32();
             }
@@ -59,7 +59,7 @@ namespace ArcFormats.Artemis
             Logger.InitBar(header.FileCount);
             // compute key
             byte[] key = new byte[20];  // SHA1 hash of index
-            if (header.Version == "8")
+            if (header.Version == 8)
             {
                 fs.Position = 7;
                 using (SHA1 sha = SHA1.Create())
@@ -81,7 +81,7 @@ namespace ArcFormats.Artemis
                 entry.Path = Path.Combine(folderPath, name);
 
                 br.ReadUInt32();
-                if (header.Version == "2")
+                if (header.Version == 2)
                 {
                     br.ReadBytes(8);
                 }
@@ -93,7 +93,7 @@ namespace ArcFormats.Artemis
                 long pos = fs.Position;
                 fs.Position = entry.Offset;
                 byte[] buffer = br.ReadBytes((int)entry.Size);
-                if (header.Version == "8")
+                if (header.Version == 8)
                 {
                     for (int j = 0; j < buffer.Length; j++)
                     {
@@ -114,7 +114,7 @@ namespace ArcFormats.Artemis
             //init
             Header header = new Header()
             {
-                Version = PackExtraOptions.Version,
+                Version = int.Parse(PackExtraOptions.Version),
                 PathLenSum = 0
             };
             List<PfsEntry> entries = new List<PfsEntry>();
@@ -136,16 +136,16 @@ namespace ArcFormats.Artemis
                 entries.Add(entry);
             }
 
-            switch (PackExtraOptions.Version)
+            switch (header.Version)
             {
-                case "8":
+                case 8:
                     header.IndexSize = 4 + 16 * header.FileCount + header.PathLenSum + 4 + 8 * header.FileCount + 12;
 
                     //write header
                     MemoryStream ms8 = new MemoryStream();
                     BinaryWriter writer8 = new BinaryWriter(ms8);
                     writer8.Write(Encoding.ASCII.GetBytes(header.Magic));
-                    writer8.Write(Encoding.ASCII.GetBytes(header.Version));
+                    writer8.Write((byte)header.Version);
                     writer8.Write(header.IndexSize);
                     writer8.Write(header.FileCount);
 
@@ -208,14 +208,14 @@ namespace ArcFormats.Artemis
                     writer8.Dispose();
                     return;
 
-                case "2":
+                case 2:
                     header.IndexSize = 8 + 24 * header.FileCount + header.PathLenSum;
 
                     //write header
                     MemoryStream ms2 = new MemoryStream();
                     BinaryWriter writer2 = new BinaryWriter(ms2);
                     writer2.Write(Encoding.ASCII.GetBytes(header.Magic));
-                    writer2.Write(Encoding.ASCII.GetBytes(header.Version));
+                    writer2.Write((byte)header.Version);
                     writer2.Write(header.IndexSize);
                     writer2.Write((uint)0);
                     writer2.Write(header.FileCount);
@@ -250,7 +250,7 @@ namespace ArcFormats.Artemis
                     writer2.Dispose();
                     return;
 
-                case "6":
+                case 6:
                     header.IndexSize = 4 + 16 * header.FileCount + header.PathLenSum + 4 + 8 * header.FileCount + 12;
                     //indexsize=(filecount)4byte+(pathlen+0x00000000+offset to begin+file size)16byte*filecount+pathlensum+(file count+1)4byte+8*filecount+(0x00000000)4byte*2+(offsettablebegin-0x7)4byte
 
@@ -258,7 +258,7 @@ namespace ArcFormats.Artemis
                     MemoryStream ms6 = new MemoryStream();
                     BinaryWriter writer6 = new BinaryWriter(ms6);
                     writer6.Write(Encoding.ASCII.GetBytes(header.Magic));
-                    writer6.Write(Encoding.ASCII.GetBytes(header.Version));
+                    writer6.Write((byte)header.Version);
                     writer6.Write(header.IndexSize);
                     writer6.Write(header.FileCount);
 

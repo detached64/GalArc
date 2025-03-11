@@ -47,6 +47,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
     <Reference Include="Zstandard.Net, Version=1.1.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Zstandard.Net.1.1.7\lib\net45\Zstandard.Net.dll</HintPath>
     </Reference>
@@ -58,6 +59,7 @@
     <Compile Include="Binary.cs" />
     <Compile Include="BitStream.cs" />
     <Compile Include="Crc32.cs" />
+    <Compile Include="Exceptions.cs" />
     <Compile Include="ExeResources.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="HuffmanCompression.cs" />

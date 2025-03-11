@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Utility.Compression;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.NeXAS
@@ -42,7 +43,7 @@ namespace ArcFormats.NeXAS
             FolderPath = folderPath;
             if (Encoding.ASCII.GetString(Reader.ReadBytes(3)) != Magic)
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
             fs.Position++;
             FileCount = Reader.ReadInt32();
@@ -90,7 +91,7 @@ namespace ArcFormats.NeXAS
                     }
                     catch (Exception ex)
                     {
-                        Logger.Error(LogStrings.ErrorDecompressFailed, false);
+                        Logger.Error(LogStrings.ErrorDecompressFailed);
                         Logger.Debug(ex.Message);
                     }
                 }

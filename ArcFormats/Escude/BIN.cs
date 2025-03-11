@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Utility;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.Escude
@@ -18,7 +19,7 @@ namespace ArcFormats.Escude
             BinaryReader br = new BinaryReader(fs);
             if (!string.Equals(Encoding.ASCII.GetString(br.ReadBytes(7)), Magic))
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
             switch (br.ReadChar() - '0')
             {
@@ -96,50 +97,53 @@ namespace ArcFormats.Escude
         {
             byte[] output = new byte[unpacked_size];
             using (MemoryStream ms = new MemoryStream(data))
-            using (BitStream input = new BitStream(ms, BitStreamMode.Read))
             {
-                int[] dic = new int[0x8900];
-                int dic_pos = 0;
-                int dst_pos = 0;
-                int length = 9;
-                while (dst_pos < unpacked_size)
+                using (BitStream input = new BitStream(ms, BitStreamMode.Read))
                 {
-                    int prefix_code = input.ReadBits(length);
-                    switch (prefix_code)
+                    int[] dic = new int[0x8900];
+                    int dic_pos = 0;
+                    int dst_pos = 0;
+                    int length = 9;
+                    while (dst_pos < unpacked_size)
                     {
-                        case -1:
-                            throw new EndOfStreamException();
-                        case 256:
-                            break;
-                        case 257:
-                            length++;
-                            if (length > 24)
-                            {
-                                throw new InvalidDataException(nameof(length));
-                            }
-                            break;
-                        case 258:
-                            length = 9;
-                            dic_pos = 0;
-                            break;
-                        default:
-                            dic[dic_pos++] = dst_pos;
-                            if (prefix_code < 256)
-                            {
-                                output[dst_pos++] = (byte)prefix_code;
-                            }
-                            else
-                            {
-                                prefix_code -= 259;
-                                int offset = dic[prefix_code];
-                                int count = Math.Min(unpacked_size - dst_pos, dic[prefix_code + 1] - offset + 1);
-                                Binary.CopyOverlapped(output, offset, dst_pos, count);
-                                dst_pos += count;
-                            }
-                            break;
+                        int prefix_code = input.ReadBits(length);
+                        switch (prefix_code)
+                        {
+                            case -1:
+                                throw new EndOfStreamException();
+                            case 256:
+                                break;
+                            case 257:
+                                length++;
+                                if (length > 24)
+                                {
+                                    throw new InvalidDataException(nameof(length));
+                                }
+                                break;
+                            case 258:
+                                length = 9;
+                                dic_pos = 0;
+                                break;
+                            default:
+                                dic[dic_pos++] = dst_pos;
+                                if (prefix_code < 256)
+                                {
+                                    output[dst_pos++] = (byte)prefix_code;
+                                }
+                                else
+                                {
+                                    prefix_code -= 259;
+                                    int offset = dic[prefix_code];
+                                    int count = Math.Min(unpacked_size - dst_pos, dic[prefix_code + 1] - offset + 1);
+                                    Binary.CopyOverlapped(output, offset, dst_pos, count);
+                                    dst_pos += count;
+                                }
+                                break;
+                        }
                     }
                 }
             }
+
             return output;
         }
 

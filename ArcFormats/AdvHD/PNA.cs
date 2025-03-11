@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Utility.Exceptions;
 
 namespace ArcFormats.AdvHD
 {
@@ -39,7 +40,7 @@ namespace ArcFormats.AdvHD
             header.Magic = Encoding.UTF8.GetString(br.ReadBytes(4));
             if (header.Magic != "PNAP")
             {
-                Logger.ErrorInvalidArchive();
+                throw new InvalidArchiveException();
             }
 
             header.Unknown1 = br.ReadUInt32();
@@ -48,7 +49,7 @@ namespace ArcFormats.AdvHD
             header.FileCount = br.ReadUInt32();
 
             Directory.CreateDirectory(folderPath);
-            List<Entry> l = new List<Entry>();
+            List<Entry> entries = new List<Entry>((int)header.FileCount);
 
             for (int i = 0; i < header.FileCount; i++)
             {
@@ -63,17 +64,17 @@ namespace ArcFormats.AdvHD
                 entry.Add2 = br.ReadUInt32();
                 entry.Remark3 = br.ReadUInt32();
                 entry.FileSize = br.ReadUInt32();
-                l.Add(entry);
+                entries.Add(entry);
             }
             int validCount = 0;
             for (int i = 0; i < header.FileCount; i++)
             {
-                if (l[i].FileType == 1 || l[i].FileType == 2)
+                if (entries[i].FileType == 1 || entries[i].FileType == 2)
                 {
                     continue;
                 }
-                byte[] buffer = br.ReadBytes((int)l[i].FileSize);
-                File.WriteAllBytes(Path.Combine(folderPath, Path.GetFileNameWithoutExtension(filePath) + "_" + l[i].FileNumber.ToString("000") + ".png"), buffer);
+                byte[] buffer = br.ReadBytes((int)entries[i].FileSize);
+                File.WriteAllBytes(Path.Combine(folderPath, Path.GetFileNameWithoutExtension(filePath) + "_" + entries[i].FileNumber.ToString("000") + ".png"), buffer);
                 buffer = null;
                 validCount++;
             }

@@ -128,7 +128,7 @@ namespace ArcFormats.GsPack
                     }
                     catch
                     {
-                        Logger.Error(LogStrings.ErrorDecScrFailed, false);
+                        Logger.Error(LogStrings.ErrorDecScrFailed);
                     }
                 }
                 File.WriteAllBytes(Path.Combine(folderPath, entry.Name + ext), data);

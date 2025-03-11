@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Utility;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.AdvHD
@@ -277,7 +278,7 @@ namespace ArcFormats.AdvHD
                 catch
                 { }
             }
-            Logger.ErrorInvalidArchive();
+            throw new InvalidArchiveException();
         }
 
         public override void Pack(string folderPath, string filePath)
@@ -289,9 +290,6 @@ namespace ArcFormats.AdvHD
                     break;
                 case "2":
                     PackV2(folderPath, filePath);
-                    break;
-                default:
-                    Logger.Error("Wrong version specified.");
                     break;
             }
         }

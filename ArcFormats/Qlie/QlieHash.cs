@@ -1,5 +1,6 @@
 using GalArc.Logs;
 using System;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -51,7 +52,7 @@ namespace ArcFormats.Qlie
             string magic = Encoding.ASCII.GetString(Hash, 0, 16).TrimEnd('\0');
             if (!Regex.IsMatch(magic, HashMagicPattern))
             {
-                Logger.Error("Invalid hash magic.");
+                throw new InvalidDataException("Invalid hash magic.");
             }
             int major = int.Parse(magic.Substring(7, 1));
             int minor = int.Parse(magic.Substring(9, 1));
@@ -69,7 +70,7 @@ namespace ArcFormats.Qlie
                     return QlieEncryption.Decompress(result);
                 }
             }
-            Logger.Error("Failed to get hash data.", false);
+            Logger.Error("Failed to get hash data.");
             return null;
         }
 

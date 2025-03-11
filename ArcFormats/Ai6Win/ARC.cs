@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using Utility;
 using Utility.Compression;
+using Utility.Exceptions;
 using Utility.Extensions;
 
 namespace ArcFormats.Ai6Win
@@ -36,7 +37,7 @@ namespace ArcFormats.Ai6Win
                 catch
                 { }
             }
-            Logger.ErrorInvalidArchive();
+            throw new InvalidArchiveException();
         }
 
         public override void Pack(string folderPath, string filePath)

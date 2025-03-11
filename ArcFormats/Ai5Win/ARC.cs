@@ -77,7 +77,7 @@ namespace ArcFormats.Ai5Win
                 catch
                 { }
             }
-            Logger.Error("Failed to read index.");
+            throw new InvalidOperationException("Failed to read index.");
         }
 
         protected class ArcScheme
