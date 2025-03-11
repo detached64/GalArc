@@ -102,31 +102,31 @@ namespace ArcFormats.Qlie
             #region read hash
             if (SaveHash)
             {
-            byte[] rawHashData = null;
-            if (version >= 20)
-            {
-                fs.Position = fs.Length - 0x440 - qkey.HashSize;
-                rawHashData = br.ReadBytes((int)qkey.HashSize);
-            }
-            else
-            {
-                string hashFile = Path.ChangeExtension(input, "hash");
-                if (File.Exists(hashFile))
+                byte[] rawHashData = null;
+                if (version >= 20)
                 {
-                    rawHashData = File.ReadAllBytes(hashFile);
+                    fs.Position = fs.Length - 0x440 - qkey.HashSize;
+                    rawHashData = br.ReadBytes((int)qkey.HashSize);
                 }
-            }
-            if (rawHashData != null)
-            {
-                QlieHashReader hashReader = new QlieHashReader(rawHashData);
-                Logger.Info($"Hash Version: {hashReader.HashVersion / 10.0:0.0}");
-                byte[] hashData = hashReader.GetHashData();
+                else
+                {
+                    string hashFile = Path.ChangeExtension(input, "hash");
+                    if (File.Exists(hashFile))
+                    {
+                        rawHashData = File.ReadAllBytes(hashFile);
+                    }
+                }
+                if (rawHashData != null)
+                {
+                    QlieHashReader hashReader = new QlieHashReader(rawHashData);
+                    Logger.Info($"Hash Version: {hashReader.HashVersion / 10.0:0.0}");
+                    byte[] hashData = hashReader.GetHashData();
                     if (hashData != null)
-                {
-                    Directory.CreateDirectory(output);
-                    File.WriteAllBytes(Path.Combine(output, "hash.bin"), hashData);
+                    {
+                        Directory.CreateDirectory(output);
+                        File.WriteAllBytes(Path.Combine(output, "hash.bin"), hashData);
+                    }
                 }
-            }
             }
             #endregion
 

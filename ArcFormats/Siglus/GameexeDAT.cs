@@ -1,5 +1,4 @@
 using GalArc.Logs;
-using GalArc.Strings;
 using System;
 using System.IO;
 using Utility.Exceptions;

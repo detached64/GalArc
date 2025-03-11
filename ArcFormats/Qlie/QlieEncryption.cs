@@ -1,4 +1,3 @@
-using GalArc.Logs;
 using System;
 using System.Linq;
 using System.Text;
@@ -386,8 +385,7 @@ namespace ArcFormats.Qlie
                     DecryptV2(data, entry.Name, entry.Key, entry.CommmonKey);
                     break;
                 default:
-                    Logger.Error("Unknown encryption method");
-                    break;
+                    throw new ArgumentException("Invalid encryption flag", nameof(entry.IsEncrypted));
             }
         }
 
