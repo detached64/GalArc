@@ -129,4 +129,7 @@
   <data name="btSelInput.Text" xml:space="preserve">
     <value>…</value>
   </data>
+  <data name="lbBufferSize.Text" xml:space="preserve">
+    <value>日志缓冲区大小（行数）</value>
+  </data>
 </root>

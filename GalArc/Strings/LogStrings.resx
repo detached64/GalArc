@@ -301,4 +301,7 @@
   <data name="ErrorInvalidArchiveCaption" xml:space="preserve">
     <value>Invalid archive: {0}</value>
   </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit the instance</value>
+  </data>
 </root>

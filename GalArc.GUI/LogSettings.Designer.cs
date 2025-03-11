@@ -35,7 +35,11 @@ namespace GalArc.GUI
             this.txtLogPath = new System.Windows.Forms.TextBox();
             this.btSelInput = new System.Windows.Forms.Button();
             this.panel = new System.Windows.Forms.Panel();
+            this.trBufferSize = new System.Windows.Forms.TrackBar();
+            this.lbBufferSize = new System.Windows.Forms.Label();
+            this.lbSize = new System.Windows.Forms.Label();
             this.panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trBufferSize)).BeginInit();
             this.SuspendLayout();
             // 
             // chkbxDebug
@@ -79,10 +83,36 @@ namespace GalArc.GUI
             this.panel.Controls.Add(this.lbLogPath);
             this.panel.Name = "panel";
             // 
+            // trBufferSize
+            // 
+            resources.ApplyResources(this.trBufferSize, "trBufferSize");
+            this.trBufferSize.LargeChange = 20;
+            this.trBufferSize.Maximum = 250;
+            this.trBufferSize.Minimum = 25;
+            this.trBufferSize.Name = "trBufferSize";
+            this.trBufferSize.SmallChange = 5;
+            this.trBufferSize.TickFrequency = 20;
+            this.trBufferSize.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trBufferSize.Value = 25;
+            this.trBufferSize.Scroll += new System.EventHandler(this.trBufferSize_Scroll);
+            // 
+            // lbBufferSize
+            // 
+            resources.ApplyResources(this.lbBufferSize, "lbBufferSize");
+            this.lbBufferSize.Name = "lbBufferSize";
+            // 
+            // lbSize
+            // 
+            resources.ApplyResources(this.lbSize, "lbSize");
+            this.lbSize.Name = "lbSize";
+            // 
             // LogSettings
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lbSize);
+            this.Controls.Add(this.lbBufferSize);
+            this.Controls.Add(this.trBufferSize);
             this.Controls.Add(this.panel);
             this.Controls.Add(this.chkbxSaveLog);
             this.Controls.Add(this.chkbxDebug);
@@ -90,6 +120,7 @@ namespace GalArc.GUI
             this.Load += new System.EventHandler(this.LogSettings_Load);
             this.panel.ResumeLayout(false);
             this.panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trBufferSize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -103,5 +134,8 @@ namespace GalArc.GUI
         private System.Windows.Forms.TextBox txtLogPath;
         private System.Windows.Forms.Button btSelInput;
         private System.Windows.Forms.Panel panel;
+        private System.Windows.Forms.TrackBar trBufferSize;
+        private System.Windows.Forms.Label lbBufferSize;
+        private System.Windows.Forms.Label lbSize;
     }
 }

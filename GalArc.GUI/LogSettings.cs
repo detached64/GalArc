@@ -20,7 +20,8 @@ namespace GalArc.GUI
             this.chkbxDebug.Checked = BaseSettings.Default.IsDebugMode;
             this.chkbxSaveLog.Checked = BaseSettings.Default.SaveLog;
             this.txtLogPath.Text = Logger.Path;
-            this.panel.Enabled = this.chkbxSaveLog.Checked;
+            this.trBufferSize.Value = BaseSettings.Default.LogBufferSize;
+            this.lbSize.Text = this.trBufferSize.Value.ToString();
         }
 
         private void chkbxDebug_CheckedChanged(object sender, EventArgs e)
@@ -53,6 +54,13 @@ namespace GalArc.GUI
         private void txtLogPath_TextChanged(object sender, EventArgs e)
         {
             Logger.Path = this.txtLogPath.Text;
+        }
+
+        private void trBufferSize_Scroll(object sender, EventArgs e)
+        {
+            this.lbSize.Text = this.trBufferSize.Value.ToString();
+            BaseSettings.Default.LogBufferSize = this.trBufferSize.Value;
+            BaseSettings.Default.Save();
         }
     }
 }

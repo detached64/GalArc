@@ -286,6 +286,15 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
+        ///   查找类似 Exit the instance 的本地化字符串。
+        /// </summary>
+        public static string Exit {
+            get {
+                return ResourceManager.GetString("Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 {0} files inside. 的本地化字符串。
         /// </summary>
         public static string FileCountInside {

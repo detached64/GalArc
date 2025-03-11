@@ -9,6 +9,15 @@ namespace GalArc.Settings
 
         [UserScopedSetting]
         [DebuggerNonUserCode]
+        [DefaultSettingValue("25")]
+        public int LogBufferSize
+        {
+            get => (int)this[nameof(LogBufferSize)];
+            set => this[nameof(LogBufferSize)] = value;
+        }
+
+        [UserScopedSetting]
+        [DebuggerNonUserCode]
         [DefaultSettingValue("False")]
         public bool IsDebugMode
         {

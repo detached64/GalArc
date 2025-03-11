@@ -67,13 +67,6 @@ namespace GalArc.Logs
         private void OnProgressEvent(ProgressEventArgs e) => ProgressEvent?.Invoke(this, e);
         #endregion
 
-        private const int CacheSize =
-#if DEBUG
-            250;
-#else
-            25;
-#endif
-
         private static string DefaultPath => System.IO.Path.Combine(Environment.CurrentDirectory, "log.txt");
 
         public static string Path
@@ -114,7 +107,7 @@ namespace GalArc.Logs
                 }
             }
 
-            if (logCache.Count > CacheSize)
+            if (logCache.Count > BaseSettings.Default.LogBufferSize)
             {
                 Flush();
             }
@@ -127,7 +120,7 @@ namespace GalArc.Logs
                 logCache.Add(string.Empty);
             }
 
-            if (logCache.Count > CacheSize)
+            if (logCache.Count > BaseSettings.Default.LogBufferSize)
             {
                 Flush();
             }
@@ -154,6 +147,7 @@ namespace GalArc.Logs
 
         public void Dispose()
         {
+            Append($"[{LogStrings.Exit}]");
             Flush();
             cts.Cancel();
             cts.Dispose();
