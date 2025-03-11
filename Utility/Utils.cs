@@ -157,25 +157,16 @@ namespace Utility
         public static byte[] GetPaddedBytes(string input, int length, char padChar, Encoding encoding)
         {
             byte[] bytes = encoding.GetBytes(input);
-            if (length > bytes.Length)
+            byte[] result = new byte[length];
+            int bytesToCopy = Math.Min(length, bytes.Length);
+            Buffer.BlockCopy(bytes, 0, result, 0, bytesToCopy);
+
+            if (length > bytes.Length && padChar != '\0')
             {
-                byte[] paddedBytes = new byte[length];
-                Array.Copy(bytes, paddedBytes, bytes.Length);
-                if (padChar != '\0')
-                {
-                    byte[] padBytes = encoding.GetBytes(new string(padChar, length - bytes.Length));
-                    Array.Copy(padBytes, 0, paddedBytes, bytes.Length, padBytes.Length);
-                }
-                bytes = null;
-                return paddedBytes;
+                byte[] padBytes = Encoding.ASCII.GetBytes(new string(padChar, length - bytes.Length));
+                Buffer.BlockCopy(padBytes, 0, result, bytes.Length, padBytes.Length);
             }
-            else
-            {
-                byte[] paddedBytes = new byte[length];
-                Array.Copy(bytes, paddedBytes, length);
-                bytes = null;
-                return paddedBytes;
-            }
+            return result;
         }
 
         public static byte[] GetPaddedBytes(string input, int length)
