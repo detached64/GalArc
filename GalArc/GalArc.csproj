@@ -131,6 +131,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if not exist "$(TargetDir)\Database" mkdir "$(TargetDir)\Database"
-xcopy /E /I /Y /D "$(ProjectDir)\Resources\Database" "$(TargetDir)\Database"</PostBuildEvent>
+xcopy /E /I /Y /D "$(ProjectDir)\Resources\Database" "$(TargetDir)\Database"
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
