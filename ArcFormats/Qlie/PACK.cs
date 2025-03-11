@@ -50,7 +50,7 @@ namespace ArcFormats.Qlie
             qheader.IndexOffset = br.ReadInt64();
             if (!IsSaneCount(qheader.FileCount) || qheader.IndexOffset < 0 || qheader.IndexOffset >= fs.Length || !Regex.IsMatch(qheader.Magic, HeaderMagicPattern))
             {
-                Logger.Error("Invalid header");
+                throw new InvalidDataException("Invalid header");
             }
             List<QlieEntry> entries = new List<QlieEntry>(qheader.FileCount);
             #endregion
@@ -78,7 +78,7 @@ namespace ArcFormats.Qlie
                 };
                 if (qkey.HashSize > fs.Length || qkey.HashSize < 0x44)
                 {
-                    Logger.Error("Invalid key");
+                    throw new InvalidDataException("Invalid key");
                 }
                 if (version >= 30)
                 {
@@ -100,6 +100,8 @@ namespace ArcFormats.Qlie
             #endregion
 
             #region read hash
+            if (SaveHash)
+            {
             byte[] rawHashData = null;
             if (version >= 20)
             {
@@ -119,12 +121,12 @@ namespace ArcFormats.Qlie
                 QlieHashReader hashReader = new QlieHashReader(rawHashData);
                 Logger.Info($"Hash Version: {hashReader.HashVersion / 10.0:0.0}");
                 byte[] hashData = hashReader.GetHashData();
-                // Optional: save hash
-                if (SaveHash && hashData != null)
+                    if (hashData != null)
                 {
                     Directory.CreateDirectory(output);
                     File.WriteAllBytes(Path.Combine(output, "hash.bin"), hashData);
                 }
+            }
             }
             #endregion
 
@@ -235,7 +237,7 @@ namespace ArcFormats.Qlie
                 }
                 else
                 {
-                    throw new FileNotFoundException("Specified file not found.");
+                    throw new FileNotFoundException("Specified key.fkey not found.");
                 }
             }
             foreach (string p in KeyLocations)
@@ -271,7 +273,7 @@ namespace ArcFormats.Qlie
 
         public override void DeserializeScheme(out string name, out int count)
         {
-            Scheme = Deserializer.ReadScheme<QlieScheme>();
+            Scheme = Deserializer.LoadScheme<QlieScheme>();
             name = "Qlie";
             count = Scheme?.KnownKeys?.Count ?? 0;
         }
@@ -297,7 +299,7 @@ namespace ArcFormats.Qlie
         public new long Offset { get; set; }
         public uint Hash { get; set; }          // for check, not necessary
         public uint IsEncrypted { get; set; }
-        public byte[] CommmonKey { get; set; }  // length: 0x40, for 3.1
-        public uint Key { get; set; }           // for 3.1
+        public byte[] CommmonKey { get; set; }  // length: 0x40
+        public uint Key { get; set; }
     }
 }
