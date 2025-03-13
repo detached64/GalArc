@@ -151,9 +151,9 @@ namespace ArcFormats.Siglus
 
         protected byte[] TryAllSchemes(ScenePckEntry entry, int type)
         {
-            foreach (string scheme in Scheme.KnownKeys.Values)
+            foreach (var scheme in Scheme.KnownKeys)
             {
-                byte[] key = Convert.FromBase64String(scheme);
+                byte[] key = scheme.Value;
                 if (key.Length != 16)
                 {
                     continue;
@@ -161,23 +161,11 @@ namespace ArcFormats.Siglus
                 if (IsRightKey(entry.Data, key, type))
                 {
                     Logger.Info(string.Format(LogStrings.KeyFound, BitConverter.ToString(key)));
-                    Logger.Info(string.Format(LogStrings.MatchedGame, FindKeyFromValue(scheme)));
+                    Logger.Info(string.Format(LogStrings.MatchedGame, scheme.Key));
                     return key;
                 }
             }
-            Logger.Info(string.Format(LogStrings.KeyNotFound));
-            return null;
-        }
-
-        protected string FindKeyFromValue(string scheme)
-        {
-            foreach (var dic in Scheme.KnownKeys)
-            {
-                if (string.Equals(scheme, dic.Value))
-                {
-                    return dic.Key;
-                }
-            }
+            Logger.Info(LogStrings.KeyNotFound);
             return null;
         }
 

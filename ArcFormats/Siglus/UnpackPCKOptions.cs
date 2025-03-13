@@ -49,7 +49,7 @@ namespace ArcFormats.Siglus
                     this.lbKey.Text = string.Empty;
                     break;
                 default:
-                    byte[] key = Convert.FromBase64String(ScenePCK.Scheme.KnownKeys[this.combSchemes.Text]);
+                    byte[] key = ScenePCK.Scheme.KnownKeys[this.combSchemes.Text];
                     try
                     {
                         ScenePCK.SelectedKey = key;
