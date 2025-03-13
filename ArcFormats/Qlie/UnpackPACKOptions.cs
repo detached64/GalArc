@@ -44,7 +44,7 @@ namespace ArcFormats.Qlie
             switch (combSchemes.SelectedIndex)
             {
                 case 0:
-                    PACK.SelectedKey = string.Empty;
+                    PACK.SelectedKey = null;
                     break;
                 default:
                     PACK.SelectedKey = PACK.Scheme.KnownKeys[combSchemes.Text];

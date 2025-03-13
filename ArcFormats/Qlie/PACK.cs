@@ -32,7 +32,7 @@ namespace ArcFormats.Qlie
         private static readonly string[] KeyLocations = { ".", "..", "..\\DLL", "DLL" };
 
         internal static QlieScheme Scheme;
-        internal static string SelectedKey;
+        internal static byte[] SelectedKey;
         internal static string FKeyPath;
         internal static bool SaveKey = false;
         internal static bool SaveHash = false;
@@ -60,7 +60,7 @@ namespace ArcFormats.Qlie
             int minor = int.Parse(qheader.Magic.Substring(13, 1));
             int version = major * 10 + minor;
             Logger.Info($"File Pack Version: {major}.{minor}");
-            byte[] game_key = !string.IsNullOrWhiteSpace(SelectedKey) ? Convert.FromBase64String(SelectedKey) : null;
+            byte[] game_key = SelectedKey;
             QlieEncryption qenc = QlieEncryption.CreateEncryption(version, game_key);
             #endregion
 
