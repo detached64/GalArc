@@ -206,6 +206,12 @@
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Qlie\PackPACKOptions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Qlie\PackPACKOptions.Designer.cs">
+      <DependentUpon>PackPACKOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Qlie\QlieEncryption.cs" />
     <Compile Include="Qlie\PACK.cs" />
     <Compile Include="Qlie\QlieHash.cs" />
@@ -416,6 +422,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PJADV\UnpackDATOptions.zh-Hans.resx">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Qlie\PackPACKOptions.resx">
+      <DependentUpon>PackPACKOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Qlie\PackPACKOptions.zh-Hans.resx">
+      <DependentUpon>PackPACKOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Qlie\UnpackPACKOptions.resx">
       <DependentUpon>UnpackPACKOptions.cs</DependentUpon>

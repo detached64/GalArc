@@ -14,6 +14,8 @@ namespace ArcFormats.Qlie
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackPACKOptions.Instance;
 
+        public override OptionsTemplate PackExtraOptions => PackPACKOptions.Instance;
+
         private readonly string HeaderMagicPattern = "^FilePackVer[0-9]\\.[0-9]$";
 
         /// <summary>
@@ -221,6 +223,61 @@ namespace ArcFormats.Qlie
 
             fs.Dispose();
             br.Dispose();
+        }
+
+        public override void Pack(string folderPath, string filePath)
+        {
+            const string magic_pattern = "FilePackVer{0}";
+            QlieEncryption qenc = QlieEncryption.CreateEncryption(PackExtraOptions.Version);
+            FileInfo[] files = new DirectoryInfo(folderPath).GetFiles("*", SearchOption.AllDirectories);
+            FileStream fw = File.Create(filePath);
+            BinaryWriter bw = new BinaryWriter(fw);
+            List<QlieEntry> entries = new List<QlieEntry>(files.Length);
+            long baseOffset = 0;
+            foreach (FileInfo file in files)
+            {
+                byte[] data = File.ReadAllBytes(file.FullName);
+                bw.Write(data);
+                QlieEntry entry = new QlieEntry();
+                entry.Name = Utils.GetRelativePath(file.FullName, folderPath);
+                entry.Hash = qenc.ComputeHash(data, data.Length);       // returns 0 for 1.0, 2.0
+                entry.RawName = qenc.EncryptName(entry.Name, (int)entry.Hash);
+                entry.Offset = baseOffset;
+                entry.Size = (uint)data.Length;
+                entry.UnpackedSize = entry.Size;
+                baseOffset += entry.Size;
+                entries.Add(entry);
+            }
+            foreach (QlieEntry entry in entries)
+            {
+                bw.Write((short)entry.RawName.Length);
+                bw.Write(entry.RawName);
+                bw.Write(entry.Offset);
+                bw.Write(entry.Size);
+                bw.Write(entry.UnpackedSize);
+                bw.Write(0);                // entry.IsPacked
+                bw.Write(0);                // entry.IsEncrypted
+                //bw.Write(entry.Hash);
+            }
+            bw.Write(Encoding.ASCII.GetBytes(string.Format(magic_pattern, PackExtraOptions.Version).PadRight(16, '\0')));
+            bw.Write(entries.Count);
+            bw.Write(baseOffset);
+            using (FileStream fwHash = File.Create(Path.ChangeExtension(filePath, "hash")))
+            {
+                using (BinaryWriter bwHash = new BinaryWriter(fwHash))
+                {
+                    bwHash.Write((short)entries.Count);
+                    foreach (QlieEntry entry in entries)
+                    {
+                        bwHash.Write((short)entry.RawName.Length);
+                        bwHash.Write(entry.RawName);
+                        bwHash.Write(0);
+                        bwHash.Write(0);
+                    }
+                }
+            }
+            bw.Dispose();
+            fw.Dispose();
         }
 
         /// <summary>

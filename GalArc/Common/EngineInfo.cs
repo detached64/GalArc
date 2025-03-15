@@ -44,7 +44,7 @@ namespace GalArc.Common
             new EngineInfo("NScripter","NS2/NSA","NS2/NSA"),
             new EngineInfo("Palette","PAK","PAK"),
             new EngineInfo("PJADV","DAT/PAK","DAT/PAK"),
-            new EngineInfo("Qlie","PACK",string.Empty),
+            new EngineInfo("Qlie","PACK","PACK"),
             new EngineInfo("RPGMaker","RGSSAD/RGSS2A/RGSS3A","RGSSAD/RGSS2A/RGSS3A"),
             new EngineInfo("Seraph","DAT",string.Empty),
             new EngineInfo("Siglus","Scene.PCK/Gameexe.DAT",string.Empty),
