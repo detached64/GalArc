@@ -1,6 +1,5 @@
 using GalArc.Controls;
 using GalArc.Logs;
-using GalArc.Settings;
 using GalArc.Strings;
 using System;
 using System.Collections.Generic;

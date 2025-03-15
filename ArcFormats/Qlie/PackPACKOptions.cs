@@ -1,4 +1,5 @@
 using GalArc.Controls;
+using System;
 
 namespace ArcFormats.Qlie
 {
@@ -15,7 +16,7 @@ namespace ArcFormats.Qlie
             this.combVersion.SelectedIndex = 0;
         }
 
-        private void combVersion_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
             Version = this.combVersion.Text;
         }
