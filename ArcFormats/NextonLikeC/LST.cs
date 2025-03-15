@@ -6,7 +6,7 @@ using Utility;
 
 namespace ArcFormats.NextonLikeC
 {
-    public class LST : ArchiveFormat
+    public class LST : ArcFormat
     {
         private class NextonEntry : Entry
         {

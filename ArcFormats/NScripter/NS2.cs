@@ -12,7 +12,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.NScripter
 {
-    public class NS2 : ArchiveFormat
+    public class NS2 : ArcFormat
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackNS2Options.Instance;
 

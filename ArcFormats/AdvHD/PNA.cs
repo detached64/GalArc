@@ -7,7 +7,7 @@ using Utility.Exceptions;
 
 namespace ArcFormats.AdvHD
 {
-    public class PNA : ArchiveFormat
+    public class PNA : ArcFormat
     {
         private class Header
         {

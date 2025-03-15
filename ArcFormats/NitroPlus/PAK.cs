@@ -7,7 +7,7 @@ using Utility.Compression;
 
 namespace ArcFormats.NitroPlus
 {
-    public class PAK : ArchiveFormat
+    public class PAK : ArcFormat
     {
         public override OptionsTemplate PackExtraOptions => PackPAKOptions.Instance;
 

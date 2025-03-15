@@ -11,7 +11,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.PJADV
 {
-    public class DAT : ArchiveFormat
+    public class DAT : ArcFormat
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackDATOptions.Instance;
         public override OptionsTemplate PackExtraOptions => PackDATOptions.Instance;

@@ -6,7 +6,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.NScripter
 {
-    public class NSA : ArchiveFormat
+    public class NSA : ArcFormat
     {
         public override void Unpack(string filePath, string folderPath)
         {

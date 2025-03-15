@@ -9,7 +9,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.Escude
 {
-    public class BIN : ArchiveFormat
+    public class BIN : ArcFormat
     {
         private readonly string Magic = "ESC-ARC";
 

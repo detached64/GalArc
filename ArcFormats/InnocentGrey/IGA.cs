@@ -8,7 +8,7 @@ using Utility.Exceptions;
 
 namespace ArcFormats.InnocentGrey
 {
-    public class IGA : ArchiveFormat
+    public class IGA : ArcFormat
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackIGAOptions.Instance;
         public override OptionsTemplate PackExtraOptions => PackIGAOptions.Instance;

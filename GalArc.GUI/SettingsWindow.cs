@@ -1,3 +1,4 @@
+using ArcFormats;
 using GalArc.Settings;
 using GalArc.Strings;
 using System;
@@ -12,7 +13,6 @@ namespace GalArc.GUI
         public SettingsWindow()
         {
             InitializeComponent();
-            this.treeViewOption.ExpandAll();
         }
 
         private void SettingsWindow_Load(object sender, EventArgs e)
@@ -21,39 +21,52 @@ namespace GalArc.GUI
             {
                 this.TopMost = true;
             }
-            this.treeViewOption.SelectedNode = treeViewOption.Nodes[0];
-            this.treeViewOption.Nodes[0].Text = GUIStrings.nodeGeneral;
-            this.treeViewOption.Nodes[1].Text = GUIStrings.nodePreference;
-            this.treeViewOption.Nodes[2].Text = GUIStrings.nodeLog;
-            this.treeViewOption.Nodes[3].Text = GUIStrings.nodeDatabase;
+            this.treeOptions.Nodes.Clear();
+            TreeNode[] nodes = new TreeNode[]
+            {
+                new TreeNode(GUIStrings.nodeGeneral) { Tag = GeneralSettings.Instance },
+                new TreeNode(GUIStrings.nodePreference) { Tag = null },
+                new TreeNode(GUIStrings.nodeLog) { Tag = LogSettings.Instance },
+                new TreeNode(GUIStrings.nodeDatabase) { Tag = DatabaseSettings.Instance }
+            };
+            this.treeOptions.Nodes.AddRange(nodes);
+            this.treeOptions.SelectedNode = this.treeOptions.Nodes[0];
+
+            foreach (var format in ArcResources.Formats)
+            {
+                if (format.Settings != null)
+                {
+                    foreach (var setting in format.Settings)
+                    {
+                        if (setting is EncodingSetting encodingSetting)
+                        {
+                            this.treeOptions.Nodes[1].Nodes.Add(new TreeNode()
+                            {
+                                Text = setting.Name.Replace("Encoding", string.Empty),
+                                Tag = new EncodingSettings(encodingSetting)
+                            });
+                        }
+                        else
+                        {
+                            throw new NotImplementedException("Not supported setting type.");
+                        }
+                    }
+                }
+            }
+            this.treeOptions.ExpandAll();
         }
 
         private void treeViewOption_AfterSelect(object sender, TreeViewEventArgs e)
         {
             this.SuspendLayout();
-            UserControl userControl = null;
-            switch (e.Node.Name)
-            {
-                case "nodeGeneral":
-                    userControl = GeneralSettings.Instance;
-                    break;
-                case "nodePreference":
-                    userControl = PreferenceSettings.Instance;
-                    break;
-                case "nodeLog":
-                    userControl = LogSettings.Instance;
-                    break;
-                case "nodeDatabase":
-                    userControl = DatabaseSettings.Instance;
-                    break;
-            }
+            UserControl userControl = e.Node.Tag as UserControl;
+            this.panel.Controls.Clear();
             if (userControl != null)
             {
-                this.panel.Controls.Clear();
                 userControl.Dock = DockStyle.Fill;
                 this.panel.Controls.Add(userControl);
             }
-            this.ResumeLayout(false);
+            this.ResumeLayout(true);
         }
     }
 }

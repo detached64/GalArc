@@ -10,7 +10,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.GsPack
 {
-    public class PAK : ArchiveFormat
+    public class PAK : ArcFormat
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackPAKOptions.Instance;
 

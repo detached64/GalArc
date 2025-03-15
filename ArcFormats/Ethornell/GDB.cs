@@ -4,7 +4,7 @@ using Utility.Exceptions;
 
 namespace ArcFormats.Ethornell
 {
-    public class GDB : ArchiveFormat
+    public class GDB : ArcFormat
     {
         private const string MagicSDCFormat100 = "SDC FORMAT 1.00\0";
 

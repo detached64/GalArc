@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Settings\ResSettings.cs" />
     <Compile Include="Settings\BaseSettings.cs" />
     <Compile Include="Common\Encodings.cs" />
     <Compile Include="Common\EngineInfo.cs" />

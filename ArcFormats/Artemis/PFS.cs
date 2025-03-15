@@ -12,9 +12,13 @@ using Utility.Extensions;
 
 namespace ArcFormats.Artemis
 {
-    public class PFS : ArchiveFormat
+    public class PFS : ArcFormat
     {
         public override OptionsTemplate PackExtraOptions => PackPFSOptions.Instance;
+
+        private readonly EncodingSetting PfsEncoding = new EncodingSetting("ArtemisPfsEncoding");
+
+        public override IEnumerable<ArcSetting> Settings => new[] { PfsEncoding };
 
         private class Header
         {
@@ -68,12 +72,13 @@ namespace ArcFormats.Artemis
                 }
                 fs.Position = 11;
             }
+            Encoding encoding = PfsEncoding.Get<Encoding>();
             // read index and save files
             for (int i = 0; i < header.FileCount; i++)
             {
                 PfsEntry entry = new PfsEntry();
                 entry.RelativePathLen = br.ReadInt32();
-                string name = ArcSettings.Encoding.GetString(br.ReadBytes(entry.RelativePathLen));
+                string name = encoding.GetString(br.ReadBytes(entry.RelativePathLen));
                 if (name.ContainsInvalidChars())
                 {
                     throw new Exception(LogStrings.ErrorContainsInvalid);
@@ -120,7 +125,8 @@ namespace ArcFormats.Artemis
             List<PfsEntry> entries = new List<PfsEntry>();
             string[] files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
             string[] relativePaths = Utils.GetRelativePaths(files, folderPath);
-            header.PathLenSum = (uint)Utils.GetLengthSum(relativePaths, ArcSettings.Encoding);
+            Encoding encoding = PfsEncoding.Get<Encoding>();
+            header.PathLenSum = (uint)Utils.GetLengthSum(relativePaths, encoding);
             header.FileCount = (uint)files.Length;
             Logger.InitBar(header.FileCount);
             Array.Sort(relativePaths, StringComparer.Ordinal);
@@ -132,7 +138,7 @@ namespace ArcFormats.Artemis
                 entry.Path = Path.Combine(folderPath, relativePaths[i]);
                 entry.Size = (uint)new FileInfo(entry.Path).Length;
                 entry.RelativePath = relativePaths[i];
-                entry.RelativePathLen = ArcSettings.Encoding.GetByteCount(relativePaths[i]);
+                entry.RelativePathLen = encoding.GetByteCount(relativePaths[i]);
                 entries.Add(entry);
             }
 
@@ -155,7 +161,7 @@ namespace ArcFormats.Artemis
                     foreach (var file in entries)
                     {
                         writer8.Write(file.RelativePathLen);
-                        writer8.Write(ArcSettings.Encoding.GetBytes(file.RelativePath));
+                        writer8.Write(encoding.GetBytes(file.RelativePath));
                         writer8.Write(0); // reserved
                         writer8.Write(offset8);
                         writer8.Write(file.Size);
@@ -225,7 +231,7 @@ namespace ArcFormats.Artemis
                     foreach (var file in entries)
                     {
                         writer2.Write((uint)file.RelativePathLen);
-                        writer2.Write(ArcSettings.Encoding.GetBytes(file.RelativePath));
+                        writer2.Write(encoding.GetBytes(file.RelativePath));
                         writer2.Write((uint)16);
                         writer2.Write((uint)0);
                         writer2.Write((uint)0);
@@ -268,7 +274,7 @@ namespace ArcFormats.Artemis
                     {
                         uint filenameSize = (uint)file.RelativePathLen;//use utf-8 for japanese character in file name
                         writer6.Write(filenameSize);
-                        writer6.Write(ArcSettings.Encoding.GetBytes(file.RelativePath));
+                        writer6.Write(encoding.GetBytes(file.RelativePath));
                         writer6.Write(0); // reserved
                         writer6.Write(offset6);
                         writer6.Write(file.Size);

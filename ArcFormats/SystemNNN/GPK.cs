@@ -7,7 +7,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.SystemNNN
 {
-    public class GPK : ArchiveFormat
+    public class GPK : ArcFormat
     {
         public override OptionsTemplate PackExtraOptions => PackGPKOptions.Instance;
 

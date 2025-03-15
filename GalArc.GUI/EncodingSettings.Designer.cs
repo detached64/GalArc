@@ -1,6 +1,6 @@
 namespace GalArc.GUI
 {
-    partial class PreferenceSettings
+    partial class EncodingSettings
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -28,15 +28,10 @@ namespace GalArc.GUI
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PreferenceSettings));
-            this.lbDefaultEncoding = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EncodingSettings));
             this.combEncoding = new System.Windows.Forms.ComboBox();
+            this.lbDefaultEncoding = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // lbDefaultEncoding
-            // 
-            resources.ApplyResources(this.lbDefaultEncoding, "lbDefaultEncoding");
-            this.lbDefaultEncoding.Name = "lbDefaultEncoding";
             // 
             // combEncoding
             // 
@@ -46,14 +41,19 @@ namespace GalArc.GUI
             this.combEncoding.Name = "combEncoding";
             this.combEncoding.SelectedIndexChanged += new System.EventHandler(this.combEncoding_SelectedIndexChanged);
             // 
-            // PreferenceSettings
+            // lbDefaultEncoding
+            // 
+            resources.ApplyResources(this.lbDefaultEncoding, "lbDefaultEncoding");
+            this.lbDefaultEncoding.Name = "lbDefaultEncoding";
+            // 
+            // EncodingSettings
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.combEncoding);
             this.Controls.Add(this.lbDefaultEncoding);
-            this.Name = "PreferenceSettings";
-            this.Load += new System.EventHandler(this.PreferenceSettings_Load);
+            this.Name = "EncodingSettings";
+            this.Load += new System.EventHandler(this.EncodingSettings_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -61,7 +61,7 @@ namespace GalArc.GUI
 
         #endregion
 
-        private System.Windows.Forms.Label lbDefaultEncoding;
         internal System.Windows.Forms.ComboBox combEncoding;
+        private System.Windows.Forms.Label lbDefaultEncoding;
     }
 }

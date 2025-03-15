@@ -1,5 +1,6 @@
 using GalArc.Controls;
 using GalArc.Logs;
+using GalArc.Settings;
 using GalArc.Strings;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.AdvHD
 {
-    public class ARC : ArchiveFormat
+    public class ARC : ArcFormat
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackARCOptions.Instance;
         public override OptionsTemplate PackExtraOptions => PackARCOptions.Instance;

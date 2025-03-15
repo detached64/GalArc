@@ -21,7 +21,7 @@ namespace GalArc.GUI
         private List<TreeNode> TreeNodesUnpack = new List<TreeNode>();
         private List<TreeNode> TreeNodesPack = new List<TreeNode>();
 
-        private ArchiveFormat SelectedFormat;
+        private ArcFormat SelectedFormat;
 
         internal static string CurrentCulture;
         private bool IsFirstChangeLang = true;
@@ -49,7 +49,7 @@ namespace GalArc.GUI
         {
             this.pnlOperation.Enabled = false;
             this.pBar.Value = 0;
-            this.pBar.Maximum = ArcSettings.Formats.Count;
+            this.pBar.Maximum = ArcResources.Formats.Count;
             try
             {
                 await Task.Run(() => LoadSchemes(true)).ConfigureAwait(true);
@@ -85,9 +85,9 @@ namespace GalArc.GUI
             Logger.InfoInvoke(LogStrings.SchemeLoading);
             Logger.Debug(string.Format(LogStrings.SchemeCount, Deserializer.SchemeCount));
             Logger.ResetBar();
-            Logger.SetBarMax(isFirstLoad ? ArcSettings.Formats.Count : ArcSettings.Formats.Count * 2);
+            Logger.SetBarMax(isFirstLoad ? ArcResources.Formats.Count : ArcResources.Formats.Count * 2);
             int im_count = 0;
-            foreach (var format in ArcSettings.Formats)
+            foreach (var format in ArcResources.Formats)
             {
                 format.DeserializeScheme(out string name, out int count);
                 if (!string.IsNullOrEmpty(name) && count > 0)
@@ -104,7 +104,7 @@ namespace GalArc.GUI
         private void RefreshSchemes()
         {
             Logger.InfoInvoke(LogStrings.SchemeRefreshing);
-            foreach (var format in ArcSettings.Formats)
+            foreach (var format in ArcResources.Formats)
             {
                 format.UnpackExtraOptions.AddSchemes();
                 format.PackExtraOptions.AddSchemes();
@@ -374,7 +374,7 @@ namespace GalArc.GUI
             }
             string[] infos = this.treeViewEngines.SelectedNode.FullPath.Replace(".", string.Empty).Split('/');
             string fullPath = $"{nameof(ArcFormats)}.{infos[0]}.{infos[1]}";
-            SelectedFormat = ArcSettings.Formats.FirstOrDefault(x => x.GetType().FullName == fullPath);
+            SelectedFormat = ArcResources.Formats.FirstOrDefault(x => x.GetType().FullName == fullPath);
             if (SelectedFormat != null)
             {
                 this.SuspendLayout();
@@ -557,19 +557,6 @@ namespace GalArc.GUI
                 this.lbStatus.Text = LogStrings.Packing;
             }
             Freeze();
-            #endregion
-
-            #region Set encoding
-            if (!string.IsNullOrEmpty(GUISettings.Default.DefaultEncoding))
-            {
-                ArcSettings.Encoding = Encoding.GetEncoding(Encodings.CodePages[GUISettings.Default.DefaultEncoding]);
-            }
-            else
-            {
-                ArcSettings.Encoding = Encoding.UTF8;
-                GUISettings.Default.DefaultEncoding = "UTF-8";
-                GUISettings.Default.Save();
-            }
             #endregion
 
             #region Execute

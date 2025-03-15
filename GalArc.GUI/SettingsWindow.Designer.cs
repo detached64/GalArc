@@ -30,7 +30,7 @@ namespace GalArc.GUI
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsWindow));
             this.panel = new System.Windows.Forms.Panel();
-            this.treeViewOption = new System.Windows.Forms.TreeView();
+            this.treeOptions = new System.Windows.Forms.TreeView();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -45,21 +45,16 @@ namespace GalArc.GUI
             this.panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel.Name = "panel";
             // 
-            // treeViewOption
+            // treeOptions
             // 
-            this.treeViewOption.BackColor = System.Drawing.SystemColors.Control;
-            this.treeViewOption.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.treeViewOption, "treeViewOption");
-            this.treeViewOption.HideSelection = false;
-            this.treeViewOption.HotTracking = true;
-            this.treeViewOption.Name = "treeViewOption";
-            this.treeViewOption.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            ((System.Windows.Forms.TreeNode)(resources.GetObject("treeViewOption.Nodes"))),
-            ((System.Windows.Forms.TreeNode)(resources.GetObject("treeViewOption.Nodes1"))),
-            ((System.Windows.Forms.TreeNode)(resources.GetObject("treeViewOption.Nodes2"))),
-            ((System.Windows.Forms.TreeNode)(resources.GetObject("treeViewOption.Nodes3")))});
-            this.treeViewOption.ShowPlusMinus = false;
-            this.treeViewOption.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewOption_AfterSelect);
+            this.treeOptions.BackColor = System.Drawing.SystemColors.Control;
+            this.treeOptions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.treeOptions, "treeOptions");
+            this.treeOptions.HideSelection = false;
+            this.treeOptions.HotTracking = true;
+            this.treeOptions.Name = "treeOptions";
+            this.treeOptions.ShowPlusMinus = false;
+            this.treeOptions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewOption_AfterSelect);
             // 
             // splitContainer
             // 
@@ -68,7 +63,7 @@ namespace GalArc.GUI
             // 
             // splitContainer.Panel1
             // 
-            this.splitContainer.Panel1.Controls.Add(this.treeViewOption);
+            this.splitContainer.Panel1.Controls.Add(this.treeOptions);
             // 
             // splitContainer.Panel2
             // 
@@ -94,7 +89,7 @@ namespace GalArc.GUI
 
         #endregion
         private System.Windows.Forms.Panel panel;
-        private System.Windows.Forms.TreeView treeViewOption;
+        private System.Windows.Forms.TreeView treeOptions;
         private System.Windows.Forms.SplitContainer splitContainer;
     }
 }

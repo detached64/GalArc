@@ -9,7 +9,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.Ethornell
 {
-    public class ARC : ArchiveFormat
+    public class ARC : ArcFormat
     {
         public override OptionsTemplate PackExtraOptions => PackARCOptions.Instance;
 

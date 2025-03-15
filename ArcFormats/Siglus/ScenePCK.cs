@@ -10,7 +10,7 @@ using Utility.Exceptions;
 
 namespace ArcFormats.Siglus
 {
-    public class ScenePCK : ArchiveFormat
+    public class ScenePCK : ArcFormat
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackPCKOptions.Instance;
 

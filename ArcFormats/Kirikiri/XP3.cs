@@ -10,7 +10,7 @@ using Utility.Exceptions;
 
 namespace ArcFormats.Kirikiri
 {
-    public class XP3 : ArchiveFormat
+    public class XP3 : ArcFormat
     {
         public override OptionsTemplate PackExtraOptions => PackXP3Options.Instance;
 

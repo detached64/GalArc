@@ -3,7 +3,7 @@ using System.IO;
 
 namespace ArcFormats.Triangle
 {
-    public class SUD : ArchiveFormat
+    public class SUD : ArcFormat
     {
         public override void Unpack(string filePath, string folderPath)
         {

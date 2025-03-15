@@ -9,7 +9,7 @@ using Utility.Exceptions;
 
 namespace ArcFormats.NekoSDK
 {
-    public class PAK : ArchiveFormat
+    public class PAK : ArcFormat
     {
         private readonly string Magic = "NEKOPACK";
 

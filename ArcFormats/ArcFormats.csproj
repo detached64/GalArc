@@ -81,7 +81,7 @@
     <Compile Include="AnimeGameSystem\UnpackDATOptions.Designer.cs">
       <DependentUpon>UnpackDATOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="ArchiveResource.cs" />
+    <Compile Include="ArcResource.cs" />
     <Compile Include="Artemis\PackPFSOptions.cs">
       <SubType>UserControl</SubType>
     </Compile>

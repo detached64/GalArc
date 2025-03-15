@@ -10,7 +10,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.AnimeGameSystem
 {
-    public class DAT : ArchiveFormat
+    public class DAT : ArcFormat
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackDATOptions.Instance;
 

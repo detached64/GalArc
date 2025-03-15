@@ -11,9 +11,13 @@ using Utility.Extensions;
 
 namespace ArcFormats.NeXAS
 {
-    public class PAC : ArchiveFormat
+    public class PAC : ArcFormat
     {
         public override OptionsTemplate PackExtraOptions => PackPACOptions.Instance;
+
+        private readonly EncodingSetting PacEncoding = new EncodingSetting("NexasPacEncoding");
+
+        public override IEnumerable<ArcSetting> Settings => new[] { PacEncoding };
 
         internal enum Method
         {
@@ -108,15 +112,16 @@ namespace ArcFormats.NeXAS
 
         private List<PackedEntry> TryReadIndex()
         {
+            Encoding encoding = PacEncoding.Get<Encoding>();
             try
             {
-                return ReadNewIndex();
+                return ReadNewIndex(encoding);
             }
             catch
             {
                 try
                 {
-                    return ReadOldIndex();
+                    return ReadOldIndex(encoding);
                 }
                 catch
                 {
@@ -125,14 +130,14 @@ namespace ArcFormats.NeXAS
             }
         }
 
-        private List<PackedEntry> ReadOldIndex()
+        private List<PackedEntry> ReadOldIndex(Encoding encoding)
         {
             List<PackedEntry> entries = new List<PackedEntry>();
             Reader.BaseStream.Position = 12;
             for (int i = 0; i < FileCount; i++)
             {
                 PackedEntry entry = new PackedEntry();
-                entry.Name = ArcSettings.Encoding.GetString(Reader.ReadBytes(64)).TrimEnd('\0');
+                entry.Name = encoding.GetString(Reader.ReadBytes(64)).TrimEnd('\0');
                 entry.Path = Path.Combine(FolderPath, entry.Name);
                 entry.Offset = Reader.ReadUInt32();
                 entry.UnpackedSize = Reader.ReadUInt32();
@@ -143,7 +148,7 @@ namespace ArcFormats.NeXAS
             return entries;
         }
 
-        private List<PackedEntry> ReadNewIndex()
+        private List<PackedEntry> ReadNewIndex(Encoding encoding)
         {
             List<PackedEntry> entries = new List<PackedEntry>();
             Reader.BaseStream.Seek(-4, SeekOrigin.End);
@@ -163,7 +168,7 @@ namespace ArcFormats.NeXAS
                     for (int i = 0; i < FileCount; i++)
                     {
                         PackedEntry entry = new PackedEntry();
-                        entry.Name = ArcSettings.Encoding.GetString(ReaderIndex.ReadBytes(64)).TrimEnd('\0');
+                        entry.Name = encoding.GetString(ReaderIndex.ReadBytes(64)).TrimEnd('\0');
                         entry.Path = Path.Combine(FolderPath, entry.Name);
                         entry.Offset = ReaderIndex.ReadUInt32();
                         entry.UnpackedSize = ReaderIndex.ReadUInt32();
@@ -230,13 +235,14 @@ namespace ArcFormats.NeXAS
                 Logger.UpdateBar();
             }
 
+            Encoding encoding = PacEncoding.Get<Encoding>();
             using (MemoryStream index = new MemoryStream())
             {
                 using (BinaryWriter indexWriter = new BinaryWriter(index))
                 {
                     foreach (PackedEntry entry in entries)
                     {
-                        indexWriter.WritePaddedString(entry.Name, 64);
+                        indexWriter.WritePaddedString(entry.Name, 64, '\0', encoding);
                         indexWriter.Write(entry.Offset);
                         indexWriter.Write(entry.UnpackedSize);
                         indexWriter.Write(entry.Size);

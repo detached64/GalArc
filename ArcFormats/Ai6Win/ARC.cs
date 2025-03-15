@@ -10,7 +10,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.Ai6Win
 {
-    public class ARC : ArchiveFormat
+    public class ARC : ArcFormat
     {
         public override OptionsTemplate PackExtraOptions => PackARCOptions.Instance;
 

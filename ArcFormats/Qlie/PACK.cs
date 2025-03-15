@@ -10,7 +10,7 @@ using Utility;
 
 namespace ArcFormats.Qlie
 {
-    public class PACK : ArchiveFormat
+    public class PACK : ArcFormat
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackPACKOptions.Instance;
 

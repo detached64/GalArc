@@ -11,7 +11,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.Majiro
 {
-    public class ARC : ArchiveFormat
+    public class ARC : ArcFormat
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackARCOptions.Instance;
         public override OptionsTemplate PackExtraOptions => PackARCOptions.Instance;

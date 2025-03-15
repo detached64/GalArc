@@ -8,7 +8,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.Triangle
 {
-    public class CGF : ArchiveFormat
+    public class CGF : ArcFormat
     {
         public override OptionsTemplate PackExtraOptions => PackCGFOptions.Instance;
 

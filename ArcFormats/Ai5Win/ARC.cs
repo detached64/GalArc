@@ -8,7 +8,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.Ai5Win
 {
-    public class ARC : ArchiveFormat
+    public class ARC : ArcFormat
     {
         private readonly int[] NameLengths = { 0x14, 0x18, 0x1E, 0x20, 0x100 };
 

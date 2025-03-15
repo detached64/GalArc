@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ArcFormats.SystemNNN
 {
-    public class VPK : ArchiveFormat
+    public class VPK : ArcFormat
     {
         public override void Unpack(string filePath, string folderPath)
         {

@@ -11,7 +11,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.Yuris
 {
-    public class YPF : ArchiveFormat
+    public class YPF : ArcFormat
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackYPFOptions.Instance;
 

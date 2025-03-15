@@ -9,7 +9,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.EmonEngine
 {
-    public class EME : ArchiveFormat
+    public class EME : ArcFormat
     {
         private readonly string Magic = "RREDATA ";
 

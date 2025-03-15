@@ -6,7 +6,7 @@ using Utility.Exceptions;
 
 namespace ArcFormats.Palette
 {
-    public class PAK : ArchiveFormat
+    public class PAK : ArcFormat
     {
         private readonly byte[] Magic = Utils.HexStringToByteArray("055041434b32");
 

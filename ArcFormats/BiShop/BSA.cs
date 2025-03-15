@@ -10,7 +10,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.BiShop
 {
-    public class BSA : ArchiveFormat
+    public class BSA : ArcFormat
     {
         public override OptionsTemplate PackExtraOptions => PackBSAOptions.Instance;
 

@@ -4,7 +4,7 @@ using Utility.Exceptions;
 
 namespace ArcFormats.NekoPack
 {
-    public class DAT : ArchiveFormat
+    public class DAT : ArcFormat
     {
         private string Magic = "NEKOPACK";
 

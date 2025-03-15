@@ -7,7 +7,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.KID
 {
-    public class DAT : ArchiveFormat
+    public class DAT : ArcFormat
     {
         private readonly string Magic = "LNK\0";
 

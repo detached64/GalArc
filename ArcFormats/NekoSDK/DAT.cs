@@ -6,7 +6,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.NekoSDK
 {
-    public class DAT : ArchiveFormat
+    public class DAT : ArcFormat
     {
         public override void Unpack(string filePath, string folderPath)
         {

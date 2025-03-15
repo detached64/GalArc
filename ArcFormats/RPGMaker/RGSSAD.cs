@@ -8,7 +8,7 @@ using Utility.Exceptions;
 
 namespace ArcFormats.RPGMaker
 {
-    public class RGSSAD : ArchiveFormat
+    public class RGSSAD : ArcFormat
     {
         public override OptionsTemplate PackExtraOptions => PackRGSSOptions.Instance;
 

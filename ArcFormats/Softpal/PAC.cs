@@ -12,7 +12,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.Softpal
 {
-    public class PAC : ArchiveFormat
+    public class PAC : ArcFormat
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackPACOptions.Instance;
         public override OptionsTemplate PackExtraOptions => PackPACOptions.Instance;

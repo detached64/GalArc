@@ -8,7 +8,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.Eushully
 {
-    public class ALF : ArchiveFormat
+    public class ALF : ArcFormat
     {
         private readonly string IndexFileNameV5 = "SYS5INI.BIN";
 

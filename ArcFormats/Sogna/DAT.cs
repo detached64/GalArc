@@ -8,7 +8,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.Sogna
 {
-    public class DAT : ArchiveFormat
+    public class DAT : ArcFormat
     {
         private readonly string Magic = "SGS.DAT 1.00";
 

@@ -5,7 +5,7 @@ using Utility.Exceptions;
 
 namespace ArcFormats.Ai5Win
 {
-    public class VSD : ArchiveFormat
+    public class VSD : ArcFormat
     {
         public override void Unpack(string filePath, string folderPath)
         {

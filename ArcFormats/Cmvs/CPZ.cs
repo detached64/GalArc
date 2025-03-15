@@ -8,7 +8,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.Cmvs
 {
-    public class CPZ : ArchiveFormat
+    public class CPZ : ArcFormat
     {
         public override OptionsTemplate PackExtraOptions => PackCPZOptions.Instance;
 

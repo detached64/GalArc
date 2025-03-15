@@ -11,7 +11,7 @@ using Utility.Exceptions;
 
 namespace ArcFormats.Seraph
 {
-    public class DAT : ArchiveFormat
+    public class DAT : ArcFormat
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackDATOptions.Instance;
 

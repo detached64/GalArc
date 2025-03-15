@@ -6,7 +6,7 @@ using Utility.Extensions;
 
 namespace ArcFormats.Triangle
 {
-    public class CG : ArchiveFormat
+    public class CG : ArcFormat
     {
         public override void Unpack(string filePath, string folderPath)
         {

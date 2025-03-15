@@ -1,4 +1,6 @@
 using GalArc.Controls;
+using GalArc.Logs;
+using GalArc.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +9,13 @@ using System.Text;
 
 namespace ArcFormats
 {
-    public abstract class ArchiveFormat
+    public abstract class ArcFormat
     {
         public virtual OptionsTemplate UnpackExtraOptions => Empty.Instance;
 
         public virtual OptionsTemplate PackExtraOptions => Empty.Instance;
+
+        public virtual IEnumerable<ArcSetting> Settings { get; protected set; }
 
         public abstract void Unpack(string filePath, string folderPath);
 
@@ -58,25 +62,78 @@ namespace ArcFormats
     public class PackedEntry : Entry
     {
         public bool IsPacked { get; set; }
+
         public uint UnpackedSize { get; set; }
     }
 
-    public static class ArcSettings
+    public static class ArcResources
     {
-        static ArcSettings()
+        public static List<ArcFormat> Formats { get; }
+
+        static ArcResources()
         {
             Formats = Assembly.GetExecutingAssembly().GetTypes()
                 .Where(t =>
-                    t.IsSubclassOf(typeof(ArchiveFormat)) &&
+                    t.IsSubclassOf(typeof(ArcFormat)) &&
                     !t.IsAbstract &&
                     t.GetConstructor(Type.EmptyTypes) != null)
                 .Reverse()
-                .Select(t => Activator.CreateInstance(t) as ArchiveFormat)
+                .Select(t => Activator.CreateInstance(t) as ArcFormat)
                 .ToList();
         }
+    }
 
-        public static Encoding Encoding { internal get; set; }
+    public class ArcSetting
+    {
+        public ArcSetting(string name)
+        {
+            Name = name;
+        }
 
-        public static List<ArchiveFormat> Formats { get; }
+        public string Name { get; set; }
+
+        public virtual object Value
+        {
+            get => ResSettings.Default[Name];
+            set
+            {
+                ResSettings.Default[Name] = value;
+                ResSettings.Default.Save();
+            }
+        }
+
+        public T Get<T>()
+        {
+            var value = Value;
+            if (value == null || !(value is T))
+            {
+                return default;
+            }
+            return (T)value;
+        }
+    }
+
+    public class EncodingSetting : ArcSetting
+    {
+        private readonly Encoding DefaultEncoding = Encoding.GetEncoding(932);
+
+        public EncodingSetting(string name) : base(name) { }
+
+        public override object Value
+        {
+            get
+            {
+                try
+                {
+                    return Encoding.GetEncoding((int)base.Value);
+                }
+                catch
+                {
+                    Logger.Info($"Invalid encoding value: {base.Value}");
+                    return DefaultEncoding;
+                }
+            }
+            set => base.Value = ((Encoding)value).CodePage;
+        }
     }
 }

@@ -1,19 +1,14 @@
 using System.Collections.Generic;
+using System.Text;
 
 namespace GalArc.Common
 {
     public static class Encodings
     {
-        static Encodings()
-        {
-            CodePages = new Dictionary<string, int>
-            {
-                { "Shift-JIS", 932 },
-                { "UTF-8", 65001 },
-                { "GBK", 936 },
-            };
-        }
-
-        public static Dictionary<string, int> CodePages { get; }
+        public static IEnumerable<Encoding> SupportedEncodings => new[] {
+            Encoding.GetEncoding(932),
+            Encoding.UTF8,
+            Encoding.GetEncoding(936),
+        };
     }
 }

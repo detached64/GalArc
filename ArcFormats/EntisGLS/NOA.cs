@@ -1,5 +1,6 @@
 using GalArc.Logs;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,15 @@ using Utility.Exceptions;
 
 namespace ArcFormats.EntisGLS
 {
-    public class NOA : ArchiveFormat
+    public class NOA : ArcFormat
     {
         private readonly byte[] Magic1 = Utils.HexStringToByteArray("456e7469731a00000004000200000000");
 
         private readonly byte[] Magic2 = Utils.HexStringToByteArray("45524953412d417263686976652066696c65");
+
+        private readonly EncodingSetting NoaSetting = new EncodingSetting("EntisNoaEncoding");
+
+        public override IEnumerable<ArcSetting> Settings => new[] { NoaSetting };
 
         private class Header
         {
@@ -96,6 +101,7 @@ namespace ArcFormats.EntisGLS
             Logger.InitBar(entry_header.FileCount);
             //List<EntisGLS_noa_timeStamp> l = new List<EntisGLS_noa_timeStamp>();
 
+            Encoding encoding = NoaSetting.Get<Encoding>();
             long pos = 0;
             for (int i = 0; i < entry_header.FileCount; i++)
             {
@@ -122,7 +128,7 @@ namespace ArcFormats.EntisGLS
                 entry.ExtraInfoLen = br.ReadUInt32();
                 entry.ExtraInfo = Encoding.ASCII.GetString(br.ReadBytes((int)entry.ExtraInfoLen));
                 entry.NameLen = br.ReadUInt32();
-                entry.Name = ArcSettings.Encoding.GetString(br.ReadBytes((int)(entry.NameLen - 1)));
+                entry.Name = encoding.GetString(br.ReadBytes((int)(entry.NameLen - 1)));
                 br.ReadByte();
                 pos = fs.Position;
                 fs.Seek(entry.Offset, SeekOrigin.Begin);
@@ -181,6 +187,7 @@ namespace ArcFormats.EntisGLS
             //    time = JsonSerializer.Deserialize<List<EntisGLS_noa_timeStamp>>(jsonStr);
             //}
 
+            Encoding encoding = NoaSetting.Get<Encoding>();
             //header
             bw.Write(Magic1);
             bw.Write(Magic2);
@@ -188,7 +195,7 @@ namespace ArcFormats.EntisGLS
                                    //entry header
             bw.Write(Encoding.ASCII.GetBytes("DirEntry"));
             //compute index size
-            long indexSize = 4 + Utils.GetNameLengthSum(files, ArcSettings.Encoding) + fileCount + (40 * fileCount);
+            long indexSize = 4 + Utils.GetNameLengthSum(files, encoding) + fileCount + (40 * fileCount);
             bw.Write(indexSize);
             bw.Write(fileCount);
 
@@ -211,8 +218,8 @@ namespace ArcFormats.EntisGLS
                 //bw.Write(time[i].year);
                 bw.Write((long)0);//timestamp disabled
                 bw.Write(0);
-                bw.Write(ArcSettings.Encoding.GetBytes(Path.GetFileName(file)).Length + 1);
-                bw.Write(ArcSettings.Encoding.GetBytes(Path.GetFileName(file)));
+                bw.Write(encoding.GetBytes(Path.GetFileName(file)).Length + 1);
+                bw.Write(encoding.GetBytes(Path.GetFileName(file)));
                 bw.Write('\0');
                 i++;
             }
