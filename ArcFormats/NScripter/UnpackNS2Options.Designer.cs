@@ -30,8 +30,7 @@ namespace ArcFormats.NScripter
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UnpackNS2Options));
             this.combSchemes = new System.Windows.Forms.ComboBox();
-            this.lbChooseOrInput = new System.Windows.Forms.Label();
-            this.txtKey = new System.Windows.Forms.TextBox();
+            this.lbChoose = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // combSchemes
@@ -42,25 +41,17 @@ namespace ArcFormats.NScripter
             this.combSchemes.Name = "combSchemes";
             this.combSchemes.SelectedIndexChanged += new System.EventHandler(this.combSchemes_SelectedIndexChanged);
             // 
-            // lbChooseOrInput
+            // lbChoose
             // 
-            resources.ApplyResources(this.lbChooseOrInput, "lbChooseOrInput");
-            this.lbChooseOrInput.Name = "lbChooseOrInput";
-            // 
-            // txtKey
-            // 
-            this.txtKey.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            resources.ApplyResources(this.txtKey, "txtKey");
-            this.txtKey.Name = "txtKey";
-            this.txtKey.TextChanged += new System.EventHandler(this.txtKey_TextChanged);
+            resources.ApplyResources(this.lbChoose, "lbChoose");
+            this.lbChoose.Name = "lbChoose";
             // 
             // UnpackNS2Options
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.txtKey);
             this.Controls.Add(this.combSchemes);
-            this.Controls.Add(this.lbChooseOrInput);
+            this.Controls.Add(this.lbChoose);
             this.Name = "UnpackNS2Options";
             this.Load += new System.EventHandler(this.UnpackNS2Options_Load);
             this.ResumeLayout(false);
@@ -70,7 +61,6 @@ namespace ArcFormats.NScripter
 
         #endregion
         private System.Windows.Forms.ComboBox combSchemes;
-        private System.Windows.Forms.Label lbChooseOrInput;
-        private System.Windows.Forms.TextBox txtKey;
+        private System.Windows.Forms.Label lbChoose;
     }
 }

@@ -29,7 +29,6 @@ namespace ArcFormats.NScripter
         {
             this.combSchemes.Items.Clear();
             this.combSchemes.Items.Add(GUIStrings.ItemNoEnc);
-            this.combSchemes.Items.Add(GUIStrings.ItemCustomEnc);
             if (NS2.Scheme?.KnownKeys != null)
             {
                 foreach (var key in NS2.Scheme.KnownKeys)
@@ -45,23 +44,12 @@ namespace ArcFormats.NScripter
             switch (combSchemes.SelectedIndex)
             {
                 case 0:
-                    txtKey.Text = string.Empty;
-                    txtKey.Enabled = false;
-                    break;
-                case 1:
-                    txtKey.Text = string.Empty;
-                    txtKey.Enabled = true;
+                    NS2.Key = null;
                     break;
                 default:
-                    txtKey.Text = NS2.Scheme.KnownKeys[combSchemes.SelectedItem.ToString()];
-                    txtKey.Enabled = true;
+                    NS2.Key = NS2.Scheme.KnownKeys[combSchemes.Text];
                     break;
             }
-        }
-
-        private void txtKey_TextChanged(object sender, EventArgs e)
-        {
-            NS2.Key = txtKey.Text;
         }
     }
 }

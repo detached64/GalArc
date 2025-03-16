@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lbChooseOrInput.Text" xml:space="preserve">
-    <value>选择加密方案或输入密钥</value>
+  <data name="lbChoose.Text" xml:space="preserve">
+    <value>选择加密方案</value>
   </data>
 </root>
