@@ -251,17 +251,11 @@ namespace GalArc.GUI
         {
             if (this.txtLog.InvokeRequired)
             {
-                this.txtLog.BeginInvoke(new Action(() => AppendLog(sender, msg)));
-                return;
+                BeginInvoke(new Action(() => this.txtLog.AppendText(msg + Environment.NewLine)));
             }
-
-            try
+            else
             {
                 this.txtLog.AppendText(msg + Environment.NewLine);
-            }
-            catch
-            {
-                MessageBox.Show("AppendLog Error");
             }
         }
 
@@ -269,17 +263,11 @@ namespace GalArc.GUI
         {
             if (this.statusStrip.InvokeRequired)
             {
-                this.statusStrip.BeginInvoke(new Action(() => UpdateStatus(sender, msg)));
-                return;
+                BeginInvoke(new Action(() => this.lbStatus.Text = msg));
             }
-
-            try
+            else
             {
                 this.lbStatus.Text = msg;
-            }
-            catch
-            {
-                MessageBox.Show("UpdateStatus Error");
             }
         }
 
@@ -287,31 +275,30 @@ namespace GalArc.GUI
         {
             if (this.statusStrip.InvokeRequired)
             {
-                this.statusStrip.BeginInvoke(new Action(() => ProcessBar(sender, progressArgs)));
-                return;
+                BeginInvoke(new Action(() => ProcessBar(progressArgs)));
             }
+            else
+            {
+                ProcessBar(progressArgs);
+            }
+        }
 
-            try
+        private void ProcessBar(ProgressEventArgs progressArgs)
+        {
+            switch (progressArgs.Action)
             {
-                switch (progressArgs.Action)
-                {
-                    case ProgressAction.Progress:
-                        this.pBar.Value = Math.Min(this.pBar.Value + 1, this.pBar.Maximum);
-                        break;
-                    case ProgressAction.Finish:
-                        this.pBar.Value = this.pBar.Maximum;
-                        break;
-                    case ProgressAction.SetVal:
-                        this.pBar.Value = Math.Min(progressArgs.Value, this.pBar.Maximum);
-                        break;
-                    case ProgressAction.SetMax:
-                        this.pBar.Maximum = progressArgs.Max;
-                        break;
-                }
-            }
-            catch
-            {
-                MessageBox.Show("ProcessBar Error");
+                case ProgressAction.Progress:
+                    this.pBar.Value = Math.Min(this.pBar.Value + 1, this.pBar.Maximum);
+                    break;
+                case ProgressAction.Finish:
+                    this.pBar.Value = this.pBar.Maximum;
+                    break;
+                case ProgressAction.SetVal:
+                    this.pBar.Value = Math.Min(progressArgs.Value, this.pBar.Maximum);
+                    break;
+                case ProgressAction.SetMax:
+                    this.pBar.Maximum = progressArgs.Max;
+                    break;
             }
         }
         #endregion
