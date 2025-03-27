@@ -331,6 +331,6 @@
     <value>DatabaseSettings</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>GalArc.Controls.SettingsTemplate, GalArc, Version=1.4.1.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>GalArc.Controls.SettingsTemplate, GalArc, Version=1.4.2.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

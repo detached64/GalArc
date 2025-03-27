@@ -31,7 +31,6 @@ namespace GalArc.GUI
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
             this.dataGridViewEngines = new System.Windows.Forms.DataGridView();
             this.txtSearchText = new System.Windows.Forms.TextBox();
-            this.lbSearch = new System.Windows.Forms.Label();
             this.lbLicense = new System.Windows.Forms.Label();
             this.linkIssue = new System.Windows.Forms.LinkLabel();
             this.linkSite = new System.Windows.Forms.LinkLabel();
@@ -42,10 +41,16 @@ namespace GalArc.GUI
             this.pageEngines = new System.Windows.Forms.TabPage();
             this.pageLicense = new System.Windows.Forms.TabPage();
             this.txtLicense = new System.Windows.Forms.TextBox();
+            this.tableFormats = new System.Windows.Forms.TableLayoutPanel();
+            this.tableInfos = new System.Windows.Forms.TableLayoutPanel();
+            this.table = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEngines)).BeginInit();
             this.tabControl.SuspendLayout();
             this.pageEngines.SuspendLayout();
             this.pageLicense.SuspendLayout();
+            this.tableFormats.SuspendLayout();
+            this.tableInfos.SuspendLayout();
+            this.table.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridViewEngines
@@ -68,16 +73,10 @@ namespace GalArc.GUI
             // 
             // txtSearchText
             // 
-            resources.ApplyResources(this.txtSearchText, "txtSearchText");
             this.txtSearchText.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.txtSearchText, "txtSearchText");
             this.txtSearchText.Name = "txtSearchText";
             this.txtSearchText.TextChanged += new System.EventHandler(this.txtSearchText_TextChanged);
-            // 
-            // lbSearch
-            // 
-            resources.ApplyResources(this.lbSearch, "lbSearch");
-            this.lbSearch.Name = "lbSearch";
-            this.lbSearch.SizeChanged += new System.EventHandler(this.lbSearch_SizeChanged);
             // 
             // lbLicense
             // 
@@ -127,9 +126,7 @@ namespace GalArc.GUI
             // 
             this.pageEngines.BackColor = System.Drawing.SystemColors.Control;
             this.pageEngines.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pageEngines.Controls.Add(this.dataGridViewEngines);
-            this.pageEngines.Controls.Add(this.lbSearch);
-            this.pageEngines.Controls.Add(this.txtSearchText);
+            this.pageEngines.Controls.Add(this.tableFormats);
             resources.ApplyResources(this.pageEngines, "pageEngines");
             this.pageEngines.Name = "pageEngines";
             // 
@@ -148,17 +145,36 @@ namespace GalArc.GUI
             this.txtLicense.Name = "txtLicense";
             this.txtLicense.ReadOnly = true;
             // 
+            // tableFormats
+            // 
+            resources.ApplyResources(this.tableFormats, "tableFormats");
+            this.tableFormats.Controls.Add(this.txtSearchText, 0, 1);
+            this.tableFormats.Controls.Add(this.dataGridViewEngines, 0, 0);
+            this.tableFormats.Name = "tableFormats";
+            // 
+            // tableInfos
+            // 
+            resources.ApplyResources(this.tableInfos, "tableInfos");
+            this.tableInfos.Controls.Add(this.lbDescription, 0, 0);
+            this.tableInfos.Controls.Add(this.lbCurrentVer, 0, 1);
+            this.tableInfos.Controls.Add(this.linkIssue, 0, 5);
+            this.tableInfos.Controls.Add(this.lbLicense, 0, 2);
+            this.tableInfos.Controls.Add(this.linkSite, 0, 4);
+            this.tableInfos.Controls.Add(this.lbCopyright, 0, 3);
+            this.tableInfos.Name = "tableInfos";
+            // 
+            // table
+            // 
+            resources.ApplyResources(this.table, "table");
+            this.table.Controls.Add(this.tabControl, 1, 0);
+            this.table.Controls.Add(this.tableInfos, 0, 0);
+            this.table.Name = "table";
+            // 
             // AboutBox
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tabControl);
-            this.Controls.Add(this.lbCurrentVer);
-            this.Controls.Add(this.lbLicense);
-            this.Controls.Add(this.linkIssue);
-            this.Controls.Add(this.linkSite);
-            this.Controls.Add(this.lbCopyright);
-            this.Controls.Add(this.lbDescription);
+            this.Controls.Add(this.table);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -170,17 +186,19 @@ namespace GalArc.GUI
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEngines)).EndInit();
             this.tabControl.ResumeLayout(false);
             this.pageEngines.ResumeLayout(false);
-            this.pageEngines.PerformLayout();
             this.pageLicense.ResumeLayout(false);
             this.pageLicense.PerformLayout();
+            this.tableFormats.ResumeLayout(false);
+            this.tableFormats.PerformLayout();
+            this.tableInfos.ResumeLayout(false);
+            this.tableInfos.PerformLayout();
+            this.table.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
         internal System.Windows.Forms.DataGridView dataGridViewEngines;
-        internal System.Windows.Forms.Label lbSearch;
         internal System.Windows.Forms.Label lbCopyright;
         internal System.Windows.Forms.Label lbDescription;
         internal System.Windows.Forms.LinkLabel linkSite;
@@ -192,5 +210,8 @@ namespace GalArc.GUI
         private System.Windows.Forms.TabPage pageLicense;
         internal System.Windows.Forms.TextBox txtLicense;
         private System.Windows.Forms.Label lbCurrentVer;
+        private System.Windows.Forms.TableLayoutPanel tableFormats;
+        private System.Windows.Forms.TableLayoutPanel tableInfos;
+        private System.Windows.Forms.TableLayoutPanel table;
     }
 }

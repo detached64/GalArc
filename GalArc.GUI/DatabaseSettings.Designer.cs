@@ -70,7 +70,8 @@ namespace GalArc.GUI
             // txtDBPath
             // 
             resources.ApplyResources(this.txtDBPath, "txtDBPath");
-            this.txtDBPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtDBPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtDBPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
             this.txtDBPath.Name = "txtDBPath";
             this.txtDBPath.TextChanged += new System.EventHandler(this.txtDBPath_TextChanged);
             // 

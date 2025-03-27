@@ -121,10 +121,10 @@
     <value>有新版本可用！</value>
   </data>
   <data name="lbCurrentVersion.Text" xml:space="preserve">
-    <value>当前版本：</value>
+    <value>当前版本：{0}</value>
   </data>
   <data name="lbLatestVersion.Text" xml:space="preserve">
-    <value>最新版本：</value>
+    <value>最新版本：{0}</value>
   </data>
   <data name="btDown.Text" xml:space="preserve">
     <value>下载</value>

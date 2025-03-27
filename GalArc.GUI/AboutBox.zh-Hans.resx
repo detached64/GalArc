@@ -129,9 +129,6 @@
   <data name="$this.Text" xml:space="preserve">
     <value>关于</value>
   </data>
-  <data name="lbSearch.Text" xml:space="preserve">
-    <value>搜索：</value>
-  </data>
   <data name="lbLicense.Text" xml:space="preserve">
     <value>GNU General Public License v3.0</value>
   </data>
@@ -140,5 +137,11 @@
   </data>
   <data name="linkSite.Text" xml:space="preserve">
     <value>开源地址</value>
+  </data>
+  <data name="lbCurrentVer.Text" xml:space="preserve">
+    <value>CurVer</value>
+  </data>
+  <data name="lbCopyright.Text" xml:space="preserve">
+    <value>Copyright</value>
   </data>
 </root>

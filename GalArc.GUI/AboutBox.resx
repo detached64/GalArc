@@ -117,20 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="dataGridViewEngines.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="dataGridViewEngines.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="dataGridViewEngines.Location" type="System.Drawing.Point, System.Drawing">
-    <value>-1, -1</value>
+    <value>3, 3</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="dataGridViewEngines.RowHeadersWidth" type="System.Int32, mscorlib">
     <value>62</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="dataGridViewEngines.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
     <value>Vertical</value>
   </data>
   <data name="dataGridViewEngines.Size" type="System.Drawing.Size, System.Drawing">
-    <value>463, 358</value>
+    <value>449, 328</value>
   </data>
   <data name="dataGridViewEngines.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -142,22 +148,25 @@
     <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;dataGridViewEngines.Parent" xml:space="preserve">
-    <value>pageEngines</value>
+    <value>tableFormats</value>
   </data>
   <data name="&gt;&gt;dataGridViewEngines.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
-  <data name="txtSearchText.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
+  <metadata name="txtSearchText.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="txtSearchText.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
   <data name="txtSearchText.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>Hangul</value>
   </data>
   <data name="txtSearchText.Location" type="System.Drawing.Point, System.Drawing">
-    <value>78, 364</value>
+    <value>3, 337</value>
   </data>
   <data name="txtSearchText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>377, 31</value>
+    <value>449, 31</value>
   </data>
   <data name="txtSearchText.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -169,55 +178,34 @@
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;txtSearchText.Parent" xml:space="preserve">
-    <value>pageEngines</value>
+    <value>tableFormats</value>
   </data>
   <data name="&gt;&gt;txtSearchText.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>0</value>
   </data>
-  <data name="lbSearch.AutoSize" type="System.Boolean, mscorlib">
+  <metadata name="lbLicense.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="lbSearch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 366</value>
-  </data>
-  <data name="lbSearch.Size" type="System.Drawing.Size, System.Drawing">
-    <value>71, 24</value>
-  </data>
-  <data name="lbSearch.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="lbSearch.Text" xml:space="preserve">
-    <value>Search:</value>
-  </data>
-  <data name="lbSearch.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="&gt;&gt;lbSearch.Name" xml:space="preserve">
-    <value>lbSearch</value>
-  </data>
-  <data name="&gt;&gt;lbSearch.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbSearch.Parent" xml:space="preserve">
-    <value>pageEngines</value>
-  </data>
-  <data name="&gt;&gt;lbSearch.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
+  </metadata>
   <data name="lbLicense.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="lbLicense.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
   <data name="lbLicense.Location" type="System.Drawing.Point, System.Drawing">
-    <value>37, 129</value>
+    <value>3, 86</value>
   </data>
   <data name="lbLicense.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 24</value>
+    <value>312, 43</value>
   </data>
   <data name="lbLicense.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
   <data name="lbLicense.Text" xml:space="preserve">
     <value>GNU General Public License v3.0</value>
+  </data>
+  <data name="lbLicense.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
   <data name="&gt;&gt;lbLicense.Name" xml:space="preserve">
     <value>lbLicense</value>
@@ -226,25 +214,34 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lbLicense.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>tableInfos</value>
   </data>
   <data name="&gt;&gt;lbLicense.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
+  <metadata name="linkIssue.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="linkIssue.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="linkIssue.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
   <data name="linkIssue.Location" type="System.Drawing.Point, System.Drawing">
-    <value>37, 279</value>
+    <value>3, 215</value>
   </data>
   <data name="linkIssue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 24</value>
+    <value>312, 43</value>
   </data>
   <data name="linkIssue.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="linkIssue.Text" xml:space="preserve">
     <value>Report Issue</value>
+  </data>
+  <data name="linkIssue.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
   <data name="&gt;&gt;linkIssue.Name" xml:space="preserve">
     <value>linkIssue</value>
@@ -253,25 +250,34 @@
     <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;linkIssue.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>tableInfos</value>
   </data>
   <data name="&gt;&gt;linkIssue.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
+  <metadata name="linkSite.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="linkSite.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="linkSite.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
   <data name="linkSite.Location" type="System.Drawing.Point, System.Drawing">
-    <value>37, 239</value>
+    <value>3, 172</value>
   </data>
   <data name="linkSite.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 24</value>
+    <value>312, 43</value>
   </data>
   <data name="linkSite.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
   <data name="linkSite.Text" xml:space="preserve">
     <value>Development Site</value>
+  </data>
+  <data name="linkSite.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
   <data name="&gt;&gt;linkSite.Name" xml:space="preserve">
     <value>linkSite</value>
@@ -280,22 +286,34 @@
     <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;linkSite.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>tableInfos</value>
   </data>
   <data name="&gt;&gt;linkSite.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <metadata name="lbCopyright.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="lbCopyright.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="lbCopyright.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
   <data name="lbCopyright.Location" type="System.Drawing.Point, System.Drawing">
-    <value>37, 169</value>
+    <value>3, 129</value>
   </data>
   <data name="lbCopyright.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 24</value>
+    <value>312, 43</value>
   </data>
   <data name="lbCopyright.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
+  </data>
+  <data name="lbCopyright.Text" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
+  <data name="lbCopyright.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
   <data name="&gt;&gt;lbCopyright.Name" xml:space="preserve">
     <value>lbCopyright</value>
@@ -304,25 +322,34 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lbCopyright.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>tableInfos</value>
   </data>
   <data name="&gt;&gt;lbCopyright.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
+  <metadata name="lbDescription.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="lbDescription.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="lbDescription.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
   <data name="lbDescription.Location" type="System.Drawing.Point, System.Drawing">
-    <value>37, 49</value>
+    <value>3, 0</value>
   </data>
   <data name="lbDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 24</value>
+    <value>312, 43</value>
   </data>
   <data name="lbDescription.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="lbDescription.Text" xml:space="preserve">
     <value>Galgame Archive Tool</value>
+  </data>
+  <data name="lbDescription.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
   <data name="&gt;&gt;lbDescription.Name" xml:space="preserve">
     <value>lbDescription</value>
@@ -331,22 +358,34 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lbDescription.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>tableInfos</value>
   </data>
   <data name="&gt;&gt;lbDescription.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>0</value>
   </data>
+  <metadata name="lbCurrentVer.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="lbCurrentVer.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="lbCurrentVer.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
   <data name="lbCurrentVer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>37, 89</value>
+    <value>3, 43</value>
   </data>
   <data name="lbCurrentVer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 24</value>
+    <value>312, 43</value>
   </data>
   <data name="lbCurrentVer.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
+  </data>
+  <data name="lbCurrentVer.Text" xml:space="preserve">
+    <value>CurVer</value>
+  </data>
+  <data name="lbCurrentVer.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
   <data name="&gt;&gt;lbCurrentVer.Name" xml:space="preserve">
     <value>lbCurrentVer</value>
@@ -355,10 +394,52 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lbCurrentVer.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>tableInfos</value>
   </data>
   <data name="&gt;&gt;lbCurrentVer.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <metadata name="tabControl.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="pageEngines.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="tableFormats.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="tableFormats.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tableFormats.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tableFormats.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="tableFormats.RowCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tableFormats.Size" type="System.Drawing.Size, System.Drawing">
+    <value>455, 371</value>
+  </data>
+  <data name="tableFormats.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tableFormats.Name" xml:space="preserve">
+    <value>tableFormats</value>
+  </data>
+  <data name="&gt;&gt;tableFormats.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableFormats.Parent" xml:space="preserve">
+    <value>pageEngines</value>
+  </data>
+  <data name="&gt;&gt;tableFormats.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tableFormats.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="txtSearchText" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="dataGridViewEngines" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,100,Absolute,37" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <data name="pageEngines.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 33</value>
@@ -367,7 +448,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="pageEngines.Size" type="System.Drawing.Size, System.Drawing">
-    <value>463, 403</value>
+    <value>463, 379</value>
   </data>
   <data name="pageEngines.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -387,8 +468,17 @@
   <data name="&gt;&gt;pageEngines.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <metadata name="pageLicense.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="txtLicense.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="txtLicense.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
   <data name="txtLicense.Location" type="System.Drawing.Point, System.Drawing">
-    <value>-1, -1</value>
+    <value>3, 3</value>
   </data>
   <data name="txtLicense.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -397,7 +487,7 @@
     <value>Vertical</value>
   </data>
   <data name="txtLicense.Size" type="System.Drawing.Size, System.Drawing">
-    <value>463, 403</value>
+    <value>455, 377</value>
   </data>
   <data name="txtLicense.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -421,7 +511,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="pageLicense.Size" type="System.Drawing.Size, System.Drawing">
-    <value>463, 403</value>
+    <value>463, 385</value>
   </data>
   <data name="pageLicense.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -442,10 +532,10 @@
     <value>1</value>
   </data>
   <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>366, 41</value>
+    <value>327, 3</value>
   </data>
   <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>471, 440</value>
+    <value>471, 416</value>
   </data>
   <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -457,12 +547,87 @@
     <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>table</value>
   </data>
   <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <metadata name="tableInfos.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="tableInfos.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tableInfos.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="tableInfos.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="tableInfos.RowCount" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="tableInfos.Size" type="System.Drawing.Size, System.Drawing">
+    <value>318, 258</value>
+  </data>
+  <data name="tableInfos.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;tableInfos.Name" xml:space="preserve">
+    <value>tableInfos</value>
+  </data>
+  <data name="&gt;&gt;tableInfos.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableInfos.Parent" xml:space="preserve">
+    <value>table</value>
+  </data>
+  <data name="&gt;&gt;tableInfos.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tableInfos.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="lbDescription" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbCurrentVer" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="linkIssue" Row="5" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbLicense" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="linkSite" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbCopyright" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,16.66667,Percent,16.66667,Percent,16.66667,Percent,16.66667,Percent,16.66667,Percent,16.66667" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <metadata name="table.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="table.ColumnCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="table.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="table.Location" type="System.Drawing.Point, System.Drawing">
+    <value>40, 50</value>
+  </data>
+  <data name="table.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="table.Size" type="System.Drawing.Size, System.Drawing">
+    <value>795, 422</value>
+  </data>
+  <data name="table.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;table.Name" xml:space="preserve">
+    <value>table</value>
+  </data>
+  <data name="&gt;&gt;table.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;table.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;table.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="table.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tabControl" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="tableInfos" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="AutoSize,0,AutoSize,0" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
@@ -476,6 +641,9 @@
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
+  </data>
+  <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>40, 50, 40, 50</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>

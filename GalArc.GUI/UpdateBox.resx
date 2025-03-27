@@ -122,21 +122,27 @@
     <value>True</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lbNewUpdate.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
   <data name="lbNewUpdate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="lbNewUpdate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>49, 56</value>
+    <value>3, 0</value>
   </data>
   <data name="lbNewUpdate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 24</value>
+    <value>229, 42</value>
   </data>
   <data name="lbNewUpdate.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="lbNewUpdate.Text" xml:space="preserve">
     <value>New Version Available!</value>
+  </data>
+  <data name="lbNewUpdate.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
   <data name="&gt;&gt;lbNewUpdate.Name" xml:space="preserve">
     <value>lbNewUpdate</value>
@@ -145,28 +151,34 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lbNewUpdate.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>table</value>
   </data>
   <data name="&gt;&gt;lbNewUpdate.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>3</value>
   </data>
   <data name="lbCurrentVersion.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="lbCurrentVersion.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
   <data name="lbCurrentVersion.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="lbCurrentVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>49, 115</value>
+    <value>3, 42</value>
   </data>
   <data name="lbCurrentVersion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 24</value>
+    <value>229, 42</value>
   </data>
   <data name="lbCurrentVersion.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="lbCurrentVersion.Text" xml:space="preserve">
-    <value>Current Version:</value>
+    <value>Current Version: {0}</value>
+  </data>
+  <data name="lbCurrentVersion.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
   <data name="&gt;&gt;lbCurrentVersion.Name" xml:space="preserve">
     <value>lbCurrentVersion</value>
@@ -175,28 +187,34 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lbCurrentVersion.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>table</value>
   </data>
   <data name="&gt;&gt;lbCurrentVersion.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>2</value>
   </data>
   <data name="lbLatestVersion.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="lbLatestVersion.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
   <data name="lbLatestVersion.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="lbLatestVersion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>49, 150</value>
+    <value>3, 84</value>
   </data>
   <data name="lbLatestVersion.Size" type="System.Drawing.Size, System.Drawing">
-    <value>134, 24</value>
+    <value>229, 42</value>
   </data>
   <data name="lbLatestVersion.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
   <data name="lbLatestVersion.Text" xml:space="preserve">
-    <value>Latest Version:</value>
+    <value>Latest Version: {0}</value>
+  </data>
+  <data name="lbLatestVersion.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
   <data name="&gt;&gt;lbLatestVersion.Name" xml:space="preserve">
     <value>lbLatestVersion</value>
@@ -205,19 +223,25 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lbLatestVersion.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>table</value>
   </data>
   <data name="&gt;&gt;lbLatestVersion.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>0</value>
+  </data>
+  <data name="btDown.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="btDown.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Right</value>
   </data>
   <data name="btDown.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>183, 228</value>
+    <value>124, 129</value>
   </data>
   <data name="btDown.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 38</value>
+    <value>108, 37</value>
   </data>
   <data name="btDown.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -232,64 +256,43 @@
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;btDown.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>table</value>
   </data>
   <data name="&gt;&gt;btDown.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="lbCurrentVer.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lbCurrentVer.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lbCurrentVer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>203, 115</value>
-  </data>
-  <data name="lbCurrentVer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 24</value>
-  </data>
-  <data name="lbCurrentVer.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;lbCurrentVer.Name" xml:space="preserve">
-    <value>lbCurrentVer</value>
-  </data>
-  <data name="&gt;&gt;lbCurrentVer.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lbCurrentVer.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lbCurrentVer.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="lbLatestVer.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="table.ColumnCount" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
-  <data name="lbLatestVer.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="table.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
-  <data name="lbLatestVer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>203, 150</value>
+  <data name="table.Location" type="System.Drawing.Point, System.Drawing">
+    <value>20, 30</value>
   </data>
-  <data name="lbLatestVer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 24</value>
+  <data name="table.RowCount" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
-  <data name="lbLatestVer.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="table.Size" type="System.Drawing.Size, System.Drawing">
+    <value>235, 169</value>
   </data>
-  <data name="&gt;&gt;lbLatestVer.Name" xml:space="preserve">
-    <value>lbLatestVer</value>
+  <data name="table.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
-  <data name="&gt;&gt;lbLatestVer.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;table.Name" xml:space="preserve">
+    <value>table</value>
   </data>
-  <data name="&gt;&gt;lbLatestVer.Parent" xml:space="preserve">
+  <data name="&gt;&gt;table.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;table.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;lbLatestVer.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;table.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="table.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="lbLatestVersion" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="btDown" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbCurrentVersion" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lbNewUpdate" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100" /&gt;&lt;Rows Styles="Percent,25,Percent,25,Percent,25,Percent,25" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -298,13 +301,16 @@
     <value>11, 24</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>330, 313</value>
+    <value>275, 229</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>微软雅黑, 9pt</value>
   </data>
   <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>4, 4, 4, 4</value>
+  </data>
+  <data name="$this.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>20, 30, 20, 30</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>

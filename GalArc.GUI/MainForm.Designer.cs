@@ -185,14 +185,16 @@ namespace GalArc.GUI
             // 
             this.txtOutputPath.AllowDrop = true;
             resources.ApplyResources(this.txtOutputPath, "txtOutputPath");
-            this.txtOutputPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtOutputPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtOutputPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
             this.txtOutputPath.Name = "txtOutputPath";
             // 
             // txtInputPath
             // 
             this.txtInputPath.AllowDrop = true;
             resources.ApplyResources(this.txtInputPath, "txtInputPath");
-            this.txtInputPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtInputPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtInputPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
             this.txtInputPath.Name = "txtInputPath";
             this.txtInputPath.TextChanged += new System.EventHandler(this.txtInputPath_TextChanged);
             // 
@@ -230,9 +232,9 @@ namespace GalArc.GUI
             // 
             // txtLog
             // 
-            resources.ApplyResources(this.txtLog, "txtLog");
             this.txtLog.BackColor = System.Drawing.SystemColors.MenuText;
             this.txtLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.txtLog, "txtLog");
             this.txtLog.ForeColor = System.Drawing.SystemColors.Window;
             this.txtLog.Name = "txtLog";
             this.txtLog.ReadOnly = true;
@@ -293,7 +295,6 @@ namespace GalArc.GUI
             this.Controls.Add(this.btSelInput);
             this.Controls.Add(this.btSelOutput);
             this.Controls.Add(this.pnlOperation);
-            this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
@@ -321,8 +322,6 @@ namespace GalArc.GUI
         private System.Windows.Forms.RadioButton chkbxUnpack;
         private System.Windows.Forms.RadioButton chkbxPack;
         private System.Windows.Forms.Label lbInput;
-        public System.Windows.Forms.TextBox txtOutputPath;
-        public System.Windows.Forms.TextBox txtInputPath;
         private System.Windows.Forms.Label lbOutput;
         private System.Windows.Forms.Button btSelInput;
         private System.Windows.Forms.Button btSelOutput;
@@ -341,6 +340,8 @@ namespace GalArc.GUI
         private System.Windows.Forms.ToolStripMenuItem matchPathsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearPathsMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.TextBox txtOutputPath;
+        private System.Windows.Forms.TextBox txtInputPath;
     }
 }
 

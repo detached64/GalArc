@@ -57,11 +57,6 @@ namespace GalArc.GUI
             }
         }
 
-        private void lbSearch_SizeChanged(object sender, EventArgs e)
-        {
-            this.txtSearchText.Location = new Point(this.lbSearch.Location.X + this.lbSearch.Width + 6, this.txtSearchText.Location.Y);
-        }
-
         private void linkSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             this.linkSite.LinkVisited = true;

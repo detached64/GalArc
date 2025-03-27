@@ -33,8 +33,8 @@ namespace GalArc.GUI
             this.lbCurrentVersion = new System.Windows.Forms.Label();
             this.lbLatestVersion = new System.Windows.Forms.Label();
             this.btDown = new System.Windows.Forms.Button();
-            this.lbCurrentVer = new System.Windows.Forms.Label();
-            this.lbLatestVer = new System.Windows.Forms.Label();
+            this.table = new System.Windows.Forms.TableLayoutPanel();
+            this.table.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbNewUpdate
@@ -46,13 +46,11 @@ namespace GalArc.GUI
             // 
             resources.ApplyResources(this.lbCurrentVersion, "lbCurrentVersion");
             this.lbCurrentVersion.Name = "lbCurrentVersion";
-            this.lbCurrentVersion.SizeChanged += new System.EventHandler(this.lbCurrentVersion_SizeChanged);
             // 
             // lbLatestVersion
             // 
             resources.ApplyResources(this.lbLatestVersion, "lbLatestVersion");
             this.lbLatestVersion.Name = "lbLatestVersion";
-            this.lbLatestVersion.SizeChanged += new System.EventHandler(this.lbLatestVersion_SizeChanged);
             // 
             // btDown
             // 
@@ -61,34 +59,30 @@ namespace GalArc.GUI
             this.btDown.UseVisualStyleBackColor = true;
             this.btDown.Click += new System.EventHandler(this.btDown_Click);
             // 
-            // lbCurrentVer
+            // table
             // 
-            resources.ApplyResources(this.lbCurrentVer, "lbCurrentVer");
-            this.lbCurrentVer.Name = "lbCurrentVer";
-            // 
-            // lbLatestVer
-            // 
-            resources.ApplyResources(this.lbLatestVer, "lbLatestVer");
-            this.lbLatestVer.Name = "lbLatestVer";
+            resources.ApplyResources(this.table, "table");
+            this.table.Controls.Add(this.lbLatestVersion, 0, 2);
+            this.table.Controls.Add(this.btDown, 0, 3);
+            this.table.Controls.Add(this.lbCurrentVersion, 0, 1);
+            this.table.Controls.Add(this.lbNewUpdate, 0, 0);
+            this.table.Name = "table";
             // 
             // UpdateBox
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.lbLatestVer);
-            this.Controls.Add(this.lbCurrentVer);
-            this.Controls.Add(this.btDown);
-            this.Controls.Add(this.lbLatestVersion);
-            this.Controls.Add(this.lbCurrentVersion);
-            this.Controls.Add(this.lbNewUpdate);
+            this.Controls.Add(this.table);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "UpdateBox";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Load += new System.EventHandler(this.UpdateBox_Load);
+            this.table.ResumeLayout(false);
+            this.table.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -98,7 +92,6 @@ namespace GalArc.GUI
         private System.Windows.Forms.Label lbCurrentVersion;
         private System.Windows.Forms.Label lbLatestVersion;
         private System.Windows.Forms.Button btDown;
-        private System.Windows.Forms.Label lbCurrentVer;
-        private System.Windows.Forms.Label lbLatestVer;
+        private System.Windows.Forms.TableLayoutPanel table;
     }
 }

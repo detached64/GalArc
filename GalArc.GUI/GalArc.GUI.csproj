@@ -135,6 +135,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EncodingSettings.resx">
       <DependentUpon>EncodingSettings.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="EncodingSettings.zh-Hans.resx">
       <DependentUpon>EncodingSettings.cs</DependentUpon>

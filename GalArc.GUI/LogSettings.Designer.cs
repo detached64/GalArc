@@ -64,7 +64,8 @@ namespace GalArc.GUI
             // txtLogPath
             // 
             resources.ApplyResources(this.txtLogPath, "txtLogPath");
-            this.txtLogPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtLogPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtLogPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
             this.txtLogPath.Name = "txtLogPath";
             this.txtLogPath.TextChanged += new System.EventHandler(this.txtLogPath_TextChanged);
             // 
