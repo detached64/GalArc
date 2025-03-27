@@ -41,9 +41,9 @@ namespace ArcFormats.Yuris
         private List<YpfEntry> entries = new List<YpfEntry>();
         private YpfScheme scheme = new YpfScheme();
 
-        private bool isFirstGuessYpf = true;
-        private bool isFirstGuessYst = true;
-        private string folderPath;
+        private bool IsFirstGuessYpf = true;
+        private bool IsFirstGuessYst = true;
+        private string FolderPath;
 
         // most freqently used combination (as far as I guess) : table3 , extraLen = 8
         private static readonly byte[] Table1 = { 0x09, 0x0B, 0x0D, 0x13, 0x15, 0x1B, 0x20, 0x23, 0x26, 0x29, 0x2C, 0x2F, 0x2E, 0x32 };
@@ -63,7 +63,7 @@ namespace ArcFormats.Yuris
                 throw new InvalidArchiveException();
             }
 
-            this.folderPath = folderPath;
+            this.FolderPath = folderPath;
 
             uint version = br.ReadUInt32();
             int fileCount = br.ReadInt32();
@@ -81,10 +81,17 @@ namespace ArcFormats.Yuris
                 entry.Data = br.ReadBytes((int)entry.Size);
                 if (entry.IsPacked)
                 {
-                    entry.Data = ZlibHelper.Decompress(entry.Data);
+                    try
+                    {
+                        entry.Data = ZlibHelper.Decompress(entry.Data);
+                    }
+                    catch (InvalidDataException)        // Not zlib-compressed, maybe snappy. No better way to check.
+                    {
+                        entry.Data = Snappy.Decompress(entry.Data);     // Game: まじかりっく⇔スカイハイ
+                    }
                 }
                 Directory.CreateDirectory(Path.GetDirectoryName(entry.Path));
-                if (UnpackYPFOptions.DecryptScripts && Path.GetExtension(entry.Path) == ".ybn" && BitConverter.ToUInt32(entry.Data, 0) == 0x42545359)
+                if (UnpackYPFOptions.DecryptScripts && Path.GetExtension(entry.Path) == ".ybn" && entry.Data.Length >= 4 && BitConverter.ToUInt32(entry.Data, 0) == 0x42545359)
                 {
                     Logger.Debug(string.Format(LogStrings.TryDecScr, entry.Name));
                     entry.Data = TryDecryptScript(entry.Data);
@@ -130,10 +137,7 @@ namespace ArcFormats.Yuris
                         ReadIndex(br, fileCount);
                         return;
                     }
-                    catch
-                    {
-                        continue;
-                    }
+                    catch { }
                 }
             }
             throw new InvalidOperationException("Failed to read index.");
@@ -155,7 +159,7 @@ namespace ArcFormats.Yuris
                 {
                     throw new Exception();
                 }
-                entry.Path = Path.Combine(folderPath, entry.Name);
+                entry.Path = Path.Combine(FolderPath, entry.Name);
                 br.BaseStream.Position++;
                 entry.IsPacked = br.ReadByte() != 0;
                 entry.UnpackedSize = br.ReadUInt32();
@@ -185,10 +189,10 @@ namespace ArcFormats.Yuris
 
         private void DecryptName(byte[] name)
         {
-            if (isFirstGuessYpf)
+            if (IsFirstGuessYpf)
             {
                 scheme.Key = (byte)(name[name.Length - 4] ^ '.');       // (maybe) all files inside the ypf archive has a 3-letter extension,so……
-                isFirstGuessYpf = false;
+                IsFirstGuessYpf = false;
             }
             for (int i = 0; i < name.Length; i++)
             {
@@ -213,12 +217,12 @@ namespace ArcFormats.Yuris
                 }
                 catch
                 {
-                    isFirstGuessYst = true;
+                    IsFirstGuessYst = true;
                     Logger.Error(LogStrings.ErrorDecScrFailed);
                     return script;
                 }
             }
-            isFirstGuessYst = false;
+            IsFirstGuessYst = false;
             return result;
         }
 
@@ -226,7 +230,7 @@ namespace ArcFormats.Yuris
         {
             if (isOld)
             {
-                if (script.Length < 44 || !isFirstGuessYst)
+                if (script.Length < 44 || !IsFirstGuessYst)
                 {
                     return;
                 }
@@ -234,7 +238,7 @@ namespace ArcFormats.Yuris
             }
             else
             {
-                if (!isFirstGuessYst)
+                if (!IsFirstGuessYst)
                 {
                     return;
                 }
@@ -296,8 +300,8 @@ namespace ArcFormats.Yuris
         private void Reset()
         {
             entries.Clear();
-            isFirstGuessYpf = true;
-            isFirstGuessYst = true;
+            IsFirstGuessYpf = true;
+            IsFirstGuessYst = true;
             scheme.Key = 0;
         }
     }

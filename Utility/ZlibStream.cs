@@ -122,27 +122,16 @@ namespace Utility.Compression
 
         public static byte[] Decompress(byte[] input)
         {
-            try
+            using (MemoryStream compressed = new MemoryStream(input))
             {
-                using (MemoryStream compressed = new MemoryStream(input))
+                using (MemoryStream decompressed = new MemoryStream())
                 {
-                    using (MemoryStream decompressed = new MemoryStream())
+                    using (ZlibStream decompressionStream = new ZlibStream(compressed, CompressionMode.Decompress))
                     {
-                        using (ZlibStream decompressionStream = new ZlibStream(compressed, CompressionMode.Decompress))
-                        {
-                            decompressionStream.CopyTo(decompressed);
-                        }
-                        return decompressed.ToArray();
+                        decompressionStream.CopyTo(decompressed);
                     }
+                    return decompressed.ToArray();
                 }
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Decompression failed: ", e);
-            }
-            finally
-            {
-                input = null;
             }
         }
     }

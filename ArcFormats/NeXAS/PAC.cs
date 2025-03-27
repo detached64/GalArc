@@ -89,7 +89,7 @@ namespace ArcFormats.NeXAS
                                 break;
 
                             case Method.Zstd:
-                                File.WriteAllBytes(entry.Path, ZstdHelper.Decompress(fileData));
+                                File.WriteAllBytes(entry.Path, Zstd.Decompress(fileData));
                                 break;
                         }
                     }
@@ -223,7 +223,7 @@ namespace ArcFormats.NeXAS
                             data = ZlibHelper.Compress(data);
                             break;
                         case 6:
-                            data = ZstdHelper.Compress(data);
+                            data = Zstd.Compress(data);
                             break;
                     }
                 }
