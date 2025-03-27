@@ -77,7 +77,7 @@ namespace ArcFormats.NeXAS
                         switch (method)
                         {
                             case Method.Huffman:
-                                File.WriteAllBytes(entry.Path, HuffmanCompression.Decompress(fileData, (int)entry.UnpackedSize));
+                                File.WriteAllBytes(entry.Path, Huffman.Decompress(fileData, (int)entry.UnpackedSize));
                                 break;
 
                             case Method.Lzss:
@@ -160,7 +160,7 @@ namespace ArcFormats.NeXAS
             {
                 packedIndex[i] ^= 0xff;
             }
-            byte[] index = HuffmanCompression.Decompress(packedIndex, unpackedLen);
+            byte[] index = Huffman.Decompress(packedIndex, unpackedLen);
             using (MemoryStream msIndex = new MemoryStream(index))
             {
                 using (BinaryReader ReaderIndex = new BinaryReader(msIndex))
@@ -215,7 +215,7 @@ namespace ArcFormats.NeXAS
                             data = LzssHelper.Compress(data);
                             break;
                         case 2:
-                            data = HuffmanCompression.Compress(data);
+                            data = Huffman.Compress(data);
                             break;
                         case 3:
                         case 4:
@@ -252,7 +252,7 @@ namespace ArcFormats.NeXAS
                 byte[] raw = index.ToArray();
                 if (PackExtraOptions.Version == "2")
                 {
-                    byte[] packed = HuffmanCompression.Compress(raw);
+                    byte[] packed = Huffman.Compress(raw);
                     for (int i = 0; i < packed.Length; i++)
                     {
                         packed[i] ^= 0xff;

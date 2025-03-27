@@ -10,14 +10,14 @@ typedef struct huffman_node
 {
 	uint weight;
 	byte ascii;
-	uint code;			/* 哈夫曼编码值 */
-	uint code_lengths;	/* 哈夫曼编码值的位数 */
+	uint code;
+	uint code_lengths;
 	struct huffman_node* parent;
 	struct huffman_node* left_child;
 	struct huffman_node* right_child;
 }huffman_node_t;
 
-int huffman_tree_create(struct bits* bits, ushort children[2][255], unsigned int* index, ushort* retval)
+int huffman_tree_create_dec(struct bits* bits, ushort children[2][255], unsigned int* index, ushort* retval)
 {
 	unsigned int bitval;
 	ushort child;
@@ -32,11 +32,11 @@ int huffman_tree_create(struct bits* bits, ushort children[2][255], unsigned int
 		parent = *index;
 		*index = parent + 1;
 
-		if (huffman_tree_create(bits, children, index, &child))
+		if (huffman_tree_create_dec(bits, children, index, &child))
 			return -1;
 		children[0][parent - 256] = child;
 
-		if (huffman_tree_create(bits, children, index, &child))
+		if (huffman_tree_create_dec(bits, children, index, &child))
 			return -1;
 		children[1][parent - 256] = child;
 
@@ -56,7 +56,7 @@ int huffman_tree_create(struct bits* bits, ushort children[2][255], unsigned int
 	return 0;
 }
 
-extern "C" NATIVE_API int huffman_uncompress(unsigned char* uncompr, unsigned long uncomprlen, unsigned char* compr, unsigned long comprlen)
+__declspec(dllexport) int huffman_uncompress(unsigned char* uncompr, unsigned long uncomprlen, unsigned char* compr, unsigned long comprlen)
 {
 	struct bits bits;
 	ushort children[2][255];
@@ -67,7 +67,7 @@ extern "C" NATIVE_API int huffman_uncompress(unsigned char* uncompr, unsigned lo
 	ushort retval;
 
 	bits_init(&bits, compr, comprlen);
-	if (huffman_tree_create(&bits, children, &index, &retval))
+	if (huffman_tree_create_dec(&bits, children, &index, &retval))
 		return -1;
 	if (retval != 256)
 		return -1;
@@ -141,15 +141,14 @@ huffman_node_t* huffman_child_init(huffman_node_t* child_node, unsigned int is_r
 	return child_node;
 }
 
-unsigned int huffman_tree_create(huffman_node_t* nodes)
+unsigned int huffman_tree_create_enc(huffman_node_t* nodes)
 {
 	huffman_node_t* pnodes[256], * pnode = 0;
-	int leaves_node;				/* 有效的叶结点计数 */
-	int parent_node;				/* 合并时新结点的位置索引 */
-	int child_node;					/* 叶结点位置计数 */
+	int leaves_node;
+	int parent_node;
+	int child_node;
 	int i;
 
-	/* 将出现过的(权值不为0的)叶节点放入队列 */
 	for (i = 0; nodes[i].weight && i < 256; i++)
 		pnodes[i] = &nodes[i];
 
@@ -157,7 +156,7 @@ unsigned int huffman_tree_create(huffman_node_t* nodes)
 
 	if (leaves_node < 2)
 	{
-		printf("有效的叶结点数目过少\n");
+		printf("Error: only one node in huffman tree\n");
 		return -1;
 	}
 
@@ -165,27 +164,20 @@ unsigned int huffman_tree_create(huffman_node_t* nodes)
 	child_node = parent_node - 1;
 	while (child_node > 0)
 	{
-		pnode = &nodes[parent_node++];	/* 合并左右叶结点以后的新结点 */
-		/* CUSTOM!! */
-		pnode->left_child = huffman_child_init(pnodes[child_node--], 0);	/* 第1个child结点作为左结点 */
-		pnode->right_child = huffman_child_init(pnodes[child_node--], 1);	/* 第2个child结点作为右结点 */
-		pnode->left_child->parent = pnode->right_child->parent = pnode;		/* 新结点成为父结点 */
-		pnode->weight = pnode->left_child->weight + pnode->right_child->weight;/* 父结点权值为2个孩子的权值之和 */
-		/* 找到一个合适的插入点, 将父结点插入剩余结点组成的森林中 */
+		pnode = &nodes[parent_node++];
+		pnode->left_child = huffman_child_init(pnodes[child_node--], 0);
+		pnode->right_child = huffman_child_init(pnodes[child_node--], 1);
+		pnode->left_child->parent = pnode->right_child->parent = pnode;
+		pnode->weight = pnode->left_child->weight + pnode->right_child->weight;
 		for (i = child_node; i >= 0; i--)
 		{
-			/* 找到一个合适的插入点 */
-			/* custom!! */
 			if (pnodes[i]->weight >= pnode->weight)
 				break;
 		}
-		/* 将新的节点插入这个位置 */
 		memmove(pnodes + i + 2, pnodes + i + 1, (child_node - i) * sizeof(huffman_node_t*));
 		pnodes[i + 1] = pnode;
 		child_node++;
 	}
-	/* pnode就是根结点 */
-	/* 到了这里，生成了一个按降序排列的2n - 1个结点的队列pnodes */
 	huffman1_node_encode(pnode, 0, 0);
 
 	return leaves_node;
@@ -195,7 +187,6 @@ int huffman_weight_compare(const void* node1, const void* node2)
 {
 	huffman_node_t* nodes[2] = { (huffman_node_t*)node1, (huffman_node_t*)node2 };
 
-	/* 这里比较的前后2项顺序决定了排序是升序或降序 */
 	return (int)nodes[1]->weight - (int)nodes[0]->weight;
 }
 
@@ -206,11 +197,9 @@ int huffman_ascii_compare(const void* node1, const void* node2)
 	return (int)nodes[0]->ascii - (int)nodes[1]->ascii;
 }
 
-extern "C" NATIVE_API int huffman_compress(unsigned char* compr, unsigned long comprlen, unsigned char* uncompr, unsigned long uncomprlen)
+__declspec(dllexport) int huffman_compress(unsigned char* compr, unsigned long comprlen, unsigned char* uncompr, unsigned long uncomprlen)
 {
-	/* n个叶子的哈夫曼树要经过n-1次合并，产生n-1个新结点。
-	 * 最终求得的哈夫曼树中共有2n-1个结点。*/
-	huffman_node_t nodes[2 * 256 - 1];	/* huffman树的最大结点数(2 ^ N - 1) */
+	huffman_node_t nodes[2 * 256 - 1];
 	unsigned int leaves;
 	unsigned int output_bits;
 	unsigned long i;
@@ -219,19 +208,15 @@ extern "C" NATIVE_API int huffman_compress(unsigned char* compr, unsigned long c
 
 	memset(nodes, 0, sizeof(nodes));
 
-	/* 前256个结点(N的最大可能值)用于存放哈夫曼树的叶结点 */
 	for (i = 0; i < 256; i++)
-		nodes[i].ascii = (byte)i;	/* for debug: 标记该叶结点所代表的ascii值 */
+		nodes[i].ascii = (byte)i;
 
-	/* 计算输入的字节数据的出现频度 */
 	for (i = 0; i < uncomprlen; i++)
 		nodes[uncompr[i]].weight++;
 
-	/* 按照频度（权）降序排序 */
 	qsort(nodes, 256, sizeof(huffman_node_t), huffman_weight_compare);
 
-	/* 创建huffman树 */
-	leaves = huffman_tree_create(nodes);
+	leaves = huffman_tree_create_enc(nodes);
 
 	root = &nodes[0];
 	while (root->parent)
@@ -241,8 +226,6 @@ extern "C" NATIVE_API int huffman_compress(unsigned char* compr, unsigned long c
 	if (huffman_code_tree_encode(&bits, root))
 		return -1;
 
-	// sort nodes depending on ascii to can index nodes with its ascii value
-	// 以便下面进行索引
 	qsort(nodes, 256, sizeof(huffman_node_t), huffman_ascii_compare);
 
 	output_bits = bits.curbyte * 8 + bits.curbits;

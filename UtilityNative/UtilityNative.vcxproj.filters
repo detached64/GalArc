@@ -15,14 +15,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="huffman.cpp">
+    <ClCompile Include="huffman.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="native.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="def.h">
       <Filter>头文件</Filter>
     </ClInclude>

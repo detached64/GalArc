@@ -25,6 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x64</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -34,6 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x64</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EasyCompressor, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -93,8 +95,8 @@
     <Compile Include="Exceptions.cs" />
     <Compile Include="ExeResources.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="HuffmanCompression.cs" />
-    <Compile Include="LzssCompression.cs" />
+    <Compile Include="Huffman.cs" />
+    <Compile Include="LzssStream.cs" />
     <Compile Include="MD5.cs" />
     <Compile Include="MMX.cs" />
     <Compile Include="NativeMethods.cs" />

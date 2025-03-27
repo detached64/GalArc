@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 
 namespace Utility.Compression
 {
-    public static class HuffmanCompression
+    public static class Huffman
     {
         [DllImport("UtilityNative.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int huffman_uncompress(byte[] dec, ulong dec_len, byte[] enc, ulong enc_len);
