@@ -43,6 +43,15 @@ namespace GalArc.Settings
             get => (bool)this[nameof(IsDatabaseEnabled)];
             set => this[nameof(IsDatabaseEnabled)] = value;
         }
+
+        [UserScopedSetting]
+        [DebuggerNonUserCode]
+        [DefaultSettingValue("False")]
+        public bool BatchExtraction
+        {
+            get => (bool)this[nameof(BatchExtraction)];
+            set => this[nameof(BatchExtraction)] = value;
+        }
         #endregion
 
         #region Paths

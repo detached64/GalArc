@@ -116,10 +116,11 @@ namespace GalArc.GUI
         #region MainFormEvents
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.combLanguages.Items.AddRange(Languages.SupportedLanguages.Keys.ToArray());
+            this.CombLanguages.Items.AddRange(Languages.SupportedLanguages.Keys.ToArray());
             this.TopMost = GUISettings.Default.IsTopMost;
-            this.combLanguages.Text = Languages.SupportedLanguages.FirstOrDefault(x => x.Value == CurrentCulture).Key;
-            this.matchPathsMenuItem.Checked = GUISettings.Default.MatchPath;
+            this.CombLanguages.Text = Languages.SupportedLanguages.FirstOrDefault(x => x.Value == CurrentCulture).Key;
+            this.MenuMatchPaths.Checked = GUISettings.Default.MatchPath;
+            this.MenuBatchExtraction.Checked = BaseSettings.Default.BatchExtraction;
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -176,13 +177,19 @@ namespace GalArc.GUI
         #endregion
 
         #region ToolStripMenuEvents
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MenuAbout_Click(object sender, EventArgs e)
         {
             AboutBox aboutBox = new AboutBox();
             aboutBox.ShowDialog();
         }
 
-        private async void checkUpdateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MenuBatchExtraction_Click(object sender, EventArgs e)
+        {
+            BaseSettings.Default.BatchExtraction = this.MenuBatchExtraction.Checked;
+            BaseSettings.Default.Save();
+        }
+
+        private async void MenuCheckUpdate_Click(object sender, EventArgs e)
         {
             Updater updater = new Updater();
             try
@@ -195,21 +202,21 @@ namespace GalArc.GUI
             }
         }
 
-        private void reimportSchemesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MenuReimportSchemes_Click(object sender, EventArgs e)
         {
             ReloadSchemesAsync(sender, e);
         }
 
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void MenuSettings_Click(object sender, EventArgs e)
         {
             SettingsWindow settingsWindow = new SettingsWindow();
             settingsWindow.ShowDialog();
         }
 
-        private void combLanguages_SelectedIndexChanged(object sender, EventArgs e)
+        private void CombLanguages_SelectedIndexChanged(object sender, EventArgs e)
         {
             string previousCulture = CurrentCulture;
-            CurrentCulture = Languages.SupportedLanguages[this.combLanguages.Text];
+            CurrentCulture = Languages.SupportedLanguages[this.CombLanguages.Text];
             GUISettings.Default.LastLanguage = CurrentCulture;
             GUISettings.Default.Save();
             if (IsFirstChangeLang)
@@ -226,22 +233,16 @@ namespace GalArc.GUI
             }
         }
 
-        private void preferenceToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SettingsWindow settingsWindow = new SettingsWindow();
-            settingsWindow.ShowDialog();
-        }
-
-        private void clearPathsMenuStrip_Click(object sender, EventArgs e)
+        private void MenuClearPaths_Click(object sender, EventArgs e)
         {
             this.txtInputPath.Text = string.Empty;
             this.txtOutputPath.Text = string.Empty;
         }
 
-        private void matchPathsMenuItem_CheckedChanged(object sender, EventArgs e)
+        private void MenuMatchPaths_CheckedChanged(object sender, EventArgs e)
         {
             SyncPath();
-            GUISettings.Default.MatchPath = this.matchPathsMenuItem.Checked;
+            GUISettings.Default.MatchPath = this.MenuMatchPaths.Checked;
             GUISettings.Default.Save();
         }
         #endregion
@@ -524,14 +525,14 @@ namespace GalArc.GUI
                 Logger.Error(LogStrings.ErrorNeedSpecifyOutput);
                 return;
             }
+            bool is_batch_mode = BaseSettings.Default.BatchExtraction && this.txtInputPath.Text.Contains('*');
             if (Mode == OperationMode.Unpack)
             {
-                if (!File.Exists(this.txtInputPath.Text))
+                if (!is_batch_mode && !File.Exists(this.txtInputPath.Text))
                 {
                     Logger.Error(LogStrings.ErrorFileNotFound);
                     return;
                 }
-                this.lbStatus.Text = LogStrings.Unpacking;
             }
             else
             {
@@ -540,7 +541,6 @@ namespace GalArc.GUI
                     Logger.Error(LogStrings.ErrorDirNotFound);
                     return;
                 }
-                this.lbStatus.Text = LogStrings.Packing;
             }
             Freeze();
             #endregion
@@ -550,14 +550,21 @@ namespace GalArc.GUI
             {
                 if (Mode == OperationMode.Unpack)
                 {
-                    Logger.InitUnpack(this.txtInputPath.Text, this.txtOutputPath.Text);
-                    await Task.Run(() => SelectedFormat.Unpack(this.txtInputPath.Text, this.txtOutputPath.Text));
+                    Logger.Status(LogStrings.Unpacking);
+                    if (is_batch_mode)
+                    {
+                        await UnpackAllAsync();
+                    }
+                    else
+                    {
+                        await UnpackOneAsync(this.txtInputPath.Text, this.txtOutputPath.Text);
+                    }
                     Logger.FinishUnpack();
                 }
                 else
                 {
-                    Logger.InitPack(this.txtInputPath.Text, this.txtOutputPath.Text);
-                    await Task.Run(() => SelectedFormat.Pack(this.txtInputPath.Text, this.txtOutputPath.Text));
+                    Logger.Status(LogStrings.Packing);
+                    await PackAsync(this.txtInputPath.Text, this.txtOutputPath.Text);
                     Logger.FinishPack();
                 }
             }
@@ -580,6 +587,29 @@ namespace GalArc.GUI
             #region Thaw controls
             Thaw();
             #endregion
+        }
+
+        private async Task UnpackOneAsync(string input, string output)
+        {
+            Logger.InitUnpack(input, output);
+            await Task.Run(() => SelectedFormat.Unpack(input, output));
+        }
+
+        private async Task UnpackAllAsync()
+        {
+            string root = Path.GetDirectoryName(this.txtInputPath.Text);
+            string pattern = Path.GetFileName(this.txtInputPath.Text);
+            foreach (string file in Directory.GetFiles(root, pattern))
+            {
+                string dst = Path.Combine(this.txtOutputPath.Text, Path.GetFileNameWithoutExtension(file));
+                await UnpackOneAsync(file, dst);
+            }
+        }
+
+        private async Task PackAsync(string input, string output)
+        {
+            Logger.InitPack(input, output);
+            await Task.Run(() => SelectedFormat.Pack(input, output));
         }
 
         private void Freeze()
@@ -612,7 +642,7 @@ namespace GalArc.GUI
 
         private void SyncPath()
         {
-            if (!this.matchPathsMenuItem.Checked || Mode == OperationMode.None || string.IsNullOrEmpty(this.txtInputPath.Text))
+            if (!this.MenuMatchPaths.Checked || Mode == OperationMode.None || string.IsNullOrEmpty(this.txtInputPath.Text) || this.txtInputPath.Text.Contains('*'))
             {
                 return;
             }
@@ -623,7 +653,7 @@ namespace GalArc.GUI
                 // 2. xxx
                 switch (Path.GetFileName(this.txtInputPath.Text).Count(chr => chr == '.'))
                 {
-                    case 0:
+                    case 0 when this.txtInputPath.Text[this.txtInputPath.Text.Length - 1] != '\\':
                         this.txtOutputPath.Text = this.txtInputPath.Text + "_unpacked";
                         break;
                     case 1:

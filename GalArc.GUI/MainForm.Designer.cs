@@ -31,16 +31,18 @@ namespace GalArc.GUI
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.optionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.matchPathsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearPathsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuMatchPaths = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuClearPaths = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.reimportSchemesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.checkUpdateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.languagesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.combLanguages = new System.Windows.Forms.ToolStripComboBox();
+            this.MenuReimport = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.MenuBatchExtraction = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuCheckUpdate = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuLanguages = new System.Windows.Forms.ToolStripMenuItem();
+            this.CombLanguages = new System.Windows.Forms.ToolStripComboBox();
             this.treeViewEngines = new System.Windows.Forms.TreeView();
             this.chkbxUnpack = new System.Windows.Forms.RadioButton();
             this.chkbxPack = new System.Windows.Forms.RadioButton();
@@ -71,84 +73,98 @@ namespace GalArc.GUI
             this.menuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionMenuItem,
-            this.settingsMenuItem,
-            this.helpMenuItem});
+            this.MenuSettings,
+            this.MenuHelp});
             this.menuStrip.Name = "menuStrip";
             // 
             // optionMenuItem
             // 
             this.optionMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.matchPathsMenuItem,
-            this.clearPathsMenuItem,
+            this.MenuMatchPaths,
+            this.MenuClearPaths,
             this.toolStripSeparator1,
-            this.reimportSchemesMenuItem});
+            this.MenuReimport,
+            this.toolStripSeparator2,
+            this.MenuBatchExtraction});
             this.optionMenuItem.Name = "optionMenuItem";
             resources.ApplyResources(this.optionMenuItem, "optionMenuItem");
             // 
-            // matchPathsMenuItem
+            // MenuMatchPaths
             // 
-            this.matchPathsMenuItem.CheckOnClick = true;
-            this.matchPathsMenuItem.Name = "matchPathsMenuItem";
-            resources.ApplyResources(this.matchPathsMenuItem, "matchPathsMenuItem");
-            this.matchPathsMenuItem.CheckedChanged += new System.EventHandler(this.matchPathsMenuItem_CheckedChanged);
+            this.MenuMatchPaths.CheckOnClick = true;
+            this.MenuMatchPaths.Name = "MenuMatchPaths";
+            resources.ApplyResources(this.MenuMatchPaths, "MenuMatchPaths");
+            this.MenuMatchPaths.CheckedChanged += new System.EventHandler(this.MenuMatchPaths_CheckedChanged);
             // 
-            // clearPathsMenuItem
+            // MenuClearPaths
             // 
-            this.clearPathsMenuItem.Name = "clearPathsMenuItem";
-            resources.ApplyResources(this.clearPathsMenuItem, "clearPathsMenuItem");
-            this.clearPathsMenuItem.Click += new System.EventHandler(this.clearPathsMenuStrip_Click);
+            this.MenuClearPaths.Name = "MenuClearPaths";
+            resources.ApplyResources(this.MenuClearPaths, "MenuClearPaths");
+            this.MenuClearPaths.Click += new System.EventHandler(this.MenuClearPaths_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             // 
-            // reimportSchemesMenuItem
+            // MenuReimport
             // 
-            this.reimportSchemesMenuItem.Name = "reimportSchemesMenuItem";
-            resources.ApplyResources(this.reimportSchemesMenuItem, "reimportSchemesMenuItem");
-            this.reimportSchemesMenuItem.Click += new System.EventHandler(this.reimportSchemesToolStripMenuItem_Click);
+            this.MenuReimport.Name = "MenuReimport";
+            resources.ApplyResources(this.MenuReimport, "MenuReimport");
+            this.MenuReimport.Click += new System.EventHandler(this.MenuReimportSchemes_Click);
             // 
-            // settingsMenuItem
+            // toolStripSeparator2
             // 
-            this.settingsMenuItem.Name = "settingsMenuItem";
-            resources.ApplyResources(this.settingsMenuItem, "settingsMenuItem");
-            this.settingsMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             // 
-            // helpMenuItem
+            // MenuBatchExtraction
             // 
-            this.helpMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.checkUpdateMenuItem,
-            this.aboutMenuItem,
-            this.languagesMenuItem});
-            this.helpMenuItem.Name = "helpMenuItem";
-            resources.ApplyResources(this.helpMenuItem, "helpMenuItem");
+            this.MenuBatchExtraction.CheckOnClick = true;
+            this.MenuBatchExtraction.Name = "MenuBatchExtraction";
+            resources.ApplyResources(this.MenuBatchExtraction, "MenuBatchExtraction");
+            this.MenuBatchExtraction.Click += new System.EventHandler(this.MenuBatchExtraction_Click);
             // 
-            // checkUpdateMenuItem
+            // MenuSettings
             // 
-            this.checkUpdateMenuItem.Name = "checkUpdateMenuItem";
-            resources.ApplyResources(this.checkUpdateMenuItem, "checkUpdateMenuItem");
-            this.checkUpdateMenuItem.Click += new System.EventHandler(this.checkUpdateToolStripMenuItem_Click);
+            this.MenuSettings.Name = "MenuSettings";
+            resources.ApplyResources(this.MenuSettings, "MenuSettings");
+            this.MenuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             // 
-            // aboutMenuItem
+            // MenuHelp
             // 
-            this.aboutMenuItem.Name = "aboutMenuItem";
-            resources.ApplyResources(this.aboutMenuItem, "aboutMenuItem");
-            this.aboutMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.MenuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuCheckUpdate,
+            this.MenuAbout,
+            this.MenuLanguages});
+            this.MenuHelp.Name = "MenuHelp";
+            resources.ApplyResources(this.MenuHelp, "MenuHelp");
             // 
-            // languagesMenuItem
+            // MenuCheckUpdate
             // 
-            this.languagesMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.combLanguages});
-            this.languagesMenuItem.Name = "languagesMenuItem";
-            resources.ApplyResources(this.languagesMenuItem, "languagesMenuItem");
+            this.MenuCheckUpdate.Name = "MenuCheckUpdate";
+            resources.ApplyResources(this.MenuCheckUpdate, "MenuCheckUpdate");
+            this.MenuCheckUpdate.Click += new System.EventHandler(this.MenuCheckUpdate_Click);
             // 
-            // combLanguages
+            // MenuAbout
             // 
-            this.combLanguages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            resources.ApplyResources(this.combLanguages, "combLanguages");
-            this.combLanguages.Name = "combLanguages";
-            this.combLanguages.SelectedIndexChanged += new System.EventHandler(this.combLanguages_SelectedIndexChanged);
+            this.MenuAbout.Name = "MenuAbout";
+            resources.ApplyResources(this.MenuAbout, "MenuAbout");
+            this.MenuAbout.Click += new System.EventHandler(this.MenuAbout_Click);
+            // 
+            // MenuLanguages
+            // 
+            this.MenuLanguages.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CombLanguages});
+            this.MenuLanguages.Name = "MenuLanguages";
+            resources.ApplyResources(this.MenuLanguages, "MenuLanguages");
+            // 
+            // CombLanguages
+            // 
+            this.CombLanguages.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            resources.ApplyResources(this.CombLanguages, "CombLanguages");
+            this.CombLanguages.Name = "CombLanguages";
+            this.CombLanguages.SelectedIndexChanged += new System.EventHandler(this.CombLanguages_SelectedIndexChanged);
             // 
             // treeViewEngines
             // 
@@ -315,9 +331,9 @@ namespace GalArc.GUI
         #endregion
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem optionMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem checkUpdateMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem MenuHelp;
+        private System.Windows.Forms.ToolStripMenuItem MenuCheckUpdate;
+        private System.Windows.Forms.ToolStripMenuItem MenuAbout;
         internal System.Windows.Forms.TreeView treeViewEngines;
         private System.Windows.Forms.RadioButton chkbxUnpack;
         private System.Windows.Forms.RadioButton chkbxPack;
@@ -333,15 +349,17 @@ namespace GalArc.GUI
         private System.Windows.Forms.ToolStripStatusLabel lbStatus;
         private System.Windows.Forms.ToolStripProgressBar pBar;
         private System.Windows.Forms.Panel pnlOperation;
-        private System.Windows.Forms.ToolStripMenuItem reimportSchemesMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem settingsMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem languagesMenuItem;
-        internal System.Windows.Forms.ToolStripComboBox combLanguages;
-        private System.Windows.Forms.ToolStripMenuItem matchPathsMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clearPathsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem MenuReimport;
+        private System.Windows.Forms.ToolStripMenuItem MenuSettings;
+        private System.Windows.Forms.ToolStripMenuItem MenuLanguages;
+        internal System.Windows.Forms.ToolStripComboBox CombLanguages;
+        private System.Windows.Forms.ToolStripMenuItem MenuMatchPaths;
+        private System.Windows.Forms.ToolStripMenuItem MenuClearPaths;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.TextBox txtOutputPath;
         private System.Windows.Forms.TextBox txtInputPath;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem MenuBatchExtraction;
     }
 }
 

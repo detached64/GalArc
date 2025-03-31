@@ -125,26 +125,35 @@
     <value>False</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="matchPathsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>248, 34</value>
+  <data name="MenuMatchPaths.Size" type="System.Drawing.Size, System.Drawing">
+    <value>270, 34</value>
   </data>
-  <data name="matchPathsMenuItem.Text" xml:space="preserve">
-    <value>Match Paths</value>
+  <data name="MenuMatchPaths.Text" xml:space="preserve">
+    <value>Match paths</value>
   </data>
-  <data name="clearPathsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>248, 34</value>
+  <data name="MenuClearPaths.Size" type="System.Drawing.Size, System.Drawing">
+    <value>270, 34</value>
   </data>
-  <data name="clearPathsMenuItem.Text" xml:space="preserve">
-    <value>Clear Paths</value>
+  <data name="MenuClearPaths.Text" xml:space="preserve">
+    <value>Clear paths</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>245, 6</value>
+    <value>267, 6</value>
   </data>
-  <data name="reimportSchemesMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>248, 34</value>
+  <data name="MenuReimport.Size" type="System.Drawing.Size, System.Drawing">
+    <value>270, 34</value>
   </data>
-  <data name="reimportSchemesMenuItem.Text" xml:space="preserve">
+  <data name="MenuReimport.Text" xml:space="preserve">
     <value>Reload schemes</value>
+  </data>
+  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>267, 6</value>
+  </data>
+  <data name="MenuBatchExtraction.Size" type="System.Drawing.Size, System.Drawing">
+    <value>270, 34</value>
+  </data>
+  <data name="MenuBatchExtraction.Text" xml:space="preserve">
+    <value>Batch extraction</value>
   </data>
   <data name="optionMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>87, 28</value>
@@ -152,41 +161,41 @@
   <data name="optionMenuItem.Text" xml:space="preserve">
     <value>Option</value>
   </data>
-  <data name="settingsMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="MenuSettings.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 28</value>
   </data>
-  <data name="settingsMenuItem.Text" xml:space="preserve">
+  <data name="MenuSettings.Text" xml:space="preserve">
     <value>Settings</value>
   </data>
-  <data name="checkUpdateMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="MenuCheckUpdate.Size" type="System.Drawing.Size, System.Drawing">
     <value>266, 34</value>
   </data>
-  <data name="checkUpdateMenuItem.Text" xml:space="preserve">
+  <data name="MenuCheckUpdate.Text" xml:space="preserve">
     <value>Check for updates</value>
   </data>
-  <data name="aboutMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="MenuAbout.Size" type="System.Drawing.Size, System.Drawing">
     <value>266, 34</value>
   </data>
-  <data name="aboutMenuItem.Text" xml:space="preserve">
+  <data name="MenuAbout.Text" xml:space="preserve">
     <value>About</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="combLanguages.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+  <data name="CombLanguages.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>System</value>
   </data>
-  <data name="combLanguages.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="CombLanguages.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 32</value>
   </data>
-  <data name="languagesMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="MenuLanguages.Size" type="System.Drawing.Size, System.Drawing">
     <value>266, 34</value>
   </data>
-  <data name="languagesMenuItem.Text" xml:space="preserve">
+  <data name="MenuLanguages.Text" xml:space="preserve">
     <value>Languages</value>
   </data>
-  <data name="helpMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="MenuHelp.Size" type="System.Drawing.Size, System.Drawing">
     <value>67, 28</value>
   </data>
-  <data name="helpMenuItem.Text" xml:space="preserve">
+  <data name="MenuHelp.Text" xml:space="preserve">
     <value>Help</value>
   </data>
   <data name="menuStrip.Location" type="System.Drawing.Point, System.Drawing">
@@ -642,16 +651,16 @@
   <data name="&gt;&gt;optionMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;matchPathsMenuItem.Name" xml:space="preserve">
-    <value>matchPathsMenuItem</value>
+  <data name="&gt;&gt;MenuMatchPaths.Name" xml:space="preserve">
+    <value>MenuMatchPaths</value>
   </data>
-  <data name="&gt;&gt;matchPathsMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;MenuMatchPaths.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;clearPathsMenuItem.Name" xml:space="preserve">
-    <value>clearPathsMenuItem</value>
+  <data name="&gt;&gt;MenuClearPaths.Name" xml:space="preserve">
+    <value>MenuClearPaths</value>
   </data>
-  <data name="&gt;&gt;clearPathsMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;MenuClearPaths.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
@@ -660,46 +669,58 @@
   <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;reimportSchemesMenuItem.Name" xml:space="preserve">
-    <value>reimportSchemesMenuItem</value>
+  <data name="&gt;&gt;MenuReimport.Name" xml:space="preserve">
+    <value>MenuReimport</value>
   </data>
-  <data name="&gt;&gt;reimportSchemesMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;MenuReimport.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;settingsMenuItem.Name" xml:space="preserve">
-    <value>settingsMenuItem</value>
+  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
+    <value>toolStripSeparator2</value>
   </data>
-  <data name="&gt;&gt;settingsMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MenuBatchExtraction.Name" xml:space="preserve">
+    <value>MenuBatchExtraction</value>
+  </data>
+  <data name="&gt;&gt;MenuBatchExtraction.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;helpMenuItem.Name" xml:space="preserve">
-    <value>helpMenuItem</value>
+  <data name="&gt;&gt;MenuSettings.Name" xml:space="preserve">
+    <value>MenuSettings</value>
   </data>
-  <data name="&gt;&gt;helpMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;MenuSettings.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;checkUpdateMenuItem.Name" xml:space="preserve">
-    <value>checkUpdateMenuItem</value>
+  <data name="&gt;&gt;MenuHelp.Name" xml:space="preserve">
+    <value>MenuHelp</value>
   </data>
-  <data name="&gt;&gt;checkUpdateMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;MenuHelp.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;aboutMenuItem.Name" xml:space="preserve">
-    <value>aboutMenuItem</value>
+  <data name="&gt;&gt;MenuCheckUpdate.Name" xml:space="preserve">
+    <value>MenuCheckUpdate</value>
   </data>
-  <data name="&gt;&gt;aboutMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;MenuCheckUpdate.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;languagesMenuItem.Name" xml:space="preserve">
-    <value>languagesMenuItem</value>
+  <data name="&gt;&gt;MenuAbout.Name" xml:space="preserve">
+    <value>MenuAbout</value>
   </data>
-  <data name="&gt;&gt;languagesMenuItem.Type" xml:space="preserve">
+  <data name="&gt;&gt;MenuAbout.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;combLanguages.Name" xml:space="preserve">
-    <value>combLanguages</value>
+  <data name="&gt;&gt;MenuLanguages.Name" xml:space="preserve">
+    <value>MenuLanguages</value>
   </data>
-  <data name="&gt;&gt;combLanguages.Type" xml:space="preserve">
+  <data name="&gt;&gt;MenuLanguages.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CombLanguages.Name" xml:space="preserve">
+    <value>CombLanguages</value>
+  </data>
+  <data name="&gt;&gt;CombLanguages.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lbStatus.Name" xml:space="preserve">

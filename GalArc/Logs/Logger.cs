@@ -258,7 +258,6 @@ namespace GalArc.Logs
             Instance.BarReset();
             Instance.DebugInternal(LogStrings.InputFile + "\t" + input);
             Instance.DebugInternal(LogStrings.OutputFolder + "\t" + output);
-            Instance.InfoInternal(LogStrings.Unpacking);
         }
 
         public static void FinishUnpack()
@@ -272,7 +271,6 @@ namespace GalArc.Logs
             Instance.BarReset();
             Instance.DebugInternal(LogStrings.InputFolder + "\t" + input);
             Instance.DebugInternal(LogStrings.OutputFile + "\t" + output);
-            Instance.InfoInternal(LogStrings.Packing);
         }
 
         public static void FinishPack()

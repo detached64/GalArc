@@ -153,31 +153,34 @@
   <data name="statusStrip.Text" xml:space="preserve">
     <value>状态栏</value>
   </data>
-  <data name="settingsMenuItem.Text" xml:space="preserve">
-    <value>设置</value>
-  </data>
-  <data name="reimportSchemesMenuItem.Text" xml:space="preserve">
-    <value>重新导入密钥</value>
-  </data>
   <data name="optionMenuItem.Text" xml:space="preserve">
     <value>选项</value>
   </data>
-  <data name="matchPathsMenuItem.Text" xml:space="preserve">
-    <value>匹配路径</value>
-  </data>
-  <data name="languagesMenuItem.Text" xml:space="preserve">
-    <value>语言</value>
-  </data>
-  <data name="helpMenuItem.Text" xml:space="preserve">
-    <value>帮助</value>
-  </data>
-  <data name="clearPathsMenuItem.Text" xml:space="preserve">
+  <data name="MenuClearPaths.Text" xml:space="preserve">
     <value>清空路径</value>
   </data>
-  <data name="checkUpdateMenuItem.Text" xml:space="preserve">
+  <data name="MenuMatchPaths.Text" xml:space="preserve">
+    <value>匹配路径</value>
+  </data>
+  <data name="MenuReimport.Text" xml:space="preserve">
+    <value>重新导入密钥</value>
+  </data>
+  <data name="MenuBatchExtraction.Text" xml:space="preserve">
+    <value>批量提取</value>
+  </data>
+  <data name="MenuSettings.Text" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="MenuHelp.Text" xml:space="preserve">
+    <value>帮助</value>
+  </data>
+  <data name="MenuCheckUpdate.Text" xml:space="preserve">
     <value>检查更新</value>
   </data>
-  <data name="aboutMenuItem.Text" xml:space="preserve">
+  <data name="MenuAbout.Text" xml:space="preserve">
     <value>关于</value>
+  </data>
+  <data name="MenuLanguages.Text" xml:space="preserve">
+    <value>语言</value>
   </data>
 </root>
