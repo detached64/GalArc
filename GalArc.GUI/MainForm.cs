@@ -546,41 +546,21 @@ namespace GalArc.GUI
             #endregion
 
             #region Execute
-            try
+            if (Mode == OperationMode.Unpack)
             {
-                if (Mode == OperationMode.Unpack)
+                if (is_batch_mode)
                 {
-                    Logger.Status(LogStrings.Unpacking);
-                    if (is_batch_mode)
-                    {
-                        await UnpackAllAsync();
-                    }
-                    else
-                    {
-                        await UnpackOneAsync(this.txtInputPath.Text, this.txtOutputPath.Text);
-                    }
-                    Logger.FinishUnpack();
+                    List<int> result = await UnpackAllAsync();
+                    Logger.FinishUnpackBatch(result[0], result[1]);
                 }
                 else
                 {
-                    Logger.Status(LogStrings.Packing);
-                    await PackAsync(this.txtInputPath.Text, this.txtOutputPath.Text);
-                    Logger.FinishPack();
+                    await UnpackOneAsync(this.txtInputPath.Text, this.txtOutputPath.Text);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                if (ex.InnerException == null)
-                {
-                    Logger.Error(ex.Message);
-                    Logger.Debug(ex.ToString());
-                }
-                else
-                {
-                    Logger.Error(ex.InnerException.Message);
-                    Logger.Debug(ex.InnerException.ToString());
-                }
-                Logger.ResetBar();
+                await PackAsync(this.txtInputPath.Text, this.txtOutputPath.Text);
             }
             #endregion
 
@@ -589,27 +569,69 @@ namespace GalArc.GUI
             #endregion
         }
 
-        private async Task UnpackOneAsync(string input, string output)
+        private async Task<bool> UnpackOneAsync(string input, string output)
         {
+            Logger.Status(LogStrings.Unpacking);
             Logger.InitUnpack(input, output);
-            await Task.Run(() => SelectedFormat.Unpack(input, output));
+            try
+            {
+                await Task.Run(() => SelectedFormat.Unpack(input, output));
+                Logger.FinishUnpack(true);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null)
+                {
+                    Logger.Debug(ex.ToString());
+                }
+                else
+                {
+                    Logger.Debug(ex.InnerException.ToString());
+                }
+                Logger.FinishUnpack(false, ex.Message);
+                return false;
+            }
         }
 
-        private async Task UnpackAllAsync()
+        private async Task<List<int>> UnpackAllAsync()
         {
             string root = Path.GetDirectoryName(this.txtInputPath.Text);
             string pattern = Path.GetFileName(this.txtInputPath.Text);
-            foreach (string file in Directory.GetFiles(root, pattern))
+            string[] files = Directory.GetFiles(root, pattern);
+            int success = 0;
+            foreach (string file in files)
             {
                 string dst = Path.Combine(this.txtOutputPath.Text, Path.GetFileNameWithoutExtension(file));
-                await UnpackOneAsync(file, dst);
+                if (await UnpackOneAsync(file, dst))
+                {
+                    success++;
+                }
             }
+            return new List<int> { files.Length, success };
         }
 
         private async Task PackAsync(string input, string output)
         {
+            Logger.Status(LogStrings.Packing);
             Logger.InitPack(input, output);
-            await Task.Run(() => SelectedFormat.Pack(input, output));
+            try
+            {
+                await Task.Run(() => SelectedFormat.Pack(input, output));
+                Logger.FinishUnpack(true);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException == null)
+                {
+                    Logger.Debug(ex.ToString());
+                }
+                else
+                {
+                    Logger.Debug(ex.InnerException.ToString());
+                }
+                Logger.FinishPack(false, ex.Message);
+            }
         }
 
         private void Freeze()

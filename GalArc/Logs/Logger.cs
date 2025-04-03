@@ -260,10 +260,24 @@ namespace GalArc.Logs
             Instance.DebugInternal(LogStrings.OutputFolder + "\t" + output);
         }
 
-        public static void FinishUnpack()
+        public static void FinishUnpack(bool success, string msg = null)
         {
-            Instance.BarFinish();
-            Instance.InfoInvokeInternal(LogStrings.UnpackFinished);
+            if (success)
+            {
+                Instance.BarFinish();
+                Instance.InfoInvokeInternal(LogStrings.UnpackSuccess);
+            }
+            else
+            {
+                Instance.BarReset();
+                Instance.InfoInvokeInternal(string.Format(LogStrings.UnpackFailed, msg ?? "unknown"));
+            }
+        }
+
+        public static void FinishUnpackBatch(int all, int success)
+        {
+            Instance.BarReset();
+            Instance.InfoInvokeInternal(string.Format(LogStrings.BatchUnpackFinish, success, all));
         }
 
         public static void InitPack(string input, string output)
@@ -273,10 +287,18 @@ namespace GalArc.Logs
             Instance.DebugInternal(LogStrings.OutputFile + "\t" + output);
         }
 
-        public static void FinishPack()
+        public static void FinishPack(bool success, string msg = null)
         {
-            Instance.BarFinish();
-            Instance.InfoInvokeInternal(LogStrings.PackFinished);
+            if (success)
+            {
+                Instance.BarFinish();
+                Instance.InfoInvokeInternal(LogStrings.PackSuccess);
+            }
+            else
+            {
+                Instance.BarReset();
+                Instance.InfoInvokeInternal(string.Format(LogStrings.PackFailed, msg ?? "unknown"));
+            }
         }
 
         public static void NewInstance()

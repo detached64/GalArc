@@ -132,11 +132,11 @@
   <data name="ValidArchiveDetected" xml:space="preserve">
     <value>检测到{0} v{1}封包。</value>
   </data>
-  <data name="UnpackFinished" xml:space="preserve">
-    <value>解包已完成。</value>
+  <data name="UnpackSuccess" xml:space="preserve">
+    <value>解包成功。</value>
   </data>
-  <data name="PackFinished" xml:space="preserve">
-    <value>封包已完成。</value>
+  <data name="PackSuccess" xml:space="preserve">
+    <value>封包成功。</value>
   </data>
   <data name="InputFile" xml:space="preserve">
     <value>输入文件路径：</value>
@@ -323,5 +323,14 @@
   </data>
   <data name="Exit" xml:space="preserve">
     <value>退出该实例</value>
+  </data>
+  <data name="BatchUnpackFinish" xml:space="preserve">
+    <value>批量提取完成。{1}个文件中的{0}个解包成功。</value>
+  </data>
+  <data name="UnpackFailed" xml:space="preserve">
+    <value>解包失败：{0}</value>
+  </data>
+  <data name="PackFailed" xml:space="preserve">
+    <value>封包失败：{0}</value>
   </data>
 </root>

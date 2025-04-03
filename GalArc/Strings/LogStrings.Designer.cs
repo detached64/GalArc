@@ -79,6 +79,15 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
+        ///   查找类似 Batch extraction finished. {0} among {1} were unpacked successfully. 的本地化字符串。
+        /// </summary>
+        public static string BatchUnpackFinish {
+            get {
+                return ResourceManager.GetString("BatchUnpackFinish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Error: Index offset not found. 的本地化字符串。
         /// </summary>
         public static string BrutalForceFailed {
@@ -439,11 +448,11 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Pack finished. 的本地化字符串。
+        ///   查找类似 Packing failed: {0} 的本地化字符串。
         /// </summary>
-        public static string PackFinished {
+        public static string PackFailed {
             get {
-                return ResourceManager.GetString("PackFinished", resourceCulture);
+                return ResourceManager.GetString("PackFailed", resourceCulture);
             }
         }
         
@@ -453,6 +462,15 @@ namespace GalArc.Strings {
         public static string Packing {
             get {
                 return ResourceManager.GetString("Packing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Packing finished. 的本地化字符串。
+        /// </summary>
+        public static string PackSuccess {
+            get {
+                return ResourceManager.GetString("PackSuccess", resourceCulture);
             }
         }
         
@@ -610,11 +628,11 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Unpack finished. 的本地化字符串。
+        ///   查找类似 Unpacking failed: {0} 的本地化字符串。
         /// </summary>
-        public static string UnpackFinished {
+        public static string UnpackFailed {
             get {
-                return ResourceManager.GetString("UnpackFinished", resourceCulture);
+                return ResourceManager.GetString("UnpackFailed", resourceCulture);
             }
         }
         
@@ -624,6 +642,15 @@ namespace GalArc.Strings {
         public static string Unpacking {
             get {
                 return ResourceManager.GetString("Unpacking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unpacking finished. 的本地化字符串。
+        /// </summary>
+        public static string UnpackSuccess {
+            get {
+                return ResourceManager.GetString("UnpackSuccess", resourceCulture);
             }
         }
         
