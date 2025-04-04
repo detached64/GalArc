@@ -313,4 +313,16 @@
   <data name="PackFailed" xml:space="preserve">
     <value>Packing failed: {0}</value>
   </data>
+  <data name="BatchActivated" xml:space="preserve">
+    <value>Batch extraction activated.</value>
+  </data>
+  <data name="BatchMatchFiles" xml:space="preserve">
+    <value>Matched file count: {0}</value>
+  </data>
+  <data name="UnpackingFile" xml:space="preserve">
+    <value>Unpacking {0}…</value>
+  </data>
+  <data name="PackingFile" xml:space="preserve">
+    <value>Packing {0}…</value>
+  </data>
 </root>

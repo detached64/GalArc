@@ -187,6 +187,10 @@ namespace GalArc.GUI
         {
             BaseSettings.Default.BatchExtraction = this.MenuBatchExtraction.Checked;
             BaseSettings.Default.Save();
+            if (this.MenuBatchExtraction.Checked)
+            {
+                Logger.Status(LogStrings.BatchActivated);
+            }
         }
 
         private async void MenuCheckUpdate_Click(object sender, EventArgs e)
@@ -444,6 +448,26 @@ namespace GalArc.GUI
         private void txtInputPath_TextChanged(object sender, EventArgs e)
         {
             SyncPath();
+            CheckMatch();
+        }
+
+        private void CheckMatch()
+        {
+            if (!BaseSettings.Default.BatchExtraction || Mode != OperationMode.Unpack || string.IsNullOrWhiteSpace(this.txtInputPath.Text))
+            {
+                Logger.Status(LogStrings.Ready);
+                return;
+            }
+            string dir = Path.GetDirectoryName(this.txtInputPath.Text);
+            string pattern = Path.GetFileName(this.txtInputPath.Text);
+            if (Directory.Exists(dir))
+            {
+                Logger.Status(string.Format(LogStrings.BatchMatchFiles, Directory.GetFiles(dir, pattern).Length));
+            }
+            else
+            {
+                Logger.Status(LogStrings.Ready);
+            }
         }
 
         private void UpdateTreeUnpack()
@@ -603,6 +627,7 @@ namespace GalArc.GUI
             foreach (string file in files)
             {
                 string dst = Path.Combine(this.txtOutputPath.Text, Path.GetFileNameWithoutExtension(file));
+                Logger.Info(string.Format(LogStrings.UnpackingFile, Path.GetFileName(file)));
                 if (await UnpackOneAsync(file, dst))
                 {
                     success++;
@@ -664,7 +689,7 @@ namespace GalArc.GUI
 
         private void SyncPath()
         {
-            if (!this.MenuMatchPaths.Checked || Mode == OperationMode.None || string.IsNullOrEmpty(this.txtInputPath.Text) || this.txtInputPath.Text.Contains('*'))
+            if (!this.MenuMatchPaths.Checked || Mode == OperationMode.None || string.IsNullOrWhiteSpace(this.txtInputPath.Text) || string.IsNullOrWhiteSpace(Path.GetDirectoryName(this.txtInputPath.Text)) || this.txtInputPath.Text.Contains('*'))
             {
                 return;
             }
@@ -705,6 +730,8 @@ namespace GalArc.GUI
             }
             return OperationMode.None;
         }
+
+
     }
 
     internal enum OperationMode

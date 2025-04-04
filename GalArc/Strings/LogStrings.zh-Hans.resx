@@ -333,4 +333,16 @@
   <data name="PackFailed" xml:space="preserve">
     <value>封包失败：{0}</value>
   </data>
+  <data name="BatchActivated" xml:space="preserve">
+    <value>批量提取功能已开启。</value>
+  </data>
+  <data name="BatchMatchFiles" xml:space="preserve">
+    <value>匹配文件数量：{0}</value>
+  </data>
+  <data name="UnpackingFile" xml:space="preserve">
+    <value>正在解包：{0}…</value>
+  </data>
+  <data name="PackingFile" xml:space="preserve">
+    <value>正在封包：{0}…</value>
+  </data>
 </root>

@@ -79,6 +79,24 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
+        ///   查找类似 Batch extraction activated. 的本地化字符串。
+        /// </summary>
+        public static string BatchActivated {
+            get {
+                return ResourceManager.GetString("BatchActivated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Matched file count: {0} 的本地化字符串。
+        /// </summary>
+        public static string BatchMatchFiles {
+            get {
+                return ResourceManager.GetString("BatchMatchFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Batch extraction finished. {0} among {1} were unpacked successfully. 的本地化字符串。
         /// </summary>
         public static string BatchUnpackFinish {
@@ -466,6 +484,15 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
+        ///   查找类似 Packing {0}… 的本地化字符串。
+        /// </summary>
+        public static string PackingFile {
+            get {
+                return ResourceManager.GetString("PackingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Packing finished. 的本地化字符串。
         /// </summary>
         public static string PackSuccess {
@@ -642,6 +669,15 @@ namespace GalArc.Strings {
         public static string Unpacking {
             get {
                 return ResourceManager.GetString("Unpacking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unpacking {0}… 的本地化字符串。
+        /// </summary>
+        public static string UnpackingFile {
+            get {
+                return ResourceManager.GetString("UnpackingFile", resourceCulture);
             }
         }
         
