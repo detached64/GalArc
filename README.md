@@ -6,31 +6,31 @@ Mainly focus on the unpacking and repacking of galgame archives.
 
 ## Features
 
-- Batch extraction
+* Batch extraction via wildcard `*` and `?`
 
-- Encoding specification
+* Encoding specification
 
-- Script decryption & encryption
+* Script decryption & encryption
 
-- Json database with custom scheme support
+* Json database with custom scheme support
 
-- ...
+* ...
 
 ## Documentation
 
-- [How to find and add custom scheme to database](./docs/contribution.md#find-and-add-custom-scheme-in-database)
+* [How to find and add custom scheme to database](./docs/contribution.md#find-and-add-custom-scheme-in-database)
 
-- [How to contribute](./docs/contribution.md)
+* [How to contribute](./docs/contribution.md)
 
-- [Supported formats](./docs/supported.md)
+* [Supported formats](./docs/supported.md)
 
 ## References
 
-- [GARbro](https://github.com/morkt/GARbro)
+* [GARbro](https://github.com/morkt/GARbro)
 
-- [GARbro-fork](https://github.com/crskycode/GARbro)
+* [GARbro-fork](https://github.com/crskycode/GARbro)
 
-- [GALgameScriptTools/SiglusEngine](https://github.com/yanhua0518/GALgameScriptTools/tree/master/SiglusEngine)
+* [GALgameScriptTools/SiglusEngine](https://github.com/yanhua0518/GALgameScriptTools/tree/master/SiglusEngine)
 
 ## License
 
