@@ -103,11 +103,9 @@ namespace ArcFormats.Kirikiri
                             switch (secMagic)
                             {
                                 case "info":
-                                    int flag = brIndex.ReadInt32();
-                                    if (flag != 0)
+                                    if (brIndex.ReadUInt32() != 0)
                                     {
-                                        Logger.Info("Encrypted file detected, skipping...");
-                                        goto NextEntry;
+                                        Logger.Info("Encrypted file detected. Extracting as is.");
                                     }
                                     entry.UnpackedSize = brIndex.ReadUInt64();
                                     entry.PackedSize = brIndex.ReadUInt64();
@@ -124,12 +122,11 @@ namespace ArcFormats.Kirikiri
                                     break;
 
                                 case "adlr":
-                                    brIndex.BaseStream.Position = secEnd;      // skip
+                                    brIndex.BaseStream.Position = secEnd;
                                     break;
                             }
                         }
                         entries.Add(entry);
-                        NextEntry:
                         ms.Position = nextPos;
                     }
                 }
@@ -140,7 +137,14 @@ namespace ArcFormats.Kirikiri
             {
                 fs.Position = entry.DataOffset;
 
-                Directory.CreateDirectory(Path.GetDirectoryName(entry.FullPath));
+                try
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(entry.FullPath));
+                }
+                catch (PathTooLongException)
+                {
+                    continue;
+                }
 
                 byte[] data = br.ReadBytes((int)entry.PackedSize);
                 if (entry.UnpackedSize != entry.PackedSize)
@@ -149,7 +153,6 @@ namespace ArcFormats.Kirikiri
                 }
                 File.WriteAllBytes(entry.FullPath, data);
                 data = null;
-                //LogUtility.Debug(entry.path);
                 Logger.UpdateBar();
             }
             fs.Dispose();
@@ -222,7 +225,7 @@ namespace ArcFormats.Kirikiri
                 Logger.UpdateBar();
             }
 
-            long indexOffset = 0;
+            long indexOffset;
             long uncomLen = ms.Length;
             if (PackXP3Options.CompressIndex)
             {
