@@ -1,3 +1,4 @@
+using ArcFormats.AdvHD;
 using GalArc.Controls;
 using System;
 
@@ -7,7 +8,7 @@ namespace ArcFormats.PJADV
     {
         public static UnpackDATOptions Instance { get; } = new UnpackDATOptions();
 
-        internal static bool DecryptScripts = true;
+        public AdvHDUnpackOptions Options = new AdvHDUnpackOptions();
 
         public UnpackDATOptions()
         {
@@ -16,7 +17,7 @@ namespace ArcFormats.PJADV
 
         private void chkbxDecScr_CheckedChanged(object sender, EventArgs e)
         {
-            DecryptScripts = this.chkbxDecScr.Checked;
+            Options.DecryptScripts = this.chkbxDecScr.Checked;
         }
     }
 }

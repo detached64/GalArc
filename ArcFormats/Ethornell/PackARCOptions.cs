@@ -7,6 +7,8 @@ namespace ArcFormats.Ethornell
     {
         public static PackARCOptions Instance { get; } = new PackARCOptions();
 
+        public VersionOptions Options = new VersionOptions();
+
         private readonly string Versions = "1/2";
 
         public PackARCOptions()
@@ -18,7 +20,7 @@ namespace ArcFormats.Ethornell
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Version = this.combVersion.Text;
+            Options.Version = this.combVersion.Text;
         }
     }
 }

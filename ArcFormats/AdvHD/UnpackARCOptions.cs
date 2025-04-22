@@ -7,7 +7,7 @@ namespace ArcFormats.AdvHD
     {
         public static UnpackARCOptions Instance { get; } = new UnpackARCOptions();
 
-        internal static bool DecryptScripts = true;
+        public AdvHDUnpackOptions Options = new AdvHDUnpackOptions();
 
         public UnpackARCOptions()
         {
@@ -16,7 +16,12 @@ namespace ArcFormats.AdvHD
 
         private void chkbxDecScr_CheckedChanged(object sender, EventArgs e)
         {
-            DecryptScripts = this.chkbxDecScr.Checked;
+            Options.DecryptScripts = this.chkbxDecScr.Checked;
         }
+    }
+
+    public class AdvHDUnpackOptions : VersionOptions
+    {
+        public bool DecryptScripts { get; set; } = true;
     }
 }

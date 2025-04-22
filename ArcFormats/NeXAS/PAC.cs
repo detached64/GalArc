@@ -15,6 +15,8 @@ namespace ArcFormats.NeXAS
     {
         public override OptionsTemplate PackExtraOptions => PackPACOptions.Instance;
 
+        private NeXASOptions Options => PackPACOptions.Instance.Options;
+
         private readonly EncodingSetting PacEncoding = new EncodingSetting("NexasPacEncoding");
 
         public override IEnumerable<ArcSetting> Settings => new[] { PacEncoding };
@@ -189,10 +191,10 @@ namespace ArcFormats.NeXAS
             bw.Write(Encoding.ASCII.GetBytes(Magic));
             bw.Write('\0');
             bw.Write((uint)files.Length);
-            bw.Write(PackPACOptions.methods[PackPACOptions.SelectedMethods][0] - '0');
+            bw.Write(Options.Methods[Options.Method][0] - '0');
             int indexLength = 76 * files.Length;
             uint offset = (uint)fw.Position;
-            if (PackExtraOptions.Version == "1")
+            if (Options.Version == "1")
             {
                 bw.BaseStream.Position += indexLength;  // Reserve space for index
             }
@@ -209,7 +211,7 @@ namespace ArcFormats.NeXAS
                 if (!entry.Name.HasAnyOfExtensions(NoComprExts))
                 {
                     entry.UnpackedSize = (uint)data.Length;
-                    switch (PackPACOptions.SelectedMethods)
+                    switch (Options.Method)
                     {
                         case 1:
                             data = LzssHelper.Compress(data);
@@ -250,7 +252,7 @@ namespace ArcFormats.NeXAS
                 }
 
                 byte[] raw = index.ToArray();
-                if (PackExtraOptions.Version == "2")
+                if (Options.Version == "2")
                 {
                     byte[] packed = Huffman.Compress(raw);
                     for (int i = 0; i < packed.Length; i++)

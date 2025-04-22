@@ -14,6 +14,8 @@ namespace ArcFormats.Ai6Win
     {
         public override OptionsTemplate PackExtraOptions => PackARCOptions.Instance;
 
+        private Ai6WinOptions Options => PackARCOptions.Instance.Options;
+
         private class ArcEntry : PackedEntry
         {
             public string FullPath { get; set; }
@@ -42,7 +44,7 @@ namespace ArcFormats.Ai6Win
 
         public override void Pack(string folderPath, string filePath)
         {
-            switch (PackExtraOptions.Version)
+            switch (Options.Version)
             {
                 case "1":
                     PackV1(folderPath, filePath);
@@ -243,7 +245,7 @@ namespace ArcFormats.Ai6Win
                 bw.Write(nameBuffer);
                 uint unpackedSize = (uint)file.Length;
                 byte[] data = File.ReadAllBytes(file.FullName);
-                if (PackARCOptions.CompressContents)
+                if (Options.CompressContents)
                 {
                     data = LzssHelper.Compress(data);
                 }
@@ -285,7 +287,7 @@ namespace ArcFormats.Ai6Win
                 bw.Write(nameBuf);
                 uint unpackedSize = (uint)file.Length;
                 byte[] data = File.ReadAllBytes(file.FullName);
-                if (PackARCOptions.CompressContents)
+                if (Options.CompressContents)
                 {
                     data = LzssHelper.Compress(data);
                 }

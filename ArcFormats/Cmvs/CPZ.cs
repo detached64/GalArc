@@ -12,6 +12,8 @@ namespace ArcFormats.Cmvs
     {
         public override OptionsTemplate PackExtraOptions => PackCPZOptions.Instance;
 
+        private VersionOptions Options => PackCPZOptions.Instance.Options;
+
         private byte[] KeyV1 =
         {
             0x92, 0xCD, 0x97, 0x90, 0x8C, 0xD7, 0x8C, 0xD5, 0x8B, 0x4B, 0x93, 0xFA, 0x9A, 0xD7, 0x8C, 0xBF,
@@ -200,7 +202,7 @@ namespace ArcFormats.Cmvs
 
         public override void Pack(string folderPath, string filePath)
         {
-            switch (PackExtraOptions.Version)
+            switch (Options.Version)
             {
                 case "1":
                     PackV1(folderPath, filePath);

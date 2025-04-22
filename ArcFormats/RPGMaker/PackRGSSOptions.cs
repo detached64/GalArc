@@ -9,14 +9,14 @@ namespace ArcFormats.RPGMaker
     {
         public static PackRGSSOptions Instance { get; } = new PackRGSSOptions();
 
-        internal static string inputSeedString = "00000000";
+        public RGSSPackOptions Options = new RGSSPackOptions();
 
         private readonly string Versions = "1/3";
 
         public PackRGSSOptions()
         {
             InitializeComponent();
-            this.txtSeed.Text = inputSeedString;
+            this.txtSeed.Text = Options.Seed;
             this.combVersion.Items.AddRange(Versions.Split('/'));
             if (this.combVersion.Items.Count > 0)
             {
@@ -26,7 +26,7 @@ namespace ArcFormats.RPGMaker
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Version = this.combVersion.Text;
+            Options.Version = this.combVersion.Text;
             this.txtSeed.Visible = this.combVersion.Text != "1";
             this.lbSeed.Visible = this.combVersion.Text != "1";
         }
@@ -35,7 +35,7 @@ namespace ArcFormats.RPGMaker
         {
             if (IsValidHex(this.txtSeed.Text))
             {
-                inputSeedString = this.txtSeed.Text;
+                Options.Seed = this.txtSeed.Text;
             }
         }
 
@@ -48,5 +48,10 @@ namespace ArcFormats.RPGMaker
         {
             this.txtSeed.Location = new Point(this.lbSeed.Location.X + this.lbSeed.Width + 6, this.txtSeed.Location.Y);
         }
+    }
+
+    public class RGSSPackOptions : VersionOptions
+    {
+        public string Seed { get; set; } = "00000000";
     }
 }

@@ -7,6 +7,8 @@ namespace ArcFormats.Triangle
     {
         public static PackCGFOptions Instance { get; } = new PackCGFOptions();
 
+        public VersionOptions Options = new VersionOptions();
+
         private readonly string Versions = "1";
 
         public PackCGFOptions()
@@ -21,7 +23,7 @@ namespace ArcFormats.Triangle
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Version = this.combVersion.Text;
+            Options.Version = this.combVersion.Text;
         }
     }
 }

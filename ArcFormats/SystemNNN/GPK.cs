@@ -11,6 +11,8 @@ namespace ArcFormats.SystemNNN
     {
         public override OptionsTemplate PackExtraOptions => PackGPKOptions.Instance;
 
+        private VersionOptions Options => PackGPKOptions.Instance.Options;
+
         public override void Unpack(string filePath, string folderPath)
         {
             //init
@@ -147,11 +149,7 @@ namespace ArcFormats.SystemNNN
                 Logger.UpdateBar();
             }
 
-            if (PackExtraOptions.Version == "1")
-            {
-                //skip this
-            }
-            else
+            if (Options.Version != "1")
             {
                 while (fs1.Position % 16 != 0)
                 {

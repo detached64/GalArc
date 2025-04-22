@@ -7,18 +7,7 @@ namespace ArcFormats.NeXAS
     {
         public static PackPACOptions Instance { get; } = new PackPACOptions();
 
-        internal static readonly string[] methods =
-        {
-            "0-None",
-            "1-Lzss",
-            "2-Huffman",
-            "3-Zlib",
-            "4-Zlib",
-            "5-Zlib",
-            "7-Zstd"
-        };
-
-        internal static int SelectedMethods;
+        public NeXASOptions Options = new NeXASOptions();
 
         private readonly string Versions = "1/2";
 
@@ -31,18 +20,34 @@ namespace ArcFormats.NeXAS
         {
             this.combVersion.Items.AddRange(Versions.Split('/'));
             this.combVersion.SelectedIndex = 0;
-            this.combMethods.Items.AddRange(methods);
+            this.combMethods.Items.AddRange(Options.Methods);
             this.combMethods.SelectedIndex = 0;
         }
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Version = this.combVersion.Text;
+            Options.Version = this.combVersion.Text;
         }
 
         private void combMethods_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SelectedMethods = this.combMethods.SelectedIndex;
+            Options.Method = this.combMethods.SelectedIndex;
         }
+    }
+
+    public class NeXASOptions : VersionOptions
+    {
+        public int Method { get; set; }
+
+        public readonly string[] Methods =
+        {
+            "0-None",
+            "1-Lzss",
+            "2-Huffman",
+            "3-Zlib",
+            "4-Zlib",
+            "5-Zlib",
+            "7-Zstd"
+        };
     }
 }

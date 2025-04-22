@@ -12,6 +12,8 @@ namespace ArcFormats.RPGMaker
     {
         public override OptionsTemplate PackExtraOptions => PackRGSSOptions.Instance;
 
+        private RGSSPackOptions Options => PackRGSSOptions.Instance.Options;
+
         public override void Unpack(string filePath, string folderPath)
         {
             int version;
@@ -45,7 +47,7 @@ namespace ArcFormats.RPGMaker
 
         public override void Pack(string folderPath, string filePath)
         {
-            switch (PackExtraOptions.Version)
+            switch (Options.Version)
             {
                 case "1":
                     PackV1(folderPath, filePath);
@@ -153,7 +155,7 @@ namespace ArcFormats.RPGMaker
             BinaryWriter bw = new BinaryWriter(fw);
             bw.Write(Encoding.ASCII.GetBytes("RGSSAD\0"));
             bw.Write((byte)3);
-            uint seed = Convert.ToUInt32(PackRGSSOptions.inputSeedString, 16);
+            uint seed = Convert.ToUInt32(Options.Seed, 16);
             bw.Write(seed);
             uint key = 9 * seed + 3;
             string[] files = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);

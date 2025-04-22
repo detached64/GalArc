@@ -16,6 +16,8 @@ namespace ArcFormats.Artemis
     {
         public override OptionsTemplate PackExtraOptions => PackPFSOptions.Instance;
 
+        private VersionOptions Options => PackPFSOptions.Instance.Options;
+
         private readonly EncodingSetting PfsEncoding = new EncodingSetting("ArtemisPfsEncoding");
 
         public override IEnumerable<ArcSetting> Settings => new[] { PfsEncoding };
@@ -119,7 +121,7 @@ namespace ArcFormats.Artemis
             //init
             Header header = new Header()
             {
-                Version = int.Parse(PackExtraOptions.Version),
+                Version = int.Parse(Options.Version),
                 PathLenSum = 0
             };
             List<PfsEntry> entries = new List<PfsEntry>();

@@ -7,7 +7,7 @@ namespace ArcFormats.AdvHD
     {
         public static PackARCOptions Instance { get; } = new PackARCOptions();
 
-        internal static bool EncryptScripts = true;
+        public AdvHDPackOptions Options = new AdvHDPackOptions();
 
         private readonly string Versions = "1/2";
 
@@ -20,12 +20,17 @@ namespace ArcFormats.AdvHD
 
         private void chkbxEncScr_CheckedChanged(object sender, EventArgs e)
         {
-            EncryptScripts = this.chkbxEncScr.Checked;
+            Options.EncryptScripts = this.chkbxEncScr.Checked;
         }
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Version = this.combVersion.Text;
+            Options.Version = this.combVersion.Text;
         }
+    }
+
+    public class AdvHDPackOptions : VersionOptions
+    {
+        public bool EncryptScripts { get; set; } = true;
     }
 }

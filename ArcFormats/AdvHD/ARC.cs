@@ -17,6 +17,9 @@ namespace ArcFormats.AdvHD
         public override OptionsTemplate UnpackExtraOptions => UnpackARCOptions.Instance;
         public override OptionsTemplate PackExtraOptions => PackARCOptions.Instance;
 
+        private AdvHDUnpackOptions UnpackOptions => UnpackARCOptions.Instance.Options;
+        private AdvHDPackOptions PackOptions => PackARCOptions.Instance.Options;
+
         private readonly string[] EncryptedFileExtV1 = { "wsc", "scr" };
 
         private readonly string[] EncryptedFileExtV2 = { "ws2", "json" };
@@ -68,7 +71,7 @@ namespace ArcFormats.AdvHD
                     index.Path = Path.Combine(folderPath, index.Name);
                     fs.Seek(index.Offset, SeekOrigin.Begin);
                     byte[] buffer = br.ReadBytes((int)index.Size);
-                    if (UnpackARCOptions.DecryptScripts && IsScriptFile(Path.GetExtension(index.Path), "1"))
+                    if (UnpackOptions.DecryptScripts && IsScriptFile(Path.GetExtension(index.Path), "1"))
                     {
                         Logger.Debug(string.Format(LogStrings.TryDecScr, index.Name));
                         DecryptScript(buffer);
@@ -122,7 +125,7 @@ namespace ArcFormats.AdvHD
                     bwentry.Write((uint)file.Length);
                     bwentry.Write((uint)(4 + 12 * header.TypeCount + 21 * header.FileCountAll + msdata.Length));
                     byte[] buffer = File.ReadAllBytes(file.FullName);
-                    if (PackARCOptions.EncryptScripts && IsScriptFile(exts[i], "1"))
+                    if (PackOptions.EncryptScripts && IsScriptFile(exts[i], "1"))
                     {
                         Logger.Debug(string.Format(LogStrings.TryEncScr, file.Name));
                         EncryptScript(buffer);
@@ -187,7 +190,7 @@ namespace ArcFormats.AdvHD
             foreach (var entry in l)
             {
                 byte[] buffer = br1.ReadBytes((int)entry.Size);
-                if (UnpackARCOptions.DecryptScripts && IsScriptFile(Path.GetExtension(entry.Path), "2"))
+                if (UnpackOptions.DecryptScripts && IsScriptFile(Path.GetExtension(entry.Path), "2"))
                 {
                     Logger.Debug(string.Format(LogStrings.TryDecScr, entry.Name));
                     DecryptScript(buffer);
@@ -248,7 +251,7 @@ namespace ArcFormats.AdvHD
                     foreach (FileInfo file in files)
                     {
                         byte[] buffer = File.ReadAllBytes(file.FullName);
-                        if (PackARCOptions.EncryptScripts && IsScriptFile(file.Extension, "2"))
+                        if (PackOptions.EncryptScripts && IsScriptFile(file.Extension, "2"))
                         {
                             Logger.Debug(string.Format(LogStrings.TryEncScr, file.Name));
                             EncryptScript(buffer);
@@ -283,7 +286,7 @@ namespace ArcFormats.AdvHD
 
         public override void Pack(string folderPath, string filePath)
         {
-            switch (PackExtraOptions.Version)
+            switch (PackOptions.Version)
             {
                 case "1":
                     PackV1(folderPath, filePath);

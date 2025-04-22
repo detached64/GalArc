@@ -7,6 +7,8 @@ namespace ArcFormats.SystemNNN
     {
         public static PackGPKOptions Instance { get; } = new PackGPKOptions();
 
+        public VersionOptions Options = new VersionOptions();
+
         private readonly string Versions = "1/2";
 
         public PackGPKOptions()
@@ -21,7 +23,7 @@ namespace ArcFormats.SystemNNN
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Version = this.combVersion.Text;
+            Options.Version = this.combVersion.Text;
         }
     }
 }

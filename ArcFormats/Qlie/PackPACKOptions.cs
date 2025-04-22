@@ -7,6 +7,8 @@ namespace ArcFormats.Qlie
     {
         public static PackPACKOptions Instance { get; } = new PackPACKOptions();
 
+        public VersionOptions Options = new VersionOptions();
+
         private readonly string Versions = "1.0";
 
         public PackPACKOptions()
@@ -18,7 +20,7 @@ namespace ArcFormats.Qlie
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Version = this.combVersion.Text;
+            Options.Version = this.combVersion.Text;
         }
     }
 }

@@ -18,6 +18,8 @@ namespace ArcFormats.Qlie
 
         private QlieOptions UnpackOptions => UnpackPACKOptions.Instance.Options;
 
+        private VersionOptions PackOptions => PackPACKOptions.Instance.Options;
+
         private QlieScheme Scheme
         {
             get => UnpackPACKOptions.Instance.Scheme;
@@ -230,7 +232,7 @@ namespace ArcFormats.Qlie
         public override void Pack(string folderPath, string filePath)
         {
             const string magic_pattern = "FilePackVer{0}";
-            QlieEncryption qenc = QlieEncryption.CreateEncryption(PackExtraOptions.Version);
+            QlieEncryption qenc = QlieEncryption.CreateEncryption(PackOptions.Version);
             FileInfo[] files = new DirectoryInfo(folderPath).GetFiles("*", SearchOption.AllDirectories);
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -261,7 +263,7 @@ namespace ArcFormats.Qlie
                 bw.Write(0);                // entry.IsEncrypted
                 //bw.Write(entry.Hash);
             }
-            bw.Write(Encoding.ASCII.GetBytes(string.Format(magic_pattern, PackExtraOptions.Version).PadRight(16, '\0')));
+            bw.Write(Encoding.ASCII.GetBytes(string.Format(magic_pattern, PackOptions.Version).PadRight(16, '\0')));
             bw.Write(entries.Count);
             bw.Write(baseOffset);
             using (FileStream fwHash = File.Create(Path.ChangeExtension(filePath, "hash")))

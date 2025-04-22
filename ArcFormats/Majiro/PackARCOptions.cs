@@ -1,3 +1,4 @@
+using ArcFormats.AdvHD;
 using GalArc.Controls;
 using System;
 
@@ -7,7 +8,7 @@ namespace ArcFormats.Majiro
     {
         public static PackARCOptions Instance { get; } = new PackARCOptions();
 
-        internal static bool EncryptScripts = true;
+        public AdvHDPackOptions Options = new AdvHDPackOptions();
 
         private readonly string Versions = "1/2/3";
 
@@ -20,12 +21,12 @@ namespace ArcFormats.Majiro
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Version = this.combVersion.Text;
+            Options.Version = this.combVersion.Text;
         }
 
         private void chkbxEncScr_CheckedChanged(object sender, EventArgs e)
         {
-            EncryptScripts = this.chkbxEncScr.Checked;
+            Options.EncryptScripts = this.chkbxEncScr.Checked;
         }
     }
 }

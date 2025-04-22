@@ -7,6 +7,8 @@ namespace ArcFormats.Artemis
     {
         public static PackPFSOptions Instance { get; } = new PackPFSOptions();
 
+        public VersionOptions Options = new VersionOptions();
+
         private readonly string Versions = "8/6/2";
 
         public PackPFSOptions()
@@ -21,7 +23,7 @@ namespace ArcFormats.Artemis
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Version = this.combVersion.Text;
+            Options.Version = this.combVersion.Text;
         }
     }
 }

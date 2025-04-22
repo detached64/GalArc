@@ -7,7 +7,7 @@ namespace ArcFormats.Ai6Win
     {
         public static PackARCOptions Instance { get; } = new PackARCOptions();
 
-        internal static bool CompressContents = false;
+        public Ai6WinOptions Options = new Ai6WinOptions();
 
         private readonly string Versions = "1/2";
 
@@ -23,13 +23,18 @@ namespace ArcFormats.Ai6Win
 
         private void chkbxCompress_CheckedChanged(object sender, EventArgs e)
         {
-            CompressContents = this.chkbxCompress.Checked;
+            Options.CompressContents = this.chkbxCompress.Checked;
         }
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Version = this.combVersion.Text;
-            this.chkbxCompress.Visible = Version != "1";
+            Options.Version = this.combVersion.Text;
+            this.chkbxCompress.Visible = Options.Version != "1";
         }
+    }
+
+    public class Ai6WinOptions : VersionOptions
+    {
+        public bool CompressContents { get; set; } = false;
     }
 }

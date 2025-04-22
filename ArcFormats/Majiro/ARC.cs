@@ -1,3 +1,4 @@
+using ArcFormats.AdvHD;
 using GalArc.Controls;
 using GalArc.Logs;
 using GalArc.Strings;
@@ -15,6 +16,9 @@ namespace ArcFormats.Majiro
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackARCOptions.Instance;
         public override OptionsTemplate PackExtraOptions => PackARCOptions.Instance;
+
+        private AdvHDUnpackOptions UnpackOptions => UnpackARCOptions.Instance.Options;
+        private AdvHDPackOptions PackOptions => PackARCOptions.Instance.Options;
 
         private string Magic = "MajiroArcV{0}.000\x00";
         private string MagicPattern = @"^MajiroArcV(\d)\.000\x00$";
@@ -100,7 +104,7 @@ namespace ArcFormats.Majiro
                         fs.Position = entries[i].Offset;
                         data = br.ReadBytes((int)entries[i].Size);
                     }
-                    if (UnpackARCOptions.DecryptScripts && Path.GetExtension(entries[i].Name) == ".mjo")
+                    if (UnpackOptions.DecryptScripts && Path.GetExtension(entries[i].Name) == ".mjo")
                     {
                         Logger.Debug(string.Format(LogStrings.TryDecScr, entries[i].Name));
                         DecryptScript(data);
@@ -117,7 +121,7 @@ namespace ArcFormats.Majiro
 
         public override void Pack(string folderPath, string filePath)
         {
-            int version = int.Parse(PackExtraOptions.Version);
+            int version = int.Parse(PackOptions.Version);
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
             DirectoryInfo d = new DirectoryInfo(folderPath);
@@ -166,7 +170,7 @@ namespace ArcFormats.Majiro
             foreach (MajiroEntry entry in entries)
             {
                 byte[] data = File.ReadAllBytes(entry.Path);
-                if (PackARCOptions.EncryptScripts && Path.GetExtension(entry.Name) == ".mjo")
+                if (PackOptions.EncryptScripts && Path.GetExtension(entry.Name) == ".mjo")
                 {
                     Logger.Debug(string.Format(LogStrings.TryEncScr, entry.Name));
                     EncryptScript(data);

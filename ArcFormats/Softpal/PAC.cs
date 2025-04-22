@@ -1,3 +1,4 @@
+using ArcFormats.AdvHD;
 using GalArc.Controls;
 using GalArc.Logs;
 using GalArc.Strings;
@@ -16,6 +17,9 @@ namespace ArcFormats.Softpal
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackPACOptions.Instance;
         public override OptionsTemplate PackExtraOptions => PackPACOptions.Instance;
+
+        private AdvHDUnpackOptions UnpackOptions => UnpackPACOptions.Instance.Options;
+        private SoftpalOptions PackOptions => PackPACOptions.Instance.Options;
 
         private readonly byte[] Magic = Utils.HexStringToByteArray("50414320");
 
@@ -59,7 +63,7 @@ namespace ArcFormats.Softpal
             foreach (Entry entry in entries)
             {
                 byte[] data = br.ReadBytes((int)entry.Size);
-                if (UnpackPACOptions.DecryptScripts && data.Length >= 16 && data[0] == 36)  //'$'
+                if (UnpackOptions.DecryptScripts && data.Length >= 16 && data[0] == 36)  //'$'
                 {
                     try
                     {
@@ -100,7 +104,7 @@ namespace ArcFormats.Softpal
                 long pos = fs.Position;
                 fs.Position = entry.Offset;
                 byte[] fileData = br.ReadBytes((int)entry.Size);
-                if (UnpackPACOptions.DecryptScripts && fileData.Length >= 16 && fileData[0] == 36)  //'$'
+                if (UnpackOptions.DecryptScripts && fileData.Length >= 16 && fileData[0] == 36)  //'$'
                 {
                     try
                     {
@@ -160,7 +164,7 @@ namespace ArcFormats.Softpal
 
         public override void Pack(string folderPath, string filePath)
         {
-            if (PackExtraOptions.Version == "1")
+            if (PackOptions.Version == "1")
             {
                 PackV1(folderPath, filePath);
             }
@@ -204,7 +208,7 @@ namespace ArcFormats.Softpal
             foreach (var str in files)
             {
                 byte[] buffer = File.ReadAllBytes(str);
-                if (PackPACOptions.EncryptScripts && buffer.Length >= 16 && buffer[0] == 36)  //'$'
+                if (PackOptions.EncryptScripts && buffer.Length >= 16 && buffer[0] == 36)  //'$'
                 {
                     try
                     {
@@ -264,7 +268,7 @@ namespace ArcFormats.Softpal
             foreach (string str in files)
             {
                 byte[] buffer = File.ReadAllBytes(str);
-                if (PackPACOptions.EncryptScripts && buffer.Length >= 16 && buffer[0] == 36)  //'$'
+                if (PackOptions.EncryptScripts && buffer.Length >= 16 && buffer[0] == 36)  //'$'
                 {
                     try
                     {
@@ -281,7 +285,7 @@ namespace ArcFormats.Softpal
                 Logger.UpdateBar();
             }
             //end
-            if (PackPACOptions.ComputeChecksum)
+            if (PackOptions.ComputeChecksum)
             {
                 uint checksum = 0;
                 fw.Position = 0;

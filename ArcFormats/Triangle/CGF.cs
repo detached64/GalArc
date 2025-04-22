@@ -12,6 +12,8 @@ namespace ArcFormats.Triangle
     {
         public override OptionsTemplate PackExtraOptions => PackCGFOptions.Instance;
 
+        private VersionOptions Options => PackCGFOptions.Instance.Options;
+
         public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
@@ -41,7 +43,7 @@ namespace ArcFormats.Triangle
 
         public override void Pack(string folderPath, string filePath)
         {
-            switch (PackExtraOptions.Version)
+            switch (Options.Version)
             {
                 case "1":
                     PackV1(folderPath, filePath);

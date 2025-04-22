@@ -13,6 +13,8 @@ namespace ArcFormats.Ethornell
     {
         public override OptionsTemplate PackExtraOptions => PackARCOptions.Instance;
 
+        private VersionOptions Options => PackARCOptions.Instance.Options;
+
         private const string Magic = "PackFile    ";
         private const string Magic20 = "BURIKO ARC20";
         private const string MagicDSCFormat100 = "DSC FORMAT 1.00\0";
@@ -65,18 +67,18 @@ namespace ArcFormats.Ethornell
             FileInfo[] files = new DirectoryInfo(folderPath).GetFiles();
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
-            string magic = PackExtraOptions.Version == "1" ? Magic : Magic20;
+            string magic = Options.Version == "1" ? Magic : Magic20;
             bw.Write(Encoding.ASCII.GetBytes(magic));
             bw.Write(files.Length);
             uint baseOffset = 0;
             foreach (FileInfo file in files)
             {
-                bw.WritePaddedString(file.Name, PackExtraOptions.Version == "1" ? 0x10 : 0x60);
+                bw.WritePaddedString(file.Name, Options.Version == "1" ? 0x10 : 0x60);
                 bw.Write(baseOffset);
                 uint size = (uint)file.Length;
                 bw.Write(size);
                 baseOffset += size;
-                bw.Write(new byte[PackExtraOptions.Version == "1" ? 8 : 0x18]);
+                bw.Write(new byte[Options.Version == "1" ? 8 : 0x18]);
             }
             foreach (FileInfo file in files)
             {

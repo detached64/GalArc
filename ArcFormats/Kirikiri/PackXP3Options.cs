@@ -7,9 +7,7 @@ namespace ArcFormats.Kirikiri
     {
         public static PackXP3Options Instance { get; } = new PackXP3Options();
 
-        internal static bool CompressIndex = true;
-
-        internal static bool CompressContents = true;
+        public KirikiriOptions Options = new KirikiriOptions();
 
         private readonly string Versions = "1/2";
 
@@ -25,17 +23,23 @@ namespace ArcFormats.Kirikiri
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Version = this.combVersion.Text;
+            Options.Version = this.combVersion.Text;
         }
 
         private void chkbxComIndex_CheckedChanged(object sender, EventArgs e)
         {
-            CompressIndex = chkbxComIndex.Checked;
+            Options.CompressIndex = chkbxComIndex.Checked;
         }
 
         private void chkbxComContents_CheckedChanged(object sender, EventArgs e)
         {
-            CompressContents = chkbxComContents.Checked;
+            Options.CompressContents = chkbxComContents.Checked;
         }
+    }
+
+    public class KirikiriOptions : VersionOptions
+    {
+        public bool CompressIndex { get; set; } = true;
+        public bool CompressContents { get; set; } = true;
     }
 }

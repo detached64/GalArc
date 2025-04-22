@@ -14,6 +14,8 @@ namespace ArcFormats.BiShop
     {
         public override OptionsTemplate PackExtraOptions => PackBSAOptions.Instance;
 
+        private VersionOptions Options => PackBSAOptions.Instance.Options;
+
         private byte[] Magic = Utils.HexStringToByteArray("4253417263000000");
 
         private List<string> path = new List<string>();
@@ -138,7 +140,7 @@ namespace ArcFormats.BiShop
 
         public override void Pack(string folderPath, string filePath)
         {
-            switch (PackExtraOptions.Version)
+            switch (Options.Version)
             {
                 case "1":
                     PackV1(folderPath, filePath);

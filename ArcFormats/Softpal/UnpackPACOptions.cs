@@ -1,3 +1,4 @@
+using ArcFormats.AdvHD;
 using GalArc.Controls;
 using System;
 
@@ -7,7 +8,7 @@ namespace ArcFormats.Softpal
     {
         public static UnpackPACOptions Instance { get; } = new UnpackPACOptions();
 
-        internal static bool DecryptScripts = true;
+        public AdvHDUnpackOptions Options = new AdvHDUnpackOptions();
 
         public UnpackPACOptions()
         {
@@ -16,7 +17,7 @@ namespace ArcFormats.Softpal
 
         private void chkbxDecScr_CheckedChanged(object sender, EventArgs e)
         {
-            DecryptScripts = this.chkbxDecScr.Checked;
+            Options.DecryptScripts = this.chkbxDecScr.Checked;
         }
     }
 }

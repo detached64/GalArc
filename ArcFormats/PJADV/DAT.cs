@@ -1,3 +1,4 @@
+using ArcFormats.AdvHD;
 using GalArc.Controls;
 using GalArc.Logs;
 using GalArc.Strings;
@@ -15,6 +16,9 @@ namespace ArcFormats.PJADV
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackDATOptions.Instance;
         public override OptionsTemplate PackExtraOptions => PackDATOptions.Instance;
+
+        private AdvHDUnpackOptions UnpackOptions => UnpackDATOptions.Instance.Options;
+        private AdvHDPackOptions PackOptions => PackDATOptions.Instance.Options;
 
         private const string Magic = "GAMEDAT PAC";
         private readonly byte[] ScriptMagic = { 0x95, 0x6b, 0x3c, 0x9d, 0x63 };
@@ -66,7 +70,7 @@ namespace ArcFormats.PJADV
             {
                 fs.Position = entry.Offset;
                 byte[] buffer = br.ReadBytes((int)entry.Size);
-                if (UnpackDATOptions.DecryptScripts && entry.Name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(ScriptMagic))
+                if (UnpackOptions.DecryptScripts && entry.Name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(ScriptMagic))
                 {
                     Logger.Debug(string.Format(LogStrings.TryDecScr, entry.Name));
                     DecryptScript(buffer);
@@ -84,8 +88,8 @@ namespace ArcFormats.PJADV
             FileStream fs = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fs);
             bw.Write(Encoding.ASCII.GetBytes(Magic));
-            int nameLength = PackExtraOptions.Version == "1" ? 16 : 32;
-            bw.Write(PackExtraOptions.Version == "1" ? (byte)'K' : (byte)'2');
+            int nameLength = PackOptions.Version == "1" ? 16 : 32;
+            bw.Write(PackOptions.Version == "1" ? (byte)'K' : (byte)'2');
             DirectoryInfo d = new DirectoryInfo(folderPath);
             FileInfo[] files = d.GetFiles();
 
@@ -116,7 +120,7 @@ namespace ArcFormats.PJADV
             foreach (Entry entry in entries)
             {
                 byte[] buffer = File.ReadAllBytes(entry.Path);
-                if (PackDATOptions.EncryptScripts && entry.Name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(new byte[] { 0x95, 0x6b, 0x3c, 0x9d, 0x63 }))
+                if (PackOptions.EncryptScripts && entry.Name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(new byte[] { 0x95, 0x6b, 0x3c, 0x9d, 0x63 }))
                 {
                     Logger.Debug(string.Format(LogStrings.TryEncScr, entry.Name));
                     DecryptScript(buffer);

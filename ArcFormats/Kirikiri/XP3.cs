@@ -14,6 +14,8 @@ namespace ArcFormats.Kirikiri
     {
         public override OptionsTemplate PackExtraOptions => PackXP3Options.Instance;
 
+        private KirikiriOptions Options => PackXP3Options.Instance.Options;
+
         private readonly byte[] Magic = Utils.HexStringToByteArray("5850330d0a200a1a8b6701");
 
         private class Xp3Entry
@@ -164,7 +166,7 @@ namespace ArcFormats.Kirikiri
             FileStream xp3Stream = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(xp3Stream);
             bw.Write(Magic);
-            if (PackExtraOptions.Version == "2")
+            if (Options.Version == "2")
             {
                 bw.Write((long)0x17);
                 bw.Write(1);
@@ -187,7 +189,7 @@ namespace ArcFormats.Kirikiri
                 long compressedSize = originalSize;
                 byte[] fileData = File.ReadAllBytes(file.FullName);
                 uint adler32 = Adler32.Compute(fileData);
-                if (PackXP3Options.CompressContents)
+                if (Options.CompressContents)
                 {
                     fileData = ZlibHelper.Compress(fileData);
                     bw.Write(fileData);
@@ -227,7 +229,7 @@ namespace ArcFormats.Kirikiri
 
             long indexOffset;
             long uncomLen = ms.Length;
-            if (PackXP3Options.CompressIndex)
+            if (Options.CompressIndex)
             {
                 bw.Write((byte)1);
                 byte[] compressedIndex = ZlibHelper.Compress(ms.ToArray());
@@ -244,7 +246,7 @@ namespace ArcFormats.Kirikiri
                 bw.Write(ms.ToArray());
                 indexOffset = xp3Stream.Length - 8 - 1 - uncomLen;
             }
-            xp3Stream.Position = PackExtraOptions.Version == "1" ? Magic.Length : 32;
+            xp3Stream.Position = Options.Version == "1" ? Magic.Length : 32;
             bw.Write(indexOffset);
 
             ms.Dispose();

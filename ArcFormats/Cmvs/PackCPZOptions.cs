@@ -7,6 +7,8 @@ namespace ArcFormats.Cmvs
     {
         public static PackCPZOptions Instance { get; } = new PackCPZOptions();
 
+        public VersionOptions Options = new VersionOptions();
+
         private readonly string Versions = "1";
 
         public PackCPZOptions()
@@ -21,7 +23,7 @@ namespace ArcFormats.Cmvs
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Version = this.combVersion.Text;
+            Options.Version = this.combVersion.Text;
         }
     }
 }

@@ -7,8 +7,6 @@ namespace GalArc.Controls
     /// </summary>
     public partial class OptionsTemplate : UserControl
     {
-        public string Version { get; set; }
-
         public string ChooseFile(string pattern = "")
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())

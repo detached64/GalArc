@@ -7,6 +7,8 @@ namespace ArcFormats.BiShop
     {
         public static PackBSAOptions Instance { get; } = new PackBSAOptions();
 
+        public VersionOptions Options = new VersionOptions();
+
         private readonly string Versions = "1/2";
 
         public PackBSAOptions()
@@ -21,7 +23,7 @@ namespace ArcFormats.BiShop
 
         private void combVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Version = this.combVersion.Text;
+            Options.Version = this.combVersion.Text;
         }
     }
 }
