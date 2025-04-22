@@ -11,14 +11,14 @@ namespace ArcFormats.Pkware
 {
     public class PKG : ArcFormat
     {
-        public override OptionsTemplate UnpackExtraOptions => UnpackPkwareOptions.Instance;
+        public override WidgetTemplate UnpackWidget => UnpackPkwareWidget.Instance;
 
-        private PkwareOptions Options => UnpackPkwareOptions.Instance.Options;
+        private PkwareOptions Options => UnpackPkwareWidget.Instance.Options;
 
         private PkwareScheme Scheme
         {
-            get => UnpackPkwareOptions.Instance.Scheme;
-            set => UnpackPkwareOptions.Instance.Scheme = value;
+            get => UnpackPkwareWidget.Instance.Scheme;
+            set => UnpackPkwareWidget.Instance.Scheme = value;
         }
 
         private readonly EncodingSetting PkgEncoding = new EncodingSetting("PkwarePkgEncoding");

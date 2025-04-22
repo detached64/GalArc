@@ -14,11 +14,11 @@ namespace ArcFormats.Majiro
 {
     public class ARC : ArcFormat
     {
-        public override OptionsTemplate UnpackExtraOptions => UnpackARCOptions.Instance;
-        public override OptionsTemplate PackExtraOptions => PackARCOptions.Instance;
+        public override WidgetTemplate UnpackWidget => UnpackARCWidget.Instance;
+        public override WidgetTemplate PackWidget => PackARCWidget.Instance;
 
-        private AdvHDUnpackOptions UnpackOptions => UnpackARCOptions.Instance.Options;
-        private AdvHDPackOptions PackOptions => PackARCOptions.Instance.Options;
+        private AdvHDUnpackOptions UnpackOptions => UnpackARCWidget.Instance.Options;
+        private AdvHDPackOptions PackOptions => PackARCWidget.Instance.Options;
 
         private string Magic = "MajiroArcV{0}.000\x00";
         private string MagicPattern = @"^MajiroArcV(\d)\.000\x00$";

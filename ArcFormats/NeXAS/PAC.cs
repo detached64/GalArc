@@ -13,9 +13,9 @@ namespace ArcFormats.NeXAS
 {
     public class PAC : ArcFormat
     {
-        public override OptionsTemplate PackExtraOptions => PackPACOptions.Instance;
+        public override WidgetTemplate PackWidget => PackPACWidget.Instance;
 
-        private NeXASOptions Options => PackPACOptions.Instance.Options;
+        private NeXASOptions Options => PackPACWidget.Instance.Options;
 
         private readonly EncodingSetting PacEncoding = new EncodingSetting("NexasPacEncoding");
 

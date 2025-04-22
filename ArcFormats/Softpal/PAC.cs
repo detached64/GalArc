@@ -15,11 +15,11 @@ namespace ArcFormats.Softpal
 {
     public class PAC : ArcFormat
     {
-        public override OptionsTemplate UnpackExtraOptions => UnpackPACOptions.Instance;
-        public override OptionsTemplate PackExtraOptions => PackPACOptions.Instance;
+        public override WidgetTemplate UnpackWidget => UnpackPACWidget.Instance;
+        public override WidgetTemplate PackWidget => PackPACWidget.Instance;
 
-        private AdvHDUnpackOptions UnpackOptions => UnpackPACOptions.Instance.Options;
-        private SoftpalOptions PackOptions => PackPACOptions.Instance.Options;
+        private AdvHDUnpackOptions UnpackOptions => UnpackPACWidget.Instance.Options;
+        private SoftpalOptions PackOptions => PackPACWidget.Instance.Options;
 
         private readonly byte[] Magic = Utils.HexStringToByteArray("50414320");
 

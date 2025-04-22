@@ -13,7 +13,7 @@ namespace ArcFormats.Yuris
 {
     public class YPF : ArcFormat
     {
-        public override OptionsTemplate UnpackExtraOptions => UnpackYPFOptions.Instance;
+        public override WidgetTemplate UnpackWidget => UnpackYPFWidget.Instance;
 
         private class YpfEntry : PackedEntry
         {
@@ -91,7 +91,7 @@ namespace ArcFormats.Yuris
                     }
                 }
                 Directory.CreateDirectory(Path.GetDirectoryName(entry.Path));
-                if (UnpackYPFOptions.DecryptScripts && Path.GetExtension(entry.Path) == ".ybn" && entry.Data.Length >= 4 && BitConverter.ToUInt32(entry.Data, 0) == 0x42545359)
+                if (UnpackYPFWidget.DecryptScripts && Path.GetExtension(entry.Path) == ".ybn" && entry.Data.Length >= 4 && BitConverter.ToUInt32(entry.Data, 0) == 0x42545359)
                 {
                     Logger.Debug(string.Format(LogStrings.TryDecScr, entry.Name));
                     entry.Data = TryDecryptScript(entry.Data);

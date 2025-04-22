@@ -13,14 +13,14 @@ namespace ArcFormats.Seraph
 {
     public class DAT : ArcFormat
     {
-        public override OptionsTemplate UnpackExtraOptions => UnpackDATOptions.Instance;
+        public override WidgetTemplate UnpackWidget => UnpackDATWidget.Instance;
 
-        private SeraphOptions Options => UnpackDATOptions.Instance.Options;
+        private SeraphOptions Options => UnpackDATWidget.Instance.Options;
 
         private SeraphScheme Scheme
         {
-            get => UnpackDATOptions.Instance.Scheme;
-            set => UnpackDATOptions.Instance.Scheme = value;
+            get => UnpackDATWidget.Instance.Scheme;
+            set => UnpackDATWidget.Instance.Scheme = value;
         }
 
         private class Group

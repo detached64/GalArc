@@ -9,7 +9,7 @@ namespace ArcFormats.NitroPlus
 {
     public class PAK : ArcFormat
     {
-        public override OptionsTemplate PackExtraOptions => PackPAKOptions.Instance;
+        public override WidgetTemplate PackWidget => PackPAKWidget.Instance;
 
         private class NitroPakEntry : PackedEntry
         {
@@ -112,9 +112,9 @@ namespace ArcFormats.NitroPlus
                     byte[] comIndex = ZlibHelper.Compress(uncomIndex);
                     bw.Write(comIndex.Length);
 
-                    if (!string.IsNullOrEmpty(PackPAKOptions.OriginalFilePath) && File.Exists(PackPAKOptions.OriginalFilePath))
+                    if (!string.IsNullOrEmpty(PackPAKWidget.OriginalFilePath) && File.Exists(PackPAKWidget.OriginalFilePath))
                     {
-                        FileStream fs = File.OpenRead(PackPAKOptions.OriginalFilePath);
+                        FileStream fs = File.OpenRead(PackPAKWidget.OriginalFilePath);
                         BinaryReader br = new BinaryReader(fs);
                         fs.Position = 16;
                         byte[] reserve = br.ReadBytes(260);

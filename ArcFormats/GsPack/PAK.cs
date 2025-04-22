@@ -12,7 +12,7 @@ namespace ArcFormats.GsPack
 {
     public class PAK : ArcFormat
     {
-        public override OptionsTemplate UnpackExtraOptions => UnpackPAKOptions.Instance;
+        public override WidgetTemplate UnpackWidget => UnpackPAKWidget.Instance;
 
         private Dictionary<string, string> NameExtensionPairs => new Dictionary<string, string>
         {
@@ -119,7 +119,7 @@ namespace ArcFormats.GsPack
                 {
                     Decrypt(data, entry.Name);
                 }
-                if (UnpackPAKOptions.DecryptScripts && ext == ".scw")
+                if (UnpackPAKWidget.DecryptScripts && ext == ".scw")
                 {
                     try
                     {

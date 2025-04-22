@@ -12,9 +12,9 @@ namespace ArcFormats.Kirikiri
 {
     public class XP3 : ArcFormat
     {
-        public override OptionsTemplate PackExtraOptions => PackXP3Options.Instance;
+        public override WidgetTemplate PackWidget => PackXP3Widget.Instance;
 
-        private KirikiriOptions Options => PackXP3Options.Instance.Options;
+        private KirikiriOptions Options => PackXP3Widget.Instance.Options;
 
         private readonly byte[] Magic = Utils.HexStringToByteArray("5850330d0a200a1a8b6701");
 

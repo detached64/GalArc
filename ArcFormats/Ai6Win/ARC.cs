@@ -12,9 +12,9 @@ namespace ArcFormats.Ai6Win
 {
     public class ARC : ArcFormat
     {
-        public override OptionsTemplate PackExtraOptions => PackARCOptions.Instance;
+        public override WidgetTemplate PackWidget => PackARCWidget.Instance;
 
-        private Ai6WinOptions Options => PackARCOptions.Instance.Options;
+        private Ai6WinOptions Options => PackARCWidget.Instance.Options;
 
         private class ArcEntry : PackedEntry
         {

@@ -105,8 +105,8 @@ namespace GalArc.GUI
             Logger.InfoInvoke(LogStrings.SchemeRefreshing);
             foreach (var format in ArcResources.Formats)
             {
-                format.UnpackExtraOptions.AddSchemes();
-                format.PackExtraOptions.AddSchemes();
+                format.UnpackWidget.AddSchemes();
+                format.PackWidget.AddSchemes();
                 Logger.UpdateBar();
             }
             Logger.Info(LogStrings.SchemeRefreshed);
@@ -353,10 +353,10 @@ namespace GalArc.GUI
                 Logger.Info(string.Format(LogStrings.SelectPackNode, e.Node.Parent.Text, e.Node.Text));
             }
             SyncPath();
-            GetExtraOptions();
+            GetWidget();
         }
 
-        private void GetExtraOptions()
+        private void GetWidget()
         {
             if (Mode == OperationMode.None)
             {
@@ -370,7 +370,7 @@ namespace GalArc.GUI
             {
                 this.SuspendLayout();
                 this.gbOptions.Controls.Clear();
-                UserControl options = Mode == OperationMode.Unpack ? SelectedFormat.UnpackExtraOptions : SelectedFormat.PackExtraOptions;
+                UserControl options = Mode == OperationMode.Unpack ? SelectedFormat.UnpackWidget : SelectedFormat.PackWidget;
                 this.gbOptions.Controls.Add(options);
                 options.Dock = DockStyle.Fill;
                 this.ResumeLayout();

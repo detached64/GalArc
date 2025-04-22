@@ -52,7 +52,7 @@ namespace ArcFormats.InnocentGrey
             {
                 fs.Position = entry.Offset;
                 byte[] data = br.ReadBytes((int)entry.UnpackedSize);
-                if (UnpackIGAOptions.DecryptScripts && Path.GetExtension(entry.Name) == ".s")
+                if (UnpackIGAWidget.DecryptScripts && Path.GetExtension(entry.Name) == ".s")
                 {
                     Logger.Debug(string.Format(LogStrings.TryDecScr, entry.Name));
                     for (int i = 0; i < data.Length; i++)
@@ -95,7 +95,7 @@ namespace ArcFormats.InnocentGrey
             foreach (FileInfo file in files)
             {
                 byte[] data = File.ReadAllBytes(file.FullName);
-                if (UnpackIGAOptions.DecryptScripts && file.Extension == ".s")
+                if (UnpackIGAWidget.DecryptScripts && file.Extension == ".s")
                 {
                     Logger.Debug(string.Format(LogStrings.TryEncScr, file.Name));
                     for (int i = 0; i < data.Length; i++)

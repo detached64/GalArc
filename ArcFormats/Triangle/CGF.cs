@@ -10,9 +10,9 @@ namespace ArcFormats.Triangle
 {
     public class CGF : ArcFormat
     {
-        public override OptionsTemplate PackExtraOptions => PackCGFOptions.Instance;
+        public override WidgetTemplate PackWidget => PackCGFWidget.Instance;
 
-        private VersionOptions Options => PackCGFOptions.Instance.Options;
+        private VersionOptions Options => PackCGFWidget.Instance.Options;
 
         public override void Unpack(string filePath, string folderPath)
         {

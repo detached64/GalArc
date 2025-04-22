@@ -11,9 +11,9 @@ namespace ArcFormats
 {
     public abstract class ArcFormat
     {
-        public virtual OptionsTemplate UnpackExtraOptions => Empty.Instance;
+        public virtual WidgetTemplate UnpackWidget => Empty.Instance;
 
-        public virtual OptionsTemplate PackExtraOptions => Empty.Instance;
+        public virtual WidgetTemplate PackWidget => Empty.Instance;
 
         public virtual IEnumerable<ArcSetting> Settings { get; protected set; }
 

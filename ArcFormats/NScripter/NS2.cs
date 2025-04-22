@@ -14,14 +14,14 @@ namespace ArcFormats.NScripter
 {
     public class NS2 : ArcFormat
     {
-        public override OptionsTemplate UnpackExtraOptions => UnpackNS2Options.Instance;
+        public override WidgetTemplate UnpackWidget => UnpackNS2Widget.Instance;
 
-        private Ns2Options Options => UnpackNS2Options.Instance.Options;
+        private Ns2Options Options => UnpackNS2Widget.Instance.Options;
 
         private Ns2Scheme Scheme
         {
-            get => UnpackNS2Options.Instance.Scheme;
-            set => UnpackNS2Options.Instance.Scheme = value;
+            get => UnpackNS2Widget.Instance.Scheme;
+            set => UnpackNS2Widget.Instance.Scheme = value;
         }
 
         private class Ns2Entry : PackedEntry

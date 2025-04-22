@@ -10,9 +10,9 @@ namespace ArcFormats.Cmvs
 {
     public class CPZ : ArcFormat
     {
-        public override OptionsTemplate PackExtraOptions => PackCPZOptions.Instance;
+        public override WidgetTemplate PackWidget => PackCPZWidget.Instance;
 
-        private VersionOptions Options => PackCPZOptions.Instance.Options;
+        private VersionOptions Options => PackCPZWidget.Instance.Options;
 
         private byte[] KeyV1 =
         {

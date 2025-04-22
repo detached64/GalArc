@@ -14,11 +14,11 @@ namespace ArcFormats.PJADV
 {
     public class DAT : ArcFormat
     {
-        public override OptionsTemplate UnpackExtraOptions => UnpackDATOptions.Instance;
-        public override OptionsTemplate PackExtraOptions => PackDATOptions.Instance;
+        public override WidgetTemplate UnpackWidget => UnpackDATWidget.Instance;
+        public override WidgetTemplate PackWidget => PackDATWidget.Instance;
 
-        private AdvHDUnpackOptions UnpackOptions => UnpackDATOptions.Instance.Options;
-        private AdvHDPackOptions PackOptions => PackDATOptions.Instance.Options;
+        private AdvHDUnpackOptions UnpackOptions => UnpackDATWidget.Instance.Options;
+        private AdvHDPackOptions PackOptions => PackDATWidget.Instance.Options;
 
         private const string Magic = "GAMEDAT PAC";
         private readonly byte[] ScriptMagic = { 0x95, 0x6b, 0x3c, 0x9d, 0x63 };

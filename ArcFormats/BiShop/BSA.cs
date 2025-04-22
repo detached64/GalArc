@@ -12,9 +12,9 @@ namespace ArcFormats.BiShop
 {
     public class BSA : ArcFormat
     {
-        public override OptionsTemplate PackExtraOptions => PackBSAOptions.Instance;
+        public override WidgetTemplate PackWidget => PackBSAWidget.Instance;
 
-        private VersionOptions Options => PackBSAOptions.Instance.Options;
+        private VersionOptions Options => PackBSAWidget.Instance.Options;
 
         private byte[] Magic = Utils.HexStringToByteArray("4253417263000000");
 

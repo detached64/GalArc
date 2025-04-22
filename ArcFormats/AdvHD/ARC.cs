@@ -14,11 +14,11 @@ namespace ArcFormats.AdvHD
 {
     public class ARC : ArcFormat
     {
-        public override OptionsTemplate UnpackExtraOptions => UnpackARCOptions.Instance;
-        public override OptionsTemplate PackExtraOptions => PackARCOptions.Instance;
+        public override WidgetTemplate UnpackWidget => UnpackARCWidget.Instance;
+        public override WidgetTemplate PackWidget => PackARCWidget.Instance;
 
-        private AdvHDUnpackOptions UnpackOptions => UnpackARCOptions.Instance.Options;
-        private AdvHDPackOptions PackOptions => PackARCOptions.Instance.Options;
+        private AdvHDUnpackOptions UnpackOptions => UnpackARCWidget.Instance.Options;
+        private AdvHDPackOptions PackOptions => PackARCWidget.Instance.Options;
 
         private readonly string[] EncryptedFileExtV1 = { "wsc", "scr" };
 

@@ -11,9 +11,9 @@ namespace ArcFormats.Ethornell
 {
     public class ARC : ArcFormat
     {
-        public override OptionsTemplate PackExtraOptions => PackARCOptions.Instance;
+        public override WidgetTemplate PackWidget => PackARCWidget.Instance;
 
-        private VersionOptions Options => PackARCOptions.Instance.Options;
+        private VersionOptions Options => PackARCWidget.Instance.Options;
 
         private const string Magic = "PackFile    ";
         private const string Magic20 = "BURIKO ARC20";

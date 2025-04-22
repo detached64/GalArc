@@ -12,14 +12,14 @@ namespace ArcFormats.AnimeGameSystem
 {
     public class DAT : ArcFormat
     {
-        public override OptionsTemplate UnpackExtraOptions => UnpackDATOptions.Instance;
+        public override WidgetTemplate UnpackWidget => UnpackDATWidget.Instance;
 
-        private AGSOptions UnpackOptions => UnpackDATOptions.Instance.Options;
+        private AGSOptions UnpackOptions => UnpackDATWidget.Instance.Options;
 
         private AGSScheme Scheme
         {
-            get => UnpackDATOptions.Instance.Scheme;
-            set => UnpackDATOptions.Instance.Scheme = value;
+            get => UnpackDATWidget.Instance.Scheme;
+            set => UnpackDATWidget.Instance.Scheme = value;
         }
 
         private const string Magic = "pack";

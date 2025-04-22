@@ -12,14 +12,14 @@ namespace ArcFormats.Siglus
 {
     public class ScenePCK : ArcFormat
     {
-        public override OptionsTemplate UnpackExtraOptions => UnpackPCKOptions.Instance;
+        public override WidgetTemplate UnpackWidget => UnpackPCKWidget.Instance;
 
-        protected SiglusOptions Options => UnpackPCKOptions.Instance.Options;
+        protected SiglusOptions Options => UnpackPCKWidget.Instance.Options;
 
         protected SiglusScheme Scheme
         {
-            get => UnpackPCKOptions.Instance.Scheme;
-            set => UnpackPCKOptions.Instance.Scheme = value;
+            get => UnpackPCKWidget.Instance.Scheme;
+            set => UnpackPCKWidget.Instance.Scheme = value;
         }
 
         private class ScenePckHeader

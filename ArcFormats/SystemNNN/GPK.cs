@@ -9,9 +9,9 @@ namespace ArcFormats.SystemNNN
 {
     public class GPK : ArcFormat
     {
-        public override OptionsTemplate PackExtraOptions => PackGPKOptions.Instance;
+        public override WidgetTemplate PackWidget => PackGPKWidget.Instance;
 
-        private VersionOptions Options => PackGPKOptions.Instance.Options;
+        private VersionOptions Options => PackGPKWidget.Instance.Options;
 
         public override void Unpack(string filePath, string folderPath)
         {

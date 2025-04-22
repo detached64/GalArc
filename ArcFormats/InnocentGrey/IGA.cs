@@ -10,8 +10,8 @@ namespace ArcFormats.InnocentGrey
 {
     public class IGA : ArcFormat
     {
-        public override OptionsTemplate UnpackExtraOptions => UnpackIGAOptions.Instance;
-        public override OptionsTemplate PackExtraOptions => PackIGAOptions.Instance;
+        public override WidgetTemplate UnpackWidget => UnpackIGAWidget.Instance;
+        public override WidgetTemplate PackWidget => PackIGAWidget.Instance;
 
         private const string Magic = "IGA0";
 
@@ -75,7 +75,7 @@ namespace ArcFormats.InnocentGrey
                 fs.Position = entry.DataOffset;
                 byte[] buffer = new byte[entry.Size];
                 br.Read(buffer, 0, (int)entry.Size);
-                int key = UnpackIGAOptions.DecryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
+                int key = UnpackIGAWidget.DecryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
                 if (key != 0)
                 {
                     Logger.Debug(string.Format(LogStrings.TryDecScr, entry.Name));
@@ -149,7 +149,7 @@ namespace ArcFormats.InnocentGrey
             foreach (var entry in l)
             {
                 byte[] buffer = File.ReadAllBytes(Path.Combine(folderPath, entry.Name));
-                int key = PackIGAOptions.EncryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
+                int key = PackIGAWidget.EncryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
                 if (key != 0)
                 {
                     Logger.Debug(string.Format(LogStrings.TryEncScr, entry.Name));

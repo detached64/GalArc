@@ -10,9 +10,9 @@ namespace ArcFormats.RPGMaker
 {
     public class RGSSAD : ArcFormat
     {
-        public override OptionsTemplate PackExtraOptions => PackRGSSOptions.Instance;
+        public override WidgetTemplate PackWidget => PackRGSSWidget.Instance;
 
-        private RGSSPackOptions Options => PackRGSSOptions.Instance.Options;
+        private RGSSPackOptions Options => PackRGSSWidget.Instance.Options;
 
         public override void Unpack(string filePath, string folderPath)
         {

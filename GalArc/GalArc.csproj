@@ -64,11 +64,11 @@
     <Compile Include="Controls\Empty.Designer.cs">
       <DependentUpon>Empty.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\OptionsTemplate.cs">
+    <Compile Include="Controls\WidgetTemplate.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\OptionsTemplate.Designer.cs">
-      <DependentUpon>OptionsTemplate.cs</DependentUpon>
+    <Compile Include="Controls\WidgetTemplate.Designer.cs">
+      <DependentUpon>WidgetTemplate.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\SettingsTemplate.cs">
       <SubType>UserControl</SubType>
@@ -99,8 +99,8 @@
     <EmbeddedResource Include="Controls\Empty.zh-Hans.resx">
       <DependentUpon>Empty.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\OptionsTemplate.resx">
-      <DependentUpon>OptionsTemplate.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\WidgetTemplate.resx">
+      <DependentUpon>WidgetTemplate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\SettingsTemplate.resx">
       <DependentUpon>SettingsTemplate.cs</DependentUpon>

@@ -70,59 +70,59 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdvHD\ARC.cs" />
-    <Compile Include="AdvHD\PackARCOptions.cs">
+    <Compile Include="AdvHD\PackARCWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AdvHD\PackARCOptions.Designer.cs">
-      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    <Compile Include="AdvHD\PackARCWidget.Designer.cs">
+      <DependentUpon>PackARCWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="AdvHD\PNA.cs" />
-    <Compile Include="AdvHD\UnpackARCOptions.cs">
+    <Compile Include="AdvHD\UnpackARCWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AdvHD\UnpackARCOptions.Designer.cs">
-      <DependentUpon>UnpackARCOptions.cs</DependentUpon>
+    <Compile Include="AdvHD\UnpackARCWidget.Designer.cs">
+      <DependentUpon>UnpackARCWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="Ai5Win\ARC.cs" />
     <Compile Include="Ai5Win\DAT.cs" />
     <Compile Include="Ai5Win\VSD.cs" />
     <Compile Include="Ai6Win\ARC.cs" />
-    <Compile Include="Ai6Win\PackARCOptions.cs">
+    <Compile Include="Ai6Win\PackARCWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Ai6Win\PackARCOptions.Designer.cs">
-      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    <Compile Include="Ai6Win\PackARCWidget.Designer.cs">
+      <DependentUpon>PackARCWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="AnimeGameSystem\DAT.cs" />
-    <Compile Include="AnimeGameSystem\UnpackDATOptions.cs">
+    <Compile Include="AnimeGameSystem\UnpackDATWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AnimeGameSystem\UnpackDATOptions.Designer.cs">
-      <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    <Compile Include="AnimeGameSystem\UnpackDATWidget.Designer.cs">
+      <DependentUpon>UnpackDATWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="ArcResource.cs" />
-    <Compile Include="Artemis\PackPFSOptions.cs">
+    <Compile Include="Artemis\PackPFSWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Artemis\PackPFSOptions.Designer.cs">
-      <DependentUpon>PackPFSOptions.cs</DependentUpon>
+    <Compile Include="Artemis\PackPFSWidget.Designer.cs">
+      <DependentUpon>PackPFSWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="Artemis\PFS.cs" />
     <Compile Include="BiShop\BSA.cs" />
-    <Compile Include="BiShop\PackBSAOptions.cs">
+    <Compile Include="BiShop\PackBSAWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="BiShop\PackBSAOptions.Designer.cs">
-      <DependentUpon>PackBSAOptions.cs</DependentUpon>
+    <Compile Include="BiShop\PackBSAWidget.Designer.cs">
+      <DependentUpon>PackBSAWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="Cmvs\CmvsMD5.cs" />
     <Compile Include="Cmvs\CPZ.cs" />
     <Compile Include="Cmvs\CmvsUtils.cs" />
-    <Compile Include="Cmvs\PackCPZOptions.cs">
+    <Compile Include="Cmvs\PackCPZWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Cmvs\PackCPZOptions.Designer.cs">
-      <DependentUpon>PackCPZOptions.cs</DependentUpon>
+    <Compile Include="Cmvs\PackCPZWidget.Designer.cs">
+      <DependentUpon>PackCPZWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="EmonEngine\EME.cs" />
     <Compile Include="EmonEngine\EmonUtils.cs" />
@@ -131,55 +131,55 @@
     <Compile Include="Ethornell\ARC.cs" />
     <Compile Include="Ethornell\GDB.cs" />
     <Compile Include="Ethornell\EthornellUtils.cs" />
-    <Compile Include="Ethornell\PackARCOptions.cs">
+    <Compile Include="Ethornell\PackARCWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Ethornell\PackARCOptions.Designer.cs">
-      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    <Compile Include="Ethornell\PackARCWidget.Designer.cs">
+      <DependentUpon>PackARCWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="Eushully\ALF.cs" />
     <Compile Include="GsPack\DAT.cs" />
     <Compile Include="GsPack\PAK.cs" />
-    <Compile Include="GsPack\UnpackPAKOptions.cs">
+    <Compile Include="GsPack\UnpackPAKWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GsPack\UnpackPAKOptions.Designer.cs">
-      <DependentUpon>UnpackPAKOptions.cs</DependentUpon>
+    <Compile Include="GsPack\UnpackPAKWidget.Designer.cs">
+      <DependentUpon>UnpackPAKWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="InnocentGrey\DAT.cs" />
     <Compile Include="InnocentGrey\IGA.cs" />
-    <Compile Include="InnocentGrey\PackIGAOptions.cs">
+    <Compile Include="InnocentGrey\PackIGAWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="InnocentGrey\PackIGAOptions.Designer.cs">
-      <DependentUpon>PackIGAOptions.cs</DependentUpon>
+    <Compile Include="InnocentGrey\PackIGAWidget.Designer.cs">
+      <DependentUpon>PackIGAWidget.cs</DependentUpon>
     </Compile>
-    <Compile Include="InnocentGrey\UnpackIGAOptions.cs">
+    <Compile Include="InnocentGrey\UnpackIGAWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="InnocentGrey\UnpackIGAOptions.Designer.cs">
-      <DependentUpon>UnpackIGAOptions.cs</DependentUpon>
+    <Compile Include="InnocentGrey\UnpackIGAWidget.Designer.cs">
+      <DependentUpon>UnpackIGAWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="KID\DAT.cs" />
-    <Compile Include="Kirikiri\PackXP3Options.cs">
+    <Compile Include="Kirikiri\PackXP3Widget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Kirikiri\PackXP3Options.Designer.cs">
-      <DependentUpon>PackXP3Options.cs</DependentUpon>
+    <Compile Include="Kirikiri\PackXP3Widget.Designer.cs">
+      <DependentUpon>PackXP3Widget.cs</DependentUpon>
     </Compile>
     <Compile Include="Kirikiri\XP3.cs" />
     <Compile Include="Majiro\ARC.cs" />
-    <Compile Include="Majiro\PackARCOptions.cs">
+    <Compile Include="Majiro\PackARCWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Majiro\PackARCOptions.Designer.cs">
-      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    <Compile Include="Majiro\PackARCWidget.Designer.cs">
+      <DependentUpon>PackARCWidget.cs</DependentUpon>
     </Compile>
-    <Compile Include="Majiro\UnpackARCOptions.cs">
+    <Compile Include="Majiro\UnpackARCWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Majiro\UnpackARCOptions.Designer.cs">
-      <DependentUpon>UnpackARCOptions.cs</DependentUpon>
+    <Compile Include="Majiro\UnpackARCWidget.Designer.cs">
+      <DependentUpon>UnpackARCWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="NekoPack\DAT.cs" />
     <Compile Include="NekoPack\DatV1.cs" />
@@ -187,128 +187,128 @@
     <Compile Include="NekoSDK\DAT.cs" />
     <Compile Include="NekoSDK\PAK.cs" />
     <Compile Include="NeXAS\PAC.cs" />
-    <Compile Include="NeXAS\PackPACOptions.cs">
+    <Compile Include="NeXAS\PackPACWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="NeXAS\PackPACOptions.Designer.cs">
-      <DependentUpon>PackPACOptions.cs</DependentUpon>
+    <Compile Include="NeXAS\PackPACWidget.Designer.cs">
+      <DependentUpon>PackPACWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="NextonLikeC\LST.cs" />
-    <Compile Include="NitroPlus\PackPAKOptions.cs">
+    <Compile Include="NitroPlus\PackPAKWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="NitroPlus\PackPAKOptions.Designer.cs">
-      <DependentUpon>PackPAKOptions.cs</DependentUpon>
+    <Compile Include="NitroPlus\PackPAKWidget.Designer.cs">
+      <DependentUpon>PackPAKWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="NitroPlus\PAK.cs" />
     <Compile Include="NScripter\NS2.cs" />
     <Compile Include="NScripter\Ns2Utils.cs" />
     <Compile Include="NScripter\NSA.cs" />
-    <Compile Include="NScripter\UnpackNS2Options.cs">
+    <Compile Include="NScripter\UnpackNS2Widget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="NScripter\UnpackNS2Options.Designer.cs">
-      <DependentUpon>UnpackNS2Options.cs</DependentUpon>
+    <Compile Include="NScripter\UnpackNS2Widget.Designer.cs">
+      <DependentUpon>UnpackNS2Widget.cs</DependentUpon>
     </Compile>
     <Compile Include="Palette\PAK.cs" />
     <Compile Include="PJADV\DAT.cs" />
-    <Compile Include="PJADV\PackDATOptions.cs">
+    <Compile Include="PJADV\PackDATWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PJADV\PackDATOptions.Designer.cs">
-      <DependentUpon>PackDATOptions.cs</DependentUpon>
+    <Compile Include="PJADV\PackDATWidget.Designer.cs">
+      <DependentUpon>PackDATWidget.cs</DependentUpon>
     </Compile>
-    <Compile Include="PJADV\UnpackDATOptions.cs">
+    <Compile Include="PJADV\UnpackDATWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PJADV\UnpackDATOptions.Designer.cs">
-      <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    <Compile Include="PJADV\UnpackDATWidget.Designer.cs">
+      <DependentUpon>UnpackDATWidget.cs</DependentUpon>
     </Compile>
-    <Compile Include="Pkware\UnpackPkwareOptions.cs">
+    <Compile Include="Pkware\UnpackPkwareWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Pkware\UnpackPkwareOptions.Designer.cs">
-      <DependentUpon>UnpackPkwareOptions.cs</DependentUpon>
+    <Compile Include="Pkware\UnpackPkwareWidget.Designer.cs">
+      <DependentUpon>UnpackPkwareWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="Pkware\PKG.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Qlie\PackPACKOptions.cs">
+    <Compile Include="Qlie\PackPACKWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Qlie\PackPACKOptions.Designer.cs">
-      <DependentUpon>PackPACKOptions.cs</DependentUpon>
+    <Compile Include="Qlie\PackPACKWidget.Designer.cs">
+      <DependentUpon>PackPACKWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="Qlie\QlieEncryption.cs" />
     <Compile Include="Qlie\PACK.cs" />
     <Compile Include="Qlie\QlieHash.cs" />
     <Compile Include="Qlie\QlieMersenneTwister.cs" />
-    <Compile Include="Qlie\UnpackPACKOptions.cs">
+    <Compile Include="Qlie\UnpackPACKWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Qlie\UnpackPACKOptions.Designer.cs">
-      <DependentUpon>UnpackPACKOptions.cs</DependentUpon>
+    <Compile Include="Qlie\UnpackPACKWidget.Designer.cs">
+      <DependentUpon>UnpackPACKWidget.cs</DependentUpon>
     </Compile>
-    <Compile Include="RPGMaker\PackRGSSOptions.cs">
+    <Compile Include="RPGMaker\PackRGSSWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="RPGMaker\PackRGSSOptions.Designer.cs">
-      <DependentUpon>PackRGSSOptions.cs</DependentUpon>
+    <Compile Include="RPGMaker\PackRGSSWidget.Designer.cs">
+      <DependentUpon>PackRGSSWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="RPGMaker\RGSSAD.cs" />
     <Compile Include="Seraph\DAT.cs" />
     <Compile Include="Seraph\SeraphUtils.cs" />
-    <Compile Include="Seraph\UnpackDATOptions.cs">
+    <Compile Include="Seraph\UnpackDATWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Seraph\UnpackDATOptions.Designer.cs">
-      <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    <Compile Include="Seraph\UnpackDATWidget.Designer.cs">
+      <DependentUpon>UnpackDATWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="Siglus\GameexeDAT.cs" />
     <Compile Include="Siglus\ScenePCK.cs" />
     <Compile Include="Siglus\SiglusUtils.cs" />
-    <Compile Include="Siglus\UnpackPCKOptions.cs">
+    <Compile Include="Siglus\UnpackPCKWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Siglus\UnpackPCKOptions.Designer.cs">
-      <DependentUpon>UnpackPCKOptions.cs</DependentUpon>
+    <Compile Include="Siglus\UnpackPCKWidget.Designer.cs">
+      <DependentUpon>UnpackPCKWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="Softpal\PAC.cs" />
-    <Compile Include="Softpal\PackPACOptions.cs">
+    <Compile Include="Softpal\PackPACWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Softpal\PackPACOptions.Designer.cs">
-      <DependentUpon>PackPACOptions.cs</DependentUpon>
+    <Compile Include="Softpal\PackPACWidget.Designer.cs">
+      <DependentUpon>PackPACWidget.cs</DependentUpon>
     </Compile>
-    <Compile Include="Softpal\UnpackPACOptions.cs">
+    <Compile Include="Softpal\UnpackPACWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Softpal\UnpackPACOptions.Designer.cs">
-      <DependentUpon>UnpackPACOptions.cs</DependentUpon>
+    <Compile Include="Softpal\UnpackPACWidget.Designer.cs">
+      <DependentUpon>UnpackPACWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="Sogna\DAT.cs" />
     <Compile Include="SystemNNN\GPK.cs" />
-    <Compile Include="SystemNNN\PackGPKOptions.cs">
+    <Compile Include="SystemNNN\PackGPKWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SystemNNN\PackGPKOptions.Designer.cs">
-      <DependentUpon>PackGPKOptions.cs</DependentUpon>
+    <Compile Include="SystemNNN\PackGPKWidget.Designer.cs">
+      <DependentUpon>PackGPKWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="SystemNNN\VPK.cs" />
     <Compile Include="Triangle\CG.cs" />
     <Compile Include="Triangle\CGF.cs" />
-    <Compile Include="Triangle\PackCGFOptions.cs">
+    <Compile Include="Triangle\PackCGFWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Triangle\PackCGFOptions.Designer.cs">
-      <DependentUpon>PackCGFOptions.cs</DependentUpon>
+    <Compile Include="Triangle\PackCGFWidget.Designer.cs">
+      <DependentUpon>PackCGFWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="Triangle\SUD.cs" />
     <Compile Include="Valkyria\DAT.cs" />
-    <Compile Include="Yuris\UnpackYPFOptions.cs">
+    <Compile Include="Yuris\UnpackYPFWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Yuris\UnpackYPFOptions.Designer.cs">
-      <DependentUpon>UnpackYPFOptions.cs</DependentUpon>
+    <Compile Include="Yuris\UnpackYPFWidget.Designer.cs">
+      <DependentUpon>UnpackYPFWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="Yuris\YPF.cs" />
   </ItemGroup>
@@ -323,204 +323,204 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AdvHD\PackARCOptions.resx">
-      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    <EmbeddedResource Include="AdvHD\PackARCWidget.resx">
+      <DependentUpon>PackARCWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="AdvHD\PackARCOptions.zh-Hans.resx">
-      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    <EmbeddedResource Include="AdvHD\PackARCWidget.zh-Hans.resx">
+      <DependentUpon>PackARCWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AdvHD\UnpackARCOptions.resx">
-      <DependentUpon>UnpackARCOptions.cs</DependentUpon>
+    <EmbeddedResource Include="AdvHD\UnpackARCWidget.resx">
+      <DependentUpon>UnpackARCWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="AdvHD\UnpackARCOptions.zh-Hans.resx">
-      <DependentUpon>UnpackARCOptions.cs</DependentUpon>
+    <EmbeddedResource Include="AdvHD\UnpackARCWidget.zh-Hans.resx">
+      <DependentUpon>UnpackARCWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Ai6Win\PackARCOptions.resx">
-      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Ai6Win\PackARCWidget.resx">
+      <DependentUpon>PackARCWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Ai6Win\PackARCOptions.zh-Hans.resx">
-      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Ai6Win\PackARCWidget.zh-Hans.resx">
+      <DependentUpon>PackARCWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AnimeGameSystem\UnpackDATOptions.resx">
-      <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    <EmbeddedResource Include="AnimeGameSystem\UnpackDATWidget.resx">
+      <DependentUpon>UnpackDATWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="AnimeGameSystem\UnpackDATOptions.zh-Hans.resx">
-      <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    <EmbeddedResource Include="AnimeGameSystem\UnpackDATWidget.zh-Hans.resx">
+      <DependentUpon>UnpackDATWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Artemis\PackPFSOptions.resx">
-      <DependentUpon>PackPFSOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Artemis\PackPFSWidget.resx">
+      <DependentUpon>PackPFSWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Artemis\PackPFSOptions.zh-Hans.resx">
-      <DependentUpon>PackPFSOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Artemis\PackPFSWidget.zh-Hans.resx">
+      <DependentUpon>PackPFSWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BiShop\PackBSAOptions.resx">
-      <DependentUpon>PackBSAOptions.cs</DependentUpon>
+    <EmbeddedResource Include="BiShop\PackBSAWidget.resx">
+      <DependentUpon>PackBSAWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BiShop\PackBSAOptions.zh-Hans.resx">
-      <DependentUpon>PackBSAOptions.cs</DependentUpon>
+    <EmbeddedResource Include="BiShop\PackBSAWidget.zh-Hans.resx">
+      <DependentUpon>PackBSAWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cmvs\PackCPZOptions.resx">
-      <DependentUpon>PackCPZOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Cmvs\PackCPZWidget.resx">
+      <DependentUpon>PackCPZWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Cmvs\PackCPZOptions.zh-Hans.resx">
-      <DependentUpon>PackCPZOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Cmvs\PackCPZWidget.zh-Hans.resx">
+      <DependentUpon>PackCPZWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Ethornell\PackARCOptions.resx">
-      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Ethornell\PackARCWidget.resx">
+      <DependentUpon>PackARCWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Ethornell\PackARCOptions.zh-Hans.resx">
-      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Ethornell\PackARCWidget.zh-Hans.resx">
+      <DependentUpon>PackARCWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GsPack\UnpackPAKOptions.resx">
-      <DependentUpon>UnpackPAKOptions.cs</DependentUpon>
+    <EmbeddedResource Include="GsPack\UnpackPAKWidget.resx">
+      <DependentUpon>UnpackPAKWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GsPack\UnpackPAKOptions.zh-Hans.resx">
-      <DependentUpon>UnpackPAKOptions.cs</DependentUpon>
+    <EmbeddedResource Include="GsPack\UnpackPAKWidget.zh-Hans.resx">
+      <DependentUpon>UnpackPAKWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InnocentGrey\PackIGAOptions.resx">
-      <DependentUpon>PackIGAOptions.cs</DependentUpon>
+    <EmbeddedResource Include="InnocentGrey\PackIGAWidget.resx">
+      <DependentUpon>PackIGAWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="InnocentGrey\PackIGAOptions.zh-Hans.resx">
-      <DependentUpon>PackIGAOptions.cs</DependentUpon>
+    <EmbeddedResource Include="InnocentGrey\PackIGAWidget.zh-Hans.resx">
+      <DependentUpon>PackIGAWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InnocentGrey\UnpackIGAOptions.resx">
-      <DependentUpon>UnpackIGAOptions.cs</DependentUpon>
+    <EmbeddedResource Include="InnocentGrey\UnpackIGAWidget.resx">
+      <DependentUpon>UnpackIGAWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="InnocentGrey\UnpackIGAOptions.zh-Hans.resx">
-      <DependentUpon>UnpackIGAOptions.cs</DependentUpon>
+    <EmbeddedResource Include="InnocentGrey\UnpackIGAWidget.zh-Hans.resx">
+      <DependentUpon>UnpackIGAWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Kirikiri\PackXP3Options.resx">
-      <DependentUpon>PackXP3Options.cs</DependentUpon>
+    <EmbeddedResource Include="Kirikiri\PackXP3Widget.resx">
+      <DependentUpon>PackXP3Widget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Kirikiri\PackXP3Options.zh-Hans.resx">
-      <DependentUpon>PackXP3Options.cs</DependentUpon>
+    <EmbeddedResource Include="Kirikiri\PackXP3Widget.zh-Hans.resx">
+      <DependentUpon>PackXP3Widget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Majiro\PackARCOptions.resx">
-      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Majiro\PackARCWidget.resx">
+      <DependentUpon>PackARCWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Majiro\PackARCOptions.zh-Hans.resx">
-      <DependentUpon>PackARCOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Majiro\PackARCWidget.zh-Hans.resx">
+      <DependentUpon>PackARCWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Majiro\UnpackARCOptions.resx">
-      <DependentUpon>UnpackARCOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Majiro\UnpackARCWidget.resx">
+      <DependentUpon>UnpackARCWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Majiro\UnpackARCOptions.zh-Hans.resx">
-      <DependentUpon>UnpackARCOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Majiro\UnpackARCWidget.zh-Hans.resx">
+      <DependentUpon>UnpackARCWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NeXAS\PackPACOptions.resx">
-      <DependentUpon>PackPACOptions.cs</DependentUpon>
+    <EmbeddedResource Include="NeXAS\PackPACWidget.resx">
+      <DependentUpon>PackPACWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NeXAS\PackPACOptions.zh-Hans.resx">
-      <DependentUpon>PackPACOptions.cs</DependentUpon>
+    <EmbeddedResource Include="NeXAS\PackPACWidget.zh-Hans.resx">
+      <DependentUpon>PackPACWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NitroPlus\PackPAKOptions.resx">
-      <DependentUpon>PackPAKOptions.cs</DependentUpon>
+    <EmbeddedResource Include="NitroPlus\PackPAKWidget.resx">
+      <DependentUpon>PackPAKWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="NitroPlus\PackPAKOptions.zh-Hans.resx">
-      <DependentUpon>PackPAKOptions.cs</DependentUpon>
+    <EmbeddedResource Include="NitroPlus\PackPAKWidget.zh-Hans.resx">
+      <DependentUpon>PackPAKWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="NScripter\UnpackNS2Options.resx">
-      <DependentUpon>UnpackNS2Options.cs</DependentUpon>
+    <EmbeddedResource Include="NScripter\UnpackNS2Widget.resx">
+      <DependentUpon>UnpackNS2Widget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="NScripter\UnpackNS2Options.zh-Hans.resx">
-      <DependentUpon>UnpackNS2Options.cs</DependentUpon>
+    <EmbeddedResource Include="NScripter\UnpackNS2Widget.zh-Hans.resx">
+      <DependentUpon>UnpackNS2Widget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PJADV\PackDATOptions.resx">
-      <DependentUpon>PackDATOptions.cs</DependentUpon>
+    <EmbeddedResource Include="PJADV\PackDATWidget.resx">
+      <DependentUpon>PackDATWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PJADV\PackDATOptions.zh-Hans.resx">
-      <DependentUpon>PackDATOptions.cs</DependentUpon>
+    <EmbeddedResource Include="PJADV\PackDATWidget.zh-Hans.resx">
+      <DependentUpon>PackDATWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PJADV\UnpackDATOptions.resx">
-      <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    <EmbeddedResource Include="PJADV\UnpackDATWidget.resx">
+      <DependentUpon>UnpackDATWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="PJADV\UnpackDATOptions.zh-Hans.resx">
-      <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    <EmbeddedResource Include="PJADV\UnpackDATWidget.zh-Hans.resx">
+      <DependentUpon>UnpackDATWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pkware\UnpackPkwareOptions.resx">
-      <DependentUpon>UnpackPkwareOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Pkware\UnpackPkwareWidget.resx">
+      <DependentUpon>UnpackPkwareWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pkware\UnpackPkwareOptions.zh-Hans.resx">
-      <DependentUpon>UnpackPkwareOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Pkware\UnpackPkwareWidget.zh-Hans.resx">
+      <DependentUpon>UnpackPkwareWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Qlie\PackPACKOptions.resx">
-      <DependentUpon>PackPACKOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Qlie\PackPACKWidget.resx">
+      <DependentUpon>PackPACKWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Qlie\PackPACKOptions.zh-Hans.resx">
-      <DependentUpon>PackPACKOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Qlie\PackPACKWidget.zh-Hans.resx">
+      <DependentUpon>PackPACKWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Qlie\UnpackPACKOptions.resx">
-      <DependentUpon>UnpackPACKOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Qlie\UnpackPACKWidget.resx">
+      <DependentUpon>UnpackPACKWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Qlie\UnpackPACKOptions.zh-Hans.resx">
-      <DependentUpon>UnpackPACKOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Qlie\UnpackPACKWidget.zh-Hans.resx">
+      <DependentUpon>UnpackPACKWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RPGMaker\PackRGSSOptions.resx">
-      <DependentUpon>PackRGSSOptions.cs</DependentUpon>
+    <EmbeddedResource Include="RPGMaker\PackRGSSWidget.resx">
+      <DependentUpon>PackRGSSWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="RPGMaker\PackRGSSOptions.zh-Hans.resx">
-      <DependentUpon>PackRGSSOptions.cs</DependentUpon>
+    <EmbeddedResource Include="RPGMaker\PackRGSSWidget.zh-Hans.resx">
+      <DependentUpon>PackRGSSWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Seraph\UnpackDATOptions.resx">
-      <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Seraph\UnpackDATWidget.resx">
+      <DependentUpon>UnpackDATWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Seraph\UnpackDATOptions.zh-Hans.resx">
-      <DependentUpon>UnpackDATOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Seraph\UnpackDATWidget.zh-Hans.resx">
+      <DependentUpon>UnpackDATWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Siglus\UnpackPCKOptions.resx">
-      <DependentUpon>UnpackPCKOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Siglus\UnpackPCKWidget.resx">
+      <DependentUpon>UnpackPCKWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Siglus\UnpackPCKOptions.zh-Hans.resx">
-      <DependentUpon>UnpackPCKOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Siglus\UnpackPCKWidget.zh-Hans.resx">
+      <DependentUpon>UnpackPCKWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Softpal\PackPACOptions.resx">
-      <DependentUpon>PackPACOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Softpal\PackPACWidget.resx">
+      <DependentUpon>PackPACWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Softpal\PackPACOptions.zh-Hans.resx">
-      <DependentUpon>PackPACOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Softpal\PackPACWidget.zh-Hans.resx">
+      <DependentUpon>PackPACWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Softpal\UnpackPACOptions.resx">
-      <DependentUpon>UnpackPACOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Softpal\UnpackPACWidget.resx">
+      <DependentUpon>UnpackPACWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Softpal\UnpackPACOptions.zh-Hans.resx">
-      <DependentUpon>UnpackPACOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Softpal\UnpackPACWidget.zh-Hans.resx">
+      <DependentUpon>UnpackPACWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SystemNNN\PackGPKOptions.resx">
-      <DependentUpon>PackGPKOptions.cs</DependentUpon>
+    <EmbeddedResource Include="SystemNNN\PackGPKWidget.resx">
+      <DependentUpon>PackGPKWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SystemNNN\PackGPKOptions.zh-Hans.resx">
-      <DependentUpon>PackGPKOptions.cs</DependentUpon>
+    <EmbeddedResource Include="SystemNNN\PackGPKWidget.zh-Hans.resx">
+      <DependentUpon>PackGPKWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Triangle\PackCGFOptions.resx">
-      <DependentUpon>PackCGFOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Triangle\PackCGFWidget.resx">
+      <DependentUpon>PackCGFWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Triangle\PackCGFOptions.zh-Hans.resx">
-      <DependentUpon>PackCGFOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Triangle\PackCGFWidget.zh-Hans.resx">
+      <DependentUpon>PackCGFWidget.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Yuris\UnpackYPFOptions.resx">
-      <DependentUpon>UnpackYPFOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Yuris\UnpackYPFWidget.resx">
+      <DependentUpon>UnpackYPFWidget.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Yuris\UnpackYPFOptions.zh-Hans.resx">
-      <DependentUpon>UnpackYPFOptions.cs</DependentUpon>
+    <EmbeddedResource Include="Yuris\UnpackYPFWidget.zh-Hans.resx">
+      <DependentUpon>UnpackYPFWidget.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -14,9 +14,9 @@ namespace ArcFormats.Artemis
 {
     public class PFS : ArcFormat
     {
-        public override OptionsTemplate PackExtraOptions => PackPFSOptions.Instance;
+        public override WidgetTemplate PackWidget => PackPFSWidget.Instance;
 
-        private VersionOptions Options => PackPFSOptions.Instance.Options;
+        private VersionOptions Options => PackPFSWidget.Instance.Options;
 
         private readonly EncodingSetting PfsEncoding = new EncodingSetting("ArtemisPfsEncoding");
 

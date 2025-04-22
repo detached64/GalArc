@@ -12,18 +12,18 @@ namespace ArcFormats.Qlie
 {
     public class PACK : ArcFormat
     {
-        public override OptionsTemplate UnpackExtraOptions => UnpackPACKOptions.Instance;
+        public override WidgetTemplate UnpackWidget => UnpackPACKWidget.Instance;
 
-        public override OptionsTemplate PackExtraOptions => PackPACKOptions.Instance;
+        public override WidgetTemplate PackWidget => PackPACKWidget.Instance;
 
-        private QlieOptions UnpackOptions => UnpackPACKOptions.Instance.Options;
+        private QlieOptions UnpackOptions => UnpackPACKWidget.Instance.Options;
 
-        private VersionOptions PackOptions => PackPACKOptions.Instance.Options;
+        private VersionOptions PackOptions => PackPACKWidget.Instance.Options;
 
         private QlieScheme Scheme
         {
-            get => UnpackPACKOptions.Instance.Scheme;
-            set => UnpackPACKOptions.Instance.Scheme = value;
+            get => UnpackPACKWidget.Instance.Scheme;
+            set => UnpackPACKWidget.Instance.Scheme = value;
         }
 
         private readonly string HeaderMagicPattern = "^FilePackVer[0-9]\\.[0-9]$";
