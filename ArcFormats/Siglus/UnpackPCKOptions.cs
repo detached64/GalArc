@@ -1,4 +1,5 @@
 using GalArc.Controls;
+using GalArc.Database;
 using GalArc.Strings;
 using System;
 using System.Reflection;
@@ -9,6 +10,10 @@ namespace ArcFormats.Siglus
     public partial class UnpackPCKOptions : OptionsTemplate
     {
         public static UnpackPCKOptions Instance { get; } = new UnpackPCKOptions();
+
+        public SiglusOptions Options = new SiglusOptions();
+
+        public SiglusScheme Scheme;
 
         public UnpackPCKOptions()
         {
@@ -29,11 +34,11 @@ namespace ArcFormats.Siglus
         {
             this.combSchemes.Items.Clear();
             this.combSchemes.Items.Add(GUIStrings.ItemTryEveryEnc);
-            if (ScenePCK.Scheme?.KnownKeys != null)
+            if (Scheme?.KnownKeys != null)
             {
-                foreach (var scheme in ScenePCK.Scheme.KnownKeys)
+                foreach (var s in Scheme.KnownKeys)
                 {
-                    this.combSchemes.Items.Add(scheme.Key);
+                    this.combSchemes.Items.Add(s.Key);
                 }
             }
             this.combSchemes.SelectedIndex = 0;
@@ -44,25 +49,31 @@ namespace ArcFormats.Siglus
             switch (this.combSchemes.SelectedIndex)
             {
                 case 0:
-                    ScenePCK.SelectedKey = null;
-                    ScenePCK.TryEachKey = true;
+                    Options.TryEachKey = true;
+                    Options.Key = null;
                     this.lbKey.Text = string.Empty;
                     break;
                 default:
-                    byte[] key = ScenePCK.Scheme.KnownKeys[this.combSchemes.Text];
+                    byte[] key = Scheme.KnownKeys[this.combSchemes.Text];
                     try
                     {
-                        ScenePCK.SelectedKey = key;
                         this.lbKey.Text = string.Format(LogStrings.Key, BitConverter.ToString(key));
+                        Options.Key = key;
                     }
                     catch
                     {
-                        ScenePCK.SelectedKey = null;
                         this.lbKey.Text = LogStrings.KeyParseError;
+                        Options.Key = null;
                     }
-                    ScenePCK.TryEachKey = false;
+                    Options.TryEachKey = false;
                     break;
             }
         }
+    }
+
+    public class SiglusOptions : ArcOptions
+    {
+        public byte[] Key { get; set; }
+        public bool TryEachKey { get; set; }
     }
 }

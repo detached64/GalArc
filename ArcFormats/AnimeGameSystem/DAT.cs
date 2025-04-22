@@ -14,9 +14,13 @@ namespace ArcFormats.AnimeGameSystem
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackDATOptions.Instance;
 
-        internal static AGSScheme Scheme;
+        private AGSOptions UnpackOptions => UnpackDATOptions.Instance.Options;
 
-        internal static AGSScheme.AGSFileMap SelectedScheme;
+        private AGSScheme Scheme
+        {
+            get => UnpackDATOptions.Instance.Scheme;
+            set => UnpackDATOptions.Instance.Scheme = value;
+        }
 
         private const string Magic = "pack";
 
@@ -24,10 +28,10 @@ namespace ArcFormats.AnimeGameSystem
         {
             AGSScheme.Key key = null;
             bool isXored = Scheme != null &&
-                SelectedScheme != null &&
+                UnpackOptions.FileMap != null &&
                 Scheme.EncryptedArchives.Any(s => StringComparer.OrdinalIgnoreCase
                 .Equals(s, Path.GetFileName(filePath))) &&
-                SelectedScheme.FileMap.TryGetValue(Path.GetFileName(filePath), out key);
+                UnpackOptions.FileMap.TryGetValue(Path.GetFileName(filePath), out key);
             using (FileStream fs = File.OpenRead(filePath))
             {
                 using (BinaryReader br = new BinaryReader(fs))

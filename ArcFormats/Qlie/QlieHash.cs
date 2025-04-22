@@ -1,8 +1,10 @@
 using GalArc.Logs;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using Utility.Extensions;
 
 namespace ArcFormats.Qlie
 {
@@ -152,6 +154,94 @@ namespace ArcFormats.Qlie
         private bool IsSaneCount(int count)
         {
             return count > 0 && count < 0x10000;
+        }
+    }
+
+    internal class QlieHashWriter
+    {
+        private readonly string KeyFileName = "pack_keyfile_kfueheish15538fa9or.key";
+        private readonly List<QlieEntry> Entries;
+        private readonly bool IsUnicode;
+        public int HashVersion { get; }
+
+        public QlieHashWriter(List<QlieEntry> entries, int version, bool is_unicode)
+        {
+            this.Entries = entries;
+            if (version < 10 || version > 14)
+            {
+                throw new ArgumentException("Invalid hash version.");
+            }
+            HashVersion = version;
+            IsUnicode = is_unicode;
+        }
+
+        private byte[] GetHashData()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    long index = 1;
+                    foreach (QlieEntry entry in Entries)
+                    {
+                        bw.Write((ushort)(IsUnicode ? entry.RawName.Length / 2 : entry.RawName.Length));
+                        bw.Write(entry.RawName);
+                        if (entry.Name == KeyFileName)   // key file should have index 0
+                        {
+                            bw.Write(0);
+                        }
+                        else
+                        {
+                            bw.Write(4 * index);
+                            index++;
+                        }
+                        bw.Write(entry.Hash);
+                    }
+                    for (int i = 0; i < Entries.Count; i++)
+                    {
+                        bw.Write(i);
+                    }
+                }
+                return ms.ToArray();
+            }
+        }
+
+        public byte[] GetHash()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.WritePaddedString($"HashVer{HashVersion / 10}.{HashVersion % 10}", 16);
+                    bw.Write(HashVersion > 12 ? 0x100 : 0x200);
+                    bw.Write(Entries.Count);
+                    bw.Write(IsUnicode ? 4 * Entries.Count : 2 * Entries.Count);
+                    byte[] hashData = GetHashData();
+                    bw.Write(hashData.Length);
+                    if (HashVersion == 14)
+                    {
+                        bw.Write(0);
+                        bw.Write(new byte[0x20]);
+                    }
+                    bw.Write(hashData);
+                }
+                return ms.ToArray();
+            }
+        }
+
+        private uint ComputeNameHash(string name)
+        {
+            uint hash = 0;
+            byte[] bytes = Encoding.Unicode.GetBytes(name);
+            int index = 1;
+            for (int i = 0; i < bytes.Length; i += 2)
+            {
+                int cur_char = bytes[i] | (bytes[i + 1] << 8);
+                int shift = index & 7;
+                hash = (uint)(((cur_char << shift) + hash) & 0x3FFFFFFF);
+                index++;
+            }
+            return hash;
         }
     }
 }

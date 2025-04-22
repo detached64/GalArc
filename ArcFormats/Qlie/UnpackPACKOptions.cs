@@ -1,4 +1,5 @@
 using GalArc.Controls;
+using GalArc.Database;
 using GalArc.Strings;
 using System;
 using System.Reflection;
@@ -9,6 +10,10 @@ namespace ArcFormats.Qlie
     public partial class UnpackPACKOptions : OptionsTemplate
     {
         public static UnpackPACKOptions Instance { get; } = new UnpackPACKOptions();
+
+        public QlieOptions Options = new QlieOptions();
+
+        public QlieScheme Scheme;
 
         public UnpackPACKOptions()
         {
@@ -29,9 +34,9 @@ namespace ArcFormats.Qlie
         {
             this.combSchemes.Items.Clear();
             this.combSchemes.Items.Add(GUIStrings.ItemDefaultEnc);
-            if (PACK.Scheme?.KnownKeys != null)
+            if (Scheme?.KnownKeys != null)
             {
-                foreach (var scheme in PACK.Scheme.KnownKeys)
+                foreach (var scheme in Scheme.KnownKeys)
                 {
                     this.combSchemes.Items.Add(scheme.Key);
                 }
@@ -44,10 +49,10 @@ namespace ArcFormats.Qlie
             switch (combSchemes.SelectedIndex)
             {
                 case 0:
-                    PACK.SelectedKey = null;
+                    Options.Key = null;
                     break;
                 default:
-                    PACK.SelectedKey = PACK.Scheme.KnownKeys[combSchemes.Text];
+                    Options.Key = Scheme.KnownKeys[combSchemes.Text];
                     break;
             }
         }
@@ -59,17 +64,25 @@ namespace ArcFormats.Qlie
 
         private void txtPath_TextChanged(object sender, EventArgs e)
         {
-            PACK.FKeyPath = this.txtPath.Text;
+            Options.FKeyPath = this.txtPath.Text;
         }
 
         private void chkbxSaveHash_CheckedChanged(object sender, EventArgs e)
         {
-            PACK.SaveHash = this.chkbxSaveHash.Checked;
+            Options.SaveHash = this.chkbxSaveHash.Checked;
         }
 
         private void lbSaveKey_CheckedChanged(object sender, EventArgs e)
         {
-            PACK.SaveKey = this.chkbxSaveKey.Checked;
+            Options.SaveKey = this.chkbxSaveKey.Checked;
         }
+    }
+
+    public class QlieOptions : ArcOptions
+    {
+        public byte[] Key { get; set; }
+        public string FKeyPath { get; set; }
+        public bool SaveHash { get; set; }
+        public bool SaveKey { get; set; }
     }
 }

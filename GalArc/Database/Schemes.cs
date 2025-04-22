@@ -25,6 +25,17 @@ namespace GalArc.Database
         public Dictionary<string, string> KnownKeys { get; set; }
     }
 
+    public class PkwareScheme : ArcScheme
+    {
+        public class PkwareKey
+        {
+            public string ContentKey { get; set; }
+            public string PlayerKey { get; set; }
+        }
+
+        public Dictionary<string, PkwareKey> KnownKeys { get; set; }
+    }
+
     public class QlieScheme : ArcScheme
     {
         public Dictionary<string, byte[]> KnownKeys { get; set; }

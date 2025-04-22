@@ -28,6 +28,15 @@ namespace GalArc.Settings
         [UserScopedSetting]
         [DebuggerNonUserCode]
         [DefaultSettingValue("932")]
+        public int PkwarePkgEncoding
+        {
+            get => (int)this[nameof(PkwarePkgEncoding)];
+            set => this[nameof(PkwarePkgEncoding)] = value;
+        }
+
+        [UserScopedSetting]
+        [DebuggerNonUserCode]
+        [DefaultSettingValue("932")]
         public int NexasPacEncoding
         {
             get => (int)this[nameof(NexasPacEncoding)];

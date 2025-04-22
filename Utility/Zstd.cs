@@ -18,7 +18,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-using EasyCompressor;
+using ZstdNet;
 
 namespace Utility.Compression
 {
@@ -26,14 +26,18 @@ namespace Utility.Compression
     {
         public static byte[] Decompress(byte[] data)
         {
-            ICompressor compressor = new ZstdSharpCompressor();
-            return compressor.Decompress(data);
+            using (var decompressor = new Decompressor())
+            {
+                return decompressor.Unwrap(data);
+            }
         }
 
         public static byte[] Compress(byte[] data)
         {
-            ICompressor compressor = new ZstdSharpCompressor();
-            return compressor.Compress(data);
+            using (var compressor = new Compressor())
+            {
+                return compressor.Wrap(data);
+            }
         }
     }
 }

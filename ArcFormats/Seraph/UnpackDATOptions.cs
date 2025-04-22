@@ -1,4 +1,5 @@
 using GalArc.Controls;
+using GalArc.Database;
 using System;
 using System.Drawing;
 using System.Text.RegularExpressions;
@@ -9,11 +10,9 @@ namespace ArcFormats.Seraph
     {
         public static UnpackDATOptions Instance { get; } = new UnpackDATOptions();
 
-        internal static string SpecifiedIndexOffsetString = "00000000";
+        public SeraphOptions Options = new SeraphOptions();
 
-        internal static bool UseSpecifiedIndexOffset = false;
-
-        internal static bool UseBrutalForce = true;
+        public SeraphScheme Scheme;
 
         public UnpackDATOptions()
         {
@@ -28,14 +27,14 @@ namespace ArcFormats.Seraph
         private void chkbxSpecifyIndex_CheckedChanged(object sender, EventArgs e)
         {
             this.txtIndexOffset.Enabled = this.chkbxSpecifyIndex.Checked;
-            UseSpecifiedIndexOffset = this.chkbxSpecifyIndex.Checked;
+            Options.UseSpecifiedIndexOffset = this.chkbxSpecifyIndex.Checked;
         }
 
         private void txtIndexOffset_TextChanged(object sender, EventArgs e)
         {
             if (IsValidHex(this.txtIndexOffset.Text))
             {
-                SpecifiedIndexOffsetString = this.txtIndexOffset.Text;
+                Options.SpecifiedIndexOffsetString = this.txtIndexOffset.Text;
             }
         }
 
@@ -46,7 +45,14 @@ namespace ArcFormats.Seraph
 
         private void chkbxBrutalForce_CheckedChanged(object sender, EventArgs e)
         {
-            UseBrutalForce = this.chkbxBrutalForce.Checked;
+            Options.UseBrutalForce = this.chkbxBrutalForce.Checked;
         }
+    }
+
+    public class SeraphOptions : ArcOptions
+    {
+        public bool UseBrutalForce { get; set; } = true;
+        public bool UseSpecifiedIndexOffset { get; set; }
+        public string SpecifiedIndexOffsetString { get; set; } = "00000000";
     }
 }

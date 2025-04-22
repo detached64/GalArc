@@ -1,4 +1,5 @@
 using GalArc.Controls;
+using GalArc.Database;
 using GalArc.Strings;
 using System;
 using System.Reflection;
@@ -9,6 +10,10 @@ namespace ArcFormats.NScripter
     public partial class UnpackNS2Options : OptionsTemplate
     {
         public static UnpackNS2Options Instance { get; } = new UnpackNS2Options();
+
+        public Ns2Options Options = new Ns2Options();
+
+        public Ns2Scheme Scheme;
 
         public UnpackNS2Options()
         {
@@ -29,9 +34,9 @@ namespace ArcFormats.NScripter
         {
             this.combSchemes.Items.Clear();
             this.combSchemes.Items.Add(GUIStrings.ItemNoEnc);
-            if (NS2.Scheme?.KnownKeys != null)
+            if (Scheme?.KnownKeys != null)
             {
-                foreach (var key in NS2.Scheme.KnownKeys)
+                foreach (var key in Scheme.KnownKeys)
                 {
                     this.combSchemes.Items.Add(key.Key);
                 }
@@ -44,12 +49,17 @@ namespace ArcFormats.NScripter
             switch (combSchemes.SelectedIndex)
             {
                 case 0:
-                    NS2.Key = null;
+                    Options.Key = null;
                     break;
                 default:
-                    NS2.Key = NS2.Scheme.KnownKeys[combSchemes.Text];
+                    Options.Key = Scheme.KnownKeys[combSchemes.Text];
                     break;
             }
         }
+    }
+
+    public class Ns2Options
+    {
+        public string Key { get; set; }
     }
 }

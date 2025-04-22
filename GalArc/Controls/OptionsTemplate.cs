@@ -43,4 +43,13 @@ namespace GalArc.Controls
             InitializeComponent();
         }
     }
+
+    public class ArcOptions
+    {
+    }
+
+    public class VersionOptions : ArcOptions
+    {
+        public string Version { get; set; }
+    }
 }

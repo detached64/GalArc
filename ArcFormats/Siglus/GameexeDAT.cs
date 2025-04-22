@@ -21,7 +21,7 @@ namespace ArcFormats.Siglus
             }
             bool flag = br.ReadUInt32() == 1;
             entry.Data = br.ReadBytes((int)br.BaseStream.Length - 8);
-            byte[] key = flag ? (TryEachKey ? TryAllSchemes(entry, 1) : SelectedKey) : null;
+            byte[] key = flag ? (Options.TryEachKey ? TryAllSchemes(entry, 1) : Options.Key) : null;
 
             Logger.InitBar(1);
             SiglusUtils.DecryptWithKey(entry.Data, key);

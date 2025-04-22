@@ -211,6 +211,8 @@ namespace ArcFormats.Qlie
             {
                 case "1.0":
                     return new Encryption10();
+                case "3.1":
+                    return new Encryption31();
                 default:
                     throw new ArgumentException("Unknown or not implemented version.", nameof(version));
             }

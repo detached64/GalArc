@@ -14,6 +14,14 @@ namespace ArcFormats.Siglus
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackPCKOptions.Instance;
 
+        protected SiglusOptions Options => UnpackPCKOptions.Instance.Options;
+
+        protected SiglusScheme Scheme
+        {
+            get => UnpackPCKOptions.Instance.Scheme;
+            set => UnpackPCKOptions.Instance.Scheme = value;
+        }
+
         private class ScenePckHeader
         {
             public int FileCount { get; set; }
@@ -35,12 +43,6 @@ namespace ArcFormats.Siglus
             public uint PackedLength { get; set; }
             public uint UnpackedLength { get; set; }
         }
-
-        internal static SiglusScheme Scheme;
-
-        internal static byte[] SelectedKey;
-
-        internal static bool TryEachKey;
 
         public override void Unpack(string filePath, string folderPath)
         {
@@ -88,7 +90,7 @@ namespace ArcFormats.Siglus
             }
             Directory.CreateDirectory(folderPath);
 
-            byte[] key = header.UseExtraKey ? (TryEachKey ? TryAllSchemes(entries[0], 0) : SelectedKey) : null;
+            byte[] key = header.UseExtraKey ? (Options.TryEachKey ? TryAllSchemes(entries[0], 0) : Options.Key) : null;
             foreach (ScenePckEntry entry in entries)
             {
                 SiglusUtils.DecryptWithKey(entry.Data, key);

@@ -24,6 +24,7 @@ namespace ArcFormats.Escude
             switch (br.ReadChar() - '0')
             {
                 case 1:
+                    Logger.ShowVersion("bin", 1);
                     break;
                 case 2:
                     Logger.ShowVersion("bin", 2);

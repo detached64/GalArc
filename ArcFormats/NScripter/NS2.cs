@@ -16,9 +16,13 @@ namespace ArcFormats.NScripter
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackNS2Options.Instance;
 
-        internal static Ns2Scheme Scheme;
+        private Ns2Options Options => UnpackNS2Options.Instance.Options;
 
-        internal static string Key;
+        private Ns2Scheme Scheme
+        {
+            get => UnpackNS2Options.Instance.Scheme;
+            set => UnpackNS2Options.Instance.Scheme = value;
+        }
 
         private class Ns2Entry : PackedEntry
         {
@@ -32,11 +36,11 @@ namespace ArcFormats.NScripter
             uint dataOffset = BitConverter.ToUInt32(data, 0);
             if (dataOffset > data.Length)
             {
-                if (string.IsNullOrEmpty(Key))
+                if (string.IsNullOrEmpty(Options.Key))
                 {
                     throw new InvalidArchiveException(LogStrings.NeedDec);
                 }
-                Ns2Decryptor decryptor = new Ns2Decryptor(data, Encoding.ASCII.GetBytes(Key));
+                Ns2Decryptor decryptor = new Ns2Decryptor(data, Encoding.ASCII.GetBytes(Options.Key));
                 decryptor.Decrypt();
             }
             MemoryStream ms = new MemoryStream(data);

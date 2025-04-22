@@ -1,6 +1,8 @@
 using GalArc.Controls;
+using GalArc.Database;
 using GalArc.Strings;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -9,6 +11,10 @@ namespace ArcFormats.AnimeGameSystem
     public partial class UnpackDATOptions : OptionsTemplate
     {
         public static UnpackDATOptions Instance { get; } = new UnpackDATOptions();
+
+        public AGSOptions Options = new AGSOptions();
+
+        public AGSScheme Scheme;
 
         public UnpackDATOptions()
         {
@@ -29,9 +35,9 @@ namespace ArcFormats.AnimeGameSystem
         {
             this.combSchemes.Items.Clear();
             this.combSchemes.Items.Add(GUIStrings.ItemNoEnc);
-            if (DAT.Scheme?.KnownSchemes != null)
+            if (Scheme?.KnownSchemes != null)
             {
-                foreach (var scheme in DAT.Scheme.KnownSchemes)
+                foreach (var scheme in Scheme.KnownSchemes)
                 {
                     this.combSchemes.Items.Add(scheme.Key);
                 }
@@ -45,13 +51,18 @@ namespace ArcFormats.AnimeGameSystem
             {
                 try
                 {
-                    DAT.SelectedScheme = DAT.Scheme.KnownSchemes[this.combSchemes.SelectedItem.ToString()];
+                    Options.FileMap = Scheme.KnownSchemes[this.combSchemes.SelectedItem.ToString()].FileMap;
                 }
                 catch
                 {
-                    DAT.SelectedScheme = null;
+                    Options.FileMap = null;
                 }
             }
         }
+    }
+
+    public class AGSOptions : ArcOptions
+    {
+        public Dictionary<string, AGSScheme.Key> FileMap;
     }
 }

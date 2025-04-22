@@ -16,6 +16,14 @@ namespace ArcFormats.Qlie
 
         public override OptionsTemplate PackExtraOptions => PackPACKOptions.Instance;
 
+        private QlieOptions UnpackOptions => UnpackPACKOptions.Instance.Options;
+
+        private QlieScheme Scheme
+        {
+            get => UnpackPACKOptions.Instance.Scheme;
+            set => UnpackPACKOptions.Instance.Scheme = value;
+        }
+
         private readonly string HeaderMagicPattern = "^FilePackVer[0-9]\\.[0-9]$";
 
         /// <summary>
@@ -31,13 +39,7 @@ namespace ArcFormats.Qlie
         /// <summary>
         /// Possible locations of key.fkey.
         /// </summary>
-        private static readonly string[] KeyLocations = { ".", "..", "..\\DLL", "DLL" };
-
-        internal static QlieScheme Scheme;
-        internal static byte[] SelectedKey;
-        internal static string FKeyPath;
-        internal static bool SaveKey = false;
-        internal static bool SaveHash = false;
+        private readonly string[] KeyLocations = { ".", "..", "..\\DLL", "DLL" };
 
         public override void Unpack(string input, string output)
         {
@@ -62,7 +64,7 @@ namespace ArcFormats.Qlie
             int minor = int.Parse(qheader.Magic.Substring(13, 1));
             int version = major * 10 + minor;
             Logger.Info($"File Pack Version: {major}.{minor}");
-            byte[] game_key = SelectedKey;
+            byte[] game_key = UnpackOptions.Key;
             QlieEncryption qenc = QlieEncryption.CreateEncryption(version, game_key);
             #endregion
 
@@ -93,7 +95,7 @@ namespace ArcFormats.Qlie
                     Logger.Info("Key magic failed to match. The archive may be corrupted.");
                 }
                 // Optional: save key
-                if (SaveKey && qkey.Key != null)
+                if (UnpackOptions.SaveKey && qkey.Key != null)
                 {
                     Directory.CreateDirectory(output);
                     File.WriteAllBytes(Path.Combine(output, "key.bin"), qkey.Key);
@@ -102,7 +104,7 @@ namespace ArcFormats.Qlie
             #endregion
 
             #region read hash
-            if (SaveHash)
+            if (UnpackOptions.SaveHash)
             {
                 byte[] rawHashData = null;
                 if (version >= 20)
@@ -286,11 +288,11 @@ namespace ArcFormats.Qlie
         private byte[] TryFindLocalKey(string input)
         {
             string folder = Path.GetDirectoryName(input);
-            if (!string.IsNullOrEmpty(FKeyPath))
+            if (!string.IsNullOrEmpty(UnpackOptions.FKeyPath))
             {
-                if (File.Exists(FKeyPath))
+                if (File.Exists(UnpackOptions.FKeyPath))
                 {
-                    return File.ReadAllBytes(FKeyPath);
+                    return File.ReadAllBytes(UnpackOptions.FKeyPath);
                 }
                 else
                 {
@@ -311,7 +313,7 @@ namespace ArcFormats.Qlie
         /// <summary>
         /// Get key from the game executable.
         /// </summary>
-        public static byte[] GetLocalKeyFromExe(string archive_path)
+        private byte[] GetLocalKeyFromExe(string archive_path)
         {
             string exe_path = Path.GetDirectoryName(Path.GetDirectoryName(archive_path));
             foreach (string file_path in Directory.GetFiles(exe_path, "*.exe", SearchOption.TopDirectoryOnly))

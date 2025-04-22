@@ -15,6 +15,14 @@ namespace ArcFormats.Seraph
     {
         public override OptionsTemplate UnpackExtraOptions => UnpackDATOptions.Instance;
 
+        private SeraphOptions Options => UnpackDATOptions.Instance.Options;
+
+        private SeraphScheme Scheme
+        {
+            get => UnpackDATOptions.Instance.Scheme;
+            set => UnpackDATOptions.Instance.Scheme = value;
+        }
+
         private class Group
         {
             public uint Offset { get; set; }
@@ -32,8 +40,6 @@ namespace ArcFormats.Seraph
 
         private HashSet<long> Indices { get; } = new HashSet<long>();
 
-        internal static SeraphScheme Scheme;
-
         public override void Unpack(string filePath, string folderPath)
         {
             string name = Path.GetFileName(filePath);
@@ -45,16 +51,16 @@ namespace ArcFormats.Seraph
                     {
                         Indices.Clear();
                         bool isGiven = false;
-                        if (UnpackDATOptions.UseBrutalForce)
+                        if (Options.UseBrutalForce)
                         {
                             Logger.Debug(LogStrings.BrutalForcing);
                             AddIndex();
                             GuessIndexArchPac(br);
                         }
-                        else if (UnpackDATOptions.UseSpecifiedIndexOffset)
+                        else if (Options.UseSpecifiedIndexOffset)
                         {
                             isGiven = true;
-                            Indices.Add(Convert.ToUInt32(UnpackDATOptions.SpecifiedIndexOffsetString, 16));
+                            Indices.Add(Convert.ToUInt32(Options.SpecifiedIndexOffsetString, 16));
                         }
                         TryReadIndexArchPac(br, isGiven);
                         ExtractArchPac(br, folderPath);
