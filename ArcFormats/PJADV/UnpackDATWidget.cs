@@ -1,5 +1,4 @@
-using ArcFormats.AdvHD;
-using GalArc.Controls;
+using GalArc.Templates;
 using System;
 
 namespace ArcFormats.PJADV
@@ -8,7 +7,7 @@ namespace ArcFormats.PJADV
     {
         public static UnpackDATWidget Instance { get; } = new UnpackDATWidget();
 
-        public AdvHDUnpackOptions Options = new AdvHDUnpackOptions();
+        public ScriptUnpackOptions Options = new ScriptUnpackOptions();
 
         public UnpackDATWidget()
         {

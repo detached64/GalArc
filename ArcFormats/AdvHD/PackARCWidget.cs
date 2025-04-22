@@ -1,4 +1,4 @@
-using GalArc.Controls;
+using GalArc.Templates;
 using System;
 
 namespace ArcFormats.AdvHD
@@ -7,7 +7,7 @@ namespace ArcFormats.AdvHD
     {
         public static PackARCWidget Instance { get; } = new PackARCWidget();
 
-        public AdvHDPackOptions Options = new AdvHDPackOptions();
+        public VersionScriptPackOptions Options = new VersionScriptPackOptions();
 
         private readonly string Versions = "1/2";
 
@@ -27,10 +27,5 @@ namespace ArcFormats.AdvHD
         {
             Options.Version = this.combVersion.Text;
         }
-    }
-
-    public class AdvHDPackOptions : VersionOptions
-    {
-        public bool EncryptScripts { get; set; } = true;
     }
 }

@@ -1,6 +1,6 @@
-namespace GalArc.Controls
+namespace GalArc.Templates
 {
-    partial class SettingsTemplate
+    partial class WidgetTemplate
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -28,14 +28,15 @@ namespace GalArc.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsTemplate));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WidgetTemplate));
             this.SuspendLayout();
             // 
-            // SettingsTemplate
+            // OptionsTemplate
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "SettingsTemplate";
+            this.DoubleBuffered = true;
+            this.Name = "OptionsTemplate";
             this.ResumeLayout(false);
 
         }

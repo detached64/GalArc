@@ -58,22 +58,23 @@
     <Compile Include="Common\Encodings.cs" />
     <Compile Include="Common\EngineInfo.cs" />
     <Compile Include="Common\Languages.cs" />
-    <Compile Include="Controls\Empty.cs">
+    <Compile Include="Templates\Empty.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Empty.Designer.cs">
+    <Compile Include="Templates\Empty.Designer.cs">
       <DependentUpon>Empty.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WidgetTemplate.cs">
+    <Compile Include="Templates\OptionsTemplates.cs" />
+    <Compile Include="Templates\WidgetTemplate.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\WidgetTemplate.Designer.cs">
+    <Compile Include="Templates\WidgetTemplate.Designer.cs">
       <DependentUpon>WidgetTemplate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SettingsTemplate.cs">
+    <Compile Include="Templates\SettingsTemplate.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\SettingsTemplate.Designer.cs">
+    <Compile Include="Templates\SettingsTemplate.Designer.cs">
       <DependentUpon>SettingsTemplate.cs</DependentUpon>
     </Compile>
     <Compile Include="Database\DatabaseConfig.cs" />
@@ -92,17 +93,17 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Logs\Logger.cs" />
-    <EmbeddedResource Include="Controls\Empty.resx">
+    <EmbeddedResource Include="Templates\Empty.resx">
       <DependentUpon>Empty.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Empty.zh-Hans.resx">
+    <EmbeddedResource Include="Templates\Empty.zh-Hans.resx">
       <DependentUpon>Empty.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\WidgetTemplate.resx">
+    <EmbeddedResource Include="Templates\WidgetTemplate.resx">
       <DependentUpon>WidgetTemplate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\SettingsTemplate.resx">
+    <EmbeddedResource Include="Templates\SettingsTemplate.resx">
       <DependentUpon>SettingsTemplate.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

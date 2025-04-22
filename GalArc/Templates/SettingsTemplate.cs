@@ -1,6 +1,6 @@
 using System.Windows.Forms;
 
-namespace GalArc.Controls
+namespace GalArc.Templates
 {
     public partial class SettingsTemplate : UserControl
     {

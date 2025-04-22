@@ -1,6 +1,6 @@
 using System.Windows.Forms;
 
-namespace GalArc.Controls
+namespace GalArc.Templates
 {
     /// <summary>
     /// The template for the extra options.
@@ -40,14 +40,5 @@ namespace GalArc.Controls
         {
             InitializeComponent();
         }
-    }
-
-    public class ArcOptions
-    {
-    }
-
-    public class VersionOptions : ArcOptions
-    {
-        public string Version { get; set; }
     }
 }

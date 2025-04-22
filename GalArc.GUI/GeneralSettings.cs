@@ -1,5 +1,5 @@
-using GalArc.Controls;
 using GalArc.Settings;
+using GalArc.Templates;
 using System;
 
 namespace GalArc.GUI

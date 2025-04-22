@@ -1,6 +1,6 @@
-using GalArc.Controls;
 using GalArc.Logs;
 using GalArc.Strings;
+using GalArc.Templates;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,8 +17,8 @@ namespace ArcFormats.AdvHD
         public override WidgetTemplate UnpackWidget => UnpackARCWidget.Instance;
         public override WidgetTemplate PackWidget => PackARCWidget.Instance;
 
-        private AdvHDUnpackOptions UnpackOptions => UnpackARCWidget.Instance.Options;
-        private AdvHDPackOptions PackOptions => PackARCWidget.Instance.Options;
+        private ScriptUnpackOptions UnpackOptions => UnpackARCWidget.Instance.Options;
+        private VersionScriptPackOptions PackOptions => PackARCWidget.Instance.Options;
 
         private readonly string[] EncryptedFileExtV1 = { "wsc", "scr" };
 

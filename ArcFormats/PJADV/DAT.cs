@@ -1,7 +1,6 @@
-using ArcFormats.AdvHD;
-using GalArc.Controls;
 using GalArc.Logs;
 using GalArc.Strings;
+using GalArc.Templates;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,8 +16,8 @@ namespace ArcFormats.PJADV
         public override WidgetTemplate UnpackWidget => UnpackDATWidget.Instance;
         public override WidgetTemplate PackWidget => PackDATWidget.Instance;
 
-        private AdvHDUnpackOptions UnpackOptions => UnpackDATWidget.Instance.Options;
-        private AdvHDPackOptions PackOptions => PackDATWidget.Instance.Options;
+        private ScriptUnpackOptions UnpackOptions => UnpackDATWidget.Instance.Options;
+        private VersionScriptPackOptions PackOptions => PackDATWidget.Instance.Options;
 
         private const string Magic = "GAMEDAT PAC";
         private readonly byte[] ScriptMagic = { 0x95, 0x6b, 0x3c, 0x9d, 0x63 };

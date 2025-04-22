@@ -1,5 +1,5 @@
 using ArcFormats.AdvHD;
-using GalArc.Controls;
+using GalArc.Templates;
 using System;
 
 namespace ArcFormats.Softpal
@@ -39,7 +39,7 @@ namespace ArcFormats.Softpal
         }
     }
 
-    public class SoftpalOptions : AdvHDPackOptions
+    public class SoftpalOptions : VersionScriptPackOptions
     {
         public bool ComputeChecksum { get; set; }
     }

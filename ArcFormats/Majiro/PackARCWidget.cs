@@ -1,5 +1,4 @@
-using ArcFormats.AdvHD;
-using GalArc.Controls;
+using GalArc.Templates;
 using System;
 
 namespace ArcFormats.Majiro
@@ -8,7 +7,7 @@ namespace ArcFormats.Majiro
     {
         public static PackARCWidget Instance { get; } = new PackARCWidget();
 
-        public AdvHDPackOptions Options = new AdvHDPackOptions();
+        public VersionScriptPackOptions Options = new VersionScriptPackOptions();
 
         private readonly string Versions = "1/2/3";
 

@@ -1,6 +1,6 @@
-using GalArc.Controls;
 using GalArc.Logs;
 using GalArc.Strings;
+using GalArc.Templates;
 using System;
 using System.IO;
 using System.Text;

@@ -1,6 +1,6 @@
-using GalArc.Controls;
 using GalArc.Logs;
 using GalArc.Strings;
+using GalArc.Templates;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +14,8 @@ namespace ArcFormats.Yuris
     public class YPF : ArcFormat
     {
         public override WidgetTemplate UnpackWidget => UnpackYPFWidget.Instance;
+
+        private ScriptUnpackOptions Options => UnpackYPFWidget.Instance.Options;
 
         private class YpfEntry : PackedEntry
         {
@@ -91,7 +93,7 @@ namespace ArcFormats.Yuris
                     }
                 }
                 Directory.CreateDirectory(Path.GetDirectoryName(entry.Path));
-                if (UnpackYPFWidget.DecryptScripts && Path.GetExtension(entry.Path) == ".ybn" && entry.Data.Length >= 4 && BitConverter.ToUInt32(entry.Data, 0) == 0x42545359)
+                if (Options.DecryptScripts && Path.GetExtension(entry.Path) == ".ybn" && entry.Data.Length >= 4 && BitConverter.ToUInt32(entry.Data, 0) == 0x42545359)
                 {
                     Logger.Debug(string.Format(LogStrings.TryDecScr, entry.Name));
                     entry.Data = TryDecryptScript(entry.Data);

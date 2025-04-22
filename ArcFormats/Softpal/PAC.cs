@@ -1,7 +1,6 @@
-using ArcFormats.AdvHD;
-using GalArc.Controls;
 using GalArc.Logs;
 using GalArc.Strings;
+using GalArc.Templates;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +17,7 @@ namespace ArcFormats.Softpal
         public override WidgetTemplate UnpackWidget => UnpackPACWidget.Instance;
         public override WidgetTemplate PackWidget => PackPACWidget.Instance;
 
-        private AdvHDUnpackOptions UnpackOptions => UnpackPACWidget.Instance.Options;
+        private ScriptUnpackOptions UnpackOptions => UnpackPACWidget.Instance.Options;
         private SoftpalOptions PackOptions => PackPACWidget.Instance.Options;
 
         private readonly byte[] Magic = Utils.HexStringToByteArray("50414320");

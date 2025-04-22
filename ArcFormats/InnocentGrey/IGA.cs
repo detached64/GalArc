@@ -1,6 +1,6 @@
-using GalArc.Controls;
 using GalArc.Logs;
 using GalArc.Strings;
+using GalArc.Templates;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -12,6 +12,9 @@ namespace ArcFormats.InnocentGrey
     {
         public override WidgetTemplate UnpackWidget => UnpackIGAWidget.Instance;
         public override WidgetTemplate PackWidget => PackIGAWidget.Instance;
+
+        protected ScriptUnpackOptions UnpackOptions => UnpackIGAWidget.Instance.Options;
+        protected ScriptPackOptions PackOptions => PackIGAWidget.Instance.Options;
 
         private const string Magic = "IGA0";
 
@@ -75,7 +78,7 @@ namespace ArcFormats.InnocentGrey
                 fs.Position = entry.DataOffset;
                 byte[] buffer = new byte[entry.Size];
                 br.Read(buffer, 0, (int)entry.Size);
-                int key = UnpackIGAWidget.DecryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
+                int key = UnpackOptions.DecryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
                 if (key != 0)
                 {
                     Logger.Debug(string.Format(LogStrings.TryDecScr, entry.Name));
@@ -149,7 +152,7 @@ namespace ArcFormats.InnocentGrey
             foreach (var entry in l)
             {
                 byte[] buffer = File.ReadAllBytes(Path.Combine(folderPath, entry.Name));
-                int key = PackIGAWidget.EncryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
+                int key = PackOptions.EncryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
                 if (key != 0)
                 {
                     Logger.Debug(string.Format(LogStrings.TryEncScr, entry.Name));

@@ -1,4 +1,4 @@
-using GalArc.Controls;
+using GalArc.Templates;
 using System;
 
 namespace ArcFormats.GsPack
@@ -7,7 +7,7 @@ namespace ArcFormats.GsPack
     {
         public static UnpackPAKWidget Instance { get; } = new UnpackPAKWidget();
 
-        internal static bool DecryptScripts = true;
+        public ScriptUnpackOptions Options = new ScriptUnpackOptions();
 
         public UnpackPAKWidget()
         {
@@ -16,7 +16,7 @@ namespace ArcFormats.GsPack
 
         private void chkbxDecScr_CheckedChanged(object sender, EventArgs e)
         {
-            DecryptScripts = this.chkbxDecScr.Checked;
+            Options.DecryptScripts = this.chkbxDecScr.Checked;
         }
     }
 }

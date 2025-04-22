@@ -1,5 +1,5 @@
-using GalArc.Controls;
 using GalArc.Database;
+using GalArc.Templates;
 using System;
 
 namespace ArcFormats.Pkware

@@ -1,4 +1,4 @@
-using GalArc.Controls;
+using GalArc.Templates;
 using System;
 
 namespace ArcFormats.InnocentGrey
@@ -7,7 +7,7 @@ namespace ArcFormats.InnocentGrey
     {
         public static PackIGAWidget Instance { get; } = new PackIGAWidget();
 
-        internal static bool EncryptScripts = true;
+        public ScriptPackOptions Options = new ScriptPackOptions();
 
         public PackIGAWidget()
         {
@@ -16,7 +16,7 @@ namespace ArcFormats.InnocentGrey
 
         private void chkbxEncScr_CheckedChanged(object sender, EventArgs e)
         {
-            EncryptScripts = this.chkbxEncScr.Checked;
+            Options.EncryptScripts = this.chkbxEncScr.Checked;
         }
     }
 }

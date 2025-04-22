@@ -1,6 +1,6 @@
-using GalArc.Controls;
 using GalArc.Logs;
 using GalArc.Strings;
+using GalArc.Templates;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +13,8 @@ namespace ArcFormats.GsPack
     public class PAK : ArcFormat
     {
         public override WidgetTemplate UnpackWidget => UnpackPAKWidget.Instance;
+
+        private ScriptUnpackOptions Options => UnpackPAKWidget.Instance.Options;
 
         private Dictionary<string, string> NameExtensionPairs => new Dictionary<string, string>
         {
@@ -119,7 +121,7 @@ namespace ArcFormats.GsPack
                 {
                     Decrypt(data, entry.Name);
                 }
-                if (UnpackPAKWidget.DecryptScripts && ext == ".scw")
+                if (Options.DecryptScripts && ext == ".scw")
                 {
                     try
                     {

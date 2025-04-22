@@ -1,5 +1,4 @@
-using ArcFormats.AdvHD;
-using GalArc.Controls;
+using GalArc.Templates;
 using System;
 
 namespace ArcFormats.Softpal
@@ -8,7 +7,7 @@ namespace ArcFormats.Softpal
     {
         public static UnpackPACWidget Instance { get; } = new UnpackPACWidget();
 
-        public AdvHDUnpackOptions Options = new AdvHDUnpackOptions();
+        public ScriptUnpackOptions Options = new ScriptUnpackOptions();
 
         public UnpackPACWidget()
         {

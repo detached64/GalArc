@@ -1,6 +1,6 @@
-using GalArc.Controls;
 using GalArc.Logs;
 using GalArc.Settings;
+using GalArc.Templates;
 using System;
 using System.Windows.Forms;
 

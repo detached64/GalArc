@@ -1,4 +1,4 @@
-using GalArc.Controls;
+using GalArc.Templates;
 using System;
 
 namespace ArcFormats.Kirikiri

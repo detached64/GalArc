@@ -1,4 +1,4 @@
-namespace GalArc.Controls
+namespace GalArc.Templates
 {
     partial class Empty
     {

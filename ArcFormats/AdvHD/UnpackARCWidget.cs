@@ -1,4 +1,4 @@
-using GalArc.Controls;
+using GalArc.Templates;
 using System;
 
 namespace ArcFormats.AdvHD
@@ -7,7 +7,7 @@ namespace ArcFormats.AdvHD
     {
         public static UnpackARCWidget Instance { get; } = new UnpackARCWidget();
 
-        public AdvHDUnpackOptions Options = new AdvHDUnpackOptions();
+        public ScriptUnpackOptions Options = new ScriptUnpackOptions();
 
         public UnpackARCWidget()
         {
@@ -18,10 +18,5 @@ namespace ArcFormats.AdvHD
         {
             Options.DecryptScripts = this.chkbxDecScr.Checked;
         }
-    }
-
-    public class AdvHDUnpackOptions : VersionOptions
-    {
-        public bool DecryptScripts { get; set; } = true;
     }
 }

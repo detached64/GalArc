@@ -1,5 +1,4 @@
-using ArcFormats.AdvHD;
-using GalArc.Controls;
+using GalArc.Templates;
 using System;
 
 namespace ArcFormats.Majiro
@@ -8,7 +7,7 @@ namespace ArcFormats.Majiro
     {
         public static UnpackARCWidget Instance { get; } = new UnpackARCWidget();
 
-        public AdvHDUnpackOptions Options = new AdvHDUnpackOptions();
+        public ScriptUnpackOptions Options = new ScriptUnpackOptions();
 
         public UnpackARCWidget()
         {

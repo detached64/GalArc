@@ -1,5 +1,5 @@
-using GalArc.Controls;
 using GalArc.Logs;
+using GalArc.Templates;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;

@@ -1,6 +1,6 @@
-using GalArc.Controls;
 using GalArc.Database;
 using GalArc.Logs;
+using GalArc.Templates;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -1,4 +1,4 @@
-using GalArc.Controls;
+using GalArc.Templates;
 using System;
 
 namespace ArcFormats.InnocentGrey
@@ -7,7 +7,7 @@ namespace ArcFormats.InnocentGrey
     {
         public static UnpackIGAWidget Instance { get; } = new UnpackIGAWidget();
 
-        internal static bool DecryptScripts = true;
+        public ScriptUnpackOptions Options = new ScriptUnpackOptions();
 
         public UnpackIGAWidget()
         {
@@ -16,7 +16,7 @@ namespace ArcFormats.InnocentGrey
 
         private void chkbxDecScr_CheckedChanged(object sender, EventArgs e)
         {
-            DecryptScripts = this.chkbxDecScr.Checked;
+            Options.DecryptScripts = this.chkbxDecScr.Checked;
         }
     }
 }

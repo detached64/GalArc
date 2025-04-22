@@ -1,6 +1,6 @@
 using System;
 
-namespace GalArc.Controls
+namespace GalArc.Templates
 {
     public partial class Empty : WidgetTemplate
     {

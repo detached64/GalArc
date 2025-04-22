@@ -1,5 +1,5 @@
-using GalArc.Controls;
 using GalArc.Logs;
+using GalArc.Templates;
 using System;
 using System.IO;
 using Utility;
@@ -10,6 +10,8 @@ namespace ArcFormats.NitroPlus
     public class PAK : ArcFormat
     {
         public override WidgetTemplate PackWidget => PackPAKWidget.Instance;
+
+        private NitroPlusOptions Options => PackPAKWidget.Instance.Options;
 
         private class NitroPakEntry : PackedEntry
         {
@@ -112,9 +114,9 @@ namespace ArcFormats.NitroPlus
                     byte[] comIndex = ZlibHelper.Compress(uncomIndex);
                     bw.Write(comIndex.Length);
 
-                    if (!string.IsNullOrEmpty(PackPAKWidget.OriginalFilePath) && File.Exists(PackPAKWidget.OriginalFilePath))
+                    if (!string.IsNullOrEmpty(Options.OriginalFilePath) && File.Exists(Options.OriginalFilePath))
                     {
-                        FileStream fs = File.OpenRead(PackPAKWidget.OriginalFilePath);
+                        FileStream fs = File.OpenRead(Options.OriginalFilePath);
                         BinaryReader br = new BinaryReader(fs);
                         fs.Position = 16;
                         byte[] reserve = br.ReadBytes(260);

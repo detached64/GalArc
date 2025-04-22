@@ -1,4 +1,4 @@
-using GalArc.Controls;
+using GalArc.Templates;
 using System;
 
 namespace ArcFormats.Yuris
@@ -7,7 +7,7 @@ namespace ArcFormats.Yuris
     {
         public static UnpackYPFWidget Instance { get; } = new UnpackYPFWidget();
 
-        internal static bool DecryptScripts = true;
+        public ScriptUnpackOptions Options = new ScriptUnpackOptions();
 
         public UnpackYPFWidget()
         {
@@ -16,7 +16,7 @@ namespace ArcFormats.Yuris
 
         private void chkbxDecScr_CheckedChanged(object sender, EventArgs e)
         {
-            DecryptScripts = this.chkbxDecScr.Checked;
+            Options.DecryptScripts = this.chkbxDecScr.Checked;
         }
     }
 }

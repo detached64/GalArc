@@ -1,4 +1,4 @@
-using GalArc.Controls;
+using GalArc.Templates;
 using System;
 using System.Drawing;
 
@@ -8,7 +8,7 @@ namespace ArcFormats.NitroPlus
     {
         public static PackPAKWidget Instance { get; } = new PackPAKWidget();
 
-        internal static string OriginalFilePath = string.Empty;
+        public NitroPlusOptions Options = new NitroPlusOptions();
 
         public PackPAKWidget()
         {
@@ -24,7 +24,12 @@ namespace ArcFormats.NitroPlus
         private void btSelect_Click(object sender, EventArgs e)
         {
             this.txtOriginalFilePath.Text = ChooseFile() ?? this.txtOriginalFilePath.Text;
-            OriginalFilePath = this.txtOriginalFilePath.Text;
+            Options.OriginalFilePath = this.txtOriginalFilePath.Text;
         }
+    }
+
+    public class NitroPlusOptions : ArcOptions
+    {
+        public string OriginalFilePath { get; set; }
     }
 }
