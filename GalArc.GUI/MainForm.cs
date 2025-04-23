@@ -643,7 +643,7 @@ namespace GalArc.GUI
             try
             {
                 await Task.Run(() => SelectedFormat.Pack(input, output));
-                Logger.FinishUnpack(true);
+                Logger.FinishPack(true);
             }
             catch (Exception ex)
             {
