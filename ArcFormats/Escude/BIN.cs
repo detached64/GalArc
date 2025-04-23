@@ -11,33 +11,64 @@ namespace ArcFormats.Escude
 {
     public class BIN : ArcFormat
     {
-        private readonly string Magic = "ESC-ARC";
+        private readonly string MagicACPX = "ACPXPK0";
+        private readonly string MagicESC = "ESC-ARC";
+
+        private string Folder;
 
         public override void Unpack(string filePath, string folderPath)
         {
+            Folder = folderPath;
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            if (!string.Equals(Encoding.ASCII.GetString(br.ReadBytes(7)), Magic))
+            string magic = Encoding.ASCII.GetString(br.ReadBytes(7));
+            if (string.Equals(magic, MagicESC))
+            {
+                switch (br.ReadChar() - '0')
+                {
+                    case 1:
+                        Logger.ShowVersion("bin", 1);
+                        break;
+                    case 2:
+                        Logger.ShowVersion("bin", 2);
+                        UnpackV2(br);
+                        break;
+                    default:
+                        throw new InvalidDataException("Unknown version");
+                }
+            }
+            else if (string.Equals(magic, MagicACPX))
+            {
+                br.ReadChar();
+                UnpackACPX(br);
+            }
+            else
             {
                 throw new InvalidArchiveException();
-            }
-            switch (br.ReadChar() - '0')
-            {
-                case 1:
-                    Logger.ShowVersion("bin", 1);
-                    break;
-                case 2:
-                    Logger.ShowVersion("bin", 2);
-                    UnpackV2(br, folderPath);
-                    break;
-                default:
-                    throw new InvalidDataException("Unknown version");
             }
             fs.Dispose();
             br.Dispose();
         }
 
-        private void UnpackV2(BinaryReader br, string folder)
+        private void UnpackACPX(BinaryReader br)
+        {
+            int fileCount = br.ReadInt32();
+            List<PackedEntry> entries = new List<PackedEntry>(fileCount);
+            for (int i = 0; i < fileCount; i++)
+            {
+                PackedEntry entry = new PackedEntry();
+                long pos = br.BaseStream.Position;
+                entry.Name = br.ReadCString();
+                br.BaseStream.Position = pos + 32;
+                entry.Offset = br.ReadUInt32();
+                entry.Size = br.ReadUInt32();
+                entry.Path = Path.Combine(Folder, entry.Name);
+                entries.Add(entry);
+            }
+            Extract(entries, br);
+        }
+
+        private void UnpackV2(BinaryReader br)
         {
             br.BaseStream.Position = 8;
             uint seed = br.ReadUInt32();
@@ -56,12 +87,17 @@ namespace ArcFormats.Escude
                 entry.Offset = BitConverter.ToUInt32(index, 12 * i + 4);
                 entry.Size = BitConverter.ToUInt32(index, 12 * i + 8);
                 entry.Name = names.GetCString((int)name_offset);
-                entry.Path = Path.Combine(folder, entry.Name);
+                entry.Path = Path.Combine(Folder, entry.Name);
                 entries.Add(entry);
             }
-            Directory.CreateDirectory(folder);
+            Extract(entries, br);
+        }
+
+        private void Extract(List<PackedEntry> entries, BinaryReader br)
+        {
+            Directory.CreateDirectory(Folder);
             Logger.InitBar(entries.Count);
-            foreach (var entry in entries)
+            foreach (PackedEntry entry in entries)
             {
                 br.BaseStream.Position = entry.Offset;
                 byte[] data = br.ReadBytes((int)entry.Size);
@@ -78,8 +114,6 @@ namespace ArcFormats.Escude
                 Logger.UpdateBar();
                 data = null;
             }
-            br.BaseStream.Dispose();
-            br.Dispose();
         }
 
         private unsafe void Decrypt(byte[] data, Keygen keygen)
