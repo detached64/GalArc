@@ -135,4 +135,19 @@ namespace Utility.Compression
             }
         }
     }
+
+    public static class DeflateHelper
+    {
+        public static byte[] Compress(byte[] input, CompressionLevel level = CompressionLevel.Optimal)
+        {
+            using (MemoryStream output = new MemoryStream())
+            {
+                using (DeflateStream ds = new DeflateStream(output, level))
+                {
+                    ds.Write(input, 0, input.Length);
+                }
+                return output.ToArray();
+            }
+        }
+    }
 }

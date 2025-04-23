@@ -124,6 +124,7 @@
     <Compile Include="Cmvs\PackCPZWidget.Designer.cs">
       <DependentUpon>PackCPZWidget.cs</DependentUpon>
     </Compile>
+    <Compile Include="Debonosu\PAK.cs" />
     <Compile Include="EmonEngine\EME.cs" />
     <Compile Include="EmonEngine\EmonUtils.cs" />
     <Compile Include="EntisGLS\NOA.cs" />
