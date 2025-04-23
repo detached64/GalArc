@@ -10,6 +10,7 @@ Attention: this file is updated manually, so it may not be up-to-date. For the l
 | Artemis/Artemis Engine | `pfs`                      | ✔️      | ✔️    | all                         |
 | BiShop           | `bsa`                      | ✔️      | ✔️    | all                         |
 | Cmvs             | `cpz`                      | ✔️      | ✔️    | v1 only                     |
+| Debonosu | `pak` | ✔️ | ✔️ | all |
 | EmonEngine       | `bsa`                      | ✔️      | ✔️    | all                         |
 | EntisGLS         | `noa`                      | ✔️      | ✔️    | unencrypted                 |
 | Ethornell/BGI | `arc` | ✔️ | ❌ | all |
@@ -27,6 +28,7 @@ Attention: this file is updated manually, so it may not be up-to-date. For the l
 | NScripter        | `ns2` `nsa`                | ✔️      | ✔️    | `ns2`: all `nsa`: unencrypted |
 | Palette          | `pak`                      | ✔️      | ✔️    | all                         |
 | PJADV            | `dat` `pak`                | ✔️      | ✔️    | all                         |
+| Pkware | `pkg` | ✔️ | ❌ | limited |
 | Qlie/Clie        | `pack`                     | ✔️      | ❌    | all                   |
 | RPGMaker         | `rgssad` `rgss2a` `rgss3a` | ✔️      | ✔️    | all                         |
 | Seraph/Seraphim  | `dat`                      | ✔️      | ❌    | all                         |
