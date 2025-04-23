@@ -207,7 +207,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if "$(ConfigurationName)" == "Release" (
-    del "$(TargetDir)*.xml" "$(TargetDir)*.exp" "$(TargetDir)*.lib"
+    del "$(TargetDir)*.xml" "$(TargetDir)*.exp" "$(TargetDir)*.lib" "$(TargetDir)*.pdb" 
 )</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
