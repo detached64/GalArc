@@ -14,88 +14,39 @@ namespace ArcFormats.Escude
         private readonly string MagicACPX = "ACPXPK0";
         private readonly string MagicESC = "ESC-ARC";
 
-        private string Folder;
-
         public override void Unpack(string filePath, string folderPath)
         {
-            Folder = folderPath;
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
             string magic = Encoding.ASCII.GetString(br.ReadBytes(7));
+            IndexReader reader = new IndexReader(br);
+            List<PackedEntry> entries = new List<PackedEntry>();
             if (string.Equals(magic, MagicESC))
             {
                 switch (br.ReadChar() - '0')
                 {
                     case 1:
                         Logger.ShowVersion("bin", 1);
+                        entries = reader.ReadEscV1();
                         break;
                     case 2:
                         Logger.ShowVersion("bin", 2);
-                        UnpackV2(br);
+                        entries = reader.ReadEscV2();
                         break;
                     default:
-                        throw new InvalidDataException("Unknown version");
+                        throw new InvalidVersionException(InvalidVersionType.Unknown);
                 }
             }
             else if (string.Equals(magic, MagicACPX))
             {
                 br.ReadChar();
-                UnpackACPX(br);
+                entries = reader.ReadACPX();
             }
             else
             {
                 throw new InvalidArchiveException();
             }
-            fs.Dispose();
-            br.Dispose();
-        }
-
-        private void UnpackACPX(BinaryReader br)
-        {
-            int fileCount = br.ReadInt32();
-            List<PackedEntry> entries = new List<PackedEntry>(fileCount);
-            for (int i = 0; i < fileCount; i++)
-            {
-                PackedEntry entry = new PackedEntry();
-                long pos = br.BaseStream.Position;
-                entry.Name = br.ReadCString();
-                br.BaseStream.Position = pos + 32;
-                entry.Offset = br.ReadUInt32();
-                entry.Size = br.ReadUInt32();
-                entry.Path = Path.Combine(Folder, entry.Name);
-                entries.Add(entry);
-            }
-            Extract(entries, br);
-        }
-
-        private void UnpackV2(BinaryReader br)
-        {
-            br.BaseStream.Position = 8;
-            uint seed = br.ReadUInt32();
-            Keygen keygen = new Keygen(seed);
-            uint count = br.ReadUInt32() ^ keygen.Get();
-            uint size1 = br.ReadUInt32() ^ keygen.Get();
-            uint size2 = 12 * count;
-            byte[] index = br.ReadBytes((int)size2);
-            byte[] names = br.ReadBytes((int)size1);
-            Decrypt(index, keygen);
-            List<PackedEntry> entries = new List<PackedEntry>((int)count);
-            for (int i = 0; i < count; i++)
-            {
-                PackedEntry entry = new PackedEntry();
-                uint name_offset = BitConverter.ToUInt32(index, 12 * i);
-                entry.Offset = BitConverter.ToUInt32(index, 12 * i + 4);
-                entry.Size = BitConverter.ToUInt32(index, 12 * i + 8);
-                entry.Name = names.GetCString((int)name_offset);
-                entry.Path = Path.Combine(Folder, entry.Name);
-                entries.Add(entry);
-            }
-            Extract(entries, br);
-        }
-
-        private void Extract(List<PackedEntry> entries, BinaryReader br)
-        {
-            Directory.CreateDirectory(Folder);
+            Directory.CreateDirectory(folderPath);
             Logger.InitBar(entries.Count);
             foreach (PackedEntry entry in entries)
             {
@@ -109,23 +60,14 @@ namespace ArcFormats.Escude
                     data = Decompress(raw, (int)entry.UnpackedSize);
                     raw = null;
                 }
+                entry.Path = Path.Combine(folderPath, entry.Name);
                 Directory.CreateDirectory(Path.GetDirectoryName(entry.Path));
                 File.WriteAllBytes(entry.Path, data);
                 Logger.UpdateBar();
                 data = null;
             }
-        }
-
-        private unsafe void Decrypt(byte[] data, Keygen keygen)
-        {
-            fixed (byte* b = data)
-            {
-                uint* data32 = (uint*)b;
-                for (int i = 0; i < data.Length / 4; i++)
-                {
-                    data32[i] ^= keygen.Get();
-                }
-            }
+            fs.Dispose();
+            br.Dispose();
         }
 
         private byte[] Decompress(byte[] data, int unpacked_size)
@@ -182,20 +124,97 @@ namespace ArcFormats.Escude
             return output;
         }
 
-        private class Keygen
+        private sealed class IndexReader
         {
             private const uint c = 0x65AC9365;
-            private uint seed;
 
-            public Keygen(uint s)
+            private BinaryReader Reader;
+
+            private List<PackedEntry> Entries;
+
+            private uint Seed;
+
+            public IndexReader(BinaryReader reader)
             {
-                seed = s;
+                Reader = reader;
+                Entries = new List<PackedEntry>();
+            }
+
+            public List<PackedEntry> ReadACPX()
+            {
+                int fileCount = Reader.ReadInt32();
+                for (int i = 0; i < fileCount; i++)
+                {
+                    PackedEntry entry = new PackedEntry();
+                    long pos = Reader.BaseStream.Position;
+                    entry.Name = Reader.ReadCString();
+                    Reader.BaseStream.Position = pos + 32;
+                    entry.Offset = Reader.ReadUInt32();
+                    entry.Size = Reader.ReadUInt32();
+                    Entries.Add(entry);
+                }
+                return Entries;
+            }
+
+            public List<PackedEntry> ReadEscV1()
+            {
+                Seed = Reader.ReadUInt32();
+                uint count = Reader.ReadUInt32() ^ Get();
+                uint indexSize = 0x88 * count;
+                byte[] index = Reader.ReadBytes((int)indexSize);
+                Decrypt(index);
+                int offset = 0;
+                for (int i = 0; i < count; i++)
+                {
+                    PackedEntry entry = new PackedEntry();
+                    entry.Name = index.GetCString(offset);
+                    offset += 0x80;
+                    entry.Offset = BitConverter.ToUInt32(index, offset);
+                    entry.Size = BitConverter.ToUInt32(index, offset + 4);
+                    offset += 8;
+                    Entries.Add(entry);
+                }
+                return Entries;
+            }
+
+            public List<PackedEntry> ReadEscV2()
+            {
+                Reader.BaseStream.Position = 8;
+                Seed = Reader.ReadUInt32();
+                uint count = Reader.ReadUInt32() ^ Get();
+                uint size1 = Reader.ReadUInt32() ^ Get();
+                uint size2 = 12 * count;
+                byte[] index = Reader.ReadBytes((int)size2);
+                byte[] names = Reader.ReadBytes((int)size1);
+                Decrypt(index);
+                for (int i = 0; i < count; i++)
+                {
+                    PackedEntry entry = new PackedEntry();
+                    uint name_offset = BitConverter.ToUInt32(index, 12 * i);
+                    entry.Offset = BitConverter.ToUInt32(index, 12 * i + 4);
+                    entry.Size = BitConverter.ToUInt32(index, 12 * i + 8);
+                    entry.Name = names.GetCString((int)name_offset);
+                    Entries.Add(entry);
+                }
+                return Entries;
+            }
+
+            private unsafe void Decrypt(byte[] data)
+            {
+                fixed (byte* b = data)
+                {
+                    uint* data32 = (uint*)b;
+                    for (int i = 0; i < data.Length / 4; i++)
+                    {
+                        data32[i] ^= Get();
+                    }
+                }
             }
 
             public uint Get()
             {
-                seed ^= (8 * (seed ^ c ^ (2 * (seed ^ c)))) ^ ((seed ^ c ^ ((seed ^ c) >> 1)) >> 3) ^ c;
-                return seed;
+                Seed ^= (8 * (Seed ^ c ^ (2 * (Seed ^ c)))) ^ ((Seed ^ c ^ ((Seed ^ c) >> 1)) >> 3) ^ c;
+                return Seed;
             }
         }
     }
