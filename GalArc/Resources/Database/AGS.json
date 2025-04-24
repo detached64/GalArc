@@ -16,6 +16,106 @@
         }
       }
     },
+    "まほ☆たまシリーズ ～スク水編～": {
+      "FileMap": {
+        "script.dat": {
+          "Initial": 31,
+          "Increment": 67
+        },
+        "bg.dat": {
+          "Initial": 43,
+          "Increment": 59
+        },
+        "mov.dat": {
+          "Initial": 17,
+          "Increment": 73
+        }
+      }
+    },
+    "まほ☆たまシリーズ ～手コキ編～": {
+      "FileMap": {
+        "script.dat": {
+          "Initial": 41,
+          "Increment": 23
+        },
+        "bg.dat": {
+          "Initial": 73,
+          "Increment": 31
+        },
+        "mov.dat": {
+          "Initial": 31,
+          "Increment": 19
+        }
+      }
+    },
+    "まほ☆たまシリーズ ～おっぱい編～": {
+      "FileMap": {
+        "script.dat": {
+          "Initial": 41,
+          "Increment": 67
+        },
+        "bg.dat": {
+          "Initial": 19,
+          "Increment": 67
+        },
+        "mov.dat": {
+          "Initial": 53,
+          "Increment": 13
+        }
+      }
+    },
+    "まほ☆たまシリーズ ～ブルマ編～": {
+      "FileMap": {
+        "script.dat": {
+          "Initial": 23,
+          "Increment": 71
+        },
+        "bg.dat": {
+          "Initial": 19,
+          "Increment": 13
+        },
+        "mov.dat": {
+          "Initial": 31,
+          "Increment": 17
+        }
+      }
+    },
+    "まほ☆たまシリーズ ～おしゃぶり編～": {
+      "FileMap": {
+        "script.dat": {
+          "Initial": 67,
+          "Increment": 23
+        },
+        "bg.dat": {
+          "Initial": 31,
+          "Increment": 17
+        },
+        "mov.dat": {
+          "Initial": 41,
+          "Increment": 13
+        }
+      }
+    },
+    "まほ☆たまシリーズ ～みみっこ編～": {
+      "FileMap": {
+        "script.dat": {
+          "Initial": 23,
+          "Increment": 11
+        },
+        "bg.dat": {
+          "Initial": 17,
+          "Increment": 31
+        },
+        "mov.dat": {
+          "Initial": 13,
+          "Increment": 41
+        },
+        "af.dat": {
+          "Initial": 13,
+          "Increment": 41
+        }
+      }
+    },
     "淫シリーズ　淫触痴漢電車": {
       "FileMap": {
         "script.dat": {
@@ -116,6 +216,7 @@
   "EncryptedArchives": [
     "script.dat",
     "bg.dat",
-    "mov.dat"
+    "mov.dat",
+    "af.dat"
   ]
 }
