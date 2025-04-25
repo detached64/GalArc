@@ -269,7 +269,7 @@
     <value>Path contains invalid characters. Switching the encoding in the settings might work.</value>
   </data>
   <data name="ErrorInvalidVersionNotSupported" xml:space="preserve">
-    <value>{0} v{1} archive temporarily not supported.</value>
+    <value>This version of archive is temporarily not supported.</value>
   </data>
   <data name="WrongScheme" xml:space="preserve">
     <value>Wrong scheme!</value>

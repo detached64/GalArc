@@ -250,7 +250,7 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 {0} v{1} archive temporarily not supported. 的本地化字符串。
+        ///   查找类似 This version of archive is temporarily not supported. 的本地化字符串。
         /// </summary>
         public static string ErrorInvalidVersionNotSupported {
             get {

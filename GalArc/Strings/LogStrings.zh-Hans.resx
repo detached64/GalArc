@@ -289,7 +289,7 @@
     <value>路径中有非法字符。在设置里切换编码或许能解决此问题。</value>
   </data>
   <data name="ErrorInvalidVersionNotSupported" xml:space="preserve">
-    <value>{0} v{1}封包暂时不支持。</value>
+    <value>该版本封包暂时不支持。</value>
   </data>
   <data name="WrongScheme" xml:space="preserve">
     <value>加密方案错误！</value>
