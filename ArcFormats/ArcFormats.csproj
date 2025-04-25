@@ -129,6 +129,12 @@
     <Compile Include="EmonEngine\EmonUtils.cs" />
     <Compile Include="EntisGLS\NOA.cs" />
     <Compile Include="Escude\BIN.cs" />
+    <Compile Include="Escude\PackBINWidget.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Escude\PackBINWidget.Designer.cs">
+      <DependentUpon>PackBINWidget.cs</DependentUpon>
+    </Compile>
     <Compile Include="Ethornell\ARC.cs" />
     <Compile Include="Ethornell\GDB.cs" />
     <Compile Include="Ethornell\EthornellUtils.cs" />
@@ -369,6 +375,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cmvs\PackCPZWidget.zh-Hans.resx">
       <DependentUpon>PackCPZWidget.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Escude\PackBINWidget.resx">
+      <DependentUpon>PackBINWidget.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Escude\PackBINWidget.zh-Hans.resx">
+      <DependentUpon>PackBINWidget.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Ethornell\PackARCWidget.resx">
       <DependentUpon>PackARCWidget.cs</DependentUpon>

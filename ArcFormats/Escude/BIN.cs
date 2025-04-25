@@ -1,4 +1,5 @@
 using GalArc.Logs;
+using GalArc.Templates;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,41 +12,36 @@ namespace ArcFormats.Escude
 {
     public class BIN : ArcFormat
     {
-        private readonly string MagicACPX = "ACPXPK0";
-        private readonly string MagicESC = "ESC-ARC";
+        public override WidgetTemplate PackWidget => PackBINWidget.Instance;
+
+        private VersionOptions Options => PackBINWidget.Instance.Options;
+
+        private const string MagicACPX = "ACPXPK01";
+        private const string MagicESC1 = "ESC-ARC1";
+        private const string MagicESC2 = "ESC-ARC2";
 
         public override void Unpack(string filePath, string folderPath)
         {
             FileStream fs = File.OpenRead(filePath);
             BinaryReader br = new BinaryReader(fs);
-            string magic = Encoding.ASCII.GetString(br.ReadBytes(7));
+            string magic = Encoding.ASCII.GetString(br.ReadBytes(8));
             IndexReader reader = new IndexReader(br);
-            List<PackedEntry> entries = new List<PackedEntry>();
-            if (string.Equals(magic, MagicESC))
+            List<PackedEntry> entries;
+            switch (magic)
             {
-                switch (br.ReadChar() - '0')
-                {
-                    case 1:
-                        Logger.ShowVersion("bin", 1);
-                        entries = reader.ReadEscV1();
-                        break;
-                    case 2:
-                        Logger.ShowVersion("bin", 2);
-                        entries = reader.ReadEscV2();
-                        break;
-                    default:
-                        throw new InvalidVersionException(InvalidVersionType.Unknown);
-                }
+                case MagicACPX:
+                    entries = reader.ReadACPX();
+                    break;
+                case MagicESC1:
+                    entries = reader.ReadEscV1();
+                    break;
+                case MagicESC2:
+                    entries = reader.ReadEscV2();
+                    break;
+                default:
+                    throw new InvalidVersionException(InvalidVersionType.Unknown);
             }
-            else if (string.Equals(magic, MagicACPX))
-            {
-                br.ReadChar();
-                entries = reader.ReadACPX();
-            }
-            else
-            {
-                throw new InvalidArchiveException();
-            }
+            Logger.ShowVersion("bin", magic);
             Directory.CreateDirectory(folderPath);
             Logger.InitBar(entries.Count);
             foreach (PackedEntry entry in entries)
@@ -68,6 +64,26 @@ namespace ArcFormats.Escude
             }
             fs.Dispose();
             br.Dispose();
+        }
+
+        public override void Pack(string folderPath, string filePath)
+        {
+            FileInfo[] files = new DirectoryInfo(folderPath).GetFiles("*");
+            FileStream fw = File.Create(filePath);
+            BinaryWriter bw = new BinaryWriter(fw);
+            bw.Write(Encoding.ASCII.GetBytes(Options.Version));
+            using (IndexBuilder builder = new IndexBuilder(files, Options.Version))
+            {
+                bw.Write(builder.Build());
+            }
+            Logger.InitBar(files.Length);
+            foreach (FileInfo file in files)
+            {
+                bw.Write(File.ReadAllBytes(file.FullName));
+                Logger.UpdateBar();
+            }
+            fw.Dispose();
+            bw.Dispose();
         }
 
         private byte[] Decompress(byte[] data, int unpacked_size)
@@ -124,20 +140,40 @@ namespace ArcFormats.Escude
             return output;
         }
 
-        private sealed class IndexReader
+        private abstract class IndexProcessor
         {
-            private const uint c = 0x65AC9365;
+            protected const uint C = 0x65AC9365;
+            protected uint Seed;
 
-            private BinaryReader Reader;
+            protected unsafe void Decrypt(byte[] data)
+            {
+                fixed (byte* b = data)
+                {
+                    uint* data32 = (uint*)b;
+                    for (int i = 0; i < data.Length / 4; i++)
+                    {
+                        data32[i] ^= Get();
+                    }
+                }
+            }
 
-            private List<PackedEntry> Entries;
+            protected uint Get()
+            {
+                Seed ^= (8 * (Seed ^ C ^ (2 * (Seed ^ C)))) ^ ((Seed ^ C ^ ((Seed ^ C) >> 1)) >> 3) ^ C;
+                return Seed;
+            }
+        }
 
-            private uint Seed;
+        private sealed class IndexReader : IndexProcessor
+        {
+            private readonly BinaryReader Reader;
+
+            private readonly List<PackedEntry> Entries = new List<PackedEntry>();
 
             public IndexReader(BinaryReader reader)
             {
                 Reader = reader;
-                Entries = new List<PackedEntry>();
+                Reader.BaseStream.Position = 8;
             }
 
             public List<PackedEntry> ReadACPX()
@@ -179,13 +215,12 @@ namespace ArcFormats.Escude
 
             public List<PackedEntry> ReadEscV2()
             {
-                Reader.BaseStream.Position = 8;
                 Seed = Reader.ReadUInt32();
                 uint count = Reader.ReadUInt32() ^ Get();
-                uint size1 = Reader.ReadUInt32() ^ Get();
-                uint size2 = 12 * count;
-                byte[] index = Reader.ReadBytes((int)size2);
-                byte[] names = Reader.ReadBytes((int)size1);
+                uint nameSize = Reader.ReadUInt32() ^ Get();
+                uint indexSize = 12 * count;
+                byte[] index = Reader.ReadBytes((int)indexSize);
+                byte[] names = Reader.ReadBytes((int)nameSize);
                 Decrypt(index);
                 for (int i = 0; i < count; i++)
                 {
@@ -198,23 +233,128 @@ namespace ArcFormats.Escude
                 }
                 return Entries;
             }
+        }
 
-            private unsafe void Decrypt(byte[] data)
+        private sealed class IndexBuilder : IndexProcessor, IDisposable
+        {
+            private readonly MemoryStream Stream;
+            private readonly BinaryWriter Writer;
+            private readonly FileInfo[] Files;
+            private readonly string Magic;
+
+            public IndexBuilder(FileInfo[] files, string magic)
             {
-                fixed (byte* b = data)
+                Stream = new MemoryStream();
+                Writer = new BinaryWriter(Stream);
+                Files = files;
+                Magic = magic;
+            }
+
+            public byte[] Build()
+            {
+                switch (Magic)
                 {
-                    uint* data32 = (uint*)b;
-                    for (int i = 0; i < data.Length / 4; i++)
-                    {
-                        data32[i] ^= Get();
-                    }
+                    case MagicACPX:
+                        return BuildACPX();
+                    case MagicESC1:
+                        return BuildEscV1();
+                    case MagicESC2:
+                        return BuildEscV2();
+                    default:
+                        throw new InvalidVersionException(InvalidVersionType.NotSupported);
                 }
             }
 
-            public uint Get()
+            private byte[] BuildACPX()
             {
-                Seed ^= (8 * (Seed ^ c ^ (2 * (Seed ^ c)))) ^ ((Seed ^ c ^ ((Seed ^ c) >> 1)) >> 3) ^ c;
-                return Seed;
+                uint baseOffset = 8 + 4 + 40 * (uint)Files.Length;
+                Writer.Write(Files.Length);
+                foreach (FileInfo file in Files)
+                {
+                    Writer.WritePaddedString(file.Name, 32);
+                    Writer.Write(baseOffset);
+                    Writer.Write((uint)file.Length);
+                    baseOffset += (uint)file.Length;
+                }
+                return Stream.ToArray();
+            }
+
+            private byte[] BuildEscV1()
+            {
+                uint baseOffset = 8 + 8 + 0x88 * (uint)Files.Length;
+                Seed = 0;
+                Writer.Write(Seed);
+                Writer.Write((uint)Files.Length ^ Get());
+                using (MemoryStream indexStream = new MemoryStream())
+                {
+                    using (BinaryWriter indexWriter = new BinaryWriter(indexStream))
+                    {
+                        foreach (FileInfo file in Files)
+                        {
+                            indexWriter.WritePaddedString(file.Name, 0x80);
+                            indexWriter.Write(baseOffset);
+                            indexWriter.Write((uint)file.Length);
+                            baseOffset += (uint)file.Length;
+                        }
+                    }
+                    byte[] index = indexStream.ToArray();
+                    Decrypt(index);
+                    Writer.Write(index);
+                }
+                return Stream.ToArray();
+            }
+
+            private byte[] BuildEscV2()
+            {
+                byte[] names = CollectNames();
+                uint nameOffset = 0;
+                uint baseOffset = 8 + 12 + 12 * (uint)Files.Length + (uint)names.Length;
+                Seed = 0;
+                Writer.Write(Seed);
+                Writer.Write((uint)Files.Length ^ Get());
+                Writer.Write((uint)names.Length ^ Get());
+                using (MemoryStream indexStream = new MemoryStream())
+                {
+                    using (BinaryWriter indexWriter = new BinaryWriter(indexStream))
+                    {
+                        foreach (FileInfo file in Files)
+                        {
+                            indexWriter.Write(nameOffset);
+                            nameOffset += (uint)(ArcEncoding.Shift_JIS.GetBytes(file.Name).Length + 1);
+                            indexWriter.Write(baseOffset);
+                            uint size = (uint)file.Length;
+                            indexWriter.Write(size);
+                            baseOffset += size;
+                        }
+                    }
+                    byte[] index = indexStream.ToArray();
+                    Decrypt(index);
+                    Writer.Write(index);
+                    Writer.Write(names);
+                }
+                return Stream.ToArray();
+            }
+
+            private byte[] CollectNames()
+            {
+                using (MemoryStream namesStream = new MemoryStream())
+                {
+                    using (BinaryWriter namesWriter = new BinaryWriter(namesStream))
+                    {
+                        foreach (FileInfo file in Files)
+                        {
+                            namesWriter.Write(ArcEncoding.Shift_JIS.GetBytes(file.Name));
+                            namesWriter.Write('\0');
+                        }
+                    }
+                    return namesStream.ToArray();
+                }
+            }
+
+            public void Dispose()
+            {
+                Stream.Dispose();
+                Writer.Dispose();
             }
         }
     }
