@@ -7,12 +7,14 @@ Attention: this file is updated manually, so it may not be up-to-date. For the l
 | AdvHD            | `arc` `pna`                | ✔️      | ✔️    | all                        |
 | Ai5Win/elf       | `arc` `dat` `VSD`          | ✔️      | ❌    | all                         |
 | Ai6Win/Silky     | `arc`                      | ✔️      | ✔️    | all                         |
+| Anime Game System/Erogos | `dat` | ✔️ | ✔️ | all |
 | Artemis/Artemis Engine | `pfs`                      | ✔️      | ✔️    | all                         |
 | BiShop           | `bsa`                      | ✔️      | ✔️    | all                         |
 | Cmvs             | `cpz`                      | ✔️      | ✔️    | v1 only                     |
 | Debonosu | `pak` | ✔️ | ✔️ | all |
 | EmonEngine       | `bsa`                      | ✔️      | ✔️    | all                         |
 | EntisGLS         | `noa`                      | ✔️      | ✔️    | unencrypted                 |
+| Escude | `bin` | ✔️ | ✔️    | all                           |
 | Ethornell/BGI | `arc` | ✔️ | ❌ | all |
 | Eushully         | `alf`                      | ✔️      | ❌    | all                         |
 | GsPack/GsWin     | `pak` `dat`                | ✔️      | ❌    | all                         |
