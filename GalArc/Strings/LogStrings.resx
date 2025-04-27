@@ -290,7 +290,7 @@
     <value>Loaded schemes: {0}</value>
   </data>
   <data name="ErrorInvalidVersion" xml:space="preserve">
-    <value>Unknown or not supported archive version.</value>
+    <value>Unknown or unsupported archive version.</value>
   </data>
   <data name="ErrorInvalidVersionUnknown" xml:space="preserve">
     <value>Unknown version.</value>
@@ -324,5 +324,14 @@
   </data>
   <data name="PackingFile" xml:space="preserve">
     <value>Packing {0}…</value>
+  </data>
+  <data name="ErrorInvalidVersionWithMsg" xml:space="preserve">
+    <value>Unknown or not supported archive version: {0}</value>
+  </data>
+  <data name="ErrorInvalidVersionUnknownWithMsg" xml:space="preserve">
+    <value>Unknown version: {0}</value>
+  </data>
+  <data name="ErrorInvalidVersionNotSupportedWithMsg" xml:space="preserve">
+    <value>Unsupported version: {0}</value>
   </data>
 </root>

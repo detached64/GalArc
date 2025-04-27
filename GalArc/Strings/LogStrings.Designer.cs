@@ -241,7 +241,7 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
-        ///   查找类似 Unknown or not supported archive version. 的本地化字符串。
+        ///   查找类似 Unknown or unsupported archive version. 的本地化字符串。
         /// </summary>
         public static string ErrorInvalidVersion {
             get {
@@ -259,11 +259,38 @@ namespace GalArc.Strings {
         }
         
         /// <summary>
+        ///   查找类似 Unsupported version: {0} 的本地化字符串。
+        /// </summary>
+        public static string ErrorInvalidVersionNotSupportedWithMsg {
+            get {
+                return ResourceManager.GetString("ErrorInvalidVersionNotSupportedWithMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Unknown version. 的本地化字符串。
         /// </summary>
         public static string ErrorInvalidVersionUnknown {
             get {
                 return ResourceManager.GetString("ErrorInvalidVersionUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unknown version: {0} 的本地化字符串。
+        /// </summary>
+        public static string ErrorInvalidVersionUnknownWithMsg {
+            get {
+                return ResourceManager.GetString("ErrorInvalidVersionUnknownWithMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Unknown or not supported archive version: {0} 的本地化字符串。
+        /// </summary>
+        public static string ErrorInvalidVersionWithMsg {
+            get {
+                return ResourceManager.GetString("ErrorInvalidVersionWithMsg", resourceCulture);
             }
         }
         

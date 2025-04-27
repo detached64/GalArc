@@ -44,16 +44,35 @@ namespace Utility.Exceptions
         {
         }
 
-        private static string GetErrorMessage(InvalidVersionType type)
+        public InvalidVersionException(InvalidVersionType type, string version) : base(GetErrorMessage(type, version))
         {
-            switch (type)
+        }
+
+        private static string GetErrorMessage(InvalidVersionType type, string ver = null)
+        {
+            if (ver == null)
             {
-                case InvalidVersionType.Unknown:
-                    return LogStrings.ErrorInvalidVersionUnknown;
-                case InvalidVersionType.NotSupported:
-                    return LogStrings.ErrorInvalidVersionNotSupported;
-                default:
-                    return LogStrings.ErrorInvalidVersion;
+                switch (type)
+                {
+                    case InvalidVersionType.Unknown:
+                        return LogStrings.ErrorInvalidVersionUnknown;
+                    case InvalidVersionType.NotSupported:
+                        return LogStrings.ErrorInvalidVersionNotSupported;
+                    default:
+                        return LogStrings.ErrorInvalidVersion;
+                }
+            }
+            else
+            {
+                switch (type)
+                {
+                    case InvalidVersionType.Unknown:
+                        return string.Format(LogStrings.ErrorInvalidVersionUnknownWithMsg, ver);
+                    case InvalidVersionType.NotSupported:
+                        return string.Format(LogStrings.ErrorInvalidVersionNotSupportedWithMsg, ver);
+                    default:
+                        return string.Format(LogStrings.ErrorInvalidVersionWithMsg, ver);
+                }
             }
         }
     }

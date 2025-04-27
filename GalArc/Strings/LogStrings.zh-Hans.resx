@@ -310,7 +310,7 @@
     <value>导入密钥总数：{0}</value>
   </data>
   <data name="ErrorInvalidVersion" xml:space="preserve">
-    <value>未知版本或该版本暂未支持。</value>
+    <value>未知版本或暂未支持的版本。</value>
   </data>
   <data name="ErrorInvalidVersionUnknown" xml:space="preserve">
     <value>未知版本。</value>
@@ -344,5 +344,14 @@
   </data>
   <data name="PackingFile" xml:space="preserve">
     <value>正在封包：{0}…</value>
+  </data>
+  <data name="ErrorInvalidVersionWithMsg" xml:space="preserve">
+    <value>未知版本或暂未支持的版本：{0}</value>
+  </data>
+  <data name="ErrorInvalidVersionUnknownWithMsg" xml:space="preserve">
+    <value>未知版本：{0}</value>
+  </data>
+  <data name="ErrorInvalidVersionNotSupportedWithMsg" xml:space="preserve">
+    <value>暂未支持的版本：{0}</value>
   </data>
 </root>
