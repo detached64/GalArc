@@ -11,16 +11,16 @@ namespace GalArc.Templates
 
     public class ScriptUnpackOptions : ArcOptions
     {
-        public bool DecryptScripts { get; set; }
+        public bool DecryptScripts { get; set; } = true;
     }
 
     public class ScriptPackOptions : ArcOptions
     {
-        public bool EncryptScripts { get; set; }
+        public bool EncryptScripts { get; set; } = true;
     }
 
     public class VersionScriptPackOptions : VersionOptions
     {
-        public bool EncryptScripts { get; set; }
+        public bool EncryptScripts { get; set; } = true;
     }
 }
