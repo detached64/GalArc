@@ -30,8 +30,6 @@ namespace Utility
         /// <summary>
         /// Get file count in specified folder and all subfolders.
         /// </summary>
-        /// <param name="folderPath"></param>
-        /// <returns></returns>
         public static int GetFileCount(string folderPath, SearchOption searchOption = SearchOption.AllDirectories)
         {
             DirectoryInfo dir = new DirectoryInfo(folderPath);
@@ -42,8 +40,6 @@ namespace Utility
         /// <summary>
         /// Get all extensions among all files in specified folder and all subfolders.
         /// </summary>
-        /// <param name="folderPath"></param>
-        /// <returns></returns>
         public static string[] GetFileExtensions(string folderPath)
         {
             HashSet<string> uniqueExtension = new HashSet<string>();
@@ -60,9 +56,6 @@ namespace Utility
         /// <summary>
         /// Get file name length sum among all files in specified folder and all subfolders.
         /// </summary>
-        /// <param name="strings"></param>
-        /// <param name="encoding"></param>
-        /// <returns></returns>
         public static int GetNameLengthSum(IEnumerable<string> strings, Encoding encoding)
         {
             int sum = 0;
