@@ -106,8 +106,9 @@ namespace ArcFormats.Qlie
                 for (int i = 0; i < length / 8; ++i)
                 {
                     v5 = MMX.PAddD(v5, v7) ^ v9;
+                    v9 = *d;
                     *d ^= v5;
-                    v9 = *d++;
+                    d++;
                 }
             }
         }
