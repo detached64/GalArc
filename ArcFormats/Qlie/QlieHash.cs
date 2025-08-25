@@ -165,19 +165,21 @@ namespace ArcFormats.Qlie
         private readonly string KeyFileName = "pack_keyfile_kfueheish15538fa9or.key";
         private bool IsUnicode => PackVersion >= 31;
         private readonly string FolderPath;
+        private readonly bool AsSeparateFile;
         private readonly int PackVersion;
         private List<string> Files = new List<string>();
         private LinkedList<QlieEntry>[] Entries = new LinkedList<QlieEntry>[256];
 
         public int HashVersion { get; }
 
-        public QlieHashWriter(string path, int hash_version, int pack_version)
+        public QlieHashWriter(string path, int hash_version, int pack_version, bool as_separate)
         {
             if (hash_version < 10 || hash_version > 14)
             {
                 throw new ArgumentException("Invalid hash version.");
             }
             FolderPath = path;
+            AsSeparateFile = as_separate;
             HashVersion = hash_version;
             PackVersion = pack_version;
         }
@@ -194,7 +196,7 @@ namespace ArcFormats.Qlie
             }
             // Build linked lists
             int index = 0;
-            foreach (var file in Files)
+            foreach (string file in Files)
             {
                 string name = Utils.GetRelativePath(file, FolderPath);
                 uint hash = ComputeNameHash(name, out ushort nameLen);
@@ -209,7 +211,34 @@ namespace ArcFormats.Qlie
             }
         }
 
-        private byte[] GetHashData()
+        private byte[] CreateHashData12()
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    for (int i = 0; i < Files.Count; i += 256)
+                    {
+                        int current = Math.Min(256, Files.Count - i);
+                        bw.Write((ushort)current);
+                        for (int j = i; j < current + i; j++)
+                        {
+                            string name = Files[j];
+                            uint hash = ComputeNameHash(name, out ushort nameLen);
+                            int position = GetPosition(hash);
+                            bw.Write((ushort)position);
+                            bw.Write((ushort)hash);
+                            bw.Write((ushort)(IsUnicode ? 4 * i : 2 * i));
+                            bw.Write(nameLen);
+                            bw.Write(Encoding.Unicode.GetBytes(name));
+                        }
+                    }
+                }
+                return ms.ToArray();
+            }
+        }
+
+        private byte[] CreateHashData14()
         {
             using (MemoryStream ms = new MemoryStream())
             {
@@ -240,7 +269,7 @@ namespace ArcFormats.Qlie
             }
         }
 
-        public byte[] GetHash()
+        public byte[] CreateHash14()
         {
             CollectList();
             using (MemoryStream ms = new MemoryStream())
@@ -251,7 +280,7 @@ namespace ArcFormats.Qlie
                     bw.Write(HashVersion > 12 ? 0x100 : 0x200);
                     bw.Write(Files.Count);
                     bw.Write(IsUnicode ? 4 * Files.Count : 2 * Files.Count);
-                    byte[] hashData = GetHashData();
+                    byte[] hashData = CreateHashData14();
                     QlieEncryption.Encrypt(hashData, hashData.Length, 0x428);
                     bw.Write(hashData.Length);
                     if (HashVersion == 14)

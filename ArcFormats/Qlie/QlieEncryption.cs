@@ -189,7 +189,7 @@ namespace ArcFormats.Qlie
             return output;
         }
 
-        public static QlieEncryption CreateEncryption(int version, byte[] game_key)
+        public static QlieEncryption Create(int version, byte[] game_key)
         {
             switch (version)
             {
@@ -206,12 +206,14 @@ namespace ArcFormats.Qlie
             }
         }
 
-        public static QlieEncryption CreateEncryption(string version)
+        public static QlieEncryption Create(string version)
         {
             switch (version)
             {
                 case "1.0":
                     return new Encryption10();
+                case "2.0":
+                    return new Encryption20();
                 case "3.1":
                     return new Encryption31();
                 default:
@@ -266,6 +268,17 @@ namespace ArcFormats.Qlie
                 name[i - 1] ^= (byte)((key ^ i) + i);
             }
             return ArcEncoding.Shift_JIS.GetString(name);
+        }
+
+        public override byte[] EncryptName(string name, int hash)
+        {
+            uint key = 0xFA + (uint)name.Length;
+            byte[] data = ArcEncoding.Shift_JIS.GetBytes(name);
+            for (int i = 1; i <= data.Length; i++)
+            {
+                data[i - 1] ^= (byte)((key ^ i) + i);
+            }
+            return data;
         }
     }
 

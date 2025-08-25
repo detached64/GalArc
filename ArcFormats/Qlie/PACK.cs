@@ -13,11 +13,9 @@ namespace ArcFormats.Qlie
     public class PACK : ArcFormat
     {
         public override WidgetTemplate UnpackWidget => UnpackPACKWidget.Instance;
-
         public override WidgetTemplate PackWidget => PackPACKWidget.Instance;
 
         private QlieOptions UnpackOptions => UnpackPACKWidget.Instance.Options;
-
         private VersionOptions PackOptions => PackPACKWidget.Instance.Options;
 
         private QlieScheme Scheme
@@ -67,7 +65,7 @@ namespace ArcFormats.Qlie
             int version = major * 10 + minor;
             Logger.Info($"File Pack Version: {major}.{minor}");
             byte[] game_key = UnpackOptions.Key;
-            QlieEncryption qenc = QlieEncryption.CreateEncryption(version, game_key);
+            QlieEncryption qenc = QlieEncryption.Create(version, game_key);
             #endregion
 
             #region read key
@@ -122,6 +120,7 @@ namespace ArcFormats.Qlie
                         rawHashData = File.ReadAllBytes(hashFile);
                     }
                 }
+                File.WriteAllBytes(Path.ChangeExtension(input, "hash"), rawHashData);
                 if (rawHashData != null)
                 {
                     QlieHashReader hashReader = new QlieHashReader(rawHashData);
@@ -232,7 +231,7 @@ namespace ArcFormats.Qlie
         public override void Pack(string folderPath, string filePath)
         {
             const string magic_pattern = "FilePackVer{0}";
-            QlieEncryption qenc = QlieEncryption.CreateEncryption(PackOptions.Version);
+            QlieEncryption qenc = QlieEncryption.Create(PackOptions.Version);
             FileInfo[] files = new DirectoryInfo(folderPath).GetFiles("*", SearchOption.AllDirectories);
             FileStream fw = File.Create(filePath);
             BinaryWriter bw = new BinaryWriter(fw);
@@ -261,32 +260,45 @@ namespace ArcFormats.Qlie
                 bw.Write(entry.UnpackedSize);
                 bw.Write(0);                // entry.IsPacked
                 bw.Write(0);                // entry.IsEncrypted
-                //bw.Write(entry.Hash);
+                bw.Write(entry.Hash);
             }
+            QlieKey key = new QlieKey
+            {
+                Magic = Encoding.ASCII.GetBytes(KeyMagic.PadRight(32, '\0')),
+                HashSize = 0,
+                Key = new byte[0x400]
+            };
+            QlieEncryption.Encrypt(key.Magic, 32, 0);
+            bw.Write(key.Magic);
+            bw.Write(key.HashSize);
+            bw.Write(key.Key);
             bw.Write(Encoding.ASCII.GetBytes(string.Format(magic_pattern, PackOptions.Version).PadRight(16, '\0')));
             bw.Write(entries.Count);
             bw.Write(baseOffset);
-            using (FileStream fwHash = File.Create(Path.ChangeExtension(filePath, "hash")))
-            {
-                using (BinaryWriter bwHash = new BinaryWriter(fwHash))
-                {
-                    bwHash.Write((short)entries.Count);
-                    foreach (QlieEntry entry in entries)
-                    {
-                        bwHash.Write((short)entry.RawName.Length);
-                        bwHash.Write(entry.RawName);
-                        bwHash.Write(0);
-                        bwHash.Write(0);
-                    }
-                }
-            }
+            //using (FileStream fwHash = File.Create(Path.ChangeExtension(filePath, "hash")))
+            //{
+            //    using (BinaryWriter bwHash = new BinaryWriter(fwHash))
+            //    {
+            //        bwHash.Write((short)entries.Count);
+            //        foreach (QlieEntry entry in entries)
+            //        {
+            //            bwHash.Write((short)entry.RawName.Length);
+            //            bwHash.Write(entry.RawName);
+            //            bwHash.Write(0);
+            //            bwHash.Write(0);
+            //        }
+            //    }
+            //}
             bw.Dispose();
             fw.Dispose();
         }
 
-        /// <summary>
-        /// Try to find key.fkey in possible locations.
-        /// </summary>
+        //public override void Pack(string folderPath, string filePath)
+        //{
+        //    //QlieHashWriter hashWriter = new QlieHashWriter(folderPath, 14, 31);
+        //    //File.WriteAllBytes(Path.ChangeExtension(filePath, "hash"), hashWriter.CreateHash14());
+        //}
+
         private byte[] TryFindLocalKey(string input)
         {
             string folder = Path.GetDirectoryName(input);
@@ -362,5 +374,8 @@ namespace ArcFormats.Qlie
         public uint IsEncrypted { get; set; }
         public byte[] CommmonKey { get; set; }  // length: 0x40
         public uint Key { get; set; }
+        public ushort NameLength { get; set; }
+        public uint NameHash { get; set; }
+        public int Index { get; set; }
     }
 }

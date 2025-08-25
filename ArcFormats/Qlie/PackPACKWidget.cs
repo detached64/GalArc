@@ -9,7 +9,7 @@ namespace ArcFormats.Qlie
 
         public VersionOptions Options = new VersionOptions();
 
-        private readonly string Versions = "1.0";
+        private readonly string Versions = "2.0";
 
         public PackPACKWidget()
         {
