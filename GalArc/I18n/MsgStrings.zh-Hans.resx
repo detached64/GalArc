@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BrutalForcing" xml:space="preserve">
+    <value>暴力破解中...</value>
+  </data>
+  <data name="CheckingUpdates" xml:space="preserve">
+    <value>检查更新中...</value>
+  </data>
+  <data name="CompressionMethod" xml:space="preserve">
+    <value>压缩方式：{0}</value>
+  </data>
+  <data name="ConfiguringSettings" xml:space="preserve">
+    <value>检查设置...</value>
+  </data>
+  <data name="ContinueOnError" xml:space="preserve">
+    <value>继续...</value>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>当前版本：{0}</value>
+  </data>
+  <data name="Decrypting" xml:space="preserve">
+    <value>解密{0}...</value>
+  </data>
+  <data name="Encrypting" xml:space="preserve">
+    <value>加密{0}...</value>
+  </data>
+  <data name="ErrorCheckingUpdates" xml:space="preserve">
+    <value>检查更新中发生错误：{0}</value>
+  </data>
+  <data name="ErrorContainsInvalid" xml:space="preserve">
+    <value>路径中有非法字符。在设置里切换编码或许能解决此问题。</value>
+  </data>
+  <data name="ErrorDecompressFailed" xml:space="preserve">
+    <value>解压缩失败。</value>
+  </data>
+  <data name="ErrorDecScrFailed" xml:space="preserve">
+    <value>解密失败。</value>
+  </data>
+  <data name="ErrorDirNotFound" xml:space="preserve">
+    <value>指定的文件夹不存在。</value>
+  </data>
+  <data name="ErrorEncScrFailed" xml:space="preserve">
+    <value>加密失败。</value>
+  </data>
+  <data name="ErrorFileNotFound" xml:space="preserve">
+    <value>指定的文件不存在。</value>
+  </data>
+  <data name="ErrorInvalidArchive" xml:space="preserve">
+    <value>无效封包。</value>
+  </data>
+  <data name="ErrorInvalidArchiveCaption" xml:space="preserve">
+    <value>无效封包：{0}</value>
+  </data>
+  <data name="ErrorInvalidScheme" xml:space="preserve">
+    <value>无效的加密方案。</value>
+  </data>
+  <data name="ErrorInvalidVersion" xml:space="preserve">
+    <value>未知版本或暂未支持的版本。</value>
+  </data>
+  <data name="ErrorInvalidVersionNotSupported" xml:space="preserve">
+    <value>该版本封包暂时不支持。</value>
+  </data>
+  <data name="ErrorInvalidVersionNotSupportedWithMsg" xml:space="preserve">
+    <value>暂未支持的版本：{0}</value>
+  </data>
+  <data name="ErrorInvalidVersionUnknown" xml:space="preserve">
+    <value>未知版本。</value>
+  </data>
+  <data name="ErrorInvalidVersionUnknownWithMsg" xml:space="preserve">
+    <value>未知版本：{0}</value>
+  </data>
+  <data name="ErrorInvalidVersionWithMsg" xml:space="preserve">
+    <value>未知版本或暂未支持的版本：{0}</value>
+  </data>
+  <data name="ErrorOpenUrl" xml:space="preserve">
+    <value>未能打开网址：{0}</value>
+  </data>
+  <data name="ErrorOperation" xml:space="preserve">
+    <value>执行操作中发生错误：{0}</value>
+  </data>
+  <data name="ErrorOriginalFileNotFound" xml:space="preserve">
+    <value>同目录下未找到{0}原文件。</value>
+  </data>
+  <data name="ErrorSpecifiedFileNotFound" xml:space="preserve">
+    <value>同目录下未找到{0}文件。</value>
+  </data>
+  <data name="IndexOffset" xml:space="preserve">
+    <value>索引偏移</value>
+  </data>
+  <data name="InnerException" xml:space="preserve">
+    <value>内部错误：{0}</value>
+  </data>
+  <data name="KeyFound" xml:space="preserve">
+    <value>密钥已找到：{0}</value>
+  </data>
+  <data name="KeyNotFound" xml:space="preserve">
+    <value>密钥未找到。</value>
+  </data>
+  <data name="LatestVersion" xml:space="preserve">
+    <value>最新版本：{0}</value>
+  </data>
+  <data name="MatchedGame" xml:space="preserve">
+    <value>匹配的游戏：{0}</value>
+  </data>
+  <data name="NeedDec" xml:space="preserve">
+    <value>文件已加密。请选择合适的加密方案。</value>
+  </data>
+  <data name="OperationCancelled" xml:space="preserve">
+    <value>操作已取消。</value>
+  </data>
+  <data name="OperationPack" xml:space="preserve">
+    <value>封包</value>
+  </data>
+  <data name="OperationUnpack" xml:space="preserve">
+    <value>解包</value>
+  </data>
+  <data name="ProcessingFile" xml:space="preserve">
+    <value>处理文件：{0}</value>
+  </data>
+  <data name="ProcessingFolder" xml:space="preserve">
+    <value>处理文件夹：{0}</value>
+  </data>
+  <data name="Seed" xml:space="preserve">
+    <value>种子</value>
+  </data>
+  <data name="StartingOperation" xml:space="preserve">
+    <value>开始{0}...</value>
+  </data>
+  <data name="SuccessPack" xml:space="preserve">
+    <value>封包成功。</value>
+  </data>
+  <data name="SuccessUnpack" xml:space="preserve">
+    <value>解包成功。</value>
+  </data>
+  <data name="TryDecompressWithMethod" xml:space="preserve">
+    <value>尝试以{1}方式解压缩：{0}……</value>
+  </data>
+  <data name="ValidArchiveDetected" xml:space="preserve">
+    <value>检测到{0} v{1}封包。</value>
+  </data>
+</root>

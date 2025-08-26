@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BrutalForcing" xml:space="preserve">
+    <value>Brutal forcing...</value>
+  </data>
+  <data name="CheckingUpdates" xml:space="preserve">
+    <value>Checking for updates...</value>
+  </data>
+  <data name="CompressionMethod" xml:space="preserve">
+    <value>Compression method: {0}</value>
+  </data>
+  <data name="ConfiguringSettings" xml:space="preserve">
+    <value>Configuring settings...</value>
+  </data>
+  <data name="ContinueOnError" xml:space="preserve">
+    <value>Continue...</value>
+  </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>Current Version: {0}</value>
+  </data>
+  <data name="Decrypting" xml:space="preserve">
+    <value>Decrypting {0}...</value>
+  </data>
+  <data name="Encrypting" xml:space="preserve">
+    <value>Encrypting {0}...</value>
+  </data>
+  <data name="ErrorCheckingUpdates" xml:space="preserve">
+    <value>An error occurred during the update check: {0}</value>
+  </data>
+  <data name="ErrorContainsInvalid" xml:space="preserve">
+    <value>Path contains invalid characters. Switching the encoding in the settings might work.</value>
+  </data>
+  <data name="ErrorDecompressFailed" xml:space="preserve">
+    <value>Decompression failed.</value>
+  </data>
+  <data name="ErrorDecScrFailed" xml:space="preserve">
+    <value>Decryption failed.</value>
+  </data>
+  <data name="ErrorDirNotFound" xml:space="preserve">
+    <value>Folder specified does not exist.</value>
+  </data>
+  <data name="ErrorEncScrFailed" xml:space="preserve">
+    <value>Encryption failed.</value>
+  </data>
+  <data name="ErrorFileNotFound" xml:space="preserve">
+    <value>File specified does not exist.</value>
+  </data>
+  <data name="ErrorInvalidArchive" xml:space="preserve">
+    <value>Invalid archive.</value>
+  </data>
+  <data name="ErrorInvalidArchiveCaption" xml:space="preserve">
+    <value>Invalid archive: {0}</value>
+  </data>
+  <data name="ErrorInvalidScheme" xml:space="preserve">
+    <value>Invalid encryption scheme.</value>
+  </data>
+  <data name="ErrorInvalidVersion" xml:space="preserve">
+    <value>Unknown or unsupported archive version.</value>
+  </data>
+  <data name="ErrorInvalidVersionNotSupported" xml:space="preserve">
+    <value>This version of archive is temporarily not supported.</value>
+  </data>
+  <data name="ErrorInvalidVersionNotSupportedWithMsg" xml:space="preserve">
+    <value>Unsupported version: {0}</value>
+  </data>
+  <data name="ErrorInvalidVersionUnknown" xml:space="preserve">
+    <value>Unknown version.</value>
+  </data>
+  <data name="ErrorInvalidVersionUnknownWithMsg" xml:space="preserve">
+    <value>Unknown version: {0}</value>
+  </data>
+  <data name="ErrorInvalidVersionWithMsg" xml:space="preserve">
+    <value>Unknown or not supported archive version: {0}</value>
+  </data>
+  <data name="ErrorOpenUrl" xml:space="preserve">
+    <value>Failed to open url: {0}</value>
+  </data>
+  <data name="ErrorOperation" xml:space="preserve">
+    <value>An error occurred during operation: {0}</value>
+  </data>
+  <data name="ErrorOriginalFileNotFound" xml:space="preserve">
+    <value>Original {0} file not found in the same directory.</value>
+  </data>
+  <data name="ErrorSpecifiedFileNotFound" xml:space="preserve">
+    <value>{0} file not found in the same directory.</value>
+  </data>
+  <data name="IndexOffset" xml:space="preserve">
+    <value>Index Offset</value>
+  </data>
+  <data name="InnerException" xml:space="preserve">
+    <value>Inner exception: {0}</value>
+  </data>
+  <data name="KeyFound" xml:space="preserve">
+    <value>Key found: {0}</value>
+  </data>
+  <data name="KeyNotFound" xml:space="preserve">
+    <value>Key not found.</value>
+  </data>
+  <data name="LatestVersion" xml:space="preserve">
+    <value>LatestVersion: {0}</value>
+  </data>
+  <data name="MatchedGame" xml:space="preserve">
+    <value>Matched game: {0}</value>
+  </data>
+  <data name="NeedDec" xml:space="preserve">
+    <value>The file has been encrypted. Please choose appropriate scheme.</value>
+  </data>
+  <data name="OperationCancelled" xml:space="preserve">
+    <value>Operation cancelled.</value>
+  </data>
+  <data name="OperationPack" xml:space="preserve">
+    <value>pack</value>
+  </data>
+  <data name="OperationUnpack" xml:space="preserve">
+    <value>unpack</value>
+  </data>
+  <data name="ProcessingFile" xml:space="preserve">
+    <value>Processing file: {0}</value>
+  </data>
+  <data name="ProcessingFolder" xml:space="preserve">
+    <value>Processing folder: {0}</value>
+  </data>
+  <data name="Seed" xml:space="preserve">
+    <value>Seed</value>
+  </data>
+  <data name="StartingOperation" xml:space="preserve">
+    <value>Starting {0}ing...</value>
+  </data>
+  <data name="SuccessPack" xml:space="preserve">
+    <value>Packing succeeded.</value>
+  </data>
+  <data name="SuccessUnpack" xml:space="preserve">
+    <value>Unpacking succeeded.</value>
+  </data>
+  <data name="TryDecompressWithMethod" xml:space="preserve">
+    <value>Try to decompress {0} with {1}……</value>
+  </data>
+  <data name="ValidArchiveDetected" xml:space="preserve">
+    <value>Valid {0} v{1} archive detected.</value>
+  </data>
+</root>

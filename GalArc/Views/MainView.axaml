@@ -1,0 +1,154 @@
+<Window x:Class="GalArc.Views.MainView"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:b="using:GalArc.Behaviors"
+        xmlns:c="using:GalArc.Controls"
+        xmlns:cv="using:GalArc.Converters"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:e="using:GalArc.Enums"
+        xmlns:i="using:GalArc.I18n"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:s="using:GalArc.Infrastructure.Settings"
+        xmlns:vm="using:GalArc.ViewModels"
+        Title="GalArc"
+        Width="750"
+        d:DesignHeight="600"
+        x:DataType="vm:MainViewModel"
+        CanMaximize="False"
+        CanResize="False"
+        Icon="/Assets/logo.ico"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d">
+
+    <Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
+
+    <Window.Resources>
+        <cv:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+    </Window.Resources>
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="{x:Static i:GuiStrings.File}">
+                <MenuItem Command="{Binding BrowseInputCommand}" Header="{x:Static i:GuiStrings.SetInput}" />
+                <MenuItem Command="{Binding BrowseOutputCommand}" Header="{x:Static i:GuiStrings.SetOutput}" />
+                <Separator />
+                <MenuItem Command="{Binding ExitCommand}"
+                          CommandParameter="{Binding $parent[Window]}"
+                          Header="{x:Static i:GuiStrings.Exit}" />
+            </MenuItem>
+            <MenuItem Command="{Binding OpenSettingsCommand}"
+                      CommandParameter="{Binding $parent[Window]}"
+                      Header="{x:Static i:GuiStrings.Settings}" />
+            <MenuItem Header="{x:Static i:GuiStrings.Help}">
+                <MenuItem Command="{Binding CheckUpdatesCommand}"
+                          CommandParameter="{Binding $parent[Window]}"
+                          Header="{x:Static i:GuiStrings.CheckUpdates}" />
+                <MenuItem Command="{Binding OpenAboutCommand}"
+                          CommandParameter="{Binding $parent[Window]}"
+                          Header="{x:Static i:GuiStrings.About}" />
+            </MenuItem>
+        </Menu>
+        <StackPanel Margin="10"
+                    DockPanel.Dock="Top"
+                    Spacing="10">
+            <c:GroupBox Header="{x:Static i:GuiStrings.GroupPath}">
+                <StackPanel Spacing="10">
+                    <c:GroupBox Header="{x:Static i:GuiStrings.GroupInput}">
+                        <StackPanel Spacing="5">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
+                                <TextBox b:FileDropBehavior.DropCommand="{Binding DropInputCommand}"
+                                         DragDrop.AllowDrop="True"
+                                         Text="{Binding InputPath, Mode=TwoWay}"
+                                         Watermark="{Binding InputWatermark}" />
+                                <Button Grid.Column="1"
+                                        Command="{Binding BrowseInputCommand}"
+                                        Content="..." />
+                            </Grid>
+                        </StackPanel>
+                    </c:GroupBox>
+                    <c:GroupBox Header="{x:Static i:GuiStrings.GroupOutput}">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
+                            <TextBox b:FileDropBehavior.DropCommand="{Binding DropOutputCommand}"
+                                     DragDrop.AllowDrop="True"
+                                     Text="{Binding OutputPath, Mode=TwoWay}"
+                                     Watermark="{Binding OutputWatermark}" />
+                            <Button Grid.Column="1"
+                                    Command="{Binding BrowseOutputCommand}"
+                                    Content="..." />
+                        </Grid>
+                    </c:GroupBox>
+                </StackPanel>
+            </c:GroupBox>
+            <c:GroupBox Header="{x:Static i:GuiStrings.GroupOperation}">
+                <Grid ColumnDefinitions="*,*">
+                    <RadioButton HorizontalAlignment="Center"
+                                 Content="{x:Static i:GuiStrings.OperationUnpack}"
+                                 IsChecked="{Binding SelectedOperation, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static e:OperationType.Unpack}}" />
+                    <RadioButton Grid.Column="1"
+                                 HorizontalAlignment="Center"
+                                 Content="{x:Static i:GuiStrings.OperationPack}"
+                                 IsChecked="{Binding SelectedOperation, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static e:OperationType.Pack}}" />
+                </Grid>
+            </c:GroupBox>
+            <c:GroupBox Header="{x:Static i:GuiStrings.GroupFormat}">
+                <StackPanel>
+                    <ComboBox HorizontalAlignment="Stretch"
+                              IsVisible="{Binding SelectedOperation, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static e:OperationType.Unpack}}"
+                              ItemsSource="{Binding UnpackFormats}"
+                              SelectedItem="{Binding SelectedUnpackFormat}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock IsVisible="{Binding $parent[ComboBox].SelectedItem, Converter={x:Static ObjectConverters.IsNotNull}}">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} - {1}">
+                                            <Binding Path="Name" />
+                                            <Binding Path="Description" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ComboBox HorizontalAlignment="Stretch"
+                              IsVisible="{Binding SelectedOperation, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static e:OperationType.Pack}}"
+                              ItemsSource="{Binding PackFormats}"
+                              SelectedItem="{Binding SelectedPackFormat}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock IsVisible="{Binding $parent[ComboBox].SelectedItem, Converter={x:Static ObjectConverters.IsNotNull}}">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} - {1}">
+                                            <Binding Path="Name" />
+                                            <Binding Path="Description" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </c:GroupBox>
+            <c:GroupBox Padding="10"
+                        Header="{x:Static i:GuiStrings.GroupFormatOptions}"
+                        IsVisible="{Binding FormatOptions, Converter={x:Static ObjectConverters.IsNotNull}}">
+                <ContentControl Content="{Binding FormatOptions, Mode=OneWay}" />
+            </c:GroupBox>
+            <c:GroupBox Header="{x:Static i:GuiStrings.GroupAdditional}">
+                <UniformGrid Columns="1">
+                    <CheckBox HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Content="{x:Static i:GuiStrings.ButtonContinue}"
+                              IsChecked="{Binding ContinueOnError}" />
+                </UniformGrid>
+            </c:GroupBox>
+            <Button HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    Command="{Binding StartCommand}"
+                    CommandParameter="{Binding $parent[Window]}"
+                    Content="{x:Static i:GuiStrings.ButtonStart}" />
+        </StackPanel>
+    </DockPanel>
+</Window>

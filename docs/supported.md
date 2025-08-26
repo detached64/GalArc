@@ -33,12 +33,11 @@ Attention: this file is updated manually, so it may not be up-to-date. For the l
 | Pkware | `pkg` | ✔️ | ❌ | limited |
 | Qlie/Clie        | `pack`                     | ✔️      | ❌    | all                   |
 | RPGMaker         | `rgssad` `rgss2a` `rgss3a` | ✔️      | ✔️    | all                         |
-| Seraph/Seraphim  | `dat`                      | ✔️      | ❌    | all                         |
+| Seraph/Seraphim  | `dat`                       | ✔️      | ❌    | all                         |
 | Siglus           | `Scene.pck` `Gameexe.dat`  | ✔️      | ❌    | all                         |
 | Softpal          | `pac`                      | ✔️      | ✔️    | all                         |
 | Sogna            | `dat`                      | ✔️      | ✔️    | all                         |
 | SystemNNN        | `gpk` `vpk`                | ✔️      | ✔️    | all                         |
 | Triangle         | `CG` `SUD` `CGF`           | ✔️      | ✔️    | `cgf`: v1 only              |
 | Valkyria         | `dat`                      | ✔️      | ✔️    | all                         |
-| Yuris            | `ypf`                      | ✔️      | ❌    | all                         |
-
+| Yuris            | `ypf`                     | ✔️      | ❌    | all                         |

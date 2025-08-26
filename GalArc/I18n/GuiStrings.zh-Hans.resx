@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="BrutalForce" xml:space="preserve">
+    <value>暴力破解</value>
+  </data>
+  <data name="ButtonContinue" xml:space="preserve">
+    <value>错误时继续</value>
+  </data>
+  <data name="ButtonStart" xml:space="preserve">
+    <value>开始</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="CheckUpdates" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+  <data name="CompressContents" xml:space="preserve">
+    <value>压缩内容</value>
+  </data>
+  <data name="CompressIndex" xml:space="preserve">
+    <value>压缩索引</value>
+  </data>
+  <data name="CompressionMethod" xml:space="preserve">
+    <value>压缩方式</value>
+  </data>
+  <data name="ComputeChecksum" xml:space="preserve">
+    <value>计算校验和</value>
+  </data>
+  <data name="ConfigNeedRestart" xml:space="preserve">
+    <value>带 * 的配置项重启后生效。</value>
+  </data>
+  <data name="Database" xml:space="preserve">
+    <value>数据库</value>
+  </data>
+  <data name="DatabasePath" xml:space="preserve">
+    <value>数据库路径</value>
+  </data>
+  <data name="DecryptScripts" xml:space="preserve">
+    <value>解密脚本文件</value>
+  </data>
+  <data name="DefaultEnc" xml:space="preserve">
+    <value>默认加密方案</value>
+  </data>
+  <data name="Encoding" xml:space="preserve">
+    <value>编码</value>
+  </data>
+  <data name="EncryptScripts" xml:space="preserve">
+    <value>加密脚本文件</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>常规</value>
+  </data>
+  <data name="GroupAdditional" xml:space="preserve">
+    <value>额外选项</value>
+  </data>
+  <data name="GroupFormat" xml:space="preserve">
+    <value>格式</value>
+  </data>
+  <data name="GroupFormatOptions" xml:space="preserve">
+    <value>格式选项</value>
+  </data>
+  <data name="GroupInput" xml:space="preserve">
+    <value>输入</value>
+  </data>
+  <data name="GroupLog" xml:space="preserve">
+    <value>日志</value>
+  </data>
+  <data name="GroupOperation" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="GroupOutput" xml:space="preserve">
+    <value>输出</value>
+  </data>
+  <data name="GroupPath" xml:space="preserve">
+    <value>路径</value>
+  </data>
+  <data name="GroupProgress" xml:space="preserve">
+    <value>进度</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>帮助</value>
+  </data>
+  <data name="IndexOffset" xml:space="preserve">
+    <value>索引偏移</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="LogFilePath" xml:space="preserve">
+    <value>日志文件路径</value>
+  </data>
+  <data name="Logging" xml:space="preserve">
+    <value>日志</value>
+  </data>
+  <data name="NoEncryption" xml:space="preserve">
+    <value>未加密</value>
+  </data>
+  <data name="OpenUrl" xml:space="preserve">
+    <value>打开网址</value>
+  </data>
+  <data name="OperationPack" xml:space="preserve">
+    <value>封包</value>
+  </data>
+  <data name="OperationUnpack" xml:space="preserve">
+    <value>解包</value>
+  </data>
+  <data name="OriginalArchive" xml:space="preserve">
+    <value>原封包路径</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>路径</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>重置</value>
+  </data>
+  <data name="SaveHash" xml:space="preserve">
+    <value>保存 Hash</value>
+  </data>
+  <data name="SaveKey" xml:space="preserve">
+    <value>保存 Key</value>
+  </data>
+  <data name="SaveLogs" xml:space="preserve">
+    <value>保存日志</value>
+  </data>
+  <data name="Seed" xml:space="preserve">
+    <value>种子</value>
+  </data>
+  <data name="SelectEncScheme" xml:space="preserve">
+    <value>请选择加密方案</value>
+  </data>
+  <data name="SetInput" xml:space="preserve">
+    <value>设置输入路径</value>
+  </data>
+  <data name="SetOutput" xml:space="preserve">
+    <value>设置输出路径</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="SourceURL" xml:space="preserve">
+    <value>开源网址</value>
+  </data>
+  <data name="SpecifyIndexOffset" xml:space="preserve">
+    <value>指定索引偏移</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>颜色主题</value>
+  </data>
+  <data name="TryEveryEnc" xml:space="preserve">
+    <value>尝试所有加密方案</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="WaterInputFile" xml:space="preserve">
+    <value>输入文件路径 (支持通配符)</value>
+  </data>
+  <data name="WaterInputFolder" xml:space="preserve">
+    <value>输入文件夹路径</value>
+  </data>
+  <data name="WaterOutputFile" xml:space="preserve">
+    <value>输出文件路径</value>
+  </data>
+  <data name="WaterOutputFolder" xml:space="preserve">
+    <value>输出文件夹路径</value>
+  </data>
+</root>

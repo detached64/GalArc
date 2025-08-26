@@ -1,0 +1,29 @@
+<UserControl x:Class="GalArc.Views.DatabaseWidget"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="using:GalArc.I18n"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:GalArc.ViewModels"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:DataType="vm:DatabaseOptions"
+             mc:Ignorable="d">
+
+    <Design.DataContext>
+        <vm:DatabaseOptions />
+    </Design.DataContext>
+
+    <StackPanel Spacing="10">
+        <TextBlock Text="{Binding Source={x:Static i:GuiStrings.DatabasePath}, StringFormat={}{0}*}" />
+        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="5">
+            <TextBox Text="{Binding DatabasePath, Mode=TwoWay}" />
+            <Button Grid.Column="1"
+                    Command="{Binding BrowseDatabasePathCommand}"
+                    Content="..." />
+            <Button Grid.Column="2"
+                    Command="{Binding ResetDatabasePathCommand}"
+                    Content="{x:Static i:GuiStrings.Reset}" />
+        </Grid>
+    </StackPanel>
+</UserControl>

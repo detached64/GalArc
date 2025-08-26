@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="BrutalForce" xml:space="preserve">
+    <value>Brutal Force</value>
+  </data>
+  <data name="ButtonContinue" xml:space="preserve">
+    <value>Continue on Error</value>
+  </data>
+  <data name="ButtonStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CheckUpdates" xml:space="preserve">
+    <value>Check for Updates</value>
+  </data>
+  <data name="CompressContents" xml:space="preserve">
+    <value>Compress Contents</value>
+  </data>
+  <data name="CompressIndex" xml:space="preserve">
+    <value>Compress Index</value>
+  </data>
+  <data name="CompressionMethod" xml:space="preserve">
+    <value>Compression Method</value>
+  </data>
+  <data name="ComputeChecksum" xml:space="preserve">
+    <value>Compute Checksum</value>
+  </data>
+  <data name="ConfigNeedRestart" xml:space="preserve">
+    <value>Configures marked with * will take effect after a restart.</value>
+  </data>
+  <data name="Database" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="DatabasePath" xml:space="preserve">
+    <value>Database Path</value>
+  </data>
+  <data name="DecryptScripts" xml:space="preserve">
+    <value>Decrypt Scripts</value>
+  </data>
+  <data name="DefaultEnc" xml:space="preserve">
+    <value>Default encryption scheme</value>
+  </data>
+  <data name="Encoding" xml:space="preserve">
+    <value>Encoding</value>
+  </data>
+  <data name="EncryptScripts" xml:space="preserve">
+    <value>Encrypt Scripts</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="GroupAdditional" xml:space="preserve">
+    <value>Additional Options</value>
+  </data>
+  <data name="GroupFormat" xml:space="preserve">
+    <value>Format</value>
+  </data>
+  <data name="GroupFormatOptions" xml:space="preserve">
+    <value>Format Options</value>
+  </data>
+  <data name="GroupInput" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="GroupLog" xml:space="preserve">
+    <value>Log</value>
+  </data>
+  <data name="GroupOperation" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="GroupOutput" xml:space="preserve">
+    <value>Output</value>
+  </data>
+  <data name="GroupPath" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="GroupProgress" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="IndexOffset" xml:space="preserve">
+    <value>Index Offset</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LogFilePath" xml:space="preserve">
+    <value>Log File Path</value>
+  </data>
+  <data name="Logging" xml:space="preserve">
+    <value>Logging</value>
+  </data>
+  <data name="NoEncryption" xml:space="preserve">
+    <value>No Encryption</value>
+  </data>
+  <data name="OpenUrl" xml:space="preserve">
+    <value>Open Url</value>
+  </data>
+  <data name="OperationPack" xml:space="preserve">
+    <value>Pack</value>
+  </data>
+  <data name="OperationUnpack" xml:space="preserve">
+    <value>Unpack</value>
+  </data>
+  <data name="OriginalArchive" xml:space="preserve">
+    <value>Original Archive Path</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="SaveHash" xml:space="preserve">
+    <value>Save Hash</value>
+  </data>
+  <data name="SaveKey" xml:space="preserve">
+    <value>Save Key</value>
+  </data>
+  <data name="SaveLogs" xml:space="preserve">
+    <value>Save Logs</value>
+  </data>
+  <data name="Seed" xml:space="preserve">
+    <value>Seed</value>
+  </data>
+  <data name="SelectEncScheme" xml:space="preserve">
+    <value>Please select encryption scheme</value>
+  </data>
+  <data name="SetInput" xml:space="preserve">
+    <value>Set Input Path</value>
+  </data>
+  <data name="SetOutput" xml:space="preserve">
+    <value>Set Output Path</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SourceURL" xml:space="preserve">
+    <value>Source URL</value>
+  </data>
+  <data name="SpecifyIndexOffset" xml:space="preserve">
+    <value>Specify Index Offset</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="TryEveryEnc" xml:space="preserve">
+    <value>Try every encryption scheme</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="WaterInputFile" xml:space="preserve">
+    <value>Input File Path (Support wildcard)</value>
+  </data>
+  <data name="WaterInputFolder" xml:space="preserve">
+    <value>Input Folder Path</value>
+  </data>
+  <data name="WaterOutputFile" xml:space="preserve">
+    <value>Output File Path</value>
+  </data>
+  <data name="WaterOutputFolder" xml:space="preserve">
+    <value>Output Folder Path</value>
+  </data>
+</root>

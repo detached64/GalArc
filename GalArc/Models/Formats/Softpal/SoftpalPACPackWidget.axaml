@@ -1,0 +1,29 @@
+<UserControl x:Class="GalArc.Models.Formats.Softpal.SoftpalPACPackWidget"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="using:GalArc.I18n"
+             xmlns:local="using:GalArc.Models.Formats.Softpal"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:DataType="local:SoftpalPACPackOptions"
+             mc:Ignorable="d">
+
+    <Design.DataContext>
+        <local:SoftpalPACPackOptions />
+    </Design.DataContext>
+
+    <StackPanel Spacing="10">
+        <TextBlock Text="{x:Static i:GuiStrings.Version}" />
+        <ComboBox HorizontalAlignment="Stretch"
+                  ItemsSource="{Binding Versions}"
+                  SelectedItem="{Binding Version}" />
+        <StackPanel Orientation="Horizontal" Spacing="10">
+            <CheckBox Content="{x:Static i:GuiStrings.EncryptScripts}" IsChecked="{Binding EncryptScripts}" />
+            <CheckBox Content="{x:Static i:GuiStrings.ComputeChecksum}"
+                      IsChecked="{Binding ComputeChecksum}"
+                      IsEnabled="{Binding CanComputeChecksum}" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

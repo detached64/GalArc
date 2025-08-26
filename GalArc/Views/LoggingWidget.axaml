@@ -1,0 +1,32 @@
+<UserControl x:Class="GalArc.Views.LoggingWidget"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="using:GalArc.I18n"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:GalArc.ViewModels"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:DataType="vm:LoggingOptions"
+             mc:Ignorable="d">
+
+    <Design.DataContext>
+        <vm:LoggingOptions />
+    </Design.DataContext>
+
+    <StackPanel Spacing="10">
+        <CheckBox Content="{x:Static i:GuiStrings.SaveLogs}" IsChecked="{Binding SaveLogs}" />
+        <TextBlock Text="{x:Static i:GuiStrings.LogFilePath}" />
+        <Grid ColumnDefinitions="*,Auto,Auto"
+              ColumnSpacing="5"
+              IsEnabled="{Binding SaveLogs}">
+            <TextBox Text="{Binding LogFilePath, Mode=TwoWay}" />
+            <Button Grid.Column="1"
+                    Command="{Binding BrowseLogPathCommand}"
+                    Content="..." />
+            <Button Grid.Column="2"
+                    Command="{Binding ResetLogPathCommand}"
+                    Content="{x:Static i:GuiStrings.Reset}" />
+        </Grid>
+    </StackPanel>
+</UserControl>

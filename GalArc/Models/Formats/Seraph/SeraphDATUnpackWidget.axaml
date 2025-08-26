@@ -1,0 +1,25 @@
+<UserControl x:Class="GalArc.Models.Formats.Seraph.SeraphDATUnpackWidget"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="using:GalArc.I18n"
+             xmlns:local="using:GalArc.Models.Formats.Seraph"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:DataType="local:SeraphDATUnpackOptions"
+             mc:Ignorable="d">
+
+    <Design.DataContext>
+        <local:SeraphDATUnpackOptions />
+    </Design.DataContext>
+    <StackPanel Spacing="10">
+        <StackPanel Orientation="Horizontal" Spacing="10">
+            <RadioButton Content="{x:Static i:GuiStrings.BrutalForce}" IsChecked="{Binding UseBrutalForce}" />
+            <RadioButton Content="{x:Static i:GuiStrings.SpecifyIndexOffset}" IsChecked="{Binding !UseBrutalForce}" />
+            <TextBox IsEnabled="{Binding !UseBrutalForce}"
+                     Text="{Binding IndexOffsetString, Mode=TwoWay}"
+                     Watermark="Hex String" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

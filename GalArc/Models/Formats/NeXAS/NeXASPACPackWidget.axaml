@@ -1,0 +1,37 @@
+<UserControl x:Class="GalArc.Models.Formats.NeXAS.NeXASPACPackWidget"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="using:GalArc.I18n"
+             xmlns:local="using:GalArc.Models.Formats.NeXAS"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:DataType="local:NeXASPACPackOptions"
+             mc:Ignorable="d">
+
+    <Design.DataContext>
+        <local:NeXASPACPackOptions />
+    </Design.DataContext>
+
+    <StackPanel Spacing="10">
+        <TextBlock Text="{x:Static i:GuiStrings.Encoding}" />
+        <ComboBox HorizontalAlignment="Stretch"
+                  ItemsSource="{Binding Encodings}"
+                  SelectedItem="{Binding Encoding}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding EncodingName}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock Text="{x:Static i:GuiStrings.Version}" />
+        <ComboBox HorizontalAlignment="Stretch"
+                  ItemsSource="{Binding Versions}"
+                  SelectedItem="{Binding Version}" />
+        <TextBlock Text="{x:Static i:GuiStrings.CompressionMethod}" />
+        <ComboBox HorizontalAlignment="Stretch"
+                  ItemsSource="{x:Static local:PAC.MethodValues}"
+                  SelectedItem="{Binding Method}" />
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,43 @@
+<Window x:Class="GalArc.Views.UpdateView"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="using:GalArc.I18n"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:GalArc.ViewModels"
+        Title="{x:Static i:GuiStrings.CheckUpdates}"
+        d:DesignHeight="450"
+        d:DesignWidth="800"
+        x:DataType="vm:UpdateViewModel"
+        CanMaximize="False"
+        CanMinimize="False"
+        CanResize="False"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner"
+        mc:Ignorable="d">
+
+    <Design.DataContext>
+        <vm:UpdateViewModel />
+    </Design.DataContext>
+
+    <StackPanel Margin="20" Spacing="15">
+        <TextBlock Text="{Binding StatusMessage}" />
+        <DockPanel LastChildFill="False">
+            <Button Command="{Binding ExitCommand}"
+                    CommandParameter="{Binding $parent[Window]}"
+                    Content="{x:Static i:GuiStrings.Cancel}"
+                    DockPanel.Dock="Right"
+                    IsEnabled="{Binding !IsChecking}" />
+            <Button Command="{Binding OpenUpdateUrlCommand}"
+                    Content="{x:Static i:GuiStrings.OpenUrl}"
+                    DockPanel.Dock="Right">
+                <Button.IsEnabled>
+                    <MultiBinding Converter="{x:Static BoolConverters.And}">
+                        <Binding Path="!IsChecking" />
+                        <Binding Path="IsSuccess" />
+                    </MultiBinding>
+                </Button.IsEnabled>
+            </Button>
+        </DockPanel>
+    </StackPanel>
+</Window>

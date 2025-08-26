@@ -1,140 +1,108 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{76E72C4E-7F17-4D75-A596-C0280530A4EB}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>GalArc</RootNamespace>
-    <AssemblyName>GalArc</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Settings\ResSettings.cs" />
-    <Compile Include="Settings\BaseSettings.cs" />
-    <Compile Include="Common\Encodings.cs" />
-    <Compile Include="Common\EngineInfo.cs" />
-    <Compile Include="Common\Languages.cs" />
-    <Compile Include="Templates\Empty.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Templates\Empty.Designer.cs">
-      <DependentUpon>Empty.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Templates\OptionsTemplates.cs" />
-    <Compile Include="Templates\WidgetTemplate.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Templates\WidgetTemplate.Designer.cs">
-      <DependentUpon>WidgetTemplate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Templates\SettingsTemplate.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Templates\SettingsTemplate.Designer.cs">
-      <DependentUpon>SettingsTemplate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Database\DatabaseConfig.cs" />
-    <Compile Include="Database\Deserializer.cs" />
-    <Compile Include="Database\Schemes.cs" />
-    <Compile Include="Settings\GUISettings.cs" />
-    <Compile Include="Strings\GUIStrings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GUIStrings.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Strings\LogStrings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LogStrings.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Logs\Logger.cs" />
-    <EmbeddedResource Include="Templates\Empty.resx">
-      <DependentUpon>Empty.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\Empty.zh-Hans.resx">
-      <DependentUpon>Empty.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\WidgetTemplate.resx">
-      <DependentUpon>WidgetTemplate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\SettingsTemplate.resx">
-      <DependentUpon>SettingsTemplate.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings\GUIStrings.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>GUIStrings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings\GUIStrings.zh-Hans.resx" />
-    <EmbeddedResource Include="Strings\LogStrings.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LogStrings.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Strings\LogStrings.zh-Hans.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <None Include="packages.config" />
-    <None Include="Resources\Database\AGS.json" />
-    <None Include="Resources\Database\Ns2.json" />
-    <None Include="Resources\Database\Pkware.json" />
-    <None Include="Resources\Database\Qlie.json" />
-    <None Include="Resources\Database\Seraph.json" />
-    <None Include="Resources\Database\Siglus.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>if not exist "$(TargetDir)\Database" mkdir "$(TargetDir)\Database"
-xcopy /E /I /Y /D "$(ProjectDir)\Resources\Database" "$(TargetDir)\Database"
-</PostBuildEvent>
-  </PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>disable</Nullable>
+		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+		<PublishAot Condition="'$(Configuration)' != 'Debug'">true</PublishAot>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<ApplicationIcon>Assets\logo.ico</ApplicationIcon>
+		<Authors>detached64</Authors>
+		<Version>2.0.0</Version>
+		<Copyright>Copyright © 2025 detached64</Copyright>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DebugType>none</DebugType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AvaloniaResource Include="Assets\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="11.3.5" />
+		<PackageReference Include="Avalonia.Desktop" Version="11.3.5" />
+		<PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.5" />
+		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+		<PackageReference Include="Avalonia.Diagnostics" Version="11.3.5">
+			<IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+			<PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.5" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
+		<PackageReference Include="SharpZipLib" Version="1.4.2" />
+		<PackageReference Include="Snappier" Version="1.2.0" />
+		<PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.8" />
+		<PackageReference Include="ZstdSharp.Port" Version="0.8.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="I18n\GuiStrings.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>GuiStrings.resx</DependentUpon>
+		</Compile>
+		<Compile Update="I18n\MsgStrings.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>MsgStrings.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Models\Formats\AdvHD\AdvHDARCPackWidget.axaml.cs">
+			<DependentUpon>AdvHDARCPackWidget.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Models\Formats\AdvHD\AdvHDARCUnpackWidget.axaml.cs">
+			<DependentUpon>AdvHDARCUnpackWidget.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Models\Formats\Ai6Win\Ai6WinARCPackWidget.axaml.cs">
+			<DependentUpon>Ai6WinARCPackWidget.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Models\Formats\AnimeGameSystem\AgsDATUnpackWidget.axaml.cs">
+			<DependentUpon>AgsDATUnpackWidget.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\GeneralWidget.axaml.cs">
+			<DependentUpon>GeneralWidget.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\LoggingWidget.axaml.cs">
+			<DependentUpon>LoggingWidget.axaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\MainView.axaml.cs">
+			<DependentUpon>MainView.axaml</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\GalArc.Generator\GalArc.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="I18n\GuiStrings.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>GuiStrings.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="I18n\MsgStrings.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>MsgStrings.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="Models\Database\Resources\*.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<Link>Database\%(FileName)%(Extension)</Link>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="Assets\logo.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Update="Models\Database\Resources\Vinos.json" Link="Database\Vinos.json" />
+	</ItemGroup>
+
 </Project>

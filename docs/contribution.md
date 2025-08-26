@@ -4,38 +4,16 @@
 
 1. Use ResX Manager extension or something to translate all the strings.
 
-2. Go to GalArc/Common/Languages.cs , add your language name and culture like this:
-
-   ```C#
-   internal static Dictionary<string, string> languages = new Dictionary<string, string>
-   {
-       { "简体中文" , "zh-CN" },
-       { "English" , "en-US" },
-       { "日本語" , "ja-JP" }			// add here
-   };
-   ```
+2. Go to GalArc/Infrastructure/Cultures/CultureManager.cs and add your culture there.
 
 ## Add new format support
 
-1. Add new folder and files in ArcFormats.
+1. Add new folder and files in GalArc/Models/Formats.
 
-2. Make sure the namespace is ArcFormats.(engine name) , and there's a public class named after the extension(upper).
+2. Make sure the namespace is GalArc.Models.Formats.(engine name) , and there's a public class named after the extension(upper). For example, for .xp3, the class name should be XP3.
 
-3. Add unpack or pack method there. Make sure the methods are like these:
-
-   ```C#
-   public override void Unpack(string filePath, string folderPath)
-   {
-
-   }
-   public override void Pack(string folderPath, string filePath)
-   {
-
-   }
-   ```
-
-4. Add a new EngineInfo in GalArc/Common/EngineInfo.cs.
+3. Fill the required properties and methods in the class.
 
 ## Find and add custom scheme in database
 
-Follow the tutorials [here](https://github.com/detached64/GalArc/tree/master/docs/database)
+Follow the tutorials [here](./database/).

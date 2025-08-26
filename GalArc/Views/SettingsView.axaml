@@ -1,0 +1,54 @@
+<Window x:Class="GalArc.Views.SettingsView"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="using:GalArc.I18n"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:GalArc.ViewModels"
+        Title="{x:Static i:GuiStrings.Settings}"
+        Width="750"
+        Height="400"
+        x:DataType="vm:SettingsViewModel"
+        Icon="/Assets/logo.ico"
+        WindowStartupLocation="CenterOwner"
+        mc:Ignorable="d">
+
+    <Design.DataContext>
+        <vm:SettingsViewModel />
+    </Design.DataContext>
+
+    <DockPanel Margin="10">
+        <TextBlock Margin="0,5,0,0"
+                   HorizontalAlignment="Right"
+                   DockPanel.Dock="Bottom"
+                   Text="{x:Static i:GuiStrings.ConfigNeedRestart}" />
+        <Grid ColumnDefinitions="Auto,5,*" DockPanel.Dock="Top">
+            <Border BorderBrush="Gray" BorderThickness="1">
+                <TreeView ItemsSource="{Binding SettingItems}" SelectedItem="{Binding SelectedItem}">
+                    <TreeView.ItemContainerTheme>
+                        <ControlTheme BasedOn="{StaticResource {x:Type TreeViewItem}}" TargetType="TreeViewItem">
+                            <Setter Property="IsExpanded" Value="True" />
+                        </ControlTheme>
+                    </TreeView.ItemContainerTheme>
+                    <TreeView.ItemTemplate>
+                        <TreeDataTemplate ItemsSource="{Binding Children}">
+                            <TextBlock Margin="0,0,5,0" Text="{Binding Title}" />
+                        </TreeDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </Border>
+            <GridSplitter Grid.Column="1"
+                          HorizontalAlignment="Stretch"
+                          VerticalAlignment="Stretch"
+                          Background="Transparent"
+                          Focusable="False" />
+            <Border Grid.Column="2"
+                    BorderBrush="Gray"
+                    BorderThickness="1">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <ContentControl Padding="10" Content="{Binding CurrentSettingOptions}" />
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </DockPanel>
+</Window>

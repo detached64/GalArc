@@ -4,34 +4,24 @@ Galgame Archive Tool.
 
 Mainly focus on the unpacking and repacking of galgame archives.
 
-## Features
+## Build
 
-* Batch extraction via wildcard `*` and `?`
+```
+dotnet publish -c Release -r win-x64
+```
 
-* Encoding specification
+### Cross-Platform Compatibility
 
-* Script decryption & encryption
+Technically, the program can be compiled and run on Windows, Linux, and macOS through `dotnet publish`.
 
-* Json database with custom scheme support
+However, the program is only tested on Windows. Some behaviors on other platforms may not be as expected because of the differences in file systems and other factors.
 
-* ...
+If you encounter any issues while running the program on non-Windows platforms, feel free to report them.
 
-## Documentation
+## Contributing
 
-* [How to find and add custom scheme to database](./docs/contribution.md#find-and-add-custom-scheme-in-database)
-
-* [How to contribute](./docs/contribution.md)
-
-* [Supported formats](./docs/supported.md)
-
-## References
-
-* [GARbro](https://github.com/morkt/GARbro)
-
-* [GARbro-fork](https://github.com/crskycode/GARbro)
-
-* [GALgameScriptTools/SiglusEngine](https://github.com/yanhua0518/GALgameScriptTools/tree/master/SiglusEngine)
+Contributions are welcome! Please refer to the [contribution guide](./docs/contribution.md) for details.
 
 ## License
 
-The GNU General Public License v3.0
+GNU General Public License v3.0
