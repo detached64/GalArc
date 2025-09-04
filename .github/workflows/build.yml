@@ -21,9 +21,6 @@ jobs:
         with:
           dotnet-version: '9.0.x'
 
-      - name: Restore dependencies
-        run: dotnet restore
-
       - name: Publish the project
         run: dotnet publish -c Release -r win-x64
 
