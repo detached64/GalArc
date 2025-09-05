@@ -123,7 +123,6 @@ internal class NS2 : ArcFormat, IUnpackConfigurable
 internal partial class NScripterNS2UnpackOptions : ArcOptions
 {
     public readonly Ns2Scheme Scheme;
-
     public NScripterNS2UnpackOptions()
     {
         if (Design.IsDesignMode)

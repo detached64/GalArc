@@ -21,5 +21,15 @@
                   ItemsSource="{Binding KnownSchemes}"
                   SelectedValue="{Binding SelectedKey}"
                   SelectedValueBinding="{Binding Value}" />
+        <TextBlock Text="{x:Static i:GuiStrings.Encoding}" />
+        <ComboBox HorizontalAlignment="Stretch"
+                  ItemsSource="{Binding Encodings}"
+                  SelectedItem="{Binding Encoding}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding EncodingName}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
     </StackPanel>
 </UserControl>

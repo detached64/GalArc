@@ -122,7 +122,6 @@ internal class DAT : ArcFormat, IUnpackConfigurable
 internal partial class AgsDATUnpackOptions : ArcOptions
 {
     public readonly AgsScheme Scheme;
-
     public AgsDATUnpackOptions()
     {
         if (Design.IsDesignMode)

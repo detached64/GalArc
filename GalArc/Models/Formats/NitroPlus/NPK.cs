@@ -58,8 +58,6 @@ internal class NPK : ArcFormat, IUnpackConfigurable
         aes.Key = _unpackOptions.SelectedKey;
         aes.IV = IV;
         using CryptoStream cryptoStream = new(entryTableStream, aes.CreateDecryptor(), CryptoStreamMode.Read);
-        //using FileStream fwTable = File.Create(Path.Combine(folderPath, "table.bin"));
-        //cryptoStream.CopyTo(fwTable);
         List<NpkEntry> entries = new(fileCount);
         using (MemoryStream tableStream = new())
         {
@@ -71,7 +69,7 @@ internal class NPK : ArcFormat, IUnpackConfigurable
                 NpkEntry entry = new();
                 entry.HasSeg = tableReader.ReadByte() == 0;
                 int nameLen = tableReader.ReadUInt16();
-                entry.Name = Encoding.UTF8.GetString(tableReader.ReadBytes(nameLen));
+                entry.Name = _unpackOptions.Encoding.GetString(tableReader.ReadBytes(nameLen));
                 entry.UnpackedSize = tableReader.ReadUInt32();
                 entry.SHA256 = tableReader.ReadBytes(32);
                 entry.SegCount = tableReader.ReadInt32();

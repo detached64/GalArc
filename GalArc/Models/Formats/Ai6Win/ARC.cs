@@ -303,13 +303,10 @@ internal partial class Ai6WinARCPackOptions : ArcOptions
 {
     [ObservableProperty]
     private IReadOnlyList<int> versions = [1, 2, 3];
-
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsCompressContentsVisible))]
     private int version = 3;
-
     [ObservableProperty]
     private bool compressContents = true;
-
     public bool IsCompressContentsVisible => Version != 1;
 }
