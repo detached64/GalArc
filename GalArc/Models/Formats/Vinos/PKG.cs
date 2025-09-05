@@ -63,6 +63,7 @@ internal partial class VinosPKGUnpackOptions : ArcOptions
         if (Scheme?.KnownSchemes != null)
         {
             KnownSchemes = Scheme.KnownSchemes;
+            SelectedKey = KnownSchemes.Values.FirstOrDefault();
         }
     }
 

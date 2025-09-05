@@ -209,9 +209,9 @@ internal partial class StatusViewModel : ViewModelBase, IDisposable
                     ProgressManager.OverallSetMax(batch_inputs.Length);
                     foreach (string batch_input in batch_inputs)
                     {
+                        _cts.Token.ThrowIfCancellationRequested();
                         ProgressManager.SetValue(0);
                         ProgressManager.SetMax(0);
-                        _cts.Token.ThrowIfCancellationRequested();
                         string batch_output = Path.Combine(SettingsManager.Settings.OutputPath,
                             Path.GetFileNameWithoutExtension(batch_input));
                         Directory.CreateDirectory(batch_output);
