@@ -1,104 +1,104 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<OutputType>WinExe</OutputType>
-		<TargetFramework>net9.0</TargetFramework>
-		<Nullable>disable</Nullable>
-		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-		<ApplicationManifest>app.manifest</ApplicationManifest>
-		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-		<PublishAot Condition="'$(Configuration)' != 'Debug'">true</PublishAot>
-		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-		<NeutralLanguage>en-US</NeutralLanguage>
-		<ApplicationIcon>Assets\logo.ico</ApplicationIcon>
-		<Authors>detached64</Authors>
-		<Version>2.0.0</Version>
-		<Copyright>Copyright © 2025 detached64</Copyright>
-	</PropertyGroup>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>disable</Nullable>
+        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <PublishAot Condition="'$(Configuration)' != 'Debug'">true</PublishAot>
+        <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+        <NeutralLanguage>en-US</NeutralLanguage>
+        <ApplicationIcon>Assets\logo.ico</ApplicationIcon>
+        <Authors>detached64</Authors>
+        <Version>2.0.0</Version>
+        <Copyright>Copyright © 2025 detached64</Copyright>
+    </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<DebugType>none</DebugType>
-	</PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <DebugType>none</DebugType>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<AvaloniaResource Include="Assets\**" />
-	</ItemGroup>
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**" />
+    </ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Avalonia" Version="11.3.5" />
-		<PackageReference Include="Avalonia.Desktop" Version="11.3.5" />
-		<PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.5" />
-		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-		<PackageReference Include="Avalonia.Diagnostics" Version="11.3.5">
-			<IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
-			<PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
-		</PackageReference>
-		<PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.5" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
-		<PackageReference Include="SharpZipLib" Version="1.4.2" />
-		<PackageReference Include="Snappier" Version="1.2.0" />
-		<PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.8" />
-		<PackageReference Include="ZstdSharp.Port" Version="0.8.6" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="11.3.5" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.3.5" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.5" />
+        <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+        <PackageReference Include="Avalonia.Diagnostics" Version="11.3.5">
+            <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+            <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.5" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
+        <PackageReference Include="SharpZipLib" Version="1.4.2" />
+        <PackageReference Include="Snappier" Version="1.2.0" />
+        <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.8" />
+        <PackageReference Include="ZstdSharp.Port" Version="0.8.6" />
+    </ItemGroup>
 
-	<ItemGroup>
-		<Compile Update="I18n\GuiStrings.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>GuiStrings.resx</DependentUpon>
-		</Compile>
-		<Compile Update="I18n\MsgStrings.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>MsgStrings.resx</DependentUpon>
-		</Compile>
-		<Compile Update="Models\Formats\AdvHD\AdvHDARCPackWidget.axaml.cs">
-			<DependentUpon>AdvHDARCPackWidget.axaml</DependentUpon>
-		</Compile>
-		<Compile Update="Models\Formats\AdvHD\AdvHDARCUnpackWidget.axaml.cs">
-			<DependentUpon>AdvHDARCUnpackWidget.axaml</DependentUpon>
-		</Compile>
-		<Compile Update="Models\Formats\Ai6Win\Ai6WinARCPackWidget.axaml.cs">
-			<DependentUpon>Ai6WinARCPackWidget.axaml</DependentUpon>
-		</Compile>
-		<Compile Update="Models\Formats\AnimeGameSystem\AgsDATUnpackWidget.axaml.cs">
-			<DependentUpon>AgsDATUnpackWidget.axaml</DependentUpon>
-		</Compile>
-		<Compile Update="Views\GeneralWidget.axaml.cs">
-			<DependentUpon>GeneralWidget.axaml</DependentUpon>
-		</Compile>
-		<Compile Update="Views\LoggingWidget.axaml.cs">
-			<DependentUpon>LoggingWidget.axaml</DependentUpon>
-		</Compile>
-		<Compile Update="Views\MainView.axaml.cs">
-			<DependentUpon>MainView.axaml</DependentUpon>
-		</Compile>
-	</ItemGroup>
+    <ItemGroup>
+        <Compile Update="I18n\GuiStrings.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>GuiStrings.resx</DependentUpon>
+        </Compile>
+        <Compile Update="I18n\MsgStrings.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>MsgStrings.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Models\Formats\AdvHD\AdvHDARCPackWidget.axaml.cs">
+            <DependentUpon>AdvHDARCPackWidget.axaml</DependentUpon>
+        </Compile>
+        <Compile Update="Models\Formats\AdvHD\AdvHDARCUnpackWidget.axaml.cs">
+            <DependentUpon>AdvHDARCUnpackWidget.axaml</DependentUpon>
+        </Compile>
+        <Compile Update="Models\Formats\Ai6Win\Ai6WinARCPackWidget.axaml.cs">
+            <DependentUpon>Ai6WinARCPackWidget.axaml</DependentUpon>
+        </Compile>
+        <Compile Update="Models\Formats\AnimeGameSystem\AgsDATUnpackWidget.axaml.cs">
+            <DependentUpon>AgsDATUnpackWidget.axaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\GeneralWidget.axaml.cs">
+            <DependentUpon>GeneralWidget.axaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\LoggingWidget.axaml.cs">
+            <DependentUpon>LoggingWidget.axaml</DependentUpon>
+        </Compile>
+        <Compile Update="Views\MainView.axaml.cs">
+            <DependentUpon>MainView.axaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\GalArc.Generator\GalArc.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-	</ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\GalArc.Generator\GalArc.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    </ItemGroup>
 
-	<ItemGroup>
-		<EmbeddedResource Update="I18n\GuiStrings.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>GuiStrings.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-		<EmbeddedResource Update="I18n\MsgStrings.resx">
-			<Generator>ResXFileCodeGenerator</Generator>
-			<LastGenOutput>MsgStrings.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-	</ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Update="I18n\GuiStrings.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>GuiStrings.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="I18n\MsgStrings.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>MsgStrings.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
 
-	<ItemGroup>
-		<Content Include="Models\Database\Resources\*.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<Link>Database\%(FileName)%(Extension)</Link>
-		</Content>
-	</ItemGroup>
+    <ItemGroup>
+        <Content Include="Models\Database\Resources\*.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <Link>Database\%(FileName)%(Extension)</Link>
+        </Content>
+    </ItemGroup>
 
-	<ItemGroup>
-		<Content Include="Assets\logo.ico" />
-	</ItemGroup>
+    <ItemGroup>
+        <Content Include="Assets\logo.ico" />
+    </ItemGroup>
 
 </Project>

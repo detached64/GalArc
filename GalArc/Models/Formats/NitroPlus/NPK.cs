@@ -125,10 +125,10 @@ internal class NPK : ArcFormat, IUnpackConfigurable
 
 internal partial class NitroPlusNPKUnpackOptions : ArcOptions
 {
-    public readonly NitroPlusScheme Scheme;
+    public readonly NpkScheme Scheme;
     public NitroPlusNPKUnpackOptions()
     {
-        Scheme = DatabaseManager.LoadScheme(DatabaseSerializationContext.Default.NitroPlusScheme);
+        Scheme = DatabaseManager.LoadScheme(DatabaseSerializationContext.Default.NpkScheme);
         if (Scheme?.KnownSchemes != null)
         {
             KnownSchemes = Scheme.KnownSchemes;

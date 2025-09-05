@@ -15,7 +15,7 @@ internal sealed class AgsScheme : ArcScheme
     public List<string> EncryptedArchives { get; set; }
 }
 
-internal sealed class NitroPlusScheme : ArcScheme
+internal sealed class NpkScheme : ArcScheme
 {
     public Dictionary<string, byte[]> KnownSchemes { get; set; }
 }
