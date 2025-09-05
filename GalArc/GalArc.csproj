@@ -101,8 +101,4 @@
 		<Content Include="Assets\logo.ico" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Content Update="Models\Database\Resources\Vinos.json" Link="Database\Vinos.json" />
-	</ItemGroup>
-
 </Project>
