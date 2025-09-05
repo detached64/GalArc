@@ -20,7 +20,7 @@ dotnet publish -c Release -r win-x64
 
 Technically, the program can be compiled and run on Windows, Linux, and macOS through `dotnet publish`.
 
-However, the program is only tested on Windows. Some behaviors on other platforms may not be as expected because of the differences in file systems and other factors.
+However, the program is only tested on Windows 11 x64. Some behaviors on other platforms may not be as expected because of the differences in file systems and other factors.
 
 If you encounter any issues while running the program on non-Windows platforms, feel free to report them.
 
@@ -30,4 +30,8 @@ Contributions are welcome! Please refer to the [contribution guide](./docs/contr
 
 ## License
 
-GNU General Public License v3.0
+This project is licensed under the GNU General Public License v3.0. See the [LICENSE](./LICENSE) file for details.
+
+## Third-Party Licenses
+
+This project uses some third-party libraries. Please refer to the [3RD_PARTY_LICENSES.md](./3RD_PARTY_LICENSES.md) file for details.
