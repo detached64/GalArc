@@ -1,4 +1,4 @@
-name: .NET 9 Windows Build
+name: Windows x64 Build
 
 on:
   push:
