@@ -96,6 +96,7 @@ internal partial class MainViewModel : ViewModelBase
                 IReadOnlyList<IStorageFile> resultFile = await App.Top.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
                 {
                     AllowMultiple = false,
+                    SuggestedStartLocation = await App.Top.StorageProvider.TryGetFolderFromPathAsync(Path.GetDirectoryName(InputPath))
                 });
                 if (resultFile?.Count > 0)
                 {
@@ -106,6 +107,8 @@ internal partial class MainViewModel : ViewModelBase
                 IReadOnlyList<IStorageFolder> resultFolder = await App.Top.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions()
                 {
                     AllowMultiple = false,
+                    SuggestedFileName = Path.GetFileNameWithoutExtension(InputPath),
+                    SuggestedStartLocation = await App.Top.StorageProvider.TryGetFolderFromPathAsync(InputPath)
                 });
                 if (resultFolder?.Count > 0)
                 {
@@ -124,6 +127,7 @@ internal partial class MainViewModel : ViewModelBase
                 IReadOnlyList<IStorageFolder> resultFolder = await App.Top.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions()
                 {
                     AllowMultiple = false,
+                    SuggestedStartLocation = await App.Top.StorageProvider.TryGetFolderFromPathAsync(OutputPath)
                 });
                 if (resultFolder?.Count >= 1)
                 {
@@ -131,7 +135,12 @@ internal partial class MainViewModel : ViewModelBase
                 }
                 break;
             case OperationType.Pack:
-                IStorageFile resultFile = await App.Top.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions());
+                IStorageFile resultFile = await App.Top.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions()
+                {
+                    DefaultExtension = SelectedPackFormat.Name,
+                    SuggestedFileName = Path.GetFileName(OutputPath),
+                    SuggestedStartLocation = await App.Top.StorageProvider.TryGetFolderFromPathAsync(Path.GetDirectoryName(OutputPath)),
+                });
                 if (resultFile != null)
                 {
                     OutputPath = resultFile.Path.LocalPath;
