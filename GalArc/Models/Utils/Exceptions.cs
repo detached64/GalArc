@@ -28,7 +28,7 @@ internal class InvalidVersionException : Exception
     {
     }
 
-    public InvalidVersionException(InvalidVersionType type, string version) : base(GetErrorMessage(type, version))
+    public InvalidVersionException(InvalidVersionType type, object version) : base(GetErrorMessage(type, version))
     {
     }
 
@@ -40,7 +40,7 @@ internal class InvalidVersionException : Exception
     {
     }
 
-    private static string GetErrorMessage(InvalidVersionType type, string ver = null)
+    private static string GetErrorMessage(InvalidVersionType type, object ver = null)
     {
         return ver == null
             ? type switch
