@@ -34,6 +34,7 @@
             <MenuItem Header="{x:Static i:GuiStrings.File}">
                 <MenuItem Command="{Binding BrowseInputCommand}" Header="{x:Static i:GuiStrings.SetInput}" />
                 <MenuItem Command="{Binding BrowseOutputCommand}" Header="{x:Static i:GuiStrings.SetOutput}" />
+                <CheckBox Content="{x:Static i:GuiStrings.MatchPaths}" IsChecked="{Binding MatchPaths}" />
                 <Separator />
                 <MenuItem Command="{Binding ExitCommand}"
                           CommandParameter="{Binding $parent[Window]}"

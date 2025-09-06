@@ -27,6 +27,7 @@ internal sealed class AppSettings
     [JsonIgnore]
     public ArcFormat PackFormat { get; set; }
     public bool ContinueOnError { get; set; }
+    public bool MatchPaths { get; set; } = true;
     public bool SaveLogs { get; set; } = true;
     public string LogFilePath { get; set; } = Logger.DefaultPath;
     public string DatabasePath { get; set; } = DatabaseManager.DefaultPath;

@@ -358,11 +358,29 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 Major Version: {0} 的本地化字符串。
+        /// </summary>
+        internal static string MajorVersion {
+            get {
+                return ResourceManager.GetString("MajorVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Matched game: {0} 的本地化字符串。
         /// </summary>
         internal static string MatchedGame {
             get {
                 return ResourceManager.GetString("MatchedGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Minor Version: {0} 的本地化字符串。
+        /// </summary>
+        internal static string MinorVersion {
+            get {
+                return ResourceManager.GetString("MinorVersion", resourceCulture);
             }
         }
         

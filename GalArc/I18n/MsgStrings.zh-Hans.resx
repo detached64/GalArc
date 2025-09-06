@@ -216,8 +216,14 @@
   <data name="LatestVersion" xml:space="preserve">
     <value>最新版本：{0}</value>
   </data>
+  <data name="MajorVersion" xml:space="preserve">
+    <value>主版本号：{0}</value>
+  </data>
   <data name="MatchedGame" xml:space="preserve">
     <value>匹配的游戏：{0}</value>
+  </data>
+  <data name="MinorVersion" xml:space="preserve">
+    <value>次版本号：{0}</value>
   </data>
   <data name="NeedDec" xml:space="preserve">
     <value>文件已加密。请选择合适的加密方案。</value>

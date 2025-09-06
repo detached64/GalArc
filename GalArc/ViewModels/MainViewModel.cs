@@ -55,6 +55,9 @@ internal partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private bool continueOnError;
 
+    [ObservableProperty]
+    private bool matchPaths;
+
     public string InputWatermark => SelectedOperation == OperationType.Unpack ? GuiStrings.WaterInputFile : GuiStrings.WaterInputFolder;
 
     public string OutputWatermark => SelectedOperation == OperationType.Unpack ? GuiStrings.WaterOutputFolder : GuiStrings.WaterOutputFile;
@@ -81,6 +84,7 @@ internal partial class MainViewModel : ViewModelBase
         SelectedUnpackFormat = UnpackFormats.Count > 0 ? UnpackFormats[SettingsManager.Settings.UnpackFormatIndex] : null;
         SelectedPackFormat = PackFormats.Count > 0 ? PackFormats[SettingsManager.Settings.PackFormatIndex] : null;
         ContinueOnError = SettingsManager.Settings.ContinueOnError;
+        MatchPaths = SettingsManager.Settings.MatchPaths;
     }
 
     public MainViewModel() : this(null)
@@ -229,8 +233,10 @@ internal partial class MainViewModel : ViewModelBase
         await _showDialogService.ShowDialogAsync<UpdateView, UpdateViewModel>(window);
     }
 
-    private void SyncPath()
+    private void MatchPath()
     {
+        if (!MatchPaths)
+            return;
         switch (SelectedOperation)
         {
             case OperationType.Unpack:
@@ -264,7 +270,7 @@ internal partial class MainViewModel : ViewModelBase
     partial void OnInputPathChanged(string value)
     {
         SettingsManager.Settings.InputPath = value;
-        SyncPath();
+        MatchPath();
     }
 
     partial void OnOutputPathChanged(string value)
@@ -275,25 +281,34 @@ internal partial class MainViewModel : ViewModelBase
     partial void OnSelectedOperationChanged(OperationType value)
     {
         SettingsManager.Settings.Operation = value;
-        SyncPath();
+        MatchPath();
     }
 
     partial void OnSelectedUnpackFormatChanged(ArcFormat value)
     {
         SettingsManager.Settings.UnpackFormatIndex = UnpackFormats.IndexOf(value);
         SettingsManager.Settings.UnpackFormat = value;
-        SyncPath();
+        MatchPath();
     }
 
     partial void OnSelectedPackFormatChanged(ArcFormat value)
     {
         SettingsManager.Settings.PackFormatIndex = PackFormats.IndexOf(value);
         SettingsManager.Settings.PackFormat = value;
-        SyncPath();
+        MatchPath();
     }
 
     partial void OnContinueOnErrorChanged(bool value)
     {
         SettingsManager.Settings.ContinueOnError = value;
+    }
+
+    partial void OnMatchPathsChanged(bool value)
+    {
+        if (value)
+        {
+            MatchPath();
+        }
+        SettingsManager.Settings.MatchPaths = value;
     }
 }

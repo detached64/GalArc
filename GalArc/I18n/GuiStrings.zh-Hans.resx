@@ -219,6 +219,15 @@
   <data name="Logging" xml:space="preserve">
     <value>日志</value>
   </data>
+  <data name="MajorVersion" xml:space="preserve">
+    <value>主版本号</value>
+  </data>
+  <data name="MatchPaths" xml:space="preserve">
+    <value>匹配路径</value>
+  </data>
+  <data name="MinorVersion" xml:space="preserve">
+    <value>次版本号</value>
+  </data>
   <data name="NoEncryption" xml:space="preserve">
     <value>未加密</value>
   </data>
@@ -251,6 +260,9 @@
   </data>
   <data name="Seed" xml:space="preserve">
     <value>种子</value>
+  </data>
+  <data name="SegContent" xml:space="preserve">
+    <value>分割内容</value>
   </data>
   <data name="SelectEncScheme" xml:space="preserve">
     <value>请选择加密方案</value>

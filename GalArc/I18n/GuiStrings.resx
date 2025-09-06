@@ -219,6 +219,15 @@
   <data name="Logging" xml:space="preserve">
     <value>Logging</value>
   </data>
+  <data name="MajorVersion" xml:space="preserve">
+    <value>Major Version</value>
+  </data>
+  <data name="MatchPaths" xml:space="preserve">
+    <value>Match Paths</value>
+  </data>
+  <data name="MinorVersion" xml:space="preserve">
+    <value>Minor Version</value>
+  </data>
   <data name="NoEncryption" xml:space="preserve">
     <value>No Encryption</value>
   </data>
@@ -251,6 +260,9 @@
   </data>
   <data name="Seed" xml:space="preserve">
     <value>Seed</value>
+  </data>
+  <data name="SegContent" xml:space="preserve">
+    <value>Segment Contents</value>
   </data>
   <data name="SelectEncScheme" xml:space="preserve">
     <value>Please select encryption scheme</value>

@@ -367,6 +367,33 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 Major Version 的本地化字符串。
+        /// </summary>
+        public static string MajorVersion {
+            get {
+                return ResourceManager.GetString("MajorVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Match Paths 的本地化字符串。
+        /// </summary>
+        public static string MatchPaths {
+            get {
+                return ResourceManager.GetString("MatchPaths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Minor Version 的本地化字符串。
+        /// </summary>
+        public static string MinorVersion {
+            get {
+                return ResourceManager.GetString("MinorVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 No Encryption 的本地化字符串。
         /// </summary>
         public static string NoEncryption {
@@ -462,6 +489,15 @@ namespace GalArc.I18n {
         public static string Seed {
             get {
                 return ResourceManager.GetString("Seed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Segment Contents 的本地化字符串。
+        /// </summary>
+        public static string SegContent {
+            get {
+                return ResourceManager.GetString("SegContent", resourceCulture);
             }
         }
         

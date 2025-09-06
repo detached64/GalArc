@@ -196,8 +196,14 @@
   <data name="LatestVersion" xml:space="preserve">
     <value>LatestVersion: {0}</value>
   </data>
+  <data name="MajorVersion" xml:space="preserve">
+    <value>Major Version: {0}</value>
+  </data>
   <data name="MatchedGame" xml:space="preserve">
     <value>Matched game: {0}</value>
+  </data>
+  <data name="MinorVersion" xml:space="preserve">
+    <value>Minor Version: {0}</value>
   </data>
   <data name="NeedDec" xml:space="preserve">
     <value>The file has been encrypted. Please choose appropriate scheme.</value>
