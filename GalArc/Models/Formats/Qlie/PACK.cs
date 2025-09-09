@@ -19,7 +19,7 @@ internal class PACK : ArcFormat, IUnpackConfigurable, IPackConfigurable
 {
     public override string Name => "PACK";
     public override string Description => "Qlie Pack Archive";
-    public override bool CanWrite => true;
+    public override bool CanWrite => false;
 
     private QliePACKUnpackOptions _unpackOptions;
     public ArcOptions UnpackOptions => _unpackOptions ??= new QliePACKUnpackOptions();
