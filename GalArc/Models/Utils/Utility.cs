@@ -57,19 +57,12 @@ internal static class Utility
         return encoding.GetByteCount(sb.ToString());
     }
 
-    public static string GetRelativePath(string fullPath, string basePath)
-    {
-        return fullPath.StartsWith(basePath)
-            ? fullPath[basePath.Length..].TrimStart(Path.DirectorySeparatorChar)
-            : throw new ArgumentException("fullPath does not start with basePath.");
-    }
-
     public static string[] GetRelativePaths(string[] fullPaths, string basePath)
     {
         string[] results = new string[fullPaths.Length];
         for (int i = 0; i < fullPaths.Length; i++)
         {
-            results[i] = GetRelativePath(fullPaths[i], basePath);
+            results[i] = Path.GetRelativePath(basePath, fullPaths[i]);
         }
         return results;
     }
