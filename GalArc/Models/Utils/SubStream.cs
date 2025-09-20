@@ -9,19 +9,27 @@ internal class SubStream : Stream
     private readonly long _start;
     private readonly long _end;
     private readonly bool _leaveOpen;
+    private bool _isDisposed;
 
-    public SubStream(Stream baseStream, long offset, long size, bool leaveOpen = false)
+    public SubStream(Stream baseStream, long offset, long size, bool leaveOpen = true)
     {
         ArgumentNullException.ThrowIfNull(baseStream);
+        if (!baseStream.CanRead)
+            throw new ArgumentException("Base stream must support reading.", nameof(baseStream));
         if (!baseStream.CanSeek)
             throw new ArgumentException("Base stream must support seeking.", nameof(baseStream));
+        if (offset < 0 || offset > baseStream.Length)
+            throw new ArgumentOutOfRangeException(nameof(offset), "Offset must be non-negative and within the length of the base stream.");
+        if (size < 0)
+            throw new ArgumentOutOfRangeException(nameof(size), "Size must be non-negative.");
         _baseStream = baseStream;
         _leaveOpen = leaveOpen;
         _start = offset;
         _end = Math.Min(offset + size, baseStream.Length);
+        _baseStream.Position = _start;
     }
 
-    public SubStream(Stream _baseStream, long offset, bool leaveOpen = false) :
+    public SubStream(Stream _baseStream, long offset, bool leaveOpen = true) :
         this(_baseStream, offset, _baseStream.Length - offset, leaveOpen)
     {
     }
@@ -33,7 +41,12 @@ internal class SubStream : Stream
     public override long Position
     {
         get => _baseStream.Position - _start;
-        set => _baseStream.Position = Math.Max(_start + value, _start);
+        set
+        {
+            if (value < 0 || value > Length)
+                throw new ArgumentOutOfRangeException(nameof(value), "Position must be non-negative and within the length of the SubStream.");
+            _baseStream.Position = _start + Math.Min(value, Length);
+        }
     }
 
     public override long Seek(long offset, SeekOrigin origin)
@@ -51,13 +64,13 @@ internal class SubStream : Stream
 
     public override int Read(byte[] buffer, int offset, int count)
     {
-        int read = 0;
         long available = _end - _baseStream.Position;
-        if (available > 0)
+        if (available <= 0)
         {
-            read = _baseStream.Read(buffer, offset, (int)Math.Min(count, available));
+            return 0;
         }
-        return read;
+        int bytesToRead = (int)Math.Min(count, available);
+        return _baseStream.Read(buffer, offset, bytesToRead);
     }
 
     public override int ReadByte()
@@ -78,5 +91,18 @@ internal class SubStream : Stream
     public override void SetLength(long value)
     {
         throw new NotSupportedException("RangeStream does not support setting length.");
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (!_isDisposed)
+        {
+            if (disposing && !_leaveOpen)
+            {
+                _baseStream?.Dispose();
+            }
+            _isDisposed = true;
+        }
+        base.Dispose(disposing);
     }
 }
