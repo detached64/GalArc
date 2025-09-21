@@ -57,7 +57,8 @@
             </StackPanel>
         </c:GroupBox>
         <c:GroupBox DockPanel.Dock="Top" Header="{x:Static i:GuiStrings.GroupLog}">
-            <ListBox AutoScrollToSelectedItem="True"
+            <ListBox x:Name="LogList"
+                     AutoScrollToSelectedItem="True"
                      BorderThickness="0"
                      ItemsSource="{Binding LogEntries}"
                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
