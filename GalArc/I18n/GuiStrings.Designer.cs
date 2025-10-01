@@ -322,6 +322,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 Hash Version 的本地化字符串。
+        /// </summary>
+        public static string HashVersion {
+            get {
+                return ResourceManager.GetString("HashVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Help 的本地化字符串。
         /// </summary>
         public static string Help {

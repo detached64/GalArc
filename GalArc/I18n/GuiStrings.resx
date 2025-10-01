@@ -204,6 +204,9 @@
   <data name="GroupProgress" xml:space="preserve">
     <value>Progress</value>
   </data>
+  <data name="HashVersion" xml:space="preserve">
+    <value>Hash Version</value>
+  </data>
   <data name="Help" xml:space="preserve">
     <value>Help</value>
   </data>
