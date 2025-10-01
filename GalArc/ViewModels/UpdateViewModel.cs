@@ -43,7 +43,8 @@ internal partial class UpdateViewModel : ViewModelBase
         IsChecking = true;
 
         using HttpClient client = new();
-        string currentVer = CurrentAssembly.GetName().Version?.ToString();
+        Version currentVersion = CurrentAssembly.GetName().Version ?? new Version(0, 0, 0);
+        string currentVer = $"{currentVersion.Major}.{currentVersion.Minor}.{currentVersion.Build}";
         client.DefaultRequestHeaders.UserAgent.Add(
             new ProductInfoHeaderValue(CurrentAssembly.GetName().Name, currentVer));
         try
