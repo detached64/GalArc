@@ -9,7 +9,9 @@ namespace GalArc.Generator;
 internal class ViewLocatorGenerator : IIncrementalGenerator
 {
     private const string ViewLocatorBaseName = "GalArc";
+    private const string ArcOptionsBaseName = "GalArc.Models.Formats.Commons";
     private const string ArcOptionsFullName = "GalArc.Models.Formats.Commons.ArcOptions";
+    private const string SettingOptionsBaseName = "GalArc.Infrastructure.Settings";
     private const string SettingOptionsFullName = "GalArc.Infrastructure.Settings.SettingOptions";
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
@@ -66,6 +68,8 @@ internal class ViewLocatorGenerator : IIncrementalGenerator
         sb.AppendLine();
         sb.AppendLine("using Avalonia.Controls;");
         sb.AppendLine("using Avalonia.Controls.Templates;");
+        sb.AppendLine($"using {ArcOptionsBaseName};");
+        sb.AppendLine($"using {SettingOptionsBaseName};");
         sb.AppendLine();
         sb.AppendLine($"namespace {ViewLocatorBaseName}");
         sb.AppendLine("{");
@@ -73,14 +77,35 @@ internal class ViewLocatorGenerator : IIncrementalGenerator
         sb.AppendLine("    {");
         sb.AppendLine("        public Control Build(object param)");
         sb.AppendLine("        {");
+        sb.AppendLine("            if (param is ArcOptions arcOptions)");
+        sb.AppendLine("                return BuildArcOptions(arcOptions);");
+        sb.AppendLine("            else if (param is SettingOptions settingOptions)");
+        sb.AppendLine("                return BuildSettingOptions(settingOptions);");
+        sb.AppendLine("            else");
+        sb.AppendLine("                return new TextBlock { Text = \"Not Found: \" + param?.GetType().FullName };");
+        sb.AppendLine("        }");
+        sb.AppendLine();
+        sb.AppendLine("        private Control BuildArcOptions(ArcOptions param)");
+        sb.AppendLine("        {");
+        sb.AppendLine("            return param switch");
+        sb.AppendLine("            {");
+        foreach (string option in options)
+        {
+            if (!option.Contains("ViewModels"))
+                sb.AppendLine($"                {option} => new {option.Replace("Options", "Widget")}(),");
+        }
+        sb.AppendLine("                _ => new TextBlock { Text = \"Not Found: \" + param?.GetType().FullName }");
+        sb.AppendLine("            };");
+        sb.AppendLine("        }");
+        sb.AppendLine();
+        sb.AppendLine("        private Control BuildSettingOptions(SettingOptions param)");
+        sb.AppendLine("        {");
         sb.AppendLine("            return param switch");
         sb.AppendLine("            {");
         foreach (string option in options)
         {
             if (option.Contains("ViewModels"))
                 sb.AppendLine($"                {option} => new {option.Replace("ViewModels", "Views").Replace("Options", "Widget")}(),");
-            else
-                sb.AppendLine($"                {option} => new {option.Replace("Options", "Widget")}(),");
         }
         sb.AppendLine("                _ => new TextBlock { Text = \"Not Found: \" + param?.GetType().FullName }");
         sb.AppendLine("            };");
