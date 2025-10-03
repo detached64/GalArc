@@ -18,15 +18,13 @@ dotnet publish -c Release -r win-x64
 
 ### Cross-Platform Compatibility
 
-Technically, the program can be compiled and run on Windows, Linux, and macOS through `dotnet publish`.
-
-However, the program is only tested on Windows 11 x64. Some behaviors on other platforms may not be as expected because of the differences in file systems and other factors.
+Technically, the program compilable and executable on Windows, Linux, and macOS through the `dotnet publish` command. However, it has only been tested on Windows 11 x64. Platform-specific variations in filesystem implementations and underlying architectural differences may lead to unexpected behaviors on non-Windows operating systems.
 
 If you encounter any issues while running the program on non-Windows platforms, feel free to report them.
 
 ## Contributing
 
-Contributions are welcome! Please refer to the [contribution guide](./docs/contribution.md) for details.
+Contributions are welcome! Please refer to the [Contribution Guide](./docs/contribution.md) for details.
 
 ## License
 
@@ -34,4 +32,4 @@ This project is licensed under the GNU General Public License v3.0. See the [LIC
 
 ## Third-Party Licenses
 
-This project uses some third-party libraries. Please refer to the [3RD_PARTY_LICENSES.md](./3RD_PARTY_LICENSES.md) file for details.
+This project uses some third-party libraries. Please refer to the [3RD_PARTY_LICENSES](./3RD_PARTY_LICENSES.md) file for details.
