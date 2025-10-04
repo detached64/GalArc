@@ -74,7 +74,7 @@
                     <ContextMenu>
                         <MenuItem Command="{Binding $parent[Window].((vm:StatusViewModel)DataContext).CopyLogCommand}"
                                   CommandParameter="{Binding $parent[Window]}"
-                                  Header="Copy" />
+                                  Header="{x:Static i:GuiStrings.Copy}" />
                     </ContextMenu>
                 </ListBox.ContextMenu>
             </ListBox>

@@ -160,6 +160,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 Copy 的本地化字符串。
+        /// </summary>
+        public static string Copy {
+            get {
+                return ResourceManager.GetString("Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Database 的本地化字符串。
         /// </summary>
         public static string Database {

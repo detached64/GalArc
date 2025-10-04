@@ -150,6 +150,9 @@
   <data name="ConfigNeedRestart" xml:space="preserve">
     <value>带 * 的配置项重启后生效。</value>
   </data>
+  <data name="Copy" xml:space="preserve">
+    <value>复制</value>
+  </data>
   <data name="Database" xml:space="preserve">
     <value>数据库</value>
   </data>

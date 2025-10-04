@@ -150,6 +150,9 @@
   <data name="ConfigNeedRestart" xml:space="preserve">
     <value>Configures marked with * will take effect after a restart.</value>
   </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
   <data name="Database" xml:space="preserve">
     <value>Database</value>
   </data>
