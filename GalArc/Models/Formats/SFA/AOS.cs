@@ -14,7 +14,6 @@ namespace GalArc.Models.Formats.SFA;
 internal class AOS : ArcFormat, IUnpackConfigurable
 {
     public override string Name => "AOS";
-
     public override string Description => "SFA AOS Archive";
 
     private SFAAOSUnpackOptions _unpackOptions;
@@ -46,6 +45,8 @@ internal class AOS : ArcFormat, IUnpackConfigurable
         {
             string path = Path.Combine(folderPath, entry.Name);
             Directory.CreateDirectory(Path.GetDirectoryName(path));
+            if (Path.GetExtension(path) == ".cmp")
+                Path.ChangeExtension(path, ".abm");
             if (_unpackOptions.DecryptScripts && string.Equals(Path.GetExtension(entry.Name), ".scr", StringComparison.OrdinalIgnoreCase))
             {
                 fs.Position = entry.Offset;
