@@ -30,7 +30,7 @@ internal static class FileDropBehavior
 
     private static void OnDragOver(object sender, DragEventArgs e)
     {
-        e.DragEffects = e.Data.Contains(DataFormats.Files) ? DragDropEffects.Copy : DragDropEffects.None;
+        e.DragEffects = e.DataTransfer.Contains(DataFormat.File) ? DragDropEffects.Copy : DragDropEffects.None;
     }
 
     private static void OnDrop(object sender, DragEventArgs e)
@@ -38,9 +38,9 @@ internal static class FileDropBehavior
         if (sender is Control control)
         {
             ICommand command = GetDropCommand(control);
-            if (command != null && e.Data.Contains(DataFormats.Files))
+            if (command != null && e.DataTransfer.Contains(DataFormat.File))
             {
-                IEnumerable<IStorageItem> fileNames = e.Data.GetFiles();
+                IEnumerable<IStorageItem> fileNames = e.DataTransfer.TryGetFiles();
                 if (fileNames != null && command.CanExecute(fileNames))
                 {
                     command.Execute(fileNames);
