@@ -57,8 +57,8 @@ internal sealed class QlieHashReader
         {
             throw new InvalidDataException("Invalid hash magic.");
         }
-        int major = int.Parse(magic.Substring(7, 1));
-        int minor = int.Parse(magic.Substring(9, 1));
+        int major = magic[7] - '0';
+        int minor = magic[9] - '0';
         HashVersion = (major * 10) + minor;
     }
 
@@ -154,69 +154,59 @@ internal sealed class QlieHashReader
     }
 }
 
-internal sealed class QlieHashWriter
+internal sealed class QlieHashWriter(string path, int hash_version, int pack_version, bool as_separate)
 {
     private readonly string KeyFileName = "pack_keyfile_kfueheish15538fa9or.key";
     private bool IsUnicode => PackVersion >= 31;
-    private readonly string FolderPath;
-    private readonly bool AsSeparateFile;
-    private readonly int PackVersion;
-    private List<string> Files = [];
-    private readonly LinkedList<QlieEntry>[] Entries = new LinkedList<QlieEntry>[256];
 
-    public int HashVersion { get; }
+    private readonly int PackVersion = pack_version;
+    private List<string> Paths = [];
+    private readonly LinkedList<QlieEntry>[] HashBuckets = new LinkedList<QlieEntry>[256];
 
-    public QlieHashWriter(string path, int hash_version, int pack_version, bool as_separate)
+    public int HashVersion { get; } = hash_version;
+
+    public byte[] CreateHash()
     {
-        if (hash_version < 10 || hash_version > 14)
+        return HashVersion switch
         {
-            throw new ArgumentException("Invalid hash version.");
-        }
-        FolderPath = path;
-        AsSeparateFile = as_separate;
-        HashVersion = hash_version;
-        PackVersion = pack_version;
+            14 => CreateHash14(),
+            _ => throw new InvalidVersionException(InvalidVersionType.NotSupported, HashVersion),
+        };
     }
 
-    private void CollectList()
+    private byte[] CreateHash14()
     {
-        Files = [.. Directory.GetFiles(FolderPath, "*", SearchOption.AllDirectories)];
-        // Place the key file at the top of the list
-        string keyFile = Files.FirstOrDefault(f => Path.GetFileName(f).Equals(KeyFileName, StringComparison.OrdinalIgnoreCase));
-        if (keyFile != null)
+        CollectList14();
+        using MemoryStream ms = new();
+        using (BinaryWriter bw = new(ms))
         {
-            Files.Remove(keyFile);
-            Files.Insert(0, keyFile);
+            bw.WritePaddedString($"HashVer{HashVersion / 10}.{HashVersion % 10}", 16);
+            bw.Write(0x100);
+            bw.Write(Paths.Count);
+            bw.Write(IsUnicode ? 4 * Paths.Count : 2 * Paths.Count);
+            byte[] hashData = CreateHashData14();
+            //File.WriteAllBytes(Path.Combine(FolderPath, "datax.hash"), hashData);
+            QlieEncryption.Encrypt(hashData, hashData.Length, 0x428);
+            bw.Write(hashData.Length);
+            bw.Write(0);
+            bw.Write(new byte[0x20]);
+            bw.Write(hashData);
         }
-        // Build linked lists
-        int index = 0;
-        foreach (string file in Files)
-        {
-            string name = Utility.GetRelativePath(file, FolderPath);
-            uint hash = ComputeNameHash(name, out ushort nameLen);
-            int position = GetPosition(hash);
-            (Entries[position] ??= new LinkedList<QlieEntry>()).AddLast(new QlieEntry
-            {
-                Name = name,
-                NameHash = hash,
-                NameLength = nameLen,
-                Index = index++
-            });
-        }
+        return ms.ToArray();
     }
 
     private byte[] CreateHashData12()
     {
         using MemoryStream ms = new();
         using BinaryWriter bw = new(ms);
-        for (int i = 0; i < Files.Count; i += 256)
+        for (int i = 0; i < Paths.Count; i += 256)
         {
-            int current = Math.Min(256, Files.Count - i);
+            int current = Math.Min(256, Paths.Count - i);
             bw.Write((ushort)current);
             for (int j = i; j < current + i; j++)
             {
-                string name = Files[j];
-                uint hash = ComputeNameHash(name, out ushort nameLen);
+                string name = Paths[j];
+                uint hash = ComputeNameHash14(name, out ushort nameLen);
                 int position = GetPosition(hash);
                 bw.Write((ushort)position);
                 bw.Write((ushort)hash);
@@ -233,23 +223,23 @@ internal sealed class QlieHashWriter
         using MemoryStream ms = new();
         using (BinaryWriter bw = new(ms))
         {
-            for (int i = 0; i < Entries.Length; i++)
+            for (int i = 0; i < HashBuckets.Length; i++)
             {
-                if (Entries[i] == null)
+                if (HashBuckets[i] == null)
                 {
                     bw.Write(0);
                     continue;
                 }
-                bw.Write(Entries[i].Count);
-                foreach (QlieEntry entry in Entries[i])
+                bw.Write(HashBuckets[i].Count);
+                foreach (QlieEntry entry in HashBuckets[i])
                 {
                     bw.Write(entry.NameLength);
                     bw.Write(Encoding.Unicode.GetBytes(entry.Name));
-                    bw.Write((long)entry.Index * 4);
+                    bw.Write(entry.Index * 4);
                     bw.Write(entry.NameHash);
                 }
             }
-            for (int i = 0; i < Files.Count; i++)
+            for (int i = 0; i < Paths.Count; i++)
             {
                 bw.Write(i);
             }
@@ -257,30 +247,50 @@ internal sealed class QlieHashWriter
         return ms.ToArray();
     }
 
-    public byte[] CreateHash14()
+    private void CollectList14()
     {
-        CollectList();
-        using MemoryStream ms = new();
-        using (BinaryWriter bw = new(ms))
+        Paths = [.. Utility.GetRelativePaths(Directory.GetFiles(path, "*", SearchOption.AllDirectories), path)];
+        string keyFile = Paths.FirstOrDefault(f => f.Equals(KeyFileName, StringComparison.OrdinalIgnoreCase));
+        if (keyFile != null)
         {
-            bw.WritePaddedString($"HashVer{HashVersion / 10}.{HashVersion % 10}", 16);
-            bw.Write(HashVersion > 12 ? 0x100 : 0x200);
-            bw.Write(Files.Count);
-            bw.Write(IsUnicode ? 4 * Files.Count : 2 * Files.Count);
-            byte[] hashData = CreateHashData14();
-            QlieEncryption.Encrypt(hashData, hashData.Length, 0x428);
-            bw.Write(hashData.Length);
-            if (HashVersion == 14)
-            {
-                bw.Write(0);
-                bw.Write(new byte[0x20]);
-            }
-            bw.Write(hashData);
+            Paths.Remove(keyFile);
+            Paths.Sort();
+            Paths.Insert(0, keyFile);
         }
-        return ms.ToArray();
+        else
+        {
+            throw new FileNotFoundException("Key file is missing.", KeyFileName);
+        }
+        // Build linked lists
+        int index = 0;
+        foreach (string path in Paths)
+        {
+            uint hash = ComputeNameHash14(path, out ushort nameLen);
+            int position = GetPosition(hash);
+            (HashBuckets[position] ??= new LinkedList<QlieEntry>()).AddLast(new QlieEntry
+            {
+                Name = path,
+                NameHash = hash,
+                NameLength = nameLen,
+                Index = index++
+            });
+        }
     }
 
-    private static uint ComputeNameHash(string name, out ushort nameLen)
+    private static uint ComputeNameHash13(string name, out ushort nameLen)
+    {
+        uint hash = 0;
+        byte[] bytes = ArcEncoding.Shift_JIS.GetBytes(name);
+        int index = 1;
+        for (int i = 0; i < bytes.Length; i++)
+        {
+            hash += (uint)(bytes[index - 1] << (index & 7));
+        }
+        nameLen = (ushort)bytes.Length;
+        return hash;
+    }
+
+    private static uint ComputeNameHash14(string name, out ushort nameLen)
     {
         uint hash = 0;
         byte[] bytes = Encoding.Unicode.GetBytes(name);

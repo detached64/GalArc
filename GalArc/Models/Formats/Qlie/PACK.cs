@@ -62,9 +62,9 @@ internal class PACK : ArcFormat, IUnpackConfigurable, IPackConfigurable
         List<QlieEntry> entries = new(qheader.FileCount);
         #endregion
 
-        #region get version, retrieve arc_key and init encryption
-        int major = int.Parse(qheader.Magic.Substring(11, 1));
-        int minor = int.Parse(qheader.Magic.Substring(13, 1));
+        #region get version, retrieve game key and init encryption
+        int major = qheader.Magic[11] - '0';
+        int minor = qheader.Magic[13] - '0';
         int version = (major * 10) + minor;
         Logger.Info($"File Pack Version: {major}.{minor}");
         byte[] game_key = _unpackOptions.Key;
@@ -80,7 +80,7 @@ internal class PACK : ArcFormat, IUnpackConfigurable, IPackConfigurable
             qkey = new QlieKey()
             {
                 Magic = br.ReadBytes(32),
-                HashSize = br.ReadUInt32(),
+                HashSize = br.ReadInt32(),
                 Key = br.ReadBytes(0x400)
             };
             if (qkey.HashSize > fs.Length || qkey.HashSize < 0x44)
@@ -112,7 +112,7 @@ internal class PACK : ArcFormat, IUnpackConfigurable, IPackConfigurable
             if (version >= 20)
             {
                 fs.Position = fs.Length - 0x440 - qkey.HashSize;
-                rawHashData = br.ReadBytes((int)qkey.HashSize);
+                rawHashData = br.ReadBytes(qkey.HashSize);
             }
             else
             {
@@ -151,6 +151,7 @@ internal class PACK : ArcFormat, IUnpackConfigurable, IPackConfigurable
                 }
                 entry.RawName = br.ReadBytes(length);
                 entry.Name = qenc.DecryptName(entry.RawName, length, (int)key);
+                Logger.Debug($"Entry {i}: {entry.Name}");
                 entry.Path = Path.Combine(output, entry.Name);
                 entry.Offset = br.ReadInt64();
                 entry.Size = br.ReadUInt32();
@@ -203,7 +204,7 @@ internal class PACK : ArcFormat, IUnpackConfigurable, IPackConfigurable
             if (need_common_key && !is_common_key_obtained && string.Equals(entry.Name, KeyFileName, StringComparison.OrdinalIgnoreCase))
             {
                 //Optional: get & check key; check hash
-                //byte[] res_key = GetResourceKey(input);
+                //byte[] res_key = GetLocalKeyFromExe(input);
                 //if (res_key != null && !res_key.SequenceEqual(data))
                 //{
                 //    Logger.Info("Key mismatch");
@@ -229,6 +230,21 @@ internal class PACK : ArcFormat, IUnpackConfigurable, IPackConfigurable
     public override void Pack(string folderPath, string filePath)
     {
         const string magic_pattern = "FilePackVer{0}";
+        int hash_ver = _packOptions.HashVersion switch
+        {
+            "1.2" => 12,
+            "1.3" => 13,
+            "1.4" => 14,
+            _ => throw new InvalidVersionException(InvalidVersionType.NotSupported),
+        };
+        int pack_ver = _packOptions.Version switch
+        {
+            "1.0" => 10,
+            "2.0" => 20,
+            "3.0" => 30,
+            "3.1" => 31,
+            _ => throw new InvalidVersionException(InvalidVersionType.NotSupported),
+        };
         QlieEncryption qenc = QlieEncryption.Create(_packOptions.Version);
         FileInfo[] files = new DirectoryInfo(folderPath).GetFiles("*", SearchOption.AllDirectories);
         using FileStream fw = File.Create(filePath);
@@ -240,7 +256,7 @@ internal class PACK : ArcFormat, IUnpackConfigurable, IPackConfigurable
             byte[] data = File.ReadAllBytes(file.FullName);
             bw.Write(data);
             QlieEntry entry = new();
-            entry.Name = Utility.GetRelativePath(file.FullName, folderPath);
+            entry.Name = Path.GetRelativePath(folderPath, file.FullName);
             entry.Hash = qenc.ComputeHash(data, data.Length);       // returns 0 for 1.0, 2.0
             entry.RawName = qenc.EncryptName(entry.Name, (int)entry.Hash);
             entry.Offset = baseOffset;
@@ -249,27 +265,33 @@ internal class PACK : ArcFormat, IUnpackConfigurable, IPackConfigurable
             baseOffset += entry.Size;
             entries.Add(entry);
         }
-        foreach (QlieEntry entry in entries)
-        {
-            bw.Write((short)entry.RawName.Length);
-            bw.Write(entry.RawName);
-            bw.Write(entry.Offset);
-            bw.Write(entry.Size);
-            bw.Write(entry.UnpackedSize);
-            bw.Write(0);                // entry.IsPacked
-            bw.Write(0);                // entry.IsEncrypted
-            bw.Write(entry.Hash);
-        }
+        //foreach (QlieEntry entry in entries)
+        //{
+        //    bw.Write((short)entry.RawName.Length);
+        //    bw.Write(entry.RawName);
+        //    bw.Write(entry.Offset);
+        //    bw.Write(entry.Size);
+        //    bw.Write(entry.UnpackedSize);
+        //    bw.Write(0);                // entry.IsPacked
+        //    bw.Write(0);                // entry.IsEncrypted
+        //    bw.Write(entry.Hash);
+        //}
+        // Write hash
+        QlieHashWriter hashWriter = new(folderPath, hash_ver, pack_ver, false);
+        byte[] hashData = hashWriter.CreateHash();
+        bw.Write(hashData);
+        // Write key
         QlieKey key = new()
         {
             Magic = Encoding.ASCII.GetBytes(KeyMagic.PadRight(32, '\0')),
-            HashSize = 0,
+            HashSize = hashData.Length,
             Key = new byte[0x400]
         };
         QlieEncryption.Encrypt(key.Magic, 32, 0);
         bw.Write(key.Magic);
         bw.Write(key.HashSize);
         bw.Write(key.Key);
+        // Write header
         bw.Write(Encoding.ASCII.GetBytes(string.Format(magic_pattern, _packOptions.Version).PadRight(16, '\0')));
         bw.Write(entries.Count);
         bw.Write(baseOffset);
@@ -291,8 +313,8 @@ internal class PACK : ArcFormat, IUnpackConfigurable, IPackConfigurable
 
     //public override void Pack(string folderPath, string filePath)
     //{
-    //    //QlieHashWriter hashWriter = new QlieHashWriter(folderPath, 14, 31);
-    //    //File.WriteAllBytes(Path.ChangeExtension(filePath, "hash"), hashWriter.CreateHash14());
+    //    QlieHashWriter hashWriter = new(folderPath, 14, 31, false);
+    //    File.WriteAllBytes(Path.ChangeExtension(filePath, "hash"), hashWriter.CreateHash14());
     //}
 
     private byte[] TryFindLocalKey(string input)
@@ -334,21 +356,21 @@ internal class PACK : ArcFormat, IUnpackConfigurable, IPackConfigurable
     }
 }
 
-internal class QlieHeader        // length: 0x1C
+internal sealed class QlieHeader        // length: 0x1C
 {
     public string Magic { get; set; }
     public int FileCount { get; set; }
     public long IndexOffset { get; set; }
 }
 
-internal class QlieKey           // length: 0x20 + 0x4 + 0x400 = 0x424
+internal sealed class QlieKey           // length: 0x20 + 0x4 + 0x400 = 0x424
 {
     public byte[] Magic { get; set; }
-    public uint HashSize { get; set; }
+    public int HashSize { get; set; }
     public byte[] Key { get; set; }    // 0x400, 0x100 key + 0x300 padding
 }
 
-internal class QlieEntry : PackedEntry
+internal sealed class QlieEntry : PackedEntry
 {
     public byte[] RawName { get; set; }
     public new long Offset { get; set; }
@@ -358,7 +380,7 @@ internal class QlieEntry : PackedEntry
     public uint Key { get; set; }
     public ushort NameLength { get; set; }
     public uint NameHash { get; set; }
-    public int Index { get; set; }
+    public long Index { get; set; }
 }
 
 internal partial class QliePACKUnpackOptions : ArcOptions
@@ -398,5 +420,9 @@ internal partial class QliePACKPackOptions : ArcOptions
     [ObservableProperty]
     private string version = "3.1";
     [ObservableProperty]
-    private IReadOnlyList<string> versions = ["1.0", "2.0", "3.0", "3.1"];
+    private IReadOnlyList<string> versions = [/*"1.0", "2.0", "3.0", */"3.1"];
+    [ObservableProperty]
+    private string hashVersion = "1.4";
+    [ObservableProperty]
+    private IReadOnlyList<string> hashVersions = ["1.2", "1.3", "1.4"];
 }

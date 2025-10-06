@@ -19,5 +19,9 @@
         <ComboBox HorizontalAlignment="Stretch"
                   ItemsSource="{Binding Versions}"
                   SelectedItem="{Binding Version}" />
+        <TextBlock Text="{x:Static i:GuiStrings.HashVersion}" />
+        <ComboBox HorizontalAlignment="Stretch"
+                  ItemsSource="{Binding HashVersions}"
+                  SelectedItem="{Binding HashVersion}" />
     </StackPanel>
 </UserControl>
