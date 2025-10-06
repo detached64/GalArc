@@ -1,9 +1,12 @@
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GalArc.Enums;
 using GalArc.I18n;
 using GalArc.Infrastructure.Logging;
+using GalArc.Infrastructure.Settings;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
@@ -42,8 +45,8 @@ internal partial class UpdateViewModel : ViewModelBase
         LogInfo(MsgStrings.CheckingUpdates);
         IsChecking = true;
 
-        using HttpClient client = new();
-        Version currentVersion = CurrentAssembly.GetName().Version ?? new Version(0, 0, 0);
+        using HttpClient client = ConfigureClient();
+        Version currentVersion = CurrentAssembly.GetName().Version ?? new(0, 0, 0);
         string currentVer = $"{currentVersion.Major}.{currentVersion.Minor}.{currentVersion.Build}";
         client.DefaultRequestHeaders.UserAgent.Add(
             new ProductInfoHeaderValue(CurrentAssembly.GetName().Name, currentVer));
@@ -106,5 +109,38 @@ internal partial class UpdateViewModel : ViewModelBase
         StatusMessage = log;
         Logger.Error(log);
         Logger.Error(ex.ToString());
+    }
+
+    private static HttpClient ConfigureClient()
+    {
+        if (SettingsManager.Settings.ProxyType == ProxyType.None)
+        {
+            return new HttpClient();
+        }
+        else
+        {
+            WebProxy proxy = new()
+            {
+                Address = new Uri($"{SettingsManager.Settings.ProxyType switch
+                {
+                    ProxyType.HTTP => "http",
+                    ProxyType.SOCKS => "socks5",
+                    _ => throw new NotSupportedException("Unsupported proxy type.")
+                }}://{SettingsManager.Settings.ProxyAddress}:{SettingsManager.Settings.ProxyPort}")
+            };
+
+            if (!string.IsNullOrEmpty(SettingsManager.Settings.ProxyUsername) && !string.IsNullOrEmpty(SettingsManager.Settings.ProxyPassword))
+            {
+                proxy.Credentials = new NetworkCredential(SettingsManager.Settings.ProxyUsername, SettingsManager.Settings.ProxyPassword);
+            }
+
+            HttpClientHandler httpClientHandler = new()
+            {
+                Proxy = proxy,
+                UseProxy = true,
+            };
+
+            return new HttpClient(httpClientHandler);
+        }
     }
 }

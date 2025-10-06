@@ -120,6 +120,9 @@
   <data name="BrutalForcing" xml:space="preserve">
     <value>暴力破解中...</value>
   </data>
+  <data name="CheckingProxy" xml:space="preserve">
+    <value>检测代理中...</value>
+  </data>
   <data name="CheckingUpdates" xml:space="preserve">
     <value>检查更新中...</value>
   </data>
@@ -242,6 +245,12 @@
   </data>
   <data name="ProcessingFolder" xml:space="preserve">
     <value>处理文件夹：{0}</value>
+  </data>
+  <data name="ProxyAvailable" xml:space="preserve">
+    <value>代理可用。</value>
+  </data>
+  <data name="ProxyNotAvailable" xml:space="preserve">
+    <value>代理不可用。</value>
   </data>
   <data name="Seed" xml:space="preserve">
     <value>种子</value>

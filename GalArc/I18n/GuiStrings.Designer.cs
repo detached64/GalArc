@@ -70,6 +70,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 Address 的本地化字符串。
+        /// </summary>
+        public static string Address {
+            get {
+                return ResourceManager.GetString("Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Brutal Force 的本地化字符串。
         /// </summary>
         public static string BrutalForce {
@@ -106,7 +115,16 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
-        ///   查找类似 Check for Updates 的本地化字符串。
+        ///   查找类似 Check 的本地化字符串。
+        /// </summary>
+        public static string Check {
+            get {
+                return ResourceManager.GetString("Check", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Check For Updates 的本地化字符串。
         /// </summary>
         public static string CheckUpdates {
             get {
@@ -165,6 +183,15 @@ namespace GalArc.I18n {
         public static string Copy {
             get {
                 return ResourceManager.GetString("Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Dark 的本地化字符串。
+        /// </summary>
+        public static string Dark {
+            get {
+                return ResourceManager.GetString("Dark", resourceCulture);
             }
         }
         
@@ -349,6 +376,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 HTTP 的本地化字符串。
+        /// </summary>
+        public static string HTTP {
+            get {
+                return ResourceManager.GetString("HTTP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Index Offset 的本地化字符串。
         /// </summary>
         public static string IndexOffset {
@@ -363,6 +399,15 @@ namespace GalArc.I18n {
         public static string Language {
             get {
                 return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Light 的本地化字符串。
+        /// </summary>
+        public static string Light {
+            get {
+                return ResourceManager.GetString("Light", resourceCulture);
             }
         }
         
@@ -421,6 +466,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 None 的本地化字符串。
+        /// </summary>
+        public static string None {
+            get {
+                return ResourceManager.GetString("None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Open Url 的本地化字符串。
         /// </summary>
         public static string OpenUrl {
@@ -448,6 +502,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 Optional 的本地化字符串。
+        /// </summary>
+        public static string Optional {
+            get {
+                return ResourceManager.GetString("Optional", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Original Archive Path 的本地化字符串。
         /// </summary>
         public static string OriginalArchive {
@@ -457,11 +520,47 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 Password 的本地化字符串。
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Path 的本地化字符串。
         /// </summary>
         public static string Path {
             get {
                 return ResourceManager.GetString("Path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Port 的本地化字符串。
+        /// </summary>
+        public static string Port {
+            get {
+                return ResourceManager.GetString("Port", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Proxy 的本地化字符串。
+        /// </summary>
+        public static string Proxy {
+            get {
+                return ResourceManager.GetString("Proxy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Proxy Type 的本地化字符串。
+        /// </summary>
+        public static string ProxyType {
+            get {
+                return ResourceManager.GetString("ProxyType", resourceCulture);
             }
         }
         
@@ -556,6 +655,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 SOCKS 的本地化字符串。
+        /// </summary>
+        public static string SOCKS {
+            get {
+                return ResourceManager.GetString("SOCKS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Source URL 的本地化字符串。
         /// </summary>
         public static string SourceURL {
@@ -583,6 +691,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 System 的本地化字符串。
+        /// </summary>
+        public static string System {
+            get {
+                return ResourceManager.GetString("System", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Theme 的本地化字符串。
         /// </summary>
         public static string Theme {
@@ -597,6 +714,24 @@ namespace GalArc.I18n {
         public static string TryEveryEnc {
             get {
                 return ResourceManager.GetString("TryEveryEnc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Update 的本地化字符串。
+        /// </summary>
+        public static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Username 的本地化字符串。
+        /// </summary>
+        public static string Username {
+            get {
+                return ResourceManager.GetString("Username", resourceCulture);
             }
         }
         

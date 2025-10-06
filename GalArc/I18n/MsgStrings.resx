@@ -100,6 +100,9 @@
   <data name="BrutalForcing" xml:space="preserve">
     <value>Brutal forcing...</value>
   </data>
+  <data name="CheckingProxy" xml:space="preserve">
+    <value>Checking proxy...</value>
+  </data>
   <data name="CheckingUpdates" xml:space="preserve">
     <value>Checking for updates...</value>
   </data>
@@ -222,6 +225,12 @@
   </data>
   <data name="ProcessingFolder" xml:space="preserve">
     <value>Processing folder: {0}</value>
+  </data>
+  <data name="ProxyAvailable" xml:space="preserve">
+    <value>Proxy is available.</value>
+  </data>
+  <data name="ProxyNotAvailable" xml:space="preserve">
+    <value>Proxy is not available.</value>
   </data>
   <data name="Seed" xml:space="preserve">
     <value>Seed</value>

@@ -70,6 +70,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 Checking proxy... 的本地化字符串。
+        /// </summary>
+        internal static string CheckingProxy {
+            get {
+                return ResourceManager.GetString("CheckingProxy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Checking for updates... 的本地化字符串。
         /// </summary>
         internal static string CheckingUpdates {
@@ -435,6 +444,24 @@ namespace GalArc.I18n {
         internal static string ProcessingFolder {
             get {
                 return ResourceManager.GetString("ProcessingFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Proxy is available. 的本地化字符串。
+        /// </summary>
+        internal static string ProxyAvailable {
+            get {
+                return ResourceManager.GetString("ProxyAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Proxy is not available. 的本地化字符串。
+        /// </summary>
+        internal static string ProxyNotAvailable {
+            get {
+                return ResourceManager.GetString("ProxyNotAvailable", resourceCulture);
             }
         }
         

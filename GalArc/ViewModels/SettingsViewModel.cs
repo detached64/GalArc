@@ -33,7 +33,18 @@ internal partial class SettingsViewModel : ViewModelBase
             {
                 Title = GuiStrings.Database,
                 SettingViewModel = new DatabaseOptions(),
-            }
+            },
+            new()
+            {
+                Title = GuiStrings.Update,
+                Children = [
+                    new()
+                    {
+                        Title = GuiStrings.Proxy,
+                        SettingViewModel = new ProxyOptions(),
+                    }
+                ]
+            },
         ];
     }
 

@@ -120,6 +120,9 @@
   <data name="About" xml:space="preserve">
     <value>About</value>
   </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
   <data name="BrutalForce" xml:space="preserve">
     <value>Brutal Force</value>
   </data>
@@ -132,8 +135,11 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Check" xml:space="preserve">
+    <value>Check</value>
+  </data>
   <data name="CheckUpdates" xml:space="preserve">
-    <value>Check for Updates</value>
+    <value>Check For Updates</value>
   </data>
   <data name="CompressContents" xml:space="preserve">
     <value>Compress Contents</value>
@@ -152,6 +158,9 @@
   </data>
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
+  </data>
+  <data name="Dark" xml:space="preserve">
+    <value>Dark</value>
   </data>
   <data name="Database" xml:space="preserve">
     <value>Database</value>
@@ -213,11 +222,17 @@
   <data name="Help" xml:space="preserve">
     <value>Help</value>
   </data>
+  <data name="HTTP" xml:space="preserve">
+    <value>HTTP</value>
+  </data>
   <data name="IndexOffset" xml:space="preserve">
     <value>Index Offset</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>Light</value>
   </data>
   <data name="LogFilePath" xml:space="preserve">
     <value>Log File Path</value>
@@ -237,6 +252,9 @@
   <data name="NoEncryption" xml:space="preserve">
     <value>No Encryption</value>
   </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
   <data name="OpenUrl" xml:space="preserve">
     <value>Open Url</value>
   </data>
@@ -246,11 +264,26 @@
   <data name="OperationUnpack" xml:space="preserve">
     <value>Unpack</value>
   </data>
+  <data name="Optional" xml:space="preserve">
+    <value>Optional</value>
+  </data>
   <data name="OriginalArchive" xml:space="preserve">
     <value>Original Archive Path</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
   <data name="Path" xml:space="preserve">
     <value>Path</value>
+  </data>
+  <data name="Port" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>Proxy</value>
+  </data>
+  <data name="ProxyType" xml:space="preserve">
+    <value>Proxy Type</value>
   </data>
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
@@ -282,6 +315,9 @@
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="SOCKS" xml:space="preserve">
+    <value>SOCKS</value>
+  </data>
   <data name="SourceURL" xml:space="preserve">
     <value>Source URL</value>
   </data>
@@ -291,11 +327,20 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="System" xml:space="preserve">
+    <value>System</value>
+  </data>
   <data name="Theme" xml:space="preserve">
     <value>Theme</value>
   </data>
   <data name="TryEveryEnc" xml:space="preserve">
     <value>Try every encryption scheme</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>

@@ -120,6 +120,9 @@
   <data name="About" xml:space="preserve">
     <value>关于</value>
   </data>
+  <data name="Address" xml:space="preserve">
+    <value>地址</value>
+  </data>
   <data name="BrutalForce" xml:space="preserve">
     <value>暴力破解</value>
   </data>
@@ -131,6 +134,9 @@
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
+  </data>
+  <data name="Check" xml:space="preserve">
+    <value>检测</value>
   </data>
   <data name="CheckUpdates" xml:space="preserve">
     <value>检查更新</value>
@@ -152,6 +158,9 @@
   </data>
   <data name="Copy" xml:space="preserve">
     <value>复制</value>
+  </data>
+  <data name="Dark" xml:space="preserve">
+    <value>深色</value>
   </data>
   <data name="Database" xml:space="preserve">
     <value>数据库</value>
@@ -213,11 +222,17 @@
   <data name="Help" xml:space="preserve">
     <value>帮助</value>
   </data>
+  <data name="HTTP" xml:space="preserve">
+    <value>HTTP</value>
+  </data>
   <data name="IndexOffset" xml:space="preserve">
     <value>索引偏移</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>语言</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>浅色</value>
   </data>
   <data name="LogFilePath" xml:space="preserve">
     <value>日志文件路径</value>
@@ -237,6 +252,9 @@
   <data name="NoEncryption" xml:space="preserve">
     <value>未加密</value>
   </data>
+  <data name="None" xml:space="preserve">
+    <value>无</value>
+  </data>
   <data name="OpenUrl" xml:space="preserve">
     <value>打开网址</value>
   </data>
@@ -246,11 +264,26 @@
   <data name="OperationUnpack" xml:space="preserve">
     <value>解包</value>
   </data>
+  <data name="Optional" xml:space="preserve">
+    <value>可选</value>
+  </data>
   <data name="OriginalArchive" xml:space="preserve">
     <value>原封包路径</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>密码</value>
+  </data>
   <data name="Path" xml:space="preserve">
     <value>路径</value>
+  </data>
+  <data name="Port" xml:space="preserve">
+    <value>端口</value>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>代理</value>
+  </data>
+  <data name="ProxyType" xml:space="preserve">
+    <value>代理类型</value>
   </data>
   <data name="Reset" xml:space="preserve">
     <value>重置</value>
@@ -282,6 +315,9 @@
   <data name="Settings" xml:space="preserve">
     <value>设置</value>
   </data>
+  <data name="SOCKS" xml:space="preserve">
+    <value>SOCKS</value>
+  </data>
   <data name="SourceURL" xml:space="preserve">
     <value>开源网址</value>
   </data>
@@ -291,11 +327,20 @@
   <data name="Status" xml:space="preserve">
     <value>状态</value>
   </data>
+  <data name="System" xml:space="preserve">
+    <value>系统</value>
+  </data>
   <data name="Theme" xml:space="preserve">
     <value>颜色主题</value>
   </data>
   <data name="TryEveryEnc" xml:space="preserve">
     <value>尝试所有加密方案</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>用户名</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>版本</value>

@@ -1,0 +1,65 @@
+<UserControl x:Class="GalArc.Views.ProxyWidget"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:GalArc.Controls"
+             xmlns:cv="using:GalArc.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="using:GalArc.I18n"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:GalArc.ViewModels"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:DataType="vm:ProxyOptions"
+             mc:Ignorable="d">
+
+    <Design.DataContext>
+        <vm:ProxyOptions />
+    </Design.DataContext>
+
+    <UserControl.Resources>
+        <cv:ProxyTypeTranslationConverter x:Key="ProxyTypeTranslationConverter" />
+    </UserControl.Resources>
+
+    <StackPanel Spacing="10">
+        <TextBlock Text="{x:Static i:GuiStrings.ProxyType}" />
+        <ComboBox HorizontalAlignment="Stretch"
+                  ItemsSource="{Binding ProxyTypes}"
+                  SelectedItem="{Binding ProxyType, Mode=TwoWay}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource ProxyTypeTranslationConverter}}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock Text="{x:Static i:GuiStrings.Address}" />
+        <TextBox HorizontalAlignment="Stretch"
+                 IsEnabled="{Binding IsProxyEditingEnabled}"
+                 Text="{Binding ProxyAddress, Mode=TwoWay}" />
+        <TextBlock Text="{x:Static i:GuiStrings.Port}" />
+        <NumericUpDown HorizontalAlignment="Stretch"
+                       Increment="1"
+                       IsEnabled="{Binding IsProxyEditingEnabled}"
+                       Minimum="0"
+                       Value="{Binding ProxyPort}" />
+        <TextBlock Text="{x:Static i:GuiStrings.Username}" />
+        <TextBox HorizontalAlignment="Stretch"
+                 IsEnabled="{Binding IsProxyEditingEnabled}"
+                 Text="{Binding ProxyUsername, Mode=TwoWay}"
+                 Watermark="{x:Static i:GuiStrings.Optional}" />
+        <TextBlock Text="{x:Static i:GuiStrings.Password}" />
+        <TextBox HorizontalAlignment="Stretch"
+                 IsEnabled="{Binding IsProxyEditingEnabled}"
+                 PasswordChar="*"
+                 Text="{Binding ProxyPassword, Mode=TwoWay}"
+                 Watermark="{x:Static i:GuiStrings.Optional}" />
+        <DockPanel>
+            <Button Command="{Binding CheckProxyCommand}"
+                    Content="{x:Static i:GuiStrings.Check}"
+                    DockPanel.Dock="Right"
+                    IsEnabled="{Binding IsProxyEditingEnabled}" />
+            <TextBlock VerticalAlignment="Center"
+                       DockPanel.Dock="Left"
+                       Text="{Binding Message}" />
+        </DockPanel>
+    </StackPanel>
+</UserControl>

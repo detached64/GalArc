@@ -12,9 +12,9 @@ namespace GalArc.Infrastructure.Settings;
 
 internal sealed class AppSettings
 {
-    [JsonConverter(typeof(ThemeVariantConverter))]
+    [JsonConverter(typeof(ThemeVariantJsonConverter))]
     public ThemeVariant AppTheme { get; set; } = ThemeVariant.Default;
-    [JsonConverter(typeof(CultureInfoConverter))]
+    [JsonConverter(typeof(CultureInfoJsonConverter))]
     public CultureInfo AppLanguage { get; set; } = CultureManager.InitCulture(CultureInfo.CurrentCulture);
     public string InputPath { get; set; } = string.Empty;
     public string OutputPath { get; set; } = string.Empty;
@@ -31,4 +31,9 @@ internal sealed class AppSettings
     public bool SaveLogs { get; set; } = true;
     public string LogFilePath { get; set; } = Logger.DefaultPath;
     public string DatabasePath { get; set; } = DatabaseManager.DefaultPath;
+    public ProxyType ProxyType { get; set; } = ProxyType.None;
+    public string ProxyAddress { get; set; }
+    public int ProxyPort { get; set; }
+    public string ProxyUsername { get; set; }
+    public string ProxyPassword { get; set; }
 }

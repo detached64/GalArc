@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace GalArc.Converters;
 
-internal sealed class ThemeVariantConverter : JsonConverter<ThemeVariant>
+internal sealed class ThemeVariantJsonConverter : JsonConverter<ThemeVariant>
 {
     public override ThemeVariant Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
@@ -24,7 +24,7 @@ internal sealed class ThemeVariantConverter : JsonConverter<ThemeVariant>
     }
 }
 
-internal sealed class CultureInfoConverter : JsonConverter<CultureInfo>
+internal sealed class CultureInfoJsonConverter : JsonConverter<CultureInfo>
 {
     public override CultureInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
