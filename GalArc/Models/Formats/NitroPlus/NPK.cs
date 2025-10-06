@@ -21,7 +21,7 @@ internal class NPK : ArcFormat, IUnpackConfigurable, IPackConfigurable
 {
     public override string Name => "NPK";
     public override string Description => "NitroPlus NPK Archive";
-    public override bool CanWrite => true;
+    public override bool CanWrite => false;
 
     private NitroPlusNPKUnpackOptions _unpackOptions;
     public ArcOptions UnpackOptions => _unpackOptions ??= new NitroPlusNPKUnpackOptions();
@@ -243,15 +243,15 @@ internal class NPK : ArcFormat, IUnpackConfigurable, IPackConfigurable
                     switch (_packOptions.MajorVersion)
                     {
                         case 3:
-                            using (CompressionStream cstream = new(compressedStream))
+                            using (CompressionStream cStream = new(compressedStream))
                             {
-                                rawStream.CopyTo(cstream);
+                                rawStream.CopyTo(cStream);
                             }
                             break;
                         case 2:
-                            using (DeflateStream dstream = new(compressedStream, CompressionLevel.Optimal, true))
+                            using (DeflateStream dStream = new(compressedStream, CompressionLevel.Optimal, true))
                             {
-                                rawStream.CopyTo(dstream);
+                                rawStream.CopyTo(dStream);
                             }
                             break;
                         default:
