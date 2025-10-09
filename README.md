@@ -8,7 +8,7 @@ Mainly focus on the unpacking and repacking of galgame archives.
 
 [Releases](https://github.com/detached64/GalArc/releases/latest)
 
-Get ci builds [here](https://github.com/detached64/GalArc/actions).
+Get ci builds [here](https://github.com/detached64/GalArc/actions/workflows/build.yml).
 
 ## Build
 
