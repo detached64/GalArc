@@ -1,5 +1,7 @@
 # GalArc
 
+[![](https://github.com/detached64/GalArc/actions/workflows/build.yml/badge.svg)](https://github.com/detached64/GalArc/actions/workflows/build.yml) [![](https://img.shields.io/github/license/detached64/GalArc)](./LICENSE) [![](https://img.shields.io/github/v/release/detached64/GalArc?include_prereleases)](https://github.com/detached64/GalArc/releases/latest)
+
 Galgame Archive Tool.
 
 Mainly focus on the unpacking and repacking of galgame archives.
