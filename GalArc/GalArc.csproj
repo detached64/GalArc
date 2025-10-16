@@ -52,30 +52,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>MsgStrings.resx</DependentUpon>
     </Compile>
-    <Compile Update="Models\Formats\AdvHD\AdvHDARCPackWidget.axaml.cs">
-      <DependentUpon>AdvHDARCPackWidget.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Models\Formats\AdvHD\AdvHDARCUnpackWidget.axaml.cs">
-      <DependentUpon>AdvHDARCUnpackWidget.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Models\Formats\Ai6Win\Ai6WinARCPackWidget.axaml.cs">
-      <DependentUpon>Ai6WinARCPackWidget.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Models\Formats\AnimeGameSystem\AgsDATUnpackWidget.axaml.cs">
-      <DependentUpon>AgsDATUnpackWidget.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\GeneralWidget.axaml.cs">
-      <DependentUpon>GeneralWidget.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\LoggingWidget.axaml.cs">
-      <DependentUpon>LoggingWidget.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\MainView.axaml.cs">
-      <DependentUpon>MainView.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="Views\ProxyWidget.axaml.cs">
-      <DependentUpon>ProxyWidget.axaml</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
