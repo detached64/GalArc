@@ -92,7 +92,7 @@ internal partial class MainViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task BrowseInput()
+    private async Task BrowseInputAsync()
     {
         switch (SelectedOperation)
         {
@@ -123,7 +123,7 @@ internal partial class MainViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task BrowseOutput()
+    private async Task BrowseOutputAsync()
     {
         switch (SelectedOperation)
         {
@@ -154,7 +154,7 @@ internal partial class MainViewModel : ViewModelBase
     }
 
     [RelayCommand(CanExecute = nameof(CanStart))]
-    private async Task Start(Window window)
+    private async Task StartAsync(Window window)
     {
         await _showDialogService.ShowDialogAsync<StatusView, StatusViewModel>(window);
     }
@@ -216,19 +216,19 @@ internal partial class MainViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task OpenSettings(Window window)
+    private async Task OpenSettingsAsync(Window window)
     {
         await _showDialogService.ShowDialogAsync<SettingsView, SettingsViewModel>(window);
     }
 
     [RelayCommand]
-    private async Task OpenAbout(Window window)
+    private async Task OpenAboutAsync(Window window)
     {
         await _showDialogService.ShowDialogAsync<AboutView, AboutViewModel>(window);
     }
 
     [RelayCommand]
-    private async Task CheckUpdates(Window window)
+    private async Task CheckUpdatesAsync(Window window)
     {
         await _showDialogService.ShowDialogAsync<UpdateView, UpdateViewModel>(window);
     }

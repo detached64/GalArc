@@ -23,7 +23,7 @@ internal partial class AboutViewModel : ViewModelBase
     private string sourceUrl = "https://github.com/detached64/GalArc";
 
     [RelayCommand]
-    private static async Task OpenUrl(string url)
+    private static async Task OpenUrlAsync(string url)
     {
         try
         {

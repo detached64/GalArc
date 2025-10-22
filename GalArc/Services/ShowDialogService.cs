@@ -12,14 +12,14 @@ internal sealed class ShowDialogService(IServiceProvider serviceProvider) : ISho
     {
         Window view = serviceProvider.GetService<TView>() as Window ?? throw new InvalidOperationException($"Could not resolve view of type {typeof(TView).FullName}");
         view.DataContext = serviceProvider.GetService<TViewModel>();
-        view.ShowDialog(parent);
+        _ = view.ShowDialog(parent);
     }
 
     public void ShowDialog<TView>(ViewModelBase vm, Window parent) where TView : Window
     {
         Window view = serviceProvider.GetService<TView>() as Window ?? throw new InvalidOperationException($"Could not resolve view of type {typeof(TView).FullName}");
         view.DataContext = vm;
-        view.ShowDialog(parent);
+        _ = view.ShowDialog(parent);
     }
 
     public async Task<TResult> ShowDialogAsync<TView, TViewModel, TResult>(Window parent) where TView : Window where TViewModel : ViewModelBase where TResult : class

@@ -38,19 +38,19 @@ internal partial class ProxyOptions : SettingOptions
     private const int TimeOut = 3000;
 
     [RelayCommand]
-    private async Task CheckProxy()
+    private async Task CheckProxyAsync()
     {
         Message = MsgStrings.CheckingProxy;
         Message = SettingsManager.Settings.ProxyType switch
         {
             ProxyType.None => true,
-            ProxyType.HTTP => await CheckHTTPProxy(),
-            ProxyType.SOCKS => await CheckSOCKSProxy(),
+            ProxyType.HTTP => await CheckHTTPProxyAsync(),
+            ProxyType.SOCKS => await CheckSOCKSProxyAsync(),
             _ => false,
         } ? MsgStrings.ProxyAvailable : MsgStrings.ProxyNotAvailable;
     }
 
-    private static async Task<bool> CheckHTTPProxy()
+    private static async Task<bool> CheckHTTPProxyAsync()
     {
         try
         {
@@ -64,7 +64,7 @@ internal partial class ProxyOptions : SettingOptions
         }
     }
 
-    private static async Task<bool> CheckSOCKSProxy()
+    private static async Task<bool> CheckSOCKSProxyAsync()
     {
         try
         {

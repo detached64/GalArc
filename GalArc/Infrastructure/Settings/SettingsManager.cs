@@ -46,7 +46,7 @@ internal static class SettingsManager
         }
     }
 
-    public static async void SaveSettings()
+    public static async void SaveSettingsAsync()
     {
         try
         {

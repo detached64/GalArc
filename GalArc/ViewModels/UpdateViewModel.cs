@@ -40,7 +40,7 @@ internal partial class UpdateViewModel : ViewModelBase
     private bool isSuccess;
 
     [RelayCommand]
-    private async Task CheckUpdates()
+    private async Task CheckUpdatesAsync()
     {
         LogInfo(MsgStrings.CheckingUpdates);
         IsChecking = true;
@@ -77,7 +77,7 @@ internal partial class UpdateViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task OpenUpdateUrl()
+    private async Task OpenUpdateUrlAsync()
     {
         if (!string.IsNullOrEmpty(UpdateUrl))
         {

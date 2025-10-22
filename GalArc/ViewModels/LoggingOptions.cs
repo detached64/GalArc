@@ -16,7 +16,7 @@ internal partial class LoggingOptions : SettingOptions
     private string logFilePath = SettingsManager.Settings.LogFilePath;
 
     [RelayCommand]
-    private async Task BrowseLogPath()
+    private async Task BrowseLogPathAsync()
     {
         IStorageFile resultFile = await App.Top.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions()
         {

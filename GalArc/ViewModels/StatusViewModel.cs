@@ -112,7 +112,7 @@ internal partial class StatusViewModel : ViewModelBase, IDisposable
     private CancellationTokenSource _cts = new();
 
     [RelayCommand]
-    private async Task Start()
+    private async Task StartAsync()
     {
         _cts?.Dispose();
         _cts = new();
@@ -256,7 +256,7 @@ internal partial class StatusViewModel : ViewModelBase, IDisposable
     }
 
     [RelayCommand(CanExecute = nameof(CanCopyLog))]
-    private async Task CopyLog(Window window)
+    private async Task CopyLogAsync(Window window)
     {
         if (SelectedLogEntries == null || SelectedLogEntries.Count == 0)
         {

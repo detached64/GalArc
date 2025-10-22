@@ -14,7 +14,7 @@ internal partial class DatabaseOptions : SettingOptions
     private string databasePath = SettingsManager.Settings.DatabasePath;
 
     [RelayCommand]
-    private async Task BrowseDatabasePath()
+    private async Task BrowseDatabasePathAsync()
     {
         IReadOnlyList<IStorageFolder> folders = await App.Top.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions()
         {
