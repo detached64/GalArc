@@ -183,7 +183,7 @@ internal class EME : ArcFormat
         FileInfo[] files = new DirectoryInfo(folderPath).GetFiles();
         ProgressManager.SetMax(files.Length);
         List<EmeEntry> entries = [];
-        using FileStream fw = File.OpenWrite(filePath);
+        using FileStream fw = File.Create(filePath);
         using BinaryWriter bw = new(fw);
         bw.Write(Encoding.ASCII.GetBytes(Magic));
         uint currentOffset = 8;
