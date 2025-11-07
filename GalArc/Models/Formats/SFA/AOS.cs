@@ -11,13 +11,17 @@ using System.Text;
 
 namespace GalArc.Models.Formats.SFA;
 
-internal class AOS : ArcFormat, IUnpackConfigurable
+internal class AOS : ArcFormat, IUnpackConfigurable, IPackConfigurable
 {
     public override string Name => "AOS";
     public override string Description => "SFA AOS Archive";
+    public override bool CanWrite => true;
 
     private SFAAOSUnpackOptions _unpackOptions;
     public ArcOptions UnpackOptions => _unpackOptions ??= new SFAAOSUnpackOptions();
+
+    private SFAAOSPackOptions _packOptions;
+    public ArcOptions PackOptions => _packOptions ??= new SFAAOSPackOptions();
 
     public override void Unpack(string filePath, string folderPath)
     {
@@ -64,10 +68,65 @@ internal class AOS : ArcFormat, IUnpackConfigurable
             ProgressManager.Progress();
         }
     }
+
+    public override void Pack(string folderPath, string filePath)
+    {
+        using FileStream fw = File.Create(filePath);
+        using BinaryWriter bw = new(fw);
+        bw.Write(0);
+        FileInfo[] files = new DirectoryInfo(folderPath).GetFiles();
+        int fileCount = files.Length;
+        int indexSize = fileCount * 40;
+        int dataOffset = 261 + 12 + indexSize;
+        bw.Write(dataOffset);
+        bw.Write(indexSize);
+        string name = Path.GetFileName(filePath);
+        bw.Write(Encoding.ASCII.GetBytes(name.PadRight(261, '\0')));
+        ProgressManager.SetMax(fileCount);
+        fw.Position = dataOffset;
+        List<Entry> entries = new(fileCount);
+        foreach (FileInfo file in files)
+        {
+            Entry entry = new();
+            entry.Name = file.Name;
+            entry.Offset = (uint)(fw.Position - dataOffset);
+            if (_packOptions.EncryptScripts && string.Equals(file.Extension, ".scr", StringComparison.OrdinalIgnoreCase))
+            {
+                Logger.DebugFormat(MsgStrings.Encrypting, file.Name);
+                byte[] raw = File.ReadAllBytes(file.FullName);
+                byte[] encoded = HuffmanHelper.Encode(raw);
+                bw.Write(raw.Length);
+                bw.Write(encoded);
+                entry.Size = (uint)(4 + encoded.Length);
+            }
+            else
+            {
+                using FileStream fr = file.OpenRead();
+                fr.CopyTo(fw);
+                entry.Size = (uint)fr.Length;
+            }
+            entries.Add(entry);
+            ProgressManager.Progress();
+        }
+        fw.Position = 261 + 12;
+        foreach (Entry entry in entries)
+        {
+            byte[] nameBytes = ArcEncoding.Shift_JIS.GetBytes(entry.Name.PadRight(32, '\0'));
+            bw.Write(nameBytes);
+            bw.Write(entry.Offset);
+            bw.Write(entry.Size);
+        }
+    }
 }
 
 internal partial class SFAAOSUnpackOptions : ArcOptions
 {
     [ObservableProperty]
     private bool decryptScripts = true;
+}
+
+internal partial class SFAAOSPackOptions : ArcOptions
+{
+    [ObservableProperty]
+    private bool encryptScripts = true;
 }
