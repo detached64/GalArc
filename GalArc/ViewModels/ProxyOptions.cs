@@ -44,8 +44,8 @@ internal partial class ProxyOptions : SettingOptions
         Message = SettingsManager.Settings.ProxyType switch
         {
             ProxyType.None => true,
-            ProxyType.HTTP => await CheckHTTPProxyAsync(),
-            ProxyType.SOCKS => await CheckSOCKSProxyAsync(),
+            ProxyType.Http => await CheckHTTPProxyAsync(),
+            ProxyType.Socks => await CheckSOCKSProxyAsync(),
             _ => false,
         } ? MsgStrings.ProxyAvailable : MsgStrings.ProxyNotAvailable;
     }

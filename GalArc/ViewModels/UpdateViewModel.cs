@@ -123,8 +123,8 @@ internal partial class UpdateViewModel : ViewModelBase
             {
                 Address = new Uri($"{SettingsManager.Settings.ProxyType switch
                 {
-                    ProxyType.HTTP => "http",
-                    ProxyType.SOCKS => "socks5",
+                    ProxyType.Http => "http",
+                    ProxyType.Socks => "socks5",
                     _ => throw new NotSupportedException("Unsupported proxy type.")
                 }}://{SettingsManager.Settings.ProxyAddress}:{SettingsManager.Settings.ProxyPort}")
             };

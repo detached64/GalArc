@@ -37,8 +37,8 @@ internal sealed class ProxyTypeTranslationConverter : IValueConverter
             : proxy switch
             {
                 ProxyType.None => GuiStrings.None,
-                ProxyType.HTTP => GuiStrings.HTTP,
-                ProxyType.SOCKS => GuiStrings.SOCKS,
+                ProxyType.Http => "Http",
+                ProxyType.Socks => "Socks",
                 _ => value,
             };
     }

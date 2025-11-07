@@ -222,12 +222,6 @@
   <data name="Help" xml:space="preserve">
     <value>帮助</value>
   </data>
-  <data name="HTTP" xml:space="preserve">
-    <value>HTTP</value>
-  </data>
-  <data name="IndexOffset" xml:space="preserve">
-    <value>索引偏移</value>
-  </data>
   <data name="Language" xml:space="preserve">
     <value>语言</value>
   </data>
@@ -314,9 +308,6 @@
   </data>
   <data name="Settings" xml:space="preserve">
     <value>设置</value>
-  </data>
-  <data name="SOCKS" xml:space="preserve">
-    <value>SOCKS</value>
   </data>
   <data name="SourceURL" xml:space="preserve">
     <value>开源网址</value>
