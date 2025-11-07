@@ -2,52 +2,34 @@ name: Build
 
 on:
   push:
-    branches:
-      - master
+    branches: [master]
   pull_request:
-    branches:
-      - master
+    branches: [master]
   workflow_dispatch:
 
 jobs:
-  build-linux-x64:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            runtime: linux-x64
+          - os: windows-latest
+            runtime: win-x64
+    runs-on: ${{ matrix.os }}
 
-      - name: Setup .NET 9 SDK
-        uses: actions/setup-dotnet@v4
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
 
-      - name: Publish the project
-        run: dotnet publish -c Release -r linux-x64
+      - run: dotnet publish -c Release -r ${{ matrix.runtime }}
 
-      - name: Archive the published output
+      - uses: actions/upload-artifact@v4
         if: success()
-        uses: actions/upload-artifact@v4
         with:
-          name: GalArc-ci-linux-x64
-          path: GalArc/bin/Release/net9.0/linux-x64/publish
-
-  build-win-x64:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup .NET 9 SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '9.0.x'
-
-      - name: Publish the project
-        run: dotnet publish -c Release -r win-x64
-
-      - name: Archive the published output
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: GalArc-ci-win-x64
-          path: GalArc/bin/Release/net9.0/win-x64/publish
+          name: GalArc-ci-${{ matrix.runtime }}
+          path: GalArc/bin/Release/net9.0/${{ matrix.runtime }}/publish
