@@ -39,8 +39,4 @@ Console.WriteLine(Convert.ToBase64String(output));
 
 ## Fun fact
 
-If you save `data` as a file and open it with a hex editor, you might see the game's logo.
-
-![美少女万華鏡 -呪われし伝説の少女- (a little bit hazy)](./pictures/qlie-4.png)
-
-![美少女万華鏡 -忘れな草と永遠の少女-](./pictures/qlie-5.png)
+The binary is actually a [TIcon](https://docwiki.embarcadero.com/Libraries/Sydney/en/Vcl.Graphics.TIcon).
