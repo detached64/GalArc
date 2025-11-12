@@ -20,7 +20,9 @@
                   ItemsSource="{Binding Names}"
                   SelectedItem="{Binding SelectedName, Mode=TwoWay}" />
         <TextBlock Text="{Binding Source={x:Static i:GuiStrings.Path}, StringFormat={}key.fkey {0}}" />
-        <TextBox HorizontalAlignment="Stretch" Text="{Binding Key, Mode=TwoWay}" />
+        <TextBox HorizontalAlignment="Stretch"
+                 Text="{Binding Key, Mode=TwoWay}"
+                 Watermark="{x:Static i:GuiStrings.Optional}" />
         <StackPanel Orientation="Horizontal" Spacing="10">
             <CheckBox Content="{x:Static i:GuiStrings.SaveKey}" IsChecked="{Binding SaveKey}" />
             <CheckBox Content="{x:Static i:GuiStrings.SaveHash}" IsChecked="{Binding SaveHash}" />
