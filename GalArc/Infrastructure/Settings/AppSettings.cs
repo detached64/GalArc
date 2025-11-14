@@ -31,6 +31,7 @@ internal sealed class AppSettings
     public bool SaveLogs { get; set; } = true;
     public string LogFilePath { get; set; } = Logger.DefaultPath;
     public string DatabasePath { get; set; } = DatabaseManager.DefaultPath;
+    [JsonConverter(typeof(JsonStringEnumConverter<ProxyType>))]
     public ProxyType ProxyType { get; set; } = ProxyType.None;
     public string ProxyAddress { get; set; }
     public int ProxyPort { get; set; }
