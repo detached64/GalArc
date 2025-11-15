@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  release:
+  build:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest]
@@ -20,24 +20,38 @@ jobs:
             artifact: GalArc-${{ github.ref_name }}-linux-x64.zip
 
     runs-on: ${{ matrix.os }}
-    permissions:
-      contents: write
 
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 10.0.x
 
       - run: dotnet publish -c Release -r ${{ matrix.runtime }}
 
       - shell: pwsh
-        run: Compress-Archive -Path GalArc/bin/Release/net9.0/${{ matrix.runtime }}/publish/* -DestinationPath ${{ matrix.artifact }}
+        run: Compress-Archive -Path GalArc/bin/Release/net10.0/${{ matrix.runtime }}/publish/* -DestinationPath ${{ matrix.artifact }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: ${{ matrix.artifact }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/download-artifact@v4
 
       - uses: softprops/action-gh-release@v2
         with:
-          files: ${{ matrix.artifact }}
+          files: |
+            GalArc-${{ github.ref_name }}-win-x64.zip/*
+            GalArc-${{ github.ref_name }}-linux-x64.zip/*
           draft: false
           prerelease: false
           generate_release_notes: true
