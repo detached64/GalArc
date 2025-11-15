@@ -24,7 +24,7 @@ jobs:
 
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: '10.0.x'
 
       - run: dotnet publish -c Release -r ${{ matrix.runtime }}
 
@@ -32,4 +32,4 @@ jobs:
         if: success()
         with:
           name: GalArc-ci-${{ matrix.runtime }}
-          path: GalArc/bin/Release/net9.0/${{ matrix.runtime }}/publish
+          path: GalArc/bin/Release/net10.0/${{ matrix.runtime }}/publish
