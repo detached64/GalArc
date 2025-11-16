@@ -14,8 +14,8 @@ Get ci builds [here](https://github.com/detached64/GalArc/actions/workflows/buil
 
 ## Build
 
-```
-dotnet publish -c Release -r win-x64
+```bash
+dotnet publish
 ```
 
 ### Cross-Platform Compatibility
