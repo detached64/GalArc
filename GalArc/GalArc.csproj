@@ -11,7 +11,7 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <ApplicationIcon>Assets\logo.ico</ApplicationIcon>
     <Authors>detached64</Authors>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
     <Copyright>Copyright © 2025 detached64</Copyright>
   </PropertyGroup>
 
