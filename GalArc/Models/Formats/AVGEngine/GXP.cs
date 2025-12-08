@@ -14,9 +14,25 @@ internal class GXP : ArcFormat
     public override string Description => "AVG Engine GXP Archive";
     public override bool CanWrite => true;
 
-    private static readonly byte[] KnownKey = [0x40, 0x21, 0x28, 0x38, 0xA6, 0x6E, 0x43, 0xA5, 0x40, 0x21, 0x28, 0x38, 0xA6, 0x43, 0xA5, 0x64, 0x3E, 0x65, 0x24, 0x20, 0x46, 0x6E, 0x74,];
+    private static readonly byte[] KnownKey = [0x40, 0x21, 0x28, 0x38, 0xA6, 0x6E, 0x43, 0xA5, 0x40, 0x21, 0x28, 0x38, 0xA6, 0x43, 0xA5, 0x64, 0x3E, 0x65, 0x24, 0x20, 0x46, 0x6E, 0x74];
+
+    private static bool UseNameKey;
+    private static byte[] NameKey = [];
 
     public override void Unpack(string filePath, string folderPath)
+    {
+        try
+        {
+            TryUnpack(filePath, folderPath);
+        }
+        catch
+        {
+            UseNameKey = true;
+            TryUnpack(filePath, folderPath);
+        }
+    }
+
+    private static void TryUnpack(string filePath, string folderPath)
     {
         using FileStream fs = File.OpenRead(filePath);
         using BinaryReader br = new(fs);
@@ -27,9 +43,13 @@ internal class GXP : ArcFormat
         fs.Position = 40;
         long baseOffset = br.ReadInt64();
         List<Entry> entries = new(fileCount);
+        if (UseNameKey)
+            NameKey = Encoding.ASCII.GetBytes(Path.GetFileName(filePath));
         for (int i = 0; i < fileCount; i++)
         {
             uint entry_size = BitConverter.ToUInt32(Decrypt(br.ReadBytes(4)));
+            if (entry_size <= 0x20 || entry_size >= 0x1000)
+                throw new InvalidArchiveException();
             fs.Position -= 4;
             byte[] entry_data = Decrypt(br.ReadBytes((int)entry_size));
             Entry entry = new();
@@ -102,7 +122,10 @@ internal class GXP : ArcFormat
     {
         for (int i = 0; i < data.Length; i++)
         {
-            data[i] ^= (byte)(i ^ KnownKey[i % KnownKey.Length]);
+            byte key = (byte)(i ^ KnownKey[i % KnownKey.Length]);
+            if (UseNameKey)
+                key ^= NameKey[i % NameKey.Length];
+            data[i] ^= key;
         }
         return data;
     }
