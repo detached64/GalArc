@@ -64,10 +64,6 @@ internal class ARC : ArcFormat
                         nameBuf[j] ^= scheme.NameKey;
                     }
                     entry.Name = ArcEncoding.Shift_JIS.GetString(nameBuf).TrimEnd('\0');
-                    if (entry.Name.ContainsInvalidChars())
-                    {
-                        throw new Exception();
-                    }
                     entry.Path = Path.Combine(folderPath, entry.Name);
                     entry.Size = br.ReadUInt32() ^ scheme.SizeKey;
                     entry.Offset = br.ReadUInt32() ^ scheme.OffsetKey;

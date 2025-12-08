@@ -82,7 +82,7 @@ internal partial class ProxyOptions : SettingOptions
             stream.ReadTimeout = TimeOut;
             stream.WriteTimeout = TimeOut;
 
-            byte[] handshakeRequest = { 0x05, 0x01, 0x00 };
+            byte[] handshakeRequest = [0x05, 0x01, 0x00];
             await stream.WriteAsync(handshakeRequest);
             await stream.FlushAsync();
 
