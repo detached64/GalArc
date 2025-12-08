@@ -6,7 +6,6 @@ internal abstract class ArcFormat
 {
     public abstract string Name { get; }
     public abstract string Description { get; }
-    public virtual string ExtendedDescription { get; }
     public virtual bool CanWrite { get; }
     public virtual bool CanFind { get; } = true;
 
