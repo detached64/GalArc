@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="GalArc.Generator/GalArc.Generator.csproj" />
+  <Project Path="GalArc/GalArc.csproj" />
+</Solution>
