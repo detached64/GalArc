@@ -55,33 +55,29 @@
         <StackPanel Margin="10"
                     DockPanel.Dock="Top"
                     Spacing="10">
-            <c:GroupBox Header="{x:Static i:GuiStrings.GroupPath}">
-                <StackPanel Spacing="10">
-                    <c:GroupBox Header="{x:Static i:GuiStrings.GroupInput}">
-                        <StackPanel Spacing="5">
-                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
-                                <TextBox b:FileDropBehavior.DropCommand="{Binding DropInputCommand}"
-                                         DragDrop.AllowDrop="True"
-                                         Text="{Binding InputPath, Mode=TwoWay}"
-                                         Watermark="{Binding InputWatermark}" />
-                                <Button Grid.Column="1"
-                                        Command="{Binding BrowseInputCommand}"
-                                        Content="..." />
-                            </Grid>
-                        </StackPanel>
-                    </c:GroupBox>
-                    <c:GroupBox Header="{x:Static i:GuiStrings.GroupOutput}">
-                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
-                            <TextBox b:FileDropBehavior.DropCommand="{Binding DropOutputCommand}"
-                                     DragDrop.AllowDrop="True"
-                                     Text="{Binding OutputPath, Mode=TwoWay}"
-                                     Watermark="{Binding OutputWatermark}" />
-                            <Button Grid.Column="1"
-                                    Command="{Binding BrowseOutputCommand}"
-                                    Content="..." />
-                        </Grid>
-                    </c:GroupBox>
+            <c:GroupBox Header="{x:Static i:GuiStrings.GroupInput}">
+                <StackPanel Spacing="5">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
+                        <TextBox b:FileDropBehavior.DropCommand="{Binding DropInputCommand}"
+                                 DragDrop.AllowDrop="True"
+                                 Text="{Binding InputPath, Mode=TwoWay}"
+                                 Watermark="{Binding InputWatermark}" />
+                        <Button Grid.Column="1"
+                                Command="{Binding BrowseInputCommand}"
+                                Content="..." />
+                    </Grid>
                 </StackPanel>
+            </c:GroupBox>
+            <c:GroupBox Header="{x:Static i:GuiStrings.GroupOutput}">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
+                    <TextBox b:FileDropBehavior.DropCommand="{Binding DropOutputCommand}"
+                             DragDrop.AllowDrop="True"
+                             Text="{Binding OutputPath, Mode=TwoWay}"
+                             Watermark="{Binding OutputWatermark}" />
+                    <Button Grid.Column="1"
+                            Command="{Binding BrowseOutputCommand}"
+                            Content="..." />
+                </Grid>
             </c:GroupBox>
             <c:GroupBox Header="{x:Static i:GuiStrings.GroupOperation}">
                 <Grid ColumnDefinitions="*,*">
