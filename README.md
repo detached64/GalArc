@@ -20,7 +20,7 @@ dotnet publish
 
 ### Cross-Platform Compatibility
 
-Technically, the program compilable and executable on Windows, Linux, and macOS through the `dotnet publish` command. However, it has only been tested on Windows 11 x64. Platform-specific variations in filesystem implementations and underlying architectural differences may lead to unexpected behaviors on non-Windows operating systems.
+Technically, the program is compilable and executable on Windows, Linux, and macOS through the `dotnet publish` command. However, it has only been tested on Windows 11 x64. Platform-specific variations in filesystem implementations and underlying architectural differences may lead to unexpected behaviors on non-Windows operating systems.
 
 If you encounter any issues while running the program on non-Windows platforms, feel free to report them.
 
