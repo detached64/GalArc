@@ -55,6 +55,11 @@ internal class PAC : ArcFormat, IUnpackConfigurable, IPackConfigurable
         }
         fs.Position++;
         FileCount = Reader.ReadInt32();
+        if (!IsSaneCount(FileCount))
+        {
+            UnpackLegacy();
+            return;
+        }
 
         int methodMagic = Reader.ReadInt32();
         Method method = (Method)methodMagic;
@@ -169,6 +174,47 @@ internal class PAC : ArcFormat, IUnpackConfigurable, IPackConfigurable
         }
         Logger.ShowVersion("pac", 2);
         return entries;
+    }
+
+    private void UnpackLegacy()
+    {
+        Reader.BaseStream.Position = 3;
+        uint baseOffset = Reader.ReadUInt32();
+        if (baseOffset > Reader.BaseStream.Length)
+        {
+            throw new InvalidArchiveException();
+        }
+        List<Entry> entries = [];
+        long pos = Reader.BaseStream.Position;
+        while (Reader.BaseStream.Position < baseOffset)
+        {
+            Entry entry = new();
+            List<byte> nameBytes = [];
+            byte b;
+            while ((b = Reader.ReadByte()) != 0)
+            {
+                nameBytes.Add((byte)~b);
+            }
+            entry.Name = ArcEncoding.Shift_JIS.GetString([.. nameBytes]);
+            entry.Path = Path.Combine(FolderPath, entry.Name);
+            entry.Offset = Reader.ReadUInt32() + baseOffset;
+            entry.Size = Reader.ReadUInt32();
+            Logger.Debug(entry.Name);
+            entries.Add(entry);
+        }
+        ProgressManager.SetMax(entries.Count);
+        foreach (Entry entry in entries)
+        {
+            Reader.BaseStream.Position = entry.Offset;
+            byte[] data = Reader.ReadBytes((int)entry.Size);
+            for (int i = 0; i < 3; i++)
+            {
+                data[i] = (byte)~data[i];   // not sure if this applies to all files, at least .grp files need this
+            }
+            File.WriteAllBytes(entry.Path, data);
+            data = null;
+            ProgressManager.Progress();
+        }
     }
 
     public override void Pack(string folderPath, string filePath)
