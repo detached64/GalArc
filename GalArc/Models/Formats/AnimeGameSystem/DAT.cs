@@ -141,5 +141,5 @@ internal partial class AgsDATUnpackOptions : ArcOptions
     private ObservableCollection<string> names = [];
     [ObservableProperty]
     private string selectedName = GuiStrings.NoEncryption;
-    public Dictionary<string, AgsScheme.AgsKey> SelectedFileMap => Scheme?.KnownSchemes != null ? Scheme.KnownSchemes.GetValueOrDefault(SelectedName) : null;
+    public Dictionary<string, AgsScheme.AgsKey> SelectedFileMap => Scheme?.KnownSchemes?.GetValueOrDefault(SelectedName);
 }

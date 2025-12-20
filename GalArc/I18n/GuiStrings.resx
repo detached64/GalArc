@@ -171,8 +171,8 @@
   <data name="DecryptScripts" xml:space="preserve">
     <value>Decrypt Scripts</value>
   </data>
-  <data name="DefaultEnc" xml:space="preserve">
-    <value>Default encryption scheme</value>
+  <data name="DefaultEncryption" xml:space="preserve">
+    <value>Default Encryption Scheme</value>
   </data>
   <data name="Encoding" xml:space="preserve">
     <value>Encoding</value>

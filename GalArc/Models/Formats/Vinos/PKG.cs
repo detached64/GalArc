@@ -22,7 +22,7 @@ internal class PKG : ArcFormat, IUnpackConfigurable
 
     public override void Unpack(string filePath, string folderPath)
     {
-        ZipFile file = new(filePath, StringCodec.FromEncoding(_unpackOptions.Encoding));
+        using ZipFile file = new(filePath, StringCodec.FromEncoding(_unpackOptions.Encoding));
         List<ZipEntry> entries = [.. file.Cast<ZipEntry>().Where(e => !e.IsDirectory)];
         bool is_encrypted = entries.Any(e => e.IsCrypted);
         if (is_encrypted)
@@ -47,7 +47,6 @@ internal class PKG : ArcFormat, IUnpackConfigurable
             }
             ProgressManager.Progress();
         }
-        file.Close();
     }
 }
 

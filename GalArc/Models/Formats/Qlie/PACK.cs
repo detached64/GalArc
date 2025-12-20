@@ -392,7 +392,7 @@ internal partial class QliePACKUnpackOptions : ArcOptions
         if (Design.IsDesignMode)
             return;
         Scheme = DatabaseManager.LoadScheme(DatabaseSerializationContext.Default.QlieScheme);
-        Names.Add(GuiStrings.DefaultEnc);
+        Names.Add(GuiStrings.DefaultEncryption);
         if (Scheme?.KnownSchemes != null)
         {
             foreach (KeyValuePair<string, byte[]> pair in Scheme.KnownSchemes)
@@ -411,8 +411,8 @@ internal partial class QliePACKUnpackOptions : ArcOptions
     [ObservableProperty]
     private ObservableCollection<string> names = [];
     [ObservableProperty]
-    private string selectedName = GuiStrings.DefaultEnc;
-    public byte[] Key => Scheme?.KnownSchemes.GetValueOrDefault(SelectedName);
+    private string selectedName = GuiStrings.DefaultEncryption;
+    public byte[] Key => Scheme?.KnownSchemes?.GetValueOrDefault(SelectedName);
 }
 
 internal partial class QliePACKPackOptions : ArcOptions

@@ -142,7 +142,7 @@ internal partial class NScripterNS2UnpackOptions : ArcOptions
     private ObservableCollection<string> names = [];
     [ObservableProperty]
     private string selectedName = GuiStrings.NoEncryption;
-    public string Key => Scheme?.KnownSchemes.GetValueOrDefault(SelectedName);
+    public string Key => Scheme?.KnownSchemes?.GetValueOrDefault(SelectedName);
 }
 
 internal sealed class Ns2Decryptor
