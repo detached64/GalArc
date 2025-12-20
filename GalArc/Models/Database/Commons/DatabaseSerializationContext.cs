@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 namespace GalArc.Models.Database.Commons;
 
 [JsonSerializable(typeof(AgsScheme))]
+[JsonSerializable(typeof(LightvnScheme))]
 [JsonSerializable(typeof(NpkScheme))]
 [JsonSerializable(typeof(Ns2Scheme))]
 [JsonSerializable(typeof(VinosScheme))]
