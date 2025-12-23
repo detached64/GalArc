@@ -162,10 +162,22 @@ internal partial class StatusViewModel : ViewModelBase, IDisposable
         Logger.Info(MsgStrings.ConfiguringSettings);
         string input = SettingsManager.Settings.InputPath;
         string output = SettingsManager.Settings.OutputPath;
-        bool is_batch_mode = SettingsManager.Settings.Operation == OperationType.Unpack &&
-            (input.Contains('*') || input.Contains('?'));
-        string[] batch_inputs = [];
-        if (!is_batch_mode)
+        bool isBatch = input.Contains('*') || input.Contains('?');
+        string[] batchInputs = [];
+        if (isBatch)
+        {
+            string dir = Path.GetDirectoryName(input);
+            string pattern = Path.GetFileName(input);
+            if (Directory.Exists(dir))
+            {
+                batchInputs = Directory.GetFiles(dir, pattern);
+            }
+            if (batchInputs.Length == 0)
+            {
+                throw new FileNotFoundException("No files match the given pattern.", input);
+            }
+        }
+        else
         {
             switch (SettingsManager.Settings.Operation)
             {
@@ -173,23 +185,10 @@ internal partial class StatusViewModel : ViewModelBase, IDisposable
                     if (!File.Exists(input))
                         throw new FileNotFoundException(MsgStrings.ErrorFileNotFound, input);
                     break;
-                case OperationType.Pack:
+                case OperationType.Pack when !SettingsManager.Settings.PackFormat.IsSingleFileArchive:
                     if (!Directory.Exists(input))
                         throw new DirectoryNotFoundException(MsgStrings.ErrorDirNotFound);
                     break;
-            }
-        }
-        else
-        {
-            string dir = Path.GetDirectoryName(input);
-            string pattern = Path.GetFileName(input);
-            if (Directory.Exists(dir))
-            {
-                batch_inputs = Directory.GetFiles(dir, pattern);
-            }
-            if (batch_inputs.Length == 0)
-            {
-                throw new FileNotFoundException("No files match the given pattern.", input);
             }
         }
         #endregion
@@ -204,21 +203,25 @@ internal partial class StatusViewModel : ViewModelBase, IDisposable
         switch (SettingsManager.Settings.Operation)
         {
             case OperationType.Unpack:
-                if (is_batch_mode)
+                if (isBatch)
                 {
-                    ProgressManager.OverallSetMax(batch_inputs.Length);
-                    foreach (string batch_input in batch_inputs)
+                    ProgressManager.OverallSetMax(batchInputs.Length);
+                    foreach (string inputPath in batchInputs)
                     {
                         _cts.Token.ThrowIfCancellationRequested();
                         ProgressManager.SetValue(0);
                         ProgressManager.SetMax(0);
-                        string batch_output = Path.Combine(SettingsManager.Settings.OutputPath,
-                            Path.GetFileNameWithoutExtension(batch_input));
-                        Directory.CreateDirectory(batch_output);
-                        Logger.InfoFormat(MsgStrings.ProcessingFile, batch_input);
+                        string outputPath = SettingsManager.Settings.UnpackFormat.IsSingleFileArchive
+                            ? Path.Combine(SettingsManager.Settings.OutputPath, Path.GetFileName(inputPath) + ".out")
+                            : Path.Combine(SettingsManager.Settings.OutputPath, Path.GetFileNameWithoutExtension(inputPath));
+                        if (!SettingsManager.Settings.UnpackFormat.IsSingleFileArchive)
+                        {
+                            Directory.CreateDirectory(outputPath);
+                        }
+                        Logger.InfoFormat(MsgStrings.ProcessingFile, inputPath);
                         try
                         {
-                            SettingsManager.Settings.UnpackFormat.Unpack(batch_input, batch_output);
+                            SettingsManager.Settings.UnpackFormat.Unpack(inputPath, outputPath);
                         }
                         catch (Exception ex) when (SettingsManager.Settings.ContinueOnError)
                         {
@@ -234,10 +237,16 @@ internal partial class StatusViewModel : ViewModelBase, IDisposable
                 else
                 {
                     _cts.Token.ThrowIfCancellationRequested();
-                    Directory.CreateDirectory(output);
+                    string outputPath = SettingsManager.Settings.UnpackFormat.IsSingleFileArchive
+                        ? output
+                        : Path.Combine(output, Path.GetFileNameWithoutExtension(input));
+                    if (!SettingsManager.Settings.UnpackFormat.IsSingleFileArchive)
+                    {
+                        Directory.CreateDirectory(outputPath);
+                    }
                     Logger.InfoFormat(MsgStrings.ProcessingFile, input);
                     ProgressManager.OverallSetMax(1);
-                    SettingsManager.Settings.UnpackFormat.Unpack(input, output);
+                    SettingsManager.Settings.UnpackFormat.Unpack(input, outputPath);
                     ProgressManager.OverallProgress();
                     Logger.Info(MsgStrings.SuccessUnpack);
                 }

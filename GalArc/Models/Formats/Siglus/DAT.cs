@@ -10,15 +10,14 @@ internal class DAT : PCK
 {
     public override string Name => "DAT";
     public override string Description => "Siglus Engine Gameexe.dat Archive";
-
-    private const string UnpackedFileName = "Gameexe.ini";
+    public override bool IsSingleFileArchive => true;
 
     private SiglusPCKUnpackOptions _unpackOptions;
     public override ArcOptions UnpackOptions => _unpackOptions ??= new SiglusPCKUnpackOptions();
 
-    public override void Unpack(string filePath, string folderPath)
+    public override void Unpack(string input, string output)
     {
-        using FileStream fs = File.OpenRead(filePath);
+        using FileStream fs = File.OpenRead(input);
         using BinaryReader br = new(fs);
         ScenePckEntry entry = new();
         uint reserve = br.ReadUInt32();
@@ -40,18 +39,18 @@ internal class DAT : PCK
             throw new InvalidSchemeException();
         }
         entry.UnpackedLength = BitConverter.ToUInt32(entry.Data, 4);
-        byte[] input = new byte[entry.PackedLength - 8];
-        Buffer.BlockCopy(entry.Data, 8, input, 0, input.Length);
+        byte[] data = new byte[entry.PackedLength - 8];
+        Buffer.BlockCopy(entry.Data, 8, data, 0, data.Length);
         try
         {
-            entry.Data = SiglusUtils.Decompress(input, entry.UnpackedLength);
+            entry.Data = SiglusUtils.Decompress(data, entry.UnpackedLength);
         }
         catch
         {
             throw new InvalidSchemeException();
         }
 
-        using (FileStream fw = File.Create(Path.Combine(folderPath, UnpackedFileName)))
+        using (FileStream fw = File.Create(output))
         {
             fw.Write([0xff, 0xfe], 0, 2);
             fw.Write(entry.Data, 0, entry.Data.Length);

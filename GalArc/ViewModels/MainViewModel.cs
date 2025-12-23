@@ -41,11 +41,15 @@ internal partial class MainViewModel : ViewModelBase
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(StartCommand))]
+    [NotifyPropertyChangedFor(nameof(InputWatermark))]
+    [NotifyPropertyChangedFor(nameof(OutputWatermark))]
     [NotifyPropertyChangedFor(nameof(FormatOptions))]
     private ArcFormat selectedUnpackFormat;
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(StartCommand))]
+    [NotifyPropertyChangedFor(nameof(InputWatermark))]
+    [NotifyPropertyChangedFor(nameof(OutputWatermark))]
     [NotifyPropertyChangedFor(nameof(FormatOptions))]
     private ArcFormat selectedPackFormat;
 
@@ -58,9 +62,13 @@ internal partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private bool matchPaths;
 
-    public string InputWatermark => SelectedOperation == OperationType.Unpack ? GuiStrings.WaterInputFile : GuiStrings.WaterInputFolder;
+    public string InputWatermark => SelectedOperation == OperationType.Unpack
+        ? GuiStrings.WaterInputFile
+        : SelectedPackFormat.IsSingleFileArchive ? GuiStrings.WaterInputFile : GuiStrings.WaterInputFolder;
 
-    public string OutputWatermark => SelectedOperation == OperationType.Unpack ? GuiStrings.WaterOutputFolder : GuiStrings.WaterOutputFile;
+    public string OutputWatermark => SelectedOperation == OperationType.Unpack
+        ? SelectedUnpackFormat.IsSingleFileArchive ? GuiStrings.WaterOutputFile : GuiStrings.WaterOutputFolder
+        : GuiStrings.WaterOutputFile;
 
     private ArcOptions UnpackFormatOptions => (SelectedUnpackFormat as IUnpackConfigurable)?.UnpackOptions;
 
@@ -87,9 +95,7 @@ internal partial class MainViewModel : ViewModelBase
         MatchPaths = SettingsManager.Settings.MatchPaths;
     }
 
-    public MainViewModel() : this(null)
-    {
-    }
+    public MainViewModel() : this(null) { }
 
     [RelayCommand]
     private async Task BrowseInputAsync()
@@ -97,6 +103,7 @@ internal partial class MainViewModel : ViewModelBase
         switch (SelectedOperation)
         {
             case OperationType.Unpack:
+            {
                 IReadOnlyList<IStorageFile> resultFile = await App.Top.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
                 {
                     AllowMultiple = false,
@@ -107,18 +114,37 @@ internal partial class MainViewModel : ViewModelBase
                     InputPath = resultFile[0].Path.LocalPath;
                 }
                 break;
+            }
+
             case OperationType.Pack:
-                IReadOnlyList<IStorageFolder> resultFolder = await App.Top.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions()
+            {
+                if (SelectedPackFormat.IsSingleFileArchive)
                 {
-                    AllowMultiple = false,
-                    SuggestedFileName = Path.GetFileNameWithoutExtension(InputPath),
-                    SuggestedStartLocation = await App.Top.StorageProvider.TryGetFolderFromPathAsync(InputPath)
-                });
-                if (resultFolder?.Count > 0)
+                    IReadOnlyList<IStorageFile> resultFile = await App.Top.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
+                    {
+                        AllowMultiple = false,
+                        SuggestedStartLocation = await App.Top.StorageProvider.TryGetFolderFromPathAsync(Path.GetDirectoryName(InputPath))
+                    });
+                    if (resultFile?.Count > 0)
+                    {
+                        InputPath = resultFile[0].Path.LocalPath;
+                    }
+                }
+                else
                 {
-                    InputPath = resultFolder[0].Path.LocalPath;
+                    IReadOnlyList<IStorageFolder> resultFolder = await App.Top.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions()
+                    {
+                        AllowMultiple = false,
+                        SuggestedFileName = Path.GetFileNameWithoutExtension(InputPath),
+                        SuggestedStartLocation = await App.Top.StorageProvider.TryGetFolderFromPathAsync(InputPath)
+                    });
+                    if (resultFolder?.Count > 0)
+                    {
+                        InputPath = resultFolder[0].Path.LocalPath;
+                    }
                 }
                 break;
+            }
         }
     }
 
@@ -127,18 +153,8 @@ internal partial class MainViewModel : ViewModelBase
     {
         switch (SelectedOperation)
         {
-            case OperationType.Unpack:
-                IReadOnlyList<IStorageFolder> resultFolder = await App.Top.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions()
-                {
-                    AllowMultiple = false,
-                    SuggestedStartLocation = await App.Top.StorageProvider.TryGetFolderFromPathAsync(OutputPath)
-                });
-                if (resultFolder?.Count >= 1)
-                {
-                    OutputPath = resultFolder[0].Path.LocalPath;
-                }
-                break;
             case OperationType.Pack:
+            {
                 IStorageFile resultFile = await App.Top.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions()
                 {
                     DefaultExtension = SelectedPackFormat.Name,
@@ -150,6 +166,36 @@ internal partial class MainViewModel : ViewModelBase
                     OutputPath = resultFile.Path.LocalPath;
                 }
                 break;
+            }
+
+            case OperationType.Unpack:
+            {
+                if (SelectedUnpackFormat.IsSingleFileArchive)
+                {
+                    IStorageFile resultFile = await App.Top.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions()
+                    {
+                        SuggestedFileName = Path.GetFileName(OutputPath) + ".out",
+                        SuggestedStartLocation = await App.Top.StorageProvider.TryGetFolderFromPathAsync(Path.GetDirectoryName(OutputPath)),
+                    });
+                    if (resultFile != null)
+                    {
+                        OutputPath = resultFile.Path.LocalPath;
+                    }
+                }
+                else
+                {
+                    IReadOnlyList<IStorageFolder> resultFolder = await App.Top.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions()
+                    {
+                        AllowMultiple = false,
+                        SuggestedStartLocation = await App.Top.StorageProvider.TryGetFolderFromPathAsync(OutputPath)
+                    });
+                    if (resultFolder?.Count >= 1)
+                    {
+                        OutputPath = resultFolder[0].Path.LocalPath;
+                    }
+                }
+                break;
+            }
         }
     }
 
@@ -244,12 +290,11 @@ internal partial class MainViewModel : ViewModelBase
                 {
                     OutputPath = Path.GetDirectoryName(InputPath);
                 }
-                else
+                else if (File.Exists(InputPath))
                 {
-                    if (File.Exists(InputPath))
-                    {
-                        OutputPath = Path.Combine(Path.GetDirectoryName(InputPath), Path.GetFileNameWithoutExtension(InputPath));
-                    }
+                    OutputPath = SelectedUnpackFormat.IsSingleFileArchive
+                        ? Path.Combine(Path.GetDirectoryName(InputPath), Path.GetFileName(InputPath) + ".out")
+                        : Path.Combine(Path.GetDirectoryName(InputPath), Path.GetFileNameWithoutExtension(InputPath));
                 }
                 break;
             case OperationType.Pack:
@@ -258,6 +303,10 @@ internal partial class MainViewModel : ViewModelBase
                     string path = InputPath.TrimEnd(Path.DirectorySeparatorChar);
                     OutputPath = Path.Combine(Path.GetDirectoryName(path), Path.GetFileName(path) +
                         (SelectedPackFormat != null ? "." + SelectedPackFormat.Name.ToLower() : string.Empty));
+                }
+                else if (File.Exists(InputPath) && SelectedPackFormat.IsSingleFileArchive)
+                {
+                    OutputPath = Path.Combine(Path.GetDirectoryName(InputPath), Path.GetFileNameWithoutExtension(InputPath));
                 }
                 break;
         }

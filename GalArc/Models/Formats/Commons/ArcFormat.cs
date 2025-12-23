@@ -8,10 +8,11 @@ internal abstract class ArcFormat
     public abstract string Description { get; }
     public virtual bool CanWrite { get; }
     public virtual bool CanFind { get; } = true;
+    public virtual bool IsSingleFileArchive { get; }
 
-    public abstract void Unpack(string filePath, string folderPath);
+    public abstract void Unpack(string input, string output);
 
-    public virtual void Pack(string folderPath, string filePath)
+    public virtual void Pack(string input, string output)
     {
         throw new NotImplementedException();
     }
