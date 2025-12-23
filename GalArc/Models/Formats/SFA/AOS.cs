@@ -50,7 +50,7 @@ internal class AOS : ArcFormat, IUnpackConfigurable, IPackConfigurable
             string path = Path.Combine(folderPath, entry.Name);
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             if (Path.GetExtension(path) == ".cmp")
-                Path.ChangeExtension(path, ".abm");
+                path = Path.ChangeExtension(path, ".abm");
             if (_unpackOptions.DecryptScripts && string.Equals(Path.GetExtension(entry.Name), ".scr", StringComparison.OrdinalIgnoreCase))
             {
                 fs.Position = entry.Offset;
