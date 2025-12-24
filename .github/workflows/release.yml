@@ -33,7 +33,7 @@ jobs:
       - shell: pwsh
         run: Compress-Archive -Path GalArc/bin/Release/net10.0/${{ matrix.runtime }}/publish/* -DestinationPath ${{ matrix.artifact }}
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.artifact }}
           path: ${{ matrix.artifact }}
