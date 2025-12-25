@@ -1,5 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using GalArc.I18n;
+using GalArc.Infrastructure.Logging;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -29,9 +31,9 @@ internal partial class AboutViewModel : ViewModelBase
         {
             await App.Top.Launcher.LaunchUriAsync(new Uri(url));
         }
-        catch
+        catch (Exception ex)
         {
-            // Ignore
+            Logger.Error(MsgStrings.ErrorOpenUrl, ex);
         }
     }
 }
