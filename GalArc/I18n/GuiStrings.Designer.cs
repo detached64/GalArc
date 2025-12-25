@@ -439,6 +439,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 Network 的本地化字符串。
+        /// </summary>
+        public static string Network {
+            get {
+                return ResourceManager.GetString("Network", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 No Encryption 的本地化字符串。
         /// </summary>
         public static string NoEncryption {
@@ -543,15 +552,6 @@ namespace GalArc.I18n {
         public static string Port {
             get {
                 return ResourceManager.GetString("Port", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Proxy 的本地化字符串。
-        /// </summary>
-        public static string Proxy {
-            get {
-                return ResourceManager.GetString("Proxy", resourceCulture);
             }
         }
         

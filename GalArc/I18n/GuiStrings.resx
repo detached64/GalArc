@@ -243,6 +243,9 @@
   <data name="MinorVersion" xml:space="preserve">
     <value>Minor Version</value>
   </data>
+  <data name="Network" xml:space="preserve">
+    <value>Network</value>
+  </data>
   <data name="NoEncryption" xml:space="preserve">
     <value>No Encryption</value>
   </data>
@@ -278,9 +281,6 @@
   </data>
   <data name="Port" xml:space="preserve">
     <value>Port</value>
-  </data>
-  <data name="Proxy" xml:space="preserve">
-    <value>Proxy</value>
   </data>
   <data name="ProxyType" xml:space="preserve">
     <value>Proxy Type</value>

@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace GalArc.Views;
 
-public partial class ProxyWidget : UserControl
+public partial class NetworkWidget : UserControl
 {
-    public ProxyWidget()
+    public NetworkWidget()
     {
         InitializeComponent();
     }
