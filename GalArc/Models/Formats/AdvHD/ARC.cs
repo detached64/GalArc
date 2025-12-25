@@ -75,7 +75,7 @@ internal class ARC : ArcFormat, IUnpackConfigurable, IPackConfigurable
                 byte[] buffer = br.ReadBytes((int)index.Size);
                 if (_unpackOptions.DecryptScripts && IsScriptFile(Path.GetExtension(index.Path), 1))
                 {
-                    Logger.DebugFormat(MsgStrings.Decrypting, index.Name);
+                    Logger.Debug(MsgStrings.Decrypting, index.Name);
                     DecryptScript(buffer);
                 }
                 File.WriteAllBytes(index.Path, buffer);
@@ -124,7 +124,7 @@ internal class ARC : ArcFormat, IUnpackConfigurable, IPackConfigurable
                 byte[] buffer = File.ReadAllBytes(file.FullName);
                 if (_packOptions.EncryptScripts && IsScriptFile(exts[i], 1))
                 {
-                    Logger.DebugFormat(MsgStrings.Encrypting, file.Name);
+                    Logger.Debug(MsgStrings.Encrypting, file.Name);
                     EncryptScript(buffer);
                 }
                 bwdata.Write(buffer);
@@ -176,7 +176,7 @@ internal class ARC : ArcFormat, IUnpackConfigurable, IPackConfigurable
             byte[] buffer = br1.ReadBytes((int)entry.Size);
             if (_unpackOptions.DecryptScripts && IsScriptFile(Path.GetExtension(entry.Path), 2))
             {
-                Logger.DebugFormat(MsgStrings.Decrypting, entry.Name);
+                Logger.Debug(MsgStrings.Decrypting, entry.Name);
                 DecryptScript(buffer);
             }
             File.WriteAllBytes(entry.Path, buffer);
@@ -229,7 +229,7 @@ internal class ARC : ArcFormat, IUnpackConfigurable, IPackConfigurable
             byte[] buffer = File.ReadAllBytes(file.FullName);
             if (_packOptions.EncryptScripts && IsScriptFile(file.Extension, 2))
             {
-                Logger.DebugFormat(MsgStrings.Encrypting, file.Name);
+                Logger.Debug(MsgStrings.Encrypting, file.Name);
                 EncryptScript(buffer);
             }
             bw.Write(buffer);

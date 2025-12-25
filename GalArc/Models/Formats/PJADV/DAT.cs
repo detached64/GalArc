@@ -75,7 +75,7 @@ internal class DAT : ArcFormat, IUnpackConfigurable, IPackConfigurable
             byte[] buffer = br.ReadBytes((int)entry.Size);
             if (_unpackOptions.DecryptScripts && entry.Name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(ScriptMagic))
             {
-                Logger.DebugFormat(MsgStrings.Decrypting, entry.Name);
+                Logger.Debug(MsgStrings.Decrypting, entry.Name);
                 DecryptScript(buffer);
             }
             File.WriteAllBytes(entry.Path, buffer);
@@ -123,7 +123,7 @@ internal class DAT : ArcFormat, IUnpackConfigurable, IPackConfigurable
             byte[] buffer = File.ReadAllBytes(entry.Path);
             if (_packOptions.EncryptScripts && entry.Name.Contains("textdata") && buffer.Take(5).ToArray().SequenceEqual(ScriptMagic))
             {
-                Logger.DebugFormat(MsgStrings.Encrypting, entry.Name);
+                Logger.Debug(MsgStrings.Encrypting, entry.Name);
                 DecryptScript(buffer);
             }
             bw.Write(buffer);

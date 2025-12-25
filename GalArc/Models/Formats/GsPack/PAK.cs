@@ -128,7 +128,7 @@ internal class PAK : ArcFormat, IUnpackConfigurable
             {
                 try
                 {
-                    Logger.DebugFormat(MsgStrings.Decrypting, entry.Name + ".scw");
+                    Logger.Debug(MsgStrings.Decrypting, entry.Name + ".scw");
                     data = DecryptScript(data);
                 }
                 catch

@@ -63,7 +63,7 @@ internal class PAC : ArcFormat, IUnpackConfigurable, IPackConfigurable
 
         int methodMagic = Reader.ReadInt32();
         Method method = (Method)methodMagic;
-        Logger.InfoFormat(MsgStrings.CompressionMethod, method);
+        Logger.Info(MsgStrings.CompressionMethod, method);
         List<PackedEntry> entries = TryReadIndex();
         ProgressManager.SetMax(FileCount);
         foreach (PackedEntry entry in entries)
@@ -73,7 +73,7 @@ internal class PAC : ArcFormat, IUnpackConfigurable, IPackConfigurable
 
             if (entry.UnpackedSize != entry.Size && method != Method.None && Enum.IsDefined(method)) // compressed
             {
-                Logger.DebugFormat(MsgStrings.TryDecompressWithMethod, entry.Name, method);
+                Logger.Debug(MsgStrings.TryDecompressWithMethod, entry.Name, method);
                 try
                 {
                     switch (method)

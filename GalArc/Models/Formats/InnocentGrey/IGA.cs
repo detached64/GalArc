@@ -77,7 +77,7 @@ internal class IGA : ArcFormat, IUnpackConfigurable, IPackConfigurable
             int key = _unpackOptions.DecryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
             if (key != 0)
             {
-                Logger.DebugFormat(MsgStrings.Decrypting, entry.Name);
+                Logger.Debug(MsgStrings.Decrypting, entry.Name);
             }
             for (uint j = 0; j < entry.Size; j++)
             {
@@ -143,7 +143,7 @@ internal class IGA : ArcFormat, IUnpackConfigurable, IPackConfigurable
             int key = _packOptions.EncryptScripts && Path.GetExtension(entry.Name) == ".s" ? 0xFF : 0;
             if (key != 0)
             {
-                Logger.DebugFormat(MsgStrings.Encrypting, entry.Name);
+                Logger.Debug(MsgStrings.Encrypting, entry.Name);
             }
             for (uint j = 0; j < entry.Size; j++)
             {

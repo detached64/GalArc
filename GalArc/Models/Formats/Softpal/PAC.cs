@@ -69,7 +69,7 @@ internal class PAC : ArcFormat, IUnpackConfigurable, IPackConfigurable
             {
                 try
                 {
-                    Logger.DebugFormat(MsgStrings.Decrypting, entry.Name);
+                    Logger.Debug(MsgStrings.Decrypting, entry.Name);
                     DecryptScript(data);
                 }
                 catch
@@ -108,7 +108,7 @@ internal class PAC : ArcFormat, IUnpackConfigurable, IPackConfigurable
             {
                 try
                 {
-                    Logger.DebugFormat(MsgStrings.Decrypting, entry.Name);
+                    Logger.Debug(MsgStrings.Decrypting, entry.Name);
                     DecryptScript(data);
                 }
                 catch
@@ -209,7 +209,7 @@ internal class PAC : ArcFormat, IUnpackConfigurable, IPackConfigurable
             {
                 try
                 {
-                    Logger.DebugFormat(MsgStrings.Encrypting, Path.GetFileName(str));
+                    Logger.Debug(MsgStrings.Encrypting, Path.GetFileName(str));
                     EncryptScript(buffer);
                 }
                 catch
@@ -266,7 +266,7 @@ internal class PAC : ArcFormat, IUnpackConfigurable, IPackConfigurable
             {
                 try
                 {
-                    Logger.DebugFormat(MsgStrings.Encrypting, Path.GetFileName(str));
+                    Logger.Debug(MsgStrings.Encrypting, Path.GetFileName(str));
                     EncryptScript(buffer);
                 }
                 catch

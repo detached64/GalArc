@@ -157,8 +157,8 @@ internal class PCK : ArcFormat, IUnpackConfigurable
             }
             if (IsRightKey(entry.Data, key, type))
             {
-                Logger.InfoFormat(MsgStrings.KeyFound, BitConverter.ToString(key));
-                Logger.InfoFormat(MsgStrings.MatchedGame, scheme.Key);
+                Logger.Info(MsgStrings.KeyFound, BitConverter.ToString(key));
+                Logger.Info(MsgStrings.MatchedGame, scheme.Key);
                 return key;
             }
         }

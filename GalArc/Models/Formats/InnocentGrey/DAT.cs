@@ -58,7 +58,7 @@ internal class DAT : IGA
             byte[] data = br.ReadBytes((int)entry.UnpackedSize);
             if (_unpackOptions.DecryptScripts && Path.GetExtension(entry.Name) == ".s")
             {
-                Logger.DebugFormat(MsgStrings.Decrypting, entry.Name);
+                Logger.Debug(MsgStrings.Decrypting, entry.Name);
                 for (int i = 0; i < data.Length; i++)
                 {
                     data[i] ^= 0xFF;
@@ -99,7 +99,7 @@ internal class DAT : IGA
             byte[] data = File.ReadAllBytes(file.FullName);
             if (_packOptions.EncryptScripts && file.Extension == ".s")
             {
-                Logger.DebugFormat(MsgStrings.Encrypting, file.Name);
+                Logger.Debug(MsgStrings.Encrypting, file.Name);
                 for (int i = 0; i < data.Length; i++)
                 {
                     data[i] ^= 0xFF;

@@ -99,7 +99,7 @@ internal partial class ARC : ArcFormat, IUnpackConfigurable, IPackConfigurable
             }
             if (_unpackOptions.DecryptScripts && Path.GetExtension(entries[i].Name) == ".mjo")
             {
-                Logger.DebugFormat(MsgStrings.Decrypting, entries[i].Name);
+                Logger.Debug(MsgStrings.Decrypting, entries[i].Name);
                 DecryptScript(data);
             }
             File.WriteAllBytes(Path.Combine(folderPath, entries[i].Name), data);
@@ -156,7 +156,7 @@ internal partial class ARC : ArcFormat, IUnpackConfigurable, IPackConfigurable
             byte[] data = File.ReadAllBytes(entry.Path);
             if (_packOptions.EncryptScripts && Path.GetExtension(entry.Name) == ".mjo")
             {
-                Logger.DebugFormat(MsgStrings.Decrypting, entry.Name);
+                Logger.Debug(MsgStrings.Decrypting, entry.Name);
                 EncryptScript(data);
             }
             bw.Write(data);
