@@ -115,6 +115,9 @@
   <data name="ContinueOnError" xml:space="preserve">
     <value>Continue...</value>
   </data>
+  <data name="Copied" xml:space="preserve">
+    <value>Copied.</value>
+  </data>
   <data name="Decrypting" xml:space="preserve">
     <value>Decrypting {0}...</value>
   </data>
@@ -126,6 +129,9 @@
   </data>
   <data name="ErrorContainsInvalid" xml:space="preserve">
     <value>Path contains invalid characters. Switching the encoding in the settings might work.</value>
+  </data>
+  <data name="ErrorCopy" xml:space="preserve">
+    <value>Failed to copy: {0}</value>
   </data>
   <data name="ErrorDecompressFailed" xml:space="preserve">
     <value>Decompression failed.</value>
@@ -178,6 +184,9 @@
   <data name="ErrorOriginalFileNotFound" xml:space="preserve">
     <value>Original {0} file not found in the same directory.</value>
   </data>
+  <data name="ErrorNoFileMatchPattern" xml:space="preserve">
+    <value>No files match the given pattern.</value>
+  </data>
   <data name="ErrorSpecifiedFileNotFound" xml:space="preserve">
     <value>{0} file not found in the same directory.</value>
   </data>
@@ -186,6 +195,9 @@
   </data>
   <data name="InnerException" xml:space="preserve">
     <value>Inner exception: {0}</value>
+  </data>
+  <data name="JsonKeyNotFound" xml:space="preserve">
+    <value>Key {0} not found.</value>
   </data>
   <data name="KeyFound" xml:space="preserve">
     <value>Key found: {0}</value>
