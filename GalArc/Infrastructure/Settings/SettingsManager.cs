@@ -1,10 +1,11 @@
+using GalArc.Infrastructure.Logging;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
+using System.Threading.Tasks;
 
 namespace GalArc.Infrastructure.Settings;
 
@@ -46,7 +47,7 @@ internal static class SettingsManager
         }
     }
 
-    public static async void SaveSettingsAsync()
+    public static async Task SaveSettingsAsync()
     {
         try
         {
@@ -55,7 +56,7 @@ internal static class SettingsManager
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Error saving settings: {ex.Message}");
+            Logger.Error($"Error saving settings: {ex.Message}");
         }
     }
 }
