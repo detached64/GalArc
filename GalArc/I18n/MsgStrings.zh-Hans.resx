@@ -135,9 +135,6 @@
   <data name="ContinueOnError" xml:space="preserve">
     <value>继续...</value>
   </data>
-  <data name="CurrentVersion" xml:space="preserve">
-    <value>当前版本：{0}</value>
-  </data>
   <data name="Decrypting" xml:space="preserve">
     <value>解密{0}...</value>
   </data>
@@ -215,9 +212,6 @@
   </data>
   <data name="KeyNotFound" xml:space="preserve">
     <value>密钥未找到。</value>
-  </data>
-  <data name="LatestVersion" xml:space="preserve">
-    <value>最新版本：{0}</value>
   </data>
   <data name="MajorVersion" xml:space="preserve">
     <value>主版本号：{0}</value>

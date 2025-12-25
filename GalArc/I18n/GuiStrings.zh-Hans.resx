@@ -249,6 +249,12 @@
   <data name="None" xml:space="preserve">
     <value>无</value>
   </data>
+  <data name="NoUpdatesAvailable" xml:space="preserve">
+    <value>暂无更新。</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>确定</value>
+  </data>
   <data name="OpenUrl" xml:space="preserve">
     <value>打开网址</value>
   </data>
@@ -329,6 +335,9 @@
   </data>
   <data name="Update" xml:space="preserve">
     <value>更新</value>
+  </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>发现更新：{0}</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>用户名</value>

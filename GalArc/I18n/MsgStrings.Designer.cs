@@ -19,7 +19,7 @@ namespace GalArc.I18n {
     // 类通过类似于 ResGen 或 Visual Studio 的工具自动生成的。
     // 若要添加或移除成员，请编辑 .ResX 文件，然后重新运行 ResGen
     // (以 /str 作为命令选项)，或重新生成 VS 项目。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class MsgStrings {
@@ -111,15 +111,6 @@ namespace GalArc.I18n {
         internal static string ContinueOnError {
             get {
                 return ResourceManager.GetString("ContinueOnError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Current Version: {0} 的本地化字符串。
-        /// </summary>
-        internal static string CurrentVersion {
-            get {
-                return ResourceManager.GetString("CurrentVersion", resourceCulture);
             }
         }
         
@@ -354,15 +345,6 @@ namespace GalArc.I18n {
         internal static string KeyNotFound {
             get {
                 return ResourceManager.GetString("KeyNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 LatestVersion: {0} 的本地化字符串。
-        /// </summary>
-        internal static string LatestVersion {
-            get {
-                return ResourceManager.GetString("LatestVersion", resourceCulture);
             }
         }
         

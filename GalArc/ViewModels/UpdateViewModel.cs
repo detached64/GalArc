@@ -37,19 +37,18 @@ internal partial class UpdateViewModel : ViewModelBase
     private bool isChecking;
 
     [ObservableProperty]
-    private bool isSuccess;
+    private bool newerVersionExist;
 
     [RelayCommand]
     private async Task CheckUpdatesAsync()
     {
-        LogInfo(MsgStrings.CheckingUpdates);
+        StatusMessage = MsgStrings.CheckingUpdates;
         IsChecking = true;
 
         using HttpClient client = ConfigureClient();
-        Version currentVersion = CurrentAssembly.GetName().Version ?? new(0, 0, 0);
-        string currentVer = $"{currentVersion.Major}.{currentVersion.Minor}.{currentVersion.Build}";
-        client.DefaultRequestHeaders.UserAgent.Add(
-            new ProductInfoHeaderValue(CurrentAssembly.GetName().Name, currentVer));
+        Version currentVersion = CurrentAssembly.GetName().Version;
+        client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(CurrentAssembly.GetName().Name, currentVersion.ToString(3)));
+
         try
         {
             HttpResponseMessage response = await client.GetAsync(ApiUrl);
@@ -57,18 +56,21 @@ internal partial class UpdateViewModel : ViewModelBase
             string jsonResponse = await response.Content.ReadAsStringAsync();
             using JsonDocument doc = JsonDocument.Parse(jsonResponse);
             JsonElement root = doc.RootElement;
-            string latestVersion = root.TryGetProperty("tag_name", out JsonElement tagNameElement)
+            string latestVer = root.TryGetProperty("tag_name", out JsonElement tagNameElement)
                 ? tagNameElement.GetString()
                 : throw new JsonException("Tag \"tag_name\" not found in the response.");
+            Version latestVersion = new(latestVer.TrimStart('v'));
             UpdateUrl = root.TryGetProperty("html_url", out JsonElement htmlUrlElement)
                 ? htmlUrlElement.GetString()
                 : throw new JsonException("Tag \"html_url\" not found in the response.");
-            LogInfo(string.Format(MsgStrings.CurrentVersion, currentVer.TrimStart('v')) + Environment.NewLine + string.Format(MsgStrings.LatestVersion, latestVersion.TrimStart('v')));
-            IsSuccess = true;
+
+            NewerVersionExist = latestVersion > currentVersion;
+            StatusMessage = NewerVersionExist ? string.Format(GuiStrings.UpdateAvailable, latestVersion.ToString(3)) : GuiStrings.NoUpdatesAvailable;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            LogError(string.Format(MsgStrings.ErrorCheckingUpdates, e.Message), e);
+            StatusMessage = string.Format(MsgStrings.ErrorCheckingUpdates, ex.Message);
+            Logger.Error(MsgStrings.ErrorCheckingUpdates, ex);
         }
         finally
         {
@@ -77,7 +79,7 @@ internal partial class UpdateViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task OpenUpdateUrlAsync()
+    private static async Task OpenUpdateUrlAsync()
     {
         if (!string.IsNullOrEmpty(UpdateUrl))
         {
@@ -87,7 +89,7 @@ internal partial class UpdateViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                LogError(string.Format(MsgStrings.ErrorOpenUrl, ex.Message), ex);
+                Logger.Error(MsgStrings.ErrorOpenUrl, ex);
             }
         }
     }
@@ -96,19 +98,6 @@ internal partial class UpdateViewModel : ViewModelBase
     private static void Exit(Window window)
     {
         window?.Close();
-    }
-
-    private void LogInfo(string log)
-    {
-        StatusMessage = log;
-        Logger.Info(log);
-    }
-
-    private void LogError(string log, Exception ex)
-    {
-        StatusMessage = log;
-        Logger.Error(log);
-        Logger.Error(ex.ToString());
     }
 
     private static HttpClient ConfigureClient()
