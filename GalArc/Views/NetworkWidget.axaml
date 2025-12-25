@@ -1,4 +1,4 @@
-<UserControl x:Class="GalArc.Views.ProxyWidget"
+<UserControl x:Class="GalArc.Views.NetworkWidget"
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:c="using:GalArc.Controls"
@@ -9,11 +9,11 @@
              xmlns:vm="using:GalArc.ViewModels"
              d:DesignHeight="450"
              d:DesignWidth="800"
-             x:DataType="vm:ProxyOptions"
+             x:DataType="vm:NetworkOptions"
              mc:Ignorable="d">
 
     <Design.DataContext>
-        <vm:ProxyOptions />
+        <vm:NetworkOptions />
     </Design.DataContext>
 
     <UserControl.Resources>

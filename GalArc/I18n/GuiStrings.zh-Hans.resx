@@ -243,6 +243,9 @@
   <data name="MinorVersion" xml:space="preserve">
     <value>次版本号</value>
   </data>
+  <data name="Network" xml:space="preserve">
+    <value>网络</value>
+  </data>
   <data name="NoEncryption" xml:space="preserve">
     <value>未加密</value>
   </data>
@@ -278,9 +281,6 @@
   </data>
   <data name="Port" xml:space="preserve">
     <value>端口</value>
-  </data>
-  <data name="Proxy" xml:space="preserve">
-    <value>代理</value>
   </data>
   <data name="ProxyType" xml:space="preserve">
     <value>代理类型</value>

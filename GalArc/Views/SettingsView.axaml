@@ -24,18 +24,10 @@
                    Text="{x:Static i:GuiStrings.ConfigNeedRestart}" />
         <Grid ColumnDefinitions="Auto,5,*" DockPanel.Dock="Top">
             <Border BorderBrush="Gray" BorderThickness="1">
-                <TreeView ItemsSource="{Binding SettingItems}" SelectedItem="{Binding SelectedItem}">
-                    <TreeView.ItemContainerTheme>
-                        <ControlTheme BasedOn="{StaticResource {x:Type TreeViewItem}}" TargetType="TreeViewItem">
-                            <Setter Property="IsExpanded" Value="True" />
-                        </ControlTheme>
-                    </TreeView.ItemContainerTheme>
-                    <TreeView.ItemTemplate>
-                        <TreeDataTemplate ItemsSource="{Binding Children}">
-                            <TextBlock Margin="0,0,5,0" Text="{Binding Title}" />
-                        </TreeDataTemplate>
-                    </TreeView.ItemTemplate>
-                </TreeView>
+                <ListBox DisplayMemberBinding="{Binding Key}"
+                         ItemsSource="{Binding SettingItems}"
+                         SelectedValue="{Binding CurrentSettingOptions}"
+                         SelectedValueBinding="{Binding Value}" />
             </Border>
             <GridSplitter Grid.Column="1"
                           HorizontalAlignment="Stretch"

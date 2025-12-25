@@ -7,56 +7,34 @@ namespace GalArc.ViewModels;
 
 internal partial class SettingsViewModel : ViewModelBase
 {
-    public IReadOnlyList<SettingItem> SettingItems { get; }
+    public Dictionary<string, SettingOptions> SettingItems { get; }
 
     [ObservableProperty]
-    private SettingItem selectedItem;
+    private string selectedItem;
 
     [ObservableProperty]
     private SettingOptions currentSettingOptions;
 
     public SettingsViewModel()
     {
-        SettingItems =
-        [
-            new()
-            {
-                Title = GuiStrings.General,
-                SettingViewModel = new GeneralOptions(),
-            },
-            new()
-            {
-                Title = GuiStrings.Logging,
-                SettingViewModel = new LoggingOptions(),
-            },
-            new()
-            {
-                Title = GuiStrings.Database,
-                SettingViewModel = new DatabaseOptions(),
-            },
-            new()
-            {
-                Title = GuiStrings.Update,
-                Children = [
-                    new()
-                    {
-                        Title = GuiStrings.Proxy,
-                        SettingViewModel = new ProxyOptions(),
-                    }
-                ]
-            },
-        ];
-    }
-
-    partial void OnSelectedItemChanged(SettingItem value)
-    {
-        if (value != null && value.SettingViewModel != null)
+        SettingItems = new()
         {
-            CurrentSettingOptions = value.SettingViewModel;
-        }
-        else
-        {
-            CurrentSettingOptions = null;
-        }
+            {
+                GuiStrings.General,
+                new GeneralOptions()
+            },
+            {
+                GuiStrings.Database,
+                new DatabaseOptions()
+            },
+            {
+                GuiStrings.Network,
+                new NetworkOptions()
+            },
+            {
+                GuiStrings.Logging,
+                new LoggingOptions()
+            },
+        };
     }
 }

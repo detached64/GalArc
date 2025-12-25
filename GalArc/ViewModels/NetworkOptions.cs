@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GalArc.ViewModels;
 
-internal partial class ProxyOptions : SettingOptions
+internal partial class NetworkOptions : SettingOptions
 {
     public IEnumerable<ProxyType> ProxyTypes { get; } = Enum.GetValues<ProxyType>();
 
