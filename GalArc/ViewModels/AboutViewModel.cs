@@ -33,7 +33,7 @@ internal partial class AboutViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            Logger.Error(MsgStrings.ErrorOpenUrl, ex);
+            Logger.Error(MsgStrings.ErrorOpenUrl, ex.Message);
         }
     }
 }
