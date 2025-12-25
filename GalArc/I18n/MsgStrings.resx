@@ -115,9 +115,6 @@
   <data name="ContinueOnError" xml:space="preserve">
     <value>Continue...</value>
   </data>
-  <data name="CurrentVersion" xml:space="preserve">
-    <value>Current Version: {0}</value>
-  </data>
   <data name="Decrypting" xml:space="preserve">
     <value>Decrypting {0}...</value>
   </data>
@@ -195,9 +192,6 @@
   </data>
   <data name="KeyNotFound" xml:space="preserve">
     <value>Key not found.</value>
-  </data>
-  <data name="LatestVersion" xml:space="preserve">
-    <value>LatestVersion: {0}</value>
   </data>
   <data name="MajorVersion" xml:space="preserve">
     <value>Major Version: {0}</value>

@@ -139,7 +139,7 @@
     <value>Check</value>
   </data>
   <data name="CheckUpdates" xml:space="preserve">
-    <value>Check For Updates</value>
+    <value>Check for Updates</value>
   </data>
   <data name="CompressContents" xml:space="preserve">
     <value>Compress Contents</value>
@@ -249,6 +249,12 @@
   <data name="None" xml:space="preserve">
     <value>None</value>
   </data>
+  <data name="NoUpdatesAvailable" xml:space="preserve">
+    <value>No updates available.</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
   <data name="OpenUrl" xml:space="preserve">
     <value>Open Url</value>
   </data>
@@ -329,6 +335,9 @@
   </data>
   <data name="Update" xml:space="preserve">
     <value>Update</value>
+  </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>Update available: {0}</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>

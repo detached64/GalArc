@@ -124,7 +124,7 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
-        ///   查找类似 Check For Updates 的本地化字符串。
+        ///   查找类似 Check for Updates 的本地化字符串。
         /// </summary>
         public static string CheckUpdates {
             get {
@@ -457,6 +457,24 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 No updates available. 的本地化字符串。
+        /// </summary>
+        public static string NoUpdatesAvailable {
+            get {
+                return ResourceManager.GetString("NoUpdatesAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 OK 的本地化字符串。
+        /// </summary>
+        public static string OK {
+            get {
+                return ResourceManager.GetString("OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Open Url 的本地化字符串。
         /// </summary>
         public static string OpenUrl {
@@ -696,6 +714,15 @@ namespace GalArc.I18n {
         public static string Update {
             get {
                 return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Update available: {0} 的本地化字符串。
+        /// </summary>
+        public static string UpdateAvailable {
+            get {
+                return ResourceManager.GetString("UpdateAvailable", resourceCulture);
             }
         }
         
