@@ -58,11 +58,11 @@ internal partial class UpdateViewModel : ViewModelBase
             JsonElement root = doc.RootElement;
             string latestVer = root.TryGetProperty("tag_name", out JsonElement tagNameElement)
                 ? tagNameElement.GetString()
-                : throw new JsonException("Tag \"tag_name\" not found in the response.");
+                : throw new JsonException(string.Format(MsgStrings.JsonKeyNotFound, "tag_name"));
             Version latestVersion = new(latestVer.TrimStart('v'));
             UpdateUrl = root.TryGetProperty("html_url", out JsonElement htmlUrlElement)
                 ? htmlUrlElement.GetString()
-                : throw new JsonException("Tag \"html_url\" not found in the response.");
+                : throw new JsonException(string.Format(MsgStrings.JsonKeyNotFound, "html_url"));
 
             NewerVersionExist = latestVersion > currentVersion;
             StatusMessage = NewerVersionExist ? string.Format(GuiStrings.UpdateAvailable, latestVersion.ToString(3)) : GuiStrings.NoUpdatesAvailable;

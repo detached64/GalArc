@@ -115,6 +115,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 Copied. 的本地化字符串。
+        /// </summary>
+        internal static string Copied {
+            get {
+                return ResourceManager.GetString("Copied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Decrypting {0}... 的本地化字符串。
         /// </summary>
         internal static string Decrypting {
@@ -147,6 +156,15 @@ namespace GalArc.I18n {
         internal static string ErrorContainsInvalid {
             get {
                 return ResourceManager.GetString("ErrorContainsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Failed to copy: {0} 的本地化字符串。
+        /// </summary>
+        internal static string ErrorCopy {
+            get {
+                return ResourceManager.GetString("ErrorCopy", resourceCulture);
             }
         }
         
@@ -277,6 +295,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 No files match the given pattern. 的本地化字符串。
+        /// </summary>
+        internal static string ErrorNoFileMatchPattern {
+            get {
+                return ResourceManager.GetString("ErrorNoFileMatchPattern", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Failed to open url: {0} 的本地化字符串。
         /// </summary>
         internal static string ErrorOpenUrl {
@@ -327,6 +354,15 @@ namespace GalArc.I18n {
         internal static string InnerException {
             get {
                 return ResourceManager.GetString("InnerException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Key {0} not found. 的本地化字符串。
+        /// </summary>
+        internal static string JsonKeyNotFound {
+            get {
+                return ResourceManager.GetString("JsonKeyNotFound", resourceCulture);
             }
         }
         

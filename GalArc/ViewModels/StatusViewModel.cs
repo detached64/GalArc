@@ -174,7 +174,7 @@ internal partial class StatusViewModel : ViewModelBase, IDisposable
             }
             if (batchInputs.Length == 0)
             {
-                throw new FileNotFoundException("No files match the given pattern.", input);
+                throw new FileNotFoundException(MsgStrings.ErrorNoFileMatchPattern, input);
             }
         }
         else
@@ -279,11 +279,11 @@ internal partial class StatusViewModel : ViewModelBase, IDisposable
         try
         {
             await window.Clipboard.SetTextAsync(sb.ToString());
-            Logger.Info("Selected log entries copied to clipboard.");
+            Logger.Info(MsgStrings.Copied);
         }
         catch (Exception ex)
         {
-            Logger.Error($"Failed to copy log entries to clipboard: {ex.Message}");
+            Logger.Error(MsgStrings.ErrorCopy, ex.Message);
         }
     }
 

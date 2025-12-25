@@ -135,6 +135,9 @@
   <data name="ContinueOnError" xml:space="preserve">
     <value>继续...</value>
   </data>
+  <data name="Copied" xml:space="preserve">
+    <value>已复制。</value>
+  </data>
   <data name="Decrypting" xml:space="preserve">
     <value>解密{0}...</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="ErrorContainsInvalid" xml:space="preserve">
     <value>路径中有非法字符。在设置里切换编码或许能解决此问题。</value>
+  </data>
+  <data name="ErrorCopy" xml:space="preserve">
+    <value>复制失败：{0}</value>
   </data>
   <data name="ErrorDecompressFailed" xml:space="preserve">
     <value>解压缩失败。</value>
@@ -189,6 +195,9 @@
   <data name="ErrorInvalidVersionWithMsg" xml:space="preserve">
     <value>未知版本或暂未支持的版本：{0}</value>
   </data>
+  <data name="ErrorNoFileMatchPattern" xml:space="preserve">
+    <value>未找到匹配的文件。</value>
+  </data>
   <data name="ErrorOpenUrl" xml:space="preserve">
     <value>未能打开网址：{0}</value>
   </data>
@@ -206,6 +215,9 @@
   </data>
   <data name="InnerException" xml:space="preserve">
     <value>内部错误：{0}</value>
+  </data>
+  <data name="JsonKeyNotFound" xml:space="preserve">
+    <value>未找到键 {0}。</value>
   </data>
   <data name="KeyFound" xml:space="preserve">
     <value>密钥已找到：{0}</value>
