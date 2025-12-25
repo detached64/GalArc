@@ -28,7 +28,7 @@ internal class LST : ArcFormat
         arcPath = Path.ChangeExtension(filePath, string.Empty);
         if (!File.Exists(arcPath))
         {
-            Logger.ErrorFormat(MsgStrings.ErrorSpecifiedFileNotFound, Path.GetFileName(arcPath));
+            Logger.Error(MsgStrings.ErrorSpecifiedFileNotFound, Path.GetFileName(arcPath));
         }
 
         using FileStream fsLst = File.OpenRead(lstPath);

@@ -30,7 +30,7 @@ internal class GPK : ArcFormat, IPackConfigurable
 
         if (!File.Exists(gtbPath))
         {
-            Logger.ErrorFormat(MsgStrings.ErrorSpecifiedFileNotFound, Path.GetFileName(gtbPath));
+            Logger.Error(MsgStrings.ErrorSpecifiedFileNotFound, Path.GetFileName(gtbPath));
         }
 
         using FileStream fs1 = File.OpenRead(gtbPath);

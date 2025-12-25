@@ -127,11 +127,11 @@ internal partial class StatusViewModel : ViewModelBase, IDisposable
         }
         catch (Exception ex)
         {
-            Logger.ErrorFormat(MsgStrings.ErrorOperation, ex.Message);
+            Logger.Error(MsgStrings.ErrorOperation, ex.Message);
             Logger.Error(ex.ToString());
             if (ex.InnerException != null)
             {
-                Logger.ErrorFormat(MsgStrings.InnerException, ex.InnerException.Message);
+                Logger.Error(MsgStrings.InnerException, ex.InnerException.Message);
                 Logger.Error(ex.InnerException.ToString());
             }
         }
@@ -194,7 +194,7 @@ internal partial class StatusViewModel : ViewModelBase, IDisposable
         #endregion
 
         #region Execute Main Operation
-        Logger.InfoFormat(MsgStrings.StartingOperation, SettingsManager.Settings.Operation switch
+        Logger.Info(MsgStrings.StartingOperation, SettingsManager.Settings.Operation switch
         {
             OperationType.Unpack => MsgStrings.OperationUnpack,
             OperationType.Pack => MsgStrings.OperationPack,
@@ -218,14 +218,14 @@ internal partial class StatusViewModel : ViewModelBase, IDisposable
                         {
                             Directory.CreateDirectory(outputPath);
                         }
-                        Logger.InfoFormat(MsgStrings.ProcessingFile, inputPath);
+                        Logger.Info(MsgStrings.ProcessingFile, inputPath);
                         try
                         {
                             SettingsManager.Settings.UnpackFormat.Unpack(inputPath, outputPath);
                         }
                         catch (Exception ex) when (SettingsManager.Settings.ContinueOnError)
                         {
-                            Logger.ErrorFormat(MsgStrings.ErrorOperation, ex.Message);
+                            Logger.Error(MsgStrings.ErrorOperation, ex.Message);
                             Logger.Info(MsgStrings.ContinueOnError);
                             ProgressManager.OverallProgress();
                             continue;
@@ -244,7 +244,7 @@ internal partial class StatusViewModel : ViewModelBase, IDisposable
                     {
                         Directory.CreateDirectory(outputPath);
                     }
-                    Logger.InfoFormat(MsgStrings.ProcessingFile, input);
+                    Logger.Info(MsgStrings.ProcessingFile, input);
                     ProgressManager.OverallSetMax(1);
                     SettingsManager.Settings.UnpackFormat.Unpack(input, outputPath);
                     ProgressManager.OverallProgress();
@@ -254,7 +254,7 @@ internal partial class StatusViewModel : ViewModelBase, IDisposable
             case OperationType.Pack:
                 _cts.Token.ThrowIfCancellationRequested();
                 Directory.CreateDirectory(Path.GetDirectoryName(output));
-                Logger.InfoFormat(MsgStrings.ProcessingFolder, input);
+                Logger.Info(MsgStrings.ProcessingFolder, input);
                 ProgressManager.OverallSetMax(1);
                 SettingsManager.Settings.PackFormat.Pack(input, output);
                 ProgressManager.OverallProgress();

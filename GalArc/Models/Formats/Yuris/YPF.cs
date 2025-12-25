@@ -94,7 +94,7 @@ internal class YPF : ArcFormat, IUnpackConfigurable
             if (_unpackOptions.DecryptScripts && Path.GetExtension(entry.Path) == ".ybn"
                 && entry.Data.Length >= 4 && BitConverter.ToUInt32(entry.Data, 0) == 0x42545359)
             {
-                Logger.DebugFormat(MsgStrings.Decrypting, entry.Name);
+                Logger.Debug(MsgStrings.Decrypting, entry.Name);
                 entry.Data = TryDecryptScript(entry.Data);
             }
             File.WriteAllBytes(entry.Path, entry.Data);

@@ -22,7 +22,7 @@ internal class VPK : ArcFormat
 
         if (!File.Exists(vtbPath))
         {
-            Logger.ErrorFormat(MsgStrings.ErrorSpecifiedFileNotFound, Path.GetFileName(vtbPath));
+            Logger.Error(MsgStrings.ErrorSpecifiedFileNotFound, Path.GetFileName(vtbPath));
         }
 
         int vtbSize = (int)new FileInfo(vtbPath).Length;

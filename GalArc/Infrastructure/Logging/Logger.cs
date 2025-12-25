@@ -4,6 +4,7 @@ using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Reflection;
+using Tmds.DBus.Protocol;
 
 namespace GalArc.Infrastructure.Logging;
 
@@ -28,17 +29,32 @@ internal static class Logger
         LogEvent?.Invoke(null, new LogEventArgs(entry));
     }
 
-    public static void Debug(string message) => Log(message, LogLevel.Debug);
+    public static void Debug(string message, params object[] args)
+    {
+        if (args?.Length > 0)
+        {
+            message = string.Format(message, args);
+        }
+        Log(message, LogLevel.Debug);
+    }
 
-    public static void Info(string message) => Log(message, LogLevel.Info);
+    public static void Info(string message, params object[] args)
+    {
+        if (args?.Length > 0)
+        {
+            message = string.Format(message, args);
+        }
+        Log(message, LogLevel.Info);
+    }
 
-    public static void Error(string message) => Log(message, LogLevel.Error);
-
-    public static void DebugFormat(string format, params object[] args) => Debug(string.Format(format, args));
-
-    public static void InfoFormat(string format, params object[] args) => Info(string.Format(format, args));
-
-    public static void ErrorFormat(string format, params object[] args) => Error(string.Format(format, args));
+    public static void Error(string message, params object[] args)
+    {
+        if (args?.Length > 0)
+        {
+            message = string.Format(message, args);
+        }
+        Log(message, LogLevel.Error);
+    }
 
     public static void Persist()
     {
@@ -56,5 +72,5 @@ internal static class Logger
         }
     }
 
-    public static void ShowVersion(string extension, object version) => InfoFormat(MsgStrings.ValidArchiveDetected, extension, version);
+    public static void ShowVersion(string extension, object version) => Info(MsgStrings.ValidArchiveDetected, extension, version);
 }

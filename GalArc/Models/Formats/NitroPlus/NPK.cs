@@ -59,8 +59,8 @@ internal class NPK : ArcFormat, IUnpackConfigurable, IPackConfigurable
             _ => throw new InvalidVersionException(InvalidVersionType.NotSupported, _packOptions.MajorVersion)
         };
         int minor_version = br.ReadInt32();
-        Logger.InfoFormat(MsgStrings.MajorVersion, version);
-        Logger.InfoFormat(MsgStrings.MinorVersion, minor_version);
+        Logger.Info(MsgStrings.MajorVersion, version);
+        Logger.Info(MsgStrings.MinorVersion, minor_version);
         byte[] IV = br.ReadBytes(16);
         int fileCount = br.ReadInt32();
         uint entryTableSize = br.ReadUInt32();

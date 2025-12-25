@@ -166,7 +166,7 @@ internal class DAT : ArcFormat, IUnpackConfigurable
             }
             baseOffset = Groups[i].Entries[Groups[i].FileCount - 1].Offset + Groups[i].Entries[Groups[i].FileCount - 1].Size;
         }
-        Logger.InfoFormat($"{MsgStrings.IndexOffset}: {indexOffset:X8}");
+        Logger.Info($"{MsgStrings.IndexOffset}: {indexOffset:X8}");
         ProgressManager.SetMax(fileCount);
         return true;
     }

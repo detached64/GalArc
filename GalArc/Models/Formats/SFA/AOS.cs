@@ -56,7 +56,7 @@ internal class AOS : ArcFormat, IUnpackConfigurable, IPackConfigurable
                 fs.Position = entry.Offset;
                 int decompressedSize = br.ReadInt32();
                 byte[] raw = br.ReadBytes((int)entry.Size - 4);
-                Logger.DebugFormat(MsgStrings.Decrypting, entry.Name);
+                Logger.Debug(MsgStrings.Decrypting, entry.Name);
                 File.WriteAllBytes(path, HuffmanHelper.Decode(raw, decompressedSize));
             }
             else
@@ -92,7 +92,7 @@ internal class AOS : ArcFormat, IUnpackConfigurable, IPackConfigurable
             entry.Offset = (uint)(fw.Position - dataOffset);
             if (_packOptions.EncryptScripts && string.Equals(file.Extension, ".scr", StringComparison.OrdinalIgnoreCase))
             {
-                Logger.DebugFormat(MsgStrings.Encrypting, file.Name);
+                Logger.Debug(MsgStrings.Encrypting, file.Name);
                 byte[] raw = File.ReadAllBytes(file.FullName);
                 byte[] encoded = HuffmanHelper.Encode(raw);
                 bw.Write(raw.Length);
