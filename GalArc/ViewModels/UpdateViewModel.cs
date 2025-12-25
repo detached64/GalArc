@@ -70,7 +70,7 @@ internal partial class UpdateViewModel : ViewModelBase
         catch (Exception ex)
         {
             StatusMessage = string.Format(MsgStrings.ErrorCheckingUpdates, ex.Message);
-            Logger.Error(MsgStrings.ErrorCheckingUpdates, ex);
+            Logger.Error(MsgStrings.ErrorCheckingUpdates, ex.Message);
         }
         finally
         {
@@ -89,7 +89,7 @@ internal partial class UpdateViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                Logger.Error(MsgStrings.ErrorOpenUrl, ex);
+                Logger.Error(MsgStrings.ErrorOpenUrl, ex.Message);
             }
         }
     }
