@@ -300,7 +300,7 @@ internal class DATV2 : ArcFormat, IPackConfigurable
 
     private static void ReadNameList()
     {
-        DatabaseManager.LoadList("nekopack", KnownFileNames.Add);
+        DatabaseManager.LoadList("NekoPack", KnownFileNames.Add);
     }
 
     private static readonly byte[] ShiftMap =
