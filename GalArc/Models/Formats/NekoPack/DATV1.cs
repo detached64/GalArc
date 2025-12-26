@@ -82,7 +82,7 @@ internal class DATV1 : ArcFormat
         {
             raw[i] = DecryptByte(raw[i]);
         }
-        return Encoding.GetEncoding(932).GetString(raw);
+        return ArcEncoding.Shift_JIS.GetString(raw);
     }
 
     private byte DecryptByte(byte raw)
