@@ -175,6 +175,9 @@
   <data name="ErrorInvalidVersionWithMsg" xml:space="preserve">
     <value>Unknown or not supported archive version: {0}</value>
   </data>
+  <data name="ErrorNoFileMatchPattern" xml:space="preserve">
+    <value>No files match the given pattern.</value>
+  </data>
   <data name="ErrorOpenUrl" xml:space="preserve">
     <value>Failed to open url: {0}</value>
   </data>
@@ -184,11 +187,11 @@
   <data name="ErrorOriginalFileNotFound" xml:space="preserve">
     <value>Original {0} file not found in the same directory.</value>
   </data>
-  <data name="ErrorNoFileMatchPattern" xml:space="preserve">
-    <value>No files match the given pattern.</value>
-  </data>
   <data name="ErrorSpecifiedFileNotFound" xml:space="preserve">
     <value>{0} file not found in the same directory.</value>
+  </data>
+  <data name="FileNameRecovered" xml:space="preserve">
+    <value>File name recovered: {0}</value>
   </data>
   <data name="IndexOffset" xml:space="preserve">
     <value>Index Offset</value>
