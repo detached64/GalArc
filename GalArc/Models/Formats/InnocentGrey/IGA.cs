@@ -174,7 +174,7 @@ internal class IGA : ArcFormat, IUnpackConfigurable, IPackConfigurable
             {
                 bytes[i] = (byte)UnpackUint(br);
             }
-            return Encoding.GetEncoding(932).GetString(bytes);
+            return ArcEncoding.Shift_JIS.GetString(bytes);
         }
 
         public static byte[] PackUint(uint a)
@@ -203,7 +203,7 @@ internal class IGA : ArcFormat, IUnpackConfigurable, IPackConfigurable
 
         public static byte[] PackString(string s)
         {
-            byte[] bytes = Encoding.GetEncoding(932).GetBytes(s);
+            byte[] bytes = ArcEncoding.Shift_JIS.GetBytes(s);
             List<byte> rst = [];
             foreach (byte b in bytes)
             {
