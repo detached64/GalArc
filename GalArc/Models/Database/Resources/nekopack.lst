@@ -22,3 +22,8 @@ list_bgm.txt
 list_act.txt
 list_sg.txt
 voicemap.txt
+actor_map.txt
+imagemap.txt
+x_music.txt
+x_scene.txt
+x_actor.txt
