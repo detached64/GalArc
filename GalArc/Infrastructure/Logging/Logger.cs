@@ -4,7 +4,6 @@ using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Reflection;
-using Tmds.DBus.Protocol;
 
 namespace GalArc.Infrastructure.Logging;
 
