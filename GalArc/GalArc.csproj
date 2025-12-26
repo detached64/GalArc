@@ -69,7 +69,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Models\Database\Resources\*.json">
+    <Content Include="Models\Database\Resources\*.json;Models\Database\Resources\*.lst">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>Database\%(FileName)%(Extension)</Link>
     </Content>
