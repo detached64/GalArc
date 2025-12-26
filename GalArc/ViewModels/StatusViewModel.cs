@@ -237,16 +237,13 @@ internal partial class StatusViewModel : ViewModelBase, IDisposable
                 else
                 {
                     _cts.Token.ThrowIfCancellationRequested();
-                    string outputPath = SettingsManager.Settings.UnpackFormat.IsSingleFileArchive
-                        ? output
-                        : Path.Combine(output, Path.GetFileNameWithoutExtension(input));
                     if (!SettingsManager.Settings.UnpackFormat.IsSingleFileArchive)
                     {
-                        Directory.CreateDirectory(outputPath);
+                        Directory.CreateDirectory(output);
                     }
                     Logger.Info(MsgStrings.ProcessingFile, input);
                     ProgressManager.OverallSetMax(1);
-                    SettingsManager.Settings.UnpackFormat.Unpack(input, outputPath);
+                    SettingsManager.Settings.UnpackFormat.Unpack(input, output);
                     ProgressManager.OverallProgress();
                     Logger.Info(MsgStrings.SuccessUnpack);
                 }
