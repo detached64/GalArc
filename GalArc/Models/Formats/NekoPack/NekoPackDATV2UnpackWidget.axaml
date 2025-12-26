@@ -1,0 +1,25 @@
+<UserControl x:Class="GalArc.Models.Formats.NekoPack.NekoPackDATV2UnpackWidget"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="using:GalArc.I18n"
+             xmlns:local="using:GalArc.Models.Formats.NekoPack"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:DataType="local:NekoPackDATV2UnpackOptions"
+             mc:Ignorable="d">
+
+    <Design.DataContext>
+        <local:NekoPackDATV2UnpackOptions />
+    </Design.DataContext>
+
+    <StackPanel Spacing="10">
+        <StackPanel Orientation="Horizontal" Spacing="10">
+            <TextBlock VerticalAlignment="Center" Text="{x:Static i:GuiStrings.Seed}" />
+            <TextBox Width="150"
+                     Text="{Binding SeedString, Mode=TwoWay}"
+                     Watermark="Hex String" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>
