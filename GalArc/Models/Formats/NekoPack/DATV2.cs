@@ -17,6 +17,11 @@ internal class DATV2 : ArcFormat
 
     private const string Magic = "NEKOPACK";
 
+    static DATV2()
+    {
+        ReadNameList();
+    }
+
     private static readonly List<string> KnownDirNames =
     [
         "image/actor", "image/back", "image/mask", "image/visual", "image/actor/big",
@@ -86,7 +91,6 @@ internal class DATV2 : ArcFormat
             }
         }
         ProgressManager.SetMax(fileCount);
-        ReadNameList();
         Dictionary<uint, string> dirNames = GetNamesMap(KnownDirNames, seed);
         Dictionary<uint, string> fileNames = GetNamesMap(KnownFileNames, seed);
         foreach (NekoPackDir dir in dirs)
@@ -188,7 +192,7 @@ internal class DATV2 : ArcFormat
         {
             int length = ArcEncoding.Shift_JIS.GetBytes(name, 0, name.Length, buffer, 0);
             uint hash = GetNameHash(buffer, length, seed);
-            if (!map.TryAdd(hash, name) && map[hash].Equals(name, StringComparison.OrdinalIgnoreCase))
+            if (!map.TryAdd(hash, name) && !map[hash].Equals(name, StringComparison.OrdinalIgnoreCase))
             {
                 Logger.Info($"Hash collision detected between \"{map[hash]}\" and \"{name}\". Hash is {hash:X8}.");
             }
