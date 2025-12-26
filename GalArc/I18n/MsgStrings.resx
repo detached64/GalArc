@@ -242,7 +242,7 @@
     <value>Proxy is not available.</value>
   </data>
   <data name="Seed" xml:space="preserve">
-    <value>Seed</value>
+    <value>Seed: {0}</value>
   </data>
   <data name="StartingOperation" xml:space="preserve">
     <value>Starting {0}ing...</value>
