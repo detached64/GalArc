@@ -47,12 +47,12 @@ internal static class SettingsManager
         }
     }
 
-    public static async Task SaveSettingsAsync()
+    public static void SaveSettings()
     {
         try
         {
             string json = JsonSerializer.Serialize(Settings, context.AppSettings);
-            await File.WriteAllTextAsync(DefaultPath, json);
+            File.WriteAllText(DefaultPath, json);
         }
         catch (Exception ex)
         {

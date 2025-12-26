@@ -60,7 +60,7 @@ public partial class App : Application
             desktop.ShutdownMode = ShutdownMode.OnMainWindowClose;
             desktop.Exit += (_, _) =>
             {
-                SettingsManager.SaveSettingsAsync();
+                SettingsManager.SaveSettings();
                 Logger.Persist();
             };
             Top = TopLevel.GetTopLevel(desktop.MainWindow);
