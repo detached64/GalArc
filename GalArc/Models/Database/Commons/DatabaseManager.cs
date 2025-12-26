@@ -14,4 +14,17 @@ internal static class DatabaseManager
         string filePath = Path.Combine(DefaultPath, $"{typeof(T).Name[..^6]}.json");
         return File.Exists(filePath) ? JsonSerializer.Deserialize(File.ReadAllText(filePath), typeInfo) ?? default : default;
     }
+
+    public static void LoadList(string name, Action<string> action)
+    {
+        string filePath = Path.Combine(DefaultPath, $"{name}.lst");
+        if (!File.Exists(filePath))
+            return;
+        using StreamReader sr = new(filePath);
+        string line;
+        while ((line = sr.ReadLine()) != null)
+        {
+            action(line);
+        }
+    }
 }
