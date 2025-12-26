@@ -29,10 +29,7 @@ internal class DATV2 : ArcFormat
         "sound/bgm", "sound/env", "sound/se", "sound/bgv", "voice", "script", "system", "count",
     ];
 
-    private static readonly List<string> KnownFileNames =
-    [
-        "title.txt", "story.txt", "start.txt", "setup.txt"
-    ];
+    private static readonly List<string> KnownFileNames = [];
 
     private class NekoPackDir
     {
