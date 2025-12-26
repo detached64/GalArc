@@ -493,7 +493,7 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
-        ///   查找类似 Seed 的本地化字符串。
+        ///   查找类似 Seed: {0} 的本地化字符串。
         /// </summary>
         internal static string Seed {
             get {

@@ -93,7 +93,7 @@ internal class RGSSAD : ArcFormat, IPackConfigurable
         using BinaryReader br = new(fs);
         fs.Position = 8;
         uint seed = br.ReadUInt32();
-        Logger.Debug($"{MsgStrings.Seed}: {seed:X8}");
+        Logger.Debug(MsgStrings.Seed, $"{seed:X8}");
         uint key = (seed * 9) + 3;
         int fileCount = 0;
         bool isFirst = true;

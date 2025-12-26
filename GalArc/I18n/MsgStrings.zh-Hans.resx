@@ -262,7 +262,7 @@
     <value>代理不可用。</value>
   </data>
   <data name="Seed" xml:space="preserve">
-    <value>种子</value>
+    <value>种子：{0}</value>
   </data>
   <data name="StartingOperation" xml:space="preserve">
     <value>开始{0}...</value>
