@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using GalArc.I18n;
 using GalArc.Infrastructure.Logging;
 using GalArc.Infrastructure.Progress;
@@ -12,11 +13,14 @@ using System.Text;
 
 namespace GalArc.Models.Formats.NekoPack;
 
-internal class DATV2 : ArcFormat
+internal class DATV2 : ArcFormat, IPackConfigurable
 {
     public override string Name => "DAT";
     public override string Description => "NEKOPACK Archive v2";
     public override bool CanWrite => true;
+
+    private NekoPackDATV2UnpackOptions _unpackOptions;
+    public ArcOptions PackOptions => _unpackOptions ??= new NekoPackDATV2UnpackOptions();
 
     private const string Magic = "NEKOPACK";
 
@@ -63,6 +67,7 @@ internal class DATV2 : ArcFormat
         {
             Logger.Info("Index parity check failed. The archive may be corrupted.");
         }
+        Logger.Info(MsgStrings.Seed, $"{seed:X8}");
         ushort[] key = GetKey(parity);
         byte[] index = br.ReadBytes((int)indexSize);
         Decrypt(index, key);
@@ -146,7 +151,7 @@ internal class DATV2 : ArcFormat
 
     public override void Pack(string input, string output)
     {
-        const uint seed = 0xB92C6C17;
+        uint seed = uint.TryParse(_unpackOptions.SeedString, System.Globalization.NumberStyles.HexNumber, null, out uint s) ? s : 0;
         using FileStream fw = File.Create(output);
         using BinaryWriter bw = new(fw);
         bw.Write(Encoding.ASCII.GetBytes(Magic));
@@ -317,4 +322,10 @@ internal class DATV2 : ArcFormat
         0xAD, 0xB1, 0x6E, 0x76, 0x8B, 0x9E, 0x8C, 0x61, 0x69, 0x8D, 0xB4, 0x78, 0xAA, 0xAE, 0x8F, 0xC3,
         0x58, 0xC5, 0x74, 0xB7, 0x8E, 0x7D, 0x89, 0x8A, 0x56, 0x4D, 0x86, 0x94, 0x9A, 0x4C, 0x92, 0xB0,
     ];
+}
+
+internal partial class NekoPackDATV2UnpackOptions : ArcOptions
+{
+    [ObservableProperty]
+    private string seedString = "00000000";
 }
