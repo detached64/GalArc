@@ -1,3 +1,4 @@
+using GalArc.I18n;
 using GalArc.Infrastructure.Logging;
 using GalArc.Infrastructure.Progress;
 using GalArc.Models.Database.Commons;
@@ -124,7 +125,11 @@ internal class DATV2 : ArcFormat
                         Buffer.BlockCopy(oddData, 0, data, 0, data.Length);
                     }
                 }
-                if (!fileNames.TryGetValue(entry.NameHash, out string fileName))
+                if (fileNames.TryGetValue(entry.NameHash, out string fileName))
+                {
+                    Logger.Debug(MsgStrings.FileNameRecovered, fileName);
+                }
+                else
                 {
                     fileName = entry.NameHash.ToString("X8");
                 }

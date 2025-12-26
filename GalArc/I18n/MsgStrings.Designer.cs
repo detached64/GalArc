@@ -340,6 +340,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 File name recovered: {0} 的本地化字符串。
+        /// </summary>
+        internal static string FileNameRecovered {
+            get {
+                return ResourceManager.GetString("FileNameRecovered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Index Offset 的本地化字符串。
         /// </summary>
         internal static string IndexOffset {
