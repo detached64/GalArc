@@ -7,6 +7,8 @@ using GalArc.Models.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace GalArc.Models.Formats.NekoPack;
 
@@ -14,6 +16,7 @@ internal class DATV2 : ArcFormat
 {
     public override string Name => "DAT";
     public override string Description => "NEKOPACK Archive v2";
+    public override bool CanWrite => true;
 
     private const string Magic = "NEKOPACK";
 
@@ -48,7 +51,7 @@ internal class DATV2 : ArcFormat
     {
         using FileStream fs = File.OpenRead(input);
         using BinaryReader br = new(fs);
-        if (!string.Equals(System.Text.Encoding.ASCII.GetString(br.ReadBytes(8)), Magic))
+        if (!string.Equals(Encoding.ASCII.GetString(br.ReadBytes(8)), Magic))
         {
             throw new InvalidArchiveException();
         }
@@ -56,7 +59,7 @@ internal class DATV2 : ArcFormat
         uint order = br.ReadUInt32();
         uint parity = br.ReadUInt32();
         uint indexSize = br.ReadUInt32();
-        if (ParityCheck(seed, indexSize) != parity)
+        if (ComputeParity(seed, indexSize) != parity)
         {
             Logger.Info("Index parity check failed. The archive may be corrupted.");
         }
@@ -108,7 +111,7 @@ internal class DATV2 : ArcFormat
                 byte[] data = br.ReadBytes((int)entry.Size);
                 if (entry.Parity != 0)
                 {
-                    if (ParityCheck(seed, entry.Size) != entry.Parity)
+                    if (ComputeParity(seed, entry.Size) != entry.Parity)
                     {
                         Logger.Info($"File parity check failed for {dirName}/{entry.NameHash:X8}. The file may be corrupted.");
                     }
@@ -141,17 +144,86 @@ internal class DATV2 : ArcFormat
         }
     }
 
-    private static uint ParityCheck(uint a1, uint a2)
+    public override void Pack(string input, string output)
+    {
+        const uint seed = 0xB92C6C17;
+        using FileStream fw = File.Create(output);
+        using BinaryWriter bw = new(fw);
+        bw.Write(Encoding.ASCII.GetBytes(Magic));
+        bw.Write(seed);
+        bw.Write(0xFFFFFFFF);
+        FileInfo[] files = new DirectoryInfo(input).GetFiles("*", SearchOption.AllDirectories);
+        int fileCount = files.Length;
+        IGrouping<string, FileInfo>[] groups = [.. files.GroupBy(f => Path.GetRelativePath(input, f.DirectoryName).Replace('\\', '/'))];
+        int dirCount = groups.Length;
+        uint indexSize = (uint)(8 * (fileCount + dirCount));
+        uint dataOffset = 24 + indexSize;
+        uint parity = ComputeParity(seed, indexSize);
+        bw.Write(parity);
+        bw.Write(indexSize);
+        fw.Position = dataOffset;
+        ProgressManager.SetMax(fileCount);
+        List<NekoPackDir> dirs = new(groups.Length);
+        foreach (IGrouping<string, FileInfo> group in groups)
+        {
+            NekoPackDir dir = new()
+            {
+                NameHash = TryGetNameHash(group.Key, seed),
+                FileCount = group.Count(),
+                Entries = new List<NekoPackEntry>(group.Count())
+            };
+            foreach (FileInfo file in group)
+            {
+                dir.Entries.Add(new NekoPackEntry()
+                {
+                    Path = file.FullName,
+                    NameHash = TryGetNameHash(file.Name, seed),
+                    Size = (uint)file.Length,
+                    Parity = 0
+                });
+            }
+            dirs.Add(dir);
+        }
+        foreach (NekoPackDir dir in dirs)
+        {
+            dir.Entries.Sort((a, b) => a.NameHash.CompareTo(b.NameHash));
+        }
+        dirs.Sort((a, b) => a.NameHash.CompareTo(b.NameHash));
+        using MemoryStream indexStream = new();
+        using BinaryWriter indexWriter = new(indexStream);
+        foreach (NekoPackDir dir in dirs)
+        {
+            indexWriter.Write(dir.NameHash);
+            indexWriter.Write(dir.FileCount);
+            foreach (NekoPackEntry entry in dir.Entries)
+            {
+                indexWriter.Write(entry.NameHash);
+                indexWriter.Write(entry.Size);
+                bw.Write(entry.Parity);
+                bw.Write(entry.Size);
+                using FileStream file = File.OpenRead(entry.Path);
+                file.CopyTo(fw);
+                ProgressManager.Progress();
+            }
+        }
+        fw.Position = 24;
+        ushort[] key = GetKey(parity);
+        byte[] indexData = indexStream.ToArray();
+        Encrypt(indexData, key);
+        bw.Write(indexData);
+    }
+
+    private static uint ComputeParity(uint a1, uint a2)
     {
         uint v1 = (a2 ^ ((a2 ^ ((a2 ^ ((a2 ^ a1) + 0x5D588B65)) - 0x359D3E2A)) - 0x70E44324)) + 0x6C078965;
         uint v2 = ((a2 ^ ((a2 ^ a1) + 0x5D588B65)) - 0x359D3E2A) >> 27;
         return Binary.RotL(v1, (int)v2);
     }
 
-    private static ushort[] GetKey(uint hash)
+    private static ushort[] GetKey(uint parity)
     {
-        uint tmp = hash ^ (hash + 0x5D588B65u);
-        uint tmp2 = tmp ^ (hash - 0x359D3E2Au);
+        uint tmp = parity ^ (parity + 0x5D588B65u);
+        uint tmp2 = tmp ^ (parity - 0x359D3E2Au);
         uint key0 = tmp2 ^ (tmp - 0x70E44324u);
         uint key1 = key0 ^ (tmp2 + 0x6C078965u);
         return [(ushort)(key0 & 0xFFFF), (ushort)(key0 >> 16), (ushort)(key1 & 0xFFFF), (ushort)(key1 >> 16)];
@@ -170,6 +242,20 @@ internal class DATV2 : ArcFormat
         }
     }
 
+    private static unsafe void Encrypt(byte[] data, ushort[] key)
+    {
+        fixed (byte* b = data)
+        {
+            ushort* w = (ushort*)b;
+            for (int i = 0; i < data.Length / 2; i++)
+            {
+                ushort tmp = w[i];
+                w[i] ^= key[i % 4];
+                key[i % 4] += tmp;
+            }
+        }
+    }
+
     private static uint GetNameHash(byte[] data, int length, uint seed)
     {
         uint hash = seed;
@@ -181,14 +267,24 @@ internal class DATV2 : ArcFormat
         return hash;
     }
 
+    private static uint GetNameHash(string name, uint seed)
+    {
+        byte[] buffer = new byte[0x100];
+        int length = ArcEncoding.Shift_JIS.GetBytes(name, 0, name.Length, buffer, 0);
+        return GetNameHash(buffer, length, seed);
+    }
+
+    private static uint TryGetNameHash(string name, uint seed)
+    {
+        return uint.TryParse(name, System.Globalization.NumberStyles.HexNumber, null, out uint hash) ? hash : GetNameHash(name, seed);
+    }
+
     private static Dictionary<uint, string> GetNamesMap(List<string> names, uint seed)
     {
         Dictionary<uint, string> map = new(names.Count);
-        byte[] buffer = new byte[0x100];
         foreach (string name in names)
         {
-            int length = ArcEncoding.Shift_JIS.GetBytes(name, 0, name.Length, buffer, 0);
-            uint hash = GetNameHash(buffer, length, seed);
+            uint hash = GetNameHash(name, seed);
             if (!map.TryAdd(hash, name) && !map[hash].Equals(name, StringComparison.OrdinalIgnoreCase))
             {
                 Logger.Info($"Hash collision detected between \"{map[hash]}\" and \"{name}\". Hash is {hash:X8}.");
