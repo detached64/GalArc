@@ -7,6 +7,7 @@ using GalArc.Models.Formats.Commons;
 using GalArc.Models.Utils;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -151,7 +152,7 @@ internal class DATV3 : ArcFormat, IPackConfigurable
 
     public override void Pack(string input, string output)
     {
-        uint seed = uint.TryParse(_packOptions.SeedString, System.Globalization.NumberStyles.HexNumber, null, out uint s) ? s : 0;
+        uint seed = uint.TryParse(_packOptions.SeedString, NumberStyles.HexNumber, null, out uint s) ? s : 0;
         using FileStream fw = File.Create(output);
         using BinaryWriter bw = new(fw);
         bw.Write(Encoding.ASCII.GetBytes(Magic));
@@ -281,7 +282,7 @@ internal class DATV3 : ArcFormat, IPackConfigurable
 
     private static uint TryGetNameHash(string name, uint seed)
     {
-        return uint.TryParse(name, System.Globalization.NumberStyles.HexNumber, null, out uint hash) ? hash : GetNameHash(name, seed);
+        return uint.TryParse(name, NumberStyles.HexNumber, null, out uint hash) ? hash : GetNameHash(name, seed);
     }
 
     private static Dictionary<uint, string> GetNamesMap(List<string> names, uint seed)
