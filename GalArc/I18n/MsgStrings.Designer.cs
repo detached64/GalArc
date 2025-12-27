@@ -79,15 +79,6 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
-        ///   查找类似 Checking for updates... 的本地化字符串。
-        /// </summary>
-        internal static string CheckingUpdates {
-            get {
-                return ResourceManager.GetString("CheckingUpdates", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 Compression method: {0} 的本地化字符串。
         /// </summary>
         internal static string CompressionMethod {

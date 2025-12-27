@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using GalArc.Enums;
 using GalArc.I18n;
 using GalArc.Infrastructure.Settings;
+using GalArc.Infrastructure.Updates;
 using GalArc.Models.Formats.Commons;
 using GalArc.Services;
 using GalArc.Views;
@@ -276,6 +277,7 @@ internal partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private async Task CheckUpdatesAsync(Window window)
     {
+        await UpdateManager.SaveUpdateResponse();
         await _showDialogService.ShowDialogAsync<UpdateView, UpdateViewModel>(window);
     }
 

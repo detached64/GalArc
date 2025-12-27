@@ -135,6 +135,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="Changelog" xml:space="preserve">
+    <value>更改日志</value>
+  </data>
   <data name="Check" xml:space="preserve">
     <value>检测</value>
   </data>

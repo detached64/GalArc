@@ -37,4 +37,8 @@ internal sealed class AppSettings
     public int ProxyPort { get; set; }
     public string ProxyUsername { get; set; }
     public string ProxyPassword { get; set; }
+    [JsonIgnore]
+    public bool UpdateSuccess { get; set; }
+    [JsonIgnore]
+    public string UpdateResponse { get; set; }
 }
