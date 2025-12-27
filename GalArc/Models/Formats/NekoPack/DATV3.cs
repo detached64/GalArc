@@ -13,18 +13,18 @@ using System.Text;
 
 namespace GalArc.Models.Formats.NekoPack;
 
-internal class DATV2 : ArcFormat, IPackConfigurable
+internal class DATV3 : ArcFormat, IPackConfigurable
 {
     public override string Name => "DAT";
-    public override string Description => "NEKOPACK Archive v2";
+    public override string Description => "NEKOPACK Archive v3";
     public override bool CanWrite => true;
 
-    private NekoPackDATV2UnpackOptions _unpackOptions;
-    public ArcOptions PackOptions => _unpackOptions ??= new NekoPackDATV2UnpackOptions();
+    private NekoPackDATV3PackOptions _packOptions;
+    public ArcOptions PackOptions => _packOptions ??= new NekoPackDATV3PackOptions();
 
     private const string Magic = "NEKOPACK";
 
-    static DATV2()
+    static DATV3()
     {
         ReadNameList();
     }
@@ -151,7 +151,7 @@ internal class DATV2 : ArcFormat, IPackConfigurable
 
     public override void Pack(string input, string output)
     {
-        uint seed = uint.TryParse(_unpackOptions.SeedString, System.Globalization.NumberStyles.HexNumber, null, out uint s) ? s : 0;
+        uint seed = uint.TryParse(_packOptions.SeedString, System.Globalization.NumberStyles.HexNumber, null, out uint s) ? s : 0;
         using FileStream fw = File.Create(output);
         using BinaryWriter bw = new(fw);
         bw.Write(Encoding.ASCII.GetBytes(Magic));
@@ -324,7 +324,7 @@ internal class DATV2 : ArcFormat, IPackConfigurable
     ];
 }
 
-internal partial class NekoPackDATV2UnpackOptions : ArcOptions
+internal partial class NekoPackDATV3PackOptions : ArcOptions
 {
     [ObservableProperty]
     private string seedString = "00000000";
