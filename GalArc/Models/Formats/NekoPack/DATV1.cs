@@ -16,7 +16,7 @@ internal class DATV1 : ArcFormat
 
     private class NekoPackEntry : Entry
     {
-        public byte Base;
+        public byte Base { get; set; }
     }
 
     private readonly uint[] Temp = new uint[625];
