@@ -115,6 +115,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 Changelog 的本地化字符串。
+        /// </summary>
+        public static string Changelog {
+            get {
+                return ResourceManager.GetString("Changelog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Check 的本地化字符串。
         /// </summary>
         public static string Check {

@@ -123,9 +123,6 @@
   <data name="CheckingProxy" xml:space="preserve">
     <value>检测代理中...</value>
   </data>
-  <data name="CheckingUpdates" xml:space="preserve">
-    <value>检查更新中...</value>
-  </data>
   <data name="CompressionMethod" xml:space="preserve">
     <value>压缩方式：{0}</value>
   </data>

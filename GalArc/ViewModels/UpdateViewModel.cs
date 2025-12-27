@@ -1,15 +1,11 @@
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using GalArc.Enums;
 using GalArc.I18n;
 using GalArc.Infrastructure.Logging;
 using GalArc.Infrastructure.Settings;
+using GalArc.Infrastructure.Updates;
 using System;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -17,44 +13,35 @@ namespace GalArc.ViewModels;
 
 internal partial class UpdateViewModel : ViewModelBase
 {
-    private static readonly Assembly CurrentAssembly = Assembly.GetExecutingAssembly();
-
-    private const string ApiUrl = "https://api.github.com/repos/detached64/GalArc/releases/latest";
-
     private static string UpdateUrl;
-
-    public UpdateViewModel()
-    {
-        if (Design.IsDesignMode)
-            return;
-        CheckUpdatesCommand.Execute(null);
-    }
 
     [ObservableProperty]
     private string statusMessage;
 
     [ObservableProperty]
-    private bool isChecking;
-
-    [ObservableProperty]
     private bool newerVersionExist;
 
-    [RelayCommand]
-    private async Task CheckUpdatesAsync()
+    [ObservableProperty]
+    private string changelog;
+
+    public UpdateViewModel()
     {
-        StatusMessage = MsgStrings.CheckingUpdates;
-        IsChecking = true;
+        if (Design.IsDesignMode)
+            return;
+        ParseUpdateResponse();
+    }
 
-        using HttpClient client = ConfigureClient();
-        Version currentVersion = CurrentAssembly.GetName().Version;
-        client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(CurrentAssembly.GetName().Name, currentVersion.ToString(3)));
-
+    private void ParseUpdateResponse()
+    {
+        if (!SettingsManager.Settings.UpdateSuccess)
+        {
+            StatusMessage = string.Format(MsgStrings.ErrorCheckingUpdates, SettingsManager.Settings.UpdateResponse);
+            Logger.Error(MsgStrings.ErrorCheckingUpdates, SettingsManager.Settings.UpdateResponse);
+            return;
+        }
         try
         {
-            HttpResponseMessage response = await client.GetAsync(ApiUrl);
-            response.EnsureSuccessStatusCode();
-            string jsonResponse = await response.Content.ReadAsStringAsync();
-            using JsonDocument doc = JsonDocument.Parse(jsonResponse);
+            using JsonDocument doc = JsonDocument.Parse(SettingsManager.Settings.UpdateResponse);
             JsonElement root = doc.RootElement;
             string latestVer = root.TryGetProperty("tag_name", out JsonElement tagNameElement)
                 ? tagNameElement.GetString()
@@ -63,18 +50,16 @@ internal partial class UpdateViewModel : ViewModelBase
             UpdateUrl = root.TryGetProperty("html_url", out JsonElement htmlUrlElement)
                 ? htmlUrlElement.GetString()
                 : throw new JsonException(string.Format(MsgStrings.JsonKeyNotFound, "html_url"));
-
-            NewerVersionExist = latestVersion > currentVersion;
+            Changelog = root.TryGetProperty("body", out JsonElement bodyElement)
+                ? bodyElement.GetString()
+                : throw new JsonException(string.Format(MsgStrings.JsonKeyNotFound, "body"));
+            NewerVersionExist = latestVersion > UpdateManager.GetCurrentVersion();
             StatusMessage = NewerVersionExist ? string.Format(GuiStrings.UpdateAvailable, latestVersion.ToString(3)) : GuiStrings.NoUpdatesAvailable;
         }
         catch (Exception ex)
         {
             StatusMessage = string.Format(MsgStrings.ErrorCheckingUpdates, ex.Message);
             Logger.Error(MsgStrings.ErrorCheckingUpdates, ex.Message);
-        }
-        finally
-        {
-            IsChecking = false;
         }
     }
 
@@ -98,38 +83,5 @@ internal partial class UpdateViewModel : ViewModelBase
     private static void Exit(Window window)
     {
         window?.Close();
-    }
-
-    private static HttpClient ConfigureClient()
-    {
-        if (SettingsManager.Settings.ProxyType == ProxyType.None)
-        {
-            return new HttpClient();
-        }
-        else
-        {
-            WebProxy proxy = new()
-            {
-                Address = new Uri($"{SettingsManager.Settings.ProxyType switch
-                {
-                    ProxyType.Http => "http",
-                    ProxyType.Socks => "socks5",
-                    _ => throw new NotSupportedException("Unsupported proxy type.")
-                }}://{SettingsManager.Settings.ProxyAddress}:{SettingsManager.Settings.ProxyPort}")
-            };
-
-            if (!string.IsNullOrEmpty(SettingsManager.Settings.ProxyUsername) && !string.IsNullOrEmpty(SettingsManager.Settings.ProxyPassword))
-            {
-                proxy.Credentials = new NetworkCredential(SettingsManager.Settings.ProxyUsername, SettingsManager.Settings.ProxyPassword);
-            }
-
-            HttpClientHandler httpClientHandler = new()
-            {
-                Proxy = proxy,
-                UseProxy = true,
-            };
-
-            return new HttpClient(httpClientHandler);
-        }
     }
 }
