@@ -1,7 +1,6 @@
-
 namespace GalArc.Infrastructure.Progress;
 
-public enum ProgressAction
+internal enum ProgressAction
 {
     Progress,
     SetMax,

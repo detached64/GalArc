@@ -1,4 +1,3 @@
-
 namespace GalArc.Enums;
 
 internal enum ProxyType

@@ -2,7 +2,7 @@ using System;
 
 namespace GalArc.Models.Utils;
 
-public static class Binary
+internal static class Binary
 {
     public static uint RotL(uint v, int count)
     {

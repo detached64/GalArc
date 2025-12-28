@@ -2,7 +2,7 @@ using System;
 
 namespace GalArc.Infrastructure.Progress;
 
-public class ProgressEventArgs : EventArgs
+internal class ProgressEventArgs : EventArgs
 {
     public int Value;
     public int Max;
