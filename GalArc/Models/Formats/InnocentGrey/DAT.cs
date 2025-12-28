@@ -55,7 +55,7 @@ internal class DAT : IGA
         foreach (DatEntry entry in entries)
         {
             fs.Position = entry.Offset;
-            byte[] data = br.ReadBytes((int)entry.UnpackedSize);
+            byte[] data = br.ReadBytes((int)entry.Size);
             if (_unpackOptions.DecryptScripts && Path.GetExtension(entry.Name) == ".s")
             {
                 Logger.Debug(MsgStrings.Decrypting, entry.Name);
