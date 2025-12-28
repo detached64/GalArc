@@ -1,4 +1,3 @@
-
 namespace GalArc.Models.Formats.Commons;
 
 internal interface IConfigurableFormat;

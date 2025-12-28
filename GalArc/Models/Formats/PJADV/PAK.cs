@@ -1,4 +1,3 @@
-
 namespace GalArc.Models.Formats.PJADV;
 
 internal class PAK : DAT

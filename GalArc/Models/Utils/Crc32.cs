@@ -1,4 +1,3 @@
-
 namespace GalArc.Models.Utils;
 
 internal static class Crc32

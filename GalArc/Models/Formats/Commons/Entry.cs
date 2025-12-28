@@ -1,7 +1,6 @@
-
 namespace GalArc.Models.Formats.Commons;
 
-public class Entry
+internal class Entry
 {
     public string Name { get; set; }
     public string Path { get; set; }
@@ -9,7 +8,7 @@ public class Entry
     public uint Size { get; set; }
 }
 
-public class PackedEntry : Entry
+internal class PackedEntry : Entry
 {
     public bool IsPacked { get; set; }
 
