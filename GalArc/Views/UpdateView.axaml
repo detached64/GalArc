@@ -8,12 +8,12 @@
         xmlns:vm="using:GalArc.ViewModels"
         Title="{x:Static i:GuiStrings.Update}"
         MinWidth="200"
+        MaxHeight="600"
         d:DesignHeight="450"
         d:DesignWidth="800"
         x:DataType="vm:UpdateViewModel"
         CanMaximize="False"
         CanMinimize="False"
-        CanResize="False"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
         mc:Ignorable="d">
@@ -22,14 +22,9 @@
         <vm:UpdateViewModel />
     </Design.DataContext>
 
-    <StackPanel Margin="20" Spacing="15">
-        <TextBlock Text="{Binding StatusMessage}" />
-        <c:GroupBox Header="{x:Static i:GuiStrings.Changelog}" IsVisible="{Binding Changelog, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
-            <TextBox IsReadOnly="True"
-                     Text="{Binding Changelog}"
-                     TextWrapping="Wrap" />
-        </c:GroupBox>
-        <DockPanel LastChildFill="False">
+    <DockPanel Margin="20">
+        <TextBlock DockPanel.Dock="Top" Text="{Binding StatusMessage}" />
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
             <Button Command="{Binding ExitCommand}"
                     CommandParameter="{Binding $parent[Window]}"
                     Content="{x:Static i:GuiStrings.OK}"
@@ -39,5 +34,13 @@
                     DockPanel.Dock="Right"
                     IsVisible="{Binding NewerVersionExist}" />
         </DockPanel>
-    </StackPanel>
+        <c:GroupBox Margin="0,15"
+                    DockPanel.Dock="Top"
+                    Header="{x:Static i:GuiStrings.Changelog}"
+                    IsVisible="{Binding Changelog, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+            <TextBox IsReadOnly="True"
+                     Text="{Binding Changelog}"
+                     TextWrapping="Wrap" />
+        </c:GroupBox>
+    </DockPanel>
 </Window>
