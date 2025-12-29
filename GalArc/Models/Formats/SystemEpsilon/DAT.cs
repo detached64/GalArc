@@ -16,6 +16,12 @@ internal class DAT : IGA
     public override string Description => "SYSTEM-ε DAT Archive";
     public override bool CanWrite => true;
 
+    private InnocentGreyIGAUnpackOptions _unpackOptions;
+    public override ArcOptions UnpackOptions => _unpackOptions ??= new InnocentGreyIGAUnpackOptions();
+
+    private InnocentGreyIGAPackOptions _packOptions;
+    public override ArcOptions PackOptions => _packOptions ??= new InnocentGreyIGAPackOptions();
+
     private const string Magic = "PACKDAT.";
 
     private class DatEntry : PackedEntry
