@@ -16,11 +16,11 @@ internal class IGA : ArcFormat, IUnpackConfigurable, IPackConfigurable
     public override string Description => "InnocentGrey/Noesis Archive";
     public override bool CanWrite => true;
 
-    protected InnocentGreyIGAUnpackOptions _unpackOptions;
-    public ArcOptions UnpackOptions => _unpackOptions ??= new InnocentGreyIGAUnpackOptions();
+    private InnocentGreyIGAUnpackOptions _unpackOptions;
+    public virtual ArcOptions UnpackOptions => _unpackOptions ??= new InnocentGreyIGAUnpackOptions();
 
-    protected InnocentGreyIGAPackOptions _packOptions;
-    public ArcOptions PackOptions => _packOptions ??= new InnocentGreyIGAPackOptions();
+    private InnocentGreyIGAPackOptions _packOptions;
+    public virtual ArcOptions PackOptions => _packOptions ??= new InnocentGreyIGAPackOptions();
 
     private const string Magic = "IGA0";
 
