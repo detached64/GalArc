@@ -2,17 +2,18 @@ using GalArc.I18n;
 using GalArc.Infrastructure.Logging;
 using GalArc.Infrastructure.Progress;
 using GalArc.Models.Formats.Commons;
+using GalArc.Models.Formats.InnocentGrey;
 using GalArc.Models.Utils;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace GalArc.Models.Formats.InnocentGrey;
+namespace GalArc.Models.Formats.SystemEpsilon;
 
 internal class DAT : IGA
 {
     public override string Name => "DAT";
-    public override string Description => "InnocentGrey Archive";
+    public override string Description => "SYSTEM-ε DAT Archive";
     public override bool CanWrite => true;
 
     private const string Magic = "PACKDAT.";
@@ -65,7 +66,6 @@ internal class DAT : IGA
                 }
             }
             File.WriteAllBytes(Path.Combine(folderPath, entry.Name), data);
-            data = null;
             ProgressManager.Progress();
         }
     }
@@ -106,7 +106,6 @@ internal class DAT : IGA
                 }
             }
             bw.Write(data);
-            data = null;
             ProgressManager.Progress();
         }
     }
