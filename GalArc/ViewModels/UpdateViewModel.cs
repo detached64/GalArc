@@ -16,6 +16,12 @@ internal partial class UpdateViewModel : ViewModelBase
     private static string UpdateUrl;
 
     [ObservableProperty]
+    private string currentVersion;
+
+    [ObservableProperty]
+    private string latestVersion;
+
+    [ObservableProperty]
     private string statusMessage;
 
     [ObservableProperty]
@@ -39,21 +45,23 @@ internal partial class UpdateViewModel : ViewModelBase
             Logger.Error(MsgStrings.ErrorCheckingUpdates, SettingsManager.Settings.UpdateResponse);
             return;
         }
+        Version currentVersion = UpdateManager.GetCurrentVersion();
+        CurrentVersion = currentVersion.ToString(3);
         try
         {
             using JsonDocument doc = JsonDocument.Parse(SettingsManager.Settings.UpdateResponse);
             JsonElement root = doc.RootElement;
-            string latestVer = root.TryGetProperty("tag_name", out JsonElement tagNameElement)
-                ? tagNameElement.GetString()
+            LatestVersion = root.TryGetProperty("tag_name", out JsonElement tagNameElement)
+                ? tagNameElement.GetString().TrimStart('v')
                 : throw new JsonException(string.Format(MsgStrings.JsonKeyNotFound, "tag_name"));
-            Version latestVersion = new(latestVer.TrimStart('v'));
+            Version latestVersion = new(LatestVersion);
             UpdateUrl = root.TryGetProperty("html_url", out JsonElement htmlUrlElement)
                 ? htmlUrlElement.GetString()
                 : throw new JsonException(string.Format(MsgStrings.JsonKeyNotFound, "html_url"));
             Changelog = root.TryGetProperty("body", out JsonElement bodyElement)
                 ? bodyElement.GetString()
                 : throw new JsonException(string.Format(MsgStrings.JsonKeyNotFound, "body"));
-            NewerVersionExist = latestVersion > UpdateManager.GetCurrentVersion();
+            NewerVersionExist = latestVersion > currentVersion;
             StatusMessage = NewerVersionExist ? string.Format(GuiStrings.UpdateAvailable, latestVersion.ToString(3)) : GuiStrings.NoUpdatesAvailable;
         }
         catch (Exception ex)

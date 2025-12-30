@@ -23,6 +23,22 @@
     </Design.DataContext>
 
     <DockPanel Margin="20">
+        <TextBlock Margin="0,0,0,15" DockPanel.Dock="Top">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0}{1}">
+                    <Binding Source="{x:Static i:GuiStrings.CurrentVersion}" />
+                    <Binding Path="CurrentVersion" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+        <TextBlock Margin="0,0,0,15" DockPanel.Dock="Top">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0}{1}">
+                    <Binding Source="{x:Static i:GuiStrings.LatestVersion}" />
+                    <Binding Path="LatestVersion" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
         <TextBlock Margin="0,0,0,15"
                    DockPanel.Dock="Top"
                    Text="{Binding StatusMessage}" />
