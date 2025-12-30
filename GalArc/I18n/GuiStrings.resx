@@ -162,6 +162,9 @@
   <data name="Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>Current Version: </value>
+  </data>
   <data name="Dark" xml:space="preserve">
     <value>Dark</value>
   </data>
@@ -227,6 +230,9 @@
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
+  </data>
+  <data name="LatestVersion" xml:space="preserve">
+    <value>Latest Version: </value>
   </data>
   <data name="Light" xml:space="preserve">
     <value>Light</value>

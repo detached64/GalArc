@@ -162,6 +162,9 @@
   <data name="Copy" xml:space="preserve">
     <value>复制</value>
   </data>
+  <data name="CurrentVersion" xml:space="preserve">
+    <value>当前版本：</value>
+  </data>
   <data name="Dark" xml:space="preserve">
     <value>深色</value>
   </data>
@@ -227,6 +230,9 @@
   </data>
   <data name="Language" xml:space="preserve">
     <value>语言</value>
+  </data>
+  <data name="LatestVersion" xml:space="preserve">
+    <value>最新版本：</value>
   </data>
   <data name="Light" xml:space="preserve">
     <value>浅色</value>

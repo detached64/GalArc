@@ -196,6 +196,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 Current Version:  的本地化字符串。
+        /// </summary>
+        public static string CurrentVersion {
+            get {
+                return ResourceManager.GetString("CurrentVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Dark 的本地化字符串。
         /// </summary>
         public static string Dark {
@@ -390,6 +399,15 @@ namespace GalArc.I18n {
         public static string Language {
             get {
                 return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Latest Version:  的本地化字符串。
+        /// </summary>
+        public static string LatestVersion {
+            get {
+                return ResourceManager.GetString("LatestVersion", resourceCulture);
             }
         }
         
