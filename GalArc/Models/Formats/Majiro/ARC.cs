@@ -39,11 +39,11 @@ internal partial class ARC : ArcFormat, IUnpackConfigurable, IPackConfigurable
         using BinaryReader br = new(fs);
         string magic = Encoding.ASCII.GetString(br.ReadBytes(16));
         Match match = MajiroMagicRegex().Match(magic);
-        int version = int.Parse(match.Groups[1].Value);
         if (!match.Success)
         {
             throw new InvalidArchiveException();
         }
+        int version = int.Parse(match.Groups[1].Value);
         if (version < 1 || version > 3)
         {
             throw new InvalidVersionException(InvalidVersionType.Unknown);
