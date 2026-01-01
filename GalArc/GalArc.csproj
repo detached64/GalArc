@@ -12,7 +12,7 @@
     <ApplicationIcon>Assets\logo.ico</ApplicationIcon>
     <Authors>detached64</Authors>
     <Version>2.0.3</Version>
-    <Copyright>Copyright © 2025 detached64</Copyright>
+    <Copyright>Copyright © 2025-2026 detached64</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
