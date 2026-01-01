@@ -346,7 +346,7 @@
     <value>Update</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
-    <value>Update available: {0}</value>
+    <value>Update available!</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>

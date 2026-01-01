@@ -62,7 +62,7 @@ internal partial class UpdateViewModel : ViewModelBase
                 ? bodyElement.GetString()
                 : throw new JsonException(string.Format(MsgStrings.JsonKeyNotFound, "body"));
             NewerVersionExist = latestVersion > currentVersion;
-            StatusMessage = NewerVersionExist ? string.Format(GuiStrings.UpdateAvailable, latestVersion.ToString(3)) : GuiStrings.NoUpdatesAvailable;
+            StatusMessage = NewerVersionExist ? GuiStrings.UpdateAvailable : GuiStrings.NoUpdatesAvailable;
         }
         catch (Exception ex)
         {
