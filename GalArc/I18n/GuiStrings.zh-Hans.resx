@@ -346,7 +346,7 @@
     <value>更新</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
-    <value>发现更新：{0}</value>
+    <value>发现更新！</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>用户名</value>
