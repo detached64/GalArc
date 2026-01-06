@@ -342,6 +342,9 @@
   <data name="TryEveryEnc" xml:space="preserve">
     <value>尝试所有加密方案</value>
   </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>未知</value>
+  </data>
   <data name="Update" xml:space="preserve">
     <value>更新</value>
   </data>

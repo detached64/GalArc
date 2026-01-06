@@ -736,6 +736,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 Unknown 的本地化字符串。
+        /// </summary>
+        public static string Unknown {
+            get {
+                return ResourceManager.GetString("Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Update 的本地化字符串。
         /// </summary>
         public static string Update {

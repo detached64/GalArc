@@ -19,7 +19,7 @@ internal partial class UpdateViewModel : ViewModelBase
     private string currentVersion;
 
     [ObservableProperty]
-    private string latestVersion;
+    private string latestVersion = GuiStrings.Unknown;
 
     [ObservableProperty]
     private string statusMessage;
@@ -39,14 +39,14 @@ internal partial class UpdateViewModel : ViewModelBase
 
     private void ParseUpdateResponse()
     {
+        Version currentVersion = UpdateManager.GetCurrentVersion();
+        CurrentVersion = currentVersion.ToString(3);
         if (!SettingsManager.Settings.UpdateSuccess)
         {
             StatusMessage = string.Format(MsgStrings.ErrorCheckingUpdates, SettingsManager.Settings.UpdateResponse);
             Logger.Error(MsgStrings.ErrorCheckingUpdates, SettingsManager.Settings.UpdateResponse);
             return;
         }
-        Version currentVersion = UpdateManager.GetCurrentVersion();
-        CurrentVersion = currentVersion.ToString(3);
         try
         {
             using JsonDocument doc = JsonDocument.Parse(SettingsManager.Settings.UpdateResponse);

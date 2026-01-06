@@ -342,6 +342,9 @@
   <data name="TryEveryEnc" xml:space="preserve">
     <value>Try every encryption scheme</value>
   </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
   <data name="Update" xml:space="preserve">
     <value>Update</value>
   </data>

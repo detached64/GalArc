@@ -142,7 +142,7 @@
     <value>加密{0}...</value>
   </data>
   <data name="ErrorCheckingUpdates" xml:space="preserve">
-    <value>检查更新中发生错误：{0}</value>
+    <value>检查更新时发生错误：{0}</value>
   </data>
   <data name="ErrorContainsInvalid" xml:space="preserve">
     <value>路径中有非法字符。在设置里切换编码或许能解决此问题。</value>
