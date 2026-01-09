@@ -14,7 +14,7 @@ Get ci builds [here](https://github.com/detached64/GalArc/actions/workflows/buil
 
 ## Build
 
-Make sure you have .NET 10 SDK installed.
+Make sure you have .NET 10 SDK & C++ build tools installed.
 
 ```bash
 dotnet publish
