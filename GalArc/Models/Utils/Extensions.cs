@@ -94,20 +94,6 @@ internal static class BinaryWriterExtensions
 
 internal static class ByteArrayExtensions
 {
-    public static string ToHexString(this byte[] bytes)
-    {
-        char[] c = new char[bytes.Length * 2];
-        byte b;
-        for (int i = 0; i < bytes.Length; i++)
-        {
-            b = ((byte)(bytes[i] >> 4));
-            c[i * 2] = (char)(b > 9 ? b + 0x37 : b + 0x30);
-            b = ((byte)(bytes[i] & 0xF));
-            c[(i * 2) + 1] = (char)(b > 9 ? b + 0x37 : b + 0x30);
-        }
-        return new string(c);
-    }
-
     public static string GetCString(this byte[] bytes, int offset, int maxLength, Encoding encoding, byte separator)
     {
         int nameLength = 0;
