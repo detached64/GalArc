@@ -7,14 +7,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:GalArc.ViewModels"
         Title="{x:Static i:GuiStrings.Update}"
-        MinWidth="200"
-        MaxHeight="600"
-        d:DesignHeight="450"
-        d:DesignWidth="800"
+        Width="750"
+        Height="400"
         x:DataType="vm:UpdateViewModel"
         CanMaximize="False"
         CanMinimize="False"
-        SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
         mc:Ignorable="d">
 
