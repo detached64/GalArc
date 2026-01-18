@@ -47,12 +47,6 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v6
-        with:
-          node-version: '22'
-
-      - run: npx -y conventional-changelog-cli -p conventionalcommits -i CHANGELOG.md -s -r 1
-
       - uses: actions/download-artifact@v7
 
       - uses: softprops/action-gh-release@v2
@@ -63,4 +57,3 @@ jobs:
           draft: false
           prerelease: false
           generate_release_notes: false
-          body_path: CHANGELOG.md
