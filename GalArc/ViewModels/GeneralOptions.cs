@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using GalArc.Infrastructure.Cultures;
 using GalArc.Infrastructure.Settings;
 using System.Collections.Generic;
@@ -22,6 +23,15 @@ internal partial class GeneralOptions : SettingOptions
     [ObservableProperty]
     private CultureInfo language = SettingsManager.Settings.AppLanguage;
 
+    [ObservableProperty]
+    private string displayFormat = SettingsManager.Settings.DisplayFormat;
+
+    [RelayCommand]
+    private void ResetDisplayFormat()
+    {
+        DisplayFormat = AppSettings.DefaultDisplayFormat;
+    }
+
     partial void OnThemeChanged(ThemeVariant value)
     {
         SettingsManager.Settings.AppTheme = value;
@@ -31,5 +41,10 @@ internal partial class GeneralOptions : SettingOptions
     partial void OnLanguageChanged(CultureInfo value)
     {
         SettingsManager.Settings.AppLanguage = value;
+    }
+
+    partial void OnDisplayFormatChanged(string value)
+    {
+        SettingsManager.Settings.DisplayFormat = value;
     }
 }

@@ -40,5 +40,12 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
+        <TextBlock Text="{Binding Source={x:Static i:GuiStrings.DisplayFormat}, StringFormat={}{0}*}" />
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
+            <TextBox HorizontalAlignment="Stretch" Text="{Binding DisplayFormat, Mode=TwoWay}" />
+            <Button Grid.Column="1"
+                    Command="{Binding ResetDisplayFormatCommand}"
+                    Content="{x:Static i:GuiStrings.Reset}" />
+        </Grid>
     </StackPanel>
 </UserControl>

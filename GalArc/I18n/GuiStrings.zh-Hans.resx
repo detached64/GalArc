@@ -180,6 +180,9 @@
   <data name="DefaultEncryption" xml:space="preserve">
     <value>默认加密方案</value>
   </data>
+  <data name="DisplayFormat" xml:space="preserve">
+    <value>显示格式</value>
+  </data>
   <data name="Encoding" xml:space="preserve">
     <value>编码</value>
   </data>

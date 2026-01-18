@@ -180,6 +180,9 @@
   <data name="DefaultEncryption" xml:space="preserve">
     <value>Default Encryption Scheme</value>
   </data>
+  <data name="DisplayFormat" xml:space="preserve">
+    <value>Display Format</value>
+  </data>
   <data name="Encoding" xml:space="preserve">
     <value>Encoding</value>
   </data>

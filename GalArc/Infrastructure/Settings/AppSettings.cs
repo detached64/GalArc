@@ -12,12 +12,15 @@ namespace GalArc.Infrastructure.Settings;
 
 internal sealed class AppSettings
 {
+    [JsonIgnore]
+    public const string DefaultDisplayFormat = "{0} - {1}";
     [JsonConverter(typeof(ThemeVariantJsonConverter))]
     public ThemeVariant AppTheme { get; set; } = ThemeVariant.Default;
     [JsonConverter(typeof(CultureInfoJsonConverter))]
     public CultureInfo AppLanguage { get; set; } = CultureManager.InitCulture(CultureInfo.CurrentCulture);
     public string InputPath { get; set; } = string.Empty;
     public string OutputPath { get; set; } = string.Empty;
+    public string DisplayFormat { get; set; } = DefaultDisplayFormat;
     [JsonConverter(typeof(JsonStringEnumConverter<OperationType>))]
     public OperationType Operation { get; set; } = OperationType.Unpack;
     public int UnpackFormatIndex { get; set; }

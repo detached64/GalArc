@@ -250,6 +250,15 @@ namespace GalArc.I18n {
         }
         
         /// <summary>
+        ///   查找类似 Display Format 的本地化字符串。
+        /// </summary>
+        public static string DisplayFormat {
+            get {
+                return ResourceManager.GetString("DisplayFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Encoding 的本地化字符串。
         /// </summary>
         public static string Encoding {

@@ -27,6 +27,7 @@
 
     <Window.Resources>
         <cv:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+        <cv:DisplayFormatConverter x:Key="DisplayFormatConverter" />
     </Window.Resources>
 
     <DockPanel>
@@ -100,7 +101,7 @@
                             <DataTemplate>
                                 <TextBlock IsVisible="{Binding $parent[ComboBox].SelectedItem, Converter={x:Static ObjectConverters.IsNotNull}}">
                                     <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} - {1}">
+                                        <MultiBinding Converter="{StaticResource DisplayFormatConverter}">
                                             <Binding Path="Name" />
                                             <Binding Path="Description" />
                                         </MultiBinding>
@@ -117,7 +118,7 @@
                             <DataTemplate>
                                 <TextBlock IsVisible="{Binding $parent[ComboBox].SelectedItem, Converter={x:Static ObjectConverters.IsNotNull}}">
                                     <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} - {1}">
+                                        <MultiBinding Converter="{StaticResource DisplayFormatConverter}">
                                             <Binding Path="Name" />
                                             <Binding Path="Description" />
                                         </MultiBinding>
