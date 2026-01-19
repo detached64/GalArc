@@ -11,7 +11,7 @@ namespace GalArc.Models.Formats.NekoPack;
 internal class DATV2 : ArcFormat
 {
     public override string Name => "DAT";
-    public override string Description => "NEKOPACK Archive V2";
+    public override string Description => "NEKOPACK Archive v2";
 
     private const string Magic = "NEKOPACK";
 
