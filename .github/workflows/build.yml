@@ -28,7 +28,7 @@ jobs:
 
       - run: dotnet publish -c Release -r ${{ matrix.runtime }}
 
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         if: success()
         with:
           name: GalArc-ci-${{ matrix.runtime }}
