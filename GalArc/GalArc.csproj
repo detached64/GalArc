@@ -11,7 +11,7 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <ApplicationIcon>Assets\logo.ico</ApplicationIcon>
     <Authors>detached64</Authors>
-    <Version>2.0.4</Version>
+    <Version>2.0.5</Version>
     <Copyright>Copyright © 2025-2026 detached64</Copyright>
   </PropertyGroup>
 
@@ -55,7 +55,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GalArc.Generator\GalArc.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference
+      Include="..\GalArc.Generator\GalArc.Generator.csproj"
+      OutputItemType="Analyzer"
+      ReferenceOutputAssembly="false"
+    />
   </ItemGroup>
 
   <ItemGroup>
@@ -79,5 +83,4 @@
   <ItemGroup>
     <Content Include="Assets\logo.ico" />
   </ItemGroup>
-
 </Project>
