@@ -17,7 +17,11 @@ internal static class CultureManager
 
     public static CultureInfo InitCulture(CultureInfo culture)
     {
-        if (culture.Name is "zh-TW" or "zh-HK" or "zh-MO") return TraditionalChinese;
-        return culture.Name == "zh-CN" ? SimplifiedChinese : SupportedCultures.Contains(culture) ? culture : DefaultCulture;
+        return culture.Name switch
+        {
+            "zh-CN" => SimplifiedChinese,
+            "zh-TW" or "zh-HK" or "zh-MO" => TraditionalChinese,
+            _ => SupportedCultures.Contains(culture) ? culture : DefaultCulture
+        };
     }
 }
