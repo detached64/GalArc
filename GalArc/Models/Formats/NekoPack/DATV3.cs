@@ -328,5 +328,5 @@ internal class DATV3 : ArcFormat, IPackConfigurable
 internal partial class NekoPackDATV3PackOptions : ArcOptions
 {
     [ObservableProperty]
-    private string seedString = "00000000";
+    public partial string SeedString { get; set; } = "00000000";
 }

@@ -16,22 +16,22 @@ internal partial class NetworkOptions : SettingOptions
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsProxyEditingEnabled))]
-    private ProxyType proxyType = SettingsManager.Settings.ProxyType;
+    public partial ProxyType ProxyType { get; set; } = SettingsManager.Settings.ProxyType;
 
     [ObservableProperty]
-    private string proxyAddress = SettingsManager.Settings.ProxyAddress;
+    public partial string ProxyAddress { get; set; } = SettingsManager.Settings.ProxyAddress;
 
     [ObservableProperty]
-    private int proxyPort = SettingsManager.Settings.ProxyPort;
+    public partial int ProxyPort { get; set; } = SettingsManager.Settings.ProxyPort;
 
     [ObservableProperty]
-    private string proxyUsername = SettingsManager.Settings.ProxyUsername;
+    public partial string ProxyUsername { get; set; } = SettingsManager.Settings.ProxyUsername;
 
     [ObservableProperty]
-    private string proxyPassword = SettingsManager.Settings.ProxyPassword;
+    public partial string ProxyPassword { get; set; } = SettingsManager.Settings.ProxyPassword;
 
     [ObservableProperty]
-    private string message;
+    public partial string Message { get; set; }
 
     public bool IsProxyEditingEnabled => ProxyType != ProxyType.None;
 

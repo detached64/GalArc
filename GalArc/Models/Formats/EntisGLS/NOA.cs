@@ -244,15 +244,17 @@ internal class NOA : ArcFormat, IUnpackConfigurable, IPackConfigurable
 internal partial class EntisGLSNOAUnpackOptions : ArcOptions
 {
     [ObservableProperty]
-    private IReadOnlyList<Encoding> encodings = ArcEncoding.SupportedEncodings;
+    public partial IReadOnlyList<Encoding> Encodings { get; set; } = ArcEncoding.SupportedEncodings;
+
     [ObservableProperty]
-    private Encoding encoding = Encoding.UTF8;
+    public partial Encoding Encoding { get; set; } = Encoding.UTF8;
 }
 
 internal partial class EntisGLSNOAPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private IReadOnlyList<Encoding> encodings = ArcEncoding.SupportedEncodings;
+    public partial IReadOnlyList<Encoding> Encodings { get; set; } = ArcEncoding.SupportedEncodings;
+
     [ObservableProperty]
-    private Encoding encoding = Encoding.UTF8;
+    public partial Encoding Encoding { get; set; } = Encoding.UTF8;
 }

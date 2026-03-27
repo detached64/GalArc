@@ -343,7 +343,8 @@ internal class BIN : ArcFormat, IPackConfigurable
 internal partial class EscudeBINPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private IReadOnlyList<string> versions = ["ACPXPK01", "ESC-ARC1", "ESC-ARC2"];
+    public partial IReadOnlyList<string> Versions { get; set; } = ["ACPXPK01", "ESC-ARC1", "ESC-ARC2"];
+
     [ObservableProperty]
-    private string version = "ACPXPK01";
+    public partial string Version { get; set; } = "ACPXPK01";
 }

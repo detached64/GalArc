@@ -146,15 +146,17 @@ internal class DAT : ArcFormat, IUnpackConfigurable, IPackConfigurable
 internal partial class PJADVDATUnpackOptions : ArcOptions
 {
     [ObservableProperty]
-    private bool decryptScripts = true;
+    public partial bool DecryptScripts { get; set; } = true;
 }
 
 internal partial class PJADVDATPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private bool encryptScripts = true;
+    public partial bool EncryptScripts { get; set; } = true;
+
     [ObservableProperty]
-    private int version = 2;
+    public partial int Version { get; set; } = 2;
+
     [ObservableProperty]
-    private IReadOnlyList<int> versions = [1, 2];
+    public partial IReadOnlyList<int> Versions { get; set; } = [1, 2];
 }

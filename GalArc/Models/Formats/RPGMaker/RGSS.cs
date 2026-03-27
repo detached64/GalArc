@@ -253,9 +253,11 @@ internal class RGSS3A : RGSSAD
 internal partial class RPGMakerRGSSPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private int version = 3;
+    public partial int Version { get; set; } = 3;
+
     [ObservableProperty]
-    private IReadOnlyList<int> versions = [1, 3];
+    public partial IReadOnlyList<int> Versions { get; set; } = [1, 3];
+
     [ObservableProperty]
-    private string seed = "0";
+    public partial string Seed { get; set; } = "0";
 }

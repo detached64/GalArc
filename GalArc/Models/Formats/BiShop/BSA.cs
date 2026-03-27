@@ -262,7 +262,8 @@ internal class BSA : ArcFormat, IPackConfigurable
 internal partial class BiShopBSAPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private IReadOnlyList<string> versions = ["1", "2"];
+    public partial IReadOnlyList<string> Versions { get; set; } = ["1", "2"];
+
     [ObservableProperty]
-    private string version = "2";
+    public partial string Version { get; set; } = "2";
 }

@@ -21,47 +21,47 @@ internal partial class MainViewModel : ViewModelBase
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(StartCommand))]
-    private string inputPath;
+    public partial string InputPath { get; set; }
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(StartCommand))]
-    private string outputPath;
-
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(StartCommand))]
-    [NotifyPropertyChangedFor(nameof(InputWatermark))]
-    [NotifyPropertyChangedFor(nameof(OutputWatermark))]
-    [NotifyPropertyChangedFor(nameof(FormatOptions))]
-    private OperationType selectedOperation;
-
-    [ObservableProperty]
-    private List<ArcFormat> unpackFormats;
-
-    [ObservableProperty]
-    private List<ArcFormat> packFormats;
+    public partial string OutputPath { get; set; }
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(StartCommand))]
     [NotifyPropertyChangedFor(nameof(InputWatermark))]
     [NotifyPropertyChangedFor(nameof(OutputWatermark))]
     [NotifyPropertyChangedFor(nameof(FormatOptions))]
-    private ArcFormat selectedUnpackFormat;
+    public partial OperationType SelectedOperation { get; set; }
+
+    [ObservableProperty]
+    public partial List<ArcFormat> UnpackFormats { get; set; }
+
+    [ObservableProperty]
+    public partial List<ArcFormat> PackFormats { get; set; }
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(StartCommand))]
     [NotifyPropertyChangedFor(nameof(InputWatermark))]
     [NotifyPropertyChangedFor(nameof(OutputWatermark))]
     [NotifyPropertyChangedFor(nameof(FormatOptions))]
-    private ArcFormat selectedPackFormat;
+    public partial ArcFormat SelectedUnpackFormat { get; set; }
 
     [ObservableProperty]
-    private bool overwriteExistingFiles;
+    [NotifyCanExecuteChangedFor(nameof(StartCommand))]
+    [NotifyPropertyChangedFor(nameof(InputWatermark))]
+    [NotifyPropertyChangedFor(nameof(OutputWatermark))]
+    [NotifyPropertyChangedFor(nameof(FormatOptions))]
+    public partial ArcFormat SelectedPackFormat { get; set; }
 
     [ObservableProperty]
-    private bool continueOnError;
+    public partial bool OverwriteExistingFiles { get; set; }
 
     [ObservableProperty]
-    private bool matchPaths;
+    public partial bool ContinueOnError { get; set; }
+
+    [ObservableProperty]
+    public partial bool MatchPaths { get; set; }
 
     public string InputWatermark => SelectedOperation == OperationType.Unpack
         ? GuiStrings.WaterInputFile

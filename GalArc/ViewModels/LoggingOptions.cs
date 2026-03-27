@@ -10,10 +10,10 @@ namespace GalArc.ViewModels;
 internal partial class LoggingOptions : SettingOptions
 {
     [ObservableProperty]
-    private bool saveLogs = SettingsManager.Settings.SaveLogs;
+    public partial bool SaveLogs { get; set; } = SettingsManager.Settings.SaveLogs;
 
     [ObservableProperty]
-    private string logFilePath = SettingsManager.Settings.LogFilePath;
+    public partial string LogFilePath { get; set; } = SettingsManager.Settings.LogFilePath;
 
     [RelayCommand]
     private async Task BrowseLogPathAsync()

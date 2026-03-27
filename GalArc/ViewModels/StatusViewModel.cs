@@ -19,27 +19,27 @@ namespace GalArc.ViewModels;
 internal partial class StatusViewModel : ViewModelBase, IDisposable
 {
     [ObservableProperty]
-    private ObservableCollection<LogEntry> logEntries = [];
+    public partial ObservableCollection<LogEntry> LogEntries { get; set; } = [];
 
     [ObservableProperty]
-    private ObservableCollection<LogEntry> selectedLogEntries = [];
+    public partial ObservableCollection<LogEntry> SelectedLogEntries { get; set; } = [];
 
     [ObservableProperty]
-    private int currentProgressValue;
+    public partial int CurrentProgressValue { get; set; }
 
     [ObservableProperty]
-    private int currentProgressMax;
+    public partial int CurrentProgressMax { get; set; }
 
     [ObservableProperty]
-    private int overallProgressValue;
+    public partial int OverallProgressValue { get; set; }
 
     [ObservableProperty]
-    private int overallProgressMax;
+    public partial int OverallProgressMax { get; set; }
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(ExitCommand))]
     [NotifyCanExecuteChangedFor(nameof(CancelCommand))]
-    private bool isOperationRunning;
+    public partial bool IsOperationRunning { get; set; }
 
     public StatusViewModel()
     {

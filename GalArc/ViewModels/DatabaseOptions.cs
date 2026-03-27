@@ -11,7 +11,7 @@ namespace GalArc.ViewModels;
 internal partial class DatabaseOptions : SettingOptions
 {
     [ObservableProperty]
-    private string databasePath = SettingsManager.Settings.DatabasePath;
+    public partial string DatabasePath { get; set; } = SettingsManager.Settings.DatabasePath;
 
     [RelayCommand]
     private async Task BrowseDatabasePathAsync()

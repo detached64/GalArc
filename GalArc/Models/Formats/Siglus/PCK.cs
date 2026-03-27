@@ -186,9 +186,11 @@ internal partial class SiglusPCKUnpackOptions : ArcOptions
     }
 
     [ObservableProperty]
-    private ObservableCollection<string> names = [];
+    public partial ObservableCollection<string> Names { get; set; } = [];
+
     [ObservableProperty]
-    private string selectedName = GuiStrings.TryEveryEnc;
+    public partial string SelectedName { get; set; } = GuiStrings.TryEveryEnc;
+
     public byte[] Key => Scheme?.KnownSchemes?.GetValueOrDefault(SelectedName);
     public bool TryEachKey => SelectedName == GuiStrings.TryEveryEnc;
 }

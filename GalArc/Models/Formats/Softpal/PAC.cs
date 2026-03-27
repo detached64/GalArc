@@ -319,19 +319,23 @@ internal class PAC : ArcFormat, IUnpackConfigurable, IPackConfigurable
 internal partial class SoftpalPACUnpackOptions : ArcOptions
 {
     [ObservableProperty]
-    private bool decryptScripts = true;
+    public partial bool DecryptScripts { get; set; } = true;
 }
 
 internal partial class SoftpalPACPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private bool encryptScripts = true;
+    public partial bool EncryptScripts { get; set; } = true;
+
     [ObservableProperty]
-    private bool computeChecksum = true;
+    public partial bool ComputeChecksum { get; set; } = true;
+
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanComputeChecksum))]
-    private int version = 2;
+    public partial int Version { get; set; } = 2;
+
     [ObservableProperty]
-    private IReadOnlyList<int> versions = [1, 2];
+    public partial IReadOnlyList<int> Versions { get; set; } = [1, 2];
+
     public bool CanComputeChecksum => Version == 2;
 }

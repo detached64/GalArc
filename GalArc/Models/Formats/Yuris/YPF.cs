@@ -296,5 +296,5 @@ internal class YPF : ArcFormat, IUnpackConfigurable
 internal partial class YurisYPFUnpackOptions : ArcOptions
 {
     [ObservableProperty]
-    private bool decryptScripts = true;
+    public partial bool DecryptScripts { get; set; } = true;
 }

@@ -403,26 +403,34 @@ internal partial class QliePACKUnpackOptions : ArcOptions
     }
 
     [ObservableProperty]
-    private string fKeyPath;
+    public partial string FKeyPath { get; set; }
+
     [ObservableProperty]
-    private bool saveKey;
+    public partial bool SaveKey { get; set; }
+
     [ObservableProperty]
-    private bool saveHash;
+    public partial bool SaveHash { get; set; }
+
     [ObservableProperty]
-    private ObservableCollection<string> names = [];
+    public partial ObservableCollection<string> Names { get; set; } = [];
+
     [ObservableProperty]
-    private string selectedName = GuiStrings.DefaultEncryption;
+    public partial string SelectedName { get; set; } = GuiStrings.DefaultEncryption;
+
     public byte[] Key => Scheme?.KnownSchemes?.GetValueOrDefault(SelectedName);
 }
 
 internal partial class QliePACKPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private string version = "3.1";
+    public partial string Version { get; set; } = "3.1";
+
     [ObservableProperty]
-    private IReadOnlyList<string> versions = [/*"1.0", "2.0", "3.0", */"3.1"];
+    public partial IReadOnlyList<string> Versions { get; set; } = [/*"1.0", "2.0", "3.0", */"3.1"];
+
     [ObservableProperty]
-    private string hashVersion = "1.4";
+    public partial string HashVersion { get; set; } = "1.4";
+
     [ObservableProperty]
-    private IReadOnlyList<string> hashVersions = ["1.2", "1.3", "1.4"];
+    public partial IReadOnlyList<string> HashVersions { get; set; } = ["1.2", "1.3", "1.4"];
 }

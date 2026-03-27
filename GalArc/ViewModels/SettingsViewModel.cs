@@ -10,10 +10,10 @@ internal partial class SettingsViewModel : ViewModelBase
     public Dictionary<string, SettingOptions> SettingItems { get; }
 
     [ObservableProperty]
-    private string selectedItem;
+    public partial string SelectedItem { get; set; }
 
     [ObservableProperty]
-    private SettingOptions currentSettingOptions;
+    public partial SettingOptions CurrentSettingOptions { get; set; }
 
     public SettingsViewModel()
     {

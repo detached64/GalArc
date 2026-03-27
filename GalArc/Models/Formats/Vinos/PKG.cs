@@ -67,11 +67,14 @@ internal partial class VinosPKGUnpackOptions : ArcOptions
     }
 
     [ObservableProperty]
-    private IReadOnlyList<Encoding> encodings = ArcEncoding.SupportedEncodings;
+    public partial IReadOnlyList<Encoding> Encodings { get; set; } = ArcEncoding.SupportedEncodings;
+
     [ObservableProperty]
-    private Encoding encoding = Encoding.UTF8;
+    public partial Encoding Encoding { get; set; } = Encoding.UTF8;
+
     [ObservableProperty]
-    private IReadOnlyDictionary<string, Dictionary<string, string>> knownSchemes = new Dictionary<string, Dictionary<string, string>>();
+    public partial IReadOnlyDictionary<string, Dictionary<string, string>> KnownSchemes { get; set; } = new Dictionary<string, Dictionary<string, string>>();
+
     [ObservableProperty]
-    private Dictionary<string, string> selectedKey;
+    public partial Dictionary<string, string> SelectedKey { get; set; }
 }

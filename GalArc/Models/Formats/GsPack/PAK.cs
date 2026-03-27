@@ -209,5 +209,5 @@ internal class PAK : ArcFormat, IUnpackConfigurable
 internal partial class GsPackPAKUnpackOptions : ArcOptions
 {
     [ObservableProperty]
-    private bool decryptScripts = true;
+    public partial bool DecryptScripts { get; set; } = true;
 }

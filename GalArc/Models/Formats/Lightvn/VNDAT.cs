@@ -70,12 +70,16 @@ internal partial class LightvnVNDATUnpackOptions : ArcOptions
     }
 
     [ObservableProperty]
-    private IReadOnlyList<Encoding> encodings = ArcEncoding.SupportedEncodings;
+    public partial IReadOnlyList<Encoding> Encodings { get; set; } = ArcEncoding.SupportedEncodings;
+
     [ObservableProperty]
-    private Encoding encoding = Encoding.UTF8;
+    public partial Encoding Encoding { get; set; } = Encoding.UTF8;
+
     [ObservableProperty]
-    private ObservableCollection<string> names = [];
+    public partial ObservableCollection<string> Names { get; set; } = [];
+
     [ObservableProperty]
-    private string selectedName = GuiStrings.DefaultEncryption;
+    public partial string SelectedName { get; set; } = GuiStrings.DefaultEncryption;
+
     public byte[] Key => Scheme?.KnownSchemes?.GetValueOrDefault(SelectedName) ?? DefaultKey;
 }

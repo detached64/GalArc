@@ -12,19 +12,19 @@ namespace GalArc.ViewModels;
 internal partial class GeneralOptions : SettingOptions
 {
     [ObservableProperty]
-    private IReadOnlyList<ThemeVariant> themes = [ThemeVariant.Default, ThemeVariant.Light, ThemeVariant.Dark];
+    public partial IReadOnlyList<ThemeVariant> Themes { get; set; } = [ThemeVariant.Default, ThemeVariant.Light, ThemeVariant.Dark];
 
     [ObservableProperty]
-    private ThemeVariant theme = SettingsManager.Settings.AppTheme;
+    public partial ThemeVariant Theme { get; set; } = SettingsManager.Settings.AppTheme;
 
     [ObservableProperty]
-    private IReadOnlyList<CultureInfo> languages = CultureManager.SupportedCultures;
+    public partial IReadOnlyList<CultureInfo> Languages { get; set; } = CultureManager.SupportedCultures;
 
     [ObservableProperty]
-    private CultureInfo language = SettingsManager.Settings.AppLanguage;
+    public partial CultureInfo Language { get; set; } = SettingsManager.Settings.AppLanguage;
 
     [ObservableProperty]
-    private string displayFormat = SettingsManager.Settings.DisplayFormat;
+    public partial string DisplayFormat { get; set; } = SettingsManager.Settings.DisplayFormat;
 
     [RelayCommand]
     private void ResetDisplayFormat()

@@ -122,11 +122,11 @@ internal class AOS : ArcFormat, IUnpackConfigurable, IPackConfigurable
 internal partial class SFAAOSUnpackOptions : ArcOptions
 {
     [ObservableProperty]
-    private bool decryptScripts = true;
+    public partial bool DecryptScripts { get; set; } = true;
 }
 
 internal partial class SFAAOSPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private bool encryptScripts = true;
+    public partial bool EncryptScripts { get; set; } = true;
 }

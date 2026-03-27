@@ -135,7 +135,8 @@ internal class PAK : ArcFormat, IPackConfigurable
 internal partial class NekoSDKPAKPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private string version = "4A";
+    public partial string Version { get; set; } = "4A";
+
     [ObservableProperty]
-    private IReadOnlyList<string> versions = ["4A"];
+    public partial IReadOnlyList<string> Versions { get; set; } = ["4A"];
 }

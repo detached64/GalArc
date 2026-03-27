@@ -254,11 +254,14 @@ internal class XP3 : ArcFormat, IPackConfigurable
 internal partial class KirikiriXP3PackOptions : ArcOptions
 {
     [ObservableProperty]
-    private bool compressIndex = true;
+    public partial bool CompressIndex { get; set; } = true;
+
     [ObservableProperty]
-    private bool compressContents = true;
+    public partial bool CompressContents { get; set; } = true;
+
     [ObservableProperty]
-    private int version = 2;
+    public partial int Version { get; set; } = 2;
+
     [ObservableProperty]
-    private IReadOnlyList<int> versions = [1, 2];
+    public partial IReadOnlyList<int> Versions { get; set; } = [1, 2];
 }

@@ -302,11 +302,14 @@ internal class ARC : ArcFormat, IPackConfigurable
 internal partial class Ai6WinARCPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private IReadOnlyList<int> versions = [1, 2, 3];
+    public partial IReadOnlyList<int> Versions { get; set; } = [1, 2, 3];
+
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsCompressContentsVisible))]
-    private int version = 3;
+    public partial int Version { get; set; } = 3;
+
     [ObservableProperty]
-    private bool compressContents = true;
+    public partial bool CompressContents { get; set; } = true;
+
     public bool IsCompressContentsVisible => Version != 1;
 }

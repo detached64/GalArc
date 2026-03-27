@@ -396,7 +396,8 @@ internal partial class SeraphDATUnpackOptions : ArcOptions
     }
 
     [ObservableProperty]
-    private bool useBrutalForce = true;
+    public partial bool UseBrutalForce { get; set; } = true;
+
     [ObservableProperty]
-    private string indexOffsetString = "00000000";
+    public partial string IndexOffsetString { get; set; } = "00000000";
 }

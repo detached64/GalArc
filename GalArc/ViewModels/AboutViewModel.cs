@@ -13,16 +13,16 @@ internal partial class AboutViewModel : ViewModelBase
     private static readonly Assembly CurrentAssembly = Assembly.GetExecutingAssembly();
 
     [ObservableProperty]
-    private string assemblyName = CurrentAssembly.GetName().Name;
+    public partial string AssemblyName { get; set; } = CurrentAssembly.GetName().Name;
 
     [ObservableProperty]
-    private string assemblyVersion = CurrentAssembly.GetName().Version?.ToString();
+    public partial string AssemblyVersion { get; set; } = CurrentAssembly.GetName().Version?.ToString();
 
     [ObservableProperty]
-    private string copyright = CurrentAssembly.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright;
+    public partial string Copyright { get; set; } = CurrentAssembly.GetCustomAttribute<AssemblyCopyrightAttribute>()?.Copyright;
 
     [ObservableProperty]
-    private string sourceUrl = "https://github.com/detached64/GalArc";
+    public partial string SourceUrl { get; set; } = "https://github.com/detached64/GalArc";
 
     [RelayCommand]
     private static async Task OpenUrlAsync(string url)

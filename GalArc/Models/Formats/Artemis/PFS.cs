@@ -317,19 +317,23 @@ internal class PFS : ArcFormat, IUnpackConfigurable, IPackConfigurable
 internal partial class ArtemisPFSUnpackOptions : ArcOptions
 {
     [ObservableProperty]
-    private IReadOnlyList<Encoding> encodings = ArcEncoding.SupportedEncodings;
+    public partial IReadOnlyList<Encoding> Encodings { get; set; } = ArcEncoding.SupportedEncodings;
+
     [ObservableProperty]
-    private Encoding encoding = Encoding.UTF8;
+    public partial Encoding Encoding { get; set; } = Encoding.UTF8;
 }
 
 internal partial class ArtemisPFSPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private IReadOnlyList<Encoding> encodings = ArcEncoding.SupportedEncodings;
+    public partial IReadOnlyList<Encoding> Encodings { get; set; } = ArcEncoding.SupportedEncodings;
+
     [ObservableProperty]
-    private Encoding encoding = Encoding.UTF8;
+    public partial Encoding Encoding { get; set; } = Encoding.UTF8;
+
     [ObservableProperty]
-    private ObservableCollection<int> versions = [8, 6, 2];
+    public partial ObservableCollection<int> Versions { get; set; } = [8, 6, 2];
+
     [ObservableProperty]
-    private int version = 8;
+    public partial int Version { get; set; } = 8;
 }

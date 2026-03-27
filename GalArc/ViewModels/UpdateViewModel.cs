@@ -16,19 +16,19 @@ internal partial class UpdateViewModel : ViewModelBase
     private static string UpdateUrl;
 
     [ObservableProperty]
-    private string currentVersion;
+    public partial string CurrentVersion { get; set; }
 
     [ObservableProperty]
-    private string latestVersion = GuiStrings.Unknown;
+    public partial string LatestVersion { get; set; } = GuiStrings.Unknown;
 
     [ObservableProperty]
-    private string statusMessage;
+    public partial string StatusMessage { get; set; }
 
     [ObservableProperty]
-    private bool newerVersionExist;
+    public partial bool NewerVersionExist { get; set; }
 
     [ObservableProperty]
-    private string changelog;
+    public partial string Changelog { get; set; }
 
     public UpdateViewModel()
     {

@@ -306,21 +306,26 @@ internal class PAC : ArcFormat, IUnpackConfigurable, IPackConfigurable
 internal partial class NeXASPACUnpackOptions : ArcOptions
 {
     [ObservableProperty]
-    private IReadOnlyList<Encoding> encodings = ArcEncoding.SupportedEncodings;
+    public partial IReadOnlyList<Encoding> Encodings { get; set; } = ArcEncoding.SupportedEncodings;
+
     [ObservableProperty]
-    private Encoding encoding = Encoding.UTF8;
+    public partial Encoding Encoding { get; set; } = Encoding.UTF8;
 }
 
 internal partial class NeXASPACPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private IReadOnlyList<Encoding> encodings = ArcEncoding.SupportedEncodings;
+    public partial IReadOnlyList<Encoding> Encodings { get; set; } = ArcEncoding.SupportedEncodings;
+
     [ObservableProperty]
-    private Encoding encoding = Encoding.UTF8;
+    public partial Encoding Encoding { get; set; } = Encoding.UTF8;
+
     [ObservableProperty]
-    private int version = 2;
+    public partial int Version { get; set; } = 2;
+
     [ObservableProperty]
-    private IReadOnlyList<int> versions = [1, 2];
+    public partial IReadOnlyList<int> Versions { get; set; } = [1, 2];
+
     [ObservableProperty]
-    private PAC.Method method = PAC.Method.None;
+    public partial PAC.Method Method { get; set; } = PAC.Method.None;
 }

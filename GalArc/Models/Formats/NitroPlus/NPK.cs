@@ -320,13 +320,16 @@ internal partial class NitroPlusNPKUnpackOptions : ArcOptions
     }
 
     [ObservableProperty]
-    private IReadOnlyDictionary<string, byte[]> knownSchemes;
+    public partial IReadOnlyDictionary<string, byte[]> KnownSchemes { get; set; }
+
     [ObservableProperty]
-    private byte[] selectedKey;
+    public partial byte[] SelectedKey { get; set; }
+
     [ObservableProperty]
-    private IReadOnlyList<Encoding> encodings = ArcEncoding.SupportedEncodings;
+    public partial IReadOnlyList<Encoding> Encodings { get; set; } = ArcEncoding.SupportedEncodings;
+
     [ObservableProperty]
-    private Encoding encoding = Encoding.UTF8;
+    public partial Encoding Encoding { get; set; } = Encoding.UTF8;
 }
 
 internal partial class NitroPlusNPKPackOptions : ArcOptions
@@ -345,21 +348,29 @@ internal partial class NitroPlusNPKPackOptions : ArcOptions
     }
 
     [ObservableProperty]
-    private IReadOnlyDictionary<string, byte[]> knownSchemes;
+    public partial IReadOnlyDictionary<string, byte[]> KnownSchemes { get; set; }
+
     [ObservableProperty]
-    private byte[] selectedKey;
+    public partial byte[] SelectedKey { get; set; }
+
     [ObservableProperty]
-    private IReadOnlyList<Encoding> encodings = ArcEncoding.SupportedEncodings;
+    public partial IReadOnlyList<Encoding> Encodings { get; set; } = ArcEncoding.SupportedEncodings;
+
     [ObservableProperty]
-    private Encoding encoding = Encoding.UTF8;
+    public partial Encoding Encoding { get; set; } = Encoding.UTF8;
+
     [ObservableProperty]
-    private IReadOnlyList<int> majorVersions = [2, 3];
+    public partial IReadOnlyList<int> MajorVersions { get; set; } = [2, 3];
+
     [ObservableProperty]
-    private int majorVersion = 3;
+    public partial int MajorVersion { get; set; } = 3;
+
     [ObservableProperty]
-    private IReadOnlyList<int> minorVersions = [1, 2];
+    public partial IReadOnlyList<int> MinorVersions { get; set; } = [1, 2];
+
     [ObservableProperty]
-    private int minorVersion = 2;
+    public partial int MinorVersion { get; set; } = 2;
+
     [ObservableProperty]
-    private bool useSeg = true;
+    public partial bool UseSeg { get; set; } = true;
 }

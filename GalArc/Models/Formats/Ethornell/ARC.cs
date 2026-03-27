@@ -98,7 +98,8 @@ internal class ARC : ArcFormat, IPackConfigurable
 internal partial class EthornellARCPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private IReadOnlyList<int> versions = [1, 2];
+    public partial IReadOnlyList<int> Versions { get; set; } = [1, 2];
+
     [ObservableProperty]
-    private int version = 2;
+    public partial int Version { get; set; } = 2;
 }

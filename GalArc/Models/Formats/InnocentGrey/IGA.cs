@@ -217,11 +217,11 @@ internal class IGA : ArcFormat, IUnpackConfigurable, IPackConfigurable
 internal partial class InnocentGreyIGAUnpackOptions : ArcOptions
 {
     [ObservableProperty]
-    private bool decryptScripts = true;
+    public partial bool DecryptScripts { get; set; } = true;
 }
 
 internal partial class InnocentGreyIGAPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private bool encryptScripts = true;
+    public partial bool EncryptScripts { get; set; } = true;
 }

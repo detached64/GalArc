@@ -293,15 +293,17 @@ internal partial class ARC : ArcFormat, IUnpackConfigurable, IPackConfigurable
 internal partial class MajiroARCUnpackOptions : ArcOptions
 {
     [ObservableProperty]
-    private bool decryptScripts = true;
+    public partial bool DecryptScripts { get; set; } = true;
 }
 
 internal partial class MajiroARCPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private bool encryptScripts = true;
+    public partial bool EncryptScripts { get; set; } = true;
+
     [ObservableProperty]
-    private int version = 1;
+    public partial int Version { get; set; } = 1;
+
     [ObservableProperty]
-    private IReadOnlyList<int> versions = [1, 2, 3];
+    public partial IReadOnlyList<int> Versions { get; set; } = [1, 2, 3];
 }

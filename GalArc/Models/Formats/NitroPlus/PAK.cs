@@ -137,5 +137,5 @@ internal class PAK : ArcFormat, IPackConfigurable
 internal partial class NitroPlusPAKPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private string originalFilePath = string.Empty;
+    public partial string OriginalFilePath { get; set; } = string.Empty;
 }

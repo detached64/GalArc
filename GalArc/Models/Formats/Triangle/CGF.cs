@@ -116,7 +116,8 @@ internal class CGF : ArcFormat, IPackConfigurable
 internal partial class TriangleCGFPackOptions : ArcOptions
 {
     [ObservableProperty]
-    private int version = 1;
+    public partial int Version { get; set; } = 1;
+
     [ObservableProperty]
-    private IReadOnlyList<int> versions = [1];
+    public partial IReadOnlyList<int> Versions { get; set; } = [1];
 }
