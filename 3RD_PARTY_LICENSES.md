@@ -88,7 +88,7 @@ SOFTWARE.
 
 Huffman is a C# implementation of Huffman compression/decompression algorithm.
 
-**Repository**: <https://github.com/detached64/Huffman?tab=readme-ov-file>
+**Repository**: <https://github.com/detached64/Huffman>
 
 **License**: The MIT License
 
