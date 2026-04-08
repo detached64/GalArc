@@ -18,8 +18,8 @@
             <RadioButton Content="{x:Static i:GuiStrings.BrutalForce}" IsChecked="{Binding UseBrutalForce}" />
             <RadioButton Content="{x:Static i:GuiStrings.SpecifyIndexOffset}" IsChecked="{Binding !UseBrutalForce}" />
             <TextBox IsEnabled="{Binding !UseBrutalForce}"
-                     Text="{Binding IndexOffsetString, Mode=TwoWay}"
-                     Watermark="Hex String" />
+                     PlaceholderText="Hex String"
+                     Text="{Binding IndexOffsetString, Mode=TwoWay}" />
         </StackPanel>
     </StackPanel>
 </UserControl>

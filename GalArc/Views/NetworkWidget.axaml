@@ -44,14 +44,14 @@
         <TextBlock Text="{x:Static i:GuiStrings.Username}" />
         <TextBox HorizontalAlignment="Stretch"
                  IsEnabled="{Binding IsProxyEditingEnabled}"
-                 Text="{Binding ProxyUsername, Mode=TwoWay}"
-                 Watermark="{x:Static i:GuiStrings.Optional}" />
+                 PlaceholderText="{x:Static i:GuiStrings.Optional}"
+                 Text="{Binding ProxyUsername, Mode=TwoWay}" />
         <TextBlock Text="{x:Static i:GuiStrings.Password}" />
         <TextBox HorizontalAlignment="Stretch"
                  IsEnabled="{Binding IsProxyEditingEnabled}"
                  PasswordChar="*"
-                 Text="{Binding ProxyPassword, Mode=TwoWay}"
-                 Watermark="{x:Static i:GuiStrings.Optional}" />
+                 PlaceholderText="{x:Static i:GuiStrings.Optional}"
+                 Text="{Binding ProxyPassword, Mode=TwoWay}" />
         <DockPanel>
             <Button Command="{Binding CheckProxyCommand}"
                     Content="{x:Static i:GuiStrings.Check}"

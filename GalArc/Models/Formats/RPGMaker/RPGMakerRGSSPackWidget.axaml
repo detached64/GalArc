@@ -21,7 +21,7 @@
                   SelectedItem="{Binding Version}" />
         <TextBlock Text="{x:Static i:GuiStrings.Seed}" />
         <TextBox HorizontalAlignment="Stretch"
-                 Text="{Binding Seed, Mode=TwoWay}"
-                 Watermark="Hex String" />
+                 PlaceholderText="Hex String"
+                 Text="{Binding Seed, Mode=TwoWay}" />
     </StackPanel>
 </UserControl>

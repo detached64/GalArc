@@ -61,8 +61,8 @@
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
                         <TextBox b:FileDropBehavior.DropCommand="{Binding DropInputCommand}"
                                  DragDrop.AllowDrop="True"
-                                 Text="{Binding InputPath, Mode=TwoWay}"
-                                 Watermark="{Binding InputWatermark}" />
+                                 PlaceholderText="{Binding InputWatermark}"
+                                 Text="{Binding InputPath, Mode=TwoWay}" />
                         <Button Grid.Column="1"
                                 Command="{Binding BrowseInputCommand}"
                                 Content="..." />
@@ -73,8 +73,8 @@
                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
                     <TextBox b:FileDropBehavior.DropCommand="{Binding DropOutputCommand}"
                              DragDrop.AllowDrop="True"
-                             Text="{Binding OutputPath, Mode=TwoWay}"
-                             Watermark="{Binding OutputWatermark}" />
+                             PlaceholderText="{Binding OutputWatermark}"
+                             Text="{Binding OutputPath, Mode=TwoWay}" />
                     <Button Grid.Column="1"
                             Command="{Binding BrowseOutputCommand}"
                             Content="..." />

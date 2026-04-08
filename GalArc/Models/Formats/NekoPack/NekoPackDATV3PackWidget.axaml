@@ -18,8 +18,8 @@
         <StackPanel Orientation="Horizontal" Spacing="10">
             <TextBlock VerticalAlignment="Center" Text="{x:Static i:GuiStrings.Seed}" />
             <TextBox Width="150"
-                     Text="{Binding SeedString, Mode=TwoWay}"
-                     Watermark="Hex String" />
+                     PlaceholderText="Hex String"
+                     Text="{Binding SeedString, Mode=TwoWay}" />
         </StackPanel>
     </StackPanel>
 </UserControl>
