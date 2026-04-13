@@ -49,7 +49,7 @@ jobs:
 
       - uses: actions/download-artifact@v8
 
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           files: |
             GalArc-${{ github.ref_name }}-win-x64.zip/*
