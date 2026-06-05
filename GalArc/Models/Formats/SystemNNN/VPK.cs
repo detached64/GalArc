@@ -2,6 +2,7 @@ using GalArc.I18n;
 using GalArc.Infrastructure.Logging;
 using GalArc.Infrastructure.Progress;
 using GalArc.Models.Formats.Commons;
+using System;
 using System.IO;
 using System.Text;
 
@@ -71,8 +72,11 @@ internal class VPK : ArcFormat
         DirectoryInfo d = new(folderPath);
         FileInfo[] files = d.GetFiles("*.vaw");
         int filecount = files.Length;
+
         string vpkPath = filePath;
-        string vtbPath = vpkPath.Contains(".vpk") ? vpkPath.Replace(".vpk", ".vtb") : vpkPath + ".vtb";
+        string vtbPath = string.Equals(Path.GetExtension(filePath), ".vpk", StringComparison.OrdinalIgnoreCase) ?
+            Path.ChangeExtension(filePath, ".vtb") : filePath + ".vtb";
+
         using FileStream fs1 = File.Create(vtbPath);
         using FileStream fs2 = File.Create(vpkPath);
         using BinaryWriter writer1 = new(fs1);

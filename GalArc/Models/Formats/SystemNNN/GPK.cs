@@ -105,7 +105,8 @@ internal class GPK : ArcFormat, IPackConfigurable
         ProgressManager.SetMax(fileCount);
 
         string gpkPath = filePath;
-        string gtbPath = filePath.Contains(".gpk") ? gpkPath.Replace(".gpk", ".gtb") : gpkPath + ".gtb";
+        string gtbPath = string.Equals(Path.GetExtension(filePath), ".gpk", StringComparison.OrdinalIgnoreCase) ?
+            Path.ChangeExtension(filePath, ".gtb") : filePath + ".gtb";
 
         using FileStream fs1 = File.Create(gtbPath);
         using FileStream fs2 = File.Create(gpkPath);
