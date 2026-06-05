@@ -73,8 +73,6 @@ internal class NPK : ArcFormat, IUnpackConfigurable, IPackConfigurable
         using (SubStream encryptedTableStream = new(fs, fs.Position, entryTableSize))
         {
             using CryptoStream cryptoStream = new(encryptedTableStream, aes.CreateDecryptor(), CryptoStreamMode.Read);
-            //using FileStream table_bin = File.Create(Path.ChangeExtension(filePath, ".table.bin"));
-            //cryptoStream.CopyTo(table_bin);
             using MemoryStream tableStream = new();
             cryptoStream.CopyTo(tableStream);
             tableStream.Position = 0;
@@ -259,7 +257,6 @@ internal class NPK : ArcFormat, IUnpackConfigurable, IPackConfigurable
                 encryptedStream.CopyTo(alignedStream);
                 seg.RealSize = (uint)compressedStream.Length;
                 seg.AlignedSize = (uint)alignedStream.Length;
-                Logger.Info($"Real size: {seg.RealSize}, Aligned size: {seg.AlignedSize}, Decompressed size: {seg.DecompressedSize}");
                 seg.Offset = fw.Position;
                 alignedStream.Position = 0;
                 alignedStream.CopyTo(fw);
