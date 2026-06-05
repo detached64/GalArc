@@ -45,6 +45,5 @@
                           SelectedItem="{Binding MinorVersion}" />
             </StackPanel>
         </Grid>
-        <CheckBox Content="{x:Static i:GuiStrings.SegContent}" IsChecked="{Binding UseSeg}" />
     </StackPanel>
 </UserControl>

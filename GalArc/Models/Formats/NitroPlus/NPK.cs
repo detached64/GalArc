@@ -185,39 +185,16 @@ internal class NPK : ArcFormat, IUnpackConfigurable, IPackConfigurable
                 entry.SHA256 = sha256.ComputeHash(content);
                 content.Position = 0;
             }
-            bool useSeg = _packOptions.UseSeg || entry.UnpackedSize > uint.MaxValue;
             entry.Name = Path.GetRelativePath(folderPath, file).Replace('\\', '/');
             entry.NameLen = (ushort)_packOptions.Encoding.GetByteCount(entry.Name);
-            long length = content.Length;
-            if (useSeg)
-            {
-                entry.SegCount = (int)((length + 0xffff) / 0x10000);
-                if (entry.SegCount == 0)
-                    entry.SegCount = 1;
-                entry.HasSeg = entry.SegCount > 1;
-                entry.Segs = new(entry.SegCount);
-                long remaining = length;
-                for (int i = 0; i < entry.SegCount; i++)
+            entry.SegCount = 1;
+            entry.HasSeg = false;
+            entry.Segs = [
+                new NpkSegInfo()
                 {
-                    uint segSize = (uint)Math.Min(0x10000, remaining);
-                    entry.Segs.Add(new NpkSegInfo()
-                    {
-                        DecompressedSize = (uint)Math.Min(0x10000, length),
-                    });
-                    remaining -= segSize;
+                    DecompressedSize = (uint)content.Length,
                 }
-            }
-            else
-            {
-                entry.SegCount = 1;
-                entry.HasSeg = false;
-                entry.Segs = [
-                    new NpkSegInfo()
-                    {
-                        DecompressedSize = (uint)length,
-                    }
-                ];
-            }
+            ];
             entries.Add(entry);
         }
         long rawTableSize = 0;
@@ -380,7 +357,4 @@ internal partial class NitroPlusNPKPackOptions : ArcOptions
 
     [ObservableProperty]
     public partial int MinorVersion { get; set; } = 2;
-
-    [ObservableProperty]
-    public partial bool UseSeg { get; set; } = true;
 }
