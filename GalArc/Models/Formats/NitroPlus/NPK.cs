@@ -21,7 +21,7 @@ internal class NPK : ArcFormat, IUnpackConfigurable, IPackConfigurable
 {
     public override string Name => "NPK";
     public override string Description => "NitroPlus NPK Archive";
-    public override bool CanWrite => false;
+    public override bool CanWrite => true;
 
     private NitroPlusNPKUnpackOptions _unpackOptions;
     public ArcOptions UnpackOptions => _unpackOptions ??= new NitroPlusNPKUnpackOptions();
@@ -186,20 +186,25 @@ internal class NPK : ArcFormat, IUnpackConfigurable, IPackConfigurable
                 content.Position = 0;
             }
             bool useSeg = _packOptions.UseSeg || entry.UnpackedSize > uint.MaxValue;
-            entry.Name = Path.GetRelativePath(folderPath, file);
+            entry.Name = Path.GetRelativePath(folderPath, file).Replace('\\', '/');
             entry.NameLen = (ushort)_packOptions.Encoding.GetByteCount(entry.Name);
             long length = content.Length;
             if (useSeg)
             {
-                entry.SegCount = (int)(1 + (entry.UnpackedSize / 0x10000));
+                entry.SegCount = (int)((length + 0xffff) / 0x10000);
+                if (entry.SegCount == 0)
+                    entry.SegCount = 1;
                 entry.HasSeg = entry.SegCount > 1;
                 entry.Segs = new(entry.SegCount);
+                long remaining = length;
                 for (int i = 0; i < entry.SegCount; i++)
                 {
+                    uint segSize = (uint)Math.Min(0x10000, remaining);
                     entry.Segs.Add(new NpkSegInfo()
                     {
                         DecompressedSize = (uint)Math.Min(0x10000, length),
                     });
+                    remaining -= segSize;
                 }
             }
             else
@@ -240,16 +245,17 @@ internal class NPK : ArcFormat, IUnpackConfigurable, IPackConfigurable
                 Stream compressedStream = new MemoryStream();
                 if (!NoCompressionExts.Contains(Path.GetExtension(entry.Path).TrimStart('.').ToLower()))
                 {
+                    MemoryStream tempCompressed = new();
                     switch (_packOptions.MajorVersion)
                     {
                         case 3:
-                            using (CompressionStream cStream = new(compressedStream))
+                            using (CompressionStream cStream = new(tempCompressed))
                             {
                                 rawStream.CopyTo(cStream);
                             }
                             break;
                         case 2:
-                            using (DeflateStream dStream = new(compressedStream, CompressionLevel.Optimal, true))
+                            using (DeflateStream dStream = new(tempCompressed, CompressionLevel.Optimal))
                             {
                                 rawStream.CopyTo(dStream);
                             }
@@ -257,9 +263,13 @@ internal class NPK : ArcFormat, IUnpackConfigurable, IPackConfigurable
                         default:
                             throw new InvalidVersionException(InvalidVersionType.NotSupported, _packOptions.MajorVersion);
                     }
-                    if (compressedStream.Length > rawStream.Length)
+                    if (tempCompressed.Length >= rawStream.Length)
                     {
                         compressedStream = rawStream;
+                    }
+                    else
+                    {
+                        compressedStream = new MemoryStream(tempCompressed.ToArray());
                     }
                 }
                 else
