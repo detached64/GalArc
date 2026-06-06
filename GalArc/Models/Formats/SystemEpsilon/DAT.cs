@@ -26,7 +26,7 @@ internal class DAT : IGA
 
     private class DatEntry : PackedEntry
     {
-        public uint FileType { get; set; }
+        public int BwtIndex { get; set; }
     }
 
     public override void Unpack(string filePath, string folderPath)
@@ -48,14 +48,10 @@ internal class DAT : IGA
             DatEntry entry = new();
             entry.Name = ArcEncoding.Shift_JIS.GetString(br.ReadBytes(32)).TrimEnd('\0');
             entry.Offset = br.ReadUInt32();
-            entry.FileType = br.ReadUInt32();
+            entry.BwtIndex = br.ReadInt32();
             entry.UnpackedSize = br.ReadUInt32();
             entry.Size = br.ReadUInt32();
             entry.IsPacked = entry.Size != entry.UnpackedSize;
-            //if (entry.IsCompressed)     //skip compressed data for now
-            //{
-            //    throw new NotImplementedException("Compressed data detected. Temporarily not supported.");
-            //}
             entries.Add(entry);
         }
 
@@ -63,6 +59,10 @@ internal class DAT : IGA
         {
             fs.Position = entry.Offset;
             byte[] data = br.ReadBytes((int)entry.Size);
+            if (entry.IsPacked)
+            {
+                data = Decompress(data, (int)entry.UnpackedSize, entry.BwtIndex);
+            }
             if (_unpackOptions.DecryptScripts && Path.GetExtension(entry.Name) == ".s")
             {
                 Logger.Debug(MsgStrings.Decrypting, entry.Name);
@@ -74,6 +74,70 @@ internal class DAT : IGA
             File.WriteAllBytes(Path.Combine(folderPath, entry.Name), data);
             ProgressManager.Progress();
         }
+    }
+
+    private static byte[] Decompress(byte[] packedData, int unpackedSize, int bwtIndex)
+    {
+        if (unpackedSize == 0)
+            return [];
+
+        byte[] decoded = new byte[unpackedSize];
+        List<int> l = new(16);
+
+        using (MemoryStream ms = new(packedData))
+        using (BitStream br = new(ms))
+        {
+            for (int i = 0; i < unpackedSize; i++)
+            {
+                int sym;
+                if (br.ReadBit() == 1)
+                {
+                    int rank = 1;
+                    if (br.ReadBit() == 0)
+                    {
+                        int depth = 1;
+                        while (br.ReadBit() == 0)
+                            depth++;
+                        while (depth-- > 0)
+                            rank = (rank << 1) | br.ReadBit();
+                    }
+                    sym = (rank > 0 && rank <= l.Count) ? l[^rank] : 256;
+                }
+                else
+                {
+                    sym = br.ReadBits(8);
+                }
+
+                decoded[i] = (byte)sym;
+
+                l.Remove(sym);
+                l.Add(sym);
+                if (l.Count >= 16)
+                    l.RemoveAt(0);
+            }
+        }
+
+        if (bwtIndex < 0 || bwtIndex >= unpackedSize)
+            throw new InvalidDataException($"Invalid BWT primary index: {bwtIndex}");
+
+        int[] count = new int[256];
+        foreach (byte b in decoded)
+            count[b]++;
+        for (int i = 1; i < 256; i++)
+            count[i] += count[i - 1];
+
+        int[] lf = new int[unpackedSize];
+        for (int i = unpackedSize - 1; i >= 0; i--)
+            lf[--count[decoded[i]]] = i;
+
+        byte[] dst = new byte[unpackedSize];
+        for (int i = 0, idx = lf[bwtIndex]; i < unpackedSize; i++)
+        {
+            dst[i] = decoded[idx];
+            idx = lf[idx];
+        }
+
+        return dst;
     }
 
     public override void Pack(string folderPath, string filePath)
