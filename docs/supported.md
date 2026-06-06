@@ -50,7 +50,7 @@ Refer to the source code for the detailed information.
 | | | `Gameexe.dat` | ✔️ | ❌ | all |
 | Softpal/Amusement Craft | <https://vndb.org/r?f=fwSoftpal_0ADV_0System-> | `pac` | ✔️ | ✔️ | all |
 | Sogna | | `dat` | ✔️ | ✔️ | all |
-| SYSTEM-ε | <https://vndb.org/r?f=fwSYSTEM_d%CE%B5-> | `dat` | ✔️ | ✔️ | limited |
+| SYSTEM-ε | <https://vndb.org/r?f=fwSYSTEM_d%CE%B5-> | `dat` | ✔️ | ✔️ | all |
 | SystemNNN | <https://vndb.org/r?f=fwSystem_dNNN-> | `gpk` | ✔️ | ✔️ | all |
 | | | `vpk` | ✔️ | ✔️ | all |
 | Triangle | | `CG` | ✔️ | ✔️ | all |
