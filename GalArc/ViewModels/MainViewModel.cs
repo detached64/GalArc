@@ -55,9 +55,6 @@ internal partial class MainViewModel : ViewModelBase
     public partial ArcFormat SelectedPackFormat { get; set; }
 
     [ObservableProperty]
-    public partial bool OverwriteExistingFiles { get; set; }
-
-    [ObservableProperty]
     public partial bool ContinueOnError { get; set; }
 
     [ObservableProperty]
