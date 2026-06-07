@@ -57,17 +57,20 @@ internal static class Logger
 
     public static void Persist()
     {
-        try
+        if (SettingsManager.Settings.SaveLogs)
         {
-            using StreamWriter writer = new(SettingsManager.Settings.LogFilePath, true);
-            while (_logQueue.TryDequeue(out LogEntry entry))
+            try
             {
-                writer.WriteLine(entry.ToString());
+                using StreamWriter writer = new(SettingsManager.Settings.LogFilePath, true);
+                while (_logQueue.TryDequeue(out LogEntry entry))
+                {
+                    writer.WriteLine(entry.ToString());
+                }
             }
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"Failed to persist logs: {ex.Message}");
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to persist logs: {ex.Message}");
+            }
         }
     }
 
