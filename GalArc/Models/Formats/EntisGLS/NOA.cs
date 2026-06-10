@@ -198,7 +198,7 @@ internal class NOA : ArcFormat, IUnpackConfigurable, IPackConfigurable
                                //entry header
         bw.Write(Encoding.ASCII.GetBytes("DirEntry"));
         //compute index size
-        long indexSize = 4 + Utility.GetNameLengthSum(files, encoding) + fileCount + (40 * fileCount);
+        long indexSize = 4 + Utility.GetFileNameLengthSum(files, encoding) + fileCount + (40 * fileCount);
         bw.Write(indexSize);
         bw.Write(fileCount);
 

@@ -265,7 +265,7 @@ internal class ARC : ArcFormat, IPackConfigurable
         FileInfo[] files = new DirectoryInfo(folderPath).GetFiles();
         int fileCount = files.Length;
         ProgressManager.SetMax(fileCount);
-        uint dataOffset = (uint)(4 + Utility.GetNameLengthSum(files, ArcEncoding.Shift_JIS) + (13 * fileCount));
+        uint dataOffset = (uint)(4 + Utility.GetFileNameLengthSum(files, ArcEncoding.Shift_JIS) + (13 * fileCount));
         bw.Write(dataOffset - 4);
 
         foreach (FileInfo file in files)

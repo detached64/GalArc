@@ -53,7 +53,7 @@ internal class PAK : ArcFormat
         using BinaryWriter bw = new(fw);
 
         string[] files = Directory.GetFiles(folderPath, "*.*", SearchOption.TopDirectoryOnly);
-        int nameLenSum = Utility.GetNameLengthSum(files, ArcEncoding.Shift_JIS);
+        int nameLenSum = Utility.GetFileNameLengthSum(files, ArcEncoding.Shift_JIS);
         int fileCount = files.Length;
         int baseOffset = 10 + nameLenSum + (9 * fileCount);
 

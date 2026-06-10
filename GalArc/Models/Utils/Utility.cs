@@ -27,7 +27,7 @@ internal static class Utility
         return ext;
     }
 
-    public static int GetNameLengthSum(IEnumerable<string> strings, Encoding encoding)
+    public static int GetFileNameLengthSum(IEnumerable<string> strings, Encoding encoding)
     {
         int sum = 0;
         foreach (string s in strings)
@@ -37,7 +37,7 @@ internal static class Utility
         return sum;
     }
 
-    public static int GetNameLengthSum(FileInfo[] files, Encoding encoding)
+    public static int GetFileNameLengthSum(FileInfo[] files, Encoding encoding)
     {
         int sum = 0;
         foreach (FileInfo file in files)
@@ -67,7 +67,7 @@ internal static class Utility
         return results;
     }
 
-    public static int GetRelativePathLenSum(string[] fullPaths, string basePath, Encoding encoding)
+    public static int GetRelativePathLengthSum(string[] fullPaths, string basePath, Encoding encoding)
     {
         string[] relativePaths = GetRelativePaths(fullPaths, basePath);
         StringBuilder sb = new();
